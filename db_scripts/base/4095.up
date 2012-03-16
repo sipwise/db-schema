@@ -1,0 +1,47 @@
+-- this script does not change table data, as there is no reliable method
+-- to determine the correct values for `billing_zones_history_id`
+-- do not run systems between r4085 and r4091
+
+ALTER TABLE billing.billing_fees_history CHANGE COLUMN `billing_zone_id` `billing_zones_history_id` int(11) UNSIGNED NULL;
+
+DROP TRIGGER billing.bill_fees_crepl_trig;
+DROP TRIGGER billing.bill_fees_urepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER billing.bill_fees_crepl_trig AFTER INSERT ON billing_fees
+  FOR EACH ROW BEGIN
+  DECLARE my_bzh_id int UNSIGNED;
+
+  SELECT id INTO my_bzh_id FROM billing_zones_history WHERE bz_id = NEW.billing_zone_id;
+
+  INSERT INTO billing_fees_history
+       VALUES(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id, NEW.destination,
+              NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+              NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+              NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.use_free_time);
+
+  END;
+|
+
+CREATE TRIGGER billing.bill_fees_urepl_trig AFTER UPDATE ON billing_fees
+  FOR EACH ROW BEGIN
+  DECLARE my_bzh_id int UNSIGNED;
+
+  SELECT id INTO my_bzh_id FROM billing_zones_history WHERE bz_id = NEW.billing_zone_id;
+
+  UPDATE billing_fees_history
+     SET bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+         billing_zones_history_id = my_bzh_id, destination = NEW.destination, type = NEW.type,
+         onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+         onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+         offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+         offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+         use_free_time = NEW.use_free_time
+   WHERE bf_id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;
+

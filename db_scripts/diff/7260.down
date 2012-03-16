@@ -1,0 +1,94 @@
+use provisioning;
+
+set autocommit=0;
+
+-- tmp table holding priority 0 CF destinations
+drop table if exists tmp_cf_map;
+create table tmp_cf_map (
+  id int(11) unsigned not null auto_increment primary key,
+  subscriber_id int(11) unsigned not null,
+  type enum('cfu', 'cft', 'cfb', 'cfna') not null default 'cfu',
+  destination varchar(255) not null,
+  key tidx(type)
+) engine=innodb;
+
+-- fetch topmost CFUs
+insert into tmp_cf_map (subscriber_id, type, destination) 
+  select m.subscriber_id, m.type, d.destination from voip_cf_destinations d, 
+  voip_cf_destination_sets s, voip_cf_mappings m, voip_usr_preferences p, 
+  voip_preferences vp 
+  where vp.attribute = 'cfu' and m.type = 'cfu' and p.attribute_id = vp.id 
+  and p.value = m.id and m.destination_set_id = s.id 
+  and p.subscriber_id = s.subscriber_id and d.destination_set_id = s.id 
+  and d.priority = 0 
+  group by m.subscriber_id;
+
+-- fetch topmost CFBs
+insert into tmp_cf_map (subscriber_id, type, destination) 
+  select m.subscriber_id, m.type, d.destination from voip_cf_destinations d, 
+  voip_cf_destination_sets s, voip_cf_mappings m, voip_usr_preferences p, 
+  voip_preferences vp 
+  where vp.attribute = 'cfb' and m.type = 'cfb' and p.attribute_id = vp.id 
+  and p.value = m.id and m.destination_set_id = s.id 
+  and p.subscriber_id = s.subscriber_id and d.destination_set_id = s.id 
+  and d.priority = 0 
+  group by m.subscriber_id;
+
+-- fetch topmost CFTs
+insert into tmp_cf_map (subscriber_id, type, destination) 
+  select m.subscriber_id, m.type, d.destination from voip_cf_destinations d, 
+  voip_cf_destination_sets s, voip_cf_mappings m, voip_usr_preferences p, 
+  voip_preferences vp 
+  where vp.attribute = 'cft' and m.type = 'cft' and p.attribute_id = vp.id 
+  and p.value = m.id and m.destination_set_id = s.id 
+  and p.subscriber_id = s.subscriber_id and d.destination_set_id = s.id 
+  and d.priority = 0 
+  group by m.subscriber_id;
+
+-- fetch topmost CFNAs
+insert into tmp_cf_map (subscriber_id, type, destination) 
+  select m.subscriber_id, m.type, d.destination from voip_cf_destinations d, 
+  voip_cf_destination_sets s, voip_cf_mappings m, voip_usr_preferences p, 
+  voip_preferences vp 
+  where vp.attribute = 'cfna' and m.type = 'cfna' and p.attribute_id = vp.id 
+  and p.value = m.id and m.destination_set_id = s.id 
+  and p.subscriber_id = s.subscriber_id and d.destination_set_id = s.id 
+  and d.priority = 0 
+  group by m.subscriber_id;
+
+-- now get rid of existing CF preferences
+delete up.* from voip_usr_preferences up, voip_preferences p 
+  where p.attribute in ('cfu', 'cfb', 'cfna', 'cft') 
+  and up.attribute_id = p.id;
+
+-- and change back the settings to the old ones
+update voip_preferences set type=0, data_type='string', internal=0, read_only=0, max_occur=1,
+  description='E.164 number or complete SIP URI. "Call forward unconditional" - if set, all incoming calls are forwarded to this destination. E.164 numbers have to be fully qualified and may be prefixed by a plus sign. E.164 numbers specified in SIP URIs have to be prefixed by a plus sign if they are fully qualified but they must always carry the subscriber\'s own domain, like in "sip:+<E.164number>@<subscriber.domain>".'
+  where attribute='cfu';
+
+update voip_preferences set type=0, data_type='string', internal=0, read_only=0, max_occur=1,
+  description='E.164 number or complete SIP URI. "Call forward busy" - if set, all incoming calls are forwarded to this destination while the subscriber is on a call. Same syntax as for "cfu".'
+  where attribute='cfb';
+
+update voip_preferences set type=0, data_type='string', internal=0, read_only=0, max_occur=1,
+  description='E.164 number or complete SIP URI. "Call forward not available" - if set, all incoming calls are forwarded to this destination if the subscriber is not online and registered. Same syntax as for "cfu".'
+  where attribute='cfna';
+
+update voip_preferences set type=0, data_type='string', internal=0, read_only=0, max_occur=1,
+  description='E.164 number or complete SIP URI. "Call forward timeout" - if set, all incoming calls are forwarded to this destination after a timeout that can be set via "ringtimeout" below. Same syntax as for "cfu".'
+  where attribute='cft';
+
+-- finally copy over the vars from the tmp table and drop it
+insert into voip_usr_preferences(subscriber_id, attribute_id, value) select t.subscriber_id, p.id, t.destination from tmp_cf_map t, voip_preferences p where t.type = p.attribute;
+
+drop table tmp_cf_map;
+
+-- clean up after us, just in case
+delete from voip_cf_mappings;
+delete from voip_cf_time_sets;
+delete from voip_cf_destination_sets;
+delete from voip_cf_destinations;
+delete from voip_cf_periods;
+
+commit;
+set autocommit=1;

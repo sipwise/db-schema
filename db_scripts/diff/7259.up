@@ -1,0 +1,5 @@
+GRANT SELECT ON provisioning.voip_cf_destination_sets TO 'kamailio'@'localhost';
+GRANT SELECT ON provisioning.voip_cf_destinations TO 'kamailio'@'localhost';
+GRANT SELECT ON provisioning.voip_cf_periods TO 'kamailio'@'localhost';
+GRANT SELECT ON provisioning.voip_cf_time_sets TO 'kamailio'@'localhost';
+GRANT SELECT ON provisioning.voip_cf_mappings TO 'kamailio'@'localhost';

@@ -1,0 +1,14 @@
+USE provisioning;
+
+CREATE TABLE `voip_cf_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `type` enum('cfu','cfb','cfna','cft') NOT NULL DEFAULT 'cfu',
+  `destination_set_id` int(11) unsigned DEFAULT NULL,
+  `time_set_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`), 
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `type_idx` (`type`),
+  CONSTRAINT `v_cfmap_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES
+`voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;

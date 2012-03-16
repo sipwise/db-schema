@@ -1,0 +1,1 @@
+DELETE FROM provisioning.voip_preferences WHERE attribute='find_subscriber_by_auth_user';

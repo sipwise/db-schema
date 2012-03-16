@@ -1,0 +1,208 @@
+-- NOTE -- This restores data in kamailio.dialplan which has been deleted by 5800.up!
+-- NOTE -- Run 5800.up first to create the data backup.
+
+use provisioning;
+
+DELETE FROM voip_rewrite_rules;
+DELETE FROM voip_rewrite_rule_sets;
+
+ALTER TABLE voip_rewrite_rule_sets ADD COLUMN `caller_in_dpid` int(11) unsigned DEFAULT NULL AFTER `description`;
+ALTER TABLE voip_rewrite_rule_sets ADD COLUMN `callee_in_dpid` int(11) unsigned DEFAULT NULL AFTER `caller_in_dpid`;
+ALTER TABLE voip_rewrite_rule_sets ADD COLUMN `caller_out_dpid` int(11) unsigned DEFAULT NULL AFTER `callee_in_dpid`;
+ALTER TABLE voip_rewrite_rule_sets ADD COLUMN `callee_out_dpid` int(11) unsigned DEFAULT NULL AFTER `caller_out_dpid`;
+
+CREATE TABLE `voip_rwrs_sequence` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+DELIMITER |
+
+DROP TRIGGER voip_rwrules_crepl_trig|
+
+CREATE TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE new_set_id int(11) unsigned;
+
+  SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id = NEW.set_id;
+
+  INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+
+  END;
+|
+
+DROP TRIGGER voip_rwrules_urepl_trig|
+
+CREATE TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+  DECLARE new_set_id int(11) unsigned;
+
+  SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO old_set_id FROM voip_rewrite_rule_sets WHERE id = OLD.set_id;
+  SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id = NEW.set_id;
+
+  UPDATE kamailio.dialplan
+     SET dpid      = new_set_id,
+         pr        = NEW.priority,
+         match_exp = NEW.match_pattern,
+         subst_exp = NEW.match_pattern,
+         repl_exp  = NEW.replace_pattern
+   WHERE dpid      = old_set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+DROP TRIGGER voip_rwrules_drepl_trig|
+
+CREATE TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+
+  SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO old_set_id FROM voip_rewrite_rule_sets WHERE id = OLD.set_id;
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      = old_set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+DROP TRIGGER voip_rwrulesets_drepl_trig|
+
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_out_dpid;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_crepl_trig BEFORE INSERT ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+
+  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid = OLD.caller_in_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid = OLD.callee_in_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid = OLD.caller_out_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid = OLD.callee_out_dpid;
+
+  END;
+|
+
+DELIMITER ;
+
+DELETE FROM voip_preferences WHERE attribute = 'rewrite_rule_set';
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, description)
+                       VALUES('rewrite_rule_set', 1, 1, 1, 1, 'int', 1, -1, 'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.');
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
+                       VALUES('rewrite_caller_in_dpid', 1, 1, 1, 1, 'int', 1, 1);
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
+                       VALUES('rewrite_callee_in_dpid', 1, 1, 1, 1, 'int', 1, 1);
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
+                       VALUES('rewrite_caller_out_dpid', 1, 1, 1, 1, 'int', 1, 1);
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
+                       VALUES('rewrite_callee_out_dpid', 1, 1, 1, 1, 'int', 1, 1);
+
+-- restore data from migration tables
+INSERT INTO voip_rewrite_rule_sets (name,description,caller_in_dpid,callee_in_dpid,caller_out_dpid,callee_out_dpid)
+                            SELECT CONCAT('peer___',ip), CONCAT('auto-generated ruleset for ',name),
+                                   dp_caller_in_id, dp_callee_in_id, dp_caller_out_id, dp_callee_out_id
+                              FROM voip_peer_hosts_rwsmig;
+INSERT INTO voip_rewrite_rules (set_id, match_pattern, replace_pattern, description, direction, field, priority)
+                         SELECT a.id, b.match_pattern, b.replace_pattern, b.description, b.direction, b.field, b.priority
+                           FROM voip_rewrite_rule_sets a, voip_peer_rewrites_rwsmig b, voip_peer_hosts_rwsmig c
+                          WHERE a.name = CONCAT('peer___',c.ip)
+                            AND b.peer_id = c.id;
+INSERT INTO voip_peer_preferences (peer_host_id,attribute_id,value)
+                           SELECT a.id, b.id, a.dp_caller_in_id
+                             FROM voip_peer_hosts_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_caller_in_dpid';
+INSERT INTO voip_peer_preferences (peer_host_id,attribute_id,value)
+                           SELECT a.id, b.id, a.dp_callee_in_id
+                             FROM voip_peer_hosts_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_callee_in_dpid';
+INSERT INTO voip_peer_preferences (peer_host_id,attribute_id,value)
+                           SELECT a.id, b.id, a.dp_caller_out_id
+                             FROM voip_peer_hosts_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_caller_out_dpid';
+INSERT INTO voip_peer_preferences (peer_host_id,attribute_id,value)
+                           SELECT a.id, b.id, a.dp_callee_out_id
+                             FROM voip_peer_hosts_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_callee_out_dpid';
+
+INSERT INTO voip_rewrite_rule_sets (name,description,caller_in_dpid,callee_in_dpid,caller_out_dpid,callee_out_dpid)
+                           SELECT CONCAT('dom___',b.domain), CONCAT('auto-generated ruleset for ',b.domain),
+                                  dp_caller_in_id, dp_callee_in_id, dp_caller_out_id, dp_callee_out_id
+                             FROM voip_domain_rwsmig a, voip_domains b
+                            WHERE a.domain_id = b.id;
+INSERT INTO voip_rewrite_rules (set_id, match_pattern, replace_pattern, description, direction, field, priority)
+                         SELECT a.id, b.match_pattern, b.replace_pattern, b.description, b.direction, b.field, b.priority
+                           FROM voip_rewrite_rule_sets a, voip_domain_rewrites_rwsmig b, voip_domains c
+                          WHERE a.name = CONCAT('dom___',c.domain)
+                            AND b.domain_id = c.id;
+INSERT INTO voip_dom_preferences (domain_id,attribute_id,value)
+                           SELECT a.domain_id, b.id, a.dp_caller_in_id
+                             FROM voip_domain_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_caller_in_dpid';
+INSERT INTO voip_dom_preferences (domain_id,attribute_id,value)
+                           SELECT a.domain_id, b.id, a.dp_callee_in_id
+                             FROM voip_domain_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_callee_in_dpid';
+INSERT INTO voip_dom_preferences (domain_id,attribute_id,value)
+                           SELECT a.domain_id, b.id, a.dp_caller_out_id
+                             FROM voip_domain_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_caller_out_dpid';
+INSERT INTO voip_dom_preferences (domain_id,attribute_id,value)
+                           SELECT a.domain_id, b.id, a.dp_callee_out_id
+                             FROM voip_domain_rwsmig a, voip_preferences b
+                            WHERE b.attribute = 'rewrite_callee_out_dpid';
+
+DROP TABLE voip_peer_hosts_rwsmig;
+DROP TABLE voip_peer_rewrites_rwsmig;
+DROP TABLE voip_domain_rwsmig;
+DROP TABLE voip_domain_rewrites_rwsmig;

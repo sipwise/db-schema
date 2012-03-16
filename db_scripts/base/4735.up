@@ -1,0 +1,1 @@
+alter table kamailio.dialplan change column repl_exp `repl_exp` varchar(64) NOT NULL;

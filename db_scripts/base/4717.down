@@ -1,0 +1,5 @@
+DELETE FROM provisioning.xmlgroups WHERE name = 'proxy-ng';
+
+DELETE FROM provisioning.xmlhosts WHERE description = 'Kamailio-SR';
+
+DELETE FROM provisioning.xmlhostgroups WHERE group_id = 6 and host_id = 3;

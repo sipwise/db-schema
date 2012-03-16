@@ -1,0 +1,2 @@
+DROP TABLE IF EXISTS kamailio.fax_journal;
+REVOKE ALL PRIVILEGES ON provisioning.* FROM 'hylafax'@'localhost';

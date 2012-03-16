@@ -1,0 +1,3 @@
+ALTER TABLE kamailio.address DROP COLUMN `tag`;
+
+UPDATE kamailio.version SET table_version = 3 WHERE table_name = 'address';

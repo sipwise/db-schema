@@ -1,0 +1,8 @@
+USE accounting;
+create table acc_backup like kamailio.acc;
+create table acc_trash like kamailio.acc;
+
+USE kamailio;
+create table acc_backup like kamailio.acc;
+create table acc_trash like kamailio.acc;
+

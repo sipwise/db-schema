@@ -1,0 +1,20 @@
+CREATE TABLE kamailio.fax_journal (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `the_timestamp` int(11) unsigned NOT NULL DEFAULT '0',
+  `duration` int(11) unsigned NOT NULL DEFAULT '0',
+  `direction` enum('in','out') NOT NULL DEFAULT 'in',
+  `peer_number` varchar(255) NOT NULL DEFAULT '',
+  `peer_name` varchar(255) NOT NULL DEFAULT '',
+  `pages` int(10) unsigned NOT NULL DEFAULT '0',
+  `reason` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `signal_rate` int(10) unsigned NOT NULL DEFAULT '0',
+  `quality` varchar(255) NOT NULL DEFAULT '',
+  `filename` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `selkey` (`subscriber_id`,`direction`)
+) ENGINE=InnoDB;
+GRANT SELECT ON kamailio.* TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
+GRANT INSERT ON kamailio.fax_journal TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
+GRANT SELECT ON provisioning.* TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';

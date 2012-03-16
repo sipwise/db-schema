@@ -1,0 +1,5 @@
+use carrier;
+
+ALTER TABLE `customers` DROP COLUMN `external_id`;
+ALTER TABLE `contracts` DROP COLUMN `external_id`;
+ALTER TABLE `subscribers` DROP COLUMN `external_id`;

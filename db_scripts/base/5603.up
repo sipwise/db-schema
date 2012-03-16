@@ -1,0 +1,11 @@
+use provisioning;
+
+UPDATE voip_preferences
+   SET description = 'A realm (hostname) used to identify and for authentication against a peer host.'
+ WHERE attribute = 'peer_auth_realm';
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                       VALUES('peer_auth_register', 1, 1, 1, 1, 'boolean', 1, 'Specifies whether registration at the peer host is desired.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                       VALUES('concurrent_max', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent sessions (calls) for a subscriber or peer.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                       VALUES('concurrent_max_out', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent outgoing sessions (calls) coming from a subscriber or going to a peer.');

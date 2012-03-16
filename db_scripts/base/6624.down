@@ -1,0 +1,1 @@
+ALTER TABLE `billing`.`voip_numbers` DROP KEY `number_idx`;

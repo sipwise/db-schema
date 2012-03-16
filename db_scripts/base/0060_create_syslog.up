@@ -1,0 +1,99 @@
+-- step out of our provisioning DB
+USE mysql;
+
+-- drop database if it allready exists
+-- this will drop all tables and triggers
+DROP DATABASE IF EXISTS syslog;
+
+-- create DB with utf8 default charset, so we don't have to
+-- specify charset for each table
+CREATE DATABASE IF NOT EXISTS syslog CHARACTER SET 'utf8';
+
+USE syslog;
+
+
+CREATE TABLE `se1` (
+  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CustomerID` bigint(20) DEFAULT NULL,
+  `ReceivedAt` datetime DEFAULT NULL,
+  `DeviceReportedTime` datetime DEFAULT NULL,
+  `Facility` smallint(6) DEFAULT NULL,
+  `Priority` smallint(6) DEFAULT NULL,
+  `FromHost` varchar(60) DEFAULT NULL,
+  `Message` text,
+  `NTSeverity` int(11) DEFAULT NULL,
+  `Importance` int(11) DEFAULT NULL,
+  `EventSource` varchar(60) DEFAULT NULL,
+  `EventUser` varchar(60) DEFAULT NULL,
+  `EventCategory` int(11) DEFAULT NULL,
+  `EventID` int(11) DEFAULT NULL,
+  `EventBinaryData` text,
+  `MaxAvailable` int(11) DEFAULT NULL,
+  `CurrUsage` int(11) DEFAULT NULL,
+  `MinUsage` int(11) DEFAULT NULL,
+  `MaxUsage` int(11) DEFAULT NULL,
+  `InfoUnitID` int(11) DEFAULT NULL,
+  `SysLogTag` varchar(60) DEFAULT NULL,
+  `EventLogType` varchar(60) DEFAULT NULL,
+  `GenericFileName` varchar(60) DEFAULT NULL,
+  `SystemID` int(11) DEFAULT NULL,
+   PRIMARY KEY  (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `se2` like `se1`;
+CREATE TABLE `se3` like `se1`;
+CREATE TABLE `se4` like `se1`;
+CREATE TABLE `se5` like `se1`;
+CREATE TABLE `se6` like `se1`;
+CREATE TABLE `se7` like `se1`;
+CREATE TABLE `se8` like `se1`;
+CREATE TABLE `se9` like `se1`;
+CREATE TABLE `se10` like `se1`;
+CREATE TABLE `se11` like `se1`;
+CREATE TABLE `se12` like `se1`;
+CREATE TABLE `se13` like `se1`;
+CREATE TABLE `se14` like `se1`;
+CREATE TABLE `se15` like `se1`;
+CREATE TABLE `se16` like `se1`;
+CREATE TABLE `se17` like `se1`;
+CREATE TABLE `se18` like `se1`;
+CREATE TABLE `se19` like `se1`;
+CREATE TABLE `se20` like `se1`;
+CREATE TABLE `se21` like `se1`;
+CREATE TABLE `se22` like `se1`;
+CREATE TABLE `se23` like `se1`;
+CREATE TABLE `se24` like `se1`;
+CREATE TABLE `se25` like `se1`;
+CREATE TABLE `se26` like `se1`;
+CREATE TABLE `se27` like `se1`;
+CREATE TABLE `se28` like `se1`;
+
+CREATE TABLE `SystemEvents` (
+  `ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CustomerID` bigint(20) DEFAULT NULL,
+  `ReceivedAt` datetime DEFAULT NULL,
+  `DeviceReportedTime` datetime DEFAULT NULL,
+  `Facility` smallint(6) DEFAULT NULL,
+  `Priority` smallint(6) DEFAULT NULL,
+  `FromHost` varchar(60) DEFAULT NULL,
+  `Message` text,
+  `NTSeverity` int(11) DEFAULT NULL,
+  `Importance` int(11) DEFAULT NULL,
+  `EventSource` varchar(60) DEFAULT NULL,
+  `EventUser` varchar(60) DEFAULT NULL,
+  `EventCategory` int(11) DEFAULT NULL,
+  `EventID` int(11) DEFAULT NULL,
+  `EventBinaryData` text,
+  `MaxAvailable` int(11) DEFAULT NULL,
+  `CurrUsage` int(11) DEFAULT NULL,
+  `MinUsage` int(11) DEFAULT NULL,
+  `MaxUsage` int(11) DEFAULT NULL,
+  `InfoUnitID` int(11) DEFAULT NULL,
+  `SysLogTag` varchar(60) DEFAULT NULL,
+  `EventLogType` varchar(60) DEFAULT NULL,
+  `GenericFileName` varchar(60) DEFAULT NULL,
+  `SystemID` int(11) DEFAULT NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8 INSERT_METHOD=FIRST UNION=(`se1`,`se2`,`se3`,`se4`,`se5`,`se6`,`se7`,`se8`,`se9`,`se10`,`se11`,`se12`,`se13`,`se14`,`se15`,`se16`,`se17`,`se18`,`se19`,`se20`,`se21`,`se22`,`se23`,`se24`,`se25`,`se26`,`se27`,`se28`);
+
+

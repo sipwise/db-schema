@@ -1,0 +1,64 @@
+#!/bin/bash
+
+hostname="$(hostname)"
+
+/etc/init.d/mysql start || true
+. /etc/mysql/sipwise.cnf
+
+if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
+  mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/init/0005_create_ngcp.up
+fi
+
+if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
+  echo 'Error: ngcp database does not exist.' >&2
+  exit 1
+fi
+
+if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e 'describe db_schema'  >/dev/null; then
+  echo 'Error: db_schema table does not exit.' >&2
+  exit 1
+fi
+
+if [ -x /usr/sbin/ngcp-check_active ] ; then
+  if /usr/sbin/ngcp-check_active -q ; then
+    echo "This seems to be the active node, registering revisions."
+  else
+    # TODO - is this really true? what about /usr/share/ngcp-upgrade-2.4/db/5670.up?
+    echo "This does not seem to be the active node, nothing to do."
+    exit 0
+  fi
+fi
+
+revision_wrapper() {
+  [ -n "$1" ] || return 1
+
+  for rev in $* ; do
+    revname="$(basename $rev)"
+
+    if ngcp-check-rev-applied --schema db_schema --revision "$revname" ; then
+      echo "Revision $revname has been applied already, nothing to do."
+      continue
+    fi
+  
+    printf "Applying revision script %s: " "$rev"
+    if mysql -usipwise -p${SIPWISE_DB_PASSWORD} < "$rev" ; then
+      echo done
+    else
+      echo "failed. :("
+      exit 1
+    fi
+
+    if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${hostname}"\", CURRENT_TIMESTAMP);" ; then
+      echo "Marked revision $rev for being applied."
+    else
+      echo "Error while executing DB commands using revision $rev for host $hostname" >&2
+      exit 1
+    fi
+  done
+}
+
+revision_wrapper /usr/share/ngcp-db-schema/db_scripts/base/*.up
+revision_wrapper /usr/share/ngcp-db-schema/db_scripts/diff/*.up
+# TODO language_wrapper
+
+## END OF FILE #################################################################

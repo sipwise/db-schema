@@ -1,0 +1,1 @@
+ALTER TABLE `accounting`.`cdr` ADD COLUMN `init_time` decimal(13,3) NOT NULL AFTER `call_code`;

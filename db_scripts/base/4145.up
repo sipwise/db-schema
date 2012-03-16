@@ -1,0 +1,1 @@
+ALTER TABLE billing.billing_profiles MODIFY COLUMN `prepaid` bool NOT NULL DEFAULT FALSE;

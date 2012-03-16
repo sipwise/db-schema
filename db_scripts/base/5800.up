@@ -1,0 +1,123 @@
+-- NOTE -- This will delete everything from kamailio.dialplan!
+-- NOTE -- A backup is made to migration tables, run 5824.up immediately to restore it!
+
+use provisioning;
+
+CREATE TABLE `voip_rewrite_rule_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_idx` (`name`)
+) ENGINE=InnoDB;
+ 
+CREATE TABLE `voip_rewrite_rules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `match_pattern` varchar(64) NOT NULL DEFAULT '',
+  `replace_pattern` varchar(64) NOT NULL,
+  `description` varchar(127) NOT NULL DEFAULT '',
+  `direction` enum('in','out') NOT NULL DEFAULT 'in',
+  `field` enum('caller','callee') NOT NULL DEFAULT 'caller',
+  `priority` int(11) unsigned NOT NULL DEFAULT '50',
+  PRIMARY KEY (`id`),
+  KEY `setidx` (`set_id`),
+  KEY `dirfieldidx` (`direction`,`field`),
+  CONSTRAINT `v_rwr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+DROP TRIGGER voip_domrw_crepl_trig;
+DROP TRIGGER voip_domrw_urepl_trig;
+DROP TRIGGER voip_domrw_drepl_trig;
+DROP TRIGGER voip_peerrw_crepl_trig;
+DROP TRIGGER voip_peerrw_urepl_trig;
+DROP TRIGGER voip_peerrw_drepl_trig;
+
+DELETE FROM kamailio.dialplan;
+
+DELIMITER |
+
+CREATE TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(NEW.set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.dialplan
+     SET pr        = NEW.priority,
+         match_exp = NEW.match_pattern,
+         subst_exp = NEW.match_pattern,
+         repl_exp  = NEW.replace_pattern
+   WHERE dpid      = OLD.set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      = OLD.set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern 
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.id;
+
+  END;
+|
+
+DELIMITER ;
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                       VALUES('rewrite_rule_set', 1, 1, 1, 1, 'int', 1, 'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.');
+
+-- create rw rules backup for upgrade
+CREATE TABLE `voip_domain_rewrites_rwsmig` SELECT * FROM `voip_domain_rewrites`;
+CREATE TABLE `voip_domain_rwsmig` SELECT b.domain_id,
+                                         b.value AS dp_caller_in_id,
+                                         d.value AS dp_callee_in_id,
+                                         f.value AS dp_caller_out_id,
+                                         h.value AS dp_callee_out_id
+                                    FROM `voip_preferences` a INNER JOIN `voip_dom_preferences` b
+                                                                     ON a.attribute = 'dp_dom_caller_in'
+                                                                     AND a.id = b.attribute_id
+                                                              INNER JOIN `voip_preferences` c
+                                                                     ON c.attribute = 'dp_dom_callee_in'
+                                                              INNER JOIN `voip_dom_preferences` d
+                                                                     ON c.id = d.attribute_id
+                                                                     AND b.domain_id = d.domain_id
+                                                              INNER JOIN `voip_preferences` e
+                                                                     ON e.attribute = 'dp_dom_caller_out'
+                                                              INNER JOIN `voip_dom_preferences` f
+                                                                     ON e.id = f.attribute_id
+                                                                     AND d.domain_id = f.domain_id
+                                                              INNER JOIN `voip_preferences` g
+                                                                     ON g.attribute = 'dp_dom_callee_out'
+                                                              INNER JOIN `voip_dom_preferences` h
+                                                                     ON g.id = h.attribute_id
+                                                                     AND f.domain_id = h.domain_id;
+CREATE TABLE `voip_peer_rewrites_rwsmig` SELECT * FROM `voip_peer_rewrites`;
+CREATE TABLE `voip_peer_hosts_rwsmig` SELECT * FROM `voip_peer_hosts`;
+
+DROP TABLE `voip_domain_rewrites`;
+DROP TABLE `voip_peer_rewrites`;

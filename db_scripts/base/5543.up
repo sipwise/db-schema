@@ -1,0 +1,2 @@
+INSERT INTO provisioning.voip_preferences (attribute, type, dom_pref, usr_pref, peer_pref, data_type, max_occur, description) VALUES('always_use_rtpproxy', 1, 1, 1, 1, 'boolean', 1, 'Force rtp relay for this peer/domain/user.');
+INSERT INTO provisioning.voip_preferences (attribute, type, dom_pref, usr_pref, peer_pref, data_type, max_occur, description) VALUES('never_use_rtpproxy', 1, 1, 1, 1, 'boolean', 1, 'Do not use rtp relay for this peer/domain/user. Rtp will be relayed if other participants have always_use_rtpproxy preference enabled.');

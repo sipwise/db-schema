@@ -1,0 +1,22 @@
+USE `provisioning`;
+
+CREATE TABLE `voip_cf_destination_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `v_s_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `voip_cf_destinations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `destination_set_id` int(11) unsigned NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  `priority` int(3) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dset_idx` (`destination_set_id`),
+  KEY `destination_idx` (`destination`),
+  CONSTRAINT `v_cf_dsetid_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;

@@ -1,0 +1,3 @@
+use carrier;
+
+ALTER TABLE `contracts` MODIFY `url` varchar(31) NULL default NULL;

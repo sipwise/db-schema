@@ -1,0 +1,1 @@
+ALTER TABLE kamailio.lcr_gw CHANGE COLUMN ip_addr ip_addr varchar(64) NOT NULL;

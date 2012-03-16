@@ -1,0 +1,8 @@
+use provisioning;
+
+UPDATE voip_preferences 
+   SET description = 'A realm used for authentication against a peer host.'
+ WHERE attribute = 'peer_auth_realm';
+DELETE FROM voip_preferences WHERE attribute = 'peer_auth_register';
+DELETE FROM voip_preferences WHERE attribute = 'concurrent_max';
+DELETE FROM voip_preferences WHERE attribute = 'concurrent_max_out';

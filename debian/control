@@ -1,0 +1,13 @@
+Source: ngcp-db-schema
+Section: admin
+Priority: extra
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.9.3
+Homepage: http://sipwise.com/
+
+Package: ngcp-db-schema
+Architecture: all
+Depends: ${misc:Depends}
+Description: TODO
+ TODO

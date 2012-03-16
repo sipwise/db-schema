@@ -1,0 +1,2 @@
+DELETE FROM provisioning.voip_preferences WHERE attribute = 'block_out_override_pin';
+DELETE FROM provisioning.voip_preferences WHERE attribute = 'adm_block_out_override_pin';

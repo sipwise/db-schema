@@ -1,0 +1,14 @@
+USE billing;
+
+ALTER TABLE billing_fees_history ADD KEY `zonehid_idx` (`billing_zones_history_id`);
+ALTER TABLE billing_fees_history ADD CONSTRAINT `b_f_h_bzhid_ref` FOREIGN KEY (`billing_zones_history_id`)
+                               REFERENCES `billing_zones_history` (`id`)
+                               ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE voip_subscribers DROP FOREIGN KEY `v_s_pnumid_ref`;
+ALTER TABLE voip_subscribers ADD CONSTRAINT `v_s_pnumid_ref` FOREIGN KEY (`primary_number_id`) REFERENCES `voip_numbers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+ALTER TABLE billing_fees AUTO_INCREMENT=1000;
+ALTER TABLE billing_fees_history AUTO_INCREMENT=1000;
+ALTER TABLE billing_zones AUTO_INCREMENT=1000;
+ALTER TABLE billing_zones_history AUTO_INCREMENT=1000;

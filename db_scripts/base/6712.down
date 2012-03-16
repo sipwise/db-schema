@@ -1,0 +1,13 @@
+use provisioning;
+
+UPDATE voip_preferences
+   SET description = 'E.164 number or complete SIP URI. "calling line identification" - specifies the source E.164 number or SIP username that is used for outgoing calls in the SIP "From" and "P-Asserted-Identity" headers (as user- and network-provided calling numbers). The content of the "From" header may be overridden by the "user_provided_cli" preference and client (if allowed by the "allowed_clis" preference) SIP signalling. Automatically set to the primary E.164 number specified in the subscriber details.'
+ WHERE attribute = 'cli';
+
+UPDATE voip_preferences
+   SET description = 'E.164 number or complete SIP URI. "user-provided calling line identification" - specifies the source E.164 number or SIP username that is used for outgoing calls. If set, this is put in the SIP "From" header (as user-provided calling number) if a client sends a CLI which is not allowed by "allowed_clis" or if "ignore_userprovided_cli" is set.'
+ WHERE attribute = 'user_cli';
+
+UPDATE voip_preferences
+   SET attribute='ignore_userprovided_cli', description = 'Discard any subscriber provided CLI information'
+ WHERE attribute='omit_outbound_displayname';

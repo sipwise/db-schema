@@ -1,0 +1,3 @@
+ALTER TABLE accounting.cdr MODIFY COLUMN `carrier_cost` float default NULL;
+ALTER TABLE accounting.cdr MODIFY COLUMN `reseller_cost` float default NULL;
+ALTER TABLE accounting.cdr MODIFY COLUMN `customer_cost` float default NULL;

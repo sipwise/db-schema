@@ -1,0 +1,1 @@
+ALTER TABLE `accounting`.`cdr` DROP COLUMN `init_time`;

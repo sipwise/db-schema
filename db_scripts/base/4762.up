@@ -1,0 +1,69 @@
+CREATE TABLE `provisioning`.`voip_peer_preferences` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `peer_host_id` int(11) UNSIGNED NOT NULL REFERENCES `voip_peer_hosts` (`id`),
+  `attribute_id` int(11) UNSIGNED NOT NULL REFERENCES `voip_preferences` (`id`),
+  `value` varchar(255) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `peerhostid_idx` (`peer_host_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_p_p_peerhostid_ref` FOREIGN KEY (`peer_host_id`)
+                                    REFERENCES `voip_peer_hosts` (`id`)
+                                    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_p_p_attributeid_ref` FOREIGN KEY (`attribute_id`)
+                                     REFERENCES `voip_preferences` (`id`)
+                                     ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `kamailio`.`peer_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL,
+  `username` varchar(128) NOT NULL DEFAULT '0',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `attribute` varchar(32) NOT NULL DEFAULT '',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `value` varchar(128) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  KEY `ua_idx` (`uuid`,`attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+USE provisioning;
+
+DELIMITER |
+
+CREATE TRIGGER voip_peerpref_crepl_trig AFTER INSERT ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.peer_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, NOW()
+         FROM provisioning.voip_preferences
+        WHERE id = NEW.attribute_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_peerpref_urepl_trig AFTER UPDATE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = NOW()
+   WHERE pp.id = OLD.id
+     AND vp.id = NEW.attribute_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_peerpref_drepl_trig BEFORE DELETE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.peer_preferences
+        WHERE id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;

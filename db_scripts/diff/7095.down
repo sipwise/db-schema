@@ -1,0 +1,4 @@
+USE `provisioning`;
+
+DROP TABLE `voip_cf_destinations`;
+DROP TABLE `voip_cf_destination_sets`;

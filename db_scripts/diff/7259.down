@@ -1,0 +1,5 @@
+REVOKE ALL PRIVILEGES ON provisioning.voip_cf_destination_sets FROM 'kamailio'@'localhost';
+REVOKE ALL PRIVILEGES ON provisioning.voip_cf_destinatios FROM 'kamailio'@'localhost';
+REVOKE ALL PRIVILEGES ON provisioning.voip_cf_time_sets FROM 'kamailio'@'localhost';
+REVOKE ALL PRIVILEGES ON provisioning.voip_cf_periods FROM 'kamailio'@'localhost';
+REVOKE ALL PRIVILEGES ON provisioning.voip_cf_mappings FROM 'kamailio'@'localhost';

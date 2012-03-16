@@ -1,0 +1,90 @@
+USE mysql;
+
+CREATE DATABASE carrier CHARACTER SET 'utf8';
+
+USE carrier;
+
+CREATE TABLE `customers` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `url` varchar(31) NOT NULL,
+  `shopuser` varchar(31) NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `shopuser_idx` (`shopuser`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `orders` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `customer_id` int(11) UNSIGNED NOT NULL REFERENCES `customers` (`id`),
+  PRIMARY KEY  (`id`),
+  KEY `customerid_idx` (`customer_id`),
+  CONSTRAINT `o_customerid_ref` FOREIGN KEY (`customer_id`)
+                                REFERENCES `customers` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `contracts` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `url` varchar(31) NOT NULL,
+  `customer_id` int(11) UNSIGNED NULL REFERENCES `customers` (`id`),
+  PRIMARY KEY  (`id`),
+  KEY `customerid_idx` (`customer_id`),
+  CONSTRAINT `c_customerid_ref` FOREIGN KEY (`customer_id`)
+                                REFERENCES `customers` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `credits` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  PRIMARY KEY  (`id`),
+  KEY `contractid_idx` (`contract_id`),
+  CONSTRAINT `c_contractid_ref` FOREIGN KEY (`contract_id`)
+                                REFERENCES `contracts` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `payments` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `order_id` int(11) UNSIGNED NULL REFERENCES `orders` (`id`),
+  `credit_id` int(11) UNSIGNED NULL REFERENCES `credits` (`id`),
+  PRIMARY KEY  (`id`),
+  KEY `orderid_idx` (`order_id`),
+  CONSTRAINT `p_orderid_ref` FOREIGN KEY (`order_id`)
+                             REFERENCES `orders` (`id`)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `creditid_idx` (`credit_id`),
+  CONSTRAINT `p_creditid_ref` FOREIGN KEY (`credit_id`)
+                              REFERENCES `credits` (`id`)
+                              ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `subscribers` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `username` varchar(127) NOT NULL,
+  `domain` varchar(127) NOT NULL,
+  `webusername` varchar(127) default NULL,
+  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `usrdom_idx` (`username`, `domain`),
+  UNIQUE KEY `domwebuser_idx` (`domain`, `webusername`),
+  KEY `contractid_idx` (`contract_id`),
+  CONSTRAINT `s_contractid_ref` FOREIGN KEY (`contract_id`)
+                                REFERENCES `contracts` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `numbers` (
+  `number` varchar(42) NOT NULL,
+  `subscriber_id` int(11) UNSIGNED NULL REFERENCES `subscribers` (`id`),
+  PRIMARY KEY `number_idx` (`number`),
+  KEY `subscriberid_idx` (`subscriber_id`),
+  CONSTRAINT `n_subscriberid_ref` FOREIGN KEY (`subscriber_id`)
+                                  REFERENCES `subscribers` (`id`)
+                                  ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `interceptions` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `url` varchar(31) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;

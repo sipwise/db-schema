@@ -1,0 +1,35 @@
+use provisioning;
+
+DELIMITER |
+
+CREATE TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  IF OLD.attribute != NEW.attribute THEN
+    UPDATE kamailio.usr_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+    UPDATE kamailio.dom_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+  END IF;
+
+  END;
+|
+
+CREATE TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_*_preferences delete action, but doesn't
+  DELETE FROM voip_usr_preferences WHERE attribute_id = OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id = OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;

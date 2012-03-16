@@ -1,0 +1,1 @@
+INSERT INTO provisioning.voip_preferences (attribute, type, usr_pref, data_type, max_occur, description) VALUES('e164_to_ruri', 1, 1, 'boolean', 1, 'Send the E164 number instead of SIP AOR as request username when sending INVITE to the subscriber. If a 404 is received the SIP AOR is sent as request URI as fallback.');

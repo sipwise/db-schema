@@ -1,0 +1,100 @@
+-- do not run systems between r4085 and r4091, but upgrade further
+-- there is no clean upgrade path if data is changed between these revisions
+
+CREATE TABLE `billing`.`billing_zones_history` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `bz_id` int(11) UNSIGNED,
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
+  `zone` varchar(127) NOT NULL,
+  `detail` varchar(127) NULL,
+  PRIMARY KEY  (`id`),
+  KEY `bzid_idx` (`bz_id`),
+  CONSTRAINT `b_z_h_bzid_ref` FOREIGN KEY (`bz_id`)
+                              REFERENCES `billing_zones` (`id`)
+                              ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+DELIMITER |
+
+CREATE TRIGGER billing.bill_zones_crepl_trig AFTER INSERT ON billing_zones
+  FOR EACH ROW BEGIN
+
+  INSERT INTO billing_zones_history
+       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);
+
+  END;
+|
+
+CREATE TRIGGER billing.bill_zones_urepl_trig AFTER UPDATE ON billing_zones
+  FOR EACH ROW BEGIN
+
+  UPDATE billing_zones_history
+     SET bz_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+         zone = NEW.zone, detail = NEW.detail
+   WHERE bz_id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;
+
+INSERT INTO billing.billing_zones_history
+     SELECT billing_zones.id, billing_zones.* FROM billing.billing_zones;
+
+CREATE TABLE `billing`.`billing_fees_history` (
+  `id` int(11) UNSIGNED NOT NULL auto_increment,
+  `bf_id` int(11) UNSIGNED,
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
+  `billing_zone_id` int(11) UNSIGNED NULL,
+  `destination` varchar(255) NOT NULL,
+  `type` enum('call', 'sms') NOT NULL DEFAULT 'call',
+  `onpeak_init_rate` double NOT NULL DEFAULT 0,
+  `onpeak_init_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
+  `onpeak_follow_rate` double NOT NULL DEFAULT 0,
+  `onpeak_follow_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
+  `offpeak_init_rate` double NOT NULL DEFAULT 0,
+  `offpeak_init_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
+  `offpeak_follow_rate` double NOT NULL DEFAULT 0,
+  `offpeak_follow_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
+  `use_free_time` bool NOT NULL DEFAULT FALSE,
+  PRIMARY KEY  (`id`),
+  KEY `bfid_idx` (`bf_id`),
+  CONSTRAINT `b_f_h_bfid_ref` FOREIGN KEY (`bf_id`)
+                              REFERENCES `billing_fees` (`id`)
+                              ON DELETE SET NULL ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+DELIMITER |
+
+CREATE TRIGGER billing.bill_fees_crepl_trig AFTER INSERT ON billing_fees
+  FOR EACH ROW BEGIN
+
+  INSERT INTO billing_fees_history
+       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.billing_zone_id, NEW.destination,
+              NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+              NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+              NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.use_free_time);
+
+  END;
+|
+
+CREATE TRIGGER billing.bill_fees_urepl_trig AFTER UPDATE ON billing_fees
+  FOR EACH ROW BEGIN
+
+  UPDATE billing_fees_history
+     SET bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+         billing_zone_id = NEW.billing_zone_id, destination = NEW.destination, type = NEW.type,
+         onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+         onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+         offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+         offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+         use_free_time = NEW.use_free_time
+   WHERE bf_id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;
+
+INSERT INTO billing.billing_fees_history
+     SELECT billing_fees.id, billing_fees.* FROM billing.billing_fees;

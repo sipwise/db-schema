@@ -1,0 +1,3 @@
+use provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'allowed_clis';

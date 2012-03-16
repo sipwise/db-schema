@@ -1,0 +1,1 @@
+DELETE FROM provisioning.voip_preferences WHERE attribute='e164_to_ruri';

@@ -1,0 +1,4 @@
+use provisioning;
+
+DROP TRIGGER voip_pref_urepl_trig;
+DROP TRIGGER voip_pref_drepl_trig;

@@ -1,0 +1,3 @@
+db_scripts                  usr/share/ngcp-db-schema/
+ngcp-check-rev-applied      usr/sbin/
+ngcp-update-db-schema       usr/sbin/

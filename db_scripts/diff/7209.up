@@ -1,0 +1,27 @@
+USE provisioning;
+
+CREATE TABLE `voip_cf_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `v_cf_ts_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES
+`voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `voip_cf_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `year` varchar(255) DEFAULT NULL,
+  `month` varchar(255) DEFAULT NULL,
+  `mday` varchar(255) DEFAULT NULL,
+  `wday` varchar(255) DEFAULT NULL,
+  `hour` varchar(255) DEFAULT NULL,
+  `minute` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tset_idx` (`time_set_id`),
+  CONSTRAINT `v_cf_tsetid_ref` FOREIGN KEY (`time_set_id`) REFERENCES
+`voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;

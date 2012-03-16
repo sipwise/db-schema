@@ -1,0 +1,83 @@
+-- NOTE! This does not update but will delete all rewrite data!
+
+use provisioning;
+
+DELETE FROM voip_rewrite_rules;
+DELETE FROM voip_rewrite_rule_sets;
+
+DELETE FROM voip_preferences WHERE attribute = 'rewrite_caller_in_dpid';
+DELETE FROM voip_preferences WHERE attribute = 'rewrite_callee_in_dpid';
+DELETE FROM voip_preferences WHERE attribute = 'rewrite_caller_out_dpid';
+DELETE FROM voip_preferences WHERE attribute = 'rewrite_callee_out_dpid';
+
+UPDATE voip_preferences SET internal = 0 WHERE attribute = 'rewrite_rule_set';
+
+DELIMITER |
+
+DROP TRIGGER voip_rwrulesets_crepl_trig|
+DROP TRIGGER voip_rwrulesets_urepl_trig|
+DROP TRIGGER voip_rwrulesets_drepl_trig|
+
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.id;
+
+  END;
+|
+
+DROP TRIGGER voip_rwrules_crepl_trig|
+
+CREATE TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(NEW.set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+
+  END;
+|
+
+DROP TRIGGER voip_rwrules_urepl_trig|
+
+CREATE TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.dialplan
+     SET pr        = NEW.priority,
+         match_exp = NEW.match_pattern,
+         subst_exp = NEW.match_pattern,
+         repl_exp  = NEW.replace_pattern
+   WHERE dpid      = OLD.set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+DROP TRIGGER voip_rwrules_drepl_trig|
+
+CREATE TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      = OLD.set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern 
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+DELIMITER ;
+
+DROP TABLE `voip_rwrs_sequence`;
+
+ALTER TABLE voip_rewrite_rule_sets DROP COLUMN `caller_in_dpid`;
+ALTER TABLE voip_rewrite_rule_sets DROP COLUMN `callee_in_dpid`;
+ALTER TABLE voip_rewrite_rule_sets DROP COLUMN `caller_out_dpid`;
+ALTER TABLE voip_rewrite_rule_sets DROP COLUMN `callee_out_dpid`;

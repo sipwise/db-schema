@@ -1,0 +1,3 @@
+ALTER TABLE kamailio.address ADD COLUMN `tag` VARCHAR(64) default NULL;
+
+UPDATE kamailio.version SET table_version = 4 WHERE table_name = 'address';

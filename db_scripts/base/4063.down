@@ -1,0 +1,1 @@
+UPDATE provisioning.voip_preferences SET data_type = 'int' where attribute = 'lock';

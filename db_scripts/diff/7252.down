@@ -1,0 +1,2 @@
+USE provisioning;
+DROP TABLE `voip_cf_mappings`;

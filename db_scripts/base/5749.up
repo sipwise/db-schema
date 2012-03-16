@@ -1,0 +1,1 @@
+ALTER TABLE kamailio.subscriber MODIFY COLUMN `password` varchar(40) NOT NULL default '';

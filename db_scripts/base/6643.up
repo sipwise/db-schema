@@ -1,0 +1,42 @@
+ALTER TABLE `provisioning`.`voip_peer_hosts` ADD COLUMN `host` VARCHAR(64) DEFAULT NULL AFTER `ip`;
+
+USE provisioning;
+
+DROP TRIGGER provisioning.voip_phost_crepl_trig;
+DROP TRIGGER voip_phost_urepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+                        VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, 1, 0, NEW.id, NEW.group_id);
+
+  INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+         SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+           FROM kamailio.lcr_rule rule
+           INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+          WHERE vpg.id = NEW.group_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr_gw
+     SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, flags = NEW.id
+   WHERE lcr_id = 1 AND ip_addr = OLD.ip;
+
+  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+     SET rt.weight = NEW.weight
+   WHERE gw.id = rt.gw_id
+     AND gw.lcr_id = 1
+     AND gw.group_id = NEW.group_id
+     AND gw.ip_addr = NEW.ip;
+
+  END;
+|
+
+DELIMITER ;

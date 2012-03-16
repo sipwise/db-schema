@@ -1,0 +1,390 @@
+USE mysql;
+DROP DATABASE IF EXISTS kamailio;
+
+CREATE DATABASE IF NOT EXISTS kamailio CHARACTER SET 'utf8';
+
+USE kamailio;
+
+CREATE TABLE `acc` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `method` varchar(16) NOT NULL DEFAULT '',
+  `from_tag` varchar(64) NOT NULL DEFAULT '',
+  `to_tag` varchar(64) NOT NULL DEFAULT '',
+  `callid` varchar(255) NOT NULL DEFAULT '',
+  `sip_code` varchar(3) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `time` datetime NOT NULL,
+  `time_hires` decimal(13,3) NOT NULL,
+  `src_leg` varchar(2048) default NULL,
+  `dst_leg` varchar(2048) default NULL,
+  `dst_user` varchar(64) NOT NULL default '',
+  `dst_ouser` varchar(64) NOT NULL default '',
+  `dst_domain` varchar(128) NOT NULL default '',
+  `src_user` varchar(64) NOT NULL default '',
+  `src_domain` varchar(128) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  KEY `callid_idx` (`callid`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `dbaliases` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `alias_username` varchar(64) NOT NULL DEFAULT '',
+  `alias_domain` varchar(64) NOT NULL DEFAULT '',
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `alias_idx` (`alias_username`,`alias_domain`),
+  KEY `target_idx` (`username`,`domain`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `dialog` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `hash_entry` int(10) unsigned NOT NULL,
+  `hash_id` int(10) unsigned NOT NULL,
+  `callid` varchar(255) NOT NULL,
+  `from_uri` varchar(128) NOT NULL,
+  `from_tag` varchar(64) NOT NULL,
+  `to_uri` varchar(128) NOT NULL,
+  `to_tag` varchar(64) NOT NULL,
+  `caller_cseq` varchar(7) NOT NULL,
+  `callee_cseq` varchar(7) NOT NULL,
+  `caller_route_set` varchar(512) DEFAULT NULL,
+  `callee_route_set` varchar(512) DEFAULT NULL,
+  `caller_contact` varchar(128) NOT NULL,
+  `callee_contact` varchar(128) NOT NULL,
+  `caller_sock` varchar(64) NOT NULL,
+  `callee_sock` varchar(64) NOT NULL,
+  `state` int(10) unsigned NOT NULL,
+  `start_time` int(10) unsigned NOT NULL,
+  `timeout` int(10) unsigned NOT NULL DEFAULT '0',
+  `sflags` int(10) unsigned NOT NULL DEFAULT '0',
+  `toroute` int(10) unsigned NOT NULL DEFAULT '0',
+  `req_uri` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `hash_idx` (`hash_entry`,`hash_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `dialplan` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `dpid` int(11) NOT NULL,
+  `pr` int(11) NOT NULL,
+  `match_op` int(11) NOT NULL,
+  `match_exp` varchar(64) NOT NULL,
+  `match_len` int(11) NOT NULL,
+  `subst_exp` varchar(64) NOT NULL,
+  `repl_exp` varchar(64) NOT NULL,
+  `attrs` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `dispatcher` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `setid` int(11) NOT NULL DEFAULT '0',
+  `destination` varchar(192) NOT NULL DEFAULT '',
+  `flags` int(11) NOT NULL DEFAULT '0',
+  `priority` int(11) NOT NULL DEFAULT '0',
+  `description` varchar(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `domain` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain_idx` (`domain`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `lcr_gw` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lcr_id` smallint(5) unsigned NOT NULL,
+  `gw_name` varchar(128) NOT NULL,
+  `ip_addr` varchar(64) NOT NULL,
+  `hostname` varchar(64) DEFAULT NULL,
+  `port` smallint(5) unsigned DEFAULT NULL,
+  `params` varchar(64) DEFAULT NULL,
+  `uri_scheme` tinyint(3) unsigned DEFAULT NULL,
+  `transport` tinyint(3) unsigned DEFAULT NULL,
+  `strip` tinyint(3) unsigned DEFAULT NULL,
+  `tag` varchar(16) DEFAULT NULL,
+  `flags` int(10) unsigned NOT NULL DEFAULT '0',
+  `defunct` int(10) unsigned DEFAULT NULL,
+  `group_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
+  UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `lcr_rule` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lcr_id` smallint(5) unsigned NOT NULL,
+  `prefix` varchar(16) DEFAULT NULL,
+  `from_uri` varchar(64) DEFAULT NULL,
+  `stopper` int(10) unsigned NOT NULL DEFAULT '0',
+  `enabled` int(10) unsigned NOT NULL DEFAULT '1',
+  `group_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lcr_id_idx` (`lcr_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `lcr_rule_target` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lcr_id` smallint(5) unsigned NOT NULL,
+  `rule_id` int(10) unsigned NOT NULL,
+  `gw_id` int(10) unsigned NOT NULL,
+  `priority` tinyint(3) unsigned NOT NULL,
+  `weight` int(10) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rule_id_gw_id_idx` (`rule_id`,`gw_id`),
+  KEY `lcr_id_idx` (`lcr_id`),
+  KEY `gw_id_idx` (`gw_id`),
+  CONSTRAINT `l_r_t_ruleid_ref` FOREIGN KEY (`rule_id`)
+                                REFERENCES `lcr_rule` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `l_r_t_gwid_ref` FOREIGN KEY (`gw_id`)
+                              REFERENCES `lcr_gw` (`id`)
+                              ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `location` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) DEFAULT NULL,
+  `contact` varchar(255) NOT NULL DEFAULT '',
+  `received` varchar(128) DEFAULT NULL,
+  `path` varchar(128) DEFAULT NULL,
+  `expires` datetime NOT NULL DEFAULT '2020-05-28 21:32:15',
+  `q` float(10,2) NOT NULL DEFAULT '1.00',
+  `callid` varchar(255) NOT NULL DEFAULT 'Default-Call-ID',
+  `cseq` int(11) NOT NULL DEFAULT '13',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  `flags` int(11) NOT NULL DEFAULT '0',
+  `cflags` int(11) NOT NULL DEFAULT '0',
+  `user_agent` varchar(255) NOT NULL DEFAULT '',
+  `socket` varchar(64) DEFAULT NULL,
+  `methods` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `account_contact_idx` (`username`,`domain`,`contact`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `speed_dial` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `sd_username` varchar(64) NOT NULL DEFAULT '',
+  `sd_domain` varchar(64) NOT NULL DEFAULT '',
+  `new_uri` varchar(128) NOT NULL DEFAULT '',
+  `fname` varchar(64) NOT NULL DEFAULT '',
+  `lname` varchar(64) NOT NULL DEFAULT '',
+  `description` varchar(64) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `speed_dial_idx` (`username`,`domain`,`sd_domain`,`sd_username`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `subscriber` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `password` varchar(40) NOT NULL DEFAULT '',
+  `email_address` varchar(64) NOT NULL DEFAULT '',
+  `ha1` varchar(64) NOT NULL DEFAULT '',
+  `ha1b` varchar(64) NOT NULL DEFAULT '',
+  `rpid` varchar(64) DEFAULT NULL,
+  `uuid` char(36) NOT NULL,
+  `timezone` varchar(64) NOT NULL DEFAULT '',
+  `datetime_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `account_idx` (`username`,`domain`),
+  KEY `username_idx` (`username`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `trusted` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `src_ip` varchar(50) NOT NULL,
+  `proto` varchar(4) NOT NULL,
+  `from_pattern` varchar(64) DEFAULT NULL,
+  `tag` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `peer_idx` (`src_ip`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `usr_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `username` varchar(128) NOT NULL DEFAULT '0',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `attribute` varchar(32) NOT NULL DEFAULT '',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `value` varchar(128) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  KEY `ua_idx` (`uuid`,`attribute`),
+  KEY `uda_idx` (`username`,`domain`,`attribute`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `dom_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `username` varchar(128) NOT NULL DEFAULT '0',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `attribute` varchar(32) NOT NULL DEFAULT '',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `value` varchar(128) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  KEY `ua_idx` (`uuid`,`attribute`),
+  KEY `uda_idx` (`username`,`domain`,`attribute`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `peer_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(36) NOT NULL,
+  `username` varchar(128) NOT NULL DEFAULT '0',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `attribute` varchar(32) NOT NULL DEFAULT '',
+  `type` int(11) NOT NULL DEFAULT '0',
+  `value` varchar(128) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  KEY `ua_idx` (`uuid`,`attribute`)
+-- not used -- KEY `uda_idx` (`username`,`domain`,`attribute`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `address` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `grp` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `ip_addr` varchar(15) NOT NULL,
+  `mask` tinyint(4) NOT NULL DEFAULT '32',
+  `port` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `tag` VARCHAR(64),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `version` (
+  `table_name` varchar(32) NOT NULL,
+  `table_version` int(10) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB;
+
+CREATE TABLE `voicemail_users` (
+  `uniqueid` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` char(36) NOT NULL DEFAULT '',
+  `context` varchar(63) NOT NULL DEFAULT 'default',
+  `mailbox` varchar(31) NOT NULL,
+  `password` varchar(31) NOT NULL DEFAULT '0',
+  `fullname` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `pager` varchar(255) NOT NULL DEFAULT '',
+  `tz` varchar(10) NOT NULL DEFAULT 'central',
+  `attach` varchar(4) NOT NULL DEFAULT 'yes',
+  `saycid` varchar(4) NOT NULL DEFAULT 'yes',
+  `dialout` varchar(10) NOT NULL DEFAULT '',
+  `callback` varchar(10) NOT NULL DEFAULT '',
+  `review` varchar(4) NOT NULL DEFAULT 'no',
+  `operator` varchar(4) NOT NULL DEFAULT 'no',
+  `envelope` varchar(4) NOT NULL DEFAULT 'no',
+  `sayduration` varchar(4) NOT NULL DEFAULT 'no',
+  `saydurationm` tinyint(4) NOT NULL DEFAULT '1',
+  `sendvoicemail` varchar(4) NOT NULL DEFAULT 'no',
+  `delete` varchar(4) NOT NULL DEFAULT 'no',
+  `nextaftercmd` varchar(4) NOT NULL DEFAULT 'yes',
+  `forcename` varchar(4) NOT NULL DEFAULT 'no',
+  `forcegreetings` varchar(4) NOT NULL DEFAULT 'no',
+  `hidefromdir` varchar(4) NOT NULL DEFAULT 'yes',
+  `stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`uniqueid`),
+  KEY `customer_idx` (`customer_id`),
+  KEY `mailbox_context` (`mailbox`,`context`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `voicemail_spool` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `msgnum` int(11) NOT NULL DEFAULT '0',
+  `dir` varchar(127) DEFAULT '',
+  `context` varchar(63) DEFAULT '',
+  `macrocontext` varchar(63) DEFAULT '',
+  `callerid` varchar(255) DEFAULT '',
+  `origtime` varchar(16) DEFAULT '',
+  `duration` varchar(16) DEFAULT '',
+  `mailboxuser` varchar(255) DEFAULT '',
+  `mailboxcontext` varchar(63) DEFAULT '',
+  `recording` longblob,
+  PRIMARY KEY (`id`),
+  KEY `dir` (`dir`),
+  KEY `mailboxuser_idx` (`mailboxuser`),
+  CONSTRAINT `v_s_mailboxuser_ref` FOREIGN KEY (`mailboxuser`) REFERENCES `voicemail_users` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `fax_preferences` (
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `password` varchar(64) default NULL,
+  `name` varchar(64) default NULL,
+  `active` enum('true','false') NOT NULL default 'true',
+  `send_status` enum('true','false') NOT NULL default 'false',
+  `send_copy` enum('true','false') NOT NULL default 'false',
+  `send_copy_cc` enum('true','false') NOT NULL default 'false',
+  PRIMARY KEY  (`subscriber_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `fax_destinations` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `destination` varchar(64) NOT NULL,
+  `filetype` enum('ps','tiff','pdf','pdf14') NOT NULL default 'tiff',
+  `cc` enum('true','false') NOT NULL default 'false',
+  `incoming` enum('true','false') NOT NULL default 'true',
+  `outgoing` enum('true','false') NOT NULL default 'false',
+  `status` enum('true','false') NOT NULL default 'false',
+  PRIMARY KEY  (`id`),
+  KEY `subscriber_id` (`subscriber_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `sems_registrations` (
+  `subscriber_id` int(11) NOT NULL,
+  `registration_status` tinyint(1) NOT NULL DEFAULT '0',
+  `last_registration` datetime DEFAULT NULL,
+  `expiry` datetime DEFAULT NULL,
+  `last_code` smallint(2) DEFAULT NULL,
+  `last_reason` varchar(256) DEFAULT NULL,
+  `contacts` varchar(512) DEFAULT NULL,
+  PRIMARY KEY (`subscriber_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `fax_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `the_timestamp` int(11) unsigned NOT NULL DEFAULT '0',
+  `duration` int(11) unsigned NOT NULL DEFAULT '0',
+  `direction` enum('in','out') NOT NULL DEFAULT 'in',
+  `peer_number` varchar(255) NOT NULL DEFAULT '',
+  `peer_name` varchar(255) NOT NULL DEFAULT '',
+  `pages` int(10) unsigned NOT NULL DEFAULT '0',
+  `reason` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `signal_rate` int(10) unsigned NOT NULL DEFAULT '0',
+  `quality` varchar(255) NOT NULL DEFAULT '',
+  `filename` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `selkey` (`subscriber_id`,`direction`)
+) ENGINE=InnoDB;
+
+INSERT INTO `version` VALUES 
+	('acc',4),
+	('lcr_gw',1),
+	('lcr_rule_target',1),
+	('lcr_rule',1),
+	('domain',1),
+	('trusted',5),
+	('location',1004),
+	('dbaliases',1),
+	('speed_dial',2),
+	('usr_preferences',2),
+	('subscriber',6),
+	('dialog',4),
+	('dispatcher',3),
+	('address',4),
+	('dialplan',1);
+
+
+INSERT INTO `dispatcher` VALUES ('1','2','sip:127.0.0.1:5070','0','0','Voicemail servers');
+INSERT INTO `dispatcher` VALUES ('2','3','sip:127.0.0.1:5080','0','0','Application servers');
+INSERT INTO `dispatcher` VALUES ('3','4','sip:127.0.0.1:5090','0','0','Fax2Mail servers');

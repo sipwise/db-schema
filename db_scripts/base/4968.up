@@ -1,0 +1,2 @@
+alter table provisioning.xmlhosts add column sip_port int(5) unsigned default NULL after path;
+update provisioning.xmlhosts set sip_port = 5062 where id = 1;

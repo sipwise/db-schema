@@ -1,0 +1,5 @@
+use provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'account_id';
+DELETE FROM voip_preferences WHERE attribute = 'ext_contract_id';
+DELETE FROM voip_preferences WHERE attribute = 'ext_subscriber_id';

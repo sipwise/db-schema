@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_cf_destinations DROP COLUMN timeout;

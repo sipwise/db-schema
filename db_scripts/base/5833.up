@@ -1,0 +1,33 @@
+use provisioning;
+
+ALTER TABLE `voip_peer_hosts` DROP COLUMN `dp_caller_in_id`;
+ALTER TABLE `voip_peer_hosts` DROP COLUMN `dp_callee_in_id`;
+ALTER TABLE `voip_peer_hosts` DROP COLUMN `dp_caller_out_id`;
+ALTER TABLE `voip_peer_hosts` DROP COLUMN `dp_callee_out_id`;
+
+DROP TABLE `counter`;
+
+DELETE FROM voip_preferences where attribute = 'dp_dom_caller_in';
+DELETE FROM voip_preferences where attribute = 'dp_dom_callee_in';
+DELETE FROM voip_preferences where attribute = 'dp_dom_caller_out';
+DELETE FROM voip_preferences where attribute = 'dp_dom_callee_out';
+
+DROP TRIGGER voip_dom_drepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.domain WHERE domain = OLD.domain;
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dom_preferences WHERE domain = OLD.domain;
+  -- this will trigger the delete action for each subscriber
+  DELETE FROM provisioning.voip_subscribers WHERE domain_id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;

@@ -1,0 +1,9 @@
+use accounting;
+
+CREATE TABLE `prepaid_costs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call_id` varchar(255) NOT NULL,
+  `cost` double NOT NULL,
+  `free_time_used` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;

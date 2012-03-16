@@ -1,0 +1,2 @@
+ALTER TABLE provisioning.voip_peer_hosts ADD COLUMN `domain` varchar(64) NOT NULL AFTER `ip`;
+UPDATE provisioning.voip_peer_hosts SET domain = 'change-me.example.com';

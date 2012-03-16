@@ -1,0 +1,7 @@
+UPDATE provisioning.voip_preferences 
+   SET attribute = 'auth_user', usr_pref = 0
+ WHERE attribute = 'peer_auth_user';
+
+UPDATE provisioning.voip_preferences
+   SET attribute = 'auth_pass', usr_pref = 0
+ WHERE attribute = 'peer_auth_pass';

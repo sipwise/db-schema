@@ -1,0 +1,4 @@
+use provisioning;
+
+alter table voip_cf_mappings drop foreign key cfmap_time_ref;
+alter table voip_cf_mappings drop foreign key cfmap_dest_ref

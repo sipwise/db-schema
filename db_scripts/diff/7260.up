@@ -1,0 +1,58 @@
+use provisioning;
+
+set autocommit=0;
+
+-- clean up before starting, just in case
+delete from voip_cf_mappings;
+delete from voip_cf_time_sets;
+delete from voip_cf_destination_sets;
+delete from voip_cf_destinations;
+delete from voip_cf_periods;
+
+-- create destination sets
+insert into voip_cf_destination_sets (subscriber_id, name) 
+  select up.subscriber_id, concat(p.attribute, '_set') 
+  from voip_usr_preferences up, voip_preferences p 
+  where p.attribute in ('cfu', 'cfna', 'cft', 'cfb') 
+  and up.attribute_id = p.id;
+
+-- fill destinations
+insert into voip_cf_destinations (destination_set_id, destination, priority) 
+  select s.id, up.value, 0 
+  from voip_cf_destination_sets s, voip_usr_preferences up, voip_preferences p 
+  where p.attribute in ('cfu', 'cfna', 'cft', 'cfb') 
+  and p.id = up.attribute_id and up.subscriber_id = s.subscriber_id 
+  and concat(p.attribute, '_set') = s.name;
+
+-- fill cf mappings
+insert into voip_cf_mappings(subscriber_id, type, destination_set_id) 
+  select s.subscriber_id, substring_index(s.name, '_', 1), s.id 
+  from voip_cf_destination_sets s;
+
+-- now get rid of existing CF preferences
+delete up.* from voip_usr_preferences up, voip_preferences p 
+  where p.attribute in ('cfu', 'cfb', 'cfna', 'cft') 
+  and up.attribute_id = p.id;
+
+-- and change the preference settings to the new ones
+update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
+  description='The id pointing to the "Call Forward Unconditional" entry in the voip_cf_mappings table'
+  where attribute='cfu';
+
+update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
+  description='The id pointing to the "Call Forward Busy" entry in the voip_cf_mappings table'
+  where attribute='cfb';
+
+update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
+  description='The id pointing to the "Call Forward Unavailable" entry in the voip_cf_mappings table'
+  where attribute='cfna';
+
+update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
+  description='The id pointing to the "Call Forward Timeout" entry in the voip_cf_mappings table'
+  where attribute='cft';
+
+-- finally copy over the vars from the mapping table
+insert into voip_usr_preferences(subscriber_id, attribute_id, value) select m.subscriber_id, p.id, m.id from voip_cf_mappings m,  voip_preferences p where m.type = p.attribute;
+
+commit;
+set autocommit=1;

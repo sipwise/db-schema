@@ -1,0 +1,5 @@
+INSERT INTO provisioning.xmlgroups (id, name) VALUES(6, 'proxy-ng');
+
+INSERT INTO provisioning.xmlhosts (id, ip, port, path, description) VALUES (3,'127.0.0.1','5062','/','Kamailio-SR');
+
+INSERT INTO provisioning.xmlhostgroups (id, group_id, host_id) VALUES (3,6,3);

@@ -1,0 +1,40 @@
+ALTER TABLE provisioning.voip_domains DROP COLUMN `timezone`;
+ALTER TABLE provisioning.voip_subscribers DROP COLUMN `timezone`;
+
+DROP TRIGGER provisioning.voip_sub_crepl_trig;
+DROP TRIGGER provisioning.voip_sub_urepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER provisioning.voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_domain varchar(127);
+
+  SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
+
+  INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
+                   VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, now(),
+                          MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
+                          MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
+  END;
+|
+
+CREATE TRIGGER provisioning.voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE new_subscriber_domain varchar(127);
+
+  SELECT domain INTO old_subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_subscriber_domain FROM voip_domains where id = NEW.domain_id;
+
+  UPDATE kamailio.subscriber SET username = NEW.username, domain = new_subscriber_domain,
+                                uuid = NEW.uuid, password = NEW.password,
+                                ha1 = MD5(CONCAT(NEW.username, ':', new_subscriber_domain, ':', NEW.password)),
+                                ha1b = MD5(CONCAT(NEW.username, '@', new_subscriber_domain, ':', new_subscriber_domain, ':', NEW.password))
+                          WHERE username = OLD.username
+                            AND domain = old_subscriber_domain;
+  END;
+|
+
+DELIMITER ;
+

@@ -1,0 +1,1 @@
+UPDATE kamailio.voicemail_users SET password=FLOOR(1000+RAND()*9000) WHERE password=0;

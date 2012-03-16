@@ -1,0 +1,5 @@
+use accounting;
+
+ALTER TABLE cdr DROP COLUMN carrier_free_time,
+                DROP COLUMN reseller_free_time,
+                DROP COLUMN customer_free_time;

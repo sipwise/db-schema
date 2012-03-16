@@ -1,0 +1,3 @@
+use carrier;
+
+ALTER TABLE `contracts` MODIFY `sip_uri` varchar(127) NOT NULL;

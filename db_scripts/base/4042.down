@@ -1,0 +1,8 @@
+DELETE FROM provisioning.voip_preferences WHERE internal = -1;
+
+ALTER TABLE provisioning.voip_preferences DROP COLUMN `read_only`;
+ALTER TABLE provisioning.voip_preferences DROP COLUMN `description`;
+ALTER TABLE provisioning.voip_preferences MODIFY COLUMN `internal` bool NOT NULL default FALSE;
+ALTER TABLE provisioning.voip_preferences MODIFY COLUMN `data_type` enum('bool','int','string') NOT NULL default 'string';
+
+UPDATE provisioning.voip_preferences SET data_type = 'bool' where data_type = '';

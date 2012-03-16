@@ -1,0 +1,7 @@
+DROP TRIGGER billing.bill_zones_crepl_trig;
+DROP TRIGGER billing.bill_zones_urepl_trig;
+DROP TRIGGER billing.bill_fees_crepl_trig;
+DROP TRIGGER billing.bill_fees_urepl_trig;
+
+DROP TABLE billing.billing_zones_history;
+DROP TABLE billing.billing_fees_history;

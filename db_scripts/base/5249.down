@@ -1,0 +1,2 @@
+ALTER TABLE kamailio.voicemail_spool CHANGE COLUMN origtime origtime INT(11) UNSIGNED DEFAULT '0';
+ALTER TABLE kamailio.voicemail_spool CHANGE COLUMN duration duration INT(11) UNSIGNED DEFAULT '0';

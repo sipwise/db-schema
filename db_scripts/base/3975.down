@@ -1,0 +1,65 @@
+ALTER TABLE provisioning.voip_domains ADD COLUMN `local` bool NOT NULL default FALSE;
+UPDATE provisioning.voip_domains SET local = TRUE;
+
+DROP TRIGGER provisioning.voip_dom_crepl_trig;
+DROP TRIGGER provisioning.voip_dom_drepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
+  FOR EACH ROW BEGIN
+
+  IF NEW.local IS TRUE THEN
+    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+  END IF;
+
+  END;
+|
+
+CREATE TRIGGER provisioning.voip_dom_urepl_trig AFTER UPDATE ON voip_domains
+  FOR EACH ROW BEGIN
+
+  IF NEW.local IS TRUE AND OLD.local IS FALSE THEN
+    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+  ELSEIF NEW.local IS FALSE AND OLD.local IS TRUE THEN
+    DELETE FROM kamailio.domain WHERE domain = OLD.domain;
+  END IF;
+
+  END;
+|
+
+CREATE TRIGGER provisioning.voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+  FOR EACH ROW BEGIN
+
+  DECLARE caller_in_id int(11) unsigned;
+  DECLARE callee_in_id int(11) unsigned;
+  DECLARE caller_out_id int(11) unsigned;
+  DECLARE callee_out_id int(11) unsigned;
+
+  SELECT vdp.value INTO caller_in_id FROM voip_dom_preferences vdp, voip_preferences vp
+      WHERE vp.attribute = 'dp_dom_caller_in' AND vdp.attribute_id = vp.id AND vdp.domain_id = OLD.id;
+  SELECT vdp.value INTO callee_in_id FROM voip_dom_preferences vdp, voip_preferences vp 
+      WHERE vp.attribute = 'dp_dom_callee_in' AND vdp.attribute_id = vp.id AND vdp.domain_id = OLD.id;
+  SELECT vdp.value INTO caller_out_id FROM voip_dom_preferences vdp, voip_preferences vp 
+      WHERE vp.attribute = 'dp_dom_caller_out' AND vdp.attribute_id = vp.id AND vdp.domain_id = OLD.id;
+  SELECT vdp.value INTO callee_out_id FROM voip_dom_preferences vdp, voip_preferences vp 
+      WHERE vp.attribute = 'dp_dom_callee_out' AND vdp.attribute_id = vp.id AND vdp.domain_id = OLD.id;
+
+  IF OLD.local IS TRUE THEN
+    DELETE FROM kamailio.domain WHERE domain = OLD.domain;
+  END IF;
+  
+  DELETE FROM kamailio.dialplan WHERE dpid IN 
+      (caller_in_id, callee_in_id, caller_out_id, callee_out_id);
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dom_preferences WHERE domain = OLD.domain;
+  -- this will trigger the delete action for each subscriber
+  DELETE FROM provisioning.voip_subscribers WHERE domain_id = OLD.id;
+  
+
+  END;
+|
+
+DELIMITER ;

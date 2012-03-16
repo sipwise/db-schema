@@ -1,0 +1,1 @@
+ALTER TABLE provisioning.voip_peer_hosts change column ip ip varchar(64) NOT NULL;

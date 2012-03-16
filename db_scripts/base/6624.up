@@ -1,0 +1,1 @@
+ALTER TABLE `billing`.`voip_numbers` ADD UNIQUE KEY `number_idx` (`cc`,`ac`,`sn`);

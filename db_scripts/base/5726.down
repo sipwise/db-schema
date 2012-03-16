@@ -1,0 +1,4 @@
+use provisioning;
+
+ALTER TABLE voip_subscribers MODIFY COLUMN `password` varchar(31) default NULL;
+ALTER TABLE voip_subscribers MODIFY COLUMN `webpassword` varchar(31) default NULL;

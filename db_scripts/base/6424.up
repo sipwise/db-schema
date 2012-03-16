@@ -1,0 +1,257 @@
+use accounting;
+
+ALTER TABLE `cdr` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `cdr` MODIFY `source_user_id` char(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `source_provider_id` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `source_external_subscriber_id` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `source_external_contract_id` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `source_user` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `source_domain` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `source_cli` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_user_id` char(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_provider_id` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_external_subscriber_id` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `destination_external_contract_id` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `destination_user` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_domain` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_user_dialed` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_user_in` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `destination_domain_in` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `peer_auth_user` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `peer_auth_realm` varchar(255) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `cdr` MODIFY `call_type` enum('call','cfu','cft','cfb','cfna') CHARACTER SET utf8 NOT NULL default 'call';
+ALTER TABLE `cdr` MODIFY `call_status` enum('ok','busy','noanswer','cancel','offline','timeout','other') CHARACTER SET utf8 NOT NULL default 'ok';
+ALTER TABLE `cdr` MODIFY `call_code` char(3) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `call_id` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `cdr` MODIFY `rating_status` enum('unrated','ok','failed') CHARACTER SET utf8 NOT NULL default 'unrated';
+
+ALTER TABLE `mark` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `mark` MODIFY `collector` varchar(255) CHARACTER SET utf8 NOT NULL;
+
+ALTER TABLE `acc` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `acc` MODIFY `method` varchar(16) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `from_tag` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `to_tag` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `callid` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `sip_code` varchar(3) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `sip_reason` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `src_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc` MODIFY `dst_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc` MODIFY `dst_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `dst_ouser` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `dst_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `src_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `src_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+
+ALTER TABLE `acc_backup` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `acc_trash` CONVERT TO CHARACTER SET utf8;
+
+use kamailio;
+
+ALTER DATABASE kamailio DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `acc` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `acc` MODIFY `method` varchar(16) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `from_tag` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `to_tag` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `callid` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `sip_code` varchar(3) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `sip_reason` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc` MODIFY `src_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc` MODIFY `dst_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc` MODIFY `dst_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `dst_ouser` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `dst_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `src_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+ALTER TABLE `acc` MODIFY `src_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+
+ALTER TABLE `acc_backup` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `acc_backup` MODIFY `sip_reason` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc_backup` MODIFY `src_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc_backup` MODIFY `dst_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+
+ALTER TABLE `acc_trash` CONVERT TO CHARACTER SET utf8;
+ALTER TABLE `acc_trash` MODIFY `sip_reason` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `acc_trash` MODIFY `src_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+ALTER TABLE `acc_trash` MODIFY `dst_leg` varchar(2048) CHARACTER SET utf8 default NULL;
+
+ALTER TABLE `dbaliases` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `dbaliases` MODIFY `alias_username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dbaliases` MODIFY `alias_domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dbaliases` MODIFY `username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dbaliases` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `dialog` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `dialog` MODIFY `callid` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `from_uri` varchar(128) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `from_tag` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `to_uri` varchar(128) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `to_tag` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `caller_cseq` varchar(7) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `callee_cseq` varchar(7) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `caller_route_set` varchar(512) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `dialog` MODIFY `callee_route_set` varchar(512) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `dialog` MODIFY `caller_contact` varchar(128) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `callee_contact` varchar(128) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `caller_sock` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `callee_sock` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialog` MODIFY `req_uri` varchar(128) CHARACTER SET utf8 NOT NULL;
+
+ALTER TABLE `dialplan` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `dialplan` MODIFY `match_exp` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialplan` MODIFY `subst_exp` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialplan` MODIFY `repl_exp` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dialplan` MODIFY `attrs` varchar(32) CHARACTER SET utf8 NOT NULL;
+
+ALTER TABLE `dispatcher` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `dispatcher` MODIFY `destination` varchar(192) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dispatcher` MODIFY `description` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `domain` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `domain` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `lcr_gw` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `lcr_gw` MODIFY `gw_name` varchar(128) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `lcr_gw` MODIFY `ip_addr` varchar(15) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `lcr_gw` MODIFY `hostname` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `lcr_gw` MODIFY `params` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `lcr_gw` MODIFY `tag` varchar(16) CHARACTER SET utf8 DEFAULT NULL;
+
+ALTER TABLE `lcr_rule` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `lcr_rule` MODIFY `prefix` varchar(16) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `lcr_rule` MODIFY `from_uri` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+
+ALTER TABLE `lcr_rule_target` DEFAULT CHARACTER SET utf8;
+
+ALTER TABLE `location` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `location` MODIFY `username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `location` MODIFY `domain` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `location` MODIFY `contact` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `location` MODIFY `received` varchar(128) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `location` MODIFY `path` varchar(128) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `location` MODIFY `callid` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT 'Default-Call-ID';
+ALTER TABLE `location` MODIFY `user_agent` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `location` MODIFY `socket` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+
+ALTER TABLE `speed_dial` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `speed_dial` MODIFY `username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `sd_username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `sd_domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `new_uri` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `fname` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `lname` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `speed_dial` MODIFY `description` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `subscriber` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `subscriber` MODIFY `username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `password` varchar(40) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `email_address` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `ha1` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `ha1b` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `subscriber` MODIFY `rpid` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `subscriber` MODIFY `uuid` char(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `subscriber` MODIFY `timezone` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `trusted` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `trusted` MODIFY `src_ip` varchar(50) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `trusted` MODIFY `proto` varchar(4) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `trusted` MODIFY `from_pattern` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `trusted` MODIFY `tag` varchar(64) CHARACTER SET utf8 DEFAULT NULL;
+
+ALTER TABLE `usr_preferences` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `usr_preferences` MODIFY `uuid` char(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `usr_preferences` MODIFY `username` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '0';
+ALTER TABLE `usr_preferences` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `usr_preferences` MODIFY `attribute` varchar(32) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `usr_preferences` MODIFY `value` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `dom_preferences` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `dom_preferences` MODIFY `uuid` char(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `dom_preferences` MODIFY `username` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '0';
+ALTER TABLE `dom_preferences` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dom_preferences` MODIFY `attribute` varchar(32) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `dom_preferences` MODIFY `value` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `peer_preferences` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `peer_preferences` MODIFY `uuid` varchar(36) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `peer_preferences` MODIFY `username` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '0';
+ALTER TABLE `peer_preferences` MODIFY `domain` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `peer_preferences` MODIFY `attribute` varchar(32) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `peer_preferences` MODIFY `value` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
+
+ALTER TABLE `address` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `address` MODIFY `ip_addr` varchar(15) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `address` MODIFY `tag` VARCHAR(64) CHARACTER SET utf8;
+
+ALTER TABLE `version` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `version` MODIFY `table_name` varchar(32) CHARACTER SET utf8 NOT NULL;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+ALTER TABLE `voicemail_users` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `voicemail_users` MODIFY `customer_id` char(36) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `context` varchar(63) CHARACTER SET utf8 NOT NULL DEFAULT 'default';
+ALTER TABLE `voicemail_users` MODIFY `mailbox` varchar(31) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `voicemail_users` MODIFY `password` varchar(31) CHARACTER SET utf8 NOT NULL DEFAULT '0';
+ALTER TABLE `voicemail_users` MODIFY `fullname` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `email` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `pager` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `tz` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT 'central';
+ALTER TABLE `voicemail_users` MODIFY `attach` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'yes';
+ALTER TABLE `voicemail_users` MODIFY `saycid` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'yes';
+ALTER TABLE `voicemail_users` MODIFY `dialout` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `callback` varchar(10) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `voicemail_users` MODIFY `review` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `operator` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `envelope` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `sayduration` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `sendvoicemail` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `delete` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `nextaftercmd` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'yes';
+ALTER TABLE `voicemail_users` MODIFY `forcename` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `forcegreetings` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'no';
+ALTER TABLE `voicemail_users` MODIFY `hidefromdir` varchar(4) CHARACTER SET utf8 NOT NULL DEFAULT 'yes';
+
+ALTER TABLE `voicemail_spool` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `voicemail_spool` MODIFY `dir` varchar(127) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `context` varchar(63) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `macrocontext` varchar(63) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `callerid` varchar(255) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `origtime` varchar(16) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `duration` varchar(16) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `mailboxuser` varchar(255) CHARACTER SET utf8 DEFAULT '';
+ALTER TABLE `voicemail_spool` MODIFY `mailboxcontext` varchar(63) CHARACTER SET utf8 DEFAULT '';
+
+SET FOREIGN_KEY_CHECKS=1;
+
+ALTER TABLE `fax_preferences` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `fax_preferences` MODIFY `password` varchar(64) CHARACTER SET utf8 default NULL;
+ALTER TABLE `fax_preferences` MODIFY `name` varchar(64) CHARACTER SET utf8 default NULL;
+ALTER TABLE `fax_preferences` MODIFY `active` enum('true','false') CHARACTER SET utf8 NOT NULL default 'true';
+ALTER TABLE `fax_preferences` MODIFY `send_status` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+ALTER TABLE `fax_preferences` MODIFY `send_copy` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+ALTER TABLE `fax_preferences` MODIFY `send_copy_cc` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+
+ALTER TABLE `fax_destinations` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `fax_destinations` MODIFY `destination` varchar(64) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `fax_destinations` MODIFY `filetype` enum('ps','tiff','pdf','pdf14') CHARACTER SET utf8 NOT NULL default 'tiff';
+ALTER TABLE `fax_destinations` MODIFY `cc` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+ALTER TABLE `fax_destinations` MODIFY `incoming` enum('true','false') CHARACTER SET utf8 NOT NULL default 'true';
+ALTER TABLE `fax_destinations` MODIFY `outgoing` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+ALTER TABLE `fax_destinations` MODIFY `status` enum('true','false') CHARACTER SET utf8 NOT NULL default 'false';
+
+ALTER TABLE `sems_registrations` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `sems_registrations` MODIFY `last_reason` varchar(256) CHARACTER SET utf8 DEFAULT NULL;
+ALTER TABLE `sems_registrations` MODIFY `contacts` varchar(512) CHARACTER SET utf8 DEFAULT NULL;
+
+ALTER TABLE `fax_journal` DEFAULT CHARACTER SET utf8;
+ALTER TABLE `fax_journal` MODIFY `direction` enum('in','out') CHARACTER SET utf8 NOT NULL DEFAULT 'in';
+ALTER TABLE `fax_journal` MODIFY `peer_number` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `fax_journal` MODIFY `peer_name` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `fax_journal` MODIFY `reason` varchar(255) CHARACTER SET utf8 NOT NULL;
+ALTER TABLE `fax_journal` MODIFY `status` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `fax_journal` MODIFY `quality` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+ALTER TABLE `fax_journal` MODIFY `filename` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '';
+

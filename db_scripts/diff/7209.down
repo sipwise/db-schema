@@ -1,0 +1,4 @@
+USE provisioning;
+
+DROP TABLE voip_cf_periods;
+DROP TABLE voip_cf_time_sets;

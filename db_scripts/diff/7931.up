@@ -1,0 +1,6 @@
+use provisioning;
+
+insert into language_strings (code,language,string) values ('Client.Syntax.ProfileNameTooLong', 'en', 'Name is too long (maximum is 31 characters).'); 
+insert into language_strings (code,language,string) values ('Client.Syntax.ProfileNameTooLong', 'de', 'Der gewählte Name ist zu lang (max. 31 Zeichen).');
+insert into language_strings (code,language,string) values ('Client.Syntax.ProfileNameTooLong', 'es', 'Name is too long (maximum is 31 characters).'); 
+insert into language_strings (code,language,string) values ('Client.Syntax.ProfileNameTooLong', 'fr', 'Name is too long (maximum is 31 characters).'); 

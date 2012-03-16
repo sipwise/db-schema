@@ -1,0 +1,5 @@
+DELETE FROM provisioning.voip_preferences WHERE peer_pref = 1;
+
+ALTER TABLE provisioning.voip_preferences DROP COLUMN `usr_pref`;
+ALTER TABLE provisioning.voip_preferences DROP COLUMN `dom_pref`;
+ALTER TABLE provisioning.voip_preferences DROP COLUMN `peer_pref`;

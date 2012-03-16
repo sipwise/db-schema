@@ -1,0 +1,6 @@
+ALTER TABLE kamailio.acc CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE kamailio.acc_trash CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE kamailio.acc_backup CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE accounting.acc CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE accounting.acc_trash CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE accounting.acc_backup CHANGE COLUMN callid callid varchar(64) NOT NULL DEFAULT ''; 

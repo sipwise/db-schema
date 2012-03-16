@@ -1,0 +1,170 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+use DBI;
+use Getopt::Long;
+use Pod::Usage;
+
+my $dbhost   = 'localhost';
+my $dbname   = 'ngcp';
+my $debug    = 0;
+my $help     = 0;
+my $man      = 0;
+my $node     = undef;
+my $revision = undef;
+my $schema   = undef;
+
+GetOptions(
+    'dbhost=s'   => \$dbhost,
+    'dbname=s'   => \$dbname,
+    'debug|d'    => \$debug,
+    'help|?'     => \$help,
+    'man'        => \$man,
+    'node=s'     => \$node,
+    'revision=s' => \$revision,
+    'schema=s'   => \$schema,
+) or pod2usage(2);
+
+pod2usage(-exitval => 2, -verbose => 0) if $help;
+pod2usage(-exitval => 2, -verbose => 2) if $man;
+pod2usage(2) if !defined $revision;
+pod2usage(2) if !defined $schema;
+
+my $dbh = DBI->connect("dbi:mysql:dbname=$dbname;host=$dbhost")
+        or die "Couldn't connect to database: " . DBI->errstr;
+
+$schema = $dbh->quote_identifier($schema);
+
+my $sql_clause = ""; # if no node is specified then use empty SQL statement
+if (defined $node) {
+        $sql_clause = "and node = ?";
+}
+
+my $sth = $dbh->prepare("SELECT * FROM $schema WHERE revision = ? $sql_clause")
+        or die "Couldn't prepare statement: " . $dbh->errstr;
+
+$sth->bind_param(1, $revision);
+if (defined $node) {
+        $sth->bind_param(2, $node);
+}
+$sth->execute()
+        or die "Couldn't execute statement: " . $sth->errstr;
+
+if ($sth->rows == 0) {
+        if (defined $node) {
+                print STDERR "No match for revision $revision on host $node.\n" if $debug;
+                exit(1);
+        } else {
+                print STDERR "No match for revision $revision.\n" if $debug;
+                exit(1);
+        }
+} else {
+        # DBI::dump_results($sth) if $debug;
+        my @data;
+        while (@data = $sth->fetchrow_array()) {
+                my $id = $data[1];
+                my $hostname = $data[2];
+                print "revision $id already executed on $hostname\n" if $debug;
+        }
+}
+
+$sth->finish;
+$dbh->disconnect;
+
+__END__
+
+=head1 NAME
+
+ngcp-check-rev-applied - check which db/config revisions have been executed
+
+=head1 SYNOPSIS
+
+ngcp-check-rev-applied --schema <schema> --revision <id>
+             [--node <name>] [--dbname <db>] [--dbhost <host>]
+
+=head1 DESCRIPTION
+
+This program queries the ngcp database to check for db/config revisions that
+have been applied. If the specified ID is present the exit code is 0, otherwise
+(the specified ID is not present) the exit code is 1.
+
+=head1 USAGE EXAMPLES
+
+=over 8
+
+=item Check db_schema table for revision 23:
+
+  ngcp-check-rev-applied --schema db_schema --revision 23
+
+=item Check cfg_schema table for revision 42 and use output of `hostname`
+to limit the specified ID to the current host:
+
+  ngcp-check-rev-applied --schema cfg_schema --revision 42 --node $(hostname)
+
+=back
+
+=head1 EXIT_CODES
+
+=over 8
+
+=item B<0>
+
+The requested ID is present.
+
+=item B<1>
+
+The requested ID is *NOT* present.
+
+=item B<2>
+
+Error or invalid usage of command line options.
+
+=item B<255>
+
+Error while running database query.
+
+=back
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--dbhost> <host>
+
+Query specified host instead of the default (being "localhost").
+
+=item B<--dbname> <db>
+
+Use specified database instead of the default (being "ngcp").
+
+=item B<--debug>
+
+Be more verbose during execution.
+
+=item B<--help>
+
+Print help message and exit.
+
+=item B<--man>
+
+Display manpage using pod2man.
+
+=item B<--node> <name>
+
+Restrict querying ID to specified node name.
+This is relevant only in high availability environments
+to check for (non-)replicated revisions.
+
+=item B<--revision> <id>
+
+Query database for specified ID.
+
+=item B<--schema> <name>
+
+Use specified schema as table name to look for specified ID.
+Supported table names: cfg_schema, db_schema
+
+=back
+
+=cut

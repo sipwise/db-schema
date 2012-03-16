@@ -1,0 +1,161 @@
+CREATE TABLE `kamailio`.`gw` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lcr_id` smallint(5) unsigned NOT NULL,
+  `gw_name` varchar(128) NOT NULL,
+  `grp_id` int(10) unsigned NOT NULL,
+  `ip_addr` varchar(15) NOT NULL,
+  `hostname` varchar(64) DEFAULT NULL,
+  `port` smallint(5) unsigned DEFAULT NULL,
+  `uri_scheme` tinyint(3) unsigned DEFAULT NULL,
+  `transport` tinyint(3) unsigned DEFAULT NULL,
+  `strip` tinyint(3) unsigned DEFAULT NULL,
+  `tag` varchar(16) DEFAULT NULL,
+  `weight` int(10) unsigned DEFAULT NULL,
+  `flags` int(10) unsigned NOT NULL DEFAULT '0',
+  `defunct` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `lcr_id_grp_id_gw_name_idx` (`lcr_id`,`grp_id`,`gw_name`),
+  UNIQUE KEY `lcr_id_grp_id_ip_addr_idx` (`lcr_id`,`grp_id`,`ip_addr`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `kamailio`.`lcr` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `lcr_id` smallint(5) unsigned NOT NULL,
+  `prefix` varchar(16) DEFAULT NULL,
+  `from_uri` varchar(64) DEFAULT NULL,
+  `grp_id` int(10) unsigned NOT NULL,
+  `priority` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `lcr_id_idx` (`lcr_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+USE provisioning;
+
+DROP trigger voip_prul_crepl_trig;
+DROP trigger voip_prul_urepl_trig;
+DROP trigger voip_prul_drepl_trig;
+DROP trigger voip_pgrp_urepl_trig;
+DROP trigger voip_pgrp_drepl_trig;
+DROP trigger voip_phost_crepl_trig;
+DROP trigger voip_phost_urepl_trig;
+DROP trigger voip_phost_drepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
+  FOR EACH ROW BEGIN
+  DECLARE prio int(11) unsigned;
+
+  SELECT priority INTO prio FROM voip_peer_groups
+      WHERE id = NEW.group_id;
+
+  INSERT INTO kamailio.lcr (lcr_id, prefix, from_uri, grp_id, priority)
+      VALUES(1, NEW.callee_prefix, IF(LENGTH(NEW.caller_prefix), CONCAT('^', NEW.caller_prefix), ''), NEW.group_id, prio);
+
+  END;
+|
+
+CREATE TRIGGER voip_prul_urepl_trig AFTER UPDATE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+  DECLARE prio int(11) unsigned;
+  
+  SELECT priority INTO prio FROM voip_peer_groups
+      WHERE id = NEW.group_id;
+
+  UPDATE kamailio.lcr SET prefix = NEW.callee_prefix, 
+      from_uri = IF(LENGTH(NEW.caller_prefix), CONCAT('^', NEW.caller_prefix), '')
+      WHERE grp_id = OLD.group_id 
+      AND prefix = OLD.callee_prefix
+      AND from_uri = IF(LENGTH(OLD.caller_prefix), CONCAT('^', OLD.caller_prefix), '')
+      AND priority = prio;
+
+  END;
+|
+
+CREATE TRIGGER voip_pgrp_urepl_trig AFTER UPDATE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr SET priority = NEW.priority
+      WHERE grp_id = NEW.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_prul_drepl_trig AFTER DELETE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+  DECLARE prio int(11) unsigned;
+  
+  SELECT priority INTO prio FROM voip_peer_groups
+      WHERE id = OLD.group_id;
+
+  DELETE FROM kamailio.lcr 
+      WHERE grp_id = OLD.group_id AND
+      prefix = OLD.callee_prefix AND
+      from_uri = IF(LENGTH(OLD.caller_prefix), CONCAT('^', OLD.caller_prefix), '') AND
+      priority = prio;
+
+  END;
+|
+
+CREATE TRIGGER voip_pgrp_drepl_trig AFTER DELETE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr WHERE grp_id = OLD.id;
+  DELETE FROM kamailio.gw WHERE grp_id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.gw (lcr_id, gw_name, grp_id, ip_addr, port, weight,
+      uri_scheme, transport, strip, tag, flags, defunct) VALUES
+      (1, NEW.name, NEW.group_id, NEW.ip, NEW.port, NEW.weight,
+       1, 1, 0, NULL, NEW.id, NULL);
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+  
+  UPDATE kamailio.gw SET gw_name = NEW.name, 
+      ip_addr = NEW.ip, port = NEW.port, weight = NEW.weight, tag = NULL
+      WHERE grp_id = OLD.group_id AND gw_name = OLD.name AND
+      ip_addr = OLD.ip AND port = OLD.port AND weight = OLD.weight;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+  
+  DELETE FROM kamailio.gw 
+      WHERE grp_id = OLD.group_id AND gw_name = OLD.name AND 
+      ip_addr = OLD.ip AND port = OLD.port AND weight = OLD.weight;
+  DELETE FROM kamailio.dialplan
+      WHERE dpid IN (OLD.dp_caller_in_id, OLD.dp_callee_in_id, 
+      OLD.dp_caller_out_id, OLD.dp_callee_out_id);
+
+  END;
+|
+
+DELIMITER ;
+
+USE kamailio;
+
+INSERT INTO gw (lcr_id, gw_name, grp_id, ip_addr, port, weight,
+                uri_scheme, transport, strip, flags)
+       SELECT 1, name, group_id, ip, port, weight, 1, 1, 0, id
+         FROM provisioning.voip_peer_hosts;
+
+INSERT INTO lcr (lcr_id, prefix, from_uri, grp_id, priority)
+       SELECT 1, callee_prefix, IF(LENGTH(caller_prefix), CONCAT('^', caller_prefix), ''), group_id, priority
+         FROM provisioning.voip_peer_rules vph
+         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id;
+
+DROP table lcr_rule_target;
+DROP table lcr_rule;
+DROP table lcr_gw;
+

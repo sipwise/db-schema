@@ -1,0 +1,19 @@
+ALTER TABLE kamailio.acc CHANGE COLUMN src_leg src_leg varchar(255) DEFAULT NULL;
+ALTER TABLE kamailio.acc CHANGE COLUMN dst_leg dst_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc CHANGE COLUMN src_leg src_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc CHANGE COLUMN dst_leg dst_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc_backup CHANGE COLUMN src_leg src_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc_backup CHANGE COLUMN dst_leg dst_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc_trash CHANGE COLUMN src_leg src_leg varchar(255) DEFAULT NULL;
+ALTER TABLE accounting.acc_trash CHANGE COLUMN dst_leg dst_leg varchar(255) DEFAULT NULL;
+
+ALTER TABLE accounting.cdr DROP COLUMN source_external_subscriber_id;
+ALTER TABLE accounting.cdr DROP COLUMN source_external_contract_id;
+ALTER TABLE accounting.cdr DROP COLUMN source_account_id;
+
+ALTER TABLE accounting.cdr DROP COLUMN destination_external_subscriber_id;
+ALTER TABLE accounting.cdr DROP COLUMN destination_external_contract_id;
+ALTER TABLE accounting.cdr DROP COLUMN destination_account_id;
+
+ALTER TABLE accounting.cdr DROP COLUMN peer_auth_user;
+ALTER TABLE accounting.cdr DROP COLUMN peer_auth_realm;

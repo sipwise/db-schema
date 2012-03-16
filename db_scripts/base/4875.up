@@ -1,0 +1,1 @@
+INSERT INTO provisioning.voip_preferences (attribute, type, dom_pref, data_type, max_occur, description) VALUES('unauth_inbound_calls', 1, 1, 'boolean', 1, 'Allow unauthenticated inbound calls from FOREIGN domain to users within this domain. Use with care - it allows to flood your users with voice spam.');

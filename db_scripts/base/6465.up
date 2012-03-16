@@ -1,0 +1,2 @@
+# set prepaid to default value for the default billing profile
+UPDATE billing.billing_profiles SET prepaid = NULL WHERE id = 1 AND handle = 'default' and name = 'Default Billing Profile';

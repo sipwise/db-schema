@@ -1,0 +1,1 @@
+INSERT INTO provisioning.voip_preferences (attribute, type, dom_pref, usr_pref, data_type, max_occur, description) VALUES('ignore_userprovided_cli', 1, 1, 1, 'boolean', 1, 'Discard any subscriber provided CLI information');

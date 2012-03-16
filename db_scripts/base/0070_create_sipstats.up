@@ -1,0 +1,38 @@
+USE mysql;
+DROP DATABASE IF EXISTS sipstats;
+
+CREATE DATABASE IF NOT EXISTS sipstats CHARACTER SET 'utf8';
+
+USE sipstats;
+
+-- create packets tables
+
+CREATE TABLE `packets` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` decimal(17,6) NOT NULL,
+  `src_mac` binary(6) NOT NULL,
+  `dst_mac` binary(6) NOT NULL,
+  `protocol` enum('IPv4','IPv6') NOT NULL,
+  `src_ip` varchar(39) NOT NULL,
+  `dst_ip` varchar(39) NOT NULL,
+  `src_port` smallint(5) unsigned NOT NULL,
+  `dst_port` smallint(5) unsigned NOT NULL,
+  `header` blob NOT NULL,
+  `payload` blob NOT NULL,
+  `trailer` blob NOT NULL,
+  `method` varchar(20) NOT NULL,
+  `cseq_method` varchar(16) NOT NULL,
+  `call_id` varchar(255) NOT NULL,
+  `request_uri` varchar(255) NOT NULL,
+  `from_uri` varchar(255) NOT NULL,
+  `caller_uuid` varchar(255) NOT NULL,
+  `callee_uuid` varchar(255) NOT NULL,
+  `was_fragmented` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`,`timestamp`),
+  KEY `call_id_idx` (`call_id`),
+  KEY `caller_uuid_idx` (`caller_uuid`),
+  KEY `callee_uuid_idx` (`callee_uuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+PARTITION BY RANGE (FLOOR(`timestamp`))
+(PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM);
+

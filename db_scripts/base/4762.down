@@ -1,0 +1,6 @@
+DROP TRIGGER `provisioning`.`voip_peerpref_crepl_trig`;
+DROP TRIGGER `provisioning`.`voip_peerpref_urepl_trig`;
+DROP TRIGGER `provisioning`.`voip_peerpref_drepl_trig`;
+
+DROP TABLE `provisioning`.`voip_peer_preferences`;
+DROP TABLE `kamailio`.`peer_preferences`;

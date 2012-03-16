@@ -1,0 +1,8 @@
+INSERT INTO provisioning.voip_preferences
+            (attribute, type, data_type, max_occur, description)
+      VALUES('block_out_override_pin', 0, 'string', 1,
+             'A PIN code which may be used in a VSC to disable the outgoing user block list and NCOS level for a call.');
+INSERT INTO provisioning.voip_preferences
+            (attribute, type, data_type, max_occur, description)
+      VALUES('adm_block_out_override_pin', 0, 'string', 1,
+             'Same as "block_out_override_pin" but additionally disables the administrative block list and NCOS level.');

@@ -1,0 +1,7 @@
+use billing;
+
+ALTER TABLE `customers` DROP COLUMN `external_id`;
+
+ALTER TABLE `contracts` DROP COLUMN `external_id`;
+
+ALTER TABLE `voip_subscribers` DROP COLUMN `external_id`;

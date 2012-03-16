@@ -1,0 +1,4 @@
+use provisioning;
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                        VALUES('force_inbound_calls_to_peer', 1, 1, 1, 0, 'boolean', 1, 'Force calls to this user to be treated as if the user was not local. This helps in migration scenarios.');

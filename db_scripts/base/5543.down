@@ -1,0 +1,2 @@
+DELETE FROM provisioning.voip_preferences WHERE attribute='always_use_rtpproxy';
+DELETE FROM provisioning.voip_preferences WHERE attribute='never_use_rtpproxy';

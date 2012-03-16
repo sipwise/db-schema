@@ -1,0 +1,32 @@
+use provisioning;
+
+DROP TRIGGER voip_rwrulesets_urepl_trig;
+DROP TRIGGER voip_rwrulesets_drepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid = OLD.caller_in_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid = OLD.callee_in_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid = OLD.caller_out_dpid;
+  UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid = OLD.callee_out_dpid;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_out_dpid;
+
+  END;
+|
+
+DELIMITER ;

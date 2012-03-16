@@ -1,0 +1,5 @@
+use accounting;
+
+ALTER TABLE cdr ADD COLUMN carrier_free_time int unsigned AFTER customer_cost,
+                ADD COLUMN reseller_free_time int unsigned AFTER carrier_free_time,
+                ADD COLUMN customer_free_time int unsigned AFTER reseller_free_time;

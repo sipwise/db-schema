@@ -1,0 +1,20 @@
+use kamailio;
+
+ALTER TABLE `acc` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+UPDATE `acc` SET time_hires=time;
+ALTER TABLE `acc_backup` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+ALTER TABLE `acc_trash` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+
+use accounting;
+
+ALTER TABLE `acc` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+UPDATE `acc` SET time_hires=time;
+ALTER TABLE `acc_backup` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+ALTER TABLE `acc_trash` ADD COLUMN `time_hires` decimal(13,3) NOT NULL AFTER `time`;
+
+ALTER TABLE `cdr` ADD COLUMN `t3mp_start_time` decimal(13,3) NOT NULL AFTER start_time;
+     UPDATE `cdr` SET t3mp_start_time=UNIX_TIMESTAMP(start_time);
+ALTER TABLE `cdr` DROP COLUMN `start_time`;
+ALTER TABLE `cdr` CHANGE COLUMN `t3mp_start_time` `start_time` decimal(13,3) NOT NULL;
+
+ALTER TABLE `cdr` MODIFY `duration` decimal(13,3) NOT NULL;

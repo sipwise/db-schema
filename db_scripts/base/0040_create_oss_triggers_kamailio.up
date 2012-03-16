@@ -1,0 +1,930 @@
+
+USE provisioning;
+
+-- create triggers that populate kamailio tables
+DELIMITER |
+
+CREATE TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_domain varchar(127);
+
+  SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
+
+  INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
+                   VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, now(),
+                          MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
+                          MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
+  END;
+|
+
+CREATE TRIGGER voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE new_subscriber_domain varchar(127);
+
+  SELECT domain INTO old_subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_subscriber_domain FROM voip_domains where id = NEW.domain_id;
+
+  UPDATE kamailio.subscriber SET username = NEW.username, domain = new_subscriber_domain,
+                                uuid = NEW.uuid, password = NEW.password,
+                                ha1 = MD5(CONCAT(NEW.username, ':', new_subscriber_domain, ':', NEW.password)),
+                                ha1b = MD5(CONCAT(NEW.username, '@', new_subscriber_domain, ':', new_subscriber_domain, ':', NEW.password))
+                          WHERE username = OLD.username
+                            AND domain = old_subscriber_domain;
+  END;
+|
+
+CREATE TRIGGER voip_sub_drepl_trig BEFORE DELETE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT domain INTO subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = OLD.username AND domain = subscriber_domain;
+
+  DELETE FROM kamailio.subscriber WHERE username = OLD.username
+                                   AND domain = subscriber_domain;
+
+  -- should be implemented via a provisioning.voicemail_users table
+  -- and a foreign key to voip_subscribers
+  DELETE FROM kamailio.voicemail_users WHERE customer_id = OLD.uuid;
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- delete actions on the provisioning tables, but doesn't
+  DELETE FROM kamailio.usr_preferences WHERE username = OLD.username
+                                        AND domain = subscriber_domain;
+  DELETE FROM kamailio.dbaliases WHERE username = OLD.username
+                                  AND domain = subscriber_domain;
+  DELETE FROM kamailio.speed_dial WHERE username = OLD.username
+                                  AND domain = subscriber_domain;
+  DELETE FROM kamailio.fax_preferences WHERE subscriber_id = os_subscriber_id;
+  DELETE FROM kamailio.fax_destinations WHERE subscriber_id = os_subscriber_id;
+  END;
+|
+
+CREATE TRIGGER voip_dba_crepl_trig AFTER INSERT ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = NEW.subscriber_id
+                               AND b.id = a.domain_id;
+
+  INSERT INTO kamailio.dbaliases (alias_username, alias_domain, username, domain)
+                          VALUES(NEW.username, dbalias_domain, target_username, target_domain);
+  END;
+|
+
+CREATE TRIGGER voip_dba_urepl_trig AFTER UPDATE ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE old_dbalias_domain varchar(127);
+  DECLARE new_dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO old_dbalias_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = NEW.subscriber_id
+                               AND b.id = a.domain_id;
+
+  UPDATE kamailio.dbaliases SET alias_username = NEW.username, alias_domain = new_dbalias_domain,
+                               username = target_username, domain = target_domain
+                         WHERE alias_username = OLD.username
+                           AND alias_domain = old_dbalias_domain;
+  END;
+|
+
+CREATE TRIGGER voip_dba_drepl_trig BEFORE DELETE ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = OLD.domain_id;
+
+  DELETE FROM kamailio.dbaliases WHERE alias_username = OLD.username
+                                  AND alias_domain = dbalias_domain;
+  END;
+|
+
+CREATE TRIGGER voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.lcr_rule (lcr_id, prefix, from_uri, stopper, enabled, group_id)
+                          VALUES(1, NEW.callee_prefix, NEW.caller_prefix,
+                                 0, 1, NEW.group_id);
+
+  INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+         SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+           FROM kamailio.lcr_gw gw
+           INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip = gw.ip_addr
+                                                      AND gw.lcr_id = 1
+                                                      AND vph.group_id = gw.group_id
+           INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+          WHERE vph.group_id = NEW.group_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_prul_urepl_trig AFTER UPDATE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+  
+  UPDATE kamailio.lcr_rule
+     SET prefix = NEW.callee_prefix, from_uri = NEW.caller_prefix
+   WHERE prefix = OLD.callee_prefix
+     AND from_uri = OLD.caller_prefix
+     AND group_id = OLD.group_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_prul_drepl_trig AFTER DELETE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_rule
+        WHERE prefix = OLD.callee_prefix
+          AND from_uri = OLD.caller_prefix
+          AND group_id = OLD.group_id;
+
+  -- foreign key will delete from kamailio.lcr_rule_target
+
+  END;
+|
+
+CREATE TRIGGER voip_pgrp_urepl_trig AFTER UPDATE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+     SET rt.priority = NEW.priority
+   WHERE gw.id = rt.gw_id
+     AND gw.lcr_id = 1
+     AND gw.group_id = NEW.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_pgrp_drepl_trig AFTER DELETE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_rule WHERE group_id = OLD.id;
+  DELETE FROM kamailio.lcr_gw WHERE group_id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+                        VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, 1, 0, NEW.id, NEW.group_id);
+
+  INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+         SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+           FROM kamailio.lcr_rule rule
+           INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+          WHERE vpg.id = NEW.group_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr_gw
+     SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, flags = NEW.id
+   WHERE lcr_id = 1 AND ip_addr = OLD.ip;
+
+  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+     SET rt.weight = NEW.weight
+   WHERE gw.id = rt.gw_id
+     AND gw.lcr_id = 1
+     AND gw.group_id = NEW.group_id
+     AND gw.ip_addr = NEW.ip;
+
+  END;
+|
+
+CREATE TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_gw
+        WHERE lcr_id = 1
+          AND group_id = OLD.group_id
+          AND ip_addr = OLD.ip;
+
+  -- foreign key will delete from kamailio.lcr_rule_target
+
+  END;
+|
+
+CREATE TRIGGER voip_peerpref_crepl_trig AFTER INSERT ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.peer_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, NOW()
+         FROM provisioning.voip_preferences
+        WHERE id = NEW.attribute_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_peerpref_urepl_trig AFTER UPDATE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = NOW()
+   WHERE pp.id = OLD.id
+     AND vp.id = NEW.attribute_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_peerpref_drepl_trig BEFORE DELETE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.peer_preferences
+        WHERE id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_usrpref_crepl_trig AFTER INSERT ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE subscriber_uuid char(36);
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT a.username, b.domain, a.uuid INTO subscriber_username, subscriber_domain, subscriber_uuid
+                                      FROM voip_subscribers a, voip_domains b
+                                     WHERE a.id = NEW.subscriber_id
+                                       AND a.domain_id = b.id;
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id = NEW.attribute_id;
+
+  INSERT INTO kamailio.usr_preferences (uuid, username, domain, attribute, type, value)
+                                VALUES(subscriber_uuid, subscriber_username, subscriber_domain,
+                                       attribute_name, attribute_type, NEW.value);
+  END;
+|
+
+CREATE TRIGGER voip_usrpref_urepl_trig AFTER UPDATE ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE new_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE new_subscriber_domain varchar(127);
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = OLD.subscriber_id
+                               AND a.domain_id = b.id;
+  SELECT a.username, b.domain INTO new_subscriber_username, new_subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = NEW.subscriber_id
+                               AND a.domain_id = b.id;
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id = OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id = NEW.attribute_id;
+
+  UPDATE kamailio.usr_preferences SET username = new_subscriber_username, domain = new_subscriber_domain,
+                                     attribute = new_attribute_name, value = NEW.value
+                               WHERE username = old_subscriber_username
+                                 AND domain = old_subscriber_domain
+                                 AND attribute = old_attribute_name
+                                 AND value = OLD.value;
+  END;
+|
+
+CREATE TRIGGER voip_usrpref_drepl_trig BEFORE DELETE ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE attribute_name varchar(31);
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = OLD.subscriber_id
+                               AND a.domain_id = b.id;
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id = OLD.attribute_id;
+
+  DELETE FROM kamailio.usr_preferences WHERE username = subscriber_username
+                                        AND domain = subscriber_domain
+                                        AND attribute = attribute_name
+                                        AND value = OLD.value;
+  END;
+|
+
+CREATE TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE new_set_id int(11) unsigned;
+
+  SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id = NEW.set_id;
+
+  INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+  DECLARE new_set_id int(11) unsigned;
+
+  SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO old_set_id FROM voip_rewrite_rule_sets WHERE id = OLD.set_id;
+  SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id = NEW.set_id;
+
+  UPDATE kamailio.dialplan
+     SET dpid      = new_set_id,
+         pr        = NEW.priority,
+         match_exp = NEW.match_pattern,
+         subst_exp = NEW.match_pattern,
+         repl_exp  = NEW.replace_pattern
+   WHERE dpid      = old_set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+
+  SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO old_set_id FROM voip_rewrite_rule_sets WHERE id = OLD.set_id;
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      = old_set_id
+     AND pr        = OLD.priority
+     AND match_exp = OLD.match_pattern
+     AND subst_exp = OLD.match_pattern 
+     AND repl_exp  = OLD.replace_pattern;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_crepl_trig BEFORE INSERT ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+
+  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid = OLD.caller_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute = 'rewrite_caller_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute = 'rewrite_caller_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute = 'rewrite_caller_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_in_dpid;
+  END IF;
+  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid = OLD.callee_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute = 'rewrite_callee_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute = 'rewrite_callee_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute = 'rewrite_callee_in_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_in_dpid;
+  END IF;
+  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid = OLD.caller_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute = 'rewrite_caller_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute = 'rewrite_caller_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute = 'rewrite_caller_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.caller_out_dpid;
+  END IF;
+  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid = OLD.callee_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute = 'rewrite_callee_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute = 'rewrite_callee_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute = 'rewrite_callee_out_dpid'
+       AND a.attribute_id = b.id
+       AND a.value = OLD.callee_out_dpid;
+  END IF;
+
+  END;
+|
+
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_out_dpid;
+
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_out_dpid;
+
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_in_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_caller_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.caller_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute = 'rewrite_callee_out_dpid'
+     AND a.attribute_id = b.id
+     AND a.value = OLD.callee_out_dpid;
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid = OLD.callee_out_dpid;
+
+  END;
+|
+
+CREATE TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  IF OLD.attribute != NEW.attribute THEN
+    UPDATE kamailio.usr_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+    UPDATE kamailio.dom_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute = OLD.attribute;
+  END IF;
+
+  END;
+|
+
+CREATE TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_*_preferences delete action, but doesn't
+  DELETE FROM voip_usr_preferences WHERE attribute_id = OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id = OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+
+  END;
+|
+
+CREATE TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.domain WHERE domain = OLD.domain;
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- voip_dom_preferences delete action, but doesn't
+  DELETE FROM kamailio.dom_preferences WHERE domain = OLD.domain;
+  -- this will trigger the delete action for each subscriber
+  DELETE FROM provisioning.voip_subscribers WHERE domain_id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_dompref_crepl_trig AFTER INSERT ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE domain_name varchar(127);
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT domain INTO domain_name
+                FROM voip_domains
+               WHERE id = NEW.domain_id;
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id = NEW.attribute_id;
+
+  INSERT INTO kamailio.dom_preferences (domain, attribute, type, value)
+                                 VALUES(domain_name, attribute_name, attribute_type, NEW.value);
+  END;
+|
+
+CREATE TRIGGER voip_dompref_urepl_trig AFTER UPDATE ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_domain_name varchar(127);
+  DECLARE new_domain_name varchar(127);
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT domain INTO old_domain_name
+                FROM voip_domains
+               WHERE id = OLD.domain_id;
+  SELECT domain INTO new_domain_name
+                FROM voip_domains
+               WHERE id = NEW.domain_id;
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id = OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id = NEW.attribute_id;
+
+  UPDATE kamailio.dom_preferences SET domain = new_domain_name,
+                                      attribute = new_attribute_name,
+                                      value = NEW.value
+                                WHERE domain = old_domain_name
+                                  AND attribute = old_attribute_name
+                                  AND value = OLD.value;
+  END;
+|
+
+CREATE TRIGGER voip_dompref_drepl_trig BEFORE DELETE ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE domain_name varchar(127);
+  DECLARE attribute_name varchar(31);
+
+  SELECT domain INTO domain_name
+                FROM voip_domains
+               WHERE id = OLD.domain_id;
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id = OLD.attribute_id;
+
+  DELETE FROM kamailio.dom_preferences WHERE domain = domain_name
+                                         AND attribute = attribute_name
+                                         AND value = OLD.value;
+  END;
+|
+
+CREATE TRIGGER voip_sd_crepl_trig AFTER INSERT ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE target_username varchar(64);
+  DECLARE target_domain varchar(64);
+
+  SELECT a.username, b.domain INTO target_username, target_domain
+                              FROM voip_subscribers a, voip_domains b
+                              WHERE a.id = NEW.subscriber_id
+                              AND b.id = a.domain_id;
+
+  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
+                                  new_uri, fname, lname, description)
+                          VALUES(target_username, target_domain,
+                                 NEW.slot, target_domain,
+                                 NEW.destination, '', '', '');
+  END;
+|
+
+CREATE TRIGGER voip_sd_urepl_trig AFTER UPDATE ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE old_username varchar(127);
+  DECLARE old_domain varchar(127);
+  DECLARE new_username varchar(127);
+  DECLARE new_domain varchar(127);
+
+  SELECT a.username, b.domain INTO old_username, old_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = OLD.subscriber_id
+                               AND b.id = a.domain_id;
+  SELECT a.username, b.domain INTO new_username, new_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = NEW.subscriber_id
+                               AND b.id = a.domain_id;
+
+  UPDATE kamailio.speed_dial SET username = new_username, domain = new_domain,
+                               sd_username = NEW.slot, sd_domain = new_domain,
+                               new_uri = NEW.destination
+                           WHERE username = old_username
+                           AND domain = old_domain
+                           AND sd_username = OLD.slot;
+  END;
+|
+
+CREATE TRIGGER voip_sd_drepl_trig BEFORE DELETE ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE old_username varchar(127);
+  DECLARE old_domain varchar(127);
+
+  SELECT a.username, b.domain INTO old_username, old_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id = OLD.subscriber_id
+                               AND b.id = a.domain_id;
+
+  DELETE FROM kamailio.speed_dial WHERE username = old_username
+                                  AND domain = old_domain
+                                  AND sd_username = OLD.slot;
+  END;
+|
+
+CREATE TRIGGER voip_faxp_crepl_trig AFTER INSERT ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = NEW.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = subscriber_username AND domain = subscriber_domain;
+
+  INSERT INTO kamailio.fax_preferences
+             (subscriber_id, password, name, active, send_status, send_copy)
+       VALUES(os_subscriber_id, NEW.password, NEW.name, IF(NEW.active, 'true', 'false'),
+              IF(NEW.send_status, 'true', 'false'), IF(NEW.send_copy, 'true', 'false'));
+
+  END;
+|
+
+CREATE TRIGGER voip_faxp_urepl_trig AFTER UPDATE ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = NEW.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = subscriber_username AND domain = subscriber_domain;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = OLD.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username = old_subscriber_username AND domain = old_subscriber_domain;
+
+  UPDATE kamailio.fax_preferences SET subscriber_id = os_subscriber_id, password = NEW.password,
+                                      name = NEW.name, active = IF(NEW.active, 'true', 'false'),
+                                      send_status = IF(NEW.send_status, 'true', 'false'),
+                                      send_copy = IF(NEW.send_copy, 'true', 'false')
+                                WHERE subscriber_id = old_os_subscriber_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_faxp_drepl_trig BEFORE DELETE ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = OLD.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username = old_subscriber_username AND domain = old_subscriber_domain;
+
+  DELETE FROM kamailio.fax_preferences WHERE subscriber_id = old_os_subscriber_id;
+
+  END;
+|
+
+CREATE TRIGGER voip_faxd_crepl_trig AFTER INSERT ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = NEW.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = subscriber_username AND domain = subscriber_domain;
+
+  INSERT INTO kamailio.fax_destinations (subscriber_id, destination, filetype,
+                                        cc, incoming, outgoing, status)
+                                 VALUES(os_subscriber_id, NEW.destination, NEW.filetype,
+                                        IF(NEW.cc, 'true', 'false'), IF(NEW.incoming, 'true', 'false'),
+                                        IF(NEW.outgoing, 'true', 'false'), IF(NEW.status, 'true', 'false'));
+
+  END;
+|
+
+CREATE TRIGGER voip_faxd_urepl_trig AFTER UPDATE ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = NEW.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = subscriber_username AND domain = subscriber_domain;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = OLD.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username = old_subscriber_username AND domain = old_subscriber_domain;
+
+  UPDATE kamailio.fax_destinations SET subscriber_id = os_subscriber_id, destination = NEW.destination,
+                                      filetype = NEW.filetype, cc = IF(NEW.cc, 'true', 'false'),
+                                      incoming = IF(NEW.incoming, 'true', 'false'),
+                                      outgoing = IF(NEW.outgoing, 'true', 'false'),
+                                      status = IF(NEW.status, 'true', 'false')
+                                WHERE subscriber_id = old_os_subscriber_id
+                                  AND destination = OLD.destination;
+
+  END;
+|
+
+CREATE TRIGGER voip_faxd_drepl_trig BEFORE DELETE ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id = OLD.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username = old_subscriber_username AND domain = old_subscriber_domain;
+
+  DELETE FROM kamailio.fax_destinations WHERE subscriber_id = old_os_subscriber_id
+                                         AND destination = OLD.destination;
+
+  END;
+|
+
+CREATE TRIGGER voip_aig_crepl_trig AFTER INSERT ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.address (id, grp, ip_addr, mask)
+                         VALUES(NEW.id, NEW.group_id,
+                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
+                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32));
+
+  END;
+|
+
+CREATE TRIGGER voip_aig_urepl_trig AFTER UPDATE ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.address SET id = NEW.id, grp = NEW.group_id,
+                              ip_addr = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
+                              mask = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32)
+                        WHERE id = OLD.id;
+
+  END;
+|
+
+CREATE TRIGGER voip_aig_drepl_trig BEFORE DELETE ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.address WHERE id = OLD.id;
+
+  END;
+|
+
+DELIMITER ;
+
+-- internal domain and subscribers
+INSERT INTO voip_domains (domain) VALUES('voip.sipwise.local');
+INSERT INTO voip_subscribers (username, domain_id, uuid, password, create_timestamp)
+                       SELECT 'no_such_number', id, '9bcb88b6-541a-43da-8fdc-816f5557ff93', MD5(RAND()), NOW()
+                         FROM voip_domains WHERE domain = 'voip.sipwise.local';
+INSERT INTO voip_subscribers (username, domain_id, uuid, password, create_timestamp)
+                       SELECT 'nagios', id, 'ac1697cf-6933-45ef-9abf-b1278054ded0', 'nagios4Sipwise!', NOW()
+                         FROM voip_domains WHERE domain = 'voip.sipwise.local';
+
