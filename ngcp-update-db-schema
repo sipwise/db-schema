@@ -6,7 +6,7 @@ hostname="$(hostname)"
 . /etc/mysql/sipwise.cnf
 
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
-  mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/init/0005_create_ngcp.up
+  mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
 
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
