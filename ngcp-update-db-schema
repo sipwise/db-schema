@@ -5,6 +5,16 @@ hostname="$(hostname)"
 /etc/init.d/mysql start || true
 . /etc/mysql/sipwise.cnf
 
+if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
+  echo 'Error: SIPWISE_DB_PASSWORD is unset (using /etc/mysql/sipwise.cnf).' >&2
+  exit 1
+fi
+
+if ! mysql -e "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY '${SIPWISE_DB_PASSWORD}' WITH GRANT OPTION;" ; then
+  echo 'Error: grants for user sipwise on localhost could not be applied.' >&2
+  exit 1
+fi
+
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
   mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
