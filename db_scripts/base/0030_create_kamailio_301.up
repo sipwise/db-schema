@@ -12,7 +12,7 @@ CREATE TABLE `acc` (
   `to_tag` varchar(64) NOT NULL DEFAULT '',
   `callid` varchar(64) NOT NULL DEFAULT '',
   `sip_code` varchar(3) NOT NULL DEFAULT '',
-  `sip_reason` varchar(32) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
   `time` datetime NOT NULL,
   `src_leg` varchar(255) default NULL,
   `dst_leg` varchar(255) default NULL,
@@ -23,7 +23,7 @@ CREATE TABLE `acc` (
   `src_domain` varchar(128) NOT NULL default '',
   PRIMARY KEY (`id`),
   KEY `callid_idx` (`callid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `dbaliases` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

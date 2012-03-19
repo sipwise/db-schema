@@ -13,21 +13,7 @@ USE accounting;
 
 -- create accounting tables
 
-CREATE TABLE `acc` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `method` varchar(16) NOT NULL default '',
-  `from_tag` varchar(64) NOT NULL default '',
-  `to_tag` varchar(64) NOT NULL default '',
-  `callid` varchar(128) NOT NULL default '',
-  `sip_code` char(3) NOT NULL default '',
-  `sip_reason` varchar(32) NOT NULL default '',
-  `time` datetime NOT NULL,
-  `src_leg` varchar(255) default NULL,
-  `dst_leg` varchar(255) default NULL,
-  `server` varchar(64) NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `acc_callid` (`callid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `acc` like kamailio.acc;
 
 CREATE TABLE `cdr` (
   `id` int(10) unsigned NOT NULL auto_increment,
