@@ -35,6 +35,8 @@ revision_wrapper() {
   for rev in $* ; do
     revname="$(basename $rev)"
 
+    cd $(dirname $rev) # would fail if a script references a file (like language_strings.txt) in its CWD
+
     if ngcp-check-rev-applied --schema db_schema --revision "$revname" ; then
       echo "Revision $revname has been applied already, nothing to do."
       continue
