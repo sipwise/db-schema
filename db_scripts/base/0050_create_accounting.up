@@ -13,45 +13,47 @@ USE accounting;
 
 -- create accounting tables
 
-CREATE TABLE `acc` like kamailio.acc;
+CREATE TABLE `acc` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `method` varchar(16) NOT NULL default '',
+  `from_tag` varchar(64) NOT NULL default '',
+  `to_tag` varchar(64) NOT NULL default '',
+  `callid` varchar(128) NOT NULL default '',
+  `sip_code` char(3) NOT NULL default '',
+  `sip_reason` varchar(32) NOT NULL default '',
+  `time` datetime NOT NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
+  `server` varchar(64) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `acc_callid` (`callid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `cdr` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `update_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `source_user_id` char(36) NOT NULL,
   `source_provider_id` varchar(255) NOT NULL,
-  `source_external_subscriber_id` varchar(255) DEFAULT NULL,
-  `source_external_contract_id` varchar(255) DEFAULT NULL,
-  `source_account_id` int(11) unsigned NOT NULL DEFAULT '0',
   `source_user` varchar(255) NOT NULL,
   `source_domain` varchar(255) NOT NULL,
   `source_cli` varchar(64) NOT NULL,
   `source_clir` tinyint(1) NOT NULL default '0',
   `destination_user_id` char(36) NOT NULL,
   `destination_provider_id` varchar(255) NOT NULL,
-  `destination_external_subscriber_id` varchar(255) DEFAULT NULL,
-  `destination_external_contract_id` varchar(255) DEFAULT NULL,
-  `destination_account_id` int(11) unsigned NOT NULL DEFAULT '0',
   `destination_user` varchar(255) NOT NULL,
   `destination_domain` varchar(255) NOT NULL,
   `destination_user_dialed` varchar(255) NOT NULL,
   `destination_user_in` varchar(255) NOT NULL,
   `destination_domain_in` varchar(255) NOT NULL,
-  `peer_auth_user` varchar(255) DEFAULT NULL,
-  `peer_auth_realm` varchar(255) DEFAULT NULL,
   `call_type` enum('call','cfu','cft','cfb','cfna') NOT NULL default 'call',
   `call_status` enum('ok','busy','noanswer','cancel','offline','timeout','other') NOT NULL default 'ok',
   `call_code` char(3) NOT NULL,
-  `init_time` decimal(13,3) NOT NULL,
-  `start_time` decimal(13,3) NOT NULL,
-  `duration` decimal(13,3) NOT NULL,
+  `start_time` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `duration` int(10) unsigned NOT NULL,
   `call_id` varchar(255) NOT NULL,
-  `carrier_cost` decimal(10,2) default NULL,
-  `reseller_cost` decimal(10,2) default NULL,
-  `customer_cost` decimal(10,2) default NULL,
-  `carrier_free_time` int(10) unsigned DEFAULT NULL,
-  `reseller_free_time` int(10) unsigned DEFAULT NULL,
-  `customer_free_time` int(10) unsigned DEFAULT NULL,
+  `carrier_cost` float default NULL,
+  `reseller_cost` float default NULL,
+  `customer_cost` float default NULL,
   `carrier_billing_fee_id` int(11) unsigned default NULL,
   `reseller_billing_fee_id` int(11) unsigned default NULL,
   `customer_billing_fee_id` int(11) unsigned default NULL,
@@ -72,19 +74,12 @@ CREATE TABLE `cdr` (
   KEY `sprov` (`source_provider_id`),
   KEY `dprov` (`destination_provider_id`),
   KEY `kcid` (`call_id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `mark` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `collector` varchar(255) NOT NULL,
   `acc_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `prepaid_costs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `call_id` varchar(255) NOT NULL,
-  `cost` double NOT NULL,
-  `free_time_used` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB;

@@ -1,7 +1,7 @@
 USE mysql;
 DROP DATABASE IF EXISTS kamailio;
 
-CREATE DATABASE IF NOT EXISTS kamailio CHARACTER SET 'utf8';
+CREATE DATABASE IF NOT EXISTS kamailio CHARACTER SET 'latin1';
 
 USE kamailio;
 
@@ -10,13 +10,12 @@ CREATE TABLE `acc` (
   `method` varchar(16) NOT NULL DEFAULT '',
   `from_tag` varchar(64) NOT NULL DEFAULT '',
   `to_tag` varchar(64) NOT NULL DEFAULT '',
-  `callid` varchar(255) NOT NULL DEFAULT '',
+  `callid` varchar(64) NOT NULL DEFAULT '',
   `sip_code` varchar(3) NOT NULL DEFAULT '',
-  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `sip_reason` varchar(32) NOT NULL DEFAULT '',
   `time` datetime NOT NULL,
-  `time_hires` decimal(13,3) NOT NULL,
-  `src_leg` varchar(2048) default NULL,
-  `dst_leg` varchar(2048) default NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
   `dst_user` varchar(64) NOT NULL default '',
   `dst_ouser` varchar(64) NOT NULL default '',
   `dst_domain` varchar(128) NOT NULL default '',
@@ -24,7 +23,7 @@ CREATE TABLE `acc` (
   `src_domain` varchar(128) NOT NULL default '',
   PRIMARY KEY (`id`),
   KEY `callid_idx` (`callid`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `dbaliases` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -35,7 +34,7 @@ CREATE TABLE `dbaliases` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `alias_idx` (`alias_username`,`alias_domain`),
   KEY `target_idx` (`username`,`domain`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `dialog` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -62,7 +61,7 @@ CREATE TABLE `dialog` (
   `req_uri` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `hash_idx` (`hash_entry`,`hash_id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `dialplan` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -72,10 +71,10 @@ CREATE TABLE `dialplan` (
   `match_exp` varchar(64) NOT NULL,
   `match_len` int(11) NOT NULL,
   `subst_exp` varchar(64) NOT NULL,
-  `repl_exp` varchar(64) NOT NULL,
+  `repl_exp` varchar(32) NOT NULL,
   `attrs` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `dispatcher` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -85,7 +84,7 @@ CREATE TABLE `dispatcher` (
   `priority` int(11) NOT NULL DEFAULT '0',
   `description` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `domain` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -93,58 +92,38 @@ CREATE TABLE `domain` (
   `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain_idx` (`domain`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `lcr_gw` (
+CREATE TABLE `gw` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lcr_id` smallint(5) unsigned NOT NULL,
   `gw_name` varchar(128) NOT NULL,
-  `ip_addr` varchar(64) NOT NULL,
+  `grp_id` int(10) unsigned NOT NULL,
+  `ip_addr` varchar(15) NOT NULL,
   `hostname` varchar(64) DEFAULT NULL,
   `port` smallint(5) unsigned DEFAULT NULL,
-  `params` varchar(64) DEFAULT NULL,
   `uri_scheme` tinyint(3) unsigned DEFAULT NULL,
   `transport` tinyint(3) unsigned DEFAULT NULL,
   `strip` tinyint(3) unsigned DEFAULT NULL,
   `tag` varchar(16) DEFAULT NULL,
+  `weight` int(10) unsigned DEFAULT NULL,
   `flags` int(10) unsigned NOT NULL DEFAULT '0',
   `defunct` int(10) unsigned DEFAULT NULL,
-  `group_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
-  UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`)
-) ENGINE=InnoDB;
+  UNIQUE KEY `lcr_id_grp_id_gw_name_idx` (`lcr_id`,`grp_id`,`gw_name`),
+  UNIQUE KEY `lcr_id_grp_id_ip_addr_idx` (`lcr_id`,`grp_id`,`ip_addr`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `lcr_rule` (
+CREATE TABLE `lcr` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lcr_id` smallint(5) unsigned NOT NULL,
   `prefix` varchar(16) DEFAULT NULL,
   `from_uri` varchar(64) DEFAULT NULL,
-  `stopper` int(10) unsigned NOT NULL DEFAULT '0',
-  `enabled` int(10) unsigned NOT NULL DEFAULT '1',
-  `group_id` int(11) unsigned NOT NULL,
+  `grp_id` int(10) unsigned NOT NULL,
+  `priority` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `lcr_id_idx` (`lcr_id`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `lcr_rule_target` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `lcr_id` smallint(5) unsigned NOT NULL,
-  `rule_id` int(10) unsigned NOT NULL,
-  `gw_id` int(10) unsigned NOT NULL,
-  `priority` tinyint(3) unsigned NOT NULL,
-  `weight` int(10) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rule_id_gw_id_idx` (`rule_id`,`gw_id`),
-  KEY `lcr_id_idx` (`lcr_id`),
-  KEY `gw_id_idx` (`gw_id`),
-  CONSTRAINT `l_r_t_ruleid_ref` FOREIGN KEY (`rule_id`)
-                                REFERENCES `lcr_rule` (`id`)
-                                ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `l_r_t_gwid_ref` FOREIGN KEY (`gw_id`)
-                              REFERENCES `lcr_gw` (`id`)
-                              ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `location` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -165,7 +144,7 @@ CREATE TABLE `location` (
   `methods` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `account_contact_idx` (`username`,`domain`,`contact`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `speed_dial` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -179,13 +158,13 @@ CREATE TABLE `speed_dial` (
   `description` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `speed_dial_idx` (`username`,`domain`,`sd_domain`,`sd_username`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `subscriber` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL DEFAULT '',
   `domain` varchar(64) NOT NULL DEFAULT '',
-  `password` varchar(40) NOT NULL DEFAULT '',
+  `password` varchar(25) NOT NULL DEFAULT '',
   `email_address` varchar(64) NOT NULL DEFAULT '',
   `ha1` varchar(64) NOT NULL DEFAULT '',
   `ha1b` varchar(64) NOT NULL DEFAULT '',
@@ -196,7 +175,7 @@ CREATE TABLE `subscriber` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `account_idx` (`username`,`domain`),
   KEY `username_idx` (`username`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `trusted` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -206,7 +185,7 @@ CREATE TABLE `trusted` (
   `tag` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `peer_idx` (`src_ip`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `usr_preferences` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -220,7 +199,7 @@ CREATE TABLE `usr_preferences` (
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `dom_preferences` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -234,21 +213,7 @@ CREATE TABLE `dom_preferences` (
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `peer_preferences` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL,
-  `username` varchar(128) NOT NULL DEFAULT '0',
-  `domain` varchar(64) NOT NULL DEFAULT '',
-  `attribute` varchar(32) NOT NULL DEFAULT '',
-  `type` int(11) NOT NULL DEFAULT '0',
-  `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
-  PRIMARY KEY (`id`),
-  KEY `ua_idx` (`uuid`,`attribute`)
--- not used -- KEY `uda_idx` (`username`,`domain`,`attribute`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `address` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -256,14 +221,13 @@ CREATE TABLE `address` (
   `ip_addr` varchar(15) NOT NULL,
   `mask` tinyint(4) NOT NULL DEFAULT '32',
   `port` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `tag` VARCHAR(64),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `version` (
   `table_name` varchar(32) NOT NULL,
   `table_version` int(10) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `voicemail_users` (
   `uniqueid` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -294,7 +258,7 @@ CREATE TABLE `voicemail_users` (
   PRIMARY KEY (`uniqueid`),
   KEY `customer_idx` (`customer_id`),
   KEY `mailbox_context` (`mailbox`,`context`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `voicemail_spool` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -303,8 +267,8 @@ CREATE TABLE `voicemail_spool` (
   `context` varchar(63) DEFAULT '',
   `macrocontext` varchar(63) DEFAULT '',
   `callerid` varchar(255) DEFAULT '',
-  `origtime` varchar(16) DEFAULT '',
-  `duration` varchar(16) DEFAULT '',
+  `origtime` int(11) unsigned DEFAULT '0',
+  `duration` int(11) unsigned DEFAULT '0',
   `mailboxuser` varchar(255) DEFAULT '',
   `mailboxcontext` varchar(63) DEFAULT '',
   `recording` longblob,
@@ -312,7 +276,7 @@ CREATE TABLE `voicemail_spool` (
   KEY `dir` (`dir`),
   KEY `mailboxuser_idx` (`mailboxuser`),
   CONSTRAINT `v_s_mailboxuser_ref` FOREIGN KEY (`mailboxuser`) REFERENCES `voicemail_users` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `fax_preferences` (
   `subscriber_id` int(10) unsigned NOT NULL,
@@ -323,7 +287,7 @@ CREATE TABLE `fax_preferences` (
   `send_copy` enum('true','false') NOT NULL default 'false',
   `send_copy_cc` enum('true','false') NOT NULL default 'false',
   PRIMARY KEY  (`subscriber_id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `fax_destinations` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -336,42 +300,12 @@ CREATE TABLE `fax_destinations` (
   `status` enum('true','false') NOT NULL default 'false',
   PRIMARY KEY  (`id`),
   KEY `subscriber_id` (`subscriber_id`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `sems_registrations` (
-  `subscriber_id` int(11) NOT NULL,
-  `registration_status` tinyint(1) NOT NULL DEFAULT '0',
-  `last_registration` datetime DEFAULT NULL,
-  `expiry` datetime DEFAULT NULL,
-  `last_code` smallint(2) DEFAULT NULL,
-  `last_reason` varchar(256) DEFAULT NULL,
-  `contacts` varchar(512) DEFAULT NULL,
-  PRIMARY KEY (`subscriber_id`)
-) ENGINE=InnoDB;
-
-CREATE TABLE `fax_journal` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `the_timestamp` int(11) unsigned NOT NULL DEFAULT '0',
-  `duration` int(11) unsigned NOT NULL DEFAULT '0',
-  `direction` enum('in','out') NOT NULL DEFAULT 'in',
-  `peer_number` varchar(255) NOT NULL DEFAULT '',
-  `peer_name` varchar(255) NOT NULL DEFAULT '',
-  `pages` int(10) unsigned NOT NULL DEFAULT '0',
-  `reason` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT '',
-  `signal_rate` int(10) unsigned NOT NULL DEFAULT '0',
-  `quality` varchar(255) NOT NULL DEFAULT '',
-  `filename` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `selkey` (`subscriber_id`,`direction`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `version` VALUES 
 	('acc',4),
-	('lcr_gw',1),
-	('lcr_rule_target',1),
-	('lcr_rule',1),
+	('gw',10),
+	('lcr',3),
 	('domain',1),
 	('trusted',5),
 	('location',1004),
@@ -381,7 +315,7 @@ INSERT INTO `version` VALUES
 	('subscriber',6),
 	('dialog',4),
 	('dispatcher',3),
-	('address',4),
+	('address',3),
 	('dialplan',1);
 
 

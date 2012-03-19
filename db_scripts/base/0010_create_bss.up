@@ -72,15 +72,12 @@ CREATE TABLE `billing_profiles` (
   `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
   `handle` varchar(63) NOT NULL,
   `name` varchar(31) NOT NULL,
-  `prepaid` bool NOT NULL DEFAULT FALSE,
+  `prepaid` bool NOT NULL DEFAULT TRUE,
   `interval_charge` double NOT NULL DEFAULT 0,
   `interval_free_time` int(5) NOT NULL DEFAULT 0,
   `interval_free_cash` double NOT NULL DEFAULT 0,
   `interval_unit` enum('week','month') NOT NULL DEFAULT 'month',
   `interval_count` tinyint(3) UNSIGNED NOT NULL DEFAULT 1,
-  `fraud_interval_limit` int(11) UNSIGNED NULL DEFAULT NULL,
-  `fraud_interval_lock` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
-  `fraud_interval_notify` varchar(255) NULL DEFAULT NULL,
   `currency` varchar(31) NULL DEFAULT NULL,
   `vat_rate` tinyint(3) UNSIGNED NULL DEFAULT NULL,
   `vat_included` bool NOT NULL DEFAULT TRUE,
@@ -104,43 +101,6 @@ CREATE TABLE `billing_zones` (
                                  REFERENCES `billing_profiles` (`id`)
                                  ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
-
-CREATE TABLE `billing_zones_history` (
-  `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `bz_id` int(11) UNSIGNED,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL,
-  `zone` varchar(127) NOT NULL,
-  `detail` varchar(127) NULL,
-  PRIMARY KEY  (`id`),
-  KEY `bzid_idx` (`bz_id`),
-  CONSTRAINT `b_z_h_bzid_ref` FOREIGN KEY (`bz_id`)
-                              REFERENCES `billing_zones` (`id`)
-                              ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB;
-
-DELIMITER |
-
-CREATE TRIGGER bill_zones_crepl_trig AFTER INSERT ON billing_zones
-  FOR EACH ROW BEGIN
-
-  INSERT INTO billing_zones_history
-       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);
-
-  END;
-|
-
-CREATE TRIGGER bill_zones_urepl_trig AFTER UPDATE ON billing_zones
-  FOR EACH ROW BEGIN
-
-  UPDATE billing_zones_history
-     SET bz_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
-         zone = NEW.zone, detail = NEW.detail
-   WHERE bz_id = OLD.id;
-
-  END;
-|
-
-DELIMITER ;
 
 CREATE TABLE `billing_fees` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
@@ -168,71 +128,6 @@ CREATE TABLE `billing_fees` (
                               ON DELETE RESTRICT ON UPDATE CASCADE,
   UNIQUE KEY `profdestype_idx` (`billing_profile_id`, `destination`, `type`)
 ) ENGINE=InnoDB;
-
-CREATE TABLE `billing_fees_history` (
-  `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `bf_id` int(11) UNSIGNED,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL,
-  `billing_zones_history_id` int(11) UNSIGNED NULL,
-  `destination` varchar(255) NOT NULL,
-  `type` enum('call', 'sms') NOT NULL DEFAULT 'call',
-  `onpeak_init_rate` double NOT NULL DEFAULT 0,
-  `onpeak_init_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
-  `onpeak_follow_rate` double NOT NULL DEFAULT 0,
-  `onpeak_follow_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
-  `offpeak_init_rate` double NOT NULL DEFAULT 0,
-  `offpeak_init_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
-  `offpeak_follow_rate` double NOT NULL DEFAULT 0,
-  `offpeak_follow_interval` int(5) UNSIGNED NOT NULL DEFAULT 0,
-  `use_free_time` bool NOT NULL DEFAULT FALSE,
-  PRIMARY KEY  (`id`),
-  KEY `bfid_idx` (`bf_id`),
-  CONSTRAINT `b_f_h_bfid_ref` FOREIGN KEY (`bf_id`)
-                              REFERENCES `billing_fees` (`id`)
-                              ON DELETE SET NULL ON UPDATE NO ACTION,
-  KEY `zonehid_idx` (`billing_zones_history_id`),
-  CONSTRAINT `b_f_h_bzhid_ref` FOREIGN KEY (`billing_zones_history_id`)
-                               REFERENCES `billing_zones_history` (`id`)
-                               ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
-DELIMITER |
-
-CREATE TRIGGER bill_fees_crepl_trig AFTER INSERT ON billing_fees
-  FOR EACH ROW BEGIN
-  DECLARE my_bzh_id int UNSIGNED;
-
-  SELECT id INTO my_bzh_id FROM billing_zones_history WHERE bz_id = NEW.billing_zone_id;
-
-  INSERT INTO billing_fees_history
-       VALUES(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id, NEW.destination,
-              NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
-              NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
-              NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.use_free_time);
-
-  END;
-|
-
-CREATE TRIGGER bill_fees_urepl_trig AFTER UPDATE ON billing_fees
-  FOR EACH ROW BEGIN
-  DECLARE my_bzh_id int UNSIGNED;
-
-  SELECT id INTO my_bzh_id FROM billing_zones_history WHERE bz_id = NEW.billing_zone_id;
-
-  UPDATE billing_fees_history
-     SET bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
-         billing_zones_history_id = my_bzh_id, destination = NEW.destination, type = NEW.type,
-         onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
-         onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
-         offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
-         offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
-         use_free_time = NEW.use_free_time
-   WHERE bf_id = OLD.id;
-
-  END;
-|
-
-DELIMITER ;
 
 CREATE TABLE `billing_peaktime_weekdays` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
@@ -351,7 +246,6 @@ CREATE TABLE `customers` (
   `contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
   `tech_contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
   `comm_contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
-  `external_id` varchar(255) NULL default NULL,
   `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `create_timestamp` timestamp,
   PRIMARY KEY  (`id`),
@@ -371,8 +265,7 @@ CREATE TABLE `customers` (
   KEY `techcontact_idx` (`tech_contact_id`),
   CONSTRAINT `cu_techcontact_ref` FOREIGN KEY (`tech_contact_id`)
                                   REFERENCES `contacts` (`id`)
-                                  ON DELETE RESTRICT ON UPDATE CASCADE,
-  KEY `externalid_idx` (`external_id`)
+                                  ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `customer_registers` (
@@ -496,7 +389,6 @@ CREATE TABLE `contracts` (
   `contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
   `order_id` int(11) UNSIGNED NULL REFERENCES `orders` (`id`),
   `status` enum('pending','active','locked','terminated') NOT NULL DEFAULT 'active',
-  `external_id` varchar(255) NULL default NULL,
   `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `create_timestamp` timestamp NOT NULL,
   `activate_timestamp` timestamp NULL,
@@ -517,8 +409,7 @@ CREATE TABLE `contracts` (
   KEY `orderid_idx` (`order_id`),
   CONSTRAINT `co_orderid_ref` FOREIGN KEY (`order_id`)
                               REFERENCES `orders` (`id`)
-                              ON DELETE SET NULL ON UPDATE CASCADE,
-  KEY `externalid_idx` (`external_id`)
+                              ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- create resellers->contracts foreign key
@@ -550,7 +441,6 @@ CREATE TABLE `voip_subscribers` (
   `domain_id` int(11) UNSIGNED NOT NULL REFERENCES `domains` (`id`),
   `status` enum('active','locked','terminated') NOT NULL DEFAULT 'active',
   `primary_number_id` int(11) unsigned default NULL,
-  `external_id` varchar(255) NULL default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uuid_idx` (uuid),
   KEY `username_idx` (`username`),
@@ -562,15 +452,14 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`)
                                 REFERENCES `domains` (`id`)
                                 ON DELETE CASCADE ON UPDATE CASCADE,
-  KEY `pnumid_idx` (`primary_number_id`),
-  KEY `externalid_idx` (`external_id`)
+  KEY `pnumid_idx` (`primary_number_id`)
 ) ENGINE=InnoDB;
 
 -- create table that stores all known E.164 numbers
 CREATE TABLE `voip_numbers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `cc` int(4) UNSIGNED NOT NULL,
-  `ac` varchar(7) NOT NULL,
+  `ac` int(5) UNSIGNED NOT NULL,
   `sn` varchar(31) NOT NULL,
   `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
   `subscriber_id` int(11) UNSIGNED NULL REFERENCES `voip_subscribers` (`id`),
@@ -579,7 +468,6 @@ CREATE TABLE `voip_numbers` (
   `list_timestamp` timestamp,
   PRIMARY KEY  (`id`),
   KEY `listts_idx` (`list_timestamp`),
-  UNIQUE KEY `number_idx` (`cc`,`ac`,`sn`),
   KEY `resellerid_idx` (`reseller_id`),
   CONSTRAINT `v_n_resellerid_ref` FOREIGN KEY (`reseller_id`)
                                   REFERENCES `resellers` (`id`)
@@ -594,7 +482,7 @@ CREATE TABLE `voip_numbers` (
 CREATE TABLE `voip_number_blocks` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `cc` int(4) UNSIGNED NOT NULL,
-  `ac` varchar(7) NOT NULL,
+  `ac` int(5) UNSIGNED NOT NULL,
   `sn_prefix` varchar(31) NOT NULL,
   `sn_length` tinyint(2) UNSIGNED NOT NULL,
   `allocable` bool NOT NULL DEFAULT FALSE,
@@ -623,7 +511,7 @@ ALTER TABLE voip_subscribers
         ADD CONSTRAINT `v_s_pnumid_ref`
             FOREIGN KEY (`primary_number_id`)
             REFERENCES `voip_numbers` (`id`)
-            ON DELETE SET NULL ON UPDATE CASCADE
+            ON DELETE CASCADE ON UPDATE CASCADE
 ;
 
 -- create account status table
@@ -729,22 +617,15 @@ CREATE TABLE `voip_intercept` (
 -- insert some data to get rating and the web interface working
 
 -- system internal products
-INSERT INTO `products` (id,class,handle,name,on_sale)
-     VALUES (1,'pstnpeering','PSTN_PEERING','PSTN Peering',1),
-            (2,'sippeering','SIP_PEERING','SIP Peering',1),
-            (3,'reseller','VOIP_RESELLER','VoIP Reseller',1);
+INSERT INTO `products`
+     VALUES (1,NULL,'pstnpeering','PSTN_PEERING','PSTN Peering',1,NULL,NULL,NULL),
+            (2,NULL,'sippeering','SIP_PEERING','SIP Peering',1,NULL,NULL,NULL),
+            (3,NULL,'reseller','VOIP_RESELLER','VoIP Reseller',1,NULL,NULL,NULL);
 -- the default reseller contract, will be the only one unless multitenancy is enabled
-INSERT INTO `contracts` (id,status,modify_timestamp,create_timestamp,activate_timestamp) VALUES (1,'active',now(),now(),now());
-INSERT INTO `resellers` (id,contract_id,name,status) VALUES (1,1,'default','active');
-INSERT INTO `billing_mappings` (id,start_date,end_date,contract_id,product_id) VALUES (1,NULL,NULL,1,3);
+INSERT INTO `contracts` VALUES (1,NULL,NULL,NULL,NULL,'active',now(),now(),now(),NULL);
+INSERT INTO `resellers` VALUES (1,1,'default','active');
+INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,NULL,1,3);
 -- first administrative account, change password after first login
-INSERT INTO `admins` (id,reseller_id,login,md5pass,is_master,is_superuser,call_data,lawful_intercept)
-              VALUES (1,1,'administrator',md5('administrator'),1,1,1,1);
+INSERT INTO `admins` VALUES (1,1,'administrator',md5('administrator'),1,1,1,0,1,1,1);
 -- default billing profile creation
-INSERT INTO `billing_profiles` (id,reseller_id,handle,name,interval_unit,interval_count)
-                         VALUES(1,1,'default','Default Billing Profile','month',1);
-INSERT INTO `billing_zones` (id,billing_profile_id,zone,detail) VALUES (1,1,'Free Default Zone','All Destinations');
-INSERT INTO `billing_fees` (id,billing_profile_id,billing_zone_id,destination,type,
-                            onpeak_init_rate,onpeak_init_interval,onpeak_follow_rate,onpeak_follow_interval,
-                            offpeak_init_rate,offpeak_init_interval,offpeak_follow_rate,offpeak_follow_interval)
-                    VALUES (1,1,1,'.*','call',0,600,0,600,0,600,0,600);
+INSERT INTO `billing_profiles` VALUES(1,1,'default','Default Billing Profile',1,0,0,0,'month',1,NULL,0,0);

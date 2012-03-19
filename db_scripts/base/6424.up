@@ -37,11 +37,11 @@ ALTER TABLE `acc` MODIFY `sip_code` varchar(3) CHARACTER SET utf8 NOT NULL DEFAU
 ALTER TABLE `acc` MODIFY `sip_reason` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '';
 ALTER TABLE `acc` MODIFY `src_leg` varchar(2048) CHARACTER SET utf8 default NULL;
 ALTER TABLE `acc` MODIFY `dst_leg` varchar(2048) CHARACTER SET utf8 default NULL;
-ALTER TABLE `acc` MODIFY `dst_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
-ALTER TABLE `acc` MODIFY `dst_ouser` varchar(64) CHARACTER SET utf8 NOT NULL default '';
-ALTER TABLE `acc` MODIFY `dst_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
-ALTER TABLE `acc` MODIFY `src_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
-ALTER TABLE `acc` MODIFY `src_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+#ALTER TABLE `acc` MODIFY `dst_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+#ALTER TABLE `acc` MODIFY `dst_ouser` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+#ALTER TABLE `acc` MODIFY `dst_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
+#ALTER TABLE `acc` MODIFY `src_user` varchar(64) CHARACTER SET utf8 NOT NULL default '';
+#ALTER TABLE `acc` MODIFY `src_domain` varchar(128) CHARACTER SET utf8 NOT NULL default '';
 
 ALTER TABLE `acc_backup` CONVERT TO CHARACTER SET utf8;
 ALTER TABLE `acc_trash` CONVERT TO CHARACTER SET utf8;
