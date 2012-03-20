@@ -1,4 +1,4 @@
 use provisioning;
 
-alter table voip_cf_mappings add constraint cfmap_time_ref foreign key (time_set_id) references voip_cf_time_sets(id);
-alter table voip_cf_mappings add constraint cfmap_dest_ref foreign key (destination_set_id) references voip_cf_destination_sets(id);
+alter table voip_cf_mappings add constraint cfmap_time_ref foreign key (time_set_id) references voip_cf_time_sets(id) on delete cascade on update cascade;
+alter table voip_cf_mappings add constraint cfmap_dest_ref foreign key (destination_set_id) references voip_cf_destination_sets(id) on delete cascade on update cascade;
