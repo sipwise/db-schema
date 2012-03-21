@@ -1,11 +1,18 @@
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO nagios@"192.168.255.%" IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO nagios@localhost IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON mysql.* TO nagios@"192.168.255.%" IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON mysql.* TO nagios@localhost IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON kamailio.location TO nagios@"192.168.255.%" IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON kamailio.location TO nagios@localhost IDENTIFIED BY 'PW_CHECKTOOL';
+GRANT SELECT ON mysql.* TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
+GRANT SELECT ON kamailio.location TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
 
-GRANT SELECT ON kamailio.* TO kamailioro@localhost IDENTIFIED BY 'PW_KAMAILIORO';
-GRANT ALL ON kamailio.* TO kamailio@localhost IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON provisioning.voip_peer_hosts TO kamailio@localhost IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON kamailio.* TO 'kamailioro'@'localhost' IDENTIFIED BY 'PW_KAMAILIORO';
+GRANT ALL ON kamailio.* TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_peer_hosts TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_cf_destination_sets TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_cf_destinations TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_cf_periods TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_cf_time_sets TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON provisioning.voip_cf_mappings TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON billing.ncos_levels TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON billing.ncos_lnp_list TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON billing.ncos_pattern_list TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON billing.lnp_numbers TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
 
+GRANT SELECT ON kamailio.* to 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
+GRANT INSERT ON kamailio.fax_journal to 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
