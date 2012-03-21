@@ -1,6 +1,17 @@
 #!/bin/bash
 
-hostname="$(hostname)"
+# do not rely on hostname(1), might return hostname of the
+# deployment system when initially deploying via chroot
+if [ -r /etc/hostname ] ; then
+  hostname="$(cat /etc/hostname)"
+else
+  hostname=$(hostname)
+fi
+
+if [ -z "${hostname}" ] ; then
+  echo "Error: hostname could not be identified." >&2
+  exit 1
+fi
 
 /etc/init.d/mysql start || true
 . /etc/mysql/sipwise.cnf
