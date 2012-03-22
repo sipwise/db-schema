@@ -1,3 +1,0 @@
-use provisioning;
-
-delete from language_strings where code='Client.Syntax.ProfileNameTooLong';
