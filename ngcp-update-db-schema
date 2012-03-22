@@ -42,11 +42,11 @@ fi
 
 if [ -x /usr/sbin/ngcp-check_active ] ; then
   if /usr/sbin/ngcp-check_active -q ; then
-    echo "This seems to be the active node, registering revisions."
-  else
-    # TODO - is this really true? what about /usr/share/ngcp-upgrade-2.4/db/5670.up?
-    echo "This does not seem to be the active node, nothing to do."
+    echo "This seems to be the active node, nothing to do."
     exit 0
+  else
+    # TODO - what about /usr/share/ngcp-upgrade-2.4/db/5670.up?
+    echo "This seems to be the inactive node, registering revisions."
   fi
 fi
 
