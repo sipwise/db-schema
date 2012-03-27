@@ -41,6 +41,8 @@ DELIMITER ;
 INSERT INTO billing.billing_zones_history
      SELECT billing_zones.id, billing_zones.* FROM billing.billing_zones;
 
+GRANT SELECT ON billing.billing_zones_history TO 'exporter'@'localhost';
+
 CREATE TABLE `billing`.`billing_fees_history` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `bf_id` int(11) UNSIGNED,
