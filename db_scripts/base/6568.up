@@ -7,3 +7,5 @@ CREATE TABLE `prepaid_costs` (
   `free_time_used` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
+
+GRANT DELETE ON accounting.prepaid_costs TO 'rateomat'@'localhost';

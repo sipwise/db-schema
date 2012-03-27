@@ -27,6 +27,9 @@ GRANT ALL on syslog.* TO 'rsyslog'@'localhost' IDENTIFIED BY 'PW_RSYSLOG';
 GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'rateomat'@localhost' IDENTIFIED BY 'PW_RATEOMAT';
 GRANT SELECT,INSERT,UPDATE ON billing.* TO 'rateomat'@'localhost' IDENTIFIED BY 'PW_RATEOMAT';
 
+GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'sems_prepaid'@'localhost' IDENTIFIED BY 'PW_SEMS_PREPAID';
+GRANT SELECT,INSERT,UPDATE ON billing.* TO 'sems_prepaid'@'localhost' IDENTIFIED BY 'PW_SEMS_PREPAID';
+
 GRANT ALL PRIVILEGES ON *.* TO 'sipwise'@'localhost' IDENTIFIED BY 'PW_SIPWISE' WITH GRANT OPTION;
 
 GRANT ALL PRIVILEGES ON kamailio.* to 'dbcleaner'@'localhost' IDENTIFIED BY 'PW_CLEANUP_TOOLS';
