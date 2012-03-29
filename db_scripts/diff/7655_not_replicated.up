@@ -32,6 +32,3 @@ CREATE TABLE `packets` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 PARTITION BY RANGE (FLOOR(`timestamp`))
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM);
-
-GRANT ALL ON sipstats.* TO 'soap'@'localhost';
-GRANT ALL ON sipstats.* to 'voisniff'@'localhost' IDENTIFIED BY 'PW_VOISNIFF';

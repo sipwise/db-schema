@@ -1,0 +1,2 @@
+REVOKE ALL PRIVILEGES ON sipstats.* FROM 'soap'@'localhost';
+REVOKE ALL PRIVILEGES ON sipstats.* FROM 'voisniff'@'localhost';
