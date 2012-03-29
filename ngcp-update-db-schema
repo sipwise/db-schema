@@ -26,6 +26,25 @@ if ! mysql -e "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY '$
   exit 1
 fi
 
+# support automated installation
+if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
+  echo "Running in automated installation mode, ignoring check for empty db_schema."
+else
+  if [ "$(mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp; select * from db_schema;' 2>/dev/null)" = "" ] ; then
+    echo "================================================================="
+    echo "Warning: the db_schema table of the ngcp database is empty."
+    echo "Are you sure you want to proceed with applying db-schema changes?"
+    printf "Please type 'agree' to really continue: "
+
+    unset AGREE
+    read AGREE
+    if [ "$AGREE" != "agree" ]; then
+      echo "Exiting as requested." >&2
+      exit 1
+    fi
+  fi
+fi
+
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
   mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
@@ -56,7 +75,7 @@ revision_wrapper() {
   for rev in $* ; do
     revname="$(basename $rev)"
 
-    cd $(dirname $rev) # would fail if a script references a file (like language_strings.txt) in its CWD
+    cd $(dirname $rev) || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
 
     if ngcp-check-rev-applied --schema db_schema --revision "$revname" ; then
       echo "Revision $revname has been applied already, nothing to do."
