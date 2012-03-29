@@ -59,48 +59,99 @@ if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e 'describe db_schema'  >/de
   exit 1
 fi
 
-if [ -x /usr/sbin/ngcp-check_active ] ; then
-  if /usr/sbin/ngcp-check_active -q ; then
-    echo "This seems to be the active node, nothing to do."
-    exit 0
-  else
-    # TODO - what about /usr/share/ngcp-upgrade-2.4/db/5670.up?
-    echo "This seems to be the inactive node, registering revisions."
+running_on_active_node() {
+  if [ -x /usr/sbin/ngcp-check_active ] ; then
+    if /usr/sbin/ngcp-check_active -q ; then
+      echo "This seems to be the active node, nothing to do."
+      return 0
+    else
+      echo "This seems to be the inactive node, registering revisions."
+      return 1
+    fi
   fi
-fi
+}
+
+apply_revision() {
+  [ -n "$1" ] || return 1
+
+  rev="$1"
+  revname="$(basename $rev)"
+
+  printf "Applying revision script %s: " "$rev"
+  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} < "$rev" ; then
+    echo done
+  else
+    echo "failed. :("
+    exit 1
+  fi
+
+  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${hostname}"\", CURRENT_TIMESTAMP);" ; then
+    echo "Marked revision $rev for being applied."
+  else
+    echo "Error while executing DB commands using revision $rev for host $hostname" >&2
+    exit 1
+  fi
+}
+
+# execute the rev script iff there's no entry for *any* host yet
+apply_generic_revs() {
+  [ -n "$1" ] || return 1
+
+  rev="$1"
+  revname="$(basename $rev)"
+
+  if ngcp-check-rev-applied --schema db_schema --revision "$revname" ; then
+    echo "Revision $revname has been applied already, nothing to do."
+    return 0
+  fi
+
+  apply_revision "$rev"
+}
+
+# execute the rev script iff there's no entry for the *current* host yet
+apply_host_specific_revs() {
+  [ -n "$1" ] || return 1
+
+  rev="$1"
+  revname="$(basename $rev)"
+
+  if ngcp-check-rev-applied --schema db_schema --revision "$revname" --node "$hostname" ; then
+    echo "Revision $revname has been applied on $hostname already, nothing to do."
+    return 0
+  fi
+
+  apply_revision "$rev"
+}
 
 revision_wrapper() {
   [ -n "$1" ] || return 1
 
   for rev in $* ; do
-    revname="$(basename $rev)"
 
     cd $(dirname $rev) || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
 
-    if ngcp-check-rev-applied --schema db_schema --revision "$revname" ; then
-      echo "Revision $revname has been applied already, nothing to do."
-      continue
-    fi
-  
-    printf "Applying revision script %s: " "$rev"
-    if mysql -usipwise -p${SIPWISE_DB_PASSWORD} < "$rev" ; then
-      echo done
-    else
-      echo "failed. :("
-      exit 1
-    fi
+    revname="$(basename $rev)"
 
-    if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${hostname}"\", CURRENT_TIMESTAMP);" ; then
-      echo "Marked revision $rev for being applied."
-    else
-      echo "Error while executing DB commands using revision $rev for host $hostname" >&2
-      exit 1
-    fi
+    case "$revname" in
+      # the scripts that should be executed on *all* hosts, no matter whether
+      # they are active or inactive, since the script's content doesn't get replicated
+      *_not_replicated.up)
+	apply_host_specific_revs "$rev"
+	;;
+      *)
+	if running_on_active_node ; then
+	  echo "Replication script ${revname} noted, nothing to do on active node"
+	else
+	  apply_generic_revs "$rev"
+        fi
+	;;
+    esac
+
+
   done
 }
 
 revision_wrapper /usr/share/ngcp-db-schema/db_scripts/base/*.up
 revision_wrapper /usr/share/ngcp-db-schema/db_scripts/diff/*.up
-# TODO language_wrapper
 
 ## END OF FILE #################################################################
