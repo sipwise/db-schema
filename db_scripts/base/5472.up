@@ -1,0 +1,2 @@
+ALTER TABLE kamailio.acc CHANGE COLUMN callid callid varchar(255) NOT NULL DEFAULT '';
+ALTER TABLE accounting.acc CHANGE COLUMN callid callid varchar(255) NOT NULL DEFAULT '';

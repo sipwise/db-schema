@@ -1,18 +1,9 @@
 use kamailio;
 
-ALTER TABLE `acc` DROP COLUMN `time_hires`;
 ALTER TABLE `acc_backup` DROP COLUMN `time_hires`;
 ALTER TABLE `acc_trash` DROP COLUMN `time_hires`;
 
 use accounting;
 
-ALTER TABLE `acc` DROP COLUMN `time_hires`;
 ALTER TABLE `acc_backup` DROP COLUMN `time_hires`;
 ALTER TABLE `acc_trash` DROP COLUMN `time_hires`;
-
-ALTER TABLE `cdr` ADD COLUMN `t3mp_start_time` timestamp NOT NULL default '0000-00-00 00:00:00' AFTER `start_time`;
-     UPDATE `cdr` SET t3mp_start_time=FROM_UNIXTIME(start_time);
-ALTER TABLE `cdr` DROP COLUMN `start_time`; 
-ALTER TABLE `cdr` CHANGE COLUMN `t3mp_start_time` `start_time` timestamp NOT NULL default '0000-00-00 00:00:00';
-
-ALTER TABLE `cdr` MODIFY `duration` int(10) unsigned NOT NULL;
