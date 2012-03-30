@@ -68,6 +68,8 @@ running_on_active_node() {
       echo "This seems to be the inactive node, registering revisions."
       return 1
     fi
+  else
+      return 1
   fi
 }
 
