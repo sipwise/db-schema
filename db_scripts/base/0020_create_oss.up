@@ -384,9 +384,6 @@ CREATE TABLE `xmlhostgroups` (
 
 -- INSERT default data
 
--- localization language strings
-LOAD DATA LOCAL INFILE 'language_strings.txt' INTO TABLE language_strings;
-
 -- dialplan id counter
 INSERT INTO counter VALUES('dp_id', 1);
 
