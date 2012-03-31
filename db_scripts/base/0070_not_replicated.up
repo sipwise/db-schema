@@ -1,8 +1,83 @@
 USE accounting;
-create table acc_backup like kamailio.acc;
-create table acc_trash like kamailio.acc;
+create table acc_backup ( 
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `method` varchar(16) NOT NULL DEFAULT '',
+  `from_tag` varchar(64) NOT NULL DEFAULT '',
+  `to_tag` varchar(64) NOT NULL DEFAULT '',
+  `callid` varchar(64) NOT NULL DEFAULT '',
+  `sip_code` varchar(3) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `time` datetime NOT NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
+  `dst_user` varchar(64) NOT NULL default '',
+  `dst_ouser` varchar(64) NOT NULL default '',
+  `dst_domain` varchar(128) NOT NULL default '',
+  `src_user` varchar(64) NOT NULL default '',
+  `src_domain` varchar(128) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  KEY `callid_idx` (`callid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table acc_trash ( 
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `method` varchar(16) NOT NULL DEFAULT '',
+  `from_tag` varchar(64) NOT NULL DEFAULT '',
+  `to_tag` varchar(64) NOT NULL DEFAULT '',
+  `callid` varchar(64) NOT NULL DEFAULT '',
+  `sip_code` varchar(3) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `time` datetime NOT NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
+  `dst_user` varchar(64) NOT NULL default '',
+  `dst_ouser` varchar(64) NOT NULL default '',
+  `dst_domain` varchar(128) NOT NULL default '',
+  `src_user` varchar(64) NOT NULL default '',
+  `src_domain` varchar(128) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  KEY `callid_idx` (`callid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 USE kamailio;
-create table acc_backup like kamailio.acc;
-create table acc_trash like kamailio.acc;
+create table acc_backup (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `method` varchar(16) NOT NULL DEFAULT '',
+  `from_tag` varchar(64) NOT NULL DEFAULT '',
+  `to_tag` varchar(64) NOT NULL DEFAULT '',
+  `callid` varchar(64) NOT NULL DEFAULT '',
+  `sip_code` varchar(3) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `time` datetime NOT NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
+  `dst_user` varchar(64) NOT NULL default '',
+  `dst_ouser` varchar(64) NOT NULL default '',
+  `dst_domain` varchar(128) NOT NULL default '',
+  `src_user` varchar(64) NOT NULL default '',
+  `src_domain` varchar(128) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  KEY `callid_idx` (`callid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table acc_trash (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `method` varchar(16) NOT NULL DEFAULT '',
+  `from_tag` varchar(64) NOT NULL DEFAULT '',
+  `to_tag` varchar(64) NOT NULL DEFAULT '',
+  `callid` varchar(64) NOT NULL DEFAULT '',
+  `sip_code` varchar(3) NOT NULL DEFAULT '',
+  `sip_reason` varchar(128) NOT NULL DEFAULT '',
+  `time` datetime NOT NULL,
+  `src_leg` varchar(255) default NULL,
+  `dst_leg` varchar(255) default NULL,
+  `dst_user` varchar(64) NOT NULL default '',
+  `dst_ouser` varchar(64) NOT NULL default '',
+  `dst_domain` varchar(128) NOT NULL default '',
+  `src_user` varchar(64) NOT NULL default '',
+  `src_domain` varchar(128) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  KEY `callid_idx` (`callid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
