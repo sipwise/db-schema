@@ -1,6 +1,11 @@
 #!/bin/bash
 
-VERBOSE=no
+# iff executed under VERBOSE=yes provide more information
+verbose() {
+  if [[ "$VERBOSE" == "yes" ]] ; then
+    echo "$*"
+  fi
+}
 
 # do not rely on hostname(1), might return hostname of the
 # deployment system when initially deploying via chroot
@@ -72,10 +77,10 @@ fi
 running_on_active_node() {
   if [ -x /usr/sbin/ngcp-check_active ] ; then
     if /usr/sbin/ngcp-check_active -q ; then
-      [ "$VERBOSE" != no ] && echo "This seems to be the active node, nothing to do."
+      verbose "This seems to be the active node, nothing to do."
       return 0
     else
-      [ "$VERBOSE" != no ] && echo "This seems to be the inactive node, applying revisions."
+      verbose "This seems to be the inactive node, applying revisions."
       return 1
     fi
   else
@@ -99,7 +104,7 @@ apply_revision() {
   fi
 
   if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${hostname}"\", CURRENT_TIMESTAMP);" ; then
-    [ "$VERBOSE" != no ] && echo "Marked revision $rev as applied."
+    verbose "Marked revision $rev as applied."
   else
     echo "Error while executing DB commands using revision $rev for host $hostname" >&2
     exit 1
