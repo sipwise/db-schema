@@ -43,6 +43,7 @@ else
     echo "================================================================="
     echo "Warning: the db_schema table of the ngcp database is empty."
     echo "Are you sure you want to proceed with applying db-schema changes?"
+    echo "This will DROP and then re-initialize your existing database."
     printf "Please type 'agree' to really continue: "
 
     unset AGREE
