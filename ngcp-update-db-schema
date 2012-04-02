@@ -6,6 +6,13 @@ VERBOSE=no
 # deployment system when initially deploying via chroot
 if [ -r /etc/hostname ] ; then
   hostname="$(cat /etc/hostname)"
+
+  # on Amazon EC2 /etc/hostname might contain just 'localhost'
+  case "$hostname" in
+    localhost)
+      hostname=$(hostname)
+      ;;
+  esac
 else
   hostname=$(hostname)
 fi
