@@ -92,8 +92,8 @@ apply_revision() {
   if mysql -usipwise -p${SIPWISE_DB_PASSWORD} < "$rev" ; then
     echo done
   else
-    echo "failed. :("
-    echo "Please resolve the problem and run ngcp-update-db-schema again."
+    echo "failed. :(" >&2
+    echo "Please resolve the problem and run ngcp-update-db-schema again." >&2
     exit 1
   fi
 
