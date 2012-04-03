@@ -1,5 +1,5 @@
-ngcp-db-schema (0.1) unstable; urgency=low
+ngcp-db-schema (0.1.0) unstable; urgency=low
 
   * Initial release.
 
- -- Michael Prokop <mprokop@sipwise.com>  Thu, 26 Aug 2010 17:19:32 +0200
+ -- Michael Prokop <mprokop@sipwise.com>  Tue, 03 Apr 2012 17:02:06 +0200
