@@ -1,0 +1,8 @@
+USE provisioning;
+
+DROP TRIGGER trusted_sources_insert;
+DROP TRIGGER trusted_sources_update;
+DROP TRIGGER trusted_sources_delete;
+DROP TABLE voip_trusted_sources;
+
+DELETE FROM language_strings WHERE code='Client.Syntax.UnknownProtocol';

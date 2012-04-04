@@ -1,0 +1,41 @@
+USE provisioning;
+
+CREATE TABLE `voip_trusted_sources` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `src_ip` varchar(50) NOT NULL,
+  `protocol` varchar(4) NOT NULL,
+  `from_pattern` varchar(64) DEFAULT NULL,
+  `uuid` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `peer_idx` (`src_ip`),
+  CONSTRAINT `subscriber_id_ref` FOREIGN KEY (`subscriber_id`)
+    REFERENCES `voip_subscribers` (`id`)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- update kamailio-db
+CREATE TRIGGER trusted_sources_insert AFTER INSERT ON voip_trusted_sources
+FOR EACH ROW
+    INSERT INTO kamailio.trusted (src_ip, proto, from_pattern, tag)
+    VALUES (NEW.src_ip, NEW.protocol, NEW.from_pattern, NEW.uuid)
+;
+CREATE TRIGGER trusted_sources_update BEFORE UPDATE ON voip_trusted_sources
+FOR EACH ROW
+    UPDATE kamailio.trusted SET
+        src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid
+    WHERE
+        src_ip=OLD.src_ip and proto=OLD.protocol and from_pattern=OLD.from_pattern and tag=OLD.uuid
+;
+CREATE TRIGGER trusted_sources_delete BEFORE DELETE ON voip_trusted_sources
+FOR EACH ROW
+    DELETE FROM kamailio.trusted 
+    WHERE src_ip=OLD.src_ip and proto=OLD.protocol and from_pattern=OLD.from_pattern and tag=OLD.uuid
+;
+
+-- languae strings
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.UnknownProtocol', 'en', 'Unknown protocol');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.UnknownProtocol', 'de', 'Unbekanntes Protokoll');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.UnknownProtocol', 'es', 'Unknown protocol');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.UnknownProtocol', 'fr', 'Unknown protocol');
+
