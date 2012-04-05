@@ -1,0 +1,6 @@
+use kamailio;
+
+ALTER TABLE dialog CHANGE COLUMN `caller_cseq` `caller_cseq` varchar(20) NOT NULL;
+ALTER TABLE dialog CHANGE COLUMN `callee_cseq` `callee_cseq` varchar(20) NOT NULL;
+ALTER TABLE dialog ADD COLUMN `toroute_name` varchar(32) DEFAULT NULL AFTER `toroute`;
+REPLACE INTO version(table_name, table_version) VALUES ('dialog', 5);
