@@ -41,7 +41,7 @@ if (!defined $dbpwd) {
   die "Couldn't identify password for user sipwise to connect to database.";
 }
 
-$dbpwd =~ s/^['"](.*)['"]$/$1/g; # get rid of possibly surrounding quotes
+$dbpwd =~ s/^['"](.*)['"]$/$1/; # get rid of possibly surrounding quotes
 
 my $dbh = DBI->connect("dbi:mysql:dbname=$dbname;host=$dbhost", $dbuser, $dbpwd)
         or die "Couldn't connect to database: " . DBI->errstr;
