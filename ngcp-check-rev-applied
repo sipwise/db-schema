@@ -5,6 +5,7 @@ use warnings;
 use DBI;
 use Getopt::Long;
 use Pod::Usage;
+use Config::Tiny;
 
 my $dbhost   = 'localhost';
 my $dbname   = 'ngcp';
@@ -31,7 +32,18 @@ pod2usage(-exitval => 2, -verbose => 2) if $man;
 pod2usage(2) if !defined $revision;
 pod2usage(2) if !defined $schema;
 
-my $dbh = DBI->connect("dbi:mysql:dbname=$dbname;host=$dbhost")
+# connect as user sipwise to DB
+my $Config = Config::Tiny->read('/etc/mysql/sipwise.cnf') or die "Could not read /etc/mysql/sipwise.cnf";
+my $dbuser = 'sipwise';
+my $dbpwd = $Config->{_}->{SIPWISE_DB_PASSWORD};
+
+if (!defined $dbpwd) {
+  die "Couldn't identify password for user sipwise to connect to database.";
+}
+
+$dbpwd =~ s/^['"](.*)['"]$/$1/g; # get rid of possibly surrounding quotes
+
+my $dbh = DBI->connect("dbi:mysql:dbname=$dbname;host=$dbhost", $dbuser, $dbpwd)
         or die "Couldn't connect to database: " . DBI->errstr;
 
 $schema = $dbh->quote_identifier($schema);
