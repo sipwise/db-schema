@@ -35,11 +35,6 @@ if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
   exit 1
 fi
 
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY '${SIPWISE_DB_PASSWORD}' WITH GRANT OPTION;" ; then
-  echo 'Error: grants for user sipwise on localhost could not be applied.' >&2
-  exit 1
-fi
-
 # support automated installation
 if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
   echo "Running in automated installation mode, ignoring check for empty db_schema."
