@@ -1,0 +1,4 @@
+USE sipstats;
+
+DROP TABLE IF EXISTS mark;
+DROP TABLE IF EXISTS statistics;

@@ -1,0 +1,48 @@
+USE sipstats;
+
+DROP TABLE IF EXISTS mark;
+CREATE TABLE `mark` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `value` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY name_idx(name)
+) ENGINE=InnoDB ;
+
+DROP TABLE IF EXISTS statistics;
+CREATE TABLE `statistics` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` decimal(17,6) NOT NULL,
+  `req_count` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_register` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_invite` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_bye` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_ack` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_prack` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_cancel` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_update` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_options` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_publish` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_subscribe` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_notify` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_message` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `req_other` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_count` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_18x` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_1xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_2xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_3xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_401` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_407` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_403` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_404` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_480` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_486` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_487` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_4xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_5xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `res_6xx` bigint(20) unsigned NOT NULL DEFAULT '0',
+ PRIMARY KEY (`id`,`timestamp`))
+ ENGINE=InnoDB PARTITION BY RANGE (FLOOR(`timestamp`)) 
+(PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = InnoDB);
+
