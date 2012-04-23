@@ -1,0 +1,19 @@
+USE provisioning;
+
+DROP TRIGGER trusted_sources_update;
+
+CREATE TRIGGER trusted_sources_update BEFORE UPDATE ON voip_trusted_sources
+FOR EACH ROW
+    UPDATE kamailio.trusted SET
+        src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid
+    WHERE
+        src_ip=OLD.src_ip and proto=OLD.protocol and tag=OLD.uuid
+;
+
+DROP TRIGGER trusted_sources_delete;
+
+CREATE TRIGGER trusted_sources_delete BEFORE DELETE ON voip_trusted_sources
+FOR EACH ROW
+    DELETE FROM kamailio.trusted 
+    WHERE src_ip=OLD.src_ip and proto=OLD.protocol and tag=OLD.uuid
+;
