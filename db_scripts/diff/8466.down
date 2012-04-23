@@ -1,0 +1,2 @@
+ALTER TABLE kamailio.lcr_rule DROP COLUMN request_uri;
+UPDATE kamailio.version SET table_version=1 WHERE table_name="lcr_rule";
