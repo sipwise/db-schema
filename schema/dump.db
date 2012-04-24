@@ -1691,6 +1691,7 @@ CREATE TABLE `lcr_rule` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lcr_id` smallint(5) unsigned NOT NULL,
   `prefix` varchar(16) DEFAULT NULL,
+  `request_uri` varchar(64) DEFAULT NULL,
   `from_uri` varchar(64) DEFAULT NULL,
   `stopper` int(10) unsigned NOT NULL DEFAULT '0',
   `enabled` int(10) unsigned NOT NULL DEFAULT '1',
@@ -1998,7 +1999,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3933,7 +3934,7 @@ FOR EACH ROW
     UPDATE kamailio.trusted SET
         src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid
     WHERE
-        src_ip=OLD.src_ip and proto=OLD.protocol and from_pattern=OLD.from_pattern and tag=OLD.uuid */;;
+        src_ip=OLD.src_ip and proto=OLD.protocol and tag=OLD.uuid */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -3951,7 +3952,7 @@ DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER trusted_sources_delete BEFORE DELETE ON voip_trusted_sources
 FOR EACH ROW
     DELETE FROM kamailio.trusted 
-    WHERE src_ip=OLD.src_ip and proto=OLD.protocol and from_pattern=OLD.from_pattern and tag=OLD.uuid */;;
+    WHERE src_ip=OLD.src_ip and proto=OLD.protocol and tag=OLD.uuid */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -5358,4 +5359,4 @@ CREATE TABLE `se9` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-04-23  6:09:17
+-- Dump completed on 2012-04-24  6:09:11
