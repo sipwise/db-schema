@@ -1,2 +1,2 @@
-ALTER TABLE kamailio.lcr_rule ADD COLUMN request_uri VARCHAR(64) DEFAULT NULL AFTER prefix;
+ALTER TABLE kamailio.lcr_rule ADD COLUMN request_uri VARCHAR(64) DEFAULT '' AFTER prefix;
 UPDATE kamailio.version SET table_version=2 WHERE table_name="lcr_rule";
