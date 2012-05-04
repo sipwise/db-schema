@@ -1,0 +1,9 @@
+USE provisioning;
+
+DELETE FROM language_strings WHERE code = 'Client.Voip.InvalidEnum';
+
+-- Previously run .down scripts must have emptied this table and dealt 
+-- with the preferences in provisioning.voip_preferences this table.
+DROP TABLE voip_preferences_enum;
+
+ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string');

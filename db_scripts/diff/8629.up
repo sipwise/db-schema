@@ -1,0 +1,28 @@
+USE provisioning;
+
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','en','Invalid enum');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','de','Ungültiger Wert');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','es','Invalid enum');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','fr','Invalid enum');
+
+ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string','enum');
+
+CREATE TABLE voip_preferences_enum (
+    preference_id   int(11) unsigned,
+    label           varchar(128),
+    value           varchar(128),
+    primary key (preference_id, value),
+    foreign key (preference_id) references voip_preferences (id) 
+) ENGINE=InnoDB;
+
+--Example enum-preference:
+--
+--INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
+--    VALUES('fwd_to_pstn', 1, 1, 1, 1, 0, 0, 'enum', 0, 'Imagine some really useful information here');
+--
+--INSERT INTO voip_preferences_enum (preference_id, label, value)
+--    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'use domain default', 'default');
+--INSERT INTO voip_preferences_enum (preference_id, label, value)
+--    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'forward', '1');
+--INSERT INTO voip_preferences_enum (preference_id, label, value)
+--    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'do not forward', '2');
