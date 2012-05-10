@@ -1,0 +1,6 @@
+DELETE FROM voip_preferences_enum WHERE preference_id = (SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method');
+DELETE FROM provisioning.voip_preferences where attribute = 'sst_enable';
+DELETE FROM provisioning.voip_preferences where attribute = 'sst_expires';
+DELETE FROM provisioning.voip_preferences where attribute = 'sst_min_timer';
+DELETE FROM provisioning.voip_preferences where attribute = 'sst_max_timer';
+DELETE FROM provisioning.voip_preferences where attribute = 'sst_refresh_method';
