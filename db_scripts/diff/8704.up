@@ -9,7 +9,7 @@ INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, da
 INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
                        VALUES('sst_max_timer', 1, 1, 1, 1, 'int', 1, 'Set Max-SE value in SBC. This is also used to build 422 reply if remote Max-SE is greater than local Max-SE.');
 INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
-    VALUES('sst_refresh_method', 1, 1, 1, 1, 1, 0, 'enum', 0, 'SIP Session Timers refresh method.');
+    VALUES('sst_refresh_method', 0, 1, 1, 1, 1, 0, 'enum', 0, 'SIP Session Timers refresh method.');
 
 INSERT INTO voip_preferences_enum (preference_id, label, value)
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE_FALLBACK_INVITE', 'UPDATE_FALLBACK_INVITE');
