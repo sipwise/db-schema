@@ -1,7 +1,13 @@
 USE provisioning
 
 INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('sst_enable', 1, 1, 1, 1, 'boolean', 1, 'Enable SIP Session Timers.');
+                       VALUES('sst_enable', 0, 1, 1, 1, 'enum', 1, 'Enable SIP Session Timers.');
+
+INSERT INTO voip_preferences_enum (preference_id, label, value)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'yes', 'yes');
+INSERT INTO voip_preferences_enum (preference_id, label, value)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'no', 'no');
+
 INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
                        VALUES('sst_expires', 1, 1, 1, 1, 'int', 1, 'SIP Session Timers refresh interval (seconds). SBC will make refresh at the half of this interval.');
 INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
