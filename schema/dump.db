@@ -237,7 +237,8 @@ CREATE TABLE `cdr` (
   KEY `duri` (`destination_user`,`destination_domain`),
   KEY `sprov` (`source_provider_id`),
   KEY `dprov` (`destination_provider_id`),
-  KEY `kcid` (`call_id`)
+  KEY `kcid` (`call_id`),
+  KEY `rstatus` (`rating_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1999,7 +2000,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -5379,4 +5380,4 @@ CREATE TABLE `se9` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-05-28  6:07:52
+-- Dump completed on 2012-05-29  6:07:49
