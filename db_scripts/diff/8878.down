@@ -1,0 +1,17 @@
+USE kamailio;
+
+DROP TABLE IF EXISTS active_watchers;
+DROP TABLE IF EXISTS presentity;
+DROP TABLE IF EXISTS pua;
+DROP TABLE IF EXISTS rls_presentity;
+DROP TABLE IF EXISTS rls_watchers;
+DROP TABLE IF EXISTS watchers;
+DROP TABLE IF EXISTS xcap;
+
+DELETE FROM version where table_name = 'active_watchers';
+DELETE FROM version where table_name = 'presentity';
+DELETE FROM version where table_name = 'pua';
+DELETE FROM version where table_name = 'rls_presentity';
+DELETE FROM version where table_name = 'rls_watchers';
+DELETE FROM version where table_name = 'watchers';
+DELETE FROM version where table_name = 'xcap';
