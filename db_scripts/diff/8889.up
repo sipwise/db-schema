@@ -1,0 +1,22 @@
+USE provisioning;
+
+-- note: voip_preferences_enum_new can not
+-- set (usr|dom|peer)_pref. they will all
+-- initially be NULL
+
+CREATE TABLE voip_preferences_enum_new (
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) unsigned,
+    label             VARCHAR(128),
+    value             VARCHAR(128),
+    usr_pref TINYINT  (1) DEFAULT 0,
+    dom_pref TINYINT  (1) DEFAULT 0,
+    peer_pref TINYINT (1) DEFAULT 0,
+    FOREIGN KEY (preference_id) REFERENCES voip_preferences (id)
+) ENGINE=InnoDB;
+
+INSERT INTO voip_preferences_enum_new (preference_id, label, value)
+SELECT * FROM voip_preferences_enum;
+
+DROP TABLE voip_preferences_enum;
+ALTER TABLE voip_preferences_enum_new RENAME TO voip_preferences_enum;

@@ -1,0 +1,15 @@
+USE provisioning;
+
+CREATE TABLE voip_preferences_enum_old (
+    preference_id   int(11) unsigned,
+    label           varchar(128),
+    value           varchar(128),
+    primary key (preference_id, value),
+    foreign key (preference_id) references voip_preferences (id) 
+) ENGINE=InnoDB;
+
+INSERT INTO voip_preferences_enum_old (preference_id, label, value)
+SELECT preference_id, label, value FROM voip_preferences_enum;
+
+DROP TABLE voip_preferences_enum;
+ALTER TABLE voip_preferences_enum_old RENAME TO voip_preferences_enum;
