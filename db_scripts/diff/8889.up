@@ -27,11 +27,11 @@ ALTER TABLE voip_preferences_enum_new RENAME TO voip_preferences_enum;
 -- INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
 --     VALUES('fwd_to_pstn', 1, 1, 1, 1, 0, 0, 'enum', 0, 'Imagine some really useful information here');
 -- 
-INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
-    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'use domain default', NULL, 1, 0, 0);
-INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
-    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), '', NULL, 0, 1, 0);
-INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
-    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'forward', '1', 1, 1, 0);
-INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
-    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'do not forward', '2', 1, 1, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'use domain default', NULL, 1, 0, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), '', NULL, 0, 1, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'forward', '1', 1, 1, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'do not forward', '2', 1, 1, 0);
