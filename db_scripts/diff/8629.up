@@ -5,24 +5,30 @@ INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.Invalid
 INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','es','Invalid enum');
 INSERT INTO language_strings (code,language,string) VALUES ('Client.Voip.InvalidEnum','fr','Invalid enum');
 
-ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string','enum');
-
 CREATE TABLE voip_preferences_enum (
-    preference_id   int(11) unsigned,
-    label           varchar(128),
-    value           varchar(128),
-    primary key (preference_id, value),
-    foreign key (preference_id) references voip_preferences (id) 
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) unsigned,
+    label             VARCHAR(128),
+    value             VARCHAR(128),
+    usr_pref TINYINT  (1) DEFAULT 0,
+    dom_pref TINYINT  (1) DEFAULT 0,
+    peer_pref TINYINT (1) DEFAULT 0,
+    FOREIGN KEY (preference_id) REFERENCES voip_preferences (id)
 ) ENGINE=InnoDB;
 
--- Example enum-preference:
--- 
+ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string','enum');
+
+-- Example enum-preference
+-- Use "fwd_to_pstn" for users and also for domains but with different "not-set-option"s
+--
 -- INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
 --     VALUES('fwd_to_pstn', 1, 1, 1, 1, 0, 0, 'enum', 0, 'Imagine some really useful information here');
 -- 
--- INSERT INTO voip_preferences_enum (preference_id, label, value)
---     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'use domain default', 'default');
--- INSERT INTO voip_preferences_enum (preference_id, label, value)
---     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'forward', '1');
--- INSERT INTO voip_preferences_enum (preference_id, label, value)
---     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'do not forward', '2');
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'use domain default', NULL, 1, 0, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), '', NULL, 0, 1, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'forward', '1', 1, 1, 0);
+-- INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+--     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'fwd_to_pstn'), 'do not forward', '2', 1, 1, 0);
