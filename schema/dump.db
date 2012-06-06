@@ -1,8 +1,3 @@
--- MySQL dump 10.13  Distrib 5.1.57, for debian-linux-gnu (x86_64)
---
--- Host: localhost    Database: Syslog
--- ------------------------------------------------------
--- Server version	5.1.57-rel12.8-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -15,20 +10,11 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Current Database: `Syslog`
---
-
 /*!40000 DROP DATABASE IF EXISTS `Syslog`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Syslog` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `Syslog`;
-
---
--- Table structure for table `SystemEvents`
---
-
 DROP TABLE IF EXISTS `SystemEvents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -60,11 +46,6 @@ CREATE TABLE `SystemEvents` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `SystemEventsProperties`
---
-
 DROP TABLE IF EXISTS `SystemEventsProperties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -77,20 +58,11 @@ CREATE TABLE `SystemEventsProperties` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `accounting`
---
-
 /*!40000 DROP DATABASE IF EXISTS `accounting`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `accounting` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `accounting`;
-
---
--- Table structure for table `acc`
---
-
 DROP TABLE IF EXISTS `acc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -115,11 +87,6 @@ CREATE TABLE `acc` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `acc_backup`
---
-
 DROP TABLE IF EXISTS `acc_backup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -144,11 +111,6 @@ CREATE TABLE `acc_backup` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `acc_trash`
---
-
 DROP TABLE IF EXISTS `acc_trash`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -173,11 +135,6 @@ CREATE TABLE `acc_trash` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `cdr`
---
-
 DROP TABLE IF EXISTS `cdr`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -241,11 +198,6 @@ CREATE TABLE `cdr` (
   KEY `rstatus` (`rating_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `mark`
---
-
 DROP TABLE IF EXISTS `mark`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -256,11 +208,6 @@ CREATE TABLE `mark` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `prepaid_costs`
---
-
 DROP TABLE IF EXISTS `prepaid_costs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -273,20 +220,11 @@ CREATE TABLE `prepaid_costs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `billing`
---
-
 /*!40000 DROP DATABASE IF EXISTS `billing`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `billing` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `billing`;
-
---
--- Table structure for table `admins`
---
-
 DROP TABLE IF EXISTS `admins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -308,11 +246,6 @@ CREATE TABLE `admins` (
   CONSTRAINT `a_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_fees`
---
-
 DROP TABLE IF EXISTS `billing_fees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -397,11 +330,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `billing_fees_history`
---
-
 DROP TABLE IF EXISTS `billing_fees_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -428,11 +356,6 @@ CREATE TABLE `billing_fees_history` (
   CONSTRAINT `b_f_h_bzhid_ref` FOREIGN KEY (`billing_zones_history_id`) REFERENCES `billing_zones_history` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_mappings`
---
-
 DROP TABLE IF EXISTS `billing_mappings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -452,11 +375,6 @@ CREATE TABLE `billing_mappings` (
   CONSTRAINT `b_m_productid_ref` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_peaktime_special`
---
-
 DROP TABLE IF EXISTS `billing_peaktime_special`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -470,11 +388,6 @@ CREATE TABLE `billing_peaktime_special` (
   CONSTRAINT `b_p_s_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_peaktime_weekdays`
---
-
 DROP TABLE IF EXISTS `billing_peaktime_weekdays`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -489,11 +402,6 @@ CREATE TABLE `billing_peaktime_weekdays` (
   CONSTRAINT `b_p_w_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_profiles`
---
-
 DROP TABLE IF EXISTS `billing_profiles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -521,11 +429,6 @@ CREATE TABLE `billing_profiles` (
   CONSTRAINT `b_p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `billing_zones`
---
-
 DROP TABLE IF EXISTS `billing_zones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -583,11 +486,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `billing_zones_history`
---
-
 DROP TABLE IF EXISTS `billing_zones_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -602,11 +500,6 @@ CREATE TABLE `billing_zones_history` (
   CONSTRAINT `b_z_h_bzid_ref` FOREIGN KEY (`bz_id`) REFERENCES `billing_zones` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `contacts`
---
-
 DROP TABLE IF EXISTS `contacts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -630,11 +523,6 @@ CREATE TABLE `contacts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `contract_balances`
---
-
 DROP TABLE IF EXISTS `contract_balances`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -655,11 +543,6 @@ CREATE TABLE `contract_balances` (
   CONSTRAINT `c_b_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `contract_credits`
---
-
 DROP TABLE IF EXISTS `contract_credits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -676,11 +559,6 @@ CREATE TABLE `contract_credits` (
   CONSTRAINT `cc_balanceid_ref` FOREIGN KEY (`balance_id`) REFERENCES `contract_balances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `contract_registers`
---
-
 DROP TABLE IF EXISTS `contract_registers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -695,11 +573,6 @@ CREATE TABLE `contract_registers` (
   CONSTRAINT `c_r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `contracts`
---
-
 DROP TABLE IF EXISTS `contracts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -727,11 +600,6 @@ CREATE TABLE `contracts` (
   CONSTRAINT `c_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `credit_payments`
---
-
 DROP TABLE IF EXISTS `credit_payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -746,11 +614,6 @@ CREATE TABLE `credit_payments` (
   CONSTRAINT `cp_paymentid_ref` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `customer_registers`
---
-
 DROP TABLE IF EXISTS `customer_registers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -765,11 +628,6 @@ CREATE TABLE `customer_registers` (
   CONSTRAINT `c_r_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `customers`
---
-
 DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -798,11 +656,6 @@ CREATE TABLE `customers` (
   CONSTRAINT `cu_techcontact_ref` FOREIGN KEY (`tech_contact_id`) REFERENCES `contacts` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `domain_resellers`
---
-
 DROP TABLE IF EXISTS `domain_resellers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -817,11 +670,6 @@ CREATE TABLE `domain_resellers` (
   CONSTRAINT `dr_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `domains`
---
-
 DROP TABLE IF EXISTS `domains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -832,11 +680,6 @@ CREATE TABLE `domains` (
   UNIQUE KEY `domain_idx` (`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `invoices`
---
-
 DROP TABLE IF EXISTS `invoices`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -850,11 +693,6 @@ CREATE TABLE `invoices` (
   UNIQUE KEY `yms_idx` (`year`,`month`,`serial`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lnp_numbers`
---
-
 DROP TABLE IF EXISTS `lnp_numbers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -869,11 +707,6 @@ CREATE TABLE `lnp_numbers` (
   CONSTRAINT `l_n_lnpproid_ref` FOREIGN KEY (`lnp_provider_id`) REFERENCES `lnp_providers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lnp_providers`
---
-
 DROP TABLE IF EXISTS `lnp_providers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -883,11 +716,6 @@ CREATE TABLE `lnp_providers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ncos_levels`
---
-
 DROP TABLE IF EXISTS `ncos_levels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -903,11 +731,6 @@ CREATE TABLE `ncos_levels` (
   CONSTRAINT `c_l_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ncos_lnp_list`
---
-
 DROP TABLE IF EXISTS `ncos_lnp_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -923,11 +746,6 @@ CREATE TABLE `ncos_lnp_list` (
   CONSTRAINT `c_l_l_ncoslevid_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ncos_pattern_list`
---
-
 DROP TABLE IF EXISTS `ncos_pattern_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -941,11 +759,6 @@ CREATE TABLE `ncos_pattern_list` (
   CONSTRAINT `c_p_l_ncoslevid_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `order_payments`
---
-
 DROP TABLE IF EXISTS `order_payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -960,11 +773,6 @@ CREATE TABLE `order_payments` (
   CONSTRAINT `op_paymentid_ref` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `orders`
---
-
 DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -992,11 +800,6 @@ CREATE TABLE `orders` (
   CONSTRAINT `o_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `payments`
---
-
 DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1018,11 +821,6 @@ CREATE TABLE `payments` (
   KEY `status_idx` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `products`
---
-
 DROP TABLE IF EXISTS `products`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1045,11 +843,6 @@ CREATE TABLE `products` (
   CONSTRAINT `p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `resellers`
---
-
 DROP TABLE IF EXISTS `resellers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1064,11 +857,6 @@ CREATE TABLE `resellers` (
   CONSTRAINT `r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_intercept`
---
-
 DROP TABLE IF EXISTS `voip_intercept`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1092,11 +880,6 @@ CREATE TABLE `voip_intercept` (
   CONSTRAINT `vi_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_number_block_resellers`
---
-
 DROP TABLE IF EXISTS `voip_number_block_resellers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1111,11 +894,6 @@ CREATE TABLE `voip_number_block_resellers` (
   CONSTRAINT `vnbr_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_number_blocks`
---
-
 DROP TABLE IF EXISTS `voip_number_blocks`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1131,11 +909,6 @@ CREATE TABLE `voip_number_blocks` (
   UNIQUE KEY `prefix_idx` (`cc`,`ac`,`sn_prefix`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_numbers`
---
-
 DROP TABLE IF EXISTS `voip_numbers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1158,11 +931,6 @@ CREATE TABLE `voip_numbers` (
   CONSTRAINT `v_n_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_subscribers`
---
-
 DROP TABLE IF EXISTS `voip_subscribers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1188,20 +956,11 @@ CREATE TABLE `voip_subscribers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `carrier`
---
-
 /*!40000 DROP DATABASE IF EXISTS `carrier`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `carrier` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `carrier`;
-
---
--- Table structure for table `contracts`
---
-
 DROP TABLE IF EXISTS `contracts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1217,11 +976,6 @@ CREATE TABLE `contracts` (
   CONSTRAINT `c_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `credits`
---
-
 DROP TABLE IF EXISTS `credits`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1233,11 +987,6 @@ CREATE TABLE `credits` (
   CONSTRAINT `c_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `customers`
---
-
 DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1251,11 +1000,6 @@ CREATE TABLE `customers` (
   UNIQUE KEY `externalid_idx` (`external_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `interceptions`
---
-
 DROP TABLE IF EXISTS `interceptions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1265,11 +1009,6 @@ CREATE TABLE `interceptions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `numbers`
---
-
 DROP TABLE IF EXISTS `numbers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1281,11 +1020,6 @@ CREATE TABLE `numbers` (
   CONSTRAINT `n_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `orders`
---
-
 DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1297,11 +1031,6 @@ CREATE TABLE `orders` (
   CONSTRAINT `o_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `payments`
---
-
 DROP TABLE IF EXISTS `payments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1316,11 +1045,6 @@ CREATE TABLE `payments` (
   CONSTRAINT `p_orderid_ref` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `subscribers`
---
-
 DROP TABLE IF EXISTS `subscribers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1340,20 +1064,11 @@ CREATE TABLE `subscribers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `kamailio`
---
-
 /*!40000 DROP DATABASE IF EXISTS `kamailio`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `kamailio` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `kamailio`;
-
---
--- Table structure for table `acc`
---
-
 DROP TABLE IF EXISTS `acc`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1378,11 +1093,6 @@ CREATE TABLE `acc` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `acc_backup`
---
-
 DROP TABLE IF EXISTS `acc_backup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1407,11 +1117,6 @@ CREATE TABLE `acc_backup` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `acc_trash`
---
-
 DROP TABLE IF EXISTS `acc_trash`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1436,11 +1141,6 @@ CREATE TABLE `acc_trash` (
   KEY `callid_idx` (`callid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `active_watchers`
---
-
 DROP TABLE IF EXISTS `active_watchers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1470,11 +1170,6 @@ CREATE TABLE `active_watchers` (
   UNIQUE KEY `active_watchers_idx` (`presentity_uri`,`callid`,`to_tag`,`from_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `address`
---
-
 DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1488,11 +1183,6 @@ CREATE TABLE `address` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `dbaliases`
---
-
 DROP TABLE IF EXISTS `dbaliases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1507,11 +1197,6 @@ CREATE TABLE `dbaliases` (
   KEY `target_idx` (`username`,`domain`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `dialog`
---
-
 DROP TABLE IF EXISTS `dialog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1543,11 +1228,6 @@ CREATE TABLE `dialog` (
   KEY `hash_idx` (`hash_entry`,`hash_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `dialplan`
---
-
 DROP TABLE IF EXISTS `dialplan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1564,11 +1244,6 @@ CREATE TABLE `dialplan` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `dispatcher`
---
-
 DROP TABLE IF EXISTS `dispatcher`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1582,11 +1257,6 @@ CREATE TABLE `dispatcher` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `dom_preferences`
---
-
 DROP TABLE IF EXISTS `dom_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1604,11 +1274,6 @@ CREATE TABLE `dom_preferences` (
   KEY `uda_idx` (`username`,`domain`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `domain`
---
-
 DROP TABLE IF EXISTS `domain`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1620,11 +1285,6 @@ CREATE TABLE `domain` (
   UNIQUE KEY `domain_idx` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fax_destinations`
---
-
 DROP TABLE IF EXISTS `fax_destinations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1641,11 +1301,6 @@ CREATE TABLE `fax_destinations` (
   KEY `subscriber_id` (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fax_journal`
---
-
 DROP TABLE IF EXISTS `fax_journal`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1667,11 +1322,6 @@ CREATE TABLE `fax_journal` (
   KEY `selkey` (`subscriber_id`,`direction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `fax_preferences`
---
-
 DROP TABLE IF EXISTS `fax_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1686,11 +1336,6 @@ CREATE TABLE `fax_preferences` (
   PRIMARY KEY (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lcr_gw`
---
-
 DROP TABLE IF EXISTS `lcr_gw`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1714,11 +1359,6 @@ CREATE TABLE `lcr_gw` (
   UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lcr_rule`
---
-
 DROP TABLE IF EXISTS `lcr_rule`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1735,11 +1375,6 @@ CREATE TABLE `lcr_rule` (
   KEY `lcr_id_idx` (`lcr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `lcr_rule_target`
---
-
 DROP TABLE IF EXISTS `lcr_rule_target`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1758,11 +1393,6 @@ CREATE TABLE `lcr_rule_target` (
   CONSTRAINT `l_r_t_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `lcr_rule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `location`
---
-
 DROP TABLE IF EXISTS `location`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1787,11 +1417,6 @@ CREATE TABLE `location` (
   KEY `account_contact_idx` (`username`,`domain`,`contact`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `peer_preferences`
---
-
 DROP TABLE IF EXISTS `peer_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1808,11 +1433,6 @@ CREATE TABLE `peer_preferences` (
   KEY `ua_idx` (`uuid`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `presentity`
---
-
 DROP TABLE IF EXISTS `presentity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1830,11 +1450,6 @@ CREATE TABLE `presentity` (
   UNIQUE KEY `presentity_idx` (`username`,`domain`,`event`,`etag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `pua`
---
-
 DROP TABLE IF EXISTS `pua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1861,11 +1476,6 @@ CREATE TABLE `pua` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `rls_presentity`
---
-
 DROP TABLE IF EXISTS `rls_presentity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1884,11 +1494,6 @@ CREATE TABLE `rls_presentity` (
   KEY `updated_idx` (`updated`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `rls_watchers`
---
-
 DROP TABLE IF EXISTS `rls_watchers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1918,11 +1523,6 @@ CREATE TABLE `rls_watchers` (
   UNIQUE KEY `rls_watcher_idx` (`presentity_uri`,`callid`,`to_tag`,`from_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `sems_registrations`
---
-
 DROP TABLE IF EXISTS `sems_registrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1937,11 +1537,6 @@ CREATE TABLE `sems_registrations` (
   PRIMARY KEY (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `speed_dial`
---
-
 DROP TABLE IF EXISTS `speed_dial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1959,11 +1554,6 @@ CREATE TABLE `speed_dial` (
   UNIQUE KEY `speed_dial_idx` (`username`,`domain`,`sd_domain`,`sd_username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `subscriber`
---
-
 DROP TABLE IF EXISTS `subscriber`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1984,11 +1574,6 @@ CREATE TABLE `subscriber` (
   KEY `username_idx` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `trusted`
---
-
 DROP TABLE IF EXISTS `trusted`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2002,11 +1587,6 @@ CREATE TABLE `trusted` (
   KEY `peer_idx` (`src_ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `usr_preferences`
---
-
 DROP TABLE IF EXISTS `usr_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2024,11 +1604,6 @@ CREATE TABLE `usr_preferences` (
   KEY `uda_idx` (`username`,`domain`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `version`
---
-
 DROP TABLE IF EXISTS `version`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2037,11 +1612,6 @@ CREATE TABLE `version` (
   `table_version` int(10) unsigned NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voicemail_spool`
---
-
 DROP TABLE IF EXISTS `voicemail_spool`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2063,11 +1633,6 @@ CREATE TABLE `voicemail_spool` (
   CONSTRAINT `v_s_mailboxuser_ref` FOREIGN KEY (`mailboxuser`) REFERENCES `voicemail_users` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voicemail_users`
---
-
 DROP TABLE IF EXISTS `voicemail_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2102,11 +1667,6 @@ CREATE TABLE `voicemail_users` (
   KEY `mailbox_context` (`mailbox`,`context`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `watchers`
---
-
 DROP TABLE IF EXISTS `watchers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2123,11 +1683,6 @@ CREATE TABLE `watchers` (
   UNIQUE KEY `watcher_idx` (`presentity_uri`,`watcher_username`,`watcher_domain`,`event`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `xcap`
---
-
 DROP TABLE IF EXISTS `xcap`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2147,20 +1702,11 @@ CREATE TABLE `xcap` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `ngcp`
---
-
 /*!40000 DROP DATABASE IF EXISTS `ngcp`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `ngcp` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `ngcp`;
-
---
--- Table structure for table `cfg_schema`
---
-
 DROP TABLE IF EXISTS `cfg_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2173,11 +1719,6 @@ CREATE TABLE `cfg_schema` (
   UNIQUE KEY `rev_idx` (`revision`,`node`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `db_schema`
---
-
 DROP TABLE IF EXISTS `db_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2191,20 +1732,11 @@ CREATE TABLE `db_schema` (
 ) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `provisioning`
---
-
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `provisioning` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `provisioning`;
-
---
--- Table structure for table `language_strings`
---
-
 DROP TABLE IF EXISTS `language_strings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2217,11 +1749,6 @@ CREATE TABLE `language_strings` (
   UNIQUE KEY `codelang_idx` (`code`,`language`)
 ) ENGINE=InnoDB AUTO_INCREMENT=913 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_aig_sequence`
---
-
 DROP TABLE IF EXISTS `voip_aig_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2230,11 +1757,6 @@ CREATE TABLE `voip_aig_sequence` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_allowed_ip_groups`
---
-
 DROP TABLE IF EXISTS `voip_allowed_ip_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2314,11 +1836,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_audio_files`
---
-
 DROP TABLE IF EXISTS `voip_audio_files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2336,11 +1853,6 @@ CREATE TABLE `voip_audio_files` (
   CONSTRAINT `v_a_f_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_cf_destination_sets`
---
-
 DROP TABLE IF EXISTS `voip_cf_destination_sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2354,11 +1866,6 @@ CREATE TABLE `voip_cf_destination_sets` (
   CONSTRAINT `v_s_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_cf_destinations`
---
-
 DROP TABLE IF EXISTS `voip_cf_destinations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2374,11 +1881,6 @@ CREATE TABLE `voip_cf_destinations` (
   CONSTRAINT `v_cf_dsetid_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_cf_mappings`
---
-
 DROP TABLE IF EXISTS `voip_cf_mappings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2398,11 +1900,6 @@ CREATE TABLE `voip_cf_mappings` (
   CONSTRAINT `v_cfmap_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_cf_periods`
---
-
 DROP TABLE IF EXISTS `voip_cf_periods`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2420,11 +1917,6 @@ CREATE TABLE `voip_cf_periods` (
   CONSTRAINT `v_cf_tsetid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_cf_time_sets`
---
-
 DROP TABLE IF EXISTS `voip_cf_time_sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2438,11 +1930,6 @@ CREATE TABLE `voip_cf_time_sets` (
   CONSTRAINT `v_cf_ts_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_contacts`
---
-
 DROP TABLE IF EXISTS `voip_contacts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2463,11 +1950,6 @@ CREATE TABLE `voip_contacts` (
   CONSTRAINT `v_c_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_dbaliases`
---
-
 DROP TABLE IF EXISTS `voip_dbaliases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2569,11 +2051,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_dom_preferences`
---
-
 DROP TABLE IF EXISTS `voip_dom_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2692,11 +2169,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_domains`
---
-
 DROP TABLE IF EXISTS `voip_domains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2753,11 +2225,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_fax_destinations`
---
-
 DROP TABLE IF EXISTS `voip_fax_destinations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2890,11 +2357,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_fax_preferences`
---
-
 DROP TABLE IF EXISTS `voip_fax_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3022,11 +2484,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_peer_groups`
---
-
 DROP TABLE IF EXISTS `voip_peer_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3085,11 +2542,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_peer_hosts`
---
-
 DROP TABLE IF EXISTS `voip_peer_hosts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3189,11 +2641,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_peer_preferences`
---
-
 DROP TABLE IF EXISTS `voip_peer_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3279,11 +2726,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_peer_rules`
---
-
 DROP TABLE IF EXISTS `voip_peer_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3382,11 +2824,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_preferences`
---
-
 DROP TABLE IF EXISTS `voip_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3461,11 +2898,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_preferences_enum`
---
-
 DROP TABLE IF EXISTS `voip_preferences_enum`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3482,11 +2914,6 @@ CREATE TABLE `voip_preferences_enum` (
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_reminder`
---
-
 DROP TABLE IF EXISTS `voip_reminder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3500,11 +2927,6 @@ CREATE TABLE `voip_reminder` (
   CONSTRAINT `v_rem_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_rewrite_rule_sets`
---
-
 DROP TABLE IF EXISTS `voip_rewrite_rule_sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3727,11 +3149,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_rewrite_rules`
---
-
 DROP TABLE IF EXISTS `voip_rewrite_rules`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3844,11 +3261,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_rwrs_sequence`
---
-
 DROP TABLE IF EXISTS `voip_rwrs_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3857,11 +3269,6 @@ CREATE TABLE `voip_rwrs_sequence` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `voip_speed_dial`
---
-
 DROP TABLE IF EXISTS `voip_speed_dial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3970,11 +3377,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_subscribers`
---
-
 DROP TABLE IF EXISTS `voip_subscribers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4095,11 +3497,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_trusted_sources`
---
-
 DROP TABLE IF EXISTS `voip_trusted_sources`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4172,11 +3569,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_usr_preferences`
---
-
 DROP TABLE IF EXISTS `voip_usr_preferences`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4306,11 +3698,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-
---
--- Table structure for table `voip_vscs`
---
-
 DROP TABLE IF EXISTS `voip_vscs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4329,11 +3716,6 @@ CREATE TABLE `voip_vscs` (
   CONSTRAINT `v_v_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `xmlgroups`
---
-
 DROP TABLE IF EXISTS `xmlgroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4344,11 +3726,6 @@ CREATE TABLE `xmlgroups` (
   KEY `gname` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `xmlhostgroups`
---
-
 DROP TABLE IF EXISTS `xmlhostgroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4363,11 +3740,6 @@ CREATE TABLE `xmlhostgroups` (
   CONSTRAINT `xhg_hostid_ref` FOREIGN KEY (`host_id`) REFERENCES `xmlhosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `xmlhosts`
---
-
 DROP TABLE IF EXISTS `xmlhosts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4381,11 +3753,6 @@ CREATE TABLE `xmlhosts` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `xmlqueue`
---
-
 DROP TABLE IF EXISTS `xmlqueue`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4402,20 +3769,11 @@ CREATE TABLE `xmlqueue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `sipstats`
---
-
 /*!40000 DROP DATABASE IF EXISTS `sipstats`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `sipstats` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `sipstats`;
-
---
--- Table structure for table `mark`
---
-
 DROP TABLE IF EXISTS `mark`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4427,11 +3785,6 @@ CREATE TABLE `mark` (
   KEY `name_idx` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `packets`
---
-
 DROP TABLE IF EXISTS `packets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4464,11 +3817,6 @@ CREATE TABLE `packets` (
 /*!50100 PARTITION BY RANGE (FLOOR(`timestamp`))
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `statistics`
---
-
 DROP TABLE IF EXISTS `statistics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4510,20 +3858,11 @@ CREATE TABLE `statistics` (
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Current Database: `syslog`
---
-
 /*!40000 DROP DATABASE IF EXISTS `syslog`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `syslog` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `syslog`;
-
---
--- Table structure for table `SystemEvents`
---
-
 DROP TABLE IF EXISTS `SystemEvents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4555,11 +3894,6 @@ CREATE TABLE `SystemEvents` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8 INSERT_METHOD=FIRST UNION=(`se1`,`se2`,`se3`,`se4`,`se5`,`se6`,`se7`,`se8`,`se9`,`se10`,`se11`,`se12`,`se13`,`se14`,`se15`,`se16`,`se17`,`se18`,`se19`,`se20`,`se21`,`se22`,`se23`,`se24`,`se25`,`se26`,`se27`,`se28`);
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se1`
---
-
 DROP TABLE IF EXISTS `se1`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4591,11 +3925,6 @@ CREATE TABLE `se1` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se10`
---
-
 DROP TABLE IF EXISTS `se10`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4627,11 +3956,6 @@ CREATE TABLE `se10` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se11`
---
-
 DROP TABLE IF EXISTS `se11`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4663,11 +3987,6 @@ CREATE TABLE `se11` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se12`
---
-
 DROP TABLE IF EXISTS `se12`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4699,11 +4018,6 @@ CREATE TABLE `se12` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se13`
---
-
 DROP TABLE IF EXISTS `se13`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4735,11 +4049,6 @@ CREATE TABLE `se13` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se14`
---
-
 DROP TABLE IF EXISTS `se14`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4771,11 +4080,6 @@ CREATE TABLE `se14` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se15`
---
-
 DROP TABLE IF EXISTS `se15`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4807,11 +4111,6 @@ CREATE TABLE `se15` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se16`
---
-
 DROP TABLE IF EXISTS `se16`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4843,11 +4142,6 @@ CREATE TABLE `se16` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se17`
---
-
 DROP TABLE IF EXISTS `se17`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4879,11 +4173,6 @@ CREATE TABLE `se17` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se18`
---
-
 DROP TABLE IF EXISTS `se18`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4915,11 +4204,6 @@ CREATE TABLE `se18` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se19`
---
-
 DROP TABLE IF EXISTS `se19`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4951,11 +4235,6 @@ CREATE TABLE `se19` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se2`
---
-
 DROP TABLE IF EXISTS `se2`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -4987,11 +4266,6 @@ CREATE TABLE `se2` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se20`
---
-
 DROP TABLE IF EXISTS `se20`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5023,11 +4297,6 @@ CREATE TABLE `se20` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se21`
---
-
 DROP TABLE IF EXISTS `se21`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5059,11 +4328,6 @@ CREATE TABLE `se21` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se22`
---
-
 DROP TABLE IF EXISTS `se22`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5095,11 +4359,6 @@ CREATE TABLE `se22` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se23`
---
-
 DROP TABLE IF EXISTS `se23`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5131,11 +4390,6 @@ CREATE TABLE `se23` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se24`
---
-
 DROP TABLE IF EXISTS `se24`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5167,11 +4421,6 @@ CREATE TABLE `se24` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se25`
---
-
 DROP TABLE IF EXISTS `se25`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5203,11 +4452,6 @@ CREATE TABLE `se25` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se26`
---
-
 DROP TABLE IF EXISTS `se26`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5239,11 +4483,6 @@ CREATE TABLE `se26` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se27`
---
-
 DROP TABLE IF EXISTS `se27`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5275,11 +4514,6 @@ CREATE TABLE `se27` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se28`
---
-
 DROP TABLE IF EXISTS `se28`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5311,11 +4545,6 @@ CREATE TABLE `se28` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se3`
---
-
 DROP TABLE IF EXISTS `se3`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5347,11 +4576,6 @@ CREATE TABLE `se3` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se4`
---
-
 DROP TABLE IF EXISTS `se4`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5383,11 +4607,6 @@ CREATE TABLE `se4` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se5`
---
-
 DROP TABLE IF EXISTS `se5`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5419,11 +4638,6 @@ CREATE TABLE `se5` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se6`
---
-
 DROP TABLE IF EXISTS `se6`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5455,11 +4669,6 @@ CREATE TABLE `se6` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se7`
---
-
 DROP TABLE IF EXISTS `se7`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5491,11 +4700,6 @@ CREATE TABLE `se7` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se8`
---
-
 DROP TABLE IF EXISTS `se8`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5527,11 +4731,6 @@ CREATE TABLE `se8` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `se9`
---
-
 DROP TABLE IF EXISTS `se9`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -5573,4 +4772,3 @@ CREATE TABLE `se9` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-06-06 16:35:16
