@@ -1,0 +1,6 @@
+USE provisioning;
+
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Syntax.UnknownLock','en','Unknown locklevel');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Syntax.UnknownLock','de','Unbekannter Locklevel');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Syntax.UnknownLock','fr','Unknown locklevel');
+INSERT INTO language_strings (code,language,string) VALUES ('Client.Syntax.UnknownLock','es','Unknown locklevel');
