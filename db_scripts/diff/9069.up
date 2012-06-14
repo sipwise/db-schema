@@ -1,0 +1,45 @@
+USE provisioning;
+
+DROP TABLE voip_vscs;
+
+CREATE TABLE voip_sound_sets (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR (256)
+) ENGINE=InnoDB;
+
+CREATE TABLE voip_sound_handles (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR (256)
+) ENGINE=InnoDB;
+
+CREATE TABLE voip_sound_files (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    filename    VARCHAR (256),
+    data        longblob,
+    handle_id   INT,
+    set_id     INT,
+    
+    CONSTRAINT set_id_ref FOREIGN KEY (set_id) REFERENCES voip_sound_sets (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT handle_id_ref FOREIGN KEY (handle_id) REFERENCES voip_sound_handles (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+
+INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
+    VALUES('sound_set', 1, 1, 1, 1, 0, 0, 'int', 0, 'Soundset');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetDeleted', 'en', 'Soundset deleted');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetDeleted', 'de', 'Soundset gelöscht');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetDeleted', 'fr', 'Soundset deleted');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetDeleted', 'es', 'Soundset deleted');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetMapped', 'en', 'Soundset still mapped');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetMapped', 'de', 'Soundset in Verwendung');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetMapped', 'fr', 'Soundset still mapped');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundSetMapped', 'es', 'Soundset still mapped');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.NoSuchSoundSet', 'en', 'Soundset does not exist ');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.NoSuchSoundSet', 'de', 'Soundset existiert nicht ');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.NoSuchSoundSet', 'fr', 'Soundset does not exist ');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.NoSuchSoundSet', 'es', 'Soundset does not exist ');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingSoundFile', 'en', 'Soundfile missing ');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingSoundFile', 'de', 'Soundfile fehlt ');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingSoundFile', 'es', 'Soundfile missing ');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingSoundFile', 'fr', 'Soundfile missing ');

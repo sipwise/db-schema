@@ -1,0 +1,12 @@
+USE provisioning;
+
+DROP TABLE voip_sound_files;
+DROP TABLE voip_sound_sets;
+DROP TABLE voip_sound_handles;
+
+DELETE FROM language_strings WHERE code='Server.Voip.SoundSetDeleted';
+DELETE FROM language_strings WHERE code='Server.Voip.SoundSetMapped';
+DELETE FROM language_strings WHERE code='Server.Voip.NoSuchSoundSet';
+DELETE FROM language_strings WHERE code='Server.Voip.MissingSoundFile';
+
+DELETE FROM voip_preferences WHERE attribute='sound_set';
