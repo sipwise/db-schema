@@ -1729,7 +1729,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -1747,7 +1747,7 @@ CREATE TABLE `language_strings` (
   `string` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codelang_idx` (`code`,`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=913 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=929 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_aig_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -2842,7 +2842,7 @@ CREATE TABLE `voip_preferences` (
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `attribute_idx` (`attribute`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -3266,6 +3266,40 @@ DROP TABLE IF EXISTS `voip_rwrs_sequence`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `voip_rwrs_sequence` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `voip_sound_files`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(256) DEFAULT NULL,
+  `data` longblob,
+  `handle_id` int(11) DEFAULT NULL,
+  `set_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `set_id_ref` (`set_id`),
+  KEY `handle_id_ref` (`handle_id`),
+  CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `voip_sound_handles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_handles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `voip_sound_sets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_sets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3698,24 +3732,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-DROP TABLE IF EXISTS `voip_vscs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_vscs` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `domain_id` int(11) unsigned DEFAULT NULL,
-  `digits` char(2) DEFAULT NULL,
-  `action` varchar(31) NOT NULL,
-  `audio_id` int(11) unsigned NOT NULL,
-  `description` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `domdig_idx` (`domain_id`,`digits`),
-  UNIQUE KEY `domaction_idx` (`domain_id`,`action`),
-  KEY `audioid_idx` (`audio_id`),
-  CONSTRAINT `v_v_audioid_ref` FOREIGN KEY (`audio_id`) REFERENCES `voip_audio_files` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `v_v_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xmlgroups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
