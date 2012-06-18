@@ -1,0 +1,3 @@
+GRANT SELECT on provisioning.voip_sound_sets to kamailio@localhost;
+GRANT SELECT on provisioning.voip_sound_handles to kamailio@localhost;
+GRANT SELECT on provisioning.voip_sound_files to kamailio@localhost;

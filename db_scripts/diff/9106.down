@@ -1,0 +1,3 @@
+REVOKE SELECT on provisioning.voip_sound_sets from kamailio@localhost;
+REVOKE SELECT on provisioning.voip_sound_handles from kamailio@localhost;
+REVOKE SELECT on provisioning.voip_sound_files from kamailio@localhost;
