@@ -1,0 +1,46 @@
+USE provisioning;
+
+ALTER TABLE voip_preferences_enum DROP COLUMN default_val; 
+
+DROP TRIGGER enum_update;
+DROP TRIGGER enum_set_default;
+
+DELIMITER |
+
+DROP TRIGGER voip_dom_crepl_trig |
+
+-- LOCK voip_domains !
+CREATE TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
+FOR EACH ROW BEGIN
+    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+END |
+
+DROP TRIGGER voip_phost_crepl_trig |
+
+CREATE TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+FOR EACH ROW BEGIN
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+                          VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, 1, 0, NEW.id, NEW.group_id);
+  
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id = NEW.group_id;
+END |
+
+DROP TRIGGER voip_sub_crepl_trig |
+CREATE TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+FOR EACH ROW BEGIN
+    DECLARE subscriber_domain varchar(127);
+  
+    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
+  
+    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
+                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, now(),
+                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
+                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
+
+END |
+
+DELIMITER ;
