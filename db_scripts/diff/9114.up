@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_sound_sets ADD COLUMN description VARCHAR(255);

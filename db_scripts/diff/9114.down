@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_sound_sets DROP COLUMN description;
