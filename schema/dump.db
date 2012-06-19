@@ -1717,7 +1717,7 @@ CREATE TABLE `cfg_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `db_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1729,7 +1729,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -2188,12 +2188,17 @@ CREATE TABLE `voip_domains` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
-  FOR EACH ROW BEGIN
-
-  INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
-
-  END */;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
+FOR EACH ROW BEGIN
+    
+    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+   
+    
+    INSERT INTO voip_dom_preferences (domain_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id=preference_id AND p.dom_pref=1 AND pe.dom_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2570,18 +2575,23 @@ CREATE TABLE `voip_peer_hosts` (
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
-  FOR EACH ROW BEGIN
-
-  INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
-                        VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, 1, 0, NEW.id, NEW.group_id);
-
-  INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-         SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
-           FROM kamailio.lcr_rule rule
-           INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
-          WHERE vpg.id = NEW.group_id;
-
-  END */;;
+FOR EACH ROW BEGIN
+    
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+                          VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, 1, 0, NEW.id, NEW.group_id);
+  
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id = NEW.group_id;
+    
+    
+    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id=preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2909,11 +2919,67 @@ CREATE TABLE `voip_preferences_enum` (
   `usr_pref` tinyint(1) DEFAULT '0',
   `dom_pref` tinyint(1) DEFAULT '0',
   `peer_pref` tinyint(1) DEFAULT '0',
+  `default_val` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `preference_id` (`preference_id`),
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    IF (NEW.dom_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_domains;
+    ELSEIF (NEW.peer_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts;
+    ELSEIF (NEW.usr_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscribers;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    UPDATE voip_usr_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_dom_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_peer_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_preferences_enum SET default_val=NEW.value
+    WHERE OLD.id=NEW.id AND default_val IS NOT NULL AND default_val=OLD.value;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 DROP TABLE IF EXISTS `voip_reminder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3445,17 +3511,24 @@ CREATE TABLE `voip_subscribers` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
-  FOR EACH ROW BEGIN
-  DECLARE subscriber_domain varchar(127);
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+FOR EACH ROW BEGIN
+    
+    DECLARE subscriber_domain varchar(127);
+  
+    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
+  
+    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
+                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, now(),
+                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
+                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
 
-  SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
-
-  INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
-                   VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, now(),
-                          MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
-                          MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
-  END */;;
+    
+    INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id=preference_id AND p.usr_pref=1 AND pe.usr_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
