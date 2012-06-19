@@ -1,0 +1,41 @@
+USE provisioning
+
+set autocommit=0;
+
+DELETE FROM voip_preferences_enum WHERE preference_id = 
+  (SELECT id FROM voip_preferences WHERE attribute = 'sst_enable');
+DELETE FROM voip_preferences_enum WHERE preference_id = 
+  (SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method');
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'use domain default', NULL, 1, 0, 0);
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'no', 'no', 1, 0, 0);
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'no', 'no', 0, 1, 0, 1);
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'no', 'no', 0, 0, 1, 1);
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'yes', 'yes', 1, 1, 1);
+
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'use domain default', NULL, 1, 0, 0);
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE_FALLBACK_INVITE', 'UPDATE_FALLBACK_INVITE', 1, 0, 0);
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE_FALLBACK_INVITE', 'UPDATE_FALLBACK_INVITE', 0, 1, 0, 1);
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE_FALLBACK_INVITE', 'UPDATE_FALLBACK_INVITE', 0, 0, 1, 1);
+
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE', 'UPDATE', 1, 1, 1);
+INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
+    VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'INVITE', 'INVITE', 1, 1, 1);
+
+commit;
+set autocommit=1;
+
