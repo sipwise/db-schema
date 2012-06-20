@@ -1,0 +1,5 @@
+USE provisioning;
+INSERT INTO voip_sound_handles (name) VALUES
+	('block_in'),
+	('block_out'),
+	('block_ncos');

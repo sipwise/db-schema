@@ -1,0 +1,3 @@
+USE provisioning;
+DELETE FROM voip_sound_handles WHERE name IN
+	('block_in', 'block_out', 'block_ncos');
