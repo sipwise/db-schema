@@ -1,0 +1,19 @@
+USE provisioning;
+DELETE FROM voip_sound_handles WHERE name IN (
+	'block_override_pin_wrong',
+	'locked_in',
+	'locked_out',
+	'max_calls_in',
+	'max_calls_out',
+	'max_calls_peer',
+	'unauth_caller_ip',
+	'relaying_denied',
+	'invalid_speeddial',
+	'cf_loop',
+	'callee_offline',
+	'callee_busy',
+	'callee_unknown',
+	'callee_tmp_unavailable',
+	'peering_unavailable',
+	'voicebox_unavailable'
+);
