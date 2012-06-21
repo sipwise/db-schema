@@ -1,0 +1,2 @@
+USE provisioning;
+DELETE FROM voip_sound_handles WHERE name = 'music_on_hold';
