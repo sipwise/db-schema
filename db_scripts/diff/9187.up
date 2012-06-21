@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_sound_files ADD COLUMN codec VARCHAR(16) NOT NULL DEFAULT '';

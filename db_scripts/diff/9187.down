@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_sound_files DROP COLUMN codec;
