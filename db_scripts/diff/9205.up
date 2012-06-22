@@ -1,0 +1,197 @@
+-- PRESENCE and RLS modules
+use kamailio
+
+INSERT INTO version (table_name, table_version) values ('presentity','3');
+DROP TABLE IF EXISTS presentity;
+CREATE TABLE presentity (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    expires INT(11) NOT NULL,
+    received_time INT(11) NOT NULL,
+    body BLOB NOT NULL,
+    sender VARCHAR(128) NOT NULL,
+    CONSTRAINT presentity_idx UNIQUE (username, domain, event, etag)
+) ENGINE=MyISAM;
+
+CREATE INDEX presentity_expires ON presentity (expires);
+CREATE INDEX account_idx ON presentity (username, domain, event);
+
+INSERT INTO version (table_name, table_version) values ('active_watchers','11');
+DROP TABLE IF EXISTS active_watchers;
+CREATE TABLE active_watchers (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    presentity_uri VARCHAR(128) NOT NULL,
+    watcher_username VARCHAR(64) NOT NULL,
+    watcher_domain VARCHAR(64) NOT NULL,
+    to_user VARCHAR(64) NOT NULL,
+    to_domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) DEFAULT 'presence' NOT NULL,
+    event_id VARCHAR(64),
+    to_tag VARCHAR(64) NOT NULL,
+    from_tag VARCHAR(64) NOT NULL,
+    callid VARCHAR(255) NOT NULL,
+    local_cseq INT(11) NOT NULL,
+    remote_cseq INT(11) NOT NULL,
+    contact VARCHAR(128) NOT NULL,
+    record_route TEXT,
+    expires INT(11) NOT NULL,
+    status INT(11) DEFAULT 2 NOT NULL,
+    reason VARCHAR(64) NOT NULL,
+    version INT(11) DEFAULT 0 NOT NULL,
+    socket_info VARCHAR(64) NOT NULL,
+    local_contact VARCHAR(128) NOT NULL,
+    from_user VARCHAR(64) NOT NULL,
+    from_domain VARCHAR(64) NOT NULL,
+    updated INT(11) NOT NULL,
+    updated_winfo INT(11) NOT NULL,
+    CONSTRAINT active_watchers_idx UNIQUE (callid, to_tag, from_tag)
+) ENGINE=MyISAM;
+
+CREATE INDEX active_watchers_expires ON active_watchers (expires);
+CREATE INDEX active_watchers_pres ON active_watchers (presentity_uri);
+CREATE INDEX updated_idx ON active_watchers (updated);
+CREATE INDEX updated_winfo_idx ON active_watchers (updated_winfo, presentity_uri);
+
+INSERT INTO version (table_name, table_version) values ('watchers','3');
+DROP TABLE IF EXISTS watchers;
+CREATE TABLE watchers (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    presentity_uri VARCHAR(128) NOT NULL,
+    watcher_username VARCHAR(64) NOT NULL,
+    watcher_domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) DEFAULT 'presence' NOT NULL,
+    status INT(11) NOT NULL,
+    reason VARCHAR(64),
+    inserted_time INT(11) NOT NULL,
+    CONSTRAINT watcher_idx UNIQUE (presentity_uri, watcher_username, watcher_domain, event)
+) ENGINE=MyISAM;
+
+INSERT INTO version (table_name, table_version) values ('xcap','4');
+DROP TABLE IF EXISTS xcap;
+CREATE TABLE xcap (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    username VARCHAR(64) NOT NULL,
+    domain VARCHAR(64) NOT NULL,
+    doc MEDIUMBLOB NOT NULL,
+    doc_type INT(11) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    source INT(11) NOT NULL,
+    doc_uri VARCHAR(255) NOT NULL,
+    port INT(11) NOT NULL,
+    CONSTRAINT doc_uri_idx UNIQUE (doc_uri)
+) ENGINE=MyISAM;
+
+CREATE INDEX account_doc_type_idx ON xcap (username, domain, doc_type);
+CREATE INDEX account_doc_type_uri_idx ON xcap (username, domain, doc_type, doc_uri);
+CREATE INDEX account_doc_uri_idx ON xcap (username, domain, doc_uri);
+
+INSERT INTO version (table_name, table_version) values ('pua','7');
+DROP TABLE IF EXISTS pua;
+CREATE TABLE pua (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    pres_uri VARCHAR(128) NOT NULL,
+    pres_id VARCHAR(255) NOT NULL,
+    event INT(11) NOT NULL,
+    expires INT(11) NOT NULL,
+    desired_expires INT(11) NOT NULL,
+    flag INT(11) NOT NULL,
+    etag VARCHAR(64) NOT NULL,
+    tuple_id VARCHAR(64),
+    watcher_uri VARCHAR(128) NOT NULL,
+    call_id VARCHAR(255) NOT NULL,
+    to_tag VARCHAR(64) NOT NULL,
+    from_tag VARCHAR(64) NOT NULL,
+    cseq INT(11) NOT NULL,
+    record_route TEXT,
+    contact VARCHAR(128) NOT NULL,
+    remote_contact VARCHAR(128) NOT NULL,
+    version INT(11) NOT NULL,
+    extra_headers TEXT NOT NULL,
+    CONSTRAINT pua_idx UNIQUE (etag, tuple_id, call_id, from_tag),
+    CONSTRAINT expires_idx UNIQUE (expires)
+) ENGINE=MyISAM;
+
+CREATE INDEX dialog1_idx ON pua (call_id, from_tag, to_tag);
+CREATE INDEX dialog2_idx ON pua (pres_id, pres_uri);
+CREATE INDEX tmp_dlg1_idx ON pua (call_id, from_tag);
+CREATE INDEX tmp_dlg2_idx ON pua (pres_id, pres_uri, call_id, from_tag);
+CREATE INDEX tmp_record1_idx ON pua (pres_id);
+CREATE INDEX tmp_record2_idx ON pua (pres_id, etag);
+
+INSERT INTO version (table_name, table_version) values ('rls_presentity','1');
+DROP TABLE IF EXISTS rls_presentity;
+CREATE TABLE rls_presentity (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    rlsubs_did VARCHAR(255) NOT NULL,
+    resource_uri VARCHAR(128) NOT NULL,
+    content_type VARCHAR(255) NOT NULL,
+    presence_state BLOB NOT NULL,
+    expires INT(11) NOT NULL,
+    updated INT(11) NOT NULL,
+    auth_state INT(11) NOT NULL,
+    reason VARCHAR(64) NOT NULL,
+    CONSTRAINT rls_presentity_idx UNIQUE (rlsubs_did, resource_uri)
+) ENGINE=MyISAM;
+
+CREATE INDEX rlsubs_idx ON rls_presentity (rlsubs_did);
+CREATE INDEX updated_idx ON rls_presentity (updated);
+CREATE INDEX expires_idx ON rls_presentity (expires);
+
+INSERT INTO version (table_name, table_version) values ('rls_watchers','3');
+DROP TABLE IF EXISTS rls_watchers;
+CREATE TABLE rls_watchers (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    presentity_uri VARCHAR(128) NOT NULL,
+    to_user VARCHAR(64) NOT NULL,
+    to_domain VARCHAR(64) NOT NULL,
+    watcher_username VARCHAR(64) NOT NULL,
+    watcher_domain VARCHAR(64) NOT NULL,
+    event VARCHAR(64) DEFAULT 'presence' NOT NULL,
+    event_id VARCHAR(64),
+    to_tag VARCHAR(64) NOT NULL,
+    from_tag VARCHAR(64) NOT NULL,
+    callid VARCHAR(255) NOT NULL,
+    local_cseq INT(11) NOT NULL,
+    remote_cseq INT(11) NOT NULL,
+    contact VARCHAR(128) NOT NULL,
+    record_route TEXT,
+    expires INT(11) NOT NULL,
+    status INT(11) DEFAULT 2 NOT NULL,
+    reason VARCHAR(64) NOT NULL,
+    version INT(11) DEFAULT 0 NOT NULL,
+    socket_info VARCHAR(64) NOT NULL,
+    local_contact VARCHAR(128) NOT NULL,
+    from_user VARCHAR(64) NOT NULL,
+    from_domain VARCHAR(64) NOT NULL,
+    updated INT(11) NOT NULL,
+    CONSTRAINT rls_watcher_idx UNIQUE (callid, to_tag, from_tag)
+) ENGINE=MyISAM;
+
+CREATE INDEX rls_watchers_delete ON rls_watchers (callid, to_tag);
+CREATE INDEX rls_watchers_update ON rls_watchers (watcher_username, watcher_domain, event);
+CREATE INDEX rls_watchers_expires ON rls_watchers (expires);
+CREATE INDEX updated_idx ON rls_watchers (updated);
+
+INSERT INTO version (table_name, table_version) values ('silo','7');
+DROP TABLE IF EXISTS silo;
+CREATE TABLE silo (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    src_addr VARCHAR(128) DEFAULT '' NOT NULL,
+    dst_addr VARCHAR(128) DEFAULT '' NOT NULL,
+    username VARCHAR(64) DEFAULT '' NOT NULL,
+    domain VARCHAR(64) DEFAULT '' NOT NULL,
+    inc_time INT DEFAULT 0 NOT NULL,
+    exp_time INT DEFAULT 0 NOT NULL,
+    snd_time INT DEFAULT 0 NOT NULL,
+    ctype VARCHAR(32) DEFAULT 'text/plain' NOT NULL,
+    body BLOB DEFAULT '' NOT NULL,
+    extra_hdrs TEXT DEFAULT '' NOT NULL,
+    callid VARCHAR(128) DEFAULT '' NOT NULL,
+    status INT DEFAULT 0 NOT NULL
+) ENGINE=MyISAM;
+
+CREATE INDEX account_idx ON silo (username, domain);
+

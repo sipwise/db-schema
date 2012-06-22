@@ -1,0 +1,120 @@
+use kamailio
+
+-- Upgrade Kamailio from v3.1.x to v3.2.0
+ALTER TABLE acc MODIFY callid VARCHAR(255) DEFAULT '' NOT NULL;
+#ALTER TABLE missed_calls MODIFY callid VARCHAR(255) DEFAULT '' NOT NULL;
+ 
+INSERT INTO version (table_name, table_version) VALUES ('dialog_vars','1');
+CREATE TABLE dialog_vars (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    hash_entry INT(10) UNSIGNED NOT NULL,
+    hash_id INT(10) UNSIGNED NOT NULL,
+    dialog_key VARCHAR(128) NOT NULL,
+    dialog_value VARCHAR(512) NOT NULL
+) ENGINE=MyISAM;
+CREATE INDEX hash_idx ON dialog_vars (hash_entry, hash_id);
+ 
+UPDATE version SET table_version=2 WHERE table_name="lcr_gw";
+#ALTER TABLE lcr_gw DROP INDEX lcr_id_ip_addr_port_hostname_idx;
+ALTER TABLE lcr_gw ADD prefix VARCHAR(16) DEFAULT NULL;
+ALTER TABLE lcr_gw MODIFY tag VARCHAR(64) DEFAULT NULL;
+CREATE INDEX lcr_id_idx ON lcr_gw (lcr_id);
+ 
+#UPDATE version SET table_version=3 WHERE table_name="sip_trace";
+#ALTER TABLE sip_trace ADD COLUMN time_us INT UNSIGNED DEFAULT 0 NOT NULL;
+#ALTER TABLE sip_trace MODIFY msg MEDIUMTEXT NOT NULL;
+
+
+-- Upgrade Kamailio from v3.2.x to v3.3.0
+-- PERMISSIONS module
+ALTER TABLE address CHANGE COLUMN ip_addr ip_addr varchar(48) NOT NULL; # was varchar(15) NOT NULL
+ALTER TABLE address CHANGE COLUMN grp grp int(11) UNSIGNED NOT NULL DEFAULT '1'; # was smallint(5) UNSIGNED NOT NULL DEFAULT '1'
+ALTER TABLE address CHANGE COLUMN mask mask int(11) NOT NULL DEFAULT '32'; # was tinyint(4) NOT NULL DEFAULT '32'
+ 
+-- DIALOG module
+DELETE FROM dialog;
+ALTER TABLE dialog CHANGE COLUMN caller_cseq caller_cseq varchar(20) NOT NULL; # was varchar(7) NOT NULL
+ALTER TABLE dialog CHANGE COLUMN callee_cseq callee_cseq varchar(20) NOT NULL; # was varchar(7) NOT NULL
+ALTER TABLE dialog DROP COLUMN toroute; # was int(10) UNSIGNED NOT NULL DEFAULT '0'
+ALTER TABLE dialog ADD COLUMN iflags int(10) UNSIGNED NOT NULL DEFAULT '0';
+ALTER TABLE dialog ADD COLUMN xdata varchar(512) DEFAULT NULL;
+ 
+DELETE FROM dialog_vars;
+ 
+-- LCR module
+#ALTER TABLE lcr_gw CHANGE COLUMN ip_addr ip_addr varchar(47) DEFAULT NULL; # was varchar(15) DEFAULT NULL
+#ALTER TABLE lcr_rule ADD COLUMN request_uri varchar(64) DEFAULT NULL;
+ 
+-- USRLOC module
+DELETE FROM location;
+ALTER TABLE location ADD COLUMN ruid varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE location ADD COLUMN reg_id int(11) NOT NULL DEFAULT '0';
+ALTER TABLE location ADD COLUMN instance varchar(255) DEFAULT NULL;
+
+INSERT INTO version (table_name, table_version) values ('aliases','5');
+CREATE TABLE aliases (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ruid VARCHAR(64) DEFAULT '' NOT NULL,
+    username VARCHAR(64) DEFAULT '' NOT NULL,
+    domain VARCHAR(64) DEFAULT NULL,
+    contact VARCHAR(255) DEFAULT '' NOT NULL,
+    received VARCHAR(128) DEFAULT NULL,
+    path VARCHAR(128) DEFAULT NULL,
+    expires DATETIME DEFAULT '2020-05-28 21:32:15' NOT NULL,
+    q FLOAT(10,2) DEFAULT 1.0 NOT NULL,
+    callid VARCHAR(255) DEFAULT 'Default-Call-ID' NOT NULL,
+    cseq INT(11) DEFAULT 1 NOT NULL,
+    last_modified DATETIME DEFAULT '1900-01-01 00:00:01' NOT NULL,
+    flags INT(11) DEFAULT 0 NOT NULL,
+    cflags INT(11) DEFAULT 0 NOT NULL,
+    user_agent VARCHAR(255) DEFAULT '' NOT NULL,
+    socket VARCHAR(64) DEFAULT NULL,
+    methods INT(11) DEFAULT NULL,
+    instance VARCHAR(255) DEFAULT NULL,
+    reg_id INT(11) DEFAULT 0 NOT NULL
+) ENGINE=MyISAM;
+
+#TODO: check ERROR 1071 (42000): Specified key was too long; max key length is 1000 bytes:
+#CREATE INDEX alias_idx ON aliases (username, domain, contact);
+ 
+-- DOMAIN module
+ALTER TABLE domain CHANGE COLUMN domain domain varchar(64) NOT NULL; # was varchar(64) NOT NULL DEFAULT ''
+ALTER TABLE domain ADD COLUMN did varchar(64) DEFAULT NULL;
+ 
+CREATE TABLE domain_attrs (
+  id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  did varchar(64) NOT NULL,
+  name varchar(32) NOT NULL,
+  type int(10) UNSIGNED NOT NULL,
+  value varchar(255) NOT NULL,
+  last_modified datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (id),
+  UNIQUE KEY domain_attrs_idx (did,name,value)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+ 
+-- PRESENCE modules
+
+-- HTABLE module
+DELETE FROM version WHERE table_name='htable';
+INSERT INTO version (table_name, table_version) VALUES ('htable','2');
+CREATE TABLE htable (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    key_name VARCHAR(64) DEFAULT '' NOT NULL,
+    key_type INT DEFAULT 0 NOT NULL,
+    value_type INT DEFAULT 0 NOT NULL,
+    key_value VARCHAR(128) DEFAULT '' NOT NULL,
+    expires INT DEFAULT 0 NOT NULL
+) ENGINE=MyISAM;
+
+-- VERSION table
+DELETE FROM version WHERE table_name='address';
+INSERT INTO version (table_name, table_version) VALUES ('address','5');
+DELETE FROM version WHERE table_name='dialog';
+INSERT INTO version (table_name, table_version) VALUES ('dialog','7');
+DELETE FROM version WHERE table_name='domain';
+INSERT INTO version (table_name, table_version) VALUES ('domain','2');
+DELETE FROM version WHERE table_name='domain_attrs';
+INSERT INTO version (table_name, table_version) VALUES ('domain_attrs','1');
+DELETE FROM version WHERE table_name='location';
+INSERT INTO version (table_name, table_version) VALUES ('location','5');
+
