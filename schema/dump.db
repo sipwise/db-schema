@@ -1729,7 +1729,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -3341,6 +3341,7 @@ CREATE TABLE `voip_sound_files` (
   `handle_id` int(11) DEFAULT NULL,
   `set_id` int(11) DEFAULT NULL,
   `loopplay` tinyint(1) DEFAULT '0',
+  `codec` varchar(16) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `set_id_ref` (`set_id`),
   KEY `handle_id_ref` (`handle_id`),
@@ -3355,7 +3356,7 @@ CREATE TABLE `voip_sound_handles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_sound_sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
