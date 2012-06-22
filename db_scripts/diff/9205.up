@@ -14,7 +14,7 @@ CREATE TABLE presentity (
     body BLOB NOT NULL,
     sender VARCHAR(128) NOT NULL,
     CONSTRAINT presentity_idx UNIQUE (username, domain, event, etag)
-) ENGINE=MyISAM;
+);
 
 CREATE INDEX presentity_expires ON presentity (expires);
 CREATE INDEX account_idx ON presentity (username, domain, event);
@@ -48,7 +48,7 @@ CREATE TABLE active_watchers (
     updated INT(11) NOT NULL,
     updated_winfo INT(11) NOT NULL,
     CONSTRAINT active_watchers_idx UNIQUE (callid, to_tag, from_tag)
-) ENGINE=MyISAM;
+);
 
 CREATE INDEX active_watchers_expires ON active_watchers (expires);
 CREATE INDEX active_watchers_pres ON active_watchers (presentity_uri);
@@ -67,7 +67,7 @@ CREATE TABLE watchers (
     reason VARCHAR(64),
     inserted_time INT(11) NOT NULL,
     CONSTRAINT watcher_idx UNIQUE (presentity_uri, watcher_username, watcher_domain, event)
-) ENGINE=MyISAM;
+);
 
 INSERT INTO version (table_name, table_version) values ('xcap','4');
 DROP TABLE IF EXISTS xcap;
@@ -82,7 +82,7 @@ CREATE TABLE xcap (
     doc_uri VARCHAR(255) NOT NULL,
     port INT(11) NOT NULL,
     CONSTRAINT doc_uri_idx UNIQUE (doc_uri)
-) ENGINE=MyISAM;
+) default charset=latin1; # FIXME
 
 CREATE INDEX account_doc_type_idx ON xcap (username, domain, doc_type);
 CREATE INDEX account_doc_type_uri_idx ON xcap (username, domain, doc_type, doc_uri);
@@ -112,7 +112,7 @@ CREATE TABLE pua (
     extra_headers TEXT NOT NULL,
     CONSTRAINT pua_idx UNIQUE (etag, tuple_id, call_id, from_tag),
     CONSTRAINT expires_idx UNIQUE (expires)
-) ENGINE=MyISAM;
+) default charset=latin1; # FIXME
 
 CREATE INDEX dialog1_idx ON pua (call_id, from_tag, to_tag);
 CREATE INDEX dialog2_idx ON pua (pres_id, pres_uri);
@@ -134,7 +134,7 @@ CREATE TABLE rls_presentity (
     auth_state INT(11) NOT NULL,
     reason VARCHAR(64) NOT NULL,
     CONSTRAINT rls_presentity_idx UNIQUE (rlsubs_did, resource_uri)
-) ENGINE=MyISAM;
+);
 
 CREATE INDEX rlsubs_idx ON rls_presentity (rlsubs_did);
 CREATE INDEX updated_idx ON rls_presentity (updated);
@@ -168,7 +168,7 @@ CREATE TABLE rls_watchers (
     from_domain VARCHAR(64) NOT NULL,
     updated INT(11) NOT NULL,
     CONSTRAINT rls_watcher_idx UNIQUE (callid, to_tag, from_tag)
-) ENGINE=MyISAM;
+);
 
 CREATE INDEX rls_watchers_delete ON rls_watchers (callid, to_tag);
 CREATE INDEX rls_watchers_update ON rls_watchers (watcher_username, watcher_domain, event);
@@ -191,7 +191,7 @@ CREATE TABLE silo (
     extra_hdrs TEXT DEFAULT '' NOT NULL,
     callid VARCHAR(128) DEFAULT '' NOT NULL,
     status INT DEFAULT 0 NOT NULL
-) ENGINE=MyISAM;
+);
 
 CREATE INDEX account_idx ON silo (username, domain);
 
