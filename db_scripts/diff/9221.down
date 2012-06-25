@@ -1,0 +1,4 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'reject_emergency';
+DELETE FROM voip_sound_handles where name = 'emergency_unsupported';
