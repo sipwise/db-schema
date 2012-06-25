@@ -1,0 +1,3 @@
+USE provisioning;
+
+UPDATE voip_preferences SET attribute='find_subscriber_by_uuid' WHERE attribute='find_subscriber_by_auth_user';
