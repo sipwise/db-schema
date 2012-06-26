@@ -1155,7 +1155,7 @@ CREATE TABLE `active_watchers` (
   `event_id` varchar(64) DEFAULT NULL,
   `to_tag` varchar(64) NOT NULL,
   `from_tag` varchar(64) NOT NULL,
-  `callid` varchar(128) NOT NULL,
+  `callid` varchar(255) NOT NULL,
   `local_cseq` int(11) NOT NULL,
   `remote_cseq` int(11) NOT NULL,
   `contact` varchar(128) NOT NULL,
@@ -1166,22 +1166,57 @@ CREATE TABLE `active_watchers` (
   `version` int(11) NOT NULL DEFAULT '0',
   `socket_info` varchar(64) NOT NULL,
   `local_contact` varchar(128) NOT NULL,
+  `from_user` varchar(64) NOT NULL,
+  `from_domain` varchar(64) NOT NULL,
+  `updated` int(11) NOT NULL,
+  `updated_winfo` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `active_watchers_idx` (`presentity_uri`,`callid`,`to_tag`,`from_tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `active_watchers_idx` (`callid`,`to_tag`,`from_tag`),
+  KEY `active_watchers_expires` (`expires`),
+  KEY `active_watchers_pres` (`presentity_uri`),
+  KEY `updated_idx` (`updated`),
+  KEY `updated_winfo_idx` (`updated_winfo`,`presentity_uri`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `address` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `grp` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `ip_addr` varchar(15) NOT NULL,
-  `mask` tinyint(4) NOT NULL DEFAULT '32',
+  `grp` int(11) unsigned NOT NULL DEFAULT '1',
+  `ip_addr` varchar(48) NOT NULL,
+  `mask` int(11) NOT NULL DEFAULT '32',
   `port` smallint(5) unsigned NOT NULL DEFAULT '0',
   `tag` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `aliases`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `aliases` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ruid` varchar(64) NOT NULL DEFAULT '',
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) DEFAULT NULL,
+  `contact` varchar(255) NOT NULL DEFAULT '',
+  `received` varchar(128) DEFAULT NULL,
+  `path` varchar(128) DEFAULT NULL,
+  `expires` datetime NOT NULL DEFAULT '2020-05-28 21:32:15',
+  `q` float(10,2) NOT NULL DEFAULT '1.00',
+  `callid` varchar(255) NOT NULL DEFAULT 'Default-Call-ID',
+  `cseq` int(11) NOT NULL DEFAULT '1',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  `flags` int(11) NOT NULL DEFAULT '0',
+  `cflags` int(11) NOT NULL DEFAULT '0',
+  `user_agent` varchar(255) NOT NULL DEFAULT '',
+  `socket` varchar(64) DEFAULT NULL,
+  `methods` int(11) DEFAULT NULL,
+  `instance` varchar(255) DEFAULT NULL,
+  `reg_id` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `alias_idx` (`username`,`domain`,`contact`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dbaliases`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1221,12 +1256,26 @@ CREATE TABLE `dialog` (
   `start_time` int(10) unsigned NOT NULL,
   `timeout` int(10) unsigned NOT NULL DEFAULT '0',
   `sflags` int(10) unsigned NOT NULL DEFAULT '0',
-  `toroute` int(10) unsigned NOT NULL DEFAULT '0',
   `toroute_name` varchar(32) DEFAULT NULL,
   `req_uri` varchar(128) NOT NULL,
+  `iflags` int(10) unsigned NOT NULL DEFAULT '0',
+  `xdata` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `hash_idx` (`hash_entry`,`hash_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `dialog_vars`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `dialog_vars` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `hash_entry` int(10) unsigned NOT NULL,
+  `hash_id` int(10) unsigned NOT NULL,
+  `dialog_key` varchar(128) NOT NULL,
+  `dialog_value` varchar(512) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `hash_idx` (`hash_entry`,`hash_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `dialplan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1279,11 +1328,26 @@ DROP TABLE IF EXISTS `domain`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `domain` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `domain` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) NOT NULL,
   `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  `did` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain_idx` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `domain_attrs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `domain_attrs` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `did` varchar(64) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `type` int(10) unsigned NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain_attrs_idx` (`did`,`name`,`value`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `fax_destinations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1336,6 +1400,19 @@ CREATE TABLE `fax_preferences` (
   PRIMARY KEY (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `htable`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `htable` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `key_name` varchar(64) NOT NULL DEFAULT '',
+  `key_type` int(11) NOT NULL DEFAULT '0',
+  `value_type` int(11) NOT NULL DEFAULT '0',
+  `key_value` varchar(128) NOT NULL DEFAULT '',
+  `expires` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lcr_gw`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1350,13 +1427,15 @@ CREATE TABLE `lcr_gw` (
   `uri_scheme` tinyint(3) unsigned DEFAULT NULL,
   `transport` tinyint(3) unsigned DEFAULT NULL,
   `strip` tinyint(3) unsigned DEFAULT NULL,
-  `tag` varchar(16) DEFAULT NULL,
+  `tag` varchar(64) DEFAULT NULL,
   `flags` int(10) unsigned NOT NULL DEFAULT '0',
   `defunct` int(10) unsigned DEFAULT NULL,
   `group_id` int(11) unsigned NOT NULL,
+  `prefix` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
-  UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`)
+  UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`),
+  KEY `lcr_id_idx` (`lcr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lcr_rule`;
@@ -1413,6 +1492,9 @@ CREATE TABLE `location` (
   `user_agent` varchar(255) NOT NULL DEFAULT '',
   `socket` varchar(64) DEFAULT NULL,
   `methods` int(11) DEFAULT NULL,
+  `ruid` varchar(64) NOT NULL DEFAULT '',
+  `reg_id` int(11) NOT NULL DEFAULT '0',
+  `instance` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `account_contact_idx` (`username`,`domain`,`contact`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1447,8 +1529,10 @@ CREATE TABLE `presentity` (
   `body` blob NOT NULL,
   `sender` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `presentity_idx` (`username`,`domain`,`event`,`etag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `presentity_idx` (`username`,`domain`,`event`,`etag`),
+  KEY `presentity_expires` (`expires`),
+  KEY `account_idx` (`username`,`domain`,`event`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `pua`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1456,7 +1540,7 @@ DROP TABLE IF EXISTS `pua`;
 CREATE TABLE `pua` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pres_uri` varchar(128) NOT NULL,
-  `pres_id` varchar(64) NOT NULL,
+  `pres_id` varchar(255) NOT NULL,
   `event` int(11) NOT NULL,
   `expires` int(11) NOT NULL,
   `desired_expires` int(11) NOT NULL,
@@ -1464,7 +1548,7 @@ CREATE TABLE `pua` (
   `etag` varchar(64) NOT NULL,
   `tuple_id` varchar(64) DEFAULT NULL,
   `watcher_uri` varchar(128) NOT NULL,
-  `call_id` varchar(128) NOT NULL,
+  `call_id` varchar(255) NOT NULL,
   `to_tag` varchar(64) NOT NULL,
   `from_tag` varchar(64) NOT NULL,
   `cseq` int(11) NOT NULL,
@@ -1473,8 +1557,16 @@ CREATE TABLE `pua` (
   `remote_contact` varchar(128) NOT NULL,
   `version` int(11) NOT NULL,
   `extra_headers` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `expires_idx` (`expires`),
+  UNIQUE KEY `pua_idx` (`etag`,`tuple_id`,`call_id`,`from_tag`),
+  KEY `dialog1_idx` (`call_id`,`from_tag`,`to_tag`),
+  KEY `dialog2_idx` (`pres_id`,`pres_uri`),
+  KEY `tmp_dlg1_idx` (`call_id`,`from_tag`),
+  KEY `tmp_dlg2_idx` (`pres_id`,`pres_uri`,`call_id`,`from_tag`),
+  KEY `tmp_record1_idx` (`pres_id`),
+  KEY `tmp_record2_idx` (`pres_id`,`etag`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `rls_presentity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1483,7 +1575,7 @@ CREATE TABLE `rls_presentity` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rlsubs_did` varchar(255) NOT NULL,
   `resource_uri` varchar(128) NOT NULL,
-  `content_type` varchar(64) NOT NULL,
+  `content_type` varchar(255) NOT NULL,
   `presence_state` blob NOT NULL,
   `expires` int(11) NOT NULL,
   `updated` int(11) NOT NULL,
@@ -1491,8 +1583,10 @@ CREATE TABLE `rls_presentity` (
   `reason` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rls_presentity_idx` (`rlsubs_did`,`resource_uri`),
-  KEY `updated_idx` (`updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `rlsubs_idx` (`rlsubs_did`),
+  KEY `updated_idx` (`updated`),
+  KEY `expires_idx` (`expires`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `rls_watchers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1508,10 +1602,10 @@ CREATE TABLE `rls_watchers` (
   `event_id` varchar(64) DEFAULT NULL,
   `to_tag` varchar(64) NOT NULL,
   `from_tag` varchar(64) NOT NULL,
-  `callid` varchar(64) NOT NULL,
+  `callid` varchar(255) NOT NULL,
   `local_cseq` int(11) NOT NULL,
   `remote_cseq` int(11) NOT NULL,
-  `contact` varchar(64) NOT NULL,
+  `contact` varchar(128) NOT NULL,
   `record_route` text,
   `expires` int(11) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '2',
@@ -1519,9 +1613,16 @@ CREATE TABLE `rls_watchers` (
   `version` int(11) NOT NULL DEFAULT '0',
   `socket_info` varchar(64) NOT NULL,
   `local_contact` varchar(128) NOT NULL,
+  `from_user` varchar(64) NOT NULL,
+  `from_domain` varchar(64) NOT NULL,
+  `updated` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `rls_watcher_idx` (`presentity_uri`,`callid`,`to_tag`,`from_tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `rls_watcher_idx` (`callid`,`to_tag`,`from_tag`),
+  KEY `rls_watchers_delete` (`callid`,`to_tag`),
+  KEY `rls_watchers_update` (`watcher_username`,`watcher_domain`,`event`),
+  KEY `rls_watchers_expires` (`expires`),
+  KEY `updated_idx` (`updated`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `sems_registrations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1536,6 +1637,27 @@ CREATE TABLE `sems_registrations` (
   `contacts` varchar(512) DEFAULT NULL,
   PRIMARY KEY (`subscriber_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `silo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `silo` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `src_addr` varchar(128) NOT NULL DEFAULT '',
+  `dst_addr` varchar(128) NOT NULL DEFAULT '',
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `inc_time` int(11) NOT NULL DEFAULT '0',
+  `exp_time` int(11) NOT NULL DEFAULT '0',
+  `snd_time` int(11) NOT NULL DEFAULT '0',
+  `ctype` varchar(32) NOT NULL DEFAULT 'text/plain',
+  `body` blob NOT NULL,
+  `extra_hdrs` text NOT NULL,
+  `callid` varchar(128) NOT NULL DEFAULT '',
+  `status` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `account_idx` (`username`,`domain`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `speed_dial`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1681,7 +1803,7 @@ CREATE TABLE `watchers` (
   `inserted_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `watcher_idx` (`presentity_uri`,`watcher_username`,`watcher_domain`,`event`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xcap`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1690,16 +1812,18 @@ CREATE TABLE `xcap` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `domain` varchar(64) NOT NULL,
-  `doc` blob NOT NULL,
+  `doc` mediumblob NOT NULL,
   `doc_type` int(11) NOT NULL,
   `etag` varchar(64) NOT NULL,
   `source` int(11) NOT NULL,
-  `doc_uri` varchar(128) NOT NULL,
+  `doc_uri` varchar(255) NOT NULL,
   `port` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `account_doc_type_idx` (`username`,`domain`,`doc_type`,`doc_uri`),
-  KEY `source_idx` (`source`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `doc_uri_idx` (`doc_uri`),
+  KEY `account_doc_type_idx` (`username`,`domain`,`doc_type`),
+  KEY `account_doc_type_uri_idx` (`username`,`domain`,`doc_type`,`doc_uri`),
+  KEY `account_doc_uri_idx` (`username`,`domain`,`doc_uri`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `ngcp`*/;
@@ -1729,7 +1853,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -2848,7 +2972,7 @@ CREATE TABLE `voip_preferences` (
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `attribute_idx` (`attribute`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -3356,7 +3480,7 @@ CREATE TABLE `voip_sound_handles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_sound_sets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
