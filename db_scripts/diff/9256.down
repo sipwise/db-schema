@@ -1,0 +1,5 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_socket' INTO @obs_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id = @obs_pref_id;
+DELETE FROM voip_preferences WHERE id = @obs_pref_id;

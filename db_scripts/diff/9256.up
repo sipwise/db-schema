@@ -1,0 +1,5 @@
+USE provisioning;
+
+INSERT INTO voip_preferences VALUES(NULL, 'outbound_socket', 0, 1, 1, 1, 1, now(), 0, 'enum', 0, 'Outbound socket to be used for SIP communication to this entity');
+SELECT last_insert_id() INTO @obs_pref_id;
+INSERT INTO voip_preferences_enum VALUES(NULL, @obs_pref_id, 'default', NULL, 1, 1, 1, 1);
