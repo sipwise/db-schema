@@ -1,0 +1,21 @@
+USE provisioning;
+
+-- reintroduce broken trigger
+
+DROP TRIGGER enum_update;
+
+DELIMITER |
+
+CREATE TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    UPDATE voip_usr_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_dom_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_peer_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_preferences_enum SET default_val=NEW.value
+    WHERE OLD.id=NEW.id AND default_val IS NOT NULL AND default_val=OLD.value;
+END |
+
+DELIMITER ;
