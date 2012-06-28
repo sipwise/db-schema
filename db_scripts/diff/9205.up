@@ -1,6 +1,7 @@
 -- PRESENCE and RLS modules
 use kamailio
 
+DELETE FROM version WHERE table_name='presentity';
 INSERT INTO version (table_name, table_version) values ('presentity','3');
 DROP TABLE IF EXISTS presentity;
 CREATE TABLE presentity (
@@ -19,6 +20,7 @@ CREATE TABLE presentity (
 CREATE INDEX presentity_expires ON presentity (expires);
 CREATE INDEX account_idx ON presentity (username, domain, event);
 
+DELETE FROM version WHERE table_name='active_watchers';
 INSERT INTO version (table_name, table_version) values ('active_watchers','11');
 DROP TABLE IF EXISTS active_watchers;
 CREATE TABLE active_watchers (
@@ -55,6 +57,7 @@ CREATE INDEX active_watchers_pres ON active_watchers (presentity_uri);
 CREATE INDEX updated_idx ON active_watchers (updated);
 CREATE INDEX updated_winfo_idx ON active_watchers (updated_winfo, presentity_uri);
 
+DELETE FROM version WHERE table_name='watchers';
 INSERT INTO version (table_name, table_version) values ('watchers','3');
 DROP TABLE IF EXISTS watchers;
 CREATE TABLE watchers (
@@ -69,6 +72,7 @@ CREATE TABLE watchers (
     CONSTRAINT watcher_idx UNIQUE (presentity_uri, watcher_username, watcher_domain, event)
 );
 
+DELETE FROM version WHERE table_name='xcap';
 INSERT INTO version (table_name, table_version) values ('xcap','4');
 DROP TABLE IF EXISTS xcap;
 CREATE TABLE xcap (
@@ -88,6 +92,7 @@ CREATE INDEX account_doc_type_idx ON xcap (username, domain, doc_type);
 CREATE INDEX account_doc_type_uri_idx ON xcap (username, domain, doc_type, doc_uri);
 CREATE INDEX account_doc_uri_idx ON xcap (username, domain, doc_uri);
 
+DELETE FROM version WHERE table_name='pua';
 INSERT INTO version (table_name, table_version) values ('pua','7');
 DROP TABLE IF EXISTS pua;
 CREATE TABLE pua (
@@ -121,6 +126,7 @@ CREATE INDEX tmp_dlg2_idx ON pua (pres_id, pres_uri, call_id, from_tag);
 CREATE INDEX tmp_record1_idx ON pua (pres_id);
 CREATE INDEX tmp_record2_idx ON pua (pres_id, etag);
 
+DELETE FROM version WHERE table_name='rls_presentity';
 INSERT INTO version (table_name, table_version) values ('rls_presentity','1');
 DROP TABLE IF EXISTS rls_presentity;
 CREATE TABLE rls_presentity (
@@ -140,6 +146,7 @@ CREATE INDEX rlsubs_idx ON rls_presentity (rlsubs_did);
 CREATE INDEX updated_idx ON rls_presentity (updated);
 CREATE INDEX expires_idx ON rls_presentity (expires);
 
+DELETE FROM version WHERE table_name='rls_watchers';
 INSERT INTO version (table_name, table_version) values ('rls_watchers','3');
 DROP TABLE IF EXISTS rls_watchers;
 CREATE TABLE rls_watchers (
@@ -175,6 +182,7 @@ CREATE INDEX rls_watchers_update ON rls_watchers (watcher_username, watcher_doma
 CREATE INDEX rls_watchers_expires ON rls_watchers (expires);
 CREATE INDEX updated_idx ON rls_watchers (updated);
 
+DELETE FROM version WHERE table_name='silo';
 INSERT INTO version (table_name, table_version) values ('silo','7');
 DROP TABLE IF EXISTS silo;
 CREATE TABLE silo (
