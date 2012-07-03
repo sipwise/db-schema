@@ -1,0 +1,56 @@
+USE provisioning;
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('outbound_from_user', 0, 1, 1, 1, 1, now(), 0, 'enum', 0, 'The content to put into the From username for outbound calls');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Network-Provided-Number', NULL, 1, 1, 1, 1),
+(@pref_id, 'User-Provided-Number', 'upn', 1, 1, 1, 0),
+(@pref_id, 'Authentication-User', 'auth_user', 1, 1, 1, 0),
+(@pref_id, 'Received Display-name', 'rcv_display', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('outbound_from_display', 0, 1, 1, 1, 1, now(), 0, 'enum', 0, 'The content to put into the From display-name for outbound calls');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'None', NULL, 1, 1, 1, 1),
+(@pref_id, 'Network-Provided-Number', 'npn', 1, 1, 1, 0),
+(@pref_id, 'User-Provided-Number', 'upn', 1, 1, 1, 0),
+(@pref_id, 'Authentication-User', 'auth_user', 1, 1, 1, 0),
+(@pref_id, 'Received Display-name', 'rcv_display', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('outbound_pai_user', 0, 1, 1, 1, 1, now(), 0, 'enum', 0, 'The content to put into the P-Asserted-Identity username for outbound calls (use "None" to not set header at all)');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'None', NULL, 1, 1, 1, 1),
+(@pref_id, 'Network-Provided-Number', 'npn', 1, 1, 1, 0),
+(@pref_id, 'User-Provided-Number', 'upn', 1, 1, 1, 0),
+(@pref_id, 'Authentication-User', 'auth_user', 1, 1, 1, 0),
+(@pref_id, 'Received Display-name', 'rcv_display', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('outbound_ppi_user', 0, 1, 1, 1, 1, now(), 0, 'enum', 0, 'The content to put into the P-Preferred-Identity username for outbound calls (use "None" to not set header at all)');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'None', NULL, 1, 1, 1, 1),
+(@pref_id, 'Network-Provided-Number', 'npn', 1, 1, 1, 0),
+(@pref_id, 'User-Provided-Number', 'upn', 1, 1, 1, 0),
+(@pref_id, 'Authentication-User', 'auth_user', 1, 1, 1, 0),
+(@pref_id, 'Received Display-name', 'rcv_display', 1, 1, 1, 0);
