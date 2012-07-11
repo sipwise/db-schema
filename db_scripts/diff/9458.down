@@ -1,0 +1,40 @@
+USE provisioning;
+
+-- audio files for IVR, auto-attendant, etc.
+CREATE TABLE `voip_audio_files` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `subscriber_id` int(11) unsigned REFERENCES `voip_subscribers` (`id`),
+  `domain_id` int(11) unsigned REFERENCES `voip_domains` (`id`),
+  `handle` varchar(63) NOT NULL,
+  `description` text,
+  `audio` longblob,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `subhand_idx` (`subscriber_id`, `handle`),
+  UNIQUE KEY `domhand_idx` (`domain_id`, `handle`),
+  CONSTRAINT `v_a_f_subscriberid_ref` FOREIGN KEY (`subscriber_id`)
+                                      REFERENCES `voip_subscribers` (`id`)
+                                      ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_a_f_domainid_ref` FOREIGN KEY (`domain_id`)
+                                  REFERENCES `voip_domains` (`id`)
+                                  ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- VSC table
+CREATE TABLE `voip_vscs` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `domain_id` int(11) unsigned REFERENCES `voip_domains` (`id`),
+  `digits` char(2),
+  `action` varchar(31) NOT NULL,
+  `audio_id` int(11) unsigned NOT NULL REFERENCES `voip_audio_files` (`id`),
+  `description` text,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `domdig_idx` (`domain_id`, `digits`),
+  UNIQUE KEY `domaction_idx` (`domain_id`, `action`),
+  KEY `audioid_idx` (`audio_id`),
+  CONSTRAINT `v_v_domainid_ref` FOREIGN KEY (`domain_id`)
+                                REFERENCES `voip_domains` (`id`)
+                                ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_v_audioid_ref` FOREIGN KEY (`audio_id`)
+                               REFERENCES `voip_audio_files` (`id`)
+                               ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB;
