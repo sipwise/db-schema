@@ -1,6 +1,7 @@
 USE provisioning;
 
-DROP TABLE voip_vscs;
+-- voip_vscs was probably already dropped with 9069.up
+DROP TABLE IF EXISTS voip_vscs;
 
 -- voip_audio_files was probably already dropped with 9069.up
 DROP TABLE IF EXISTS voip_audio_files;
