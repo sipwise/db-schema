@@ -1,0 +1,42 @@
+use sipstats;
+
+set autocommit=0;
+
+rename table packets to messages;
+create table packets like messages;
+
+alter table packets drop column protocol;
+alter table packets drop column src_ip;
+alter table packets drop column dst_ip;
+alter table packets drop column src_port;
+alter table packets drop column dst_port;
+alter table packets drop column method;
+alter table packets drop column cseq_method;
+alter table packets drop column call_id;
+alter table packets drop column request_uri;
+alter table packets drop column from_uri;
+alter table packets drop column caller_uuid;
+alter table packets drop column callee_uuid;
+alter table packets drop column was_fragmented;
+alter table packets add unique key (timestamp, src_mac, dst_mac, header(80));
+
+insert into packets (id, timestamp, src_mac, dst_mac, header, payload, trailer) select id, timestamp, src_mac, dst_mac, header, payload, trailer from messages;
+
+alter table messages drop column src_mac;
+alter table messages drop column dst_mac;
+alter table messages add column transport enum('UDP','TCP') not null after protocol;
+alter table messages drop column header;
+alter table messages drop column trailer;
+alter table messages drop column was_fragmented;
+
+CREATE TABLE `message_packets` (
+`message` bigint(20) unsigned NOT NULL,
+`packet` bigint(20) unsigned NOT NULL,
+PRIMARY KEY (`message`,`packet`),
+KEY `packet` (`packet`)
+) ENGINE=MyISAM;
+
+insert into message_packets select id, id from messages;
+
+commit;
+set autocommit=1;

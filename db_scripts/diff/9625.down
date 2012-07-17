@@ -1,0 +1,24 @@
+use sipstats;
+
+set autocommit=0;
+
+alter table messages add column src_mac binary(6) not null after timestamp;
+alter table messages add column dst_mac binary(6) not null after src_mac;
+alter table messages drop column transport;
+alter table messages add column header blob not null after dst_port;
+alter table messages add column trailer blob not null after payload;
+alter table messages add column was_fragmented tinyint unsigned not null after callee_uuid;
+
+update messages m set
+src_mac = (select src_mac from packets p, message_packets mp where p.id = mp.packet and mp.message = m.id limit 1),
+dst_mac = (select dst_mac from packets p, message_packets mp where p.id = mp.packet and mp.message = m.id limit 1),
+header = (select header from packets p, message_packets mp where p.id = mp.packet and mp.message = m.id limit 1),
+trailer = (select trailer from packets p, message_packets mp where p.id = mp.packet and mp.message = m.id limit 1),
+was_fragmented = if(length(payload) <= 1472, 0, 1);
+
+drop table message_packets;
+drop table packets;
+rename table messages to packets;
+
+commit;
+set autocommit=1;
