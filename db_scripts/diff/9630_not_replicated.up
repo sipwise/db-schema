@@ -1,0 +1,10 @@
+use sipstats;
+
+set autocommit=0;
+
+alter table mark drop column id;
+alter table mark drop key name_idx;
+alter table mark add primary key (name);
+
+commit;
+set autocommit=1;
