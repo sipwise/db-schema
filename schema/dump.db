@@ -1853,7 +1853,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -3971,12 +3971,48 @@ DROP TABLE IF EXISTS `mark`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mark` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `value` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `name_idx` (`name`)
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `message_packets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message_packets` (
+  `message` bigint(20) unsigned NOT NULL,
+  `packet` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`message`,`packet`),
+  KEY `packet` (`packet`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `messages` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `timestamp` decimal(17,6) NOT NULL,
+  `protocol` enum('IPv4','IPv6') NOT NULL,
+  `transport` enum('UDP','TCP') NOT NULL,
+  `src_ip` varchar(39) NOT NULL,
+  `dst_ip` varchar(39) NOT NULL,
+  `src_port` smallint(5) unsigned NOT NULL,
+  `dst_port` smallint(5) unsigned NOT NULL,
+  `payload` blob NOT NULL,
+  `method` varchar(20) NOT NULL,
+  `cseq_method` varchar(16) NOT NULL,
+  `call_id` varchar(255) NOT NULL,
+  `request_uri` varchar(255) NOT NULL,
+  `from_uri` varchar(255) NOT NULL,
+  `caller_uuid` varchar(255) NOT NULL,
+  `callee_uuid` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`,`timestamp`),
+  KEY `call_id_idx` (`call_id`),
+  KEY `caller_uuid_idx` (`caller_uuid`),
+  KEY `callee_uuid_idx` (`callee_uuid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8
+/*!50100 PARTITION BY RANGE (FLOOR(`timestamp`))
+(PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `packets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -3986,26 +4022,11 @@ CREATE TABLE `packets` (
   `timestamp` decimal(17,6) NOT NULL,
   `src_mac` binary(6) NOT NULL,
   `dst_mac` binary(6) NOT NULL,
-  `protocol` enum('IPv4','IPv6') NOT NULL,
-  `src_ip` varchar(39) NOT NULL,
-  `dst_ip` varchar(39) NOT NULL,
-  `src_port` smallint(5) unsigned NOT NULL,
-  `dst_port` smallint(5) unsigned NOT NULL,
   `header` blob NOT NULL,
   `payload` blob NOT NULL,
   `trailer` blob NOT NULL,
-  `method` varchar(20) NOT NULL,
-  `cseq_method` varchar(16) NOT NULL,
-  `call_id` varchar(255) NOT NULL,
-  `request_uri` varchar(255) NOT NULL,
-  `from_uri` varchar(255) NOT NULL,
-  `caller_uuid` varchar(255) NOT NULL,
-  `callee_uuid` varchar(255) NOT NULL,
-  `was_fragmented` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY (`id`,`timestamp`),
-  KEY `call_id_idx` (`call_id`),
-  KEY `caller_uuid_idx` (`caller_uuid`),
-  KEY `callee_uuid_idx` (`callee_uuid`)
+  UNIQUE KEY `timestamp` (`timestamp`,`src_mac`,`dst_mac`,`header`(80))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 /*!50100 PARTITION BY RANGE (FLOOR(`timestamp`))
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
