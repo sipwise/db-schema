@@ -1,0 +1,3 @@
+use sipstats;
+
+alter table message_packets partition by range (message) (partition pmax values less than maxvalue);

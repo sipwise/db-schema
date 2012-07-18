@@ -1,0 +1,3 @@
+use sipstats;
+
+alter table message_packets remove partitioning;
