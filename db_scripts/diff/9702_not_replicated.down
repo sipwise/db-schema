@@ -1,0 +1,14 @@
+use sipstats;
+
+alter table packets remove partitioning;
+alter table packets drop primary key, drop key uniq,
+  add primary key (id, timestamp), add unique key (timestamp, src_mac, dst_mac, header(80));
+alter table packets partition by range (floor(timestamp)) (partition pmax values less than maxvalue);
+
+alter table messages remove partitioning;
+alter table messages drop primary key, drop key timestamp, add primary key (id, timestamp);
+alter table messages partition by range (floor(timestamp)) (partition pmax values less than maxvalue);
+
+
+
+
