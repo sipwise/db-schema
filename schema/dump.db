@@ -1853,7 +1853,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -4008,12 +4008,13 @@ CREATE TABLE `messages` (
   `from_uri` varchar(255) NOT NULL,
   `caller_uuid` varchar(255) NOT NULL,
   `callee_uuid` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`,`timestamp`),
+  PRIMARY KEY (`id`),
   KEY `call_id_idx` (`call_id`),
   KEY `caller_uuid_idx` (`caller_uuid`),
-  KEY `callee_uuid_idx` (`callee_uuid`)
+  KEY `callee_uuid_idx` (`callee_uuid`),
+  KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
-/*!50100 PARTITION BY RANGE (FLOOR(`timestamp`))
+/*!50100 PARTITION BY RANGE (id)
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `packets`;
@@ -4027,10 +4028,10 @@ CREATE TABLE `packets` (
   `header` blob NOT NULL,
   `payload` blob NOT NULL,
   `trailer` blob NOT NULL,
-  PRIMARY KEY (`id`,`timestamp`),
-  UNIQUE KEY `timestamp` (`timestamp`,`src_mac`,`dst_mac`,`header`(80))
+  PRIMARY KEY (`id`),
+  KEY `uniq` (`timestamp`,`src_mac`,`dst_mac`,`header`(80))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
-/*!50100 PARTITION BY RANGE (FLOOR(`timestamp`))
+/*!50100 PARTITION BY RANGE (id)
 (PARTITION pmax VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `statistics`;
