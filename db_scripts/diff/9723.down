@@ -1,0 +1,30 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_upn' INTO @upn_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@upn_pref_id AND label='use domain default';
+DELETE FROM voip_preferences_enum WHERE preference_id=@upn_pref_id AND label='From-Username' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1 WHERE preference_id=@upn_pref_id AND label='From-Username';
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' INTO @ofu_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@ofu_pref_id AND label='use domain default';
+DELETE FROM voip_preferences_enum WHERE preference_id=@ofu_pref_id AND label='Network-Provided-Number' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1 WHERE preference_id=@ofu_pref_id AND label='Network-Provided-Number';
+UPDATE voip_preferences SET description='The content to put into the From username for outbound calls' WHERE id=@ofu_pref_id;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_display' INTO @ofd_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@ofd_pref_id AND label='use domain default';
+DELETE FROM voip_preferences_enum WHERE preference_id=@ofd_pref_id AND label='None' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1 WHERE preference_id=@ofd_pref_id AND label='None';
+UPDATE voip_preferences SET description='The content to put into the From display-name for outbound calls' WHERE id=@ofd_pref_id;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pau_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@pau_pref_id AND label='use domain default';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pau_pref_id AND label='None' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1 WHERE preference_id=@pau_pref_id AND label='None';
+UPDATE voip_preferences SET description='The content to put into the P-Asserted-Identity username for outbound calls (use "None" to not set header at all)' WHERE id=@pau_pref_id;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_ppi_user' INTO @ppu_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@ppu_pref_id AND label='use domain default';
+DELETE FROM voip_preferences_enum WHERE preference_id=@ppu_pref_id AND label='None' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1 WHERE preference_id=@ppu_pref_id AND label='None';
+UPDATE voip_preferences SET description='The content to put into the P-Preferred-Identity username for outbound calls (use "None" to not set header at all)' WHERE id=@ppu_pref_id;
