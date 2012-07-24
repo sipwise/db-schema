@@ -1,0 +1,60 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_upn' INTO @upn_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@upn_pref_id AND
+ label='From-Username';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@upn_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@upn_pref_id, 'From-Username', 'from_user', 1, 0, 0, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_npn' INTO @npn_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@npn_pref_id AND
+ label='From-Username';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@npn_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@npn_pref_id, 'From-Username', 'from_user', 1, 0, 0, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' INTO @ofu_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@ofu_pref_id AND
+ label='Network-Provided-Number';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ofu_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@ofu_pref_id, 'Network-Provided-Number', 'npn', 1, 0, 0, 0);
+UPDATE voip_preferences SET description='The content to put into the From username for outbound calls from the platform to the subscriber' WHERE attribute='outbound_from_user';
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_display' INTO @ofd_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@ofd_pref_id AND
+ label='None';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ofd_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@ofd_pref_id, 'None', 'none', 1, 0, 0, 0);
+UPDATE voip_preferences SET description='The content to put into the From display-name for outbound calls from the platform to the subscriber' WHERE attribute='outbound_from_display';
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pau_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@pau_pref_id AND
+ label='None';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pau_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@pau_pref_id, 'None', 'none', 1, 0, 0, 0);
+UPDATE voip_preferences SET description='The content to put into the P-Asserted-Identity username for outbound calls from the platform to the subscriber (use "None" to not set header at all)' WHERE attribute='outbound_pai_user';
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_ppi_user' INTO @ppu_pref_id;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@ppu_pref_id AND
+ label='None';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ppu_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@ppu_pref_id, 'None', 'none', 1, 0, 0, 0);
+UPDATE voip_preferences SET description='The content to put into the P-Preferred-Identity username for outbound calls from the platform to the subscriber (use "None" to not set header at all)' WHERE attribute='outbound_ppi_user';
+
