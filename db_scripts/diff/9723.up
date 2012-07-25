@@ -27,7 +27,7 @@ INSERT INTO voip_preferences_enum
 VALUES
 (@ofd_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
 (@ofd_pref_id, 'None', 'none', 1, 0, 0, 0);
-UPDATE voip_preferences SET description='The content to put into the From display-name for outbound calls from the platform to the subscriber' WHERE @ofd_pref_id;
+UPDATE voip_preferences SET description='The content to put into the From display-name for outbound calls from the platform to the subscriber' WHERE id=@ofd_pref_id;
 
 SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pau_pref_id;
 UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@pau_pref_id AND
