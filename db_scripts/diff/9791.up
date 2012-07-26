@@ -1,0 +1,8 @@
+USE provisioning;
+
+INSERT INTO xmlhosts VALUES (NULL, '127.0.0.1', '5060', '/', NULL, 'Loadbalancer');
+INSERT INTO xmlhostgroups VALUES (
+    NULL,
+    (SELECT id FROM xmlgroups WHERE name = 'loadbalancer'),
+    (SELECT id FROM xmlhosts WHERE description = 'Loadbalancer')
+);

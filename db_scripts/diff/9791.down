@@ -1,0 +1,7 @@
+USE provisioning;
+
+DELETE FROM xmlhostgroups
+WHERE group_id = (SELECT id FROM xmlgroups WHERE name = 'loadbalancer')
+AND host_id = (SELECT id FROM xmlhosts WHERE description = 'Loadbalancer');
+
+DELETE FROM xmlhosts WHERE description = 'Loadbalancer';
