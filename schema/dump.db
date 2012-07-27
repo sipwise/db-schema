@@ -1853,7 +1853,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -3931,7 +3931,7 @@ CREATE TABLE `xmlhostgroups` (
   KEY `xhg_hostid_ref` (`host_id`),
   CONSTRAINT `xhg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `xmlgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `xhg_hostid_ref` FOREIGN KEY (`host_id`) REFERENCES `xmlhosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xmlhosts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -3944,7 +3944,7 @@ CREATE TABLE `xmlhosts` (
   `sip_port` int(5) unsigned DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `xmlqueue`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
