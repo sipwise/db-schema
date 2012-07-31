@@ -3,7 +3,7 @@ use kamailio
 -- Downgrade Kamailio from v3.3.0 to v3.2.x
 -- PERMISSIONS module
 ALTER TABLE address CHANGE COLUMN ip_addr ip_addr varchar(15) NOT NULL;
-ALTER TABLE address CHANGE COLUMN grp grp smallint(5) UNSIGNED NOT NULL DEFAULT '1';
+ALTER TABLE address CHANGE COLUMN grp grp smallint(5) UNSIGNED NOT NULL DEFAULT '0';
 ALTER TABLE address CHANGE COLUMN mask mask tinyint(4) NOT NULL DEFAULT '32';
 
 -- DIALOG module
