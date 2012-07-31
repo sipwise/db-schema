@@ -1,0 +1,55 @@
+use kamailio
+
+-- Downgrade Kamailio from v3.3.0 to v3.2.x
+-- PERMISSIONS module
+ALTER TABLE address CHANGE COLUMN ip_addr ip_addr varchar(15) NOT NULL;
+ALTER TABLE address CHANGE COLUMN grp grp smallint(5) UNSIGNED NOT NULL DEFAULT '1';
+ALTER TABLE address CHANGE COLUMN mask mask tinyint(4) NOT NULL DEFAULT '32';
+
+-- DIALOG module
+DELETE FROM dialog;
+ALTER TABLE dialog CHANGE COLUMN caller_cseq caller_cseq varchar(7) NOT NULL;
+ALTER TABLE dialog CHANGE COLUMN callee_cseq callee_cseq varchar(7) NOT NULL;
+ALTER TABLE dialog ADD COLUMN toroute int(10) UNSIGNED NOT NULL DEFAULT '0' AFTER sflags;
+ALTER TABLE dialog DROP COLUMN iflags;
+ALTER TABLE dialog DROP COLUMN xdata;
+
+-- USRLOC module
+DELETE FROM location;
+ALTER TABLE location DROP COLUMN ruid;
+ALTER TABLE location DROP COLUMN reg_id;
+ALTER TABLE location DROP COLUMN instance;
+
+DROP TABLE aliases;
+DELETE FROM version WHERE table_name='aliases';
+
+-- DOMAIN module
+ALTER TABLE domain CHANGE COLUMN domain domain varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE domain DROP COLUMN did;
+DROP TABLE domain_attrs;
+DELETE FROM version WHERE table_name='domain_attrs';
+
+-- HTABLE module
+DROP TABLE htable;
+DELETE FROM version WHERE table_name='htable';
+
+-- VERSION table
+DELETE FROM version WHERE table_name='address';
+INSERT INTO version (table_name, table_version) VALUES ('address','4');
+DELETE FROM version WHERE table_name='dialog';
+INSERT INTO version (table_name, table_version) VALUES ('dialog','4');
+DELETE FROM version WHERE table_name='domain';
+INSERT INTO version (table_name, table_version) VALUES ('domain','1');
+DELETE FROM version WHERE table_name='location';
+INSERT INTO version (table_name, table_version) VALUES ('location','4');
+
+-- Downgrade Kamailio from v3.2.0 to v3.1.x
+
+DROP TABLE dialog_vars;
+DELETE FROM version WHERE table_name='dialog_vars';
+
+ALTER TABLE lcr_gw DROP COLUMN prefix;
+ALTER TABLE lcr_gw MODIFY tag VARCHAR(16) DEFAULT NULL;
+ALTER TABLE lcr_gw DROP INDEX lcr_id_idx;
+UPDATE version SET table_version=1 WHERE table_name='lcr_gw';
+
