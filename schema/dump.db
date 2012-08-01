@@ -1302,6 +1302,7 @@ CREATE TABLE `dispatcher` (
   `destination` varchar(192) NOT NULL DEFAULT '',
   `flags` int(11) NOT NULL DEFAULT '0',
   `priority` int(11) NOT NULL DEFAULT '0',
+  `attrs` varchar(128) NOT NULL DEFAULT '',
   `description` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -1419,7 +1420,7 @@ DROP TABLE IF EXISTS `lcr_gw`;
 CREATE TABLE `lcr_gw` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `lcr_id` smallint(5) unsigned NOT NULL,
-  `gw_name` varchar(128) NOT NULL,
+  `gw_name` varchar(128) DEFAULT NULL,
   `ip_addr` varchar(64) NOT NULL,
   `hostname` varchar(64) DEFAULT NULL,
   `port` smallint(5) unsigned DEFAULT NULL,
@@ -1430,11 +1431,10 @@ CREATE TABLE `lcr_gw` (
   `tag` varchar(64) DEFAULT NULL,
   `flags` int(10) unsigned NOT NULL DEFAULT '0',
   `defunct` int(10) unsigned DEFAULT NULL,
-  `group_id` int(11) unsigned NOT NULL,
   `prefix` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
   UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`),
+  UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
   KEY `lcr_id_idx` (`lcr_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1451,7 +1451,7 @@ CREATE TABLE `lcr_rule` (
   `enabled` int(10) unsigned NOT NULL DEFAULT '1',
   `group_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `lcr_id_idx` (`lcr_id`)
+  UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `lcr_rule_target`;
@@ -1853,7 +1853,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
