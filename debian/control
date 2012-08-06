@@ -8,7 +8,7 @@ Homepage: http://sipwise.com/
 
 Package: ngcp-db-schema
 Architecture: all
-Depends: ${misc:Depends}, libconfig-tiny-perl
+Depends: libconfig-tiny-perl, ${misc:Depends}
 Description: database schema for Sipwise's NGCP platform
  This package provides the database schema for Sipwise's NGCP
  platform.
