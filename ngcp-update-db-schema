@@ -141,6 +141,11 @@ revision_wrapper() {
 
   for rev in $* ; do
 
+    if ! [ -r "$rev" ] ; then
+      echo "Error: $rev can not be read." >&2
+      exit 1
+    fi
+
     cd $(dirname $rev) || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
 
     revname="$(basename $rev)"
