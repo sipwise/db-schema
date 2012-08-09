@@ -169,7 +169,14 @@ revision_wrapper() {
   done
 }
 
-revision_wrapper /usr/share/ngcp-db-schema/db_scripts/base/*.up
-revision_wrapper /usr/share/ngcp-db-schema/db_scripts/diff/*.up
+# make sure we get sorted 10XXX after 9XXX
+cd /usr/share/ngcp-db-schema/db_scripts/base/
+revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo /usr/share/ngcp-db-schema/db_scripts/base/$file; done)
+
+cd /usr/share/ngcp-db-schema/db_scripts/diff/
+revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo /usr/share/ngcp-db-schema/db_scripts/diff/$file; done)
+
 
 ## END OF FILE #################################################################
