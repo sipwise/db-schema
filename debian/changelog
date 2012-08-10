@@ -1,3 +1,89 @@
+ngcp-db-schema (2.6.0) unstable; urgency=low
+
+  [ rfuchs ]
+  * 9625.down,9625.up: rev scripts for new voisniff db schema
+  * 9630_not_replicated.down,9630_not_replicated.up: sanitize sipstats.mark table
+  * 9665_not_replicated.down,9665_not_replicated.up: rev scripts to partition message_packets table
+  * 9702_not_replicated.down,9702_not_replicated.up: changed sipstats partitioning scheme
+  * 9703_not_replicated.down,9703_not_replicated.up: also repartition message_packets table. partitioning format hasn't changed, but the names have
+  * 9733.down,9733.up: collectd plugin uses nagios user for db access, so grant select to sipstats.*
+
+  [ dtiefnig ]
+  * 8408.down,8408.up: replace emerg_ac by emergency_prefix, add emergency_suffix, drop svc_ac
+  * 8846.down,8846.up: add index for rate-o-mat on cdr.rating_status column
+
+  [ mprokop ]
+  * changelog: Release new version 0.1.3
+  * schema: create schmema directory
+  * dump.db: ignore: modify dump.db to test upload procedure
+  * ngcp-update-db-schema: Make code less ugly
+  * 9458.up: Do not drop voip_vscs if it doesn't exist
+  * control: wrap and sort items in Debian packaging files
+  * ngcp-update-db-schema: Error out if a sript can not be read
+  * ngcp-update-db-schema: Fix script order execution for scripts with >4 digits
+
+  [ agranig ]
+  * 8378_not_replicated.down,8378_not_replicated.up: Add statistics table.
+  * 8466.down,8466.up: Add pattern column for r-uri matching.
+  * 8466.up: Align kamailio.lcr_rule.request_uri length to from_uri length.
+  * 8467.down,8467.up: Rename caller prefix to caller pattern and add callee pattern.
+  * 8466.up: Make r-uri and empty string by default
+  * 8878.down,8878.up: Add presence tables.
+  * 9106.down,9106.up: Grant select privs for kamailio to new sound tables.
+  * 9159.down,9159.up: Add announcement handles for block-in/out/ncos.
+  * 9166.down,9166.up: Add sound handles for rest of rejection cases.
+  * 9187.down,9187.up: Add codec column for music-on-hold.
+  * 9188.down,9188.up: Add music_on_hold handle.
+  * 9221.down,9221.up: Add preference and sound handle for rejecting em calls.
+  * 9222.down,9222.up: Add emergency_cli preference.
+  * r9228.down,r9228.up: Rename attribute to make new behavior more clear.
+  * 9204.up: Use latin1 for now to work-around 1000byte key limit
+  * 9205.up: Delete old entries from version before adding new ones.
+  * 9256.down,9256.up: Add up/down scripts for outbound_socket pref.
+  * 9303.down,9303.up: Add preferences for inbound NPN/UPN selection.
+  * 9312.down,9312.up: Add preferences for driving outbound caller CLI.
+
+  [ apogrebennyk ]
+  * 8704.down,8704.up: add db rev scripts for session timer preferences
+  * 8704.up: sst_refresh_method is not integer, so type=0
+  * 8704.down: add missing db specification
+  * 8704.down,8704.up: make sst_enable preference an enum
+  * 8704.up: update sst preferences to the latest schema
+  * 9119.down,9119.up: set "no" as default for sst_enable in dom/peer; add default method too
+  * 9150.down,9150.up: add transport protocol select to peers (db rev scripts)
+  * 9204.up,9205.up: update kamailio database for version 3.3
+  * 9204.up,9205.up: fix engine & encoding for presence tables - WIP
+  * 9205.up: more presence table with indexes that don't fix in 1000 bytes (utf8 issue)
+  * r9228.down:9286),r9228.up:9286),r9228.down,r9228.up: avoid "r" in the beginning of file names (otherwise 0 is inserted into db)
+  * 9675.down,9675.up: add mobile_push_enable preference
+  * 9675.up: fix syntax
+  * 9723.up: add "Use domain default" option to outbound CLI settings
+  * 9723.down,9723.up: add downgrade script for r9723, some corrections
+  * 9723.up: fix sql error
+  * 9868.up: fix some discrepancies with vanilla kamailio 3.3 schema
+  * 9204.down: add missing kamailio 3.3->3.1 downgrade script
+  * 9204.down: default value of address.grp in 3.1 was '0' (testing rocks)
+  * 9868.up: keep lcr_gw.group_id column for now..
+
+  [ cveigl ]
+  * 8461.down,8461.up,DB.pm,Voip.pm,subscriber.pm: allow empty sip-uri (mantis:797)
+  * 8629.down,8629.up: up/down scripts for matnis:841
+  * 8629.up: typo. mysql demands a whitespace after starting a comment "-- "
+  * 8889.down,8889.up: enhanced enum type
+  * 8889.up: add example enum-preference
+  * 8889.up: comment out examples
+  * 8629.up,8889.down,8889.up: simplify up/down scripts (cudos to See also
+  * 8997.down,8997.up: languagstrings for r8997
+  * 8629.up,9069.down,9069.up: oss/bss support for sound sets
+  * 8629.up: revert accidental commit
+  * 9086.down,9086.up: enable default enum-option; propagate changes in voip_preferences_enum.value (mantis:841)
+  * 9114.down,9114.up: add attribute "description" to sound sets
+  * 9154.down,9154.up: add support for loopplay flag of soundfile handle
+  * 9249.down,9249.up: fix broken trigger
+  * 9458.down,9458.up: drop unused tables voip_vscs and voip_audio_files
+
+ -- Jon Bonilla <jbonilla@sipwise.com>  Fri, 10 Aug 2012 15:45:45 +0200
+
 ngcp-db-schema (0.1.3) unstable; urgency=low
 
   * Drop grant specific code from ngcp-update-db-schema
