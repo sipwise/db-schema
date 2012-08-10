@@ -1431,6 +1431,7 @@ CREATE TABLE `lcr_gw` (
   `tag` varchar(64) DEFAULT NULL,
   `flags` int(10) unsigned NOT NULL DEFAULT '0',
   `defunct` int(10) unsigned DEFAULT NULL,
+  `group_id` int(11) unsigned NOT NULL,
   `prefix` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`),
@@ -1841,7 +1842,7 @@ CREATE TABLE `cfg_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `db_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
