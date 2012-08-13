@@ -1,0 +1,6 @@
+use kamailio;
+
+ALTER TABLE lcr_rule DROP KEY `lcr_id_prefix_from_uri_idx`;
+ALTER TABLE lcr_rule ADD UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`, `request_uri`);
+
+ALTER TABLE lcr_gw ADD `group_id` int(11) unsigned NOT NULL AFTER defunct;
