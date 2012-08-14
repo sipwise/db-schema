@@ -64,6 +64,12 @@ ngcp-db-schema (2.6.0) unstable; urgency=low
   * 9204.down: add missing kamailio 3.3->3.1 downgrade script
   * 9204.down: default value of address.grp in 3.1 was '0' (testing rocks)
   * 9868.up: keep lcr_gw.group_id column for now..
+  * increase length of rewrite rule regexp fields
+  * somewhat tune up the cli related preferences
+  * backward-compatible defaults: NPN is default for outbound_pai, UPN for outbound_from_user.
+  * update cli & user_cli preferences description.
+  * drop omit_outbound_displayname preference (obsolete since r9312)
+  * return column lcr_gw.group_id, update key on lcr_rule to include request_uri
 
   [ cveigl ]
   * 8461.down,8461.up,DB.pm,Voip.pm,subscriber.pm: allow empty sip-uri (mantis:797)
