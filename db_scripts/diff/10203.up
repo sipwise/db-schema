@@ -1,0 +1,29 @@
+use provisioning
+
+UPDATE voip_preferences
+   SET description = 'E.164 number or complete SIP URI. "network-provided calling line identification" - specifies the source E.164 number or SIP username. Automatically set to the primary E.164 number specified in the subscriber details.'
+ WHERE attribute = 'cli';
+
+UPDATE voip_preferences
+   SET description = 'E.164 number or complete SIP URI. "user-provided calling line identification" - specifies the source E.164 number or SIP username. This is the default UPN (user-provided calling number) in case client-provided UPN as determined by "inbound_upn" preference is not allowed according to "allowed_clis" check.'
+ WHERE attribute = 'user_cli';
+
+DELETE FROM voip_preferences WHERE attribute='omit_outbound_displayname';
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pau_pref_id;
+UPDATE voip_preferences_enum SET default_val=0 WHERE preference_id=@pau_pref_id AND value IS NULL;
+UPDATE voip_preferences_enum SET usr_pref=0 WHERE preference_id=@pau_pref_id AND value='npn';
+UPDATE voip_preferences_enum SET default_val=1 WHERE preference_id=@pau_pref_id AND value='npn';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pau_pref_id, 'Network-Provided-Number ', 'npn', 1, 0, 0, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' INTO @ofu_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@ofu_pref_id AND value='npn' AND usr_pref=1;
+UPDATE voip_preferences_enum SET usr_pref=1, default_val=0, value='npn' WHERE preference_id=@ofu_pref_id AND label='Network-Provided-Number';
+UPDATE voip_preferences_enum SET usr_pref=0, default_val=1 WHERE preference_id=@ofu_pref_id AND value='upn';
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ofu_pref_id, 'User-Provided-Number', 'upn', 1, 0, 0, 0);

@@ -1,0 +1,6 @@
+ALTER TABLE kamailio.dialplan MODIFY `match_exp` varchar(64) NOT NULL;
+ALTER TABLE kamailio.dialplan MODIFY `subst_exp` varchar(64) NOT NULL;
+ALTER TABLE kamailio.dialplan MODIFY `repl_exp` varchar(64) NOT NULL;
+
+ALTER TABLE provisioning.voip_rewrite_rules MODIFY `match_pattern` varchar(64) NOT NULL DEFAULT '';
+ALTER TABLE provisioning.voip_rewrite_rules MODIFY `replace_pattern` varchar(64) NOT NULL;
