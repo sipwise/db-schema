@@ -1,0 +1,2 @@
+USE provisioning;
+DELETE FROM voip_sound_handles WHERE name = 'no_credit';
