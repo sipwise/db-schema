@@ -1,0 +1,2 @@
+USE provisioning;
+INSERT INTO voip_sound_handles (name) VALUES ('no_credit');
