@@ -1,0 +1,4 @@
+use provisioning;
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+                       VALUES('extension_in_npn', 1, 1, 1, 0, 'boolean', 1, 'Search for partial match of user-provided number (UPN) to subscriber\'s  primary E164 number and aliases. If it mathes, take UPN as valid wihout allowed_clis check and copy UPN to network-provided number (NPN).');
