@@ -1,0 +1,17 @@
+USE provisioning;
+
+DELETE FROM language_strings WHERE code in (
+    'Client.Syntax.InvalidE164Number',
+    'Client.Syntax.InvalidSipUsernamePattern',
+    'Client.Syntax.InvalidSipUsername'
+);
+
+-- cli-preferences should again be sipuris, not just sipusernames
+UPDATE voip_usr_preferences
+SET value=CONCAT('sip:+', value, '@', (SELECT domain FROM voip_domains WHERE id=(SELECT domain_id FROM voip_subscribers WHERE id=subscriber_id)))
+WHERE attribute_id=(SELECT id from voip_preferences WHERE attribute='cli');
+
+-- reset '+' in sipuris
+UPDATE voip_cf_destinations
+SET destination=REPLACE(destination, 'sip:', 'sip:+')
+WHERE destination NOT LIKE 'sip:vmu%' AND destination NOT LIKE 'sip:conf%';
