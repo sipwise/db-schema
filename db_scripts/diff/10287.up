@@ -1,0 +1,42 @@
+USE provisioning;
+
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidE164Number', 'en', 'Invalid E.164 Number');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidE164Number', 'de', 'Ungültige E.164 Nummer');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidE164Number', 'es', 'Invalid E.164 Number');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidE164Number', 'fr', 'Invalid E.164 Number');
+
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsernamePattern', 'en', 'Invalid SIP username patter, please use numbers, letters, "*", "?" and "[n-m]" only');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsernamePattern', 'de', 'Ungültiges SIP username Muster, bitte verwenden Sie nur Ziffern, Buchstaben, "*", "?" und "[n-m"]');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsernamePattern', 'es', 'Invalid SIP username patter, please use numbers, letters, "*", "?" and "[n-m]" only');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsernamePattern', 'fr', 'Invalid SIP username patter, please use numbers, letters, "*", "?" and "[n-m]" only');
+
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsername', 'en', 'Invalid sip username');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsername', 'de', 'Ungültiger sip username');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsername', 'es', 'Invalid sip username');
+INSERT INTO language_strings VALUES (NULL, 'Client.Syntax.InvalidSipUsername', 'fr', 'Invalid sip username');
+
+UPDATE voip_preferences SET description='SIP username (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com"). "network-provided calling line identification" - specifies the SIP username that is used for outgoing calls in the SIP "From" and "P-Asserted-Identity" headers (as user- and network-provided calling numbers). The content of the "From" header may be overridden by the "user_cli" preference and client (if allowed by the "allowed_clis" preference) SIP signalling. Automatically set to the primary E.164 number specified in the subscriber details.'
+WHERE attribute='cli';
+
+UPDATE voip_preferences SET description='SIP username (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com"). "user-provided calling line identification" - specifies the SIP username that is used for outgoing calls. If set, this is put in the SIP "From" header (as user-provided calling number) if a client sends a CLI which is not allowed by "allowed_clis" or if "allowed_clis" is not set.'
+WHERE attribute='user_cli';
+
+UPDATE voip_preferences SET description='SIP username (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com"). Emergency CLI which can be used in rewrite rules as substitution value.'
+WHERE attribute='emergency_cli';
+
+UPDATE voip_preferences SET description='Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com") that are (not) allowed to be called by the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'
+WHERE attribute='block_out_list';
+
+UPDATE voip_preferences SET description='Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com") that are (not) allowed to call the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'
+WHERE attribute='block_in_list';
+
+-- update cli-preference. Used to be sipuris (eg. sip:user01@example.com), now it's just sipusernames (aka localpart)
+UPDATE voip_usr_preferences
+SET value=SUBSTR(value, 6, (SELECT LOCATE('@', value) - 6))
+WHERE attribute_id=(SELECT id from voip_preferences WHERE attribute='cli')
+AND value like 'sip:+%@%';
+
+-- remove '+' from sipuris
+UPDATE voip_cf_destinations
+SET destination=REPLACE(destination, 'sip:+', 'sip:')
+WHERE destination NOT LIKE 'sip:vmu%' AND destination NOT LIKE 'sip:conf%';
