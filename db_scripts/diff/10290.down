@@ -1,0 +1,3 @@
+USE provisioning;
+
+DELETE from voip_preferences where attribute in ('concurrent_max_per_account', 'concurrent_max_out_per_account');
