@@ -1,0 +1,11 @@
+USE provisioning;
+
+DELETE FROM language_strings WHERE code='Client.Voip.ExistingWebUser';
+
+-- delete unique constraint
+ALTER TABLE voip_subscribers DROP INDEX webuser_dom_idx;
+
+-- remove suffix set when adding above unique constraint
+UPDATE voip_subscribers
+SET webusername=REPLACE(webusername, CONCAT('-', id), '')
+WHERE webusername LIKE CONCAT('%', '-', id)

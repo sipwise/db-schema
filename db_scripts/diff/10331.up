@@ -1,0 +1,23 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingWebUser', 'en', 'This webuser is already in use.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingWebUser', 'de', 'Dieser Webuser ist nicht mehr verfügbar.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingWebUser', 'es', 'This webuser is already in use.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingWebUser', 'fr', 'This webuser is already in use.');
+
+-- need to check if there are duplicates in voip_subscribers.webusername and
+-- suffix them with with "-"voip_subscribers.id before createing unique constraint (see below)
+CREATE OR REPLACE VIEW webusername_dupes_view
+AS select webusername, count(*) c from voip_subscribers group by webusername having c > 1;
+
+UPDATE voip_subscribers
+SET voip_subscribers.webusername = CONCAT(voip_subscribers.webusername, '-', voip_subscribers.id)
+WHERE
+voip_subscribers.webusername IN (
+    SELECT webusername FROM webusername_dupes_view
+);
+
+DROP VIEW webusername_dupes_view;
+
+-- its safe now to make voip_subscribers.webusername unique
+ALTER TABLE voip_subscribers ADD CONSTRAINT UNIQUE KEY `webuser_dom_idx` (`webusername`,`domain_id`);
