@@ -1,0 +1,6 @@
+USE provisioning;
+
+DELETE FROM language_strings WHERE code in (
+    'Server.Voip.SoundFileExists',
+    'Server.System.WaveTranscodeFailed'
+);
