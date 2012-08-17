@@ -30,11 +30,16 @@ WHERE attribute='block_out_list';
 UPDATE voip_preferences SET description='Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., "user" of SIP URI "user@example.com") that are (not) allowed to call the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'
 WHERE attribute='block_in_list';
 
--- update cli-preference. Used to be sipuris (eg. sip:user01@example.com), now it's just sipusernames (aka localpart)
+-- update cli-preference. Used to be sipuris (eg. sip:+user01@example.com), now it's just sipusernames (aka localpart)
 UPDATE voip_usr_preferences
 SET value=SUBSTR(value, 6, (SELECT LOCATE('@', value) - 6))
 WHERE attribute_id=(SELECT id from voip_preferences WHERE attribute='cli')
 AND value like 'sip:+%@%';
+-- same as above, just without the optional "+"
+UPDATE voip_usr_preferences
+SET value=SUBSTR(value, 5, (SELECT LOCATE('@', value) - 5))
+WHERE attribute_id=(SELECT id from voip_preferences WHERE attribute='cli')
+AND value like 'sip:%@%';
 
 -- remove '+' from sipuris
 UPDATE voip_cf_destinations
