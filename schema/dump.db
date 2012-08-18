@@ -1854,7 +1854,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -1872,7 +1872,7 @@ CREATE TABLE `language_strings` (
   `string` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codelang_idx` (`code`,`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=941 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=953 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_aig_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -3602,6 +3602,7 @@ CREATE TABLE `voip_subscribers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_dom_idx` (`username`,`domain_id`),
   UNIQUE KEY `uuid_idx` (`uuid`),
+  UNIQUE KEY `webuser_dom_idx` (`webusername`,`domain_id`),
   KEY `accountid_idx` (`account_id`),
   KEY `domainid_idx` (`domain_id`),
   CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
