@@ -1,0 +1,11 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundFileExists', 'en', 'Soundfile already exists');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundFileExists', 'de', 'Soundfile existiert bereits');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundFileExists', 'fr', 'Soundfile already exists');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundFileExists', 'es', 'Soundfile already exists');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Server.System.WaveTranscodeFailed', 'en', 'Failed to transcode sound file');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.System.WaveTranscodeFailed', 'de', 'Transkodieren der Sounddatei fehlgeschlagen');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.System.WaveTranscodeFailed', 'es', 'Failed to transcode sound file');
+INSERT INTO language_strings (code, language, string) VALUES ('Server.System.WaveTranscodeFailed', 'fr', 'Failed to transcode sound file');
