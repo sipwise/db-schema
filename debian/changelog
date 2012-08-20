@@ -1,3 +1,9 @@
+ngcp-db-schema (2.6.1) unstable; urgency=low
+
+  * Install correct version of voip_phost_crepl_trig trigger. 
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Mon, 20 Aug 2012 16:39:29 +0200
+
 ngcp-db-schema (2.6.0) unstable; urgency=low
 
   [ rfuchs ]
