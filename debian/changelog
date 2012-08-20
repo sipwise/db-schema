@@ -42,6 +42,7 @@ ngcp-db-schema (2.6.0) unstable; urgency=low
   * 9256.down,9256.up: Add up/down scripts for outbound_socket pref.
   * 9303.down,9303.up: Add preferences for inbound NPN/UPN selection.
   * 9312.down,9312.up: Add preferences for driving outbound caller CLI.
+  * 10290.down,10290.up: Add preferences for limiting calls per account.
 
   [ apogrebennyk ]
   * 8704.down,8704.up: add db rev scripts for session timer preferences
@@ -70,23 +71,26 @@ ngcp-db-schema (2.6.0) unstable; urgency=low
   * update cli & user_cli preferences description.
   * drop omit_outbound_displayname preference (obsolete since r9312)
   * return column lcr_gw.group_id, update key on lcr_rule to include request_uri
+  * 10268.down,10268.up: db rev script for extension_in_npn preference
+  * 10272.down,10272.up: add "no_credit" sound handle
+
 
   [ cveigl ]
-  * 8461.down,8461.up,DB.pm,Voip.pm,subscriber.pm: allow empty sip-uri (mantis:797)
-  * 8629.down,8629.up: up/down scripts for matnis:841
-  * 8629.up: typo. mysql demands a whitespace after starting a comment "-- "
+  * 8461.down,8461.up,DB.pm,Voip.pm,subscriber.pm: allow empty sip-uri
+  * 8629.down,8629.up: up/down scripts
   * 8889.down,8889.up: enhanced enum type
   * 8889.up: add example enum-preference
-  * 8889.up: comment out examples
-  * 8629.up,8889.down,8889.up: simplify up/down scripts (cudos to See also
-  * 8997.down,8997.up: languagstrings for r8997
   * 8629.up,9069.down,9069.up: oss/bss support for sound sets
-  * 8629.up: revert accidental commit
-  * 9086.down,9086.up: enable default enum-option; propagate changes in voip_preferences_enum.value (mantis:841)
+  * 9086.down,9086.up: enable default enum-option; propagate changes in voip_preferences_enum.value
   * 9114.down,9114.up: add attribute "description" to sound sets
   * 9154.down,9154.up: add support for loopplay flag of soundfile handle
   * 9249.down,9249.up: fix broken trigger
   * 9458.down,9458.up: drop unused tables voip_vscs and voip_audio_files
+  * 10287.down,10287.up: necessary db-updates according to r10287 (see also: mantis:473)
+  * 10331.down,10331.up: make provisioning.voip_subscribers.webusername unique (see mantis:1913)
+  * 10332.down,10332.up: add a couple of language strings
+  * 10287.up: the "+" was optional for cli-preferences. update data therefore with or without it
+
 
  -- Jon Bonilla <jbonilla@sipwise.com>  Fri, 10 Aug 2012 15:45:45 +0200
 
