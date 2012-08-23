@@ -1,0 +1,6 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidFileType', 'en', 'Invalid file type');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidFileType', 'de', 'Ungültiger Dateityp');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidFileType', 'es', 'Invalid file type');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidFileType', 'fr', 'Invalid file type');
