@@ -10,54 +10,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-/*!40000 DROP DATABASE IF EXISTS `Syslog`*/;
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `Syslog` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `Syslog`;
-DROP TABLE IF EXISTS `SystemEvents`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SystemEvents` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `CustomerID` bigint(20) DEFAULT NULL,
-  `ReceivedAt` datetime DEFAULT NULL,
-  `DeviceReportedTime` datetime DEFAULT NULL,
-  `Facility` smallint(6) DEFAULT NULL,
-  `Priority` smallint(6) DEFAULT NULL,
-  `FromHost` varchar(60) DEFAULT NULL,
-  `Message` text,
-  `NTSeverity` int(11) DEFAULT NULL,
-  `Importance` int(11) DEFAULT NULL,
-  `EventSource` varchar(60) DEFAULT NULL,
-  `EventUser` varchar(60) DEFAULT NULL,
-  `EventCategory` int(11) DEFAULT NULL,
-  `EventID` int(11) DEFAULT NULL,
-  `EventBinaryData` text,
-  `MaxAvailable` int(11) DEFAULT NULL,
-  `CurrUsage` int(11) DEFAULT NULL,
-  `MinUsage` int(11) DEFAULT NULL,
-  `MaxUsage` int(11) DEFAULT NULL,
-  `InfoUnitID` int(11) DEFAULT NULL,
-  `SysLogTag` varchar(60) DEFAULT NULL,
-  `EventLogType` varchar(60) DEFAULT NULL,
-  `GenericFileName` varchar(60) DEFAULT NULL,
-  `SystemID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `SystemEventsProperties`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `SystemEventsProperties` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `SystemEventID` int(11) DEFAULT NULL,
-  `ParamName` varchar(255) DEFAULT NULL,
-  `ParamValue` text,
-  PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
 /*!40000 DROP DATABASE IF EXISTS `accounting`*/;
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `accounting` /*!40100 DEFAULT CHARACTER SET utf8 */;
@@ -1842,7 +1794,7 @@ CREATE TABLE `cfg_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `db_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1854,7 +1806,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -1872,7 +1824,7 @@ CREATE TABLE `language_strings` (
   `string` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codelang_idx` (`code`,`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=953 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=957 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_aig_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -2695,6 +2647,10 @@ DELIMITER ;;
            INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
           WHERE vpg.id = NEW.group_id;
 
+    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id=preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
   END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
