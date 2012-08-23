@@ -1,3 +1,10 @@
+ngcp-db-schema (2.6.2) unstable; urgency=low
+
+  [ cveigl ]
+  * add error codes for invalid filetype 
+
+ -- Jon Bonilla <jbonilla@sipwise.com>  Thu, 23 Aug 2012 18:35:27 +0200
+
 ngcp-db-schema (2.6.1) unstable; urgency=low
 
   * Install correct version of voip_phost_crepl_trig trigger. 
