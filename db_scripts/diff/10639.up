@@ -1,0 +1,7 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.DuplicatePeeringRule', 'en', 'This peering rule already exists.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.DuplicatePeeringRule', 'de', 'Diese Peering-Regel existiert bereits.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.DuplicatePeeringRule', 'es', 'This peering rule already exists.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.DuplicatePeeringRule', 'fr', 'This peering rule already exists.');
+
