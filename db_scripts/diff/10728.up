@@ -1,0 +1,4 @@
+use kamailio
+
+ALTER TABLE pua DROP KEY `expires_idx`;
+ALTER TABLE pua ADD KEY `expires_idx` (`expires`);
