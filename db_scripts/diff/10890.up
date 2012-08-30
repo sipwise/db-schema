@@ -1,0 +1,5 @@
+#Sync group_id between provisioning hosts and lcr hosts
+UPDATE kamailio.lcr_gw lg, provisioning.voip_peer_hosts vph SET lg.group_id = vph.group_id WHERE vph.ip = lg.ip_addr AND vph.port = lg.port;
+
+#Remove orphaned ones
+DELETE FROM kamailio.lcr_gw WHERE ip_addr NOT IN (select ip from provisioning.voip_peer_hosts);
