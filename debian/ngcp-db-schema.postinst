@@ -9,8 +9,18 @@ case "$1" in
         # ngcp 2.5 repos provides ngcp-db-schema := 0.1.3
         # ngcp 2.6 repos provides ngcp-db-schema >= 2.6.3
         if [ -n "$2" ] && dpkg --compare-versions $2 ge 2.6.0 && dpkg --compare-versions $2 le 2.6.3 ; then
-            echo "Executing ngcp-update-db-schema to address 2.6 db rev script bug."
+            echo -ne "Executing ngcp-update-db-schema to address 2.6 db rev script bug.\n"
             ngcp-update-db-schema
+
+            if /etc/init.d/kamailio-proxy status >/dev/null ; then
+               if [ -x "$(which invoke-rc.d 2>/dev/null)" ]; then
+		   echo -ne "\n\nRestarting kamailio proxy to handle db changes\n"
+                   invoke-rc.d kamailio-proxy restart || exit $?
+               else
+		   echo -ne "\n\nRestarting kamailio proxy to handle db changes\n"
+                   /etc/init.d/kamailio-proxy restart || exit $?
+               fi
+            fi
         fi
     ;;
 
