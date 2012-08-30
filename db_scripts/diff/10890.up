@@ -1,5 +1,23 @@
-#Sync group_id between provisioning hosts and lcr hosts
-UPDATE kamailio.lcr_gw lg, provisioning.voip_peer_hosts vph SET lg.group_id = vph.group_id WHERE vph.ip = lg.ip_addr AND vph.port = lg.port;
+#Sync between provisioning and lcr:
 
-#Remove orphaned ones
-DELETE FROM kamailio.lcr_gw WHERE ip_addr NOT IN (select ip from provisioning.voip_peer_hosts);
+
+use kamailio;
+
+truncate table lcr_rule;
+truncate table lcr_gw;
+truncate table lcr_rule_target;
+
+INSERT INTO lcr_rule (lcr_id, prefix, from_uri, request_uri, stopper, enabled, group_id)
+       SELECT 1, callee_prefix, caller_pattern, callee_pattern, 0, 1, group_id
+         FROM provisioning.voip_peer_rules;
+
+INSERT INTO lcr_gw (lcr_id, gw_name, ip_addr, port, uri_scheme, transport, strip, flags, group_id)
+       SELECT 1, name, ip, port, 1, transport, 0, id, group_id
+         FROM provisioning.voip_peer_hosts;
+
+INSERT INTO lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+       SELECT rule.lcr_id, rule.id, gw.id, vpg.priority, vph.weight
+         FROM kamailio.lcr_rule rule
+         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+         INNER JOIN provisioning.voip_peer_hosts vph ON vpg.id = vph.group_id
+         INNER JOIN lcr_gw gw ON gw.ip_addr = vph.ip AND gw.lcr_id = 1;
