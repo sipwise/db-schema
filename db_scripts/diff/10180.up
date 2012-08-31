@@ -1,5 +1,10 @@
-use kamailio;
+# Remove duplicated rules on the same group. Triggers should do the rest for lcr_rule.
 
-#ALTER TABLE lcr_rule DROP KEY `lcr_id_prefix_from_uri_idx`;
+use provisioning;
+ALTER IGNORE TABLE voip_peer_rules ADD UNIQUE KEY `idx1temp` (`group_id`, `callee_prefix`, `callee_pattern`, `caller_pattern`);
+ALTER TABLE voip_peer_rules DROP KEY `idx1temp`;
+
+# Now we can create the unique key without duplicates
+use kamailio;
 ALTER TABLE lcr_rule ADD UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`, `request_uri`, `group_id`);
 
