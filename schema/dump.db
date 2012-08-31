@@ -1511,14 +1511,14 @@ CREATE TABLE `pua` (
   `version` int(11) NOT NULL,
   `extra_headers` text NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `expires_idx` (`expires`),
   UNIQUE KEY `pua_idx` (`etag`,`tuple_id`,`call_id`,`from_tag`),
   KEY `dialog1_idx` (`call_id`,`from_tag`,`to_tag`),
   KEY `dialog2_idx` (`pres_id`,`pres_uri`),
   KEY `tmp_dlg1_idx` (`call_id`,`from_tag`),
   KEY `tmp_dlg2_idx` (`pres_id`,`pres_uri`,`call_id`,`from_tag`),
   KEY `tmp_record1_idx` (`pres_id`),
-  KEY `tmp_record2_idx` (`pres_id`,`etag`)
+  KEY `tmp_record2_idx` (`pres_id`,`etag`),
+  KEY `expires_idx` (`expires`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `rls_presentity`;
@@ -1794,7 +1794,7 @@ CREATE TABLE `cfg_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `db_schema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1806,7 +1806,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=149 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=151 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -1824,7 +1824,7 @@ CREATE TABLE `language_strings` (
   `string` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codelang_idx` (`code`,`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=957 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=961 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `voip_aig_sequence`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

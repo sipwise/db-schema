@@ -1,0 +1,4 @@
+#Fix the unsynced rules default values
+ALTER TABLE provisioning.voip_peer_rules CHANGE COLUMN callee_pattern callee_pattern VARCHAR(64) DEFAULT '';
+UPDATE provisioning.voip_peer_rules SET callee_pattern='' where callee_pattern IS NULL;
+UPDATE kamailio.lcr_rule SET request_uri='' where request_uri IS NULL;

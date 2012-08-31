@@ -1,4 +1,4 @@
-ALTER TABLE provisioning.voip_peer_rules ADD COLUMN callee_pattern VARCHAR(64) DEFAULT NULL AFTER callee_prefix;
+ALTER TABLE provisioning.voip_peer_rules ADD COLUMN callee_pattern VARCHAR(64) DEFAULT '' AFTER callee_prefix;
 ALTER TABLE provisioning.voip_peer_rules CHANGE COLUMN caller_prefix caller_pattern VARCHAR(64) DEFAULT NULL;
 
 DROP TRIGGER provisioning.voip_prul_crepl_trig;

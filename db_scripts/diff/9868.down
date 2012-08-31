@@ -2,7 +2,7 @@ use kamailio
 
 ALTER TABLE dispatcher DROP column `attrs`;
 ALTER TABLE lcr_gw CHANGE column `gw_name` `gw_name` varchar(128) NOT NULL;
-ALTER TABLE lcr_gw ADD column `group_id` int(11) unsigned NOT NULL AFTER defunct;
+#ALTER TABLE lcr_gw ADD column `group_id` int(11) unsigned NOT NULL AFTER defunct;
 ALTER TABLE lcr_rule ADD KEY `lcr_id_idx` (`lcr_id`);
-ALTER TABLE lcr_rule DROP KEY `lcr_id_prefix_from_uri_idx`;
+#ALTER TABLE lcr_rule DROP KEY `lcr_id_prefix_from_uri_idx`;
 

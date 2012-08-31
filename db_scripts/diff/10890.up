@@ -1,0 +1,22 @@
+#Sync between provisioning and lcr:
+
+use kamailio;
+
+truncate table lcr_rule;
+truncate table lcr_gw;
+truncate table lcr_rule_target;
+
+INSERT INTO lcr_rule (lcr_id, prefix, from_uri, request_uri, stopper, enabled, group_id)
+       SELECT 1, callee_prefix, caller_pattern, callee_pattern, 0, 1, group_id
+         FROM provisioning.voip_peer_rules;
+
+INSERT INTO lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+       SELECT 1, name, ip, host, port, 1, transport, 0, id, group_id
+         FROM provisioning.voip_peer_hosts;
+
+INSERT INTO lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+       SELECT rule.lcr_id, rule.id, gw.id, vpg.priority, vph.weight
+         FROM kamailio.lcr_rule rule
+         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+         INNER JOIN provisioning.voip_peer_hosts vph ON vpg.id = vph.group_id
+         INNER JOIN lcr_gw gw ON gw.ip_addr = vph.ip AND gw.lcr_id = 1;

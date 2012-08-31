@@ -3,9 +3,11 @@ use kamailio
 ALTER TABLE dispatcher ADD column `attrs` varchar(128) NOT NULL DEFAULT '' AFTER priority;
 ALTER TABLE lcr_gw CHANGE column `gw_name` `gw_name` varchar(128) DEFAULT NULL;
 
-#moved to lcr_rule table
-ALTER TABLE lcr_gw DROP column `group_id`;
+#Edited because it drops an in-use column to create it later with different values
+#ALTER TABLE lcr_gw DROP column `group_id`;
 
 ALTER TABLE lcr_rule DROP KEY lcr_id_idx;
-ALTER TABLE lcr_rule ADD UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`);
+
+#Edited because it breaks upgrade not being really unique between peering groups
+#ALTER TABLE lcr_rule ADD UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`);
 
