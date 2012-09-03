@@ -1,5 +1,24 @@
-use kamailio;
+# Remove duplicated rules on the same group. Triggers should do the rest for lcr_rule.
 
-#ALTER TABLE lcr_rule DROP KEY `lcr_id_prefix_from_uri_idx`;
+use provisioning;
+#make sure that the repeated have caller_prefix '' instead of null or won't be detected
+UPDATE voip_peer_rules SET caller_pattern='' WHERE caller_pattern IS NULL;
+
+#Can't use ALTER IGNORE in Percona https://bugs.launchpad.net/percona-xtradb/+bug/604439
+#ALTER IGNORE TABLE voip_peer_rules ADD UNIQUE KEY `idx1temp` (`group_id`, `callee_prefix`, `callee_pattern`, `caller_pattern`);
+#ALTER TABLE voip_peer_rules DROP KEY `idx1temp`;
+
+
+#Remove duplicated that could be added via ossbss. Removed keys via triggers will be added later
+CREATE TABLE newtemp LIKE voip_peer_rules;
+ALTER TABLE newtemp ADD UNIQUE KEY `idx1temp` (`group_id`, `callee_prefix`, `callee_pattern`, `caller_pattern`);
+INSERT IGNORE INTO newtemp SELECT * FROM voip_peer_rules;
+DELETE FROM voip_peer_rules;
+INSERT INTO voip_peer_rules SELECT * FROM newtemp;
+DROP table newtemp;
+
+
+# Now we can create the unique key without duplicates
+use kamailio;
 ALTER TABLE lcr_rule ADD UNIQUE KEY `lcr_id_prefix_from_uri_idx` (`lcr_id`,`prefix`,`from_uri`, `request_uri`, `group_id`);
 
