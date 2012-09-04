@@ -1,0 +1,2 @@
+use accounting;
+alter table prepaid_costs drop column timestamp;
