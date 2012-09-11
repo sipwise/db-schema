@@ -1,0 +1,6 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchSubscriber', 'en', 'Subscriber does not exist');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchSubscriber', 'de', 'Subscriber existiert nicht');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchSubscriber', 'es', 'Subscriber does not exist');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchSubscriber', 'fr', 'Subscriber does not exist');
