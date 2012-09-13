@@ -1,0 +1,9 @@
+USE provisioning;
+
+UPDATE language_strings 
+SET string='Invalid SIP username pattern, please use numbers, letters, "*", "?" and bracket expressions only. Bracket expressions may contain single characters, ranges and the leading negation. Eg.: [0-9a-z], [^abc].'
+WHERE code='Client.Syntax.InvalidSipUsernamePattern' and language in ('en', 'es', 'fr');
+
+UPDATE language_strings 
+SET string='Ungültiges SIP username Muster, bitte verwenden Sie nur Ziffern, Buchstaben, "*", "?" und Klammerausdrücke. In Klammerausdrücke erlaubt sind einzelne Zeichen, Bereiche und Negation. Zb: [0-9a-z], [^abc].'
+WHERE code='Client.Syntax.InvalidSipUsernamePattern' and language='de';

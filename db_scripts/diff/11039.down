@@ -1,0 +1,9 @@
+USE provisioning;
+
+UPDATE language_strings 
+SET string='Invalid SIP username pattern, please use numbers, letters, "*", "?" and "[n-m]" only'
+WHERE code='Client.Syntax.InvalidSipUsernamePattern' and language in ('en', 'es', 'fr');
+
+UPDATE language_strings 
+SET string='Ungültiges SIP username Muster, bitte verwenden Sie nur Ziffern, Buchstaben, "*", "?" und "[n-m]"'
+WHERE code='Client.Syntax.InvalidSipUsernamePattern' and language='de';
