@@ -1,5 +1,5 @@
 use accounting;
 
 alter table prepaid_costs add column timestamp timestamp not null;
-update prepaid_costs set timestamp = now();
+update prepaid_costs set timestamp = '0';
 alter table prepaid_costs add key (timestamp);

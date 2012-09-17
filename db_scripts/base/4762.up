@@ -38,7 +38,7 @@ CREATE TRIGGER voip_peerpref_crepl_trig AFTER INSERT ON voip_peer_preferences
 
   INSERT INTO kamailio.peer_preferences
               (id, uuid, attribute, type, value, last_modified)
-       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, NOW()
+       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, '0'
          FROM provisioning.voip_preferences
         WHERE id = NEW.attribute_id;
 
@@ -50,7 +50,7 @@ CREATE TRIGGER voip_peerpref_urepl_trig AFTER UPDATE ON voip_peer_preferences
 
   UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp
      SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,
-         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = NOW()
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
    WHERE pp.id = OLD.id
      AND vp.id = NEW.attribute_id;
 
