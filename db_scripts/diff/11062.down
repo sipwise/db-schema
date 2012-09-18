@@ -1,0 +1,39 @@
+USE provisioning;
+
+DROP TRIGGER enum_set_default;
+
+DELIMITER |
+
+-- update preferences for existing domains / peer hosts /subscribers
+-- when enum preferences are created that use a default value
+-- (does not care about reseller_id)
+CREATE TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    IF (NEW.dom_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_domains;
+    ELSEIF (NEW.peer_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts;
+    ELSEIF (NEW.usr_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscribers;
+    END IF;
+END |
+
+DROP TRIGGER enum_update;
+
+CREATE TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    UPDATE voip_usr_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_dom_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+    UPDATE voip_peer_preferences SET value=NEW.value
+    WHERE attribute_id=NEW.preference_id;
+END |
+
+DELIMITER ;
