@@ -1,0 +1,8 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_uprn' INTO @uprn_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@uprn_pref_id;
+SELECT id FROM voip_preferences WHERE attribute='outbound_diversion' INTO @div_pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@div_pref_id;
+DELETE FROM voip_preferences WHERE attribute IN ('inbound_uprn', 'outbound_diversion');
+DELETE FROM voip_preferences_enum WHERE value LIKE "uprn/%";

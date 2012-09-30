@@ -1,0 +1,65 @@
+USE provisioning;
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('inbound_uprn', 0, 1, 1, 1, 1, '0', 0, 'enum', 0, 'Specifies the way to obtain the User-Provided Redirecting CLI. Possible options are use NPN of forwarding subscriber or respect inbound Diversion header. Same validation rules as for UPN apply to UPRN. NGCP does not stack UPRNs up if the call is forwarded several times.');
+SELECT last_insert_id() INTO @uprn_pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@uprn_pref_id, 'None', 'none', 1, 1, 1, 0),
+(@uprn_pref_id, 'Forwarder\'s NPN', NULL, 0, 1, 0, 1),
+(@uprn_pref_id, 'Forwarder\'s NPN', 'npn', 1, 0, 0, 0),
+(@uprn_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@uprn_pref_id, 'Forwarder\'s NPN / Received Diversion', 'npn_diversion', 1, 1, 0, 0),
+(@uprn_pref_id, 'Received Diversion', 'diversion', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('outbound_diversion', 0, 1, 1, 1, 1, '0', 0, 'enum', 0, 'The content to put into the Diversion header for outbound calls (use "None" to not set header at all)');
+SELECT last_insert_id() INTO @div_pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@div_pref_id, 'None', NULL, 0, 1, 1, 1),
+(@div_pref_id, 'None', 'none', 1, 0, 0, 0),
+(@div_pref_id, 'use domain default', NULL, 1, 0, 0, 0),
+(@div_pref_id, 'UPRN', 'uprn', 1, 1, 1, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' INTO @ofu_pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ofu_pref_id, 'UPRN (if set) or Network-Provided-Number', 'uprn/npn', 1, 1, 1, 0),
+(@ofu_pref_id, 'UPRN (if set) or User-Provided-Number', 'uprn/upn', 1, 1, 1, 0),
+(@ofu_pref_id, 'UPRN (if set) or Authentication-User', 'uprn/auth_user', 1, 1, 1, 0),
+(@ofu_pref_id, 'UPRN (if set) or Received Display-name', 'uprn/rcv_display', 1, 1, 1, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_display' INTO @ofd_pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ofd_pref_id, 'UPRN (if set) or Network-Provided-Number', 'uprn/npn', 1, 1, 1, 0),
+(@ofd_pref_id, 'UPRN (if set) or User-Provided-Number', 'uprn/upn', 1, 1, 1, 0),
+(@ofd_pref_id, 'UPRN (if set) or Authentication-User', 'uprn/auth_user', 1, 1, 1, 0),
+(@ofd_pref_id, 'UPRN (if set) or Received Display-name', 'uprn/rcv_display', 1, 1, 1, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pau_pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pau_pref_id, 'UPRN (if set) or Network-Provided-Number', 'uprn/npn', 1, 1, 1, 0),
+(@pau_pref_id, 'UPRN (if set) or User-Provided-Number', 'uprn/upn', 1, 1, 1, 0),
+(@pau_pref_id, 'UPRN (if set) or Authentication-User', 'uprn/auth_user', 1, 1, 1, 0),
+(@pau_pref_id, 'UPRN (if set) or Received Display-name', 'uprn/rcv_display', 1, 1, 1, 0);
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_ppi_user' INTO @ppu_pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@ppu_pref_id, 'UPRN (if set) or Network-Provided-Number', 'uprn/npn', 1, 1, 1, 0),
+(@ppu_pref_id, 'UPRN (if set) or User-Provided-Number', 'uprn/upn', 1, 1, 1, 0),
+(@ppu_pref_id, 'UPRN (if set) or Authentication-User', 'uprn/auth_user', 1, 1, 1, 0),
+(@ppu_pref_id, 'UPRN (if set) or Received Display-name', 'uprn/rcv_display', 1, 1, 1, 0);
