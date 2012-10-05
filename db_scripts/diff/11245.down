@@ -1,0 +1,3 @@
+USE billing;
+
+ALTER TABLE billing.contacts DROP COLUMN faxnumber;
