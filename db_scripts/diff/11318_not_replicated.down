@@ -1,0 +1,17 @@
+use sipstats;
+
+alter table messages
+DEFAULT CHARSET=utf8,
+change protocol `protocol` enum('IPv4','IPv6') NOT NULL,
+change transport `transport` enum('UDP','TCP') NOT NULL,
+change src_ip `src_ip` varchar(39) NOT NULL,
+change dst_ip `dst_ip` varchar(39) NOT NULL,
+change method `method` varchar(20) NOT NULL,
+change cseq_method `cseq_method` varchar(16) NOT NULL,
+change call_id `call_id` varchar(255) NOT NULL,
+change request_uri `request_uri` varchar(255) NOT NULL,
+change from_uri `from_uri` varchar(255) NOT NULL,
+change caller_uuid `caller_uuid` varchar(255) NOT NULL,
+change callee_uuid `callee_uuid` varchar(255) NOT NULL;
+
+alter table packets DEFAULT CHARSET=utf8;
