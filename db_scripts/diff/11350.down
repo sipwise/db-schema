@@ -1,0 +1,19 @@
+USE provisioning;
+
+DELETE FROM voip_allowed_ip_groups;
+
+DELETE FROM voip_usr_preferences WHERE attribute_id IN (
+    (SELECT id FROM voip_preferences WHERE attribute='allowed_ips'),
+    (SELECT id FROM voip_preferences WHERE attribute='man_allowed_ips'),
+    (SELECT id FROM voip_preferences WHERE attribute='allowed_ips_grp'),
+    (SELECT id FROM voip_preferences WHERE attribute='man_allowed_ips_grp'),
+    (SELECT id FROM voip_preferences WHERE attribute='ignore_allowed_ips')
+);
+
+DELETE FROM voip_preferences WHERE attribute IN (
+    'allowed_ips',
+    'man_allowed_ips',
+    'allowed_ips_grp',
+    'man_allowed_ips_grp',
+    'ignore_allowed_ips'
+);
