@@ -1,0 +1,1 @@
+REVOKE ALL PRIVILEGES ON carrier.* FROM soap@localhost;
