@@ -1,0 +1,2 @@
+use kamailio;
+drop table mobile_push_registrations;

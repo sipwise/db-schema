@@ -1,0 +1,11 @@
+use kamailio;
+
+CREATE TABLE `mobile_push_registrations` (
+  `reg_id` varbinary(255) NOT NULL,
+  `type` enum('gcm','apns') NOT NULL,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`reg_id`),
+  KEY `subscriber_id` (`subscriber_id`),
+  CONSTRAINT `mobile_push_registrations_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `provisioning`.`voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
