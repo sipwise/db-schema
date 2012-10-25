@@ -1,0 +1,1 @@
+DELETE FROM voip_preferences WHERE attribute = 'no_nat_sipping';
