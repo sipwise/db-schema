@@ -1,0 +1,5 @@
+use sipstats;
+
+alter table message_packets engine=innodb;
+alter table messages engine=innodb;
+alter table packets engine=innodb;

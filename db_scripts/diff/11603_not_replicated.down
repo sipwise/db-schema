@@ -1,0 +1,5 @@
+use sipstats;
+
+alter table message_packets engine=myisam;
+alter table messages engine=myisam;
+alter table packets engine=myisam;
