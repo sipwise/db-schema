@@ -1,0 +1,6 @@
+use sipstats;
+alter table statistics remove partitioning;
+set @stm = concat('alter table statistics partition by range (floor(timestamp)) (partition p_old values less than (', unix_timestamp() + 600, '))');
+prepare st from @stm;
+execute st;
+deallocate prepare st;

@@ -1,0 +1,3 @@
+use sipstats;
+alter table statistics remove partitioning;
+alter table statistics partition by range (floor(timestamp)) (partition pmax values less than maxvalue);
