@@ -1,0 +1,21 @@
+use sipstats;
+
+alter ignore table messages remove partitioning;
+set @mx = (select (coalesce(max(id), 0)) + 700000 from messages);
+set @stm = concat('alter table messages partition by range (id) (partition p', @mx, ' values less than (', @mx, '))');
+prepare st from @stm;
+execute st;
+deallocate prepare st;
+
+alter ignore table message_packets remove partitioning;
+set @stm = concat('alter table message_packets partition by range (message) (partition p', @mx, ' values less than (', @mx, '))');
+prepare st from @stm;
+execute st;
+deallocate prepare st;
+
+alter ignore table packets remove partitioning;
+set @mx = (select (coalesce(max(id), 0)) + 700000 from packets);
+set @stm = concat('alter table packets partition by range (id) (partition p', @mx, ' values less than (', @mx, '))');
+prepare st from @stm;
+execute st;
+deallocate prepare st;

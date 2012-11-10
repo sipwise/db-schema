@@ -1,0 +1,10 @@
+use sipstats;
+
+alter ignore table messages remove partitioning;
+alter table messages partition by range (id) (partition pmax values less than maxvalue);
+
+alter ignore table message_packets remove partitioning;
+alter table message_packets partition by range (message) (partition pmax values less than maxvalue);
+
+alter ignore table packets remove partitioning;
+alter table packets partition by range (id) (partition pmax values less than maxvalue);
