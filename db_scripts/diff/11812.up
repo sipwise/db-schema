@@ -1,0 +1,2 @@
+use accounting;
+alter table cdr add column source_ip varchar(64) not null after source_clir;

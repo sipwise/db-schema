@@ -1,0 +1,2 @@
+use accounting;
+alter table cdr drop column source_ip;
