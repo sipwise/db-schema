@@ -1,0 +1,4 @@
+USE provisioning;
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
+VALUES('ip_header', 0, 1, 1, 1, 'string', 1, 'The SIP header to take the IP address for logging it into CDRs.');

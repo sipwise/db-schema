@@ -1,0 +1,2 @@
+USE provisioning;
+DELETE FROM voip_preferences where attribute='ip_header';
