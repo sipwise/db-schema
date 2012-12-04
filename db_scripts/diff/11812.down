@@ -1,2 +1,7 @@
 use accounting;
-alter table cdr drop column source_ip;
+alter table cdr 
+  drop key estatus,
+  drop column source_ip,
+  drop column split,
+  drop column exported_at,
+  drop column export_status;

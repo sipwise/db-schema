@@ -1,2 +1,8 @@
 use accounting;
-alter table cdr add column source_ip varchar(64) not null after source_clir;
+alter table cdr 
+  add column source_ip varchar(64) not null after source_clir, 
+  add column split tinyint(1) unsigned not null default 0 after is_fragmented,
+  add column exported_at datetime default null,
+  add column export_status enum('unexported', 'ok', 'failed') not null default 'unexported',
+  add key estatus(export_status);
+
