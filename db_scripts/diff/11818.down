@@ -1,0 +1,2 @@
+revoke select on provisioning.voip_peer_hosts from sems_prepaid@localhost;
+revoke select on provisioning.voip_peer_groups from sems_prepaid@localhost;
