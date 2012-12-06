@@ -1,0 +1,10 @@
+USE provisioning;
+CREATE TABLE `voip_cc_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `auth_key` varchar(255) NOT NULL,
+  `source_uuid` char(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uuid_idx` (`uuid`),
+  KEY `uuid_authkey_idx` (`uuid`,`auth_key`)
+) ENGINE=InnoDB;
