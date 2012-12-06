@@ -6,5 +6,6 @@ CREATE TABLE `voip_cc_mappings` (
   `source_uuid` char(36) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `uuid_idx` (`uuid`),
-  KEY `uuid_authkey_idx` (`uuid`,`auth_key`)
+  KEY `uuid_authkey_idx` (`uuid`,`auth_key`),
+  CONSTRAINT `vs_uuid_ref` FOREIGN KEY (`uuid`) REFERENCES `voip_subscribers` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
