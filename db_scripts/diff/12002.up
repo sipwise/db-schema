@@ -1,0 +1,16 @@
+USE provisioning;
+INSERT INTO voip_sound_handles (name) VALUES ('and');
+INSERT INTO voip_sound_handles (name) VALUES ('busy_ringback_tone');
+INSERT INTO voip_sound_handles (name) VALUES ('calling_card_not_found');
+INSERT INTO voip_sound_handles (name) VALUES ('connecting');
+INSERT INTO voip_sound_handles (name) VALUES ('could_not_connect');
+INSERT INTO voip_sound_handles (name) VALUES ('credits_successfully_transfered');
+INSERT INTO voip_sound_handles (name) VALUES ('declined_ringback_tone');
+INSERT INTO voip_sound_handles (name) VALUES ('dollar');
+INSERT INTO voip_sound_handles (name) VALUES ('enter_callingcard_number_to_transfer');
+INSERT INTO voip_sound_handles (name) VALUES ('enter_callingcard_number');
+INSERT INTO voip_sound_handles (name) VALUES ('enter_destination_number');
+INSERT INTO voip_sound_handles (name) VALUES ('error_please_try_later');
+INSERT INTO voip_sound_handles (name) VALUES ('euro_cents');
+INSERT INTO voip_sound_handles (name) VALUES ('euro_unit');
+

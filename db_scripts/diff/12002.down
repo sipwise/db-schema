@@ -1,0 +1,16 @@
+USE provisioning;
+DELETE FROM voip_sound_handles WHERE name = 'and';
+DELETE FROM voip_sound_handles WHERE name = 'busy_ringback_tone';
+DELETE FROM voip_sound_handles WHERE name = 'calling_card_not_found';
+DELETE FROM voip_sound_handles WHERE name = 'connecting';
+DELETE FROM voip_sound_handles WHERE name = 'could_not_connect';
+DELETE FROM voip_sound_handles WHERE name = 'credits_successfully_transfered';
+DELETE FROM voip_sound_handles WHERE name = 'declined_ringback_tone';
+DELETE FROM voip_sound_handles WHERE name = 'dollar';
+DELETE FROM voip_sound_handles WHERE name = 'enter_callingcard_number_to_transfer';
+DELETE FROM voip_sound_handles WHERE name = 'enter_callingcard_number';
+DELETE FROM voip_sound_handles WHERE name = 'enter_destination_number';
+DELETE FROM voip_sound_handles WHERE name = 'error_please_try_later';
+DELETE FROM voip_sound_handles WHERE name = 'euro_cents';
+DELETE FROM voip_sound_handles WHERE name = 'euro_unit;
+
