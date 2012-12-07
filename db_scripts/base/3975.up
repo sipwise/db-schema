@@ -1,13 +1,15 @@
-UPDATE provisioning.voip_domains SET local = TRUE;
-ALTER TABLE provisioning.voip_domains DROP COLUMN `local`;
+use provisioning;
 
-DROP TRIGGER provisioning.voip_dom_crepl_trig;
-DROP TRIGGER provisioning.voip_dom_urepl_trig;
-DROP TRIGGER provisioning.voip_dom_drepl_trig;
+UPDATE voip_domains SET local = TRUE;
+ALTER TABLE voip_domains DROP COLUMN `local`;
+
+DROP TRIGGER voip_dom_crepl_trig;
+DROP TRIGGER voip_dom_urepl_trig;
+DROP TRIGGER voip_dom_drepl_trig;
 
 DELIMITER |
 
-CREATE TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
+CREATE TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
   FOR EACH ROW BEGIN
 
   INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
@@ -15,7 +17,7 @@ CREATE TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
   END;
 |
 
-CREATE TRIGGER provisioning.voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+CREATE TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
   FOR EACH ROW BEGIN
 
   DECLARE caller_in_id int(11) unsigned;

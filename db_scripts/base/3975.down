@@ -1,12 +1,14 @@
-ALTER TABLE provisioning.voip_domains ADD COLUMN `local` bool NOT NULL default FALSE;
-UPDATE provisioning.voip_domains SET local = TRUE;
+use provisioning;
 
-DROP TRIGGER provisioning.voip_dom_crepl_trig;
-DROP TRIGGER provisioning.voip_dom_drepl_trig;
+ALTER TABLE voip_domains ADD COLUMN `local` bool NOT NULL default FALSE AFTER `domain`;
+UPDATE voip_domains SET local = TRUE;
+
+DROP TRIGGER voip_dom_crepl_trig;
+DROP TRIGGER voip_dom_drepl_trig;
 
 DELIMITER |
 
-CREATE TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
+CREATE TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
   FOR EACH ROW BEGIN
 
   IF NEW.local IS TRUE THEN
@@ -16,7 +18,7 @@ CREATE TRIGGER provisioning.voip_dom_crepl_trig AFTER INSERT ON voip_domains
   END;
 |
 
-CREATE TRIGGER provisioning.voip_dom_urepl_trig AFTER UPDATE ON voip_domains
+CREATE TRIGGER voip_dom_urepl_trig AFTER UPDATE ON voip_domains
   FOR EACH ROW BEGIN
 
   IF NEW.local IS TRUE AND OLD.local IS FALSE THEN
@@ -28,7 +30,7 @@ CREATE TRIGGER provisioning.voip_dom_urepl_trig AFTER UPDATE ON voip_domains
   END;
 |
 
-CREATE TRIGGER provisioning.voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+CREATE TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
   FOR EACH ROW BEGIN
 
   DECLARE caller_in_id int(11) unsigned;
