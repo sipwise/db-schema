@@ -1,6 +1,6 @@
 use provisioning;
 
-ALTER TABLE voip_domains ADD COLUMN `timezone` varchar(31) default NULL AFTER `password`;
+ALTER TABLE voip_domains ADD COLUMN `timezone` varchar(31) default NULL;
 ALTER TABLE voip_subscribers ADD COLUMN `timezone` varchar(31) default NULL AFTER `password`;
 
 DROP TRIGGER voip_sub_crepl_trig;
