@@ -1,12 +1,14 @@
-ALTER TABLE provisioning.voip_domains DROP COLUMN `timezone`;
-ALTER TABLE provisioning.voip_subscribers DROP COLUMN `timezone`;
+use provisioning;
 
-DROP TRIGGER provisioning.voip_sub_crepl_trig;
-DROP TRIGGER provisioning.voip_sub_urepl_trig;
+ALTER TABLE voip_domains DROP COLUMN `timezone`;
+ALTER TABLE voip_subscribers DROP COLUMN `timezone`;
+
+DROP TRIGGER voip_sub_crepl_trig;
+DROP TRIGGER voip_sub_urepl_trig;
 
 DELIMITER |
 
-CREATE TRIGGER provisioning.voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+CREATE TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
   FOR EACH ROW BEGIN
   DECLARE subscriber_domain varchar(127);
 
@@ -19,7 +21,7 @@ CREATE TRIGGER provisioning.voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
   END;
 |
 
-CREATE TRIGGER provisioning.voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
+CREATE TRIGGER voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
   FOR EACH ROW BEGIN
   DECLARE old_subscriber_domain varchar(127);
   DECLARE new_subscriber_domain varchar(127);
