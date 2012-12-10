@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE voip_preferences SET dom_pref=1 WHERE attribute='ncos_id';
+UPDATE voip_preferences SET dom_pref=1 WHERE attribute='adm_ncos_id';
