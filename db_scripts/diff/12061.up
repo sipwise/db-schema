@@ -1,4 +1,4 @@
 USE provisioning;
 
-UPDATE voip_preferences SET internal=1 WHERE attribute='allowed_ips_grp';
-UPDATE voip_preferences SET internal=1 WHERE attribute='man_allowed_ips_grp';
+UPDATE voip_preferences SET internal=1, modify_timestamp='1970-01-01 00:00:00' WHERE attribute='allowed_ips_grp';
+UPDATE voip_preferences SET internal=1, modify_timestamp='1970-01-01 00:00:00' WHERE attribute='man_allowed_ips_grp';

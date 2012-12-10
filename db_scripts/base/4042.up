@@ -7,82 +7,106 @@ UPDATE provisioning.voip_preferences SET data_type = 'boolean' where data_type =
 
 UPDATE provisioning.voip_preferences
    SET read_only = TRUE,
-       description = 'See "lock_voip_account_subscriber" for a list of possible values. A lock value of "none" will not be returned to the caller. Read-only setting.'
+       description = 'See "lock_voip_account_subscriber" for a list of possible values. A lock value of "none" will not be returned to the caller. Read-only setting.',
+       modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'lock';
 UPDATE provisioning.voip_preferences
-   SET description = 'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).'
+   SET description = 'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'block_in_mode';
 UPDATE provisioning.voip_preferences
-   SET description = 'Contains wildcarded E.164 numbers that are (not) allowed to call the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'
+   SET description = 'Contains wildcarded E.164 numbers that are (not) allowed to call the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'block_in_list';
 UPDATE provisioning.voip_preferences
-   SET description = 'Incoming anonymous calls (with calling line identification restriction) are blocked if set to true.'
+   SET description = 'Incoming anonymous calls (with calling line identification restriction) are blocked if set to true.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'block_in_clir';
 UPDATE provisioning.voip_preferences
-   SET description = 'Specifies the operational mode of the outgoing block list. If unset or set to a false value, it is a blacklist (allow all calls except to numbers listed in the block list), with a true value it is a whitelist (deny all calls except to numbers listed in the block list).'
+   SET description = 'Specifies the operational mode of the outgoing block list. If unset or set to a false value, it is a blacklist (allow all calls except to numbers listed in the block list), with a true value it is a whitelist (deny all calls except to numbers listed in the block list).',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'block_out_mode';
 UPDATE provisioning.voip_preferences
-   SET description = 'Contains wildcarded E.164 numbers that are (not) allowed to be called by the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'
+   SET description = 'Contains wildcarded E.164 numbers that are (not) allowed to be called by the subscriber. "*", "?" and "[x-y]" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'block_out_list';
 UPDATE provisioning.voip_preferences
-   SET description = 'Same as "block_in_mode" but may only be set by administrators.'
+   SET description = 'Same as "block_in_mode" but may only be set by administrators.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_block_in_mode';
 UPDATE provisioning.voip_preferences
-   SET description = 'Same as "block_in_list" but may only be set by administrators and is applied prior to the user setting.'
+   SET description = 'Same as "block_in_list" but may only be set by administrators and is applied prior to the user setting.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_block_in_list';
 UPDATE provisioning.voip_preferences
-   SET description = 'Same as "block_in_clir" but may only be set by administrators and is applied prior to the user setting.'
+   SET description = 'Same as "block_in_clir" but may only be set by administrators and is applied prior to the user setting.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_block_in_clir';
 UPDATE provisioning.voip_preferences
-   SET description = 'Same as "block_out_mode" but may only be set by administrators.'
+   SET description = 'Same as "block_out_mode" but may only be set by administrators.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_block_out_mode';
 UPDATE provisioning.voip_preferences
-   SET description = 'Same as "block_out_list" but may only be set by administrators and is applied prior to the user setting.'
+   SET description = 'Same as "block_out_list" but may only be set by administrators and is applied prior to the user setting.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_block_out_list';
 UPDATE provisioning.voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "Call forward unconditional" - if set, all incoming calls are forwarded to this destination. E.164 numbers have to be fully qualified and may be prefixed by a plus sign. E.164 numbers specified in SIP URIs have to be prefixed by a plus sign if they are fully qualified but they must always carry the subscriber\'s own domain, like in "sip:+<E.164number>@<subscriber.domain>".'
+   SET description = 'E.164 number or complete SIP URI. "Call forward unconditional" - if set, all incoming calls are forwarded to this destination. E.164 numbers have to be fully qualified and may be prefixed by a plus sign. E.164 numbers specified in SIP URIs have to be prefixed by a plus sign if they are fully qualified but they must always carry the subscriber\'s own domain, like in "sip:+<E.164number>@<subscriber.domain>".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cfu';
 UPDATE provisioning.voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "Call forward busy" - if set, all incoming calls are forwarded to this destination while the subscriber is on a call. Same syntax as for "cfu".'
+   SET description = 'E.164 number or complete SIP URI. "Call forward busy" - if set, all incoming calls are forwarded to this destination while the subscriber is on a call. Same syntax as for "cfu".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cfb';
 UPDATE provisioning.voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "Call forward not available" - if set, all incoming calls are forwarded to this destination if the subscriber is not online and registered. Same syntax as for "cfu".'
+   SET description = 'E.164 number or complete SIP URI. "Call forward not available" - if set, all incoming calls are forwarded to this destination if the subscriber is not online and registered. Same syntax as for "cfu".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cfna';
 UPDATE provisioning.voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "Call forward timeout" - if set, all incoming calls are forwarded to this destination after a timeout that can be set via "ringtimeout" below. Same syntax as for "cfu".'
+   SET description = 'E.164 number or complete SIP URI. "Call forward timeout" - if set, all incoming calls are forwarded to this destination after a timeout that can be set via "ringtimeout" below. Same syntax as for "cfu".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cft';
 UPDATE provisioning.voip_preferences
-   SET description = 'Specifies how many seconds the system should wait before redirecting the call if "cft" is set.'
+   SET description = 'Specifies how many seconds the system should wait before redirecting the call if "cft" is set.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'ringtimeout';
 UPDATE provisioning.voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "Calling line identification" - specifies the source E.164 number or SIP username that is used for outgoing calls. Automatically set to the primary E.164 number specified in the subscriber details.'
+   SET description = 'E.164 number or complete SIP URI. "Calling line identification" - specifies the source E.164 number or SIP username that is used for outgoing calls. Automatically set to the primary E.164 number specified in the subscriber details.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cli';
 UPDATE provisioning.voip_preferences
-SET description = '"Calling line identification restriction" - if set to true, the CLI is not displayed on outgoing calls.'
+SET description = '"Calling line identification restriction" - if set to true, the CLI is not displayed on outgoing calls.',
+modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'clir';
 UPDATE provisioning.voip_preferences
-   SET description = 'The country code that will be used for routing of dialed numbers without a country code. Defaults to the country code of the E.164 number if the subscriber has one.'
+   SET description = 'The country code that will be used for routing of dialed numbers without a country code. Defaults to the country code of the E.164 number if the subscriber has one.',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cc';
 UPDATE provisioning.voip_preferences
-SET description = 'The area code that will be used for routing of dialed numbers without an area code. Defaults to the area code of the E.164 number if the subscriber has one.'
+SET description = 'The area code that will be used for routing of dialed numbers without an area code. Defaults to the area code of the E.164 number if the subscriber has one.',
+modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'ac';
 UPDATE provisioning.voip_preferences
-   SET description = 'The area code that will be used for routing of dialed service numbers without an area code. Defaults to "ac".'
+   SET description = 'The area code that will be used for routing of dialed service numbers without an area code. Defaults to "ac".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'svc_ac';
 UPDATE provisioning.voip_preferences
-   SET description = 'The area code that will be used for routing of dialed emergency numbers without an area code. Defaults to "ac".'
+   SET description = 'The area code that will be used for routing of dialed emergency numbers without an area code. Defaults to "ac".',
+   modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'emerg_ac';
 UPDATE provisioning.voip_preferences
    SET internal = -1,
-       description = 'Specifies the NCOS level that applies to the user.'
+       description = 'Specifies the NCOS level that applies to the user.',
+       modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'ncos';
 UPDATE provisioning.voip_preferences
    SET internal = -1,
-       description = 'Same as "ncos", but may only be set by administrators and is applied prior to the user setting.'
+       description = 'Same as "ncos", but may only be set by administrators and is applied prior to the user setting.',
+       modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'adm_ncos';
 
-INSERT INTO provisioning.voip_preferences (attribute, type, data_type, max_occur, internal, description)
-                                    VALUES('ncos', 0, 'string', 1, -1, 'Specifies the NCOS level that applies to the user.');
-INSERT INTO provisioning.voip_preferences (attribute, type, data_type, max_occur, internal, description)
-                                    VALUES('adm_ncos', 0, 'string', 1, -1, 'Same as "ncos", but may only be set by administrators and is applied prior to the user setting.');
+INSERT INTO provisioning.voip_preferences (attribute, type, data_type, max_occur, internal, description, modify_timestamp)
+                                    VALUES('ncos', 0, 'string', 1, -1, 'Specifies the NCOS level that applies to the user.', '1970-01-01 00:00:00');
+INSERT INTO provisioning.voip_preferences (attribute, type, data_type, max_occur, internal, description, modify_timestamp)
+                                    VALUES('adm_ncos', 0, 'string', 1, -1, 'Same as "ncos", but may only be set by administrators and is applied prior to the user setting.', '1970-01-01 00:00:00');
 

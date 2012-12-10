@@ -1,7 +1,7 @@
 USE provisioning
 
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('sst_enable', 0, 1, 1, 1, 'enum', 1, 'Enable SIP Session Timers.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('sst_enable', 0, 1, 1, 1, 'enum', 1, 'Enable SIP Session Timers.', '1970-01-01 00:00:00');
 
 INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'use domain default', NULL, 1, 0, 0);
@@ -10,14 +10,14 @@ INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pr
 INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_enable'), 'no', 'no', 1, 1, 1);
 
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('sst_expires', 1, 1, 1, 1, 'int', 1, 'SIP Session Timers refresh interval (seconds). Should be always greater than min_timer preference. SBC will make refresh at the half of this interval.');
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('sst_min_timer', 1, 1, 1, 1, 'int', 1, 'Set Min-SE value in SBC. This is also used to build 422 reply if remote Min-SE is smaller than local Min-SE.');
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('sst_max_timer', 1, 1, 1, 1, 'int', 1, 'Sets upper limit on accepted Min-SE value in in SBC.');
-INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
-    VALUES('sst_refresh_method', 0, 1, 1, 1, 1, 0, 'enum', 0, 'SIP Session Timers refresh method.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('sst_expires', 1, 1, 1, 1, 'int', 1, 'SIP Session Timers refresh interval (seconds). Should be always greater than min_timer preference. SBC will make refresh at the half of this interval.', '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('sst_min_timer', 1, 1, 1, 1, 'int', 1, 'Set Min-SE value in SBC. This is also used to build 422 reply if remote Min-SE is smaller than local Min-SE.', '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('sst_max_timer', 1, 1, 1, 1, 'int', 1, 'Sets upper limit on accepted Min-SE value in in SBC.', '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description, modify_timestamp)
+    VALUES('sst_refresh_method', 0, 1, 1, 1, 1, 0, 'enum', 0, 'SIP Session Timers refresh method.', '1970-01-01 00:00:00');
 
 INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'use domain default', NULL, 1, 0, 0);
