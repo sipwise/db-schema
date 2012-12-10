@@ -1,5 +1,5 @@
 use provisioning;
 
-INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal) VALUES('account_id', 1, 1, 'int', 1, 1);
-INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal) VALUES('ext_contract_id', 0, 1, 'string', 1, 1);
-INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal) VALUES('ext_subscriber_id', 0, 1, 'string', 1, 1);
+INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal, modify_timestamp) VALUES('account_id', 1, 1, 'int', 1, 1, '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal, modify_timestamp) VALUES('ext_contract_id', 0, 1, 'string', 1, 1, '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, data_type, max_occur, internal, modify_timestamp) VALUES('ext_subscriber_id', 0, 1, 'string', 1, 1, '1970-01-01 00:00:00');

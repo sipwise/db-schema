@@ -136,17 +136,17 @@ CREATE TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
 DELIMITER ;
 
 DELETE FROM voip_preferences WHERE attribute = 'rewrite_rule_set';
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, description)
-                       VALUES('rewrite_rule_set', 1, 1, 1, 1, 'int', 1, -1, 'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, description, modify_timestamp)
+                       VALUES('rewrite_rule_set', 1, 1, 1, 1, 'int', 1, -1, 'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.', '1970-01-01 00:00:00');
 
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
-                       VALUES('rewrite_caller_in_dpid', 1, 1, 1, 1, 'int', 1, 1);
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
-                       VALUES('rewrite_callee_in_dpid', 1, 1, 1, 1, 'int', 1, 1);
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
-                       VALUES('rewrite_caller_out_dpid', 1, 1, 1, 1, 'int', 1, 1);
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal)
-                       VALUES('rewrite_callee_out_dpid', 1, 1, 1, 1, 'int', 1, 1);
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, modify_timestamp)
+                       VALUES('rewrite_caller_in_dpid', 1, 1, 1, 1, 'int', 1, 1, '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, modify_timestamp)
+                       VALUES('rewrite_callee_in_dpid', 1, 1, 1, 1, 'int', 1, 1, '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, modify_timestamp)
+                       VALUES('rewrite_caller_out_dpid', 1, 1, 1, 1, 'int', 1, 1, '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, internal, modify_timestamp)
+                       VALUES('rewrite_callee_out_dpid', 1, 1, 1, 1, 'int', 1, 1, '1970-01-01 00:00:00');
 
 -- restore data from migration tables
 INSERT INTO voip_rewrite_rule_sets (name,description,caller_in_dpid,callee_in_dpid,caller_out_dpid,callee_out_dpid)

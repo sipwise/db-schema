@@ -1,11 +1,12 @@
 use provisioning;
 
 UPDATE voip_preferences
-   SET description = 'A realm (hostname) used to identify and for authentication against a peer host.'
+   SET description = 'A realm (hostname) used to identify and for authentication against a peer host.',
+   modify_timestamp='1970-01-01 00:00:00'
  WHERE attribute = 'peer_auth_realm';
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('peer_auth_register', 1, 1, 1, 1, 'boolean', 1, 'Specifies whether registration at the peer host is desired.');
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('concurrent_max', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent sessions (calls) for a subscriber or peer.');
-INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description)
-                       VALUES('concurrent_max_out', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent outgoing sessions (calls) coming from a subscriber or going to a peer.');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('peer_auth_register', 1, 1, 1, 1, 'boolean', 1, 'Specifies whether registration at the peer host is desired.', '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('concurrent_max', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent sessions (calls) for a subscriber or peer.', '1970-01-01 00:00:00');
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+                       VALUES('concurrent_max_out', 1, 1, 1, 1, 'int', 1, 'Maximum number of concurrent outgoing sessions (calls) coming from a subscriber or going to a peer.', '1970-01-01 00:00:00');
