@@ -36,19 +36,23 @@ delete up.* from voip_usr_preferences up, voip_preferences p
 
 -- and change the preference settings to the new ones
 update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
-  description='The id pointing to the "Call Forward Unconditional" entry in the voip_cf_mappings table'
+  description='The id pointing to the "Call Forward Unconditional" entry in the voip_cf_mappings table',
+  modify_timestamp='1970-01-01 00:00:00'
   where attribute='cfu';
 
 update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
-  description='The id pointing to the "Call Forward Busy" entry in the voip_cf_mappings table'
+  description='The id pointing to the "Call Forward Busy" entry in the voip_cf_mappings table',
+  modify_timestamp='1970-01-01 00:00:00'
   where attribute='cfb';
 
 update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
-  description='The id pointing to the "Call Forward Unavailable" entry in the voip_cf_mappings table'
+  description='The id pointing to the "Call Forward Unavailable" entry in the voip_cf_mappings table',
+  modify_timestamp='1970-01-01 00:00:00'
   where attribute='cfna';
 
 update voip_preferences set type=1, data_type='int', internal=1, read_only=1, max_occur=0,
-  description='The id pointing to the "Call Forward Timeout" entry in the voip_cf_mappings table'
+  description='The id pointing to the "Call Forward Timeout" entry in the voip_cf_mappings table',
+  modify_timestamp='1970-01-01 00:00:00'
   where attribute='cft';
 
 -- finally copy over the vars from the mapping table

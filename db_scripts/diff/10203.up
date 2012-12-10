@@ -1,11 +1,11 @@
 use provisioning
 
 UPDATE voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "network-provided calling line identification" - specifies the source E.164 number or SIP username. Automatically set to the primary E.164 number specified in the subscriber details.'
+   SET description = 'E.164 number or complete SIP URI. "network-provided calling line identification" - specifies the source E.164 number or SIP username. Automatically set to the primary E.164 number specified in the subscriber details.', modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'cli';
 
 UPDATE voip_preferences
-   SET description = 'E.164 number or complete SIP URI. "user-provided calling line identification" - specifies the source E.164 number or SIP username. This is the default UPN (user-provided calling number) in case client-provided UPN as determined by "inbound_upn" preference is not allowed according to "allowed_clis" check.'
+   SET description = 'E.164 number or complete SIP URI. "user-provided calling line identification" - specifies the source E.164 number or SIP username. This is the default UPN (user-provided calling number) in case client-provided UPN as determined by "inbound_upn" preference is not allowed according to "allowed_clis" check.', modify_timestamp = '1970-01-01 00:00:00'
  WHERE attribute = 'user_cli';
 
 DELETE FROM voip_preferences WHERE attribute='omit_outbound_displayname';
