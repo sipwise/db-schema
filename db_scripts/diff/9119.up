@@ -2,6 +2,8 @@ USE provisioning
 
 set autocommit=0;
 
+set @ts = now();
+
 DELETE FROM voip_preferences_enum WHERE preference_id = 
   (SELECT id FROM voip_preferences WHERE attribute = 'sst_enable');
 DELETE FROM voip_preferences_enum WHERE preference_id = 
@@ -35,6 +37,9 @@ INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pr
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'UPDATE', 'UPDATE', 1, 1, 1);
 INSERT INTO voip_preferences_enum (preference_id, label, value, usr_pref, dom_pref, peer_pref)
     VALUES ((SELECT id FROM voip_preferences WHERE attribute = 'sst_refresh_method'), 'INVITE', 'INVITE', 1, 1, 1);
+
+-- fix timestamps for fresh installations
+update voip_dom_preferences set modify_timestamp = '1970-01-01 00:00:00' where domain_id = (select id from voip_domains where domain = 'voip.sipwise.local') and modify_timestamp between @ts and now();
 
 commit;
 set autocommit=1;
