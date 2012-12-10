@@ -1,5 +1,5 @@
 USE provisioning;
 DELETE FROM provisioning.voip_domains where domain = 'voip.sipwise.local';
 INSERT INTO provisioning.voip_domains (domain) VALUES('voip.sipwise.local');
-INSERT INTO provisioning.voip_subscribers (username, domain_id, uuid, password, create_timestamp) SELECT 'no_such_number', id, '9bcb88b6-541a-43da-8fdc-816f5557ff93', MD5(RAND()), '0' FROM voip_domains WHERE domain = 'voip.sipwise.local';
-INSERT INTO provisioning.voip_subscribers (username, domain_id, uuid, password, create_timestamp) SELECT 'nagios', id, 'ac1697cf-6933-45ef-9abf-b1278054ded0', 'nagios4Sipwise!', '0' FROM voip_domains WHERE domain = 'voip.sipwise.local';
+INSERT INTO provisioning.voip_subscribers (username, domain_id, uuid, password, create_timestamp, modify_timestamp) SELECT 'no_such_number', id, '9bcb88b6-541a-43da-8fdc-816f5557ff93', MD5(RAND()), '0', '1970-01-01 00:00:00' FROM voip_domains WHERE domain = 'voip.sipwise.local';
+INSERT INTO provisioning.voip_subscribers (username, domain_id, uuid, password, create_timestamp, modify_timestamp) SELECT 'nagios', id, 'ac1697cf-6933-45ef-9abf-b1278054ded0', 'nagios4Sipwise!', '0', '1970-01-01 00:00:00' FROM voip_domains WHERE domain = 'voip.sipwise.local';
