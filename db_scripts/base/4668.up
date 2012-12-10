@@ -2,10 +2,10 @@ ALTER TABLE provisioning.voip_preferences ADD COLUMN `usr_pref` bool NOT NULL de
 ALTER TABLE provisioning.voip_preferences ADD COLUMN `dom_pref` bool NOT NULL default FALSE AFTER `usr_pref`;
 ALTER TABLE provisioning.voip_preferences ADD COLUMN `peer_pref` bool NOT NULL default FALSE AFTER `dom_pref`;
 
-UPDATE provisioning.voip_preferences SET usr_pref = 1 WHERE attribute NOT LIKE 'dp_dom_%';
-UPDATE provisioning.voip_preferences SET dom_pref = 1 WHERE attribute LIKE 'dp_dom_%';
+UPDATE provisioning.voip_preferences SET usr_pref = 1, modify_timestamp='1970-01-01 00:00:00' WHERE attribute NOT LIKE 'dp_dom_%';
+UPDATE provisioning.voip_preferences SET dom_pref = 1, modify_timestamp='1970-01-01 00:00:00' WHERE attribute LIKE 'dp_dom_%';
 
-INSERT INTO provisioning.voip_preferences (attribute, type, peer_pref, data_type, max_occur, description)
-                                    VALUES('auth_user', 0, 1, 'string', 1, 'A username used for authentication against the peer host.');
-INSERT INTO provisioning.voip_preferences (attribute, type, peer_pref, data_type, max_occur, description)
-                                    VALUES('auth_pass', 0, 1, 'string', 1, 'A password used for authentication against the peer host.');
+INSERT INTO provisioning.voip_preferences (attribute, type, peer_pref, data_type, max_occur, description, modify_timestamp)
+                                    VALUES('auth_user', 0, 1, 'string', 1, 'A username used for authentication against the peer host.', '1970-01-01 00:00:00');
+INSERT INTO provisioning.voip_preferences (attribute, type, peer_pref, data_type, max_occur, description, modify_timestamp)
+                                    VALUES('auth_pass', 0, 1, 'string', 1, 'A password used for authentication against the peer host.', '1970-01-01 00:00:00');
