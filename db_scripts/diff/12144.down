@@ -1,0 +1,2 @@
+DELETE FROM provisioning.voip_sound_handles WHERE name = 'you_have_in_your_account';
+
