@@ -1,0 +1,105 @@
+USE provisioning;
+
+UPDATE language_strings 
+SET string='Año inválido'
+WHERE code='Client.Syntax.InvalidYear' and language='es';
+
+UPDATE language_strings 
+SET string='Mes no válido'
+WHERE code='Client.Syntax.InvalidMonth' and language='es';
+
+UPDATE language_strings 
+SET string='Día del mes no válido'
+WHERE code='Client.Syntax.InvalidMDay' and language='es';
+
+UPDATE language_strings 
+SET string='Día de la semana no válido'
+WHERE code='Client.Syntax.InvalidWDay' and language='es';
+
+UPDATE language_strings 
+SET string='Hora no válida'
+WHERE code='Client.Syntax.InvalidHour' and language='es';
+
+UPDATE language_strings 
+SET string='Minuto no válido'
+WHERE code='Client.Syntax.InvalidMinute' and language='es';
+
+UPDATE language_strings 
+SET string='Falta el inicio'
+WHERE code='Client.Syntax.FromMissing' and language='es';
+
+UPDATE language_strings 
+SET string='Inicio después de final'
+WHERE code='Client.Syntax.FromAfterTo' and language='es';
+
+UPDATE language_strings 
+SET string='No se ha asignado un nombre'
+WHERE code='Client.Syntax.EmptySetName' and language='es';
+
+UPDATE language_strings 
+SET string='Por favor, elija un grupo de destinos'
+WHERE code='Client.Syntax.MissingDestinationSet' and language='es';
+
+UPDATE language_strings 
+SET string='Protocolo desconocido'
+WHERE code='Client.Syntax.UnknownProtocol' and language='es';
+
+UPDATE language_strings 
+SET string='Valor inválido'
+WHERE code='Client.Voip.InvalidEnum' and language='es';
+
+UPDATE language_strings 
+SET string='Nivel de bloqueo inválido'
+WHERE code='Client.Syntax.UnknownLock' and language='es';
+
+UPDATE language_strings 
+SET string='Grupo de locuciones eliminado'
+WHERE code='Server.Voip.SoundSetDeleted' and language='es';
+
+UPDATE language_strings 
+SET string='El grupo de locuciones aún está asignado'
+WHERE code='Server.Voip.SoundSetMapped' and language='es';
+
+UPDATE language_strings 
+SET string='El grupo de locuciones no existe'
+WHERE code='Server.Voip.NoSuchSoundSet' and language='es';
+
+UPDATE language_strings 
+SET string='Locución no encontrada'
+WHERE code='Client.Syntax.MissingSoundFile' and language='es';
+
+UPDATE language_strings 
+SET string='Número E164 inválido'
+WHERE code='Client.Syntax.InvalidE164Number' and language='es';
+
+UPDATE language_strings 
+SET string='Patrón de usuario SIP no válido. Por favor, use números, letras, "*", "?" y corchetes únicamente. Los corchetes pueden contener caracteres, rangos y negaciones. Ej: [0-9a-z], [^abc]'
+WHERE code='Client.Syntax.InvalidSipUsernamePattern' and language='es';
+
+UPDATE language_strings 
+SET string='Usuario SIP no válido'
+WHERE code='Client.Syntax.InvalidSipUsername' and language='es';
+
+UPDATE language_strings 
+SET string='El usuario web ya se encuentra en uso'
+WHERE code='Client.Voip.ExistingWebUser' and language='es';
+
+UPDATE language_strings 
+SET string='La locución ya existe'
+WHERE code='Server.Voip.SoundFileExists' and language='es';
+
+UPDATE language_strings 
+SET string='Ha fallado la transcodificación de la locución'
+WHERE code='Server.System.WaveTranscodeFailed' and language='es';
+
+UPDATE language_strings 
+SET string='Tipo de fichero inválido'
+WHERE code='Client.Syntax.InvalidFileType' and language='es';
+
+UPDATE language_strings 
+SET string='Regla de peering duplicada'
+WHERE code='Client.Voip.DuplicatePeeringRule' and language='es';
+
+UPDATE language_strings 
+SET string='No existe el subscriber'
+WHERE code='Client.Voip.NoSuchSubscriber' and language='es';
