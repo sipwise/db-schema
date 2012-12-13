@@ -1,6 +1,6 @@
 use provisioning;
 
-INSERT INTO language_strings (code, language, string) VALUES ('Client.Billing.MalformedAmount','it', 'Per favore specificare l'ammontare con un numero intero.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Billing.MalformedAmount','it', 'Per favore specificare l\'ammontare con un numero intero.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Billing.NoPayType','it', 'Per favore scegliere un tipo di pagamento.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.Date','it', 'Formato data non valido.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.Email','it', 'Indirizzo e-mail non valido.');
@@ -12,7 +12,7 @@ INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.Mal
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingUsername','it', 'Per favore inserire uno username.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.VoiceBoxPin','it', 'Per favore inserire 4 cifre, oppure lasciare il campo testo vuoto.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.AssignedExtension','it', 'L\'interno e\' gia\' in uso.');
-INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.AssignedNumber','it', ''Il numero telefono specificato non e\' piu\' disponibile. ');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.AssignedNumber','it', 'Il numero telefono specificato non e\' piu\' disponibile. ');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.AuthFailed','it', 'Login fallito, prego verificare le credenziali.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ChooseNumber','it', 'Prego selezionare un numero dalla lista.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.DeniedNumber','it', 'Il numero di telefono specificato non e\' disponibile.');
