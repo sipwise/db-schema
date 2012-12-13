@@ -82,7 +82,7 @@ INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.Exist
 INSERT INTO language_strings (code, language, string) VALUES ('Web.Domain.Created','it', 'Il dominio e\' stato salvato.');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.Domain.Deleted','it', 'Il dominio e\' stato eliminato.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Admin.ExistingAdmin','it', 'Lo username e\' gia\' in uso.');
-INSERT INTO language_strings (code, language, string) VALUES ('Client.Admin.NoSuchAdmin','it', 'L'amministratore non esiste.');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Admin.NoSuchAdmin','it', 'L\'amministratore non esiste.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MalformedLogin','it', 'Carattere non valido nel nome di Login. Prego utilizzare solo caratteri alfanumerici.');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.Admin.Created','it', 'L\'amministratore e\' stato salvato.');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.Admin.Deleted','it', 'L\'amministratore e\' stato eliminato');
@@ -176,7 +176,7 @@ INSERT INTO language_strings (code, language, string) VALUES ('Web.NCOSLNP.Delet
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MalformedNCOSPattern','it', 'Il pattern non puo\' essere vuoto, prego specificare una espressione regolare.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MalformedAudioData','it', 'File audio non valido, prego immettere una file audio in formato wav.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingAudioFile','it', 'Identificativo per il file audio gia\' in uso.');
-INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchAudioFile','it', 'L'dentificativo per il file audio non esiste..');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoSuchAudioFile','it', 'L\'dentificativo per il file audio non esiste..');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.AudioFile.Created','it', 'Il file audio e\' stato creato.');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.AudioFile.Updated','it', 'Il file audio e\' stato modificato.');
 INSERT INTO language_strings (code, language, string) VALUES ('Web.AudioFile.Deleted','it', 'Il file audio e\' stato eliminato.');
@@ -233,7 +233,7 @@ INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.Sound
 INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.NoSuchSoundSet','it', 'La tipologia di suoni non esiste.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.MissingSoundFile','it', 'File audio mancante.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidE164Number','it', 'Numerazione E.164 non valida.');
-INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidSipUsernamePattern','it', 'Pattern specificato per username SIP non valido, prego utilizzare solo numeri, lettere, “*”, “?” e “[n-m]');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidSipUsernamePattern','it', 'Pattern specificato per username SIP non valido, prego utilizzare solo numeri, lettere, “*”, “?” e “[n-m]”');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Syntax.InvalidSipUsername','it', 'Username SIP non valido.');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.ExistingWebUser','it', 'L\'utente webuser e\' gia\' in uso.');
 INSERT INTO language_strings (code, language, string) VALUES ('Server.Voip.SoundFileExists','it', 'Il file audio esiste gia\'.');
