@@ -388,11 +388,11 @@ CREATE TABLE `xmlhostgroups` (
 INSERT INTO counter VALUES('dp_id', 1);
 
 -- xmlrpc dispatcher
-INSERT INTO xmlgroups (name) VALUES('proxy');
-INSERT INTO xmlgroups (name) VALUES('registrar');
-INSERT INTO xmlgroups (name) VALUES('presence');
-INSERT INTO xmlgroups (name) VALUES('loadbalancer');
-INSERT INTO xmlgroups (name) VALUES('appserver');
+INSERT INTO xmlgroups (id, name) VALUES(1, 'proxy');
+INSERT INTO xmlgroups (id, name) VALUES(2, 'registrar');
+INSERT INTO xmlgroups (id, name) VALUES(3, 'presence');
+INSERT INTO xmlgroups (id, name) VALUES(4, 'loadbalancer');
+INSERT INTO xmlgroups (id, name) VALUES(5, 'appserver');
 
 -- internal domain and subscribers
 INSERT INTO voip_domains (domain, local) VALUES('voip.sipwise.local', true);
