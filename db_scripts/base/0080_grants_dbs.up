@@ -7,7 +7,7 @@ GRANT ALL ON kamailio.* TO 'kamailio'@'localhost';
 GRANT SELECT ON provisioning.voip_peer_hosts TO 'kamailio'@'localhost';
 GRANT SELECT ON billing.ncos_levels TO 'kamailio'@'localhost';
 GRANT SELECT ON billing.ncos_lnp_list TO 'kamailio'@'localhost';
-GRANT SELECT ON billing.ncos_pattern_list TO 'kamailio'@'localhost':
+GRANT SELECT ON billing.ncos_pattern_list TO 'kamailio'@'localhost';
 GRANT SELECT ON billing.lnp_numbers TO 'kamailio'@'localhost';
 
 GRANT ALL ON accounting.* TO 'mediator'@'localhost';
