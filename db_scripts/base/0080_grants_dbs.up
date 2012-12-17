@@ -1,45 +1,45 @@
-GRANT SELECT ON mysql.* TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON kamailio.location TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SELECT ON provisioning.voip_subscribers TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
+GRANT SELECT ON mysql.* TO 'nagios'@'localhost';
+GRANT SELECT ON kamailio.location TO 'nagios'@'localhost';
+GRANT SELECT ON provisioning.voip_subscribers TO 'nagios'@'localhost';
 
-GRANT SELECT ON kamailio.* TO 'kamailioro'@'localhost' IDENTIFIED BY 'PW_KAMAILIORO';
-GRANT ALL ON kamailio.* TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON provisioning.voip_peer_hosts TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON billing.ncos_levels TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON billing.ncos_lnp_list TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON billing.ncos_pattern_list TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
-GRANT SELECT ON billing.lnp_numbers TO 'kamailio'@'localhost' IDENTIFIED BY 'PW_KAMAILIORW';
+GRANT SELECT ON kamailio.* TO 'kamailioro'@'localhost';
+GRANT ALL ON kamailio.* TO 'kamailio'@'localhost';
+GRANT SELECT ON provisioning.voip_peer_hosts TO 'kamailio'@'localhost';
+GRANT SELECT ON billing.ncos_levels TO 'kamailio'@'localhost';
+GRANT SELECT ON billing.ncos_lnp_list TO 'kamailio'@'localhost';
+GRANT SELECT ON billing.ncos_pattern_list TO 'kamailio'@'localhost':
+GRANT SELECT ON billing.lnp_numbers TO 'kamailio'@'localhost';
 
-GRANT ALL ON accounting.* TO 'mediator'@'localhost' IDENTIFIED BY 'PW_MEDIATOR';
-GRANT SELECT ON provisioning.* TO 'mediator'@'localhost' IDENTIFIED BY 'PW_MEDIATOR';
-GRANT SELECT ON billing.* TO 'mediator'@'localhost' IDENTIFIED BY 'PW_MEDIATOR';
+GRANT ALL ON accounting.* TO 'mediator'@'localhost';
+GRANT SELECT ON provisioning.* TO 'mediator'@'localhost';
+GRANT SELECT ON billing.* TO 'mediator'@'localhost';
 
-GRANT ALL ON accounting.* TO 'soap'@'localhost' IDENTIFIED BY 'PW_SOAP';
-GRANT ALL ON billing.* TO 'soap'@'localhost' IDENTIFIED BY 'PW_SOAP';
+GRANT ALL ON accounting.* TO 'soap'@'localhost';
+GRANT ALL ON billing.* TO 'soap'@'localhost';
 
-GRANT ALL PRIVILEGES ON kamailio.voicemail_users TO 'asterisk'@'localhost' IDENTIFIED BY 'PW_ASTERISK';
-GRANT ALL PRIVILEGES ON kamailio.voicemail_spool TO 'asterisk'@'localhost' IDENTIFIED BY 'PW_ASTERISK';
+GRANT ALL PRIVILEGES ON kamailio.voicemail_users TO 'asterisk'@'localhost';
+GRANT ALL PRIVILEGES ON kamailio.voicemail_spool TO 'asterisk'@'localhost';
 
-GRANT ALL ON provisioning.* TO 'soap'@'localhost' IDENTIFIED BY 'PW_SOAP';
-GRANT ALL ON kamailio.* TO 'soap'@'localhost' IDENTIFIED BY 'PW_SOAP';
+GRANT ALL ON provisioning.* TO 'soap'@'localhost';
+GRANT ALL ON kamailio.* TO 'soap'@'localhost';
 
-GRANT SELECT ON accounting.cdr TO 'exporter'@'localhost' IDENTIFIED BY 'PW_EXPORTER';
-GRANT SELECT,INSERT,UPDATE ON accounting.mark TO 'exporter'@'localhost' IDENTIFIED BY 'PW_EXPORTER';
+GRANT SELECT ON accounting.cdr TO 'exporter'@'localhost';
+GRANT SELECT,INSERT,UPDATE ON accounting.mark TO 'exporter'@'localhost';
 
-GRANT RELOAD ON *.* TO 'rsyslog'@'localhost' IDENTIFIED BY 'PW_RSYSLOG';
-GRANT ALL on syslog.* TO 'rsyslog'@'localhost' IDENTIFIED BY 'PW_RSYSLOG';
+GRANT RELOAD ON *.* TO 'rsyslog'@'localhost';
+GRANT ALL on syslog.* TO 'rsyslog'@'localhost';
 
-GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'rateomat'@'localhost' IDENTIFIED BY 'PW_RATEOMAT';
-GRANT SELECT,INSERT,UPDATE ON billing.* TO 'rateomat'@'localhost' IDENTIFIED BY 'PW_RATEOMAT';
+GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'rateomat'@'localhost';
+GRANT SELECT,INSERT,UPDATE ON billing.* TO 'rateomat'@'localhost';
 
-GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'sems_prepaid'@'localhost' IDENTIFIED BY 'PW_SEMS_PREPAID';
-GRANT SELECT,INSERT,UPDATE ON billing.* TO 'sems_prepaid'@'localhost' IDENTIFIED BY 'PW_SEMS_PREPAID';
+GRANT SELECT,INSERT,UPDATE ON accounting.* TO 'sems_prepaid'@'localhost';
+GRANT SELECT,INSERT,UPDATE ON billing.* TO 'sems_prepaid'@'localhost';
 
-GRANT ALL PRIVILEGES ON kamailio.* to 'dbcleaner'@'localhost' IDENTIFIED BY 'PW_CLEANUP_TOOLS';
-GRANT ALL PRIVILEGES ON accounting.* to 'dbcleaner'@'localhost' IDENTIFIED BY 'PW_CLEANUP_TOOLS';
+GRANT ALL PRIVILEGES ON kamailio.* to 'dbcleaner'@'localhost';
+GRANT ALL PRIVILEGES ON accounting.* to 'dbcleaner'@'localhost';
 
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'replicator'@'sp1' IDENTIFIED BY 'PW_REPLICATOR';
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'replicator'@'sp2' IDENTIFIED BY 'PW_REPLICATOR';
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'sp1' IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'sp2' IDENTIFIED BY 'PW_CHECKTOOL';
-GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'localhost' IDENTIFIED BY 'PW_CHECKTOOL';
+GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'replicator'@'sp1';
+GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'replicator'@'sp2';
+GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'sp1';
+GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'sp2';
+GRANT SUPER,REPLICATION CLIENT,REPLICATION SLAVE,RELOAD ON *.* TO 'nagios'@'localhost';

@@ -15,6 +15,6 @@ CREATE TABLE kamailio.fax_journal (
   PRIMARY KEY (`id`),
   KEY `selkey` (`subscriber_id`,`direction`)
 ) ENGINE=InnoDB;
-GRANT SELECT ON kamailio.* TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
-GRANT INSERT ON kamailio.fax_journal TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
-GRANT SELECT ON provisioning.* TO 'hylafax'@'localhost' IDENTIFIED BY 'PW_HYLAFAX';
+GRANT SELECT ON kamailio.* TO 'hylafax'@'localhost';
+GRANT INSERT ON kamailio.fax_journal TO 'hylafax'@'localhost';
+GRANT SELECT ON provisioning.* TO 'hylafax'@'localhost';

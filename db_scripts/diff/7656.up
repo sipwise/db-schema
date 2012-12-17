@@ -1,2 +1,2 @@
 GRANT ALL ON sipstats.* TO 'soap'@'localhost';
-GRANT ALL ON sipstats.* to 'voisniff'@'localhost' IDENTIFIED BY 'PW_VOISNIFF';
+GRANT ALL ON sipstats.* to 'voisniff'@'localhost';
