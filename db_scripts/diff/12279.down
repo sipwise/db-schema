@@ -1,0 +1,3 @@
+ALTER TABLE `billing`.`billing_profiles` DROP COLUMN `fraud_daily_limit`;
+ALTER TABLE `billing`.`billing_profiles` DROP COLUMN `fraud_daily_lock`;
+ALTER TABLE `billing`.`billing_profiles` DROP COLUMN `fraud_daily_notify`;
