@@ -1,3 +1,5 @@
-ALTER TABLE `billing`.`billing_profiles` ADD COLUMN `fraud_daily_limit` int(11) UNSIGNED NULL DEFAULT NULL AFTER `fraud_interval_notify`;
-ALTER TABLE `billing`.`billing_profiles` ADD COLUMN `fraud_daily_lock` tinyint(3) UNSIGNED NULL DEFAULT NULL AFTER `fraud_daily_limit`;
-ALTER TABLE `billing`.`billing_profiles` ADD COLUMN `fraud_daily_notify` varchar(255) NULL DEFAULT NULL AFTER `fraud_daily_lock`;
+USE billing;
+
+ALTER TABLE `billing_profiles` ADD COLUMN `fraud_daily_limit` int(11) UNSIGNED NULL DEFAULT NULL AFTER `fraud_interval_notify`;
+ALTER TABLE `billing_profiles` ADD COLUMN `fraud_daily_lock` tinyint(3) UNSIGNED NULL DEFAULT NULL AFTER `fraud_daily_limit`;
+ALTER TABLE `billing_profiles` ADD COLUMN `fraud_daily_notify` varchar(255) NULL DEFAULT NULL AFTER `fraud_daily_lock`;
