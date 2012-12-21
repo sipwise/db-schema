@@ -1,3 +1,63 @@
+ngcp-db-schema (2.7.0) unstable; urgency=low
+
+  [ rfuchs ]
+  * 10950.down,10950.up: add timestamp column to prepaid_costs table
+  * 11318_not_replicated.down,11318_not_replicated.up: change sipstats db charset to latin1
+  * 11565.down,11565.up: up/down scripts for adding mobile_push_registrations table
+  * 11603_not_replicated.down,11603_not_replicated.up: convert voisniff tables to innodb
+  * 11722_not_replicated.down,11722_not_replicated.up: repartition sipstats.statistics
+  * 11729_not_replicated.down,11729_not_replicated.up: change sipstats partitioning
+  * 3972.down,3972.up: fix up/down scripts
+  * 3972.down: fix the fix
+  * 3975.down,3975.up: fix up/down scripts
+  * 0020_create_oss.up and 12 others: fix modify_timestamp to 1970 for voip_preferences in various places - WIP
+  * 4063.down,4063.up: change the up script, not the down script
+  * 10290.up: fix typo
+  * 10203.up,10287.up,7260.up,7500.up,8408.up,9228.up: more fixing of timestamps
+  * 4668.up: more fixing of timestamps
+  * 4832.up and 21 others: more fixing of timestamps
+  * 5737.up: fix typo
+  * 9119.up: try this ugly hack to fix the timestamps
+  * 5737.up: properly fix the typo this time
+  * 5973.up: fix modify timestamp
+  * 11722_not_replicated.up: use a different calculation to determine initial partition
+
+  [ mprokop ]
+  * 0010_create_bss.up and 12 others: Use '0' instead of now() for timestamps
+  * 12162.up: fix broken quoting in italian translation
+
+  [ agranig ]
+  * 11379.down,11379.up: Add grants for carrier-db.
+  * 11812.down,11812.up: Add source_ip field to cdr table.
+  * 11817.down,11817.up: Add ip_header preference.
+  * 11818.down,11818.up: Add privileges for sems_prepaid user.
+  * 11812.down,11812.up: Add new CDR rows in one go.
+  * 11819.down,11819.up: Add calling-card/call-thru tables.
+  * 11819.up: Add foreign key constraint for uuid.
+
+  [ jbonilla ]
+  * 12117.up: update Spanish translation
+  * 12162.up: Add italian translation strings
+
+  [ apogrebennyk ]
+  * 11188.down,11188.up: schema changes for Diversion & forwarding CLI configuration
+  * 11581.down,11581.up: DB rev script for no_sipping preference
+  * 12002.down,12002.up: add voip_sound_handles for calling card
+  * 12061.down,12061.up: make allowed_ips_grp preference hidden
+  * 12062.down,12062.up: mark [adm_]ncos_id preferences as dom_pref too (mantis:2041)
+  * 12062.down,12062.up: make sure to update all 4 ncos preferences (mantis:2047)
+  * 12144.down,12144.up: add missed prompt for callingcard
+
+  [ cveigl ]
+  * 10951.down,10951.up: add translations for "Client.Voip.NoSuchSubscriber" (mantis:2035)
+  * 11039.down,11039.up: fix language string "Client.Syntax.InvalidSipUsernamePattern"
+  * 11062.down,11062.up: fix broken triggers (discovered by dtiefnig; see mantis:2123 and mantis:2121)
+  * 11245.down,11245.up: add attribute faxnumber to billing.contacts
+  * 11350.down,11350.up: add preferences for (man_)allowed_ips to reanable this feature
+  * 11350.up: change (man_)allowed_ips preferences to usr-only preferences
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Fri, 21 Dec 2012 10:27:38 +0100
+
 ngcp-db-schema (2.6.5) unstable; urgency=low
 
   [jbonilla]
