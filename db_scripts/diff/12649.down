@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE language_strings SET string='Bitte wälhlen Sie eine Zielmenge.'
+WHERE code='Client.Syntax.MissingDestinationSet' AND language='de';

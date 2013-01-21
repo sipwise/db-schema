@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE language_strings SET string='Bitte wählen Sie eine Zielgruppe.' 
+WHERE code='Client.Syntax.MissingDestinationSet' AND language='de';
