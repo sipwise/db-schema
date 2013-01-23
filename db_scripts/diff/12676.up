@@ -1,0 +1,16 @@
+USE provisioning;
+
+INSERT INTO language_strings (code, language, string) 
+VALUES ('Server.System.RRDFoldersSearch', 'en', 'Could not execute find to search for RRD folders');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFoldersSearch', 'de', 'Beim Suche der RRD Verzeichnisse konnte find nicht ausgeführt werden');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFoldersSearch', 'fr', "Impossible d'exécuter find pour rechercher des dossiers RRD");
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFoldersSearch', 'es', 'No se pudo ejecutar find para buscar carpetas RRD');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFoldersSearch', 'it', 'Impossibile eseguire find per cercare cartelle RRD');
