@@ -7,10 +7,27 @@ INSERT INTO language_strings (code, language, string)
 VALUES ('Server.System.RRDSubfoldersSearch', 'de', 'Beim Suche der RRD Unterverzeichnisse konnte find nicht ausgeführt werden');
 
 INSERT INTO language_strings (code, language, string)
-VALUES ('Server.System.RRDSubfoldersSearch', 'fr', "Impossible d'exécuter find pour rechercher des sous-dossiers RRD");
+VALUES ('Server.System.RRDSubfoldersSearch', 'fr', "Impossible d'exécuter find pour rechercher de sous-dossiers RRD");
 
 INSERT INTO language_strings (code, language, string)
 VALUES ('Server.System.RRDSubfoldersSearch', 'es', 'No se pudo ejecutar find para buscar subcarpetas RRD');
 
 INSERT INTO language_strings (code, language, string)
 VALUES ('Server.System.RRDSubfoldersSearch', 'it', 'Impossibile eseguire find per cercare sottocartelle RRD');
+
+
+
+INSERT INTO language_strings (code, language, string) 
+VALUES ('Server.System.RRDFilesSearch', 'en', 'Could not execute find to search for RRD files');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFilesSearch', 'de', 'Beim Suche der RRD Files konnte find nicht ausgeführt werden');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFilesSearch', 'fr', "Impossible d'exécuter find pour rechercher de fichiers RRD");
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFilesSearch', 'es', 'No se pudo ejecutar find para buscar de archivos RRD');
+
+INSERT INTO language_strings (code, language, string)
+VALUES ('Server.System.RRDFilesSearch', 'it', 'Impossibile eseguire find per cercare i file RRD');
