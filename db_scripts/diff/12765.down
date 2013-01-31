@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit = 0;
+
+alter table voip_sound_handles drop foreign key v_s_h_group_ref;
+alter table voip_sound_handles drop column group_id;
+drop table voip_sound_groups;
+
+commit;

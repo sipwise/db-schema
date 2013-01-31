@@ -1,0 +1,44 @@
+USE provisioning;
+set autocommit = 0;
+
+create table voip_sound_groups(
+  id int(11) unsigned auto_increment primary key, 
+  name varchar(255) not null
+) engine='innodb';
+
+insert into voip_sound_groups values 
+  (NULL, 'early_rejects'), 
+  (NULL, 'pbx'), 
+  (NULL, 'calling_card'), 
+  (NULL, 'music_on_hold');
+
+alter table voip_sound_handles add column group_id int(11) unsigned not null;
+
+select id into @rej_id from voip_sound_groups where name = 'early_rejects';
+update voip_sound_handles set group_id = @rej_id where name in (
+  'block_in', 'block_out', 'block_ncos', 'block_override_pin_wrong', 
+  'locked_in', 'locked_out', 'max_calls_in', 'max_calls_out', 'max_calls_peer',
+  'unauth_caller_ip', 'relaying_denied', 'invalid_speeddial', 'cf_loop', 
+  'callee_offline', 'callee_busy', 'callee_unknown', 'callee_tmp_unavailable',
+  'peering_unavailable', 'voicebox_unavailable', 'emergency_unsupported', 
+  'no_credit'
+);
+
+select id into @moh_id from voip_sound_groups where name = 'music_on_hold';
+update voip_sound_handles set group_id = @moh_id where name in ('music_on_hold');
+
+select id into @cc_id from voip_sound_groups where name = 'calling_card';
+update voip_sound_handles set group_id = @cc_id where name in (
+  'and', 'busy_ringback_tone', 'calling_card_not_found', 'connecting', 
+  'could_not_connect', 'credits_successfully_transfered', 
+  'declined_ringback_tone', 'dollar', 'enter_callingcard_number_to_transfer', 
+  'enter_callingcard_number', 'enter_destination_number', 
+  'error_please_try_later', 'euro_cents', 'euro_unit', 
+  'you_have_in_your_account'
+);
+
+alter table voip_sound_handles 
+  add constraint v_s_h_group_ref foreign key (group_id) 
+  references voip_sound_groups(id) on delete cascade on update cascade;
+
+commit;
