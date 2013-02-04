@@ -1,0 +1,8 @@
+use provisioning;
+
+delete from language_strings where code in (
+  'Client.Voip.FaxQueued', 
+  'Client.Voip.NoFaxData', 
+  'Client.Voip.InvalidFaxFileType'
+);
+

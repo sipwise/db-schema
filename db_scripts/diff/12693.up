@@ -1,0 +1,19 @@
+use provisioning;
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.FaxQueued', 'en', 'Fax is going to be sent');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.FaxQueued', 'de', 'Fax wird gesendet');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.FaxQueued', 'es', 'Fax se transmite');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.FaxQueued', 'it', 'Fax verrà trasmesso');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.FaxQueued', 'fr', 'Fax sera transmis');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoFaxData', 'en', 'No Fax content specified');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoFaxData', 'de', 'Kein Inhalt zur Fax-Übertragung angegeben');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoFaxData', 'es', 'No se especifica el contenido del fax');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoFaxData', 'it', 'Nessun contenuto fax è specificato');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.NoFaxData', 'fr', 'Aucun contenu du fax est spécifié');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.InvalidFaxFileType', 'en', 'Invalid File Type for Fax');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.InvalidFaxFileType', 'de', 'Ungültiger Datei-Typ für Fax');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.InvalidFaxFileType', 'es', 'Tipo de archivo no válido para el fax');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.InvalidFaxFileType', 'it', 'Tipo di file non valido per il fax');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.InvalidFaxFileType', 'fr', 'Type de fichier non valide pour fax');
