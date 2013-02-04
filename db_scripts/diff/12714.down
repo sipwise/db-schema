@@ -1,4 +1,0 @@
-USE provisioning;
-
-DELETE FROM language_strings WHERE code='Server.System.RRDSubfoldersSearch';
-DELETE FROM language_strings WHERE code='Server.System.RRDFilesSearch';
