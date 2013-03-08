@@ -1,0 +1,32 @@
+USE provisioning;
+set autocommit = 0;
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('use_rtpproxy', 0, 1, 1, 1, 1, '1970-01-01 00:00:00', 0, 'enum', 0, 'Set RTP relay mode for this peer/domain/user');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Always with plain SDP', NULL, 1, 0, 0, 1),
+(@pref_id, 'Always with plain SDP', 'ice_strip_candidates', 0, 1, 1, 1),
+(@pref_id, 'Always with rtpproxy as additional ICE candidate', 'ice_add_candidates', 1, 1, 1, 0),
+(@pref_id, 'Always with rtpproxy as only ICE candidate', 'ice_replace_candidates', 1, 1, 1, 0),
+(@pref_id, 'Never', 'never', 1, 1, 1, 0);
+
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('ipv46_for_rtpproxy', 0, 1, 1, 1, 1, '1970-01-01 00:00:00', 0, 'enum', 0, 'Choose the logic of IPv4/IPv6 autodetection for the RTP relay');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Auto-detect', NULL, 1, 1, 1, 1),
+(@pref_id, 'Force IPv4', 'force_ipv4', 1, 1, 1, 0),
+(@pref_id, 'Force IPv6', 'force_ipv6', 1, 1, 1, 0);
+
+commit;
+
