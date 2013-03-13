@@ -1,0 +1,8 @@
+-- We explicitely don't replicate this statement in order
+-- to perform the query only on the corresponding standby
+-- node, and we make sure to execute it on both nodes.
+-- The reason is that this statement might take quite long
+-- and would lock the cdr table on the active node.
+
+SET sql_log_bin=0;
+ALTER TABLE accounting.cdr ADD KEY stime_idx(start_time);
