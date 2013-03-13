@@ -1,0 +1,14 @@
+USE billing;
+CREATE TABLE `contract_fraud_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `fraud_interval_limit` int(11) unsigned DEFAULT NULL,
+  `fraud_interval_lock` tinyint(3) unsigned DEFAULT NULL,
+  `fraud_interval_notify` varchar(255) DEFAULT NULL,
+  `fraud_daily_limit` int(11) unsigned DEFAULT NULL,
+  `fraud_daily_lock` tinyint(3) unsigned DEFAULT NULL,
+  `fraud_daily_notify` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `contract_id` (`contract_id`),
+  CONSTRAINT `contract_id_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
