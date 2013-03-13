@@ -1,0 +1,40 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='always_use_rtpproxy' INTO @old_aur_id;
+SELECT id FROM voip_preferences WHERE attribute='never_use_rtpproxy' INTO @old_nur_id;
+SELECT id FROM voip_preferences WHERE attribute='use_rtpproxy' INTO @new_pref_id;
+
+-- delete conflicting rows where always=1 and never=1 (always takes precedence)
+DELETE a.* FROM voip_usr_preferences a, voip_usr_preferences b
+  WHERE a.subscriber_id=b.subscriber_id
+  AND a.attribute_id=@old_nur_id AND b.attribute_id=@old_aur_id;
+
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @new_pref_id, "never" from voip_usr_preferences p
+  WHERE p.attribute_id=@old_nur_id;
+
+-- finally copy over the vars to the new preference
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @new_pref_id, "ice_strip_candidates" from voip_usr_preferences p
+  WHERE p.attribute_id=@old_aur_id;
+
+
+SELECT id FROM voip_preferences WHERE attribute='always_use_ipv4_for_rtpproxy' INTO @old_pref_v4_id;
+SELECT id FROM voip_preferences WHERE attribute='always_use_ipv6_for_rtpproxy' INTO @old_pref_v6_id;
+SELECT id FROM voip_preferences WHERE attribute='ipv46_for_rtpproxy' INTO @new_pref_id;
+
+DELETE a.* FROM voip_usr_preferences a, voip_usr_preferences b
+  WHERE a.subscriber_id=b.subscriber_id
+  AND a.attribute_id=@old_pref_v6_id AND b.attribute_id=@old_pref_v4_id;
+
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @new_pref_id, "force_ipv4" from voip_usr_preferences p
+  WHERE p.attribute_id=@old_pref_v4_id;
+
+SELECT id FROM voip_preferences WHERE attribute='ipv46_for_rtpproxy' INTO @new_pref_id;
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @new_pref_id, "force_ipv6" from voip_usr_preferences p
+  WHERE p.attribute_id=@old_pref_v6_id;
+
+COMMIT;
