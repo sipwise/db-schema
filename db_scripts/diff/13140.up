@@ -1,0 +1,10 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_socket' INTO @pref_id;
+
+UPDATE voip_preferences SET usr_pref=0, dom_pref=0 WHERE id=@pref_id;
+DELETE FROM voip_usr_preferences WHERE attribute_id=@pref_id;
+DELETE FROM voip_dom_preferences WHERE attribute_id=@pref_id;
+
+commit;
