@@ -1,3 +1,6 @@
 USE billing;
 
+ALTER TABLE billing_fees DROP KEY profdesdirtype_idx;
 ALTER TABLE billing_fees DROP COLUMN direction;
+ALTER TABLE billing_fees ADD KEY profdestype_idx
+  (billing_profile_id, destination, type);
