@@ -1,0 +1,6 @@
+USE provisioning;
+
+ALTER TABLE voip_peer_groups CHANGE peering_contract_id 
+  outbound_peering_contract_id int(11) unsigned;
+ALTER TABLE voip_peer_groups ADD COLUMN 
+  inbound_peering_contract_id int(11) unsigned;
