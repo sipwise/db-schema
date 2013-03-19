@@ -1,5 +1,0 @@
-USE provisioning;
-
-ALTER TABLE voip_peer_groups DROP COLUMN inbound_peering_contract_id; 
-ALTER TABLE voip_peer_groups CHANGE COLUMN outbound_peering_contract_id
-  peering_contract_id INT(11) unsigned;
