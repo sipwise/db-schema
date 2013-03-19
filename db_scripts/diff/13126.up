@@ -1,0 +1,41 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+DROP TRIGGER voip_sub_drepl_trig;
+
+DELIMITER |
+
+CREATE TRIGGER voip_sub_drepl_trig BEFORE DELETE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT domain INTO subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username = OLD.username AND domain = subscriber_domain;
+
+  DELETE FROM kamailio.subscriber WHERE username = OLD.username
+                                   AND domain = subscriber_domain;
+
+  -- should be implemented via a provisioning.voicemail_users table
+  -- and a foreign key to voip_subscribers
+  DELETE FROM kamailio.voicemail_users WHERE customer_id = OLD.uuid;
+
+  -- work around MySQL bug. the cascaded delete should trigger our
+  -- delete actions on the provisioning tables, but doesn't
+  DELETE FROM kamailio.usr_preferences WHERE username = OLD.username
+                                        AND domain = subscriber_domain;
+  DELETE FROM kamailio.dbaliases WHERE username = OLD.username
+                                  AND domain = subscriber_domain;
+  DELETE FROM kamailio.speed_dial WHERE username = OLD.username
+                                  AND domain = subscriber_domain;
+  DELETE FROM kamailio.fax_preferences WHERE subscriber_id = os_subscriber_id;
+  DELETE FROM kamailio.fax_destinations WHERE subscriber_id = os_subscriber_id;
+  DELETE FROM kamailio.trusted WHERE tag = OLD.uuid;
+  END;
+|
+
+DELIMITER ;
+
+COMMIT;
