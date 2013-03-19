@@ -1,0 +1,19 @@
+USE billing;
+
+ALTER TABLE billing_mappings DROP FOREIGN KEY b_m_bilprofid_ref;
+ALTER TABLE billing_mappings DROP KEY profileid_idx;
+
+ALTER TABLE billing_mappings CHANGE billing_profile_id
+  outbound_billing_profile_id int(11) unsigned;
+ALTER TABLE billing_mappings ADD COLUMN 
+  inbound_billing_profile_id int(11) unsigned
+  AFTER outbound_billing_profile_id;
+
+ALTER TABLE billing_mappings ADD KEY out_profileid_idx(outbound_billing_profile_id);
+ALTER TABLE billing_mappings ADD KEY in_profileid_idx(inbound_billing_profile_id);
+ALTER TABLE billing_mappings ADD CONSTRAINT b_m_out_bilprofid_ref
+  FOREIGN KEY(outbound_billing_profile_id) REFERENCES billing_profiles(id) 
+  ON UPDATE CASCADE;
+ALTER TABLE billing_mappings ADD CONSTRAINT b_m_in_bilprofid_ref
+  FOREIGN KEY(inbound_billing_profile_id) REFERENCES billing_profiles(id) 
+  ON UPDATE CASCADE;
