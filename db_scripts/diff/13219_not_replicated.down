@@ -1,0 +1,37 @@
+-- We explicitely don't replicate this statement in order
+-- to perform the query only on the corresponding standby
+-- node, and we make sure to execute it on both nodes.
+-- The reason is that this statement might take quite long
+-- and would lock the cdr table on the active node.
+
+USE accounting;
+SET AUTOCOMMIT=0;
+SET sql_log_bin=0;
+
+ALTER TABLE cdr 
+  CHANGE COLUMN source_carrier_cost carrier_cost decimal(10,2) DEFAULT NULL,
+  CHANGE COLUMN source_reseller_cost reseller_cost decimal(10,2) DEFAULT NULL,
+  CHANGE COLUMN source_customer_cost customer_cost decimal(10,2) DEFAULT NULL,
+  CHANGE COLUMN source_carrier_free_time carrier_free_time int(10) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_reseller_free_time reseller_free_time int(10) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_customer_free_time customer_free_time int(10) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_carrier_billing_fee_id carrier_billing_fee_id int(11) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_reseller_billing_fee_id reseller_billing_fee_id int(11) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_customer_billing_fee_id customer_billing_fee_id int(11) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_carrier_billing_zone_id carrier_billing_zone_id int(11) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_reseller_billing_zone_id reseller_billing_zone_id int(11) unsigned DEFAULT NULL,
+  CHANGE COLUMN source_customer_billing_zone_id customer_billing_zone_id int(11) unsigned DEFAULT NULL,
+  DROP COLUMN destination_carrier_cost,
+  DROP COLUMN destination_reseller_cost,
+  DROP COLUMN destination_customer_cost,
+  DROP COLUMN destination_carrier_free_time,
+  DROP COLUMN destination_reseller_free_time,
+  DROP COLUMN destination_customer_free_time,
+  DROP COLUMN destination_carrier_billing_fee_id,
+  DROP COLUMN destination_reseller_billing_fee_id,
+  DROP COLUMN destination_customer_billing_fee_id,
+  DROP COLUMN destination_carrier_billing_zone_id,
+  DROP COLUMN destination_reseller_billing_zone_id,
+  DROP COLUMN destination_customer_billing_zone_id;
+
+COMMIT;
