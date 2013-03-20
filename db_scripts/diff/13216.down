@@ -1,0 +1,3 @@
+USE provisioning;
+
+DELETE FROM language_strings WHERE code = 'Web.Fees.InvalidDirection';

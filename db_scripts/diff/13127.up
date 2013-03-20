@@ -4,5 +4,5 @@ ALTER TABLE billing_fees ADD COLUMN direction enum('in', 'out')
   NOT NULL DEFAULT 'out'
   AFTER destination;
 ALTER TABLE billing_fees DROP KEY profdestype_idx;
-ALTER TABLE billing_fees ADD KEY profdesdirtype_idx
+ALTER TABLE billing_fees ADD UNIQUE KEY profdesdirtype_idx
   (billing_profile_id, destination, direction, type);

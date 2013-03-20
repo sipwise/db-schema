@@ -1,0 +1,8 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+INSERT INTO language_strings (code, language, string) VALUES ('Web.Fees.InvalidDirection', 'en', 'Invalid fee direction');
+INSERT INTO language_strings (code, language, string) VALUES ('Web.Fees.InvalidDirection', 'de', 'Ungültige Gebühren-Richtung');
+INSERT INTO language_strings (code, language, string) VALUES ('Web.Fees.InvalidDirection', 'fr', 'Invalid fee direction');
+INSERT INTO language_strings (code, language, string) VALUES ('Web.Fees.InvalidDirection', 'es', 'Invalid fee direction');
+COMMIT;
