@@ -1,8 +1,8 @@
 DROP TRIGGER billing.bill_fees_crepl_trig;
 DROP TRIGGER billing.bill_fees_urepl_trig;
 
-ALTER TABLE billing.billing_fees_history DROP COLUMN direction;
 ALTER TABLE billing.billing_fees_history DROP KEY bfhdir_idx;
+ALTER TABLE billing.billing_fees_history DROP COLUMN direction;
 
 DELIMITER |
 

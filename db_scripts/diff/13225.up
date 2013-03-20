@@ -1,5 +1,6 @@
 ALTER TABLE billing.billing_fees_history 
-  ADD COLUMN direction enum('in', 'out') NOT NULL DEFAULT 'out';
+  ADD COLUMN direction enum('in', 'out') NOT NULL DEFAULT 'out'
+  AFTER destination;
 ALTER TABLE billing.billing_fees_history ADD KEY bfhdir_idx(direction);
 
 DROP TRIGGER billing.bill_fees_crepl_trig;
