@@ -1,8 +1,8 @@
 ALTER TABLE billing.billing_fees
-  ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '' 
+  ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '.' 
   AFTER billing_zone_id;
 ALTER TABLE billing.billing_fees_history 
-  ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '' 
+  ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '.' 
   AFTER billing_zones_history_id;
 ALTER TABLE billing.billing_fees DROP KEY profdesdirtype_idx;
 ALTER TABLE billing.billing_fees ADD KEY profsrcdesdirtype_idx(billing_profile_id, source, destination, direction, type);
