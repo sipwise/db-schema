@@ -1,0 +1,8 @@
+USE accounting;
+
+SET AUTOCOMMIT=0;
+
+SELECT acc_id FROM mark WHERE collector='exporter-lastid' INTO @lastid;
+UPDATE cdr SET export_status='ok', exported_at=NOW() WHERE id <= @lastid;
+
+COMMIT;

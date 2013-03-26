@@ -1,0 +1,7 @@
+USE accounting;
+
+SET AUTOCOMMIT=0;
+
+UPDATE cdr SET export_status='unexported', exported_at=NULL;
+
+COMMIT;
