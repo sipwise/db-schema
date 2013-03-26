@@ -1,5 +1,7 @@
 USE accounting;
 
+GRANT UPDATE on accounting.cdr TO 'exporter'@'localhost';
+
 SET AUTOCOMMIT=0;
 
 SELECT acc_id FROM mark WHERE collector='exporter-lastid' INTO @lastid;

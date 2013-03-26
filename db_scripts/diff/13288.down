@@ -1,5 +1,7 @@
 USE accounting;
 
+REVOKE UPDATE on accounting.cdr FROM 'exporter'@'localhost';
+
 SET AUTOCOMMIT=0;
 
 UPDATE cdr SET export_status='unexported', exported_at=NULL;
