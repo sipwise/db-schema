@@ -1,3 +1,5 @@
+USE billing;
+
 ALTER TABLE billing.billing_fees_history 
   ADD COLUMN direction enum('in', 'out') NOT NULL DEFAULT 'out'
   AFTER destination;

@@ -1,3 +1,5 @@
+USE billing;
+
 DROP TRIGGER billing.bill_fees_crepl_trig;
 DROP TRIGGER billing.bill_fees_urepl_trig;
 
