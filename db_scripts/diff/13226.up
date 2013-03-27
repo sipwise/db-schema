@@ -1,3 +1,5 @@
+USE billing;
+
 ALTER TABLE billing.billing_fees
   ADD COLUMN source VARCHAR(255) NOT NULL DEFAULT '.' 
   AFTER billing_zone_id;
