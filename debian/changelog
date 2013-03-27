@@ -1,3 +1,44 @@
+ngcp-db-schema (2.8.0) unstable; urgency=low
+
+  [ agranig ]
+  * 13127.down,13127.up: Add inbound peering contract id to peer groups.
+  * 13127.down,13127.up: Revert r13198 as this was stupid.
+  * 13127.down,13127.up: Add inbound billing profile to contract-billing mapping.
+  * 13127.down,13127.up: Another fix for inbound billing.
+  * 13127.down,13127.up: Add keys for proper access.
+  * 13127.down,13127.up,13216.down,13216.up: Add language strings for fee direction and fix key.
+  * 13219_not_replicated.down,13219_not_replicated.up: Split fee-related columns into source and destination.
+  * 13225.down,13225.up: Correctly populate billing_fee_history table.
+  * 13225.down,13225.up: Fix diff scripts.
+  * 13226.down,13226.up: Add source column for billing fees.
+  * 13226.up: Stupid mysql doesn't allow empty string as pattern.
+  * 13288.down,13288.up: Use export fields for marker.
+  * 13288.down,13288.up: Alter permissions for exporter user.
+  * 13226.down,13226.up: Fix replication issue.
+  * 13225.down,13225.up: Explicitely USE billing db.
+  * 12649.down,12649.up: Fix typo and improve phrasing.
+  * 12765.down,12765.up: Add sound groups.
+  * 12693.down,12693.up: Add webfax language strings.
+  * 13042_not_replicated.down,13042_not_replicated.up: Add trigger to accounting.cdr.start_time.
+  * 13125.down,13125.up: Add schema for account-specific fraud preferences.
+
+  [ apogrebennyk ]
+  * 13226.up: change column name billing_zone_history_id to correct billing_zones_history_id
+  * 13041.up: add ICE preferences and wrap it all into an enum; make ipv4/ipv6 prefs an enum
+  * 13042.up: add db-up script for migration and cleanup of legacy rtpproxy settings
+  * 13042.up,13117.up: rename script to avoid naming conflict
+  * 13140.up: make outbound_socket a peer-only preference; cleanup preference values
+
+  [ rdieser ]
+  * 12676.up: create error message Serever.System.RRDFoldersSearch
+  * 12676.down: delete error message Serever.System.RRDFoldersSearch
+  * 12714.up: Server.System.RRDSubfoldersSearch error up script
+  * 12714.down: Server.System.RRDSubfoldersSearch error down script
+  * 12714.down,12714.up: update in order to handle Server.System.RRDFilesSearch error
+  * 12676.down,12676.up,12714.down,12714.up: remove Server.System.RRDFoldersSearch, Server.System.RRDSubfoldersSearch and Server.System.RRDFilesSearch
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 27 Mar 2013 14:50:01 +0100
+
 ngcp-db-schema (2.7.1) unstable; urgency=low
 
   * 13194.up/down: fix cascaded deletion of trusted ips on subcriber termination
