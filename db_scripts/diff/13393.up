@@ -1,0 +1,3 @@
+USE provisioning;
+
+INSERT INTO voip_preferences VALUES (NULL, 'allow_out_foreign_domain', 1, 1, 1, 1, 0, now(), 0, 'boolean', 0, 'Allow outbound calls of local subscribers to foreign domains');
