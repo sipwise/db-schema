@@ -1,3 +1,10 @@
+ngcp-db-schema (2.8.2) unstable; urgency=low
+
+  [ agranig ]
+  * 13393.up,13393.down: Add allow_out_foreign_domain preference.
+
+ -- Andreas Granig <agranig@sipwise.com>  Thu, 28 Mar 2013 15:44:57 +0100
+
 ngcp-db-schema (2.8.0) unstable; urgency=low
 
   [ agranig ]
