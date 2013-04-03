@@ -1,0 +1,5 @@
+USE provisioning;
+DELETE FROM voip_preferences where attribute='always_use_ipv4_for_rtpproxy';
+DELETE FROM voip_preferences where attribute='always_use_ipv6_for_rtpproxy';
+DELETE FROM voip_preferences WHERE attribute='always_use_rtpproxy';
+DELETE FROM voip_preferences WHERE attribute='never_use_rtpproxy';
