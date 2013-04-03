@@ -1,0 +1,9 @@
+USE provisioning;
+SET AUTOCOMMIT=0;
+
+UPDATE voip_peer_rules SET callee_pattern = REPLACE(callee_pattern, '^', '^sip:') 
+  WHERE callee_pattern LIKE '^%' AND callee_pattern NOT LIKE '^sip:';
+UPDATE voip_peer_rules SET caller_pattern = REPLACE(caller_pattern, '^', '^sip:') 
+  WHERE caller_pattern LIKE '^%' AND caller_pattern NOT LIKE '^sip:';
+
+COMMIT;
