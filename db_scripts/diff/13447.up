@@ -1,0 +1,25 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences   WHERE attribute='always_use_rtpproxy' INTO @old_aur_id;
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_aur_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_aur_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@old_aur_id;
+DELETE FROM voip_preferences      WHERE id=@old_aur_id;
+
+SELECT id FROM voip_preferences   WHERE attribute='never_use_rtpproxy' INTO @old_nur_id;
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_nur_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_nur_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@old_nur_id;
+DELETE FROM voip_preferences      WHERE id=@old_nur_id;
+
+SELECT id FROM voip_preferences   WHERE attribute='always_use_ipv4_for_rtpproxy' INTO @old_v4_id;
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_v4_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_v4_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@old_v4_id;
+DELETE FROM voip_preferences      WHERE id=@old_v4_id;
+
+SELECT id FROM voip_preferences   WHERE attribute='always_use_ipv6_for_rtpproxy' INTO @old_v6_id;
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_v6_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_v6_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@old_v6_id;
+DELETE FROM voip_preferences      WHERE id=@old_v6_id;
