@@ -1,0 +1,2 @@
+use billing;
+create index bfhsems_idx on billing_fees_history (billing_profile_id,bf_id,type,destination) using btree;
