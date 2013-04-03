@@ -1,0 +1,2 @@
+use billing;
+alter table billing_fees_history drop index bfhsems_idx;
