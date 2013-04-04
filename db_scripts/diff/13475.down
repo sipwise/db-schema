@@ -1,0 +1,8 @@
+use provisioning;
+set autocommit=0;
+
+alter table voip_preferences drop foreign key vpgid_ref;
+alter table voip_preferences drop column voip_preference_groups_id;
+drop table voip_preference_groups;
+
+commit;

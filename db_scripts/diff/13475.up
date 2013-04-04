@@ -1,0 +1,81 @@
+use provisioning;
+set autocommit=0;
+
+CREATE TABLE `voip_preference_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+insert into voip_preference_groups(name) values
+  ('Call Forwards'), ('Call Blockings'), ('Access Restrictions'),
+  ('Number Manipulations'), ('NAT and Media Flow Control'), 
+  ('Remote Authentication'), ('Session Timers'), ('Internals');
+
+alter table voip_preferences add column voip_preference_groups_id 
+  int(11) unsigned not null after id;
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Call Forwards';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in
+  ('cfb', 'cfna', 'cft', 'cfu', 'ringtimeout');
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Call Blockings';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'adm_block_in_clir', 'adm_block_in_list', 'adm_block_in_mode', 'adm_block_out_list', 
+   'adm_block_out_mode', 'adm_block_out_override_pin', 'adm_ncos', 'adm_ncos_id', 
+   'block_in_clir', 'block_in_list', 'block_in_mode', 'block_out_list', 'block_out_mode', 
+   'block_out_override_pin', 'ncos', 'ncos_id'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Access Restrictions';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'allowed_clis', 'allowed_ips', 'allowed_ips_grp', 'allow_out_foreign_domain', 
+   'concurrent_max', 'concurrent_max_out', 'concurrent_max_out_per_account', 
+   'concurrent_max_per_account', 'ignore_allowed_ips',
+   'lock', 'man_allowed_ips', 'man_allowed_ips_grp', 'reject_emergency', 'unauth_inbound_calls'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Number Manipulations';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'e164_to_ruri', 'emergency_cli', 'emergency_prefix', 'emergency_suffix', 
+   'extension_in_npn', 'inbound_npn', 'inbound_upn', 'inbound_uprn', 'outbound_diversion',
+   'outbound_from_display', 'outbound_from_user', 'outbound_pai_user', 'outbound_ppi_user',
+   'rewrite_callee_in_dpid', 'rewrite_callee_out_dpid', 'rewrite_caller_in_dpid', 
+   'rewrite_caller_out_dpid', 'rewrite_rule_set', 'ac', 'cc', 'cli', 'clir', 'user_cli'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'NAT and Media Flow Control';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'ipv46_for_rtpproxy', 'no_nat_sipping', 'use_rtpproxy', 'sound_set'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Remote Authentication';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'find_subscriber_by_uuid', 'peer_auth_pass', 'peer_auth_realm', 'peer_auth_register', 
+   'peer_auth_user'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Session Timers';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'sst_enable', 'sst_expires', 'sst_max_timer', 'sst_min_timer', 'sst_refresh_method'
+);
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Internals';
+update voip_preferences set voip_preference_groups_id = @pid where attribute in (
+   'account_id', 'ext_contract_id', 'ext_subscriber_id', 'ip_header', 'mobile_push_enable',
+   'outbound_socket', 'prepaid', 'force_inbound_calls_to_peer', 'force_outbound_calls_to_peer'
+);
+
+alter table voip_preferences add constraint vpgid_ref 
+  foreign key (voip_preference_groups_id) references voip_preference_groups(id) 
+  on update cascade;
+
+commit;
