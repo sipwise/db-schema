@@ -73,6 +73,8 @@ update voip_preferences set voip_preference_groups_id = @pid where attribute in 
    'account_id', 'ext_contract_id', 'ext_subscriber_id', 'ip_header', 'mobile_push_enable',
    'outbound_socket', 'prepaid', 'force_inbound_calls_to_peer', 'force_outbound_calls_to_peer'
 );
+update voip_preferences set voip_preference_groups_id = @pid where voip_preference_groups_id = 0;
+
 
 alter table voip_preferences add constraint vpgid_ref 
   foreign key (voip_preference_groups_id) references voip_preference_groups(id) 
