@@ -1,0 +1,27 @@
+use provisioning
+
+SELECT id INTO @grp_id FROM voip_sound_groups WHERE name='pbx';
+
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_welcome', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_1_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_1_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_2_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_2_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_3_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_3_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_4_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_4_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_5_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_5_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_6_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_6_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_7_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_7_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_8_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_8_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_9_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_9_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_0_for', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('aa_0_option', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('office_hours', @grp_id);
+

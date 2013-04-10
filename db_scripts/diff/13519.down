@@ -1,0 +1,3 @@
+use provisioning
+
+DELETE FROM voip_sound_handles WHERE name IN ('aa_welcome', 'aa_1_for', 'aa_1_option', 'aa_2_for', 'aa_2_option', 'aa_3_for', 'aa_3_option', 'aa_4_for', 'aa_4_option', 'aa_5_for', 'aa_5_option', 'aa_6_for', 'aa_6_option', 'aa_7_for', 'aa_7_option', 'aa_8_for', 'aa_8_option', 'aa_9_for', 'aa_9_option', 'aa_0_for', 'aa_0_option', 'office_hours');
