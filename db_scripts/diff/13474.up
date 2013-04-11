@@ -1,2 +1,5 @@
 use billing;
-create index bfhsems_idx on billing_fees_history (billing_profile_id,bf_id,type,destination) using btree;
+set @exist := (select count(*) from information_schema.statistics where table_name = 'billing_fees_history' and index_name = 'bfhsems_idx');
+set @sqlstmt := if( @exist > 0, 'select ''INFO: Index already exists.''', 'create index bfhsems_idx on billing_fees_history (billing_profile_id,bf_id,type,destination) using btree');
+PREPARE stmt FROM @sqlstmt;
+EXECUTE stmt;
