@@ -124,7 +124,7 @@ CREATE TRIGGER voip_pgrp_urepl_trig AFTER UPDATE ON voip_peer_groups
 CREATE TRIGGER voip_pgrp_drepl_trig AFTER DELETE ON voip_peer_groups
   FOR EACH ROW BEGIN
 
-  DELETE kamailio.rule, kamailio.gw FROM kamailio.lcr_rule rule, kamailio.lcr_gw gw
+  DELETE rule, gw FROM kamailio.lcr_rule rule, kamailio.lcr_gw gw
    WHERE rule.group_id = OLD.id and gw.group_id = OLD.id;
 
   END;
