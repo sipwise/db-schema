@@ -1,0 +1,3 @@
+USE kamailio
+
+DELETE FROM `dispatcher` WHERE setid=5;
