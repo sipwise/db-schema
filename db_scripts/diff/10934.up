@@ -3,9 +3,13 @@ update provisioning.voip_peer_hosts set transport=1 where transport is NULL;
 
 #now sync again provisioning and lcr
 use kamailio;
+
+SET FOREIGN_KEY_CHECKS = 0;
 truncate table lcr_rule;
 truncate table lcr_gw;
 truncate table lcr_rule_target;
+SET FOREIGN_KEY_CHECKS = 1;
+
 INSERT INTO lcr_rule (lcr_id, prefix, from_uri, request_uri, stopper, enabled, group_id)
  SELECT 1, callee_prefix, caller_pattern, callee_pattern, 0, 1, group_id
  FROM provisioning.voip_peer_rules;
