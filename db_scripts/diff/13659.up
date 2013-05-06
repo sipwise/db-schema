@@ -1,0 +1,161 @@
+USE kamailio;
+
+-- Upgrade Kamailio from v3.3.x to v4.0.0
+ALTER TABLE address CHANGE COLUMN ip_addr ip_addr VARCHAR(50) NOT NULL; # was VARCHAR(48) NOT NULL
+ 
+ALTER TABLE aliases CHANGE COLUMN expires expires datetime NOT NULL DEFAULT '2030-05-28 21:32:15'; # was datetime NOT NULL DEFAULT '2020-05-28 21:32:15'
+ALTER TABLE aliases ADD UNIQUE ruid_idx (ruid);
+ 
+ALTER TABLE lcr_gw CHANGE COLUMN ip_addr ip_addr VARCHAR(50) DEFAULT NULL; # was VARCHAR(47) DEFAULT NULL
+ 
+ALTER TABLE location CHANGE COLUMN path path VARCHAR(512) DEFAULT NULL; # was VARCHAR(128) DEFAULT NULL
+ALTER TABLE location CHANGE COLUMN expires expires datetime NOT NULL DEFAULT '2030-05-28 21:32:15'; # was datetime NOT NULL DEFAULT '2020-05-28 21:32:15'
+ALTER TABLE location ADD UNIQUE ruid_idx (ruid);
+ALTER TABLE location ADD INDEX expires_idx (expires);
+ 
+ALTER TABLE active_watchers DROP INDEX active_watchers_pres; # was INDEX (presentity_uri)
+ALTER TABLE active_watchers ADD INDEX active_watchers_pres (presentity_uri,event);
+ 
+ALTER TABLE pua DROP INDEX tmp_record2_idx; # was INDEX (pres_id,etag)
+ALTER TABLE pua DROP INDEX tmp_dlg2_idx; # was INDEX (pres_id,pres_uri,call_id,from_tag)
+ALTER TABLE pua DROP INDEX tmp_record1_idx; # was INDEX (pres_id)
+ALTER TABLE pua DROP INDEX dialog2_idx; # was INDEX (pres_id,pres_uri)
+ALTER TABLE pua ADD INDEX dialog2_idx (call_id,from_tag);
+ALTER TABLE pua DROP INDEX dialog1_idx; # was INDEX (call_id,from_tag,to_tag)
+ALTER TABLE pua ADD INDEX dialog1_idx (pres_id,pres_uri);
+ALTER TABLE pua DROP INDEX tmp_dlg1_idx; # was INDEX (call_id,from_tag)
+ALTER TABLE pua ADD INDEX record_idx (pres_id);
+ 
+ALTER TABLE rls_watchers DROP INDEX rls_watchers_delete; # was INDEX (callid,to_tag)
+ 
+ALTER TABLE version ADD UNIQUE table_name_idx (TABLE_NAME);
+ 
+CREATE TABLE location_attrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  ruid VARCHAR(64) NOT NULL DEFAULT '',
+  username VARCHAR(64) NOT NULL DEFAULT '',
+  DOMAIN VARCHAR(64) DEFAULT NULL,
+  aname VARCHAR(64) NOT NULL DEFAULT '',
+  atype INT(11) NOT NULL DEFAULT '0',
+  avalue VARCHAR(255) NOT NULL DEFAULT '',
+  last_modified datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (id),
+  KEY account_record_idx (username,DOMAIN,ruid),
+  KEY last_modified_idx (last_modified)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('location_attrs','1');
+DELETE FROM version WHERE TABLE_NAME='address';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('address','6');
+DELETE FROM version WHERE TABLE_NAME='lcr_gw';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('lcr_gw','3');
+DELETE FROM version WHERE TABLE_NAME='aliases';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('aliases','6');
+DELETE FROM version WHERE TABLE_NAME='location';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('location','6');
+
+-- Tables from new modules
+CREATE TABLE sca_subscriptions (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  subscriber VARCHAR(255) NOT NULL,
+  aor VARCHAR(255) NOT NULL,
+  event INT(11) NOT NULL DEFAULT '0',
+  expires INT(11) NOT NULL DEFAULT '0',
+  state INT(11) NOT NULL DEFAULT '0',
+  app_idx INT(11) NOT NULL DEFAULT '0',
+  call_id VARCHAR(255) NOT NULL,
+  from_tag VARCHAR(64) NOT NULL,
+  to_tag VARCHAR(64) NOT NULL,
+  record_route text,
+  notify_cseq INT(11) NOT NULL,
+  subscribe_cseq INT(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY sca_subscriptions_idx (subscriber,call_id,from_tag,to_tag),
+  KEY sca_expires_idx (expires),
+  KEY sca_subscribers_idx (subscriber,event)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_credentials (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  auth_username VARCHAR(64) NOT NULL,
+  did VARCHAR(64) NOT NULL DEFAULT '_default',
+  realm VARCHAR(64) NOT NULL,
+  password VARCHAR(28) NOT NULL DEFAULT '',
+  flags INT(11) NOT NULL DEFAULT '0',
+  ha1 VARCHAR(32) NOT NULL,
+  ha1b VARCHAR(32) NOT NULL DEFAULT '',
+  uid VARCHAR(64) NOT NULL,
+  PRIMARY KEY (id),
+  KEY cred_idx (auth_username,did),
+  KEY uid (uid),
+  KEY did_idx (did),
+  KEY realm_idx (realm)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_domain (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  did VARCHAR(64) NOT NULL,
+  DOMAIN VARCHAR(64) NOT NULL,
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY domain_idx (DOMAIN),
+  KEY did_idx (did)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_domain_attrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  did VARCHAR(64) DEFAULT NULL,
+  name VARCHAR(32) NOT NULL,
+  TYPE INT(11) NOT NULL DEFAULT '0',
+  VALUE VARCHAR(128) DEFAULT NULL,
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY domain_attr_idx (did,name,VALUE),
+  KEY domain_did (did,flags)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_global_attrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(32) NOT NULL,
+  TYPE INT(11) NOT NULL DEFAULT '0',
+  VALUE VARCHAR(128) DEFAULT NULL,
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY global_attrs_idx (name,VALUE)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_uri (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  uid VARCHAR(64) NOT NULL,
+  did VARCHAR(64) NOT NULL,
+  username VARCHAR(64) NOT NULL,
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  scheme VARCHAR(8) NOT NULL DEFAULT 'sip',
+  PRIMARY KEY (id),
+  KEY uri_idx1 (username,did,scheme),
+  KEY uri_uid (uid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_uri_attrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  username VARCHAR(64) NOT NULL,
+  did VARCHAR(64) NOT NULL,
+  name VARCHAR(32) NOT NULL,
+  VALUE VARCHAR(128) DEFAULT NULL,
+  TYPE INT(11) NOT NULL DEFAULT '0',
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  scheme VARCHAR(8) NOT NULL DEFAULT 'sip',
+  PRIMARY KEY (id),
+  UNIQUE KEY uriattrs_idx (username,did,name,VALUE,scheme)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 
+CREATE TABLE uid_user_attrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  uid VARCHAR(64) NOT NULL,
+  name VARCHAR(32) NOT NULL,
+  VALUE VARCHAR(128) DEFAULT NULL,
+  TYPE INT(11) NOT NULL DEFAULT '0',
+  flags INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY userattrs_idx (uid,name,VALUE)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

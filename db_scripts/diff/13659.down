@@ -1,0 +1,52 @@
+USE kamailio;
+
+ALTER TABLE address CHANGE COLUMN ip_addr ip_addr VARCHAR(48) NOT NULL; 
+ 
+ALTER TABLE aliases CHANGE COLUMN expires expires datetime NOT NULL DEFAULT '2020-05-28 21:32:15'; 
+
+ALTER TABLE aliases DROP INDEX ruid_idx;
+ 
+ALTER TABLE lcr_gw CHANGE COLUMN ip_addr ip_addr VARCHAR(47) DEFAULT NULL;
+ 
+ALTER TABLE location CHANGE COLUMN path path VARCHAR(128) DEFAULT NULL; 
+ALTER TABLE location CHANGE COLUMN expires expires datetime NOT NULL DEFAULT '2020-05-28 21:32:15'; 
+ALTER TABLE location DROP INDEX ruid_idx;
+ALTER TABLE location DROP INDEX expires_idx;
+ 
+ALTER TABLE active_watchers DROP INDEX active_watchers_pres; 
+ALTER TABLE active_watchers ADD INDEX active_watchers_pres (presentity_uri);
+ 
+ALTER TABLE pua ADD INDEX tmp_record2_idx (pres_id,etag);
+ALTER TABLE pua ADD INDEX tmp_dlg2_idx (pres_id,pres_uri,call_id,from_tag);
+ALTER TABLE pua ADD INDEX tmp_record1_idx (pres_id);
+ALTER TABLE pua DROP INDEX dialog2_idx;
+ALTER TABLE pua ADD INDEX dialog2_idx (pres_id,pres_uri);
+ALTER TABLE pua DROP INDEX dialog1_idx; 
+ALTER TABLE pua ADD INDEX dialog1_idx (call_id,from_tag,to_tag);
+ALTER TABLE pua ADD INDEX tmp_dlg1_idx (call_id,from_tag);
+ALTER TABLE pua DROP INDEX record_idx;
+ 
+ALTER TABLE rls_watchers ADD INDEX rls_watchers_delete (callid,to_tag);
+ 
+ALTER TABLE version DROP INDEX table_name_idx;
+
+DROP TABLE location_attrs;
+ 
+DELETE FROM version WHERE TABLE_NAME='location_attrs';
+DELETE FROM version WHERE TABLE_NAME='address';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('address','5');
+DELETE FROM version WHERE TABLE_NAME='lcr_gw';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('lcr_gw','2');
+DELETE FROM version WHERE TABLE_NAME='aliases';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('aliases','5');
+DELETE FROM version WHERE TABLE_NAME='location';
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('location','5');
+
+DROP TABLE sca_subscriptions;
+DROP TABLE uid_credentials;
+DROP TABLE uid_domain;
+DROP TABLE uid_domain_attrs;
+DROP TABLE uid_global_attrs;
+DROP TABLE uid_uri;
+DROP TABLE uid_uri_attrs;
+DROP TABLE uid_user_attrs;
