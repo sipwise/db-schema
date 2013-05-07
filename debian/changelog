@@ -1,6 +1,6 @@
-ngcp-db-schema (2.8.3+1) UNRELEASED; urgency=low
+ngcp-db-schema (3.0.0) UNRELEASED; urgency=low
 
-  * Testing kamailio4 upgrade.
+  * 13659.down,13659.up: Kamailio 4 upgrade.
 
  -- Victor Seva <vseva@sipwise.com>  Mon, 06 May 2013 11:49:17 +0200
 
