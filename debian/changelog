@@ -1,3 +1,9 @@
+ngcp-db-schema (3.0.0) UNRELEASED; urgency=low
+
+  * 13659.down,13659.up: Kamailio 4 upgrade.
+
+ -- Victor Seva <vseva@sipwise.com>  Wed, 08 May 2013 16:56:24 +0200
+
 ngcp-db-schema (2.8.3) unstable; urgency=low
 
   [ apogrebennyk ]
