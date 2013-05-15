@@ -1453,7 +1453,7 @@ CREATE TABLE `active_watchers` (
   KEY `updated_idx` (`updated`),
   KEY `updated_winfo_idx` (`updated_winfo`,`presentity_uri`),
   KEY `active_watchers_pres` (`presentity_uri`,`event`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `active_watchers` WRITE;
@@ -1504,7 +1504,7 @@ CREATE TABLE `aliases` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ruid_idx` (`ruid`),
   KEY `alias_idx` (`username`,`domain`,`contact`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `aliases` WRITE;
@@ -1578,7 +1578,7 @@ CREATE TABLE `dialog_vars` (
   `dialog_value` varchar(512) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `hash_idx` (`hash_entry`,`hash_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `dialog_vars` WRITE;
@@ -1679,7 +1679,7 @@ CREATE TABLE `domain_attrs` (
   `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain_attrs_idx` (`did`,`name`,`value`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `domain_attrs` WRITE;
@@ -1763,7 +1763,7 @@ CREATE TABLE `htable` (
   `key_value` varchar(128) NOT NULL DEFAULT '',
   `expires` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `htable` WRITE;
@@ -1956,7 +1956,7 @@ CREATE TABLE `presentity` (
   UNIQUE KEY `presentity_idx` (`username`,`domain`,`event`,`etag`),
   KEY `presentity_expires` (`expires`),
   KEY `account_idx` (`username`,`domain`,`event`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `presentity` WRITE;
@@ -1992,7 +1992,7 @@ CREATE TABLE `pua` (
   KEY `dialog2_idx` (`call_id`,`from_tag`),
   KEY `dialog1_idx` (`pres_id`,`pres_uri`),
   KEY `record_idx` (`pres_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `pua` WRITE;
@@ -2017,7 +2017,7 @@ CREATE TABLE `rls_presentity` (
   KEY `rlsubs_idx` (`rlsubs_did`),
   KEY `updated_idx` (`updated`),
   KEY `expires_idx` (`expires`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `rls_presentity` WRITE;
@@ -2057,7 +2057,7 @@ CREATE TABLE `rls_watchers` (
   KEY `rls_watchers_update` (`watcher_username`,`watcher_domain`,`event`),
   KEY `rls_watchers_expires` (`expires`),
   KEY `updated_idx` (`updated`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `rls_watchers` WRITE;
@@ -2130,7 +2130,7 @@ CREATE TABLE `silo` (
   `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `account_idx` (`username`,`domain`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `silo` WRITE;
@@ -2182,7 +2182,7 @@ CREATE TABLE `subscriber` (
 
 LOCK TABLES `subscriber` WRITE;
 /*!40000 ALTER TABLE `subscriber` DISABLE KEYS */;
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','721145eb76bf6ab7d3c2985b8cce8454','','17f4ea2cb1b7fe166999d0e4b0ad89b5','e87bd7853b7af8206ac02e7cf9c0902f',NULL,'9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00'),(2,'nagios','voip.sipwise.local','nagios4Sipwise!','','e5290263a1b27f90c5630eecc7319715','aba8e5f08f6fc0dd1e18e9e27550b8f0',NULL,'ac1697cf-6933-45ef-9abf-b1278054ded0','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','894a18cf2a422c26a3aeeba5a803856d','','37070962437f12ca3fcd1fd873846182','7e3e5ba9201dd25f0f2f7a17b14206c7',NULL,'9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00'),(2,'nagios','voip.sipwise.local','nagios4Sipwise!','','e5290263a1b27f90c5630eecc7319715','aba8e5f08f6fc0dd1e18e9e27550b8f0',NULL,'ac1697cf-6933-45ef-9abf-b1278054ded0','','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `subscriber` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `trusted`;
@@ -2460,7 +2460,7 @@ CREATE TABLE `watchers` (
   `inserted_time` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `watcher_idx` (`presentity_uri`,`watcher_username`,`watcher_domain`,`event`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `watchers` WRITE;
@@ -2485,7 +2485,7 @@ CREATE TABLE `xcap` (
   KEY `account_doc_type_idx` (`username`,`domain`,`doc_type`),
   KEY `account_doc_type_uri_idx` (`username`,`domain`,`doc_type`,`doc_uri`),
   KEY `account_doc_uri_idx` (`username`,`domain`,`doc_uri`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `xcap` WRITE;
@@ -2513,7 +2513,7 @@ CREATE TABLE `cfg_schema` (
 
 LOCK TABLES `cfg_schema` WRITE;
 /*!40000 ALTER TABLE `cfg_schema` DISABLE KEYS */;
-INSERT INTO `cfg_schema` VALUES (1,1,'','2013-05-15 03:09:05'),(2,2,'','2013-05-15 03:09:05'),(3,8374,'spce','2013-05-15 03:09:05'),(4,8411,'spce','2013-05-15 03:09:05'),(5,8615,'spce','2013-05-15 03:09:05'),(6,8708,'spce','2013-05-15 03:09:05'),(7,8871,'spce','2013-05-15 03:09:06'),(8,8873,'spce','2013-05-15 03:09:06'),(9,8886,'spce','2013-05-15 03:09:06'),(10,9084,'spce','2013-05-15 03:09:06'),(11,9119,'spce','2013-05-15 03:09:06'),(12,9259,'spce','2013-05-15 03:09:06'),(13,9562,'spce','2013-05-15 03:09:06'),(14,9564,'spce','2013-05-15 03:09:07'),(15,9658,'spce','2013-05-15 03:09:07'),(16,10088,'spce','2013-05-15 03:09:07'),(17,10226,'spce','2013-05-15 03:09:07'),(18,10233,'spce','2013-05-15 03:09:07'),(19,10432,'spce','2013-05-15 03:09:07'),(20,10443,'spce','2013-05-15 03:09:07'),(21,10472,'spce','2013-05-15 03:09:08'),(22,10534,'spce','2013-05-15 03:09:08'),(23,10699,'spce','2013-05-15 03:09:08'),(24,10700,'spce','2013-05-15 03:09:08'),(25,11260,'spce','2013-05-15 03:09:08'),(26,11263,'spce','2013-05-15 03:09:08'),(27,11372,'spce','2013-05-15 03:09:08'),(28,12029,'spce','2013-05-15 03:09:09'),(29,12037,'spce','2013-05-15 03:09:09'),(30,12091,'spce','2013-05-15 03:09:09'),(31,12134,'spce','2013-05-15 03:09:09'),(32,12395,'spce','2013-05-15 03:09:09'),(33,12419,'spce','2013-05-15 03:09:09'),(34,12599,'spce','2013-05-15 03:09:09'),(35,12623,'spce','2013-05-15 03:09:10'),(36,12664,'spce','2013-05-15 03:09:10'),(37,12692,'spce','2013-05-15 03:09:10'),(38,12815,'spce','2013-05-15 03:09:10'),(39,12915,'spce','2013-05-15 03:09:10'),(40,13214,'spce','2013-05-15 03:09:10'),(41,13293,'spce','2013-05-15 03:09:10'),(42,8874,'spce','2013-05-15 03:09:11'),(43,9830,'spce','2013-05-15 03:09:11'),(44,10468,'spce','2013-05-15 03:09:11'),(45,11316,'spce','2013-05-15 03:09:11'),(46,11814,'spce','2013-05-15 03:09:11'),(47,12385,'spce','2013-05-15 03:09:11'),(48,13287,'spce','2013-05-15 03:09:11'),(49,13614,'spce','2013-05-15 03:09:12'),(50,11379,'spce','2013-05-15 03:09:12'),(51,11380,'spce','2013-05-15 03:09:12'),(52,11395,'spce','2013-05-15 03:09:12');
+INSERT INTO `cfg_schema` VALUES (1,1,'','2013-05-15 13:57:21'),(2,2,'','2013-05-15 13:57:21'),(3,8374,'spce','2013-05-15 13:57:22'),(4,8411,'spce','2013-05-15 13:57:22'),(5,8615,'spce','2013-05-15 13:57:22'),(6,8708,'spce','2013-05-15 13:57:22'),(7,8871,'spce','2013-05-15 13:57:22'),(8,8873,'spce','2013-05-15 13:57:22'),(9,8886,'spce','2013-05-15 13:57:22'),(10,9084,'spce','2013-05-15 13:57:23'),(11,9119,'spce','2013-05-15 13:57:23'),(12,9259,'spce','2013-05-15 13:57:23'),(13,9562,'spce','2013-05-15 13:57:23'),(14,9564,'spce','2013-05-15 13:57:23'),(15,9658,'spce','2013-05-15 13:57:24'),(16,10088,'spce','2013-05-15 13:57:24'),(17,10226,'spce','2013-05-15 13:57:24'),(18,10233,'spce','2013-05-15 13:57:24'),(19,10432,'spce','2013-05-15 13:57:25'),(20,10443,'spce','2013-05-15 13:57:25'),(21,10472,'spce','2013-05-15 13:57:26'),(22,10534,'spce','2013-05-15 13:57:26'),(23,10699,'spce','2013-05-15 13:57:26'),(24,10700,'spce','2013-05-15 13:57:26'),(25,11260,'spce','2013-05-15 13:57:27'),(26,11263,'spce','2013-05-15 13:57:27'),(27,11372,'spce','2013-05-15 13:57:27'),(28,12029,'spce','2013-05-15 13:57:27'),(29,12037,'spce','2013-05-15 13:57:28'),(30,12091,'spce','2013-05-15 13:57:28'),(31,12134,'spce','2013-05-15 13:57:28'),(32,12395,'spce','2013-05-15 13:57:28'),(33,12419,'spce','2013-05-15 13:57:28'),(34,12599,'spce','2013-05-15 13:57:29'),(35,12623,'spce','2013-05-15 13:57:29'),(36,12664,'spce','2013-05-15 13:57:29'),(37,12692,'spce','2013-05-15 13:57:29'),(38,12815,'spce','2013-05-15 13:57:29'),(39,12915,'spce','2013-05-15 13:57:29'),(40,13214,'spce','2013-05-15 13:57:30'),(41,13293,'spce','2013-05-15 13:57:30'),(42,8874,'spce','2013-05-15 13:57:30'),(43,9830,'spce','2013-05-15 13:57:30'),(44,10468,'spce','2013-05-15 13:57:30'),(45,11316,'spce','2013-05-15 13:57:30'),(46,11814,'spce','2013-05-15 13:57:31'),(47,12385,'spce','2013-05-15 13:57:31'),(48,13287,'spce','2013-05-15 13:57:31'),(49,13614,'spce','2013-05-15 13:57:31'),(50,11379,'spce','2013-05-15 13:57:31'),(51,11380,'spce','2013-05-15 13:57:31'),(52,11395,'spce','2013-05-15 13:57:31');
 /*!40000 ALTER TABLE `cfg_schema` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `db_schema`;
@@ -2531,8 +2531,309 @@ CREATE TABLE `db_schema` (
 
 LOCK TABLES `db_schema` WRITE;
 /*!40000 ALTER TABLE `db_schema` DISABLE KEYS */;
-INSERT INTO `db_schema` VALUES (1,10,'spce','2013-05-15 03:08:25'),(2,20,'spce','2013-05-15 03:08:26'),(3,30,'spce','2013-05-15 03:08:26'),(4,40,'spce','2013-05-15 03:08:26'),(5,50,'spce','2013-05-15 03:08:26'),(6,60,'spce','2013-05-15 03:08:27'),(7,70,'spce','2013-05-15 03:08:27'),(8,80,'spce','2013-05-15 03:08:27'),(9,3972,'spce','2013-05-15 03:08:27'),(10,3975,'spce','2013-05-15 03:08:27'),(11,4026,'spce','2013-05-15 03:08:27'),(12,4042,'spce','2013-05-15 03:08:28'),(13,4063,'spce','2013-05-15 03:08:28'),(14,4085,'spce','2013-05-15 03:08:28'),(15,4095,'spce','2013-05-15 03:08:28'),(16,4112,'spce','2013-05-15 03:08:28'),(17,4145,'spce','2013-05-15 03:08:29'),(18,4496,'spce','2013-05-15 03:08:29'),(19,4665,'spce','2013-05-15 03:08:29'),(20,4668,'spce','2013-05-15 03:08:29'),(21,4701,'spce','2013-05-15 03:08:29'),(22,4711,'spce','2013-05-15 03:08:29'),(23,4712,'spce','2013-05-15 03:08:30'),(24,4717,'spce','2013-05-15 03:08:30'),(25,4735,'spce','2013-05-15 03:08:30'),(26,4762,'spce','2013-05-15 03:08:30'),(27,4832,'spce','2013-05-15 03:08:30'),(28,4875,'spce','2013-05-15 03:08:30'),(29,4968,'spce','2013-05-15 03:08:30'),(30,4984,'spce','2013-05-15 03:08:30'),(31,5000,'spce','2013-05-15 03:08:31'),(32,5249,'spce','2013-05-15 03:08:31'),(33,5283,'spce','2013-05-15 03:08:31'),(34,5300,'spce','2013-05-15 03:08:31'),(35,5347,'spce','2013-05-15 03:08:31'),(36,5471,'spce','2013-05-15 03:08:32'),(37,5472,'spce','2013-05-15 03:08:32'),(38,5538,'spce','2013-05-15 03:08:32'),(39,5543,'spce','2013-05-15 03:08:32'),(40,5553,'spce','2013-05-15 03:08:32'),(41,5603,'spce','2013-05-15 03:08:32'),(42,5604,'spce','2013-05-15 03:08:33'),(43,5607,'spce','2013-05-15 03:08:33'),(44,5670,'spce','2013-05-15 03:08:33'),(45,5708,'spce','2013-05-15 03:08:33'),(46,5709,'spce','2013-05-15 03:08:34'),(47,5722,'spce','2013-05-15 03:08:34'),(48,5726,'spce','2013-05-15 03:08:34'),(49,5728,'spce','2013-05-15 03:08:34'),(50,5737,'spce','2013-05-15 03:08:35'),(51,5744,'spce','2013-05-15 03:08:35'),(52,5749,'spce','2013-05-15 03:08:35'),(53,5800,'spce','2013-05-15 03:08:35'),(54,5824,'spce','2013-05-15 03:08:35'),(55,5826,'spce','2013-05-15 03:08:35'),(56,5831,'spce','2013-05-15 03:08:36'),(57,5833,'spce','2013-05-15 03:08:36'),(58,5843,'spce','2013-05-15 03:08:36'),(59,5973,'spce','2013-05-15 03:08:36'),(60,6254,'spce','2013-05-15 03:08:36'),(61,6346,'spce','2013-05-15 03:08:36'),(62,6424,'spce','2013-05-15 03:08:37'),(63,6425,'spce','2013-05-15 03:08:42'),(64,6435,'spce','2013-05-15 03:08:42'),(65,6436,'spce','2013-05-15 03:08:43'),(66,6459,'spce','2013-05-15 03:08:43'),(67,6465,'spce','2013-05-15 03:08:43'),(68,6551,'spce','2013-05-15 03:08:43'),(69,6560,'spce','2013-05-15 03:08:43'),(70,6568,'spce','2013-05-15 03:08:44'),(71,6619,'spce','2013-05-15 03:08:44'),(72,6624,'spce','2013-05-15 03:08:44'),(73,6643,'spce','2013-05-15 03:08:44'),(74,6712,'spce','2013-05-15 03:08:44'),(75,6746,'spce','2013-05-15 03:08:44'),(76,7006,'spce','2013-05-15 03:08:44'),(77,7036,'spce','2013-05-15 03:08:45'),(78,7065,'spce','2013-05-15 03:08:45'),(79,7095,'spce','2013-05-15 03:08:45'),(80,7209,'spce','2013-05-15 03:08:45'),(81,7252,'spce','2013-05-15 03:08:45'),(82,7259,'spce','2013-05-15 03:08:45'),(83,7260,'spce','2013-05-15 03:08:46'),(84,7485,'spce','2013-05-15 03:08:46'),(85,7493,'spce','2013-05-15 03:08:46'),(86,7496,'spce','2013-05-15 03:08:46'),(87,7500,'spce','2013-05-15 03:08:46'),(88,7644,'spce','2013-05-15 03:08:46'),(89,7647,'spce','2013-05-15 03:08:46'),(90,7655,'spce','2013-05-15 03:08:47'),(91,7656,'spce','2013-05-15 03:08:47'),(92,7764,'spce','2013-05-15 03:08:47'),(93,7937,'spce','2013-05-15 03:08:47'),(94,7991,'spce','2013-05-15 03:08:47'),(95,8169,'spce','2013-05-15 03:08:47'),(96,8293,'spce','2013-05-15 03:08:48'),(97,8378,'spce','2013-05-15 03:08:48'),(98,8408,'spce','2013-05-15 03:08:48'),(99,8461,'spce','2013-05-15 03:08:48'),(100,8466,'spce','2013-05-15 03:08:48'),(101,8467,'spce','2013-05-15 03:08:48'),(102,8629,'spce','2013-05-15 03:08:49'),(103,8704,'spce','2013-05-15 03:08:49'),(104,8846,'spce','2013-05-15 03:08:49'),(105,8878,'spce','2013-05-15 03:08:49'),(106,8997,'spce','2013-05-15 03:08:49'),(107,9069,'spce','2013-05-15 03:08:49'),(108,9086,'spce','2013-05-15 03:08:50'),(109,9106,'spce','2013-05-15 03:08:50'),(110,9114,'spce','2013-05-15 03:08:50'),(111,9119,'spce','2013-05-15 03:08:50'),(112,9150,'spce','2013-05-15 03:08:50'),(113,9154,'spce','2013-05-15 03:08:50'),(114,9159,'spce','2013-05-15 03:08:50'),(115,9166,'spce','2013-05-15 03:08:51'),(116,9187,'spce','2013-05-15 03:08:51'),(117,9188,'spce','2013-05-15 03:08:51'),(118,9204,'spce','2013-05-15 03:08:51'),(119,9205,'spce','2013-05-15 03:08:52'),(120,9221,'spce','2013-05-15 03:08:52'),(121,9222,'spce','2013-05-15 03:08:52'),(122,9228,'spce','2013-05-15 03:08:52'),(123,9249,'spce','2013-05-15 03:08:52'),(124,9256,'spce','2013-05-15 03:08:52'),(125,9303,'spce','2013-05-15 03:08:52'),(126,9312,'spce','2013-05-15 03:08:53'),(127,9458,'spce','2013-05-15 03:08:53'),(128,9625,'spce','2013-05-15 03:08:53'),(129,9630,'spce','2013-05-15 03:08:53'),(130,9665,'spce','2013-05-15 03:08:53'),(131,9675,'spce','2013-05-15 03:08:53'),(132,9702,'spce','2013-05-15 03:08:53'),(133,9703,'spce','2013-05-15 03:08:54'),(134,9723,'spce','2013-05-15 03:08:54'),(135,9733,'spce','2013-05-15 03:08:54'),(136,9791,'spce','2013-05-15 03:08:54'),(137,9868,'spce','2013-05-15 03:08:54'),(138,10180,'spce','2013-05-15 03:08:54'),(139,10203,'spce','2013-05-15 03:08:55'),(140,10210,'spce','2013-05-15 03:08:55'),(141,10268,'spce','2013-05-15 03:08:55'),(142,10272,'spce','2013-05-15 03:08:55'),(143,10287,'spce','2013-05-15 03:08:55'),(144,10290,'spce','2013-05-15 03:08:55'),(145,10331,'spce','2013-05-15 03:08:55'),(146,10332,'spce','2013-05-15 03:08:56'),(147,10423,'spce','2013-05-15 03:08:56'),(148,10538,'spce','2013-05-15 03:08:56'),(149,10639,'spce','2013-05-15 03:08:56'),(150,10728,'spce','2013-05-15 03:08:56'),(151,10860,'spce','2013-05-15 03:08:56'),(152,10877,'spce','2013-05-15 03:08:56'),(153,10890,'spce','2013-05-15 03:08:57'),(154,10934,'spce','2013-05-15 03:08:57'),(155,10950,'spce','2013-05-15 03:08:57'),(156,10951,'spce','2013-05-15 03:08:57'),(157,11039,'spce','2013-05-15 03:08:57'),(158,11062,'spce','2013-05-15 03:08:57'),(159,11188,'spce','2013-05-15 03:08:57'),(160,11245,'spce','2013-05-15 03:08:58'),(161,11318,'spce','2013-05-15 03:08:58'),(162,11350,'spce','2013-05-15 03:08:58'),(163,11379,'spce','2013-05-15 03:08:58'),(164,11565,'spce','2013-05-15 03:08:58'),(165,11581,'spce','2013-05-15 03:08:58'),(166,11603,'spce','2013-05-15 03:08:59'),(167,11722,'spce','2013-05-15 03:08:59'),(168,11729,'spce','2013-05-15 03:08:59'),(169,11812,'spce','2013-05-15 03:08:59'),(170,11817,'spce','2013-05-15 03:08:59'),(171,11818,'spce','2013-05-15 03:09:00'),(172,11819,'spce','2013-05-15 03:09:00'),(173,12002,'spce','2013-05-15 03:09:00'),(174,12061,'spce','2013-05-15 03:09:00'),(175,12062,'spce','2013-05-15 03:09:00'),(176,12117,'spce','2013-05-15 03:09:00'),(177,12144,'spce','2013-05-15 03:09:00'),(178,12162,'spce','2013-05-15 03:09:01'),(179,12279,'spce','2013-05-15 03:09:01'),(180,12649,'spce','2013-05-15 03:09:01'),(181,12693,'spce','2013-05-15 03:09:01'),(182,12765,'spce','2013-05-15 03:09:01'),(183,13041,'spce','2013-05-15 03:09:02'),(184,13042,'spce','2013-05-15 03:09:02'),(185,13117,'spce','2013-05-15 03:09:02'),(186,13125,'spce','2013-05-15 03:09:02'),(187,13126,'spce','2013-05-15 03:09:02'),(188,13127,'spce','2013-05-15 03:09:02'),(189,13140,'spce','2013-05-15 03:09:02'),(190,13216,'spce','2013-05-15 03:09:03'),(191,13219,'spce','2013-05-15 03:09:03'),(192,13225,'spce','2013-05-15 03:09:03'),(193,13226,'spce','2013-05-15 03:09:03'),(194,13288,'spce','2013-05-15 03:09:03'),(195,13393,'spce','2013-05-15 03:09:03'),(196,13447,'spce','2013-05-15 03:09:04'),(197,13449,'spce','2013-05-15 03:09:04'),(198,13474,'spce','2013-05-15 03:09:04'),(199,13475,'spce','2013-05-15 03:09:04'),(200,13519,'spce','2013-05-15 03:09:04'),(201,13658,'spce','2013-05-15 03:09:04'),(202,13659,'spce','2013-05-15 03:09:05');
+INSERT INTO `db_schema` VALUES (1,10,'spce','2013-05-15 13:56:25'),(2,20,'spce','2013-05-15 13:56:27'),(3,30,'spce','2013-05-15 13:56:27'),(4,40,'spce','2013-05-15 13:56:28'),(5,50,'spce','2013-05-15 13:56:28'),(6,60,'spce','2013-05-15 13:56:29'),(7,70,'spce','2013-05-15 13:56:29'),(8,80,'spce','2013-05-15 13:56:29'),(9,3972,'spce','2013-05-15 13:56:29'),(10,3975,'spce','2013-05-15 13:56:29'),(11,4026,'spce','2013-05-15 13:56:30'),(12,4042,'spce','2013-05-15 13:56:30'),(13,4063,'spce','2013-05-15 13:56:30'),(14,4085,'spce','2013-05-15 13:56:30'),(15,4095,'spce','2013-05-15 13:56:30'),(16,4112,'spce','2013-05-15 13:56:31'),(17,4145,'spce','2013-05-15 13:56:31'),(18,4496,'spce','2013-05-15 13:56:31'),(19,4665,'spce','2013-05-15 13:56:31'),(20,4668,'spce','2013-05-15 13:56:31'),(21,4701,'spce','2013-05-15 13:56:32'),(22,4711,'spce','2013-05-15 13:56:32'),(23,4712,'spce','2013-05-15 13:56:32'),(24,4717,'spce','2013-05-15 13:56:32'),(25,4735,'spce','2013-05-15 13:56:32'),(26,4762,'spce','2013-05-15 13:56:33'),(27,4832,'spce','2013-05-15 13:56:33'),(28,4875,'spce','2013-05-15 13:56:33'),(29,4968,'spce','2013-05-15 13:56:33'),(30,4984,'spce','2013-05-15 13:56:33'),(31,5000,'spce','2013-05-15 13:56:34'),(32,5249,'spce','2013-05-15 13:56:34'),(33,5283,'spce','2013-05-15 13:56:34'),(34,5300,'spce','2013-05-15 13:56:35'),(35,5347,'spce','2013-05-15 13:56:35'),(36,5471,'spce','2013-05-15 13:56:35'),(37,5472,'spce','2013-05-15 13:56:36'),(38,5538,'spce','2013-05-15 13:56:36'),(39,5543,'spce','2013-05-15 13:56:36'),(40,5553,'spce','2013-05-15 13:56:36'),(41,5603,'spce','2013-05-15 13:56:37'),(42,5604,'spce','2013-05-15 13:56:37'),(43,5607,'spce','2013-05-15 13:56:37'),(44,5670,'spce','2013-05-15 13:56:37'),(45,5708,'spce','2013-05-15 13:56:37'),(46,5709,'spce','2013-05-15 13:56:38'),(47,5722,'spce','2013-05-15 13:56:39'),(48,5726,'spce','2013-05-15 13:56:39'),(49,5728,'spce','2013-05-15 13:56:39'),(50,5737,'spce','2013-05-15 13:56:39'),(51,5744,'spce','2013-05-15 13:56:39'),(52,5749,'spce','2013-05-15 13:56:40'),(53,5800,'spce','2013-05-15 13:56:40'),(54,5824,'spce','2013-05-15 13:56:41'),(55,5826,'spce','2013-05-15 13:56:41'),(56,5831,'spce','2013-05-15 13:56:41'),(57,5833,'spce','2013-05-15 13:56:41'),(58,5843,'spce','2013-05-15 13:56:42'),(59,5973,'spce','2013-05-15 13:56:42'),(60,6254,'spce','2013-05-15 13:56:42'),(61,6346,'spce','2013-05-15 13:56:42'),(62,6424,'spce','2013-05-15 13:56:43'),(63,6425,'spce','2013-05-15 13:56:50'),(64,6435,'spce','2013-05-15 13:56:50'),(65,6436,'spce','2013-05-15 13:56:51'),(66,6459,'spce','2013-05-15 13:56:51'),(67,6465,'spce','2013-05-15 13:56:51'),(68,6551,'spce','2013-05-15 13:56:51'),(69,6560,'spce','2013-05-15 13:56:51'),(70,6568,'spce','2013-05-15 13:56:52'),(71,6619,'spce','2013-05-15 13:56:52'),(72,6624,'spce','2013-05-15 13:56:52'),(73,6643,'spce','2013-05-15 13:56:53'),(74,6712,'spce','2013-05-15 13:56:53'),(75,6746,'spce','2013-05-15 13:56:53'),(76,7006,'spce','2013-05-15 13:56:53'),(77,7036,'spce','2013-05-15 13:56:53'),(78,7065,'spce','2013-05-15 13:56:53'),(79,7095,'spce','2013-05-15 13:56:54'),(80,7209,'spce','2013-05-15 13:56:54'),(81,7252,'spce','2013-05-15 13:56:54'),(82,7259,'spce','2013-05-15 13:56:54'),(83,7260,'spce','2013-05-15 13:56:54'),(84,7485,'spce','2013-05-15 13:56:54'),(85,7493,'spce','2013-05-15 13:56:55'),(86,7496,'spce','2013-05-15 13:56:55'),(87,7500,'spce','2013-05-15 13:56:55'),(88,7644,'spce','2013-05-15 13:56:55'),(89,7647,'spce','2013-05-15 13:56:55'),(90,7655,'spce','2013-05-15 13:56:56'),(91,7656,'spce','2013-05-15 13:56:56'),(92,7764,'spce','2013-05-15 13:56:56'),(93,7937,'spce','2013-05-15 13:56:56'),(94,7991,'spce','2013-05-15 13:56:56'),(95,8169,'spce','2013-05-15 13:56:57'),(96,8293,'spce','2013-05-15 13:56:57'),(97,8378,'spce','2013-05-15 13:56:57'),(98,8408,'spce','2013-05-15 13:56:57'),(99,8461,'spce','2013-05-15 13:56:57'),(100,8466,'spce','2013-05-15 13:56:57'),(101,8467,'spce','2013-05-15 13:56:58'),(102,8629,'spce','2013-05-15 13:56:58'),(103,8704,'spce','2013-05-15 13:56:58'),(104,8846,'spce','2013-05-15 13:56:58'),(105,8878,'spce','2013-05-15 13:56:59'),(106,8997,'spce','2013-05-15 13:56:59'),(107,9069,'spce','2013-05-15 13:56:59'),(108,9086,'spce','2013-05-15 13:56:59'),(109,9106,'spce','2013-05-15 13:57:00'),(110,9114,'spce','2013-05-15 13:57:00'),(111,9119,'spce','2013-05-15 13:57:00'),(112,9150,'spce','2013-05-15 13:57:00'),(113,9154,'spce','2013-05-15 13:57:00'),(114,9159,'spce','2013-05-15 13:57:00'),(115,9166,'spce','2013-05-15 13:57:00'),(116,9187,'spce','2013-05-15 13:57:01'),(117,9188,'spce','2013-05-15 13:57:01'),(118,9204,'spce','2013-05-15 13:57:02'),(119,9205,'spce','2013-05-15 13:57:04'),(120,9221,'spce','2013-05-15 13:57:04'),(121,9222,'spce','2013-05-15 13:57:04'),(122,9228,'spce','2013-05-15 13:57:04'),(123,9249,'spce','2013-05-15 13:57:04'),(124,9256,'spce','2013-05-15 13:57:04'),(125,9303,'spce','2013-05-15 13:57:04'),(126,9312,'spce','2013-05-15 13:57:05'),(127,9458,'spce','2013-05-15 13:57:05'),(128,9625,'spce','2013-05-15 13:57:05'),(129,9630,'spce','2013-05-15 13:57:05'),(130,9665,'spce','2013-05-15 13:57:06'),(131,9675,'spce','2013-05-15 13:57:06'),(132,9702,'spce','2013-05-15 13:57:06'),(133,9703,'spce','2013-05-15 13:57:06'),(134,9723,'spce','2013-05-15 13:57:06'),(135,9733,'spce','2013-05-15 13:57:06'),(136,9791,'spce','2013-05-15 13:57:07'),(137,9868,'spce','2013-05-15 13:57:07'),(138,10180,'spce','2013-05-15 13:57:07'),(139,10203,'spce','2013-05-15 13:57:07'),(140,10210,'spce','2013-05-15 13:57:07'),(141,10268,'spce','2013-05-15 13:57:08'),(142,10272,'spce','2013-05-15 13:57:08'),(143,10287,'spce','2013-05-15 13:57:08'),(144,10290,'spce','2013-05-15 13:57:08'),(145,10331,'spce','2013-05-15 13:57:08'),(146,10332,'spce','2013-05-15 13:57:09'),(147,10423,'spce','2013-05-15 13:57:09'),(148,10538,'spce','2013-05-15 13:57:09'),(149,10639,'spce','2013-05-15 13:57:09'),(150,10728,'spce','2013-05-15 13:57:09'),(151,10860,'spce','2013-05-15 13:57:10'),(152,10877,'spce','2013-05-15 13:57:10'),(153,10890,'spce','2013-05-15 13:57:10'),(154,10934,'spce','2013-05-15 13:57:10'),(155,10950,'spce','2013-05-15 13:57:10'),(156,10951,'spce','2013-05-15 13:57:10'),(157,11039,'spce','2013-05-15 13:57:11'),(158,11062,'spce','2013-05-15 13:57:11'),(159,11188,'spce','2013-05-15 13:57:11'),(160,11245,'spce','2013-05-15 13:57:11'),(161,11318,'spce','2013-05-15 13:57:11'),(162,11350,'spce','2013-05-15 13:57:11'),(163,11379,'spce','2013-05-15 13:57:11'),(164,11565,'spce','2013-05-15 13:57:12'),(165,11581,'spce','2013-05-15 13:57:12'),(166,11603,'spce','2013-05-15 13:57:13'),(167,11722,'spce','2013-05-15 13:57:13'),(168,11729,'spce','2013-05-15 13:57:13'),(169,11812,'spce','2013-05-15 13:57:13'),(170,11817,'spce','2013-05-15 13:57:13'),(171,11818,'spce','2013-05-15 13:57:14'),(172,11819,'spce','2013-05-15 13:57:14'),(173,12002,'spce','2013-05-15 13:57:14'),(174,12061,'spce','2013-05-15 13:57:14'),(175,12062,'spce','2013-05-15 13:57:14'),(176,12117,'spce','2013-05-15 13:57:15'),(177,12144,'spce','2013-05-15 13:57:15'),(178,12162,'spce','2013-05-15 13:57:16'),(179,12279,'spce','2013-05-15 13:57:16'),(180,12649,'spce','2013-05-15 13:57:16'),(181,12693,'spce','2013-05-15 13:57:16'),(182,12765,'spce','2013-05-15 13:57:17'),(183,13041,'spce','2013-05-15 13:57:17'),(184,13042,'spce','2013-05-15 13:57:17'),(185,13117,'spce','2013-05-15 13:57:17'),(186,13125,'spce','2013-05-15 13:57:17'),(187,13126,'spce','2013-05-15 13:57:18'),(188,13127,'spce','2013-05-15 13:57:18'),(189,13140,'spce','2013-05-15 13:57:18'),(190,13216,'spce','2013-05-15 13:57:18'),(191,13219,'spce','2013-05-15 13:57:18'),(192,13225,'spce','2013-05-15 13:57:18'),(193,13226,'spce','2013-05-15 13:57:19'),(194,13288,'spce','2013-05-15 13:57:19'),(195,13393,'spce','2013-05-15 13:57:19'),(196,13447,'spce','2013-05-15 13:57:19'),(197,13449,'spce','2013-05-15 13:57:19'),(198,13474,'spce','2013-05-15 13:57:19'),(199,13475,'spce','2013-05-15 13:57:20'),(200,13519,'spce','2013-05-15 13:57:20'),(201,13658,'spce','2013-05-15 13:57:20'),(202,13659,'spce','2013-05-15 13:57:21');
 /*!40000 ALTER TABLE `db_schema` ENABLE KEYS */;
+UNLOCK TABLES;
+
+/*!40000 DROP DATABASE IF EXISTS `performance_schema`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `performance_schema` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `performance_schema`;
+DROP TABLE IF EXISTS `cond_instances`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `cond_instances` (
+  `NAME` varchar(128) NOT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `cond_instances` WRITE;
+/*!40000 ALTER TABLE `cond_instances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cond_instances` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_current`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_current` (
+  `THREAD_ID` int(11) NOT NULL,
+  `EVENT_ID` bigint(20) unsigned NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `SOURCE` varchar(64) DEFAULT NULL,
+  `TIMER_START` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_END` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_WAIT` bigint(20) unsigned DEFAULT NULL,
+  `SPINS` int(10) unsigned DEFAULT NULL,
+  `OBJECT_SCHEMA` varchar(64) DEFAULT NULL,
+  `OBJECT_NAME` varchar(512) DEFAULT NULL,
+  `OBJECT_TYPE` varchar(64) DEFAULT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `NESTING_EVENT_ID` bigint(20) unsigned DEFAULT NULL,
+  `OPERATION` varchar(16) NOT NULL,
+  `NUMBER_OF_BYTES` bigint(20) unsigned DEFAULT NULL,
+  `FLAGS` int(10) unsigned DEFAULT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_current` WRITE;
+/*!40000 ALTER TABLE `events_waits_current` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_current` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_history` (
+  `THREAD_ID` int(11) NOT NULL,
+  `EVENT_ID` bigint(20) unsigned NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `SOURCE` varchar(64) DEFAULT NULL,
+  `TIMER_START` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_END` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_WAIT` bigint(20) unsigned DEFAULT NULL,
+  `SPINS` int(10) unsigned DEFAULT NULL,
+  `OBJECT_SCHEMA` varchar(64) DEFAULT NULL,
+  `OBJECT_NAME` varchar(512) DEFAULT NULL,
+  `OBJECT_TYPE` varchar(64) DEFAULT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `NESTING_EVENT_ID` bigint(20) unsigned DEFAULT NULL,
+  `OPERATION` varchar(16) NOT NULL,
+  `NUMBER_OF_BYTES` bigint(20) unsigned DEFAULT NULL,
+  `FLAGS` int(10) unsigned DEFAULT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_history` WRITE;
+/*!40000 ALTER TABLE `events_waits_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_history` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_history_long`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_history_long` (
+  `THREAD_ID` int(11) NOT NULL,
+  `EVENT_ID` bigint(20) unsigned NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `SOURCE` varchar(64) DEFAULT NULL,
+  `TIMER_START` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_END` bigint(20) unsigned DEFAULT NULL,
+  `TIMER_WAIT` bigint(20) unsigned DEFAULT NULL,
+  `SPINS` int(10) unsigned DEFAULT NULL,
+  `OBJECT_SCHEMA` varchar(64) DEFAULT NULL,
+  `OBJECT_NAME` varchar(512) DEFAULT NULL,
+  `OBJECT_TYPE` varchar(64) DEFAULT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `NESTING_EVENT_ID` bigint(20) unsigned DEFAULT NULL,
+  `OPERATION` varchar(16) NOT NULL,
+  `NUMBER_OF_BYTES` bigint(20) unsigned DEFAULT NULL,
+  `FLAGS` int(10) unsigned DEFAULT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_history_long` WRITE;
+/*!40000 ALTER TABLE `events_waits_history_long` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_history_long` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_summary_by_instance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_summary_by_instance` (
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `COUNT_STAR` bigint(20) unsigned NOT NULL,
+  `SUM_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MIN_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `AVG_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MAX_TIMER_WAIT` bigint(20) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_summary_by_instance` WRITE;
+/*!40000 ALTER TABLE `events_waits_summary_by_instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_summary_by_instance` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_summary_by_thread_by_event_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_summary_by_thread_by_event_name` (
+  `THREAD_ID` int(11) NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `COUNT_STAR` bigint(20) unsigned NOT NULL,
+  `SUM_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MIN_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `AVG_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MAX_TIMER_WAIT` bigint(20) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_summary_by_thread_by_event_name` WRITE;
+/*!40000 ALTER TABLE `events_waits_summary_by_thread_by_event_name` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_summary_by_thread_by_event_name` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `events_waits_summary_global_by_event_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `events_waits_summary_global_by_event_name` (
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `COUNT_STAR` bigint(20) unsigned NOT NULL,
+  `SUM_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MIN_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `AVG_TIMER_WAIT` bigint(20) unsigned NOT NULL,
+  `MAX_TIMER_WAIT` bigint(20) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `events_waits_summary_global_by_event_name` WRITE;
+/*!40000 ALTER TABLE `events_waits_summary_global_by_event_name` DISABLE KEYS */;
+/*!40000 ALTER TABLE `events_waits_summary_global_by_event_name` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `file_instances`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file_instances` (
+  `FILE_NAME` varchar(512) NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `OPEN_COUNT` int(10) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `file_instances` WRITE;
+/*!40000 ALTER TABLE `file_instances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `file_instances` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `file_summary_by_event_name`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file_summary_by_event_name` (
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `COUNT_READ` bigint(20) unsigned NOT NULL,
+  `COUNT_WRITE` bigint(20) unsigned NOT NULL,
+  `SUM_NUMBER_OF_BYTES_READ` bigint(20) unsigned NOT NULL,
+  `SUM_NUMBER_OF_BYTES_WRITE` bigint(20) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `file_summary_by_event_name` WRITE;
+/*!40000 ALTER TABLE `file_summary_by_event_name` DISABLE KEYS */;
+/*!40000 ALTER TABLE `file_summary_by_event_name` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `file_summary_by_instance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file_summary_by_instance` (
+  `FILE_NAME` varchar(512) NOT NULL,
+  `EVENT_NAME` varchar(128) NOT NULL,
+  `COUNT_READ` bigint(20) unsigned NOT NULL,
+  `COUNT_WRITE` bigint(20) unsigned NOT NULL,
+  `SUM_NUMBER_OF_BYTES_READ` bigint(20) unsigned NOT NULL,
+  `SUM_NUMBER_OF_BYTES_WRITE` bigint(20) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `file_summary_by_instance` WRITE;
+/*!40000 ALTER TABLE `file_summary_by_instance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `file_summary_by_instance` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `mutex_instances`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mutex_instances` (
+  `NAME` varchar(128) NOT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `LOCKED_BY_THREAD_ID` int(11) DEFAULT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `mutex_instances` WRITE;
+/*!40000 ALTER TABLE `mutex_instances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mutex_instances` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `performance_timers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `performance_timers` (
+  `TIMER_NAME` enum('CYCLE','NANOSECOND','MICROSECOND','MILLISECOND','TICK') NOT NULL,
+  `TIMER_FREQUENCY` bigint(20) DEFAULT NULL,
+  `TIMER_RESOLUTION` bigint(20) DEFAULT NULL,
+  `TIMER_OVERHEAD` bigint(20) DEFAULT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `performance_timers` WRITE;
+/*!40000 ALTER TABLE `performance_timers` DISABLE KEYS */;
+INSERT INTO `performance_timers` VALUES ('CYCLE',NULL,NULL,NULL),('NANOSECOND',NULL,NULL,NULL),('MICROSECOND',NULL,NULL,NULL),('MILLISECOND',NULL,NULL,NULL),('TICK',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `performance_timers` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `rwlock_instances`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rwlock_instances` (
+  `NAME` varchar(128) NOT NULL,
+  `OBJECT_INSTANCE_BEGIN` bigint(20) NOT NULL,
+  `WRITE_LOCKED_BY_THREAD_ID` int(11) DEFAULT NULL,
+  `READ_LOCKED_BY_COUNT` int(10) unsigned NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `rwlock_instances` WRITE;
+/*!40000 ALTER TABLE `rwlock_instances` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rwlock_instances` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `setup_consumers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setup_consumers` (
+  `NAME` varchar(64) NOT NULL,
+  `ENABLED` enum('YES','NO') NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `setup_consumers` WRITE;
+/*!40000 ALTER TABLE `setup_consumers` DISABLE KEYS */;
+INSERT INTO `setup_consumers` VALUES ('events_waits_current','YES'),('events_waits_history','YES'),('events_waits_history_long','YES'),('events_waits_summary_by_thread_by_event_name','YES'),('events_waits_summary_by_event_name','YES'),('events_waits_summary_by_instance','YES'),('file_summary_by_event_name','YES'),('file_summary_by_instance','YES');
+/*!40000 ALTER TABLE `setup_consumers` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `setup_instruments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setup_instruments` (
+  `NAME` varchar(128) NOT NULL,
+  `ENABLED` enum('YES','NO') NOT NULL,
+  `TIMED` enum('YES','NO') NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `setup_instruments` WRITE;
+/*!40000 ALTER TABLE `setup_instruments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `setup_instruments` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `setup_timers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `setup_timers` (
+  `NAME` varchar(64) NOT NULL,
+  `TIMER_NAME` enum('CYCLE','NANOSECOND','MICROSECOND','MILLISECOND','TICK') NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `setup_timers` WRITE;
+/*!40000 ALTER TABLE `setup_timers` DISABLE KEYS */;
+INSERT INTO `setup_timers` VALUES ('wait','CYCLE');
+/*!40000 ALTER TABLE `setup_timers` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `threads`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `threads` (
+  `THREAD_ID` int(11) NOT NULL,
+  `PROCESSLIST_ID` int(11) DEFAULT NULL,
+  `NAME` varchar(128) NOT NULL
+) ENGINE=PERFORMANCE_SCHEMA DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `threads` WRITE;
+/*!40000 ALTER TABLE `threads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `threads` ENABLE KEYS */;
 UNLOCK TABLES;
 
 /*!40000 DROP DATABASE IF EXISTS `provisioning`*/;
@@ -2927,7 +3228,7 @@ CREATE TABLE `voip_dom_preferences` (
 
 LOCK TABLES `voip_dom_preferences` WRITE;
 /*!40000 ALTER TABLE `voip_dom_preferences` DISABLE KEYS */;
-INSERT INTO `voip_dom_preferences` VALUES (1,2,62,'no','0000-00-00 00:00:00'),(2,2,66,'UPDATE_FALLBACK_INVITE','0000-00-00 00:00:00'),(3,2,91,'ice_strip_candidates','2013-05-15 03:09:02');
+INSERT INTO `voip_dom_preferences` VALUES (1,2,62,'no','0000-00-00 00:00:00'),(2,2,66,'UPDATE_FALLBACK_INVITE','0000-00-00 00:00:00'),(3,2,90,'ice_strip_candidates','2013-05-15 13:57:17');
 /*!40000 ALTER TABLE `voip_dom_preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -3768,12 +4069,12 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `voip_preferences` WRITE;
 /*!40000 ALTER TABLE `voip_preferences` DISABLE KEYS */;
-INSERT INTO `voip_preferences` VALUES (1,3,'lock',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',1,'See \"lock_voip_account_subscriber\" for a list of possible values. A lock value of \"none\" will not be returned to the caller. Read-only setting.'),(2,2,'block_in_mode',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).'),(3,2,'block_in_list',0,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\") that are (not) allowed to call the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'),(4,2,'block_in_clir',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Incoming anonymous calls (with calling line identification restriction) are blocked if set to true.'),(5,2,'block_out_mode',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Specifies the operational mode of the outgoing block list. If unset or set to a false value, it is a blacklist (allow all calls except to numbers listed in the block list), with a true value it is a whitelist (deny all calls except to numbers listed in the block list).'),(6,2,'block_out_list',0,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\") that are (not) allowed to be called by the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'),(7,2,'adm_block_in_mode',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Same as \"block_in_mode\" but may only be set by administrators.'),(8,2,'adm_block_in_list',0,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Same as \"block_in_list\" but may only be set by administrators and is applied prior to the user setting.'),(9,2,'adm_block_in_clir',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Same as \"block_in_clir\" but may only be set by administrators and is applied prior to the user setting.'),(10,2,'adm_block_out_mode',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Same as \"block_out_mode\" but may only be set by administrators.'),(11,2,'adm_block_out_list',0,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Same as \"block_out_list\" but may only be set by administrators and is applied prior to the user setting.'),(12,1,'cfu',1,0,1,0,0,'2013-05-15 03:09:04',1,'int',1,'The id pointing to the \"Call Forward Unconditional\" entry in the voip_cf_mappings table'),(13,1,'cfb',1,0,1,0,0,'2013-05-15 03:09:04',1,'int',1,'The id pointing to the \"Call Forward Busy\" entry in the voip_cf_mappings table'),(14,1,'cfna',1,0,1,0,0,'2013-05-15 03:09:04',1,'int',1,'The id pointing to the \"Call Forward Unavailable\" entry in the voip_cf_mappings table'),(15,1,'cft',1,0,1,0,0,'2013-05-15 03:09:04',1,'int',1,'The id pointing to the \"Call Forward Timeout\" entry in the voip_cf_mappings table'),(16,1,'ringtimeout',1,1,1,0,0,'2013-05-15 03:09:04',0,'int',0,'Specifies how many seconds the system should wait before redirecting the call if \"cft\" is set.'),(17,4,'cli',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). \"network-provided calling line identification\" - specifies the SIP username that is used for outgoing calls in the SIP \"From\" and \"P-Asserted-Identity\" headers (as user- and network-provided calling numbers). The content of the \"From\" header may be overridden by the \"user_cli\" preference and client (if allowed by the \"allowed_clis\" preference) SIP signalling. Automatically set to the primary E.164 number specified in the subscriber details.'),(18,4,'clir',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'\"Calling line identification restriction\" - if set to true, the CLI is not displayed on outgoing calls.'),(19,4,'cc',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'The country code that will be used for routing of dialed numbers without a country code. Defaults to the country code of the E.164 number if the subscriber has one.'),(20,4,'ac',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'The area code that will be used for routing of dialed numbers without an area code. Defaults to the area code of the E.164 number if the subscriber has one.'),(22,4,'emergency_prefix',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'A numeric string intended to be used in rewrite rules for emergency numbers.'),(23,2,'ncos_id',1,1,1,1,0,'2013-05-15 03:09:04',1,'int',0,NULL),(24,2,'adm_ncos_id',1,1,1,1,0,'2013-05-15 03:09:04',1,'int',0,NULL),(29,2,'ncos',0,1,1,1,0,'2013-05-15 03:09:04',-1,'string',0,'Specifies the NCOS level that applies to the user.'),(30,2,'adm_ncos',0,1,1,1,0,'2013-05-15 03:09:04',-1,'string',0,'Same as \"ncos\", but may only be set by administrators and is applied prior to the user setting.'),(31,2,'block_out_override_pin',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'A PIN code which may be used in a VSC to disable the outgoing user block list and NCOS level for a call.'),(32,2,'adm_block_out_override_pin',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Same as \"block_out_override_pin\" but additionally disables the administrative block list and NCOS level.'),(33,6,'peer_auth_user',0,1,1,0,1,'2013-05-15 03:09:04',0,'string',0,'A username used for authentication against the peer host.'),(34,6,'peer_auth_pass',0,1,1,0,1,'2013-05-15 03:09:04',0,'string',0,'A password used for authentication against the peer host.'),(35,3,'unauth_inbound_calls',1,1,0,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Allow unauthenticated inbound calls from FOREIGN domain to users within this domain. Use with care - it allows to flood your users with voice spam.'),(36,6,'peer_auth_realm',0,1,1,0,1,'2013-05-15 03:09:04',0,'string',0,'A realm (hostname) used to identify and for authentication against a peer host.'),(40,6,'peer_auth_register',1,1,1,1,1,'2013-05-15 03:09:04',0,'boolean',0,'Specifies whether registration at the peer host is desired.'),(41,3,'concurrent_max',1,1,1,1,1,'2013-05-15 03:09:04',0,'int',0,'Maximum number of concurrent sessions (calls) for a subscriber or peer.'),(42,3,'concurrent_max_out',1,1,1,1,1,'2013-05-15 03:09:04',0,'int',0,'Maximum number of concurrent outgoing sessions (calls) coming from a subscriber or going to a peer.'),(43,3,'allowed_clis',0,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'A list of shell patterns specifying which CLIs are allowed to be set by the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards as usual in shell patterns.'),(44,8,'force_outbound_calls_to_peer',1,1,1,1,1,'2013-05-15 03:09:04',0,'boolean',0,'Force calls from this user/domain/peer to be routed to PSTN even if the callee is local. Use with caution, as this setting may increase your costs! When enabling this option in a peer, make sure you trust it, as the NGCP will become an open relay for it!'),(45,8,'account_id',1,1,1,0,0,'2013-05-15 03:09:04',1,'int',0,NULL),(46,8,'ext_contract_id',0,1,1,0,0,'2013-05-15 03:09:04',1,'string',0,NULL),(47,8,'ext_subscriber_id',0,1,1,0,0,'2013-05-15 03:09:04',1,'string',0,NULL),(48,6,'find_subscriber_by_uuid',1,1,0,0,1,'2013-05-15 03:09:04',0,'boolean',0,'For incoming calls from this peer, find the destination subscriber also using its auth_username used for outbound registration.'),(50,4,'rewrite_rule_set',1,1,1,1,1,'2013-05-15 03:09:04',-1,'int',0,'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.'),(51,4,'rewrite_caller_in_dpid',1,1,1,1,1,'2013-05-15 03:09:04',1,'int',0,NULL),(52,4,'rewrite_callee_in_dpid',1,1,1,1,1,'2013-05-15 03:09:04',1,'int',0,NULL),(53,4,'rewrite_caller_out_dpid',1,1,1,1,1,'2013-05-15 03:09:04',1,'int',0,NULL),(54,4,'rewrite_callee_out_dpid',1,1,1,1,1,'2013-05-15 03:09:04',1,'int',0,NULL),(55,4,'e164_to_ruri',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Send the E164 number instead of SIP AOR as request username when sending INVITE to the subscriber. If a 404 is received the SIP AOR is sent as request URI as fallback.'),(56,4,'user_cli',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). \"user-provided calling line identification\" - specifies the SIP username that is used for outgoing calls. If set, this is put in the SIP \"From\" header (as user-provided calling number) if a client sends a CLI which is not allowed by \"allowed_clis\" or if \"allowed_clis\" is not set.'),(57,8,'prepaid',1,1,1,0,0,'2013-05-15 03:09:04',1,'boolean',0,NULL),(60,8,'force_inbound_calls_to_peer',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Force calls to this user to be treated as if the user was not local. This helps in migration scenarios.'),(61,4,'emergency_suffix',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'A numeric string intended to be used in rewrite rules for emergency numbers.'),(62,7,'sst_enable',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'Enable SIP Session Timers.'),(63,7,'sst_expires',1,1,1,1,1,'2013-05-15 03:09:04',0,'int',0,'SIP Session Timers refresh interval (seconds). Should be always greater than min_timer preference. SBC will make refresh at the half of this interval.'),(64,7,'sst_min_timer',1,1,1,1,1,'2013-05-15 03:09:04',0,'int',0,'Set Min-SE value in SBC. This is also used to build 422 reply if remote Min-SE is smaller than local Min-SE.'),(65,7,'sst_max_timer',1,1,1,1,1,'2013-05-15 03:09:04',0,'int',0,'Sets upper limit on accepted Min-SE value in in SBC.'),(66,7,'sst_refresh_method',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'SIP Session Timers refresh method.'),(67,5,'sound_set',1,1,1,1,0,'2013-05-15 03:09:04',0,'int',0,'Soundset'),(68,3,'reject_emergency',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Reject emergency calls from this user or domain.'),(69,4,'emergency_cli',0,1,1,0,0,'2013-05-15 03:09:04',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). Emergency CLI which can be used in rewrite rules as substitution value.'),(70,8,'outbound_socket',0,1,0,0,1,'2013-05-15 03:09:04',0,'enum',0,'Outbound socket to be used for SIP communication to this entity'),(71,4,'inbound_upn',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The SIP header field to fetch the user-provided-number from for inbound calls'),(72,4,'inbound_npn',0,1,0,0,1,'2013-05-15 03:09:04',0,'enum',0,'The SIP header field to fetch the network-provided-number from for inbound calls'),(73,4,'outbound_from_user',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The content to put into the From username for outbound calls from the platform to the subscriber'),(74,4,'outbound_from_display',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The content to put into the From display-name for outbound calls from the platform to the subscriber'),(75,4,'outbound_pai_user',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The content to put into the P-Asserted-Identity username for outbound calls from the platform to the subscriber (use \"None\" to not set header at all)'),(76,4,'outbound_ppi_user',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The content to put into the P-Preferred-Identity username for outbound calls from the platform to the subscriber (use \"None\" to not set header at all)'),(77,8,'mobile_push_enable',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Send inbound call to Mobile Push server when called subscriber is not registered. This can not be used together with CFNA as call will be then simply forwarded.'),(78,4,'extension_in_npn',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Search for partial match of user-provided number (UPN) to subscriber\'s  primary E164 number and aliases. If it mathes, take UPN as valid wihout allowed_clis check and copy UPN to network-provided number (NPN).'),(79,3,'concurrent_max_per_account',1,1,1,1,0,'2013-05-15 03:09:04',0,'int',0,'Maximum number of concurrent sessions (calls) for subscribers within the same account'),(80,3,'concurrent_max_out_per_account',1,1,1,1,0,'2013-05-15 03:09:04',0,'int',0,'Maximum number of concurrent outgoing sessions (calls) for subscribers within the same account'),(82,4,'inbound_uprn',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'Specifies the way to obtain the User-Provided Redirecting CLI. Possible options are use NPN of forwarding subscriber or respect inbound Diversion header. Same validation rules as for UPN apply to UPRN. NGCP does not stack UPRNs up if the call is forwarded several times.'),(83,4,'outbound_diversion',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'The content to put into the Diversion header for outbound calls (use \"None\" to not set header at all)'),(84,3,'allowed_ips_grp',1,0,1,0,0,'2013-05-15 03:09:04',1,'string',0,'Group of addresses and/or IP nets allowed access.'),(85,3,'man_allowed_ips_grp',1,0,1,0,0,'2013-05-15 03:09:04',1,'string',0,'Group of addresses and/or IP nets allowed access.'),(86,3,'allowed_ips',1,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Allow access from the given list of IP addresses and/or IP nets.'),(87,3,'man_allowed_ips',1,0,1,0,0,'2013-05-15 03:09:04',0,'string',0,'Allow access from the given list of IP addresses and/or IP nets.'),(88,3,'ignore_allowed_ips',1,1,1,0,0,'2013-05-15 03:09:04',0,'boolean',0,'Ignore preferences \"allowed_ips\" and \"man_allowed_ips\".'),(89,5,'no_nat_sipping',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Don\'t do NAT ping for domain/user. Use with caution: this only makes sense on the access network which does not need pings (e.g. CDMA)'),(90,8,'ip_header',0,1,1,1,1,'2013-05-15 03:09:04',0,'string',0,'The SIP header to take the IP address for logging it into CDRs.'),(91,5,'use_rtpproxy',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'Set RTP relay mode for this peer/domain/user'),(92,5,'ipv46_for_rtpproxy',0,1,1,1,1,'2013-05-15 03:09:04',0,'enum',0,'Choose the logic of IPv4/IPv6 autodetection for the RTP relay'),(93,3,'allow_out_foreign_domain',1,1,1,1,0,'2013-05-15 03:09:04',0,'boolean',0,'Allow outbound calls of local subscribers to foreign domains');
+INSERT INTO `voip_preferences` VALUES (1,3,'lock',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',1,'See \"lock_voip_account_subscriber\" for a list of possible values. A lock value of \"none\" will not be returned to the caller. Read-only setting.'),(2,2,'block_in_mode',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).'),(3,2,'block_in_list',0,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\") that are (not) allowed to call the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'),(4,2,'block_in_clir',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Incoming anonymous calls (with calling line identification restriction) are blocked if set to true.'),(5,2,'block_out_mode',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Specifies the operational mode of the outgoing block list. If unset or set to a false value, it is a blacklist (allow all calls except to numbers listed in the block list), with a true value it is a whitelist (deny all calls except to numbers listed in the block list).'),(6,2,'block_out_list',0,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\") that are (not) allowed to be called by the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.'),(7,2,'adm_block_in_mode',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Same as \"block_in_mode\" but may only be set by administrators.'),(8,2,'adm_block_in_list',0,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Same as \"block_in_list\" but may only be set by administrators and is applied prior to the user setting.'),(9,2,'adm_block_in_clir',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Same as \"block_in_clir\" but may only be set by administrators and is applied prior to the user setting.'),(10,2,'adm_block_out_mode',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Same as \"block_out_mode\" but may only be set by administrators.'),(11,2,'adm_block_out_list',0,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Same as \"block_out_list\" but may only be set by administrators and is applied prior to the user setting.'),(12,1,'cfu',1,0,1,0,0,'2013-05-15 13:57:20',1,'int',1,'The id pointing to the \"Call Forward Unconditional\" entry in the voip_cf_mappings table'),(13,1,'cfb',1,0,1,0,0,'2013-05-15 13:57:20',1,'int',1,'The id pointing to the \"Call Forward Busy\" entry in the voip_cf_mappings table'),(14,1,'cfna',1,0,1,0,0,'2013-05-15 13:57:20',1,'int',1,'The id pointing to the \"Call Forward Unavailable\" entry in the voip_cf_mappings table'),(15,1,'cft',1,0,1,0,0,'2013-05-15 13:57:20',1,'int',1,'The id pointing to the \"Call Forward Timeout\" entry in the voip_cf_mappings table'),(16,1,'ringtimeout',1,1,1,0,0,'2013-05-15 13:57:20',0,'int',0,'Specifies how many seconds the system should wait before redirecting the call if \"cft\" is set.'),(17,4,'cli',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). \"network-provided calling line identification\" - specifies the SIP username that is used for outgoing calls in the SIP \"From\" and \"P-Asserted-Identity\" headers (as user- and network-provided calling numbers). The content of the \"From\" header may be overridden by the \"user_cli\" preference and client (if allowed by the \"allowed_clis\" preference) SIP signalling. Automatically set to the primary E.164 number specified in the subscriber details.'),(18,4,'clir',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'\"Calling line identification restriction\" - if set to true, the CLI is not displayed on outgoing calls.'),(19,4,'cc',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'The country code that will be used for routing of dialed numbers without a country code. Defaults to the country code of the E.164 number if the subscriber has one.'),(20,4,'ac',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'The area code that will be used for routing of dialed numbers without an area code. Defaults to the area code of the E.164 number if the subscriber has one.'),(22,4,'emergency_prefix',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'A numeric string intended to be used in rewrite rules for emergency numbers.'),(23,2,'ncos_id',1,1,1,1,0,'2013-05-15 13:57:20',1,'int',0,NULL),(24,2,'adm_ncos_id',1,1,1,1,0,'2013-05-15 13:57:20',1,'int',0,NULL),(29,2,'ncos',0,1,1,1,0,'2013-05-15 13:57:20',-1,'string',0,'Specifies the NCOS level that applies to the user.'),(30,2,'adm_ncos',0,1,1,1,0,'2013-05-15 13:57:20',-1,'string',0,'Same as \"ncos\", but may only be set by administrators and is applied prior to the user setting.'),(31,2,'block_out_override_pin',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'A PIN code which may be used in a VSC to disable the outgoing user block list and NCOS level for a call.'),(32,2,'adm_block_out_override_pin',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Same as \"block_out_override_pin\" but additionally disables the administrative block list and NCOS level.'),(33,6,'peer_auth_user',0,1,1,0,1,'2013-05-15 13:57:20',0,'string',0,'A username used for authentication against the peer host.'),(34,6,'peer_auth_pass',0,1,1,0,1,'2013-05-15 13:57:20',0,'string',0,'A password used for authentication against the peer host.'),(35,3,'unauth_inbound_calls',1,1,0,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Allow unauthenticated inbound calls from FOREIGN domain to users within this domain. Use with care - it allows to flood your users with voice spam.'),(36,6,'peer_auth_realm',0,1,1,0,1,'2013-05-15 13:57:20',0,'string',0,'A realm (hostname) used to identify and for authentication against a peer host.'),(40,6,'peer_auth_register',1,1,1,1,1,'2013-05-15 13:57:20',0,'boolean',0,'Specifies whether registration at the peer host is desired.'),(41,3,'concurrent_max',1,1,1,1,1,'2013-05-15 13:57:20',0,'int',0,'Maximum number of concurrent sessions (calls) for a subscriber or peer.'),(42,3,'concurrent_max_out',1,1,1,1,1,'2013-05-15 13:57:20',0,'int',0,'Maximum number of concurrent outgoing sessions (calls) coming from a subscriber or going to a peer.'),(43,3,'allowed_clis',0,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'A list of shell patterns specifying which CLIs are allowed to be set by the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards as usual in shell patterns.'),(44,8,'force_outbound_calls_to_peer',1,1,1,1,1,'2013-05-15 13:57:20',0,'boolean',0,'Force calls from this user/domain/peer to be routed to PSTN even if the callee is local. Use with caution, as this setting may increase your costs! When enabling this option in a peer, make sure you trust it, as the NGCP will become an open relay for it!'),(45,8,'account_id',1,1,1,0,0,'2013-05-15 13:57:20',1,'int',0,NULL),(46,8,'ext_contract_id',0,1,1,0,0,'2013-05-15 13:57:20',1,'string',0,NULL),(47,8,'ext_subscriber_id',0,1,1,0,0,'2013-05-15 13:57:20',1,'string',0,NULL),(48,6,'find_subscriber_by_uuid',1,1,0,0,1,'2013-05-15 13:57:20',0,'boolean',0,'For incoming calls from this peer, find the destination subscriber also using its auth_username used for outbound registration.'),(50,4,'rewrite_rule_set',1,1,1,1,1,'2013-05-15 13:57:20',-1,'int',0,'Specifies the list of caller and callee rewrite rules which should be applied for incoming and outgoing calls.'),(51,4,'rewrite_caller_in_dpid',1,1,1,1,1,'2013-05-15 13:57:20',1,'int',0,NULL),(52,4,'rewrite_callee_in_dpid',1,1,1,1,1,'2013-05-15 13:57:20',1,'int',0,NULL),(53,4,'rewrite_caller_out_dpid',1,1,1,1,1,'2013-05-15 13:57:20',1,'int',0,NULL),(54,4,'rewrite_callee_out_dpid',1,1,1,1,1,'2013-05-15 13:57:20',1,'int',0,NULL),(55,4,'e164_to_ruri',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Send the E164 number instead of SIP AOR as request username when sending INVITE to the subscriber. If a 404 is received the SIP AOR is sent as request URI as fallback.'),(56,4,'user_cli',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). \"user-provided calling line identification\" - specifies the SIP username that is used for outgoing calls. If set, this is put in the SIP \"From\" header (as user-provided calling number) if a client sends a CLI which is not allowed by \"allowed_clis\" or if \"allowed_clis\" is not set.'),(57,8,'prepaid',1,1,1,0,0,'2013-05-15 13:57:20',1,'boolean',0,NULL),(60,8,'force_inbound_calls_to_peer',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Force calls to this user to be treated as if the user was not local. This helps in migration scenarios.'),(61,4,'emergency_suffix',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'A numeric string intended to be used in rewrite rules for emergency numbers.'),(62,7,'sst_enable',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'Enable SIP Session Timers.'),(63,7,'sst_expires',1,1,1,1,1,'2013-05-15 13:57:20',0,'int',0,'SIP Session Timers refresh interval (seconds). Should be always greater than min_timer preference. SBC will make refresh at the half of this interval.'),(64,7,'sst_min_timer',1,1,1,1,1,'2013-05-15 13:57:20',0,'int',0,'Set Min-SE value in SBC. This is also used to build 422 reply if remote Min-SE is smaller than local Min-SE.'),(65,7,'sst_max_timer',1,1,1,1,1,'2013-05-15 13:57:20',0,'int',0,'Sets upper limit on accepted Min-SE value in in SBC.'),(66,7,'sst_refresh_method',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'SIP Session Timers refresh method.'),(67,5,'sound_set',1,1,1,1,0,'2013-05-15 13:57:20',0,'int',0,'Soundset'),(68,3,'reject_emergency',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Reject emergency calls from this user or domain.'),(69,4,'emergency_cli',0,1,1,0,0,'2013-05-15 13:57:20',0,'string',0,'SIP username (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\"). Emergency CLI which can be used in rewrite rules as substitution value.'),(70,8,'outbound_socket',0,1,0,0,1,'2013-05-15 13:57:20',0,'enum',0,'Outbound socket to be used for SIP communication to this entity'),(71,4,'inbound_upn',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The SIP header field to fetch the user-provided-number from for inbound calls'),(72,4,'inbound_npn',0,1,0,0,1,'2013-05-15 13:57:20',0,'enum',0,'The SIP header field to fetch the network-provided-number from for inbound calls'),(73,4,'outbound_from_user',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The content to put into the From username for outbound calls from the platform to the subscriber'),(74,4,'outbound_from_display',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The content to put into the From display-name for outbound calls from the platform to the subscriber'),(75,4,'outbound_pai_user',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The content to put into the P-Asserted-Identity username for outbound calls from the platform to the subscriber (use \"None\" to not set header at all)'),(76,4,'outbound_ppi_user',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The content to put into the P-Preferred-Identity username for outbound calls from the platform to the subscriber (use \"None\" to not set header at all)'),(77,8,'mobile_push_enable',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Send inbound call to Mobile Push server when called subscriber is not registered. This can not be used together with CFNA as call will be then simply forwarded.'),(78,4,'extension_in_npn',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Search for partial match of user-provided number (UPN) to subscriber\'s  primary E164 number and aliases. If it mathes, take UPN as valid wihout allowed_clis check and copy UPN to network-provided number (NPN).'),(79,3,'concurrent_max_per_account',1,1,1,1,0,'2013-05-15 13:57:20',0,'int',0,'Maximum number of concurrent sessions (calls) for subscribers within the same account'),(80,3,'concurrent_max_out_per_account',1,1,1,1,0,'2013-05-15 13:57:20',0,'int',0,'Maximum number of concurrent outgoing sessions (calls) for subscribers within the same account'),(81,4,'inbound_uprn',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'Specifies the way to obtain the User-Provided Redirecting CLI. Possible options are use NPN of forwarding subscriber or respect inbound Diversion header. Same validation rules as for UPN apply to UPRN. NGCP does not stack UPRNs up if the call is forwarded several times.'),(82,4,'outbound_diversion',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'The content to put into the Diversion header for outbound calls (use \"None\" to not set header at all)'),(83,3,'allowed_ips_grp',1,0,1,0,0,'2013-05-15 13:57:20',1,'string',0,'Group of addresses and/or IP nets allowed access.'),(84,3,'man_allowed_ips_grp',1,0,1,0,0,'2013-05-15 13:57:20',1,'string',0,'Group of addresses and/or IP nets allowed access.'),(85,3,'allowed_ips',1,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Allow access from the given list of IP addresses and/or IP nets.'),(86,3,'man_allowed_ips',1,0,1,0,0,'2013-05-15 13:57:20',0,'string',0,'Allow access from the given list of IP addresses and/or IP nets.'),(87,3,'ignore_allowed_ips',1,1,1,0,0,'2013-05-15 13:57:20',0,'boolean',0,'Ignore preferences \"allowed_ips\" and \"man_allowed_ips\".'),(88,5,'no_nat_sipping',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Don\'t do NAT ping for domain/user. Use with caution: this only makes sense on the access network which does not need pings (e.g. CDMA)'),(89,8,'ip_header',0,1,1,1,1,'2013-05-15 13:57:20',0,'string',0,'The SIP header to take the IP address for logging it into CDRs.'),(90,5,'use_rtpproxy',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'Set RTP relay mode for this peer/domain/user'),(91,5,'ipv46_for_rtpproxy',0,1,1,1,1,'2013-05-15 13:57:20',0,'enum',0,'Choose the logic of IPv4/IPv6 autodetection for the RTP relay'),(92,3,'allow_out_foreign_domain',1,1,1,1,0,'2013-05-15 13:57:20',0,'boolean',0,'Allow outbound calls of local subscribers to foreign domains');
 /*!40000 ALTER TABLE `voip_preferences` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -3845,12 +4146,12 @@ CREATE TABLE `voip_preferences_enum` (
   PRIMARY KEY (`id`),
   KEY `preference_id` (`preference_id`),
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `voip_preferences_enum` WRITE;
 /*!40000 ALTER TABLE `voip_preferences_enum` DISABLE KEYS */;
-INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,0,0,NULL),(9,62,'no','no',1,0,0,NULL),(10,62,'no','no',0,1,0,1),(11,62,'no','no',0,0,1,1),(12,62,'yes','yes',1,1,1,NULL),(13,66,'use domain default',NULL,1,0,0,NULL),(14,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',1,0,0,NULL),(15,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',0,1,0,1),(16,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',0,0,1,1),(17,66,'UPDATE','UPDATE',1,1,1,NULL),(18,66,'INVITE','INVITE',1,1,1,NULL),(19,70,'default',NULL,1,1,1,1),(20,71,'From-Username',NULL,0,1,1,1),(21,71,'From-Displayname','from_display',1,1,1,0),(22,71,'P-Asserted-Identity','pai_user',1,1,1,0),(23,71,'P-Preferred-Identity','ppi_user',1,1,1,0),(24,71,'Remote-Party-ID','rpid_user',1,1,1,0),(27,72,'From-Username',NULL,0,0,1,1),(28,72,'From-Displayname','from_display',0,0,1,0),(29,72,'P-Asserted-Identity','pai_user',0,0,1,0),(30,72,'P-Preferred-Identity','ppi_user',0,0,1,0),(31,72,'Remote-Party-ID','rpid_user',0,0,1,0),(34,73,'Network-Provided-Number','npn',1,1,1,0),(35,73,'User-Provided-Number','upn',0,1,1,1),(36,73,'Authentication-User','auth_user',1,1,1,0),(37,73,'Received Display-name','rcv_display',1,1,1,0),(41,74,'None',NULL,0,1,1,1),(42,74,'Network-Provided-Number','npn',1,1,1,0),(43,74,'User-Provided-Number','upn',1,1,1,0),(44,74,'Authentication-User','auth_user',1,1,1,0),(45,74,'Received Display-name','rcv_display',1,1,1,0),(48,75,'None',NULL,0,1,1,0),(49,75,'Network-Provided-Number','npn',0,1,1,1),(50,75,'User-Provided-Number','upn',1,1,1,0),(51,75,'Authentication-User','auth_user',1,1,1,0),(52,75,'Received Display-name','rcv_display',1,1,1,0),(55,76,'None',NULL,0,1,1,1),(56,76,'Network-Provided-Number','npn',1,1,1,0),(57,76,'User-Provided-Number','upn',1,1,1,0),(58,76,'Authentication-User','auth_user',1,1,1,0),(59,76,'Received Display-name','rcv_display',1,1,1,0),(62,71,'use domain default',NULL,1,0,0,0),(63,71,'From-Username','from_user',1,0,0,0),(65,73,'use domain default',NULL,1,0,0,0),(68,74,'use domain default',NULL,1,0,0,0),(69,74,'None','none',1,0,0,0),(71,75,'use domain default',NULL,1,0,0,0),(72,75,'None','none',1,0,0,0),(74,76,'use domain default',NULL,1,0,0,0),(75,76,'None','none',1,0,0,0),(77,75,'Network-Provided-Number ','npn',1,0,0,0),(78,73,'User-Provided-Number','upn',1,0,0,0),(79,82,'None','none',1,1,1,0),(80,82,'Forwarder\'s NPN',NULL,0,1,0,1),(81,82,'Forwarder\'s NPN','npn',1,0,0,0),(82,82,'use domain default',NULL,1,0,0,0),(83,82,'Forwarder\'s NPN / Received Diversion','npn_diversion',1,1,0,0),(84,82,'Received Diversion','diversion',1,1,1,0),(86,83,'None',NULL,0,1,1,1),(87,83,'None','none',1,0,0,0),(88,83,'use domain default',NULL,1,0,0,0),(89,83,'UPRN','uprn',1,1,1,0),(93,73,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(94,73,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(95,73,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(96,73,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(100,74,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(101,74,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(102,74,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(103,74,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(107,75,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(108,75,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(109,75,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(110,75,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(114,76,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(115,76,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(116,76,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(117,76,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(121,91,'Always with plain SDP',NULL,1,0,0,1),(122,91,'Always with plain SDP','ice_strip_candidates',0,1,1,1),(123,91,'Always with rtpproxy as additional ICE candidate','ice_add_candidates',1,1,1,0),(124,91,'Always with rtpproxy as only ICE candidate','ice_replace_candidates',1,1,1,0),(125,91,'Never','never',1,1,1,0),(128,92,'Auto-detect',NULL,1,1,1,1),(129,92,'Force IPv4','force_ipv4',1,1,1,0),(130,92,'Force IPv6','force_ipv6',1,1,1,0);
+INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,0,0,NULL),(9,62,'no','no',1,0,0,NULL),(10,62,'no','no',0,1,0,1),(11,62,'no','no',0,0,1,1),(12,62,'yes','yes',1,1,1,NULL),(13,66,'use domain default',NULL,1,0,0,NULL),(14,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',1,0,0,NULL),(15,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',0,1,0,1),(16,66,'UPDATE_FALLBACK_INVITE','UPDATE_FALLBACK_INVITE',0,0,1,1),(17,66,'UPDATE','UPDATE',1,1,1,NULL),(18,66,'INVITE','INVITE',1,1,1,NULL),(19,70,'default',NULL,1,1,1,1),(20,71,'From-Username',NULL,0,1,1,1),(21,71,'From-Displayname','from_display',1,1,1,0),(22,71,'P-Asserted-Identity','pai_user',1,1,1,0),(23,71,'P-Preferred-Identity','ppi_user',1,1,1,0),(24,71,'Remote-Party-ID','rpid_user',1,1,1,0),(25,72,'From-Username',NULL,0,0,1,1),(26,72,'From-Displayname','from_display',0,0,1,0),(27,72,'P-Asserted-Identity','pai_user',0,0,1,0),(28,72,'P-Preferred-Identity','ppi_user',0,0,1,0),(29,72,'Remote-Party-ID','rpid_user',0,0,1,0),(30,73,'Network-Provided-Number','npn',1,1,1,0),(31,73,'User-Provided-Number','upn',0,1,1,1),(32,73,'Authentication-User','auth_user',1,1,1,0),(33,73,'Received Display-name','rcv_display',1,1,1,0),(34,74,'None',NULL,0,1,1,1),(35,74,'Network-Provided-Number','npn',1,1,1,0),(36,74,'User-Provided-Number','upn',1,1,1,0),(37,74,'Authentication-User','auth_user',1,1,1,0),(38,74,'Received Display-name','rcv_display',1,1,1,0),(39,75,'None',NULL,0,1,1,0),(40,75,'Network-Provided-Number','npn',0,1,1,1),(41,75,'User-Provided-Number','upn',1,1,1,0),(42,75,'Authentication-User','auth_user',1,1,1,0),(43,75,'Received Display-name','rcv_display',1,1,1,0),(44,76,'None',NULL,0,1,1,1),(45,76,'Network-Provided-Number','npn',1,1,1,0),(46,76,'User-Provided-Number','upn',1,1,1,0),(47,76,'Authentication-User','auth_user',1,1,1,0),(48,76,'Received Display-name','rcv_display',1,1,1,0),(49,71,'use domain default',NULL,1,0,0,0),(50,71,'From-Username','from_user',1,0,0,0),(51,73,'use domain default',NULL,1,0,0,0),(53,74,'use domain default',NULL,1,0,0,0),(54,74,'None','none',1,0,0,0),(55,75,'use domain default',NULL,1,0,0,0),(56,75,'None','none',1,0,0,0),(57,76,'use domain default',NULL,1,0,0,0),(58,76,'None','none',1,0,0,0),(59,75,'Network-Provided-Number ','npn',1,0,0,0),(60,73,'User-Provided-Number','upn',1,0,0,0),(61,81,'None','none',1,1,1,0),(62,81,'Forwarder\'s NPN',NULL,0,1,0,1),(63,81,'Forwarder\'s NPN','npn',1,0,0,0),(64,81,'use domain default',NULL,1,0,0,0),(65,81,'Forwarder\'s NPN / Received Diversion','npn_diversion',1,1,0,0),(66,81,'Received Diversion','diversion',1,1,1,0),(67,82,'None',NULL,0,1,1,1),(68,82,'None','none',1,0,0,0),(69,82,'use domain default',NULL,1,0,0,0),(70,82,'UPRN','uprn',1,1,1,0),(71,73,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(72,73,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(73,73,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(74,73,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(75,74,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(76,74,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(77,74,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(78,74,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(79,75,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(80,75,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(81,75,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(82,75,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(83,76,'UPRN (if set) or Network-Provided-Number','uprn/npn',1,1,1,0),(84,76,'UPRN (if set) or User-Provided-Number','uprn/upn',1,1,1,0),(85,76,'UPRN (if set) or Authentication-User','uprn/auth_user',1,1,1,0),(86,76,'UPRN (if set) or Received Display-name','uprn/rcv_display',1,1,1,0),(87,90,'Always with plain SDP',NULL,1,0,0,1),(88,90,'Always with plain SDP','ice_strip_candidates',0,1,1,1),(89,90,'Always with rtpproxy as additional ICE candidate','ice_add_candidates',1,1,1,0),(90,90,'Always with rtpproxy as only ICE candidate','ice_replace_candidates',1,1,1,0),(91,90,'Never','never',1,1,1,0),(92,91,'Auto-detect',NULL,1,1,1,1),(93,91,'Force IPv4','force_ipv4',1,1,1,0),(94,91,'Force IPv6','force_ipv6',1,1,1,0);
 /*!40000 ALTER TABLE `voip_preferences_enum` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -4496,7 +4797,7 @@ CREATE TABLE `voip_subscribers` (
 
 LOCK TABLES `voip_subscribers` WRITE;
 /*!40000 ALTER TABLE `voip_subscribers` DISABLE KEYS */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','721145eb76bf6ab7d3c2985b8cce8454',0,NULL,NULL,NULL,NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'nagios',2,'ac1697cf-6933-45ef-9abf-b1278054ded0','nagios4Sipwise!',0,NULL,NULL,NULL,NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','894a18cf2a422c26a3aeeba5a803856d',0,NULL,NULL,NULL,NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'nagios',2,'ac1697cf-6933-45ef-9abf-b1278054ded0','nagios4Sipwise!',0,NULL,NULL,NULL,NULL,NULL,'0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `voip_subscribers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -6071,6 +6372,12 @@ LOCK TABLES `se9` WRITE;
 /*!40000 ALTER TABLE `se9` DISABLE KEYS */;
 /*!40000 ALTER TABLE `se9` ENABLE KEYS */;
 UNLOCK TABLES;
+
+/*!40000 DROP DATABASE IF EXISTS `test`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `test` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `test`;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
