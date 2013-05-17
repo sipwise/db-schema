@@ -1,0 +1,6 @@
+use provisioning
+
+insert into voip_sound_groups values (NULL, 'mobile_push');
+SELECT last_insert_id() into @grp_id;
+
+INSERT into voip_sound_handles (name,group_id) VALUES ('push_connecting', @grp_id);
