@@ -1,0 +1,1 @@
+DELETE FROM provisioning.voip_preferences where attribute='mobile_push_expiry';
