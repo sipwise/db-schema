@@ -1,3 +1,10 @@
+ngcp-db-schema (2.8.4) unstable; urgency=low
+
+  * Add db update script for sound group "mobile_push" and connecting voice prompt.
+  * Add mobile_push_expiry usr/dom preference.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 22 May 2013 13:46:20 +0200
+
 ngcp-db-schema (2.8.3) unstable; urgency=low
 
   [ apogrebennyk ]
