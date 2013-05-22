@@ -1,7 +1,15 @@
 ngcp-db-schema (2.8.4) unstable; urgency=low
 
+  [ agranig ]
+  * Disable fk-checks during truncate.
+
+  [ apogrebennyk ]
   * Add db update script for sound group "mobile_push" and connecting voice prompt.
   * Add mobile_push_expiry usr/dom preference.
+
+  [ rfuchs ]
+  * use a pseudo "add index if not exists" statement
+  * db scripts for billing.billing_fees_history.bfhsems_idx - thx Kirill
 
  -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 22 May 2013 13:46:20 +0200
 
