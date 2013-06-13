@@ -1,0 +1,9 @@
+USE billing;
+
+ALTER TABLE voip_intercept 
+  DROP COLUMN `uuid`,
+  DROP COLUMN `sip_username`,
+  DROP COLUMN `sip_domain`,
+  DROP COLUMN `cc_delivery_host`,
+  DROP COLUMN `cc_delivery_port`;
+  
