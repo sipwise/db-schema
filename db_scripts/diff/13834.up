@@ -1,0 +1,5 @@
+USE carrier;
+
+ALTER TABLE subscribers ADD COLUMN uuid char(36) DEFAULT NULL;
+ALTER TABLE subscribers ADD KEY uuid_idx(uuid);
+
