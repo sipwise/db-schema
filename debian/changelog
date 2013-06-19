@@ -1,3 +1,10 @@
+ngcp-db-schema (2.7.2) unstable; urgency=low
+
+  [ agranig ]
+  * 13834.up/down: add uuid to carrier.subscribers table
+
+ -- Andreas Granig <agranig@sipwise.com>  Wed, 19 Jun 2013 18:07:42 +0200
+
 ngcp-db-schema (2.7.1) unstable; urgency=low
 
   * 13194.up/down: fix cascaded deletion of trusted ips on subcriber termination
