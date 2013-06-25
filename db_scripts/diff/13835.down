@@ -1,0 +1,14 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+SELECT id INTO @srtp_vp_id FROM voip_preferences WHERE attribute='srtp_transcoding';
+DELETE FROM voip_preferences_enum WHERE preference_id = @srtp_vp_id;
+DELETE FROM voip_preferences WHERE id = @srtp_vp_id;
+
+SELECT id INTO @avpf_vp_id FROM voip_preferences WHERE attribute='rtcp_feedback';
+DELETE FROM voip_preferences_enum WHERE preference_id = @avpf_vp_id;
+DELETE FROM voip_preferences WHERE id = @avpf_vp_id;
+
+COMMIT;
+SET AUTOCOMMIT=1;
