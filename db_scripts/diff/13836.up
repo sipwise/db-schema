@@ -1,0 +1,11 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+UPDATE voip_preferences_enum
+  SET value='force_avp' WHERE label='Force AVP';
+UPDATE voip_preferences_enum
+  SET value='force_avpf' WHERE label='Prefer AVPF';
+
+COMMIT;
+SET AUTOCOMMIT=1;
