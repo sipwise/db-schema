@@ -1,0 +1,7 @@
+USE provisioning;
+
+ALTER TABLE voip_sound_sets DROP FOREIGN KEY vss_reseller_ref;
+ALTER TABLE voip_sound_sets DROP COLUMN reseller_id;
+
+ALTER TABLE voip_rewrite_rule_sets DROP FOREIGN KEY vrwrs_reseller_ref;
+ALTER TABLE voip_rewrite_rule_sets DROP COLUMN reseller_id;
