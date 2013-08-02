@@ -1,4 +1,4 @@
-USE billing;
+USE provisioning;
 
 ALTER TABLE voip_preferences ADD COLUMN 
   expose_to_customer TINYINT(1) NOT NULL DEFAULT 0 AFTER internal;
