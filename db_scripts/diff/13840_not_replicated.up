@@ -1,0 +1,9 @@
+-- don't replicate this up script to not break 2.8->3.0 upgrade
+
+CREATE DATABASE prosody;
+GRANT ALL PRIVILEGES ON prosody.* TO 'prosody'@'localhost' IDENTIFIED BY 'PW_PROSODY';
+GRANT SELECT ON kamailio.voip_preferences TO prosody@localhost;
+GRANT SELECT ON kamailio.voip_usr_preferences TO prosody@localhost;
+GRANT SELECT ON kamailio.voip_dom_preferences TO prosody@localhost;
+GRANT SELECT ON kamailio.dbaliases TO prosody@localhost;
+GRANT SELECT ON kamailio.subscriber TO prosody@localhost;
