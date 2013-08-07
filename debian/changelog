@@ -1,8 +1,45 @@
-ngcp-db-schema (3.0.0) UNRELEASED; urgency=low
+ngcp-db-schema (3.0.0) unstable; urgency=low
 
-  * 13659.down,13659.up: Kamailio 4 upgrade.
+  [ Andrew Pogrebennyk ]
+  * also cleanup the obsolete (peer|dom|usr)_preferences
+  * add sound handles for auto-attendant
+  * add dispatcher entry for pbx.
+  * add db update script for sound group "mobile_push" and connecting voice prompt
+  * add forgotten db up files for cloud_pbx preference
+  * add mobile_push_expiry usr/dom preference
+  * rephrase option description
+  * add missing semicolon
+  * fix syntax error "Table 'provisioning.voip_preference_groups' doesn\'t exist"
 
- -- Victor Seva <vseva@sipwise.com>  Wed, 08 May 2013 16:56:24 +0200
+  [ Andreas Granig ]
+  * Fix handling patterns which already start with "^sip:".
+  * Add group table for voip preferences.
+  * Assign any unknown preferences to Internals.
+  * Fix wrong alias usage to make mysql 5.5 happy.
+  * Disable fk-checks during truncate.
+  * Split multi-delete into two separate statements.
+  * Add dummy contact to all contracts not having one.
+  * Add captagent fields to voip_intercept table.
+  * Add uuid to carrier.subscribers table.
+  * Fix wrong avpf/avp value in rtcp_feedback pref.
+  * Changed cc_delivery_port to unsigned.
+  * Move reseller_id to contact.
+  * Make ringtimeout internal and flag preferences.
+  * Add missing reseller_id to sounds and rw-rules.
+  * Use correct db for scripts.
+  * Add prosody DB.
+  * Fix grants.
+  * Add index to billing fees.
+  * Make prosody db creation more graceful.
+
+  [ Richard Fuchs ]
+  * db scripts for billing.billing_fees_history.bfhsems_idx - thx Kirill
+  * use a pseudo "add index if not exists" statement
+
+  [ Jon Bonilla ]
+  * Increase location.contact length to 1024
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 07 Aug 2013 12:25:51 +0200
 
 ngcp-db-schema (2.8.3) unstable; urgency=low
 
