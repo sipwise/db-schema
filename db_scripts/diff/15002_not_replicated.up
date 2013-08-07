@@ -1,0 +1,4 @@
+-- don't replicate this up script to not break 2.8->3.0 upgrade
+USE provisioning;
+GRANT SELECT ON provisioning.voip_rewrite_rule_sets TO prosody@localhost;
+GRANT SELECT ON provisioning.voip_rewrite_rules TO prosody@localhost;
