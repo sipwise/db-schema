@@ -1,3 +1,9 @@
+ngcp-db-schema (3.0.2) unstable; urgency=low
+
+  * [df52183] Add more prosody grants on provisioning tables.
+
+ -- Andreas Granig <agranig@sipwise.com>  Wed, 07 Aug 2013 18:46:46 +0200
+
 ngcp-db-schema (3.0.1) unstable; urgency=low
 
   [ Andreas Granig ]
