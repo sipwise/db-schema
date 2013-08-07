@@ -1,0 +1,10 @@
+USE provisioning;
+
+
+INSERT INTO xmlgroups VALUES (NULL, 'xmpp');
+INSERT INTO xmlhosts VALUES (NULL, '127.0.0.1', '5582,', '/', NULL, 'Prosody');
+INSERT INTO xmlhostgroups VALUES (
+    NULL,
+    (SELECT id FROM xmlgroups WHERE name = 'xmpp'),
+    (SELECT id FROM xmlhosts WHERE description = 'Prosody')
+);
