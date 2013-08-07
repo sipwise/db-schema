@@ -1,0 +1,2 @@
+DROP DATABASE prosody;
+DROP USER 'prosody'@'localhost';

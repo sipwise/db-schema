@@ -1,0 +1,16 @@
+USE billing;
+
+-- move the reseller_id from contract to contact to be able to properly
+-- enforce contacts and be able to manage contacts for resellers
+
+ALTER TABLE contacts ADD COLUMN reseller_id INT(11) UNSIGNED DEFAULT NULL AFTER id;
+INSERT INTO contacts(email) VALUES('default-customer@default.invalid');
+SELECT LAST_INSERT_ID() INTO @cid;
+UPDATE contacts SET reseller_id = 1 WHERE id = @cid;
+ALTER TABLE contacts ADD CONSTRAINT ct_resellerid_ref FOREIGN KEY(reseller_id) REFERENCES resellers(id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+UPDATE contracts SET contact_id = @cid WHERE contact_id IS NULL;
+ALTER TABLE contracts DROP FOREIGN KEY co_resellerid_ref;
+ALTER TABLE contracts DROP COLUMN reseller_id;
+ALTER TABLE contracts DROP FOREIGN KEY co_contactid_ref;
+ALTER TABLE contracts ADD CONSTRAINT co_contactid_ref FOREIGN KEY(contact_id) REFERENCES contacts(id) ON DELETE RESTRICT ON UPDATE CASCADE;

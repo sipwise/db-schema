@@ -1,0 +1,13 @@
+USE provisioning;
+
+ALTER TABLE voip_sound_sets ADD COLUMN reseller_id 
+  INT(11) UNSIGNED NOT NULL DEFAULT 1 AFTER id;
+ALTER TABLE voip_sound_sets ADD CONSTRAINT vss_reseller_ref
+  FOREIGN KEY(reseller_id) REFERENCES billing.resellers(id)
+  ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE voip_rewrite_rule_sets ADD COLUMN reseller_id 
+  INT(11) UNSIGNED NOT NULL DEFAULT 1 AFTER id;
+ALTER TABLE voip_rewrite_rule_sets ADD CONSTRAINT vrwrs_reseller_ref
+  FOREIGN KEY(reseller_id) REFERENCES billing.resellers(id)
+  ON DELETE CASCADE ON UPDATE CASCADE;

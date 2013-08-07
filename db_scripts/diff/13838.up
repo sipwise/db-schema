@@ -1,0 +1,12 @@
+USE provisioning;
+
+ALTER TABLE voip_preferences ADD COLUMN 
+  expose_to_customer TINYINT(1) NOT NULL DEFAULT 0 AFTER internal;
+
+UPDATE voip_preferences SET expose_to_customer=1 WHERE attribute IN (
+  'block_in_clir', 'block_in_list', 'block_in_mode', 
+  'block_out_list', 'block_out_mode', 'block_out_override_pin',
+  'clir', 'ncos'
+);
+
+UPDATE voip_preferences SET internal=1 WHERE attribute='ringtimeout';

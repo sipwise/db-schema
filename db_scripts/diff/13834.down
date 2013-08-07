@@ -1,0 +1,4 @@
+USE carrier;
+
+ALTER TABLE subscribers DROP COLUMN uuid;
+

@@ -1,0 +1,49 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups 
+  WHERE name='NAT and Media Flow Control';
+
+INSERT INTO voip_preferences
+  (voip_preference_groups_id, attribute, type, max_occur, 
+   usr_pref, dom_pref, peer_pref, internal, data_type, read_only,
+   description)
+  VALUES
+  (@vpg_id, 'srtp_transcoding', 0, 1,
+   1, 1, 1, 0, 'enum', 0,
+   'Choose the logic for RTP/SRTP transcoding (SAVP profile) for the RTP relay');
+
+SELECT LAST_INSERT_ID() INTO @srtp_vp_id;
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@srtp_vp_id, 'use domain default', NULL, 1, 0, 0, 1),
+  (@srtp_vp_id, 'Transparent', 'transparent', 1, 0, 0, 0),
+  (@srtp_vp_id, 'Transparent', 'transparent', 0, 1, 1, 1),
+  (@srtp_vp_id, 'Force RTP', 'force_rtp', 1, 1, 1, 0),
+  (@srtp_vp_id, 'Prefer SRTP', 'force_srtp', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences
+  (voip_preference_groups_id, attribute, type, max_occur, 
+   usr_pref, dom_pref, peer_pref, internal, data_type, read_only,
+   description)
+  VALUES
+  (@vpg_id, 'rtcp_feedback', 0, 1,
+   1, 1, 1, 0, 'enum', 0,
+   'Choose the logic for local RTCP feedback (AVPF profile) for the RTP relay');
+
+SELECT LAST_INSERT_ID() INTO @avpf_vp_id;
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@avpf_vp_id, 'use domain default', NULL, 1, 0, 0, 1),
+  (@avpf_vp_id, 'Transparent', 'transparent', 1, 0, 0, 0),
+  (@avpf_vp_id, 'Transparent', 'transparent', 0, 1, 1, 1),
+  (@avpf_vp_id, 'Force AVP', 'force_avpf', 1, 1, 1, 0),
+  (@avpf_vp_id, 'Prefer AVPF', 'force_avp', 1, 1, 1, 0);
+
+COMMIT;
+SET AUTOCOMMIT=1;

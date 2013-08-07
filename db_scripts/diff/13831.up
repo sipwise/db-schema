@@ -1,0 +1,7 @@
+use provisioning
+
+select id into @pid from voip_preference_groups where name = 'Internals';
+
+INSERT INTO voip_preferences (attribute, type, dom_pref, usr_pref, peer_pref, data_type, 
+    max_occur, description, modify_timestamp, voip_preference_groups_id) VALUES('cloud_pbx', 1, 1, 1, 0, 
+    'boolean', 1, 'Send the calls from/to the subscribers through the cloud pbx module.', '1970-01-01 00:00:00', @pid);

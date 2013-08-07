@@ -1,0 +1,2 @@
+USE billing;
+CREATE INDEX showfeesc_idx ON billing_fees(billing_profile_id, billing_zone_id, destination);

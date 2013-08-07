@@ -1,0 +1,9 @@
+USE billing;
+
+ALTER TABLE voip_intercept 
+  ADD COLUMN `uuid` varchar(255) DEFAULT NULL,
+  ADD COLUMN `sip_username` varchar(255) DEFAULT NULL,
+  ADD COLUMN `sip_domain` varchar(255) DEFAULT NULL,
+  ADD COLUMN `cc_delivery_host` varchar(64) DEFAULT NULL,
+  ADD COLUMN `cc_delivery_port` smallint(5) UNSIGNED DEFAULT NULL;
+  
