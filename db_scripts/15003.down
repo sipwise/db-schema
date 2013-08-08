@@ -1,3 +1,0 @@
-USE provisioning;
-REVOKE SELECT ON provisioning.voip_subscribers FROM prosody@localhost;
-REVOKE SELECT ON provisioning.voip_domains FROM prosody@localhost;

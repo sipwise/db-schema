@@ -1,4 +1,0 @@
--- don't replicate this up script to not break 2.8->3.0 upgrade
-USE provisioning;
-GRANT SELECT ON provisioning.voip_subscribers TO prosody@localhost;
-GRANT SELECT ON provisioning.voip_domains TO prosody@localhost;
