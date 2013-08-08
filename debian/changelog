@@ -1,3 +1,11 @@
+ngcp-db-schema (3.0.4) unstable; urgency=low
+
+  [ Richard Fuchs ]
+  * [09fb8da] move 15003 diff files to correct directory
+  * [8cbd0aa] add grants on resellers table for cdr exporter
+
+ -- Richard Fuchs <rfuchs@sipwise.com>  Thu, 08 Aug 2013 17:02:51 -0400
+
 ngcp-db-schema (3.0.3) unstable; urgency=low
 
   * [29e3d80] Grant subscriber/domain privileges to prosody.
