@@ -1,3 +1,10 @@
+ngcp-db-schema (3.0.5) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [9b4bc89] Use <=> instead of = in triggers for NULL-safe cmp
+
+ -- Andreas Granig <agranig@sipwise.com>  Mon, 26 Aug 2013 16:32:45 +0200
+
 ngcp-db-schema (3.0.4) unstable; urgency=low
 
   [ Richard Fuchs ]
