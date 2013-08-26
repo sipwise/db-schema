@@ -1,0 +1,20 @@
+USE provisioning;
+set autocommit = 0;
+
+INSERT INTO voip_preferences 
+(attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+('ua_header_mode', 0, 1, 1, 1, 1, '1970-01-01 00:00:00', 0, 'enum', 0, 'User-Agent header passing mode.');
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Strip', NULL, 1, 0, 0, 1),
+(@pref_id, 'Strip', 'strip', 0, 1, 1, 1),
+(@pref_id, 'Pass-through', 'passthrough', 1, 1, 1, 0),
+(@pref_id, 'Replace', 'replace', 1, 1, 1, 0);
+
+INSERT INTO voip_preferences (attribute, type, usr_pref, dom_pref, peer_pref, data_type, max_occur, description, modify_timestamp)
+VALUES('ua_header_replace', 0, 1, 1, 1, 'string', 1, 'The string to be used as a User-Agent header replacement if ua_header_mode is set to "replace".', '1970-01-01 00:00:00');
+
+commit;
