@@ -71,7 +71,8 @@ set @pid = 0;
 select id into @pid from voip_preference_groups where name = 'Internals';
 update voip_preferences set voip_preference_groups_id = @pid where attribute in (
    'account_id', 'ext_contract_id', 'ext_subscriber_id', 'ip_header', 'mobile_push_enable',
-   'outbound_socket', 'prepaid', 'force_inbound_calls_to_peer', 'force_outbound_calls_to_peer'
+   'outbound_socket', 'prepaid', 'force_inbound_calls_to_peer', 'force_outbound_calls_to_peer',
+   'ua_header_mode', 'ua_header_replace'
 );
 update voip_preferences set voip_preference_groups_id = @pid where voip_preference_groups_id = 0;
 
