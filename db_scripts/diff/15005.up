@@ -1,0 +1,15 @@
+USE billing;
+
+SET AUTOCOMMIT=0;
+
+ALTER TABLE products CHANGE COLUMN class class ENUM('sippeering', 'pstnpeering', 'reseller', 'sipaccount', 'pbxaccount') NOT NULL;
+
+INSERT INTO products VALUES
+  (NULL, NULL, 'sipaccount', 'SIP_ACCOUNT', 'Basic SIP Account', 1, NULL, NULL, NULL);
+SELECT LAST_INSERT_ID() INTO @sip_id;
+UPDATE billing_mappings SET product_id = @sip_id WHERE product_id IS NULL;
+
+INSERT INTO products VALUES
+  (NULL, NULL, 'pbxaccount', 'PBX_ACCOUNT', 'Cloud PBX Account', 1, NULL, NULL, NULL);
+
+COMMIT;

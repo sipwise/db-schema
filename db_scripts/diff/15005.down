@@ -1,0 +1,13 @@
+USE billing;
+
+SET AUTOCOMMIT=0;
+
+SELECT id INTO @sip_id FROM billing_mappings WHERE class = 'sipaccount';
+UPDATE billing_mappings SET product_id = NULL WHERE product_id = @sip_id;
+
+SELECT id INTO @pbx_id FROM billing_mappings WHERE class = 'pbxaccount';
+UPDATE billing_mappings SET product_id = NULL WHERE product_id = @pbx_id;
+
+DELETE FROM products WHERE class IN ('sipaccount', 'pbxaccount');
+
+COMMIT;
