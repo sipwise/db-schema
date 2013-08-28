@@ -1,0 +1,27 @@
+use provisioning
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Peer authentication name', 'peer_auth_user', 0, 0, 1, 0);
+set @pref_id = 0;
+
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Peer authentication name', 'peer_auth_user', 0, 0, 1, 0);
+set @pref_id = 0;
+
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_ppi_user' INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Peer authentication name', 'peer_auth_user', 0, 0, 1, 0);
+set @pref_id = 0;
+
+commit;
