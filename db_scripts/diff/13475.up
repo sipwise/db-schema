@@ -45,7 +45,8 @@ update voip_preferences set voip_preference_groups_id = @pid where attribute in 
    'extension_in_npn', 'inbound_npn', 'inbound_upn', 'inbound_uprn', 'outbound_diversion',
    'outbound_from_display', 'outbound_from_user', 'outbound_pai_user', 'outbound_ppi_user',
    'rewrite_callee_in_dpid', 'rewrite_callee_out_dpid', 'rewrite_caller_in_dpid', 
-   'rewrite_caller_out_dpid', 'rewrite_rule_set', 'ac', 'cc', 'cli', 'clir', 'user_cli'
+   'rewrite_caller_out_dpid', 'rewrite_rule_set', 'ac', 'cc', 'cli', 'clir', 'user_cli',
+   'outbound_history_info'
 );
 
 set @pid = 0;
