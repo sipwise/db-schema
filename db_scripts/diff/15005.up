@@ -18,6 +18,7 @@ CREATE TABLE `voip_pbx_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
   `number_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
   `hunt_policy` enum('serial','parallel') NOT NULL DEFAULT 'serial',
   `hunt_policy_timeout` int(4) unsigned NOT NULL,
   PRIMARY KEY (`id`),
