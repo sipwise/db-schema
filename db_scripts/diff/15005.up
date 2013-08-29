@@ -21,17 +21,18 @@ ALTER TABLE voip_subscribers
 ALTER TABLE voip_subscribers 
   DROP COLUMN autoconf_displayname;
 
-
 CREATE TABLE `voip_pbx_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
-  `number_id` int(11) unsigned DEFAULT NULL,
+  `subscriber_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `extension` varchar(255) DEFAULT NULL,
   `hunt_policy` enum('serial','parallel') NOT NULL DEFAULT 'serial',
   `hunt_policy_timeout` int(4) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `contract_idx` (`contract_id`)
+  KEY `contract_idx` (`contract_id`),
+  KEY `subscriber_idx` (`subscriber_id`),
+  CONSTRAINT `fk_v_sub_group` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 COMMIT;
