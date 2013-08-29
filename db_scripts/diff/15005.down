@@ -10,4 +10,7 @@ UPDATE billing_mappings SET product_id = NULL WHERE product_id = @pbx_id;
 
 DELETE FROM products WHERE class IN ('sipaccount', 'pbxaccount');
 
+USE provisioning;
+DROP TABLE voip_pbx_groups;
+
 COMMIT;

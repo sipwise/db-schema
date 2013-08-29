@@ -12,4 +12,15 @@ UPDATE billing_mappings SET product_id = @sip_id WHERE product_id IS NULL;
 INSERT INTO products VALUES
   (NULL, NULL, 'pbxaccount', 'PBX_ACCOUNT', 'Cloud PBX Account', 1, NULL, NULL, NULL);
 
+USE provisioning;
+
+CREATE TABLE `voip_pbx_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `number_id` int(11) unsigned NOT NULL,
+  `hunt_policy` enum('serial','parallel') NOT NULL DEFAULT 'serial',
+  `hunt_policy_timeout` int(4) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 COMMIT;
