@@ -14,6 +14,14 @@ INSERT INTO products VALUES
 
 USE provisioning;
 
+ALTER TABLE voip_subscribers 
+  ADD COLUMN is_pbx_group TINYINT(1) NOT NULL DEFAULT 0 AFTER webpassword;
+ALTER TABLE voip_subscribers 
+  CHANGE COLUMN autoconf_group_id pbx_group_id INT(11) UNSIGNED DEFAULT NULL;
+ALTER TABLE voip_subscribers 
+  DROP COLUMN autoconf_displayname;
+
+
 CREATE TABLE `voip_pbx_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
