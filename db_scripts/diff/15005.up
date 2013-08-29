@@ -20,7 +20,8 @@ CREATE TABLE `voip_pbx_groups` (
   `number_id` int(11) unsigned NOT NULL,
   `hunt_policy` enum('serial','parallel') NOT NULL DEFAULT 'serial',
   `hunt_policy_timeout` int(4) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `contract_idx` (`contract_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 COMMIT;
