@@ -35,4 +35,30 @@ CREATE TABLE `voip_pbx_groups` (
   CONSTRAINT `fk_v_sub_group` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO voip_preference_groups (name) values ('Cloud PBX');
+SELECT LAST_INSERT_ID() INTO @vpg_id;
+
+UPDATE voip_preferences SET 
+  voip_preference_groups_id = @vpg_id, 
+  internal = 1 
+WHERE attribute = 'cloud_pbx';
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, 
+   internal, data_type, max_occur, description, modify_timestamp)
+VALUES
+  (@vpg_id, 'cloud_pbx_hunt_policy', 0, 1, 0, 0, 
+   1, 'enum', 1, 'The hunting policy for PBX hunt groups.', '1970-01-01 00:00:00'),
+  (@vpg_id, 'cloud_pbx_hunt_timeout', 1, 1, 0, 0, 
+   1, 'int', 1, 'The serial timeout for hunting in PBX hunt groups.', '1970-01-01 00:00:00'),
+  (@vpg_id, 'cloud_pbx_hunt_group', 0, 1, 0, 0, 
+   1, 'string', 0, 'The members (as SIP URIs) of the PBX hunt group.', '1970-01-01 00:00:00');
+
+SELECT id INTO @hunt_id FROM voip_preferences WHERE attribute = 'cloud_pbx_hunt_policy';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@hunt_id, 'serial', 'serial', 1, 0, 0, 1),
+  (@hunt_id, 'parallel', 'parallel', 1, 0, 0, 0);
+
 COMMIT;
