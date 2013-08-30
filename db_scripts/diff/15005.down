@@ -1,11 +1,11 @@
-USE billing;
-
 SET AUTOCOMMIT=0;
 
-SELECT id INTO @sip_id FROM billing_mappings WHERE class = 'sipaccount';
+USE billing;
+
+SELECT id INTO @sip_id FROM products WHERE class = 'sipaccount';
 UPDATE billing_mappings SET product_id = NULL WHERE product_id = @sip_id;
 
-SELECT id INTO @pbx_id FROM billing_mappings WHERE class = 'pbxaccount';
+SELECT id INTO @pbx_id FROM products WHERE class = 'pbxaccount';
 UPDATE billing_mappings SET product_id = NULL WHERE product_id = @pbx_id;
 
 DELETE FROM products WHERE class IN ('sipaccount', 'pbxaccount');
@@ -21,16 +21,18 @@ ALTER TABLE voip_subscribers
   ADD COLUMN autoconf_displayname VARCHAR(255) DEFAULT NULL;
 
 
-SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internal';
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
 UPDATE voip_preferences SET 
   voip_preference_groups_id = @vpg_id, 
   internal = 0 
 WHERE attribute = 'cloud_pbx';
-DELETE FROM voip_preference_groups WHERE name = 'Cloud PBX';
 
 SELECT id INTO @hunt_id FROM voip_preferences WHERE attribute = 'cloud_pbx_hunt_policy';
 DELETE FROM voip_preferences_enum WHERE preference_id = @hunt_id;
 DELETE FROM voip_preferences WHERE attribute IN
-  ('cloud_pbx_hunt_policy', 'cloud_pbx_hunt_timeout', 'cloud_pbx_hunt_group');
+  ('cloud_pbx_hunt_policy', 'cloud_pbx_hunt_timeout', 
+   'cloud_pbx_hunt_group', 'cloud_pbx_base_cli');
+
+DELETE FROM voip_preference_groups WHERE name = 'Cloud PBX';
 
 COMMIT;

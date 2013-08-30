@@ -1,6 +1,6 @@
-USE billing;
-
 SET AUTOCOMMIT=0;
+
+USE billing;
 
 ALTER TABLE products CHANGE COLUMN class class ENUM('sippeering', 'pstnpeering', 'reseller', 'sipaccount', 'pbxaccount') NOT NULL;
 
@@ -52,7 +52,9 @@ VALUES
   (@vpg_id, 'cloud_pbx_hunt_timeout', 1, 1, 0, 0, 
    1, 'int', 1, 'The serial timeout for hunting in PBX hunt groups.', '1970-01-01 00:00:00'),
   (@vpg_id, 'cloud_pbx_hunt_group', 0, 1, 0, 0, 
-   1, 'string', 0, 'The members (as SIP URIs) of the PBX hunt group.', '1970-01-01 00:00:00');
+   1, 'string', 0, 'The members (as SIP URIs) of the PBX hunt group.', '1970-01-01 00:00:00'),
+  (@vpg_id, 'cloud_pbx_base_cli', 0, 1, 0, 0, 
+   1, 'string', 1, 'The base CLI for the PBX extension.', '1970-01-01 00:00:00');
 
 SELECT id INTO @hunt_id FROM voip_preferences WHERE attribute = 'cloud_pbx_hunt_policy';
 INSERT INTO voip_preferences_enum
