@@ -1,0 +1,1 @@
+REVOKE SELECT ON provisioning.voip_pbx_groups FROM prosody@localhost;
