@@ -1,0 +1,3 @@
+USE provisioning;
+INSERT INTO voip_preferences (attribute, type, max_occur, usr_pref, dom_pref, peer_pref, internal, data_type, read_only, description)
+VALUES('shared_buddylist_visibility', 1, 1, 1, 0, 0, 0, 'boolean', 0, 'Subscriber buddylist visibility');

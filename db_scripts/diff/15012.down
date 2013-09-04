@@ -1,0 +1,7 @@
+USE provisioning;
+
+SELECT id FROM voip_preferences   WHERE attribute='shared_buddylist_visibility' INTO @old_id;
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@old_id;
+DELETE FROM voip_preferences      WHERE id=@old_id;
