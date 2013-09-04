@@ -1,0 +1,16 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'shared_buddylist_visibility';
+DELETE FROM voip_preference_groups WHERE name = 'XMPP Settings';
+
+DELETE FROM voip_preferences WHERE attribute = 'display_name';
+
+SELECT id INTO @out_id FROM voip_preferences WHERE attribute = 'outbound_from_display';
+DELETE FROM voip_preferences_enum WHERE preference_id = @out_id AND value = 'np_display';
+UPDATE voip_usr_preferences SET value = 'npn' WHERE attribute_id = @out_id AND value = 'np_display';
+UPDATE voip_dom_preferences SET value = 'npn' WHERE attribute_id = @out_id AND value = 'np_display';
+UPDATE voip_peer_preferences SET value = 'npn' WHERE attribute_id = @out_id AND value = 'np_display';
+
+COMMIT;

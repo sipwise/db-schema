@@ -1,0 +1,24 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+INSERT INTO voip_preference_groups (name) values ('XMPP Settings');
+SELECT LAST_INSERT_ID() INTO @xmpp_id;
+SELECT id INTO @num_id FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, 
+   internal, data_type, max_occur, description, modify_timestamp)
+VALUES
+  (@xmpp_id, 'shared_buddylist_visibility', 1, 1, 0, 0, 
+   0, 'boolean', 1, 'Export this subscriber into the shared XMPP buddy list for the customer.', '1970-01-01 00:00:00'),
+  (@num_id, 'display_name', 0, 1, 0, 0, 
+   0, 'string', 1, 'The network-provided display name used for XMPP contacts and optionally SIP outbound header manipulation.', '1970-01-01 00:00:00');
+
+SELECT id INTO @disp_id FROM voip_preferences WHERE attribute = 'outbound_from_display';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@disp_id, 'Network-Provided Display-name', 'np_display', 1, 1, 1, 0);
+
+COMMIT;
