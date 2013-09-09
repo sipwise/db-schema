@@ -2,87 +2,129 @@
 
 use strict;
 use warnings;
-use DBI;
-use Getopt::Long;
-use Pod::Usage;
+use Carp;
 use Config::Tiny;
+use DBI;
+use English qw( -no_match_vars );
+use Getopt::Long;
+use List::MoreUtils qw{ any };
+use Pod::Usage;
 
-my $dbhost   = 'localhost';
-my $dbname   = 'ngcp';
-my $debug    = 0;
-my $help     = 0;
-my $man      = 0;
-my $node     = undef;
-my $revision = undef;
-my $schema   = undef;
+my $dbhost      = 'localhost';
+my $dbname      = 'ngcp';
+my $debug       = 0;
+my $exit_code   = 0;
+my $help        = 0;
+my $man         = 0;
+my $node        = undef;
+my $result_date = undef;
+my $result_host = undef;
+my $result_id   = undef;
+my $result_rev  = undef;
+my @revision;
+my @result_list;
+my $schema = undef;
 
 GetOptions(
-    'dbhost=s'   => \$dbhost,
-    'dbname=s'   => \$dbname,
-    'debug|d'    => \$debug,
-    'help|?'     => \$help,
-    'man'        => \$man,
-    'node=s'     => \$node,
-    'revision=s' => \$revision,
-    'schema=s'   => \$schema,
+    'dbhost=s'       => \$dbhost,
+    'dbname=s'       => \$dbname,
+    'debug|d'        => \$debug,
+    'help|?'         => \$help,
+    'man'            => \$man,
+    'node=s'         => \$node,
+    'revision=s{1,}' => \@revision,
+    'schema=s'       => \$schema,
 ) or pod2usage(2);
 
-pod2usage(-exitval => 2, -verbose => 0) if $help;
-pod2usage(-exitval => 2, -verbose => 2) if $man;
-pod2usage(2) if !defined $revision;
+pod2usage( -exitval => 2, -verbose => 0 ) if $help;
+pod2usage( -exitval => 2, -verbose => 2 ) if $man;
+pod2usage(2) if !@revision;
 pod2usage(2) if !defined $schema;
 
 # connect as user sipwise to DB
-my $Config = Config::Tiny->read('/etc/mysql/sipwise.cnf') or die "Could not read /etc/mysql/sipwise.cnf";
+my $Config = Config::Tiny->read('/etc/mysql/sipwise.cnf')
+  or croak "Could not read /etc/mysql/sipwise.cnf: $ERRNO";
 my $dbuser = 'sipwise';
-my $dbpwd = $Config->{_}->{SIPWISE_DB_PASSWORD};
+my $dbpwd  = $Config->{_}->{SIPWISE_DB_PASSWORD};
 
-if (!defined $dbpwd) {
-  die "Couldn't identify password for user sipwise to connect to database.";
+if ( !defined $dbpwd ) {
+    croak "Couldn't identify password for user sipwise to connect to database.";
 }
 
-$dbpwd =~ s/^['"](.*)['"]$/$1/; # get rid of possibly surrounding quotes
+$dbpwd =~ s/^['"](.*)['"]$/$1/;    # get rid of possibly surrounding quotes
 
-my $dbh = DBI->connect("dbi:mysql:dbname=$dbname;host=$dbhost", $dbuser, $dbpwd)
-        or die "Couldn't connect to database: " . DBI->errstr;
+my $dbh =
+     DBI->connect( "dbi:mysql:dbname=$dbname;host=$dbhost", $dbuser, $dbpwd )
+  or croak "Couldn't connect to database: " . DBI->errstr;
 
 $schema = $dbh->quote_identifier($schema);
 
-my $sql_clause = ""; # if no node is specified then use empty SQL statement
-if (defined $node) {
-        $sql_clause = "and node = ?";
+my $sql_clause = "";    # if no node is specified then use empty SQL statement
+if ( defined $node ) {
+    $sql_clause = "where node = ?";
 }
 
-my $sth = $dbh->prepare("SELECT * FROM $schema WHERE revision = ? $sql_clause")
-        or die "Couldn't prepare statement: " . $dbh->errstr;
+my $sth = $dbh->prepare("SELECT * FROM $schema $sql_clause")
+  or croak "Couldn't prepare statement: " . $dbh->errstr;
 
-$sth->bind_param(1, $revision);
-if (defined $node) {
-        $sth->bind_param(2, $node);
+if ( defined $node ) {
+    $sth->bind_param( 1, $node );
 }
+
 $sth->execute()
-        or die "Couldn't execute statement: " . $sth->errstr;
+  or croak "Couldn't execute statement: " . $sth->errstr;
 
-if ($sth->rows == 0) {
-        if (defined $node) {
-                print STDERR "No match for revision $revision on host $node.\n" if $debug;
-                exit(1);
-        } else {
-                print STDERR "No match for revision $revision.\n" if $debug;
-                exit(1);
+$sth->bind_columns( \$result_id, \$result_rev, \$result_host, \$result_date );
+
+while ( $sth->fetch ) {
+    foreach my $rev (@revision) {
+
+        # adjust for MySQL handling (we're interested only in the ID in MySQL speak)
+        # the regex handling is ugly, some love to it would be nice...
+        my $short_rev = $rev;
+        $short_rev =~ s/.*\///;    # drop anything until and incl. the first slash
+        $short_rev =~ s/\..*//;    # drop anything starting at the first '.'
+        $short_rev =~ s/_.*//;     # drop anything starting at the first '_'
+        $short_rev =~ s/^0+//;     # strip any trailing zeros from the id
+
+        if ( $result_rev =~ /^${short_rev}$/msx ) {
+            if ( defined $node ) {
+                if ( $result_host =~ /$node/msx ) {
+                    push @result_list, $rev;
+                }
+            }
+            else {
+                push @result_list, $rev;
+            }
         }
-} else {
-        # DBI::dump_results($sth) if $debug;
-        my @data;
-        while (@data = $sth->fetchrow_array()) {
-                my $id = $data[1];
-                my $hostname = $data[2];
-                print "revision $id already executed on $hostname\n" if $debug;
+    }
+}
+
+foreach my $rev (@revision) {
+    if ( any { /^${rev}$/msx } @result_list ) {
+        if ( defined $node ) {
+            print "Revision $rev already executed on host $node\n";
         }
+        else {
+            print "Revision $rev already executed\n";
+        }
+    }
+    else {
+        if ( defined $node ) {
+            print "No match for revision $rev on host $node\n";
+            $exit_code = 1;
+        }
+        else {
+            print "No match for revision $rev\n";
+            $exit_code = 1;
+        }
+    }
 }
 
 $sth->finish;
 $dbh->disconnect;
+
+exit($exit_code);
 
 __END__
 
@@ -92,14 +134,16 @@ ngcp-check-rev-applied - check which db/config revisions have been executed
 
 =head1 SYNOPSIS
 
-ngcp-check-rev-applied --schema <schema> --revision <id>
+ngcp-check-rev-applied --schema <schema> --revision <id> [<2nd_id> [<3rd_id> [...]]
              [--node <name>] [--dbname <db>] [--dbhost <host>]
 
 =head1 DESCRIPTION
 
 This program queries the ngcp database to check for db/config revisions that
-have been applied. If the specified ID is present the exit code is 0, otherwise
-(the specified ID is not present) the exit code is 1.
+have been applied. If the specified ID is present (or when multiple IDs are
+specified: all of them are present) the exit code is 0, otherwise (the specified
+ID is not present, or when multiple IDs are specified:: one of them is not
+present) the exit code is 1.
 
 =head1 USAGE EXAMPLES
 
@@ -107,12 +151,19 @@ have been applied. If the specified ID is present the exit code is 0, otherwise
 
 =item Check db_schema table for revision 23:
 
-  ngcp-check-rev-applied --schema db_schema --revision 23
+  % ngcp-check-rev-applied --schema db_schema --revision 23
 
 =item Check cfg_schema table for revision 42 and use output of `hostname`
 to limit the specified ID to the current host:
 
-  ngcp-check-rev-applied --schema cfg_schema --revision 42 --node $(hostname)
+  % ngcp-check-rev-applied --schema cfg_schema --revision 42 --node $(hostname)
+
+=item Check db_schema table for revisions 11, 23 and 42:
+
+  % ngcp-check-rev-applied --schema db_schema --revision 11 23 42 --debug
+  No match for revision 11.
+  No match for revision 23.
+  Revision 42 already executed.
 
 =back
 
@@ -122,11 +173,12 @@ to limit the specified ID to the current host:
 
 =item B<0>
 
-The requested ID is present.
+The requested ID is present. If multiple IDs have been specified all of them are present.
 
 =item B<1>
 
-The requested ID is *NOT* present.
+The requested ID is *NOT* present. If multiple IDs have been specified at least
+one of the specified IDs it *NOT* present.
 
 =item B<2>
 
@@ -170,7 +222,8 @@ to check for (non-)replicated revisions.
 
 =item B<--revision> <id>
 
-Query database for specified ID.
+Query database for specified ID. Multiple IDs can be specified white-space
+separated (e.g.: '--revision 11 23 42').
 
 =item B<--schema> <name>
 
