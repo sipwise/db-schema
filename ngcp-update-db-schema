@@ -174,8 +174,8 @@ revision_wrapper() {
 
   done
 
-  apply_host_specific_revs "$host_specific_revs"
   apply_generic_revs "$generic_revs"
+  apply_host_specific_revs "$host_specific_revs"
 }
 
 # make sure we get sorted 10XXX after 9XXX
