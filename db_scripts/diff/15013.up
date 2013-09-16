@@ -1,0 +1,9 @@
+USE provisioning
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_uprn' INTO @uprn_pref_id;
+
+UPDATE voip_preferences_enum SET value='npn' 
+WHERE preference_id=@uprn_pref_id
+AND value IS NULL
+AND dom_pref=1
+AND default_val=1;
