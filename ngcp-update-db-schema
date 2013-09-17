@@ -107,44 +107,36 @@ apply_revision() {
 }
 
 # execute the rev script iff there's no entry for *any* host yet
-apply_generic_revs() {
+apply_revs() {
   [ -n "$1" ] || return 1
 
   revs="$1"
 
   for missing_revision in $(ngcp-check-rev-applied --schema db_schema --revision $revs | awk '/^No match for revision/ {print $5}') ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
+
+    # execute the rev script iff there's no entry for the *current* host yet
+    case "$revision_file" in
+      *_not_replicated.up)
+        if ngcp-check-rev-applied --schema db_schema --revision $revs --node "$hostname" | grep 'already executed' ; then
+          continue
+        fi
+        ;;
+    esac
+
     if [ -r "$revision_file" ] ; then
       apply_revision "$revision_file"
     else
       echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
     fi
   done
-
 }
 
-# execute the rev script iff there's no entry for the *current* host yet
-apply_host_specific_revs() {
-  [ -n "$1" ] || return 1
-
-  revs="$1"
-
-  for missing_revision in $(ngcp-check-rev-applied --schema db_schema --revision $revs --node "$hostname" | awk '/^No match for revision/ {print $5}') ; do
-    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
-
-    if [ -r "$revision_file" ] ; then
-      apply_revision "$revision_file"
-    else
-      echo "Warning: missing revision $missing_revision identified but could not find according file."
-    fi
-  done
-}
 
 revision_wrapper() {
   [ -n "$1" ] || return 1
 
-  local host_specific_revs;
-  local generic_revs;
+  local revlist
 
   for rev in $* ; do
 
@@ -160,22 +152,23 @@ revision_wrapper() {
     case "$revname" in
       # the scripts that should be executed on *all* hosts, no matter whether
       # they are active or inactive, since the script's content doesn't get replicated
+      # NOTE: the actual logic is inside the apply_revs to avoid *_not_replicated.up
+      # scripts being executed independent from the other ones
       *_not_replicated.up)
-        host_specific_revs="$host_specific_revs $(basename $rev)"
+        revlist="$revlist $(basename $rev)"
         ;;
       *)
         if running_on_active_node ; then
           echo "Replication script ${revname} noted, nothing to do on active node"
         else
-          generic_revs="$generic_revs $(basename $rev)"
+          revlist="$revlist $(basename $rev)"
         fi
         ;;
     esac
 
   done
 
-  apply_generic_revs "$generic_revs"
-  apply_host_specific_revs "$host_specific_revs"
+  apply_revs "$revlist"
 }
 
 # make sure we get sorted 10XXX after 9XXX
