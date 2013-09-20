@@ -1,0 +1,66 @@
+USE provisioning;
+
+CREATE TABLE `autoprov_configs` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `content_type` varchar(255) NOT NULL,
+  `data` mediumtext NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_config_device_idx` (`device_id`),
+  CONSTRAINT `fk_config_device_idx` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `autoprov_devices` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `vendor` varchar(255) NOT NULL,
+  `model` varchar(255) NOT NULL,
+  `front_image` mediumblob,
+  `front_image_type` varchar(32) DEFAULT NULL,
+  `mac_image` mediumblob,
+  `mac_image_type` varchar(32) DEFAULT NULL,
+  `sync_uri` varchar(255) DEFAULT NULL,
+  `sync_method` enum('GET','POST') DEFAULT 'GET',
+  `sync_params` varchar(255) DEFAULT NULL,
+  `security_handler` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `reseller_idx` (`reseller_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `autoprov_field_devices` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `profile_id` int(11) unsigned NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `bootstrapped` tinyint(1) NOT NULL DEFAULT '0',
+  `insecure_transfer` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_identifier_idx` (`identifier`),
+  KEY `fk_fdev_subscriber_idx` (`subscriber_id`),
+  KEY `fk_fdev_profile_idx` (`profile_id`),
+  CONSTRAINT `fk_fdev_profile_idx` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_fdev_subscriber_idx` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `autoprov_firmwares` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `data` longblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_device_idx` (`device_id`),
+  CONSTRAINT `fk_device_idx` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `autoprov_profiles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `firmware_id` int(11) unsigned DEFAULT NULL,
+  `config_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_profile_firmware_idx` (`firmware_id`),
+  KEY `fk_profile_config_idx` (`config_id`),
+  CONSTRAINT `fk_profile_config_idx` FOREIGN KEY (`config_id`) REFERENCES `autoprov_configs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_profile_firmware_idx` FOREIGN KEY (`firmware_id`) REFERENCES `autoprov_firmwares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;

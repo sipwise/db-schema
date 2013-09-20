@@ -1,0 +1,9 @@
+USE provisioning;
+
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE `autoprov_configs`;
+DROP TABLE `autoprov_devices`;
+DROP TABLE `autoprov_field_devices`;
+DROP TABLE `autoprov_firmwares`;
+DROP TABLE `autoprov_profiles`;
+SET FOREIGN_KEY_CHECKS=1;
