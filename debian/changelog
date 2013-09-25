@@ -1,8 +1,13 @@
 ngcp-db-schema (3.0.6) unstable; urgency=low
 
   * [0588e27] Fix default value for inbound_uprn domain pref.
+  * [d90dbc2] Insert ua_header_{mode,replace} preferences (#3061)
+  * [ab7bf3e] Assign ua_header_{mode,replace} preferences to Internal group.
+  * [ab20e3f] add new outbound_* peer preference values for templates commit 634a850
+  * [e32c28d] Add new up script for outbound_history_info pref (3.0).
+  * [2c18f04] Assign the outbound_history_info preference to Number Manipulations group.
 
- -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Tue, 24 Sep 2013 17:22:13 +0200
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 25 Sep 2013 17:01:13 +0200
 
 ngcp-db-schema (3.0.5) unstable; urgency=low
 
