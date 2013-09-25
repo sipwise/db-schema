@@ -1,3 +1,13 @@
+ngcp-db-schema (2.8.5) unstable; urgency=low
+
+  [ apogrebennyk ]
+  * [4328ce9] Insert ua_header_{mode,replace} preferences (#3061)
+  * [c7c211c] Add new up script for outbound_history_info pref (2.8).
+  * [cf0c47b] add new outbound_* peer preference values for templates commit 442a926
+  * [a20f84b] Fix default value for inbound_uprn domain pref.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Wed, 25 Sep 2013 16:48:58 +0200
+
 ngcp-db-schema (2.8.4) unstable; urgency=low
 
   [ agranig ]
