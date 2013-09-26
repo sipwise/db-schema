@@ -1,0 +1,2 @@
+USE provisioning;
+ALTER TABLE voip_preferences DROP COLUMN label;
