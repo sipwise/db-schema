@@ -118,7 +118,7 @@ apply_revs() {
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
-        if ngcp-check-rev-applied --schema db_schema --revision $revs --node "$hostname" | grep 'already executed' ; then
+        if ngcp-check-rev-applied --schema db_schema --revision $revs --node "$hostname" | grep -q 'already executed' ; then
           continue
         fi
         ;;
