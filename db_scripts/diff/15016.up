@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE voip_subscribers SET create_timestamp = '2013-01-01 00:00:00'
+  WHERE create_timestamp = '0000-00-00 00:00:00';
