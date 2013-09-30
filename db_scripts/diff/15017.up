@@ -1,0 +1,27 @@
+USE provisioning
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='use_rtpproxy' INTO @pref_id;
+
+UPDATE voip_preferences_enum SET label='use domain default' 
+WHERE preference_id=@pref_id
+AND value IS NULL
+AND usr_pref=1 and dom_pref=0 and peer_pref=0
+AND default_val=1;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Always with plain SDP', 'ice_strip_candidates', 1, 0, 0, 0);
+
+SET @pref_id=0;
+SELECT id FROM voip_preferences WHERE attribute='ipv46_for_rtpproxy' INTO @pref_id;
+
+UPDATE voip_preferences_enum
+SET label='use domain default', dom_pref=0, peer_pref=0
+WHERE preference_id=@pref_id AND value IS NULL;
+
+INSERT INTO voip_preferences_enum  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val) VALUES 
+(@pref_id, 'Auto-detect', 'auto', 0, 1, 1, 1), (@pref_id, 'Auto-detect', 'auto', 1, 0, 0, 0);
+
+commit;
