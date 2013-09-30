@@ -1,3 +1,13 @@
+ngcp-db-schema (3.0.7) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [e4fb1dc] MT#3607 Fix create time for voip_subscribers
+
+  [ Andrew Pogrebennyk ]
+  * [40d23fc] Add 'use domain default' choice to use_rtpproxy and ipv46_for_rtpproxy prefs.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Mon, 30 Sep 2013 11:31:13 +0200
+
 ngcp-db-schema (3.0.6) unstable; urgency=low
 
   * [0588e27] Fix default value for inbound_uprn domain pref.
