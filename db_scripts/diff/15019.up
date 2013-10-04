@@ -1,0 +1,40 @@
+USE provisioning;
+
+CREATE TABLE `autoprov_device_line_ranges` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `num_lines` int(4) unsigned NOT NULL DEFAULT '0',
+  `can_private` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_shared` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `can_blf` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `fk_device_line` (`device_id`),
+  CONSTRAINT `fk_device_line` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+ALTER TABLE `autoprov_field_devices` 
+  DROP FOREIGN KEY `fk_fdev_subscriber_idx`;
+
+ALTER TABLE `autoprov_field_devices` 
+  CHANGE COLUMN `subscriber_id` `contract_id` int(11) unsigned NOT NULL;
+
+ALTER TABLE `autoprov_field_devices` 
+  ADD COLUMN `station_name` VARCHAR(255) NOT NULL;
+
+CREATE TABLE `autoprov_field_device_lines` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `linerange_id` int(11) unsigned NOT NULL,
+  `linerange_num` int(11) unsigned NOT NULL,
+  `key_num` int(11) unsigned NOT NULL,
+  `line_type` enum('private','shared','blf') DEFAULT 'private',
+  PRIMARY KEY (`id`),
+  KEY `fk_fdev_line_const` (`device_id`),
+  KEY `fk_sub_line_const` (`subscriber_id`),
+  KEY `fk_fielddevlines_devlinerange_idx` (`linerange_id`),
+  CONSTRAINT `autoprov_field_device_lines_ibfk_1` FOREIGN KEY (`linerange_id`) REFERENCES `autoprov_device_line_ranges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_fdev_line_const` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_sub_line_const` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
