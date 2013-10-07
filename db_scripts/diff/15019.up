@@ -22,6 +22,9 @@ ALTER TABLE `autoprov_field_devices`
 ALTER TABLE `autoprov_field_devices` 
   ADD COLUMN `station_name` VARCHAR(255) NOT NULL;
 
+ALTER TABLE autoprov_firmwares 
+  ADD COLUMN version VARCHAR(255) NOT NULL DEFAULT '' AFTER device_id;
+
 CREATE TABLE `autoprov_field_device_lines` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `device_id` int(11) unsigned NOT NULL,
