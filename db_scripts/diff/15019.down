@@ -1,0 +1,5 @@
+USE billing;
+
+ALTER TABLE `billing`.`admins`
+  DROP COLUMN `ssl_client_m_serial`,
+  DROP INDEX `ssl_client_m_serial_UNIQUE`;

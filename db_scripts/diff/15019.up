@@ -38,3 +38,8 @@ CREATE TABLE `autoprov_field_device_lines` (
   CONSTRAINT `fk_fdev_line_const` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_sub_line_const` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+USE billing;
+ALTER TABLE `admins`
+  ADD COLUMN `ssl_client_m_serial` BIGINT UNSIGNED NULL DEFAULT NULL AFTER `lawful_intercept`,
+  ADD UNIQUE INDEX `ssl_client_m_serial_UNIQUE` (`ssl_client_m_serial` ASC);
