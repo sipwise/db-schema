@@ -1,0 +1,13 @@
+USE provisioning;
+
+UPDATE voip_preferences SET 
+  label='System Sound Set', 
+  description='Sound Set used for system prompts like error announcements etc.' 
+WHERE attribute = 'sound_set';
+
+INSERT INTO voip_preferences VALUES(
+  NULL, 5, 'contract_sound_set', 'Customer Sound Set', 
+  1, 1, 1, 0, 0, now(), 0, 1, 'int', 0, 
+  'Customer specific Sound Set used for PBX auto-attendant prompts, customer-specific announcements etc.'
+);
+

@@ -1,0 +1,9 @@
+USE provisioning;
+
+UPDATE voip_preferences SET 
+  label='Sound Set', 
+  description='Soundset'
+WHERE attribute = 'sound_set';
+
+DELETE FROM voip_preferences WHERE attribute = 'contract_sound_set';
+
