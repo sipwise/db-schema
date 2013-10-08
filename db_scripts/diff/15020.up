@@ -1,6 +1,6 @@
 USE provisioning;
 
 ALTER TABLE voip_sound_sets 
-  ADD COLUMN contract_id INT(11) UNSIGNED DEFAULT NULL, 
+  ADD COLUMN contract_id INT(11) UNSIGNED DEFAULT NULL AFTER reseller_id, 
   ADD KEY contract_id_idx(contract_id);
 
