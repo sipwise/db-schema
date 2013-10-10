@@ -1,0 +1,4 @@
+USE billing;
+
+ALTER TABLE contacts 
+  CHANGE COLUMN postcode postcode INT(6) DEFAULT NULL;
