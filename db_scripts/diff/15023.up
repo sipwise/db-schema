@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE voip_peer_hosts 
+  ADD COLUMN via_route VARCHAR(255) DEFAULT NULL AFTER weight;

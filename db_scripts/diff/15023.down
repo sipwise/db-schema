@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE voip_peer_hosts DROP COLUMN via_route;
