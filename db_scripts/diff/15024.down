@@ -1,0 +1,5 @@
+USE provisioning;
+
+-- add the unique part of the key
+ALTER TABLE kamailio.lcr_gw DROP KEY lcr_id_ip_addr_idx;
+ALTER TABLE kamailio.lcr_gw ADD UNIQUE KEY lcr_id_ip_addr_idx(lcr_id, ip_addr);
