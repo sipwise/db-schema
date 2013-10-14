@@ -1,0 +1,12 @@
+USE provisioning;
+
+CREATE TABLE `voip_pbx_autoattendant` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `uuid` char(36) NOT NULL,
+  `choice` tinyint(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uuid_choice_idx` (`uuid`,`choice`),
+  KEY `fk_aa_sub_idx` (`subscriber_id`),
+  CONSTRAINT `voip_pbx_autoattendant_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
