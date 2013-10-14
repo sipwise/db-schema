@@ -1,3 +1,3 @@
 USE provisioning;
 
-DROP TABLE `voip_pbx_autoattendant`;
+DROP TABLE `voip_pbx_autoattendants`;

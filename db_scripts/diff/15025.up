@@ -1,6 +1,6 @@
 USE provisioning;
 
-CREATE TABLE `voip_pbx_autoattendant` (
+CREATE TABLE `voip_pbx_autoattendants` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `subscriber_id` int(11) unsigned NOT NULL,
   `uuid` char(36) NOT NULL,
