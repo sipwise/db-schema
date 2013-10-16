@@ -1,0 +1,11 @@
+USE billing;
+
+INSERT INTO contacts(email) VALUES('default-system@default.invalid');
+SELECT LAST_INSERT_ID() INTO @cid;
+
+UPDATE contracts ctr, billing_mappings m, products p, contacts c SET ctr.contact_id = @cid
+WHERE c.id = ctr.contact_id
+    AND m.contract_id = ctr.id
+    AND m.product_id = p.id
+    AND p.class IN ('pstnpeering', 'sippeering', 'reseller')
+    AND c.reseller_id IS NOT NULL;
