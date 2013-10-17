@@ -1,0 +1,20 @@
+USE provisioning;
+
+DROP TRIGGER voip_phost_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr_gw
+     SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id
+   WHERE lcr_id = 1 AND flags <=> NEW.id;
+
+  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+     SET rt.weight = NEW.weight
+   WHERE gw.id <=> rt.gw_id
+     AND gw.lcr_id = 1
+     AND gw.group_id <=> NEW.group_id
+     AND gw.flags <=> NEW.id;
+
+  END */;;
+DELIMITER ;
