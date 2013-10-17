@@ -18,3 +18,24 @@ DELIMITER ;;
 
   END */;;
 DELIMITER ;
+
+DROP TRIGGER provisioning.voip_prul_crepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
+                          VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern,
+                                 0, 1, NEW.group_id);
+
+  INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+         SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+           FROM kamailio.lcr_gw gw
+           INNER JOIN provisioning.voip_peer_hosts vph ON vph.id = gw.flags
+                                                      AND gw.lcr_id = 1
+                                                      AND vph.group_id = gw.group_id
+           INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+          WHERE vph.group_id <=> NEW.group_id;
+
+  END */;;
+DELIMITER ;
