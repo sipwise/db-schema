@@ -1,0 +1,7 @@
+USE provisioning;
+
+SET FOREIGN_KEY_CHECKS=0;
+alter table autoprov_profiles drop foreign key fk_profile_firmware_idx;
+alter table autoprov_profiles drop column firmware_id;
+alter table autoprov_firmwares add key version_idx(device_id, version);
+SET FOREIGN_KEY_CHECKS=1;
