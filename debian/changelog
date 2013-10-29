@@ -1,3 +1,62 @@
+ngcp-db-schema (3.1.0) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [414909a] Align products and add sip/pbx product.
+  * [e33fe8f] Add voip_pbx_groups table.
+  * [bd411c4] Add key on voip_pbx_groups.contract_id
+  * [33877bc] Make number relation optional.
+  * [198b564] Add name to provisioning.voip_pbx_groups
+  * [84a3576] Add explicit extension column to voip_pbx_groups.
+  * [367f442] Align provisioning.voip_subscribers to pbx feature
+  * [9198915] Relate voip_pbx_groups to voip_subscribers.
+  * [02f8ef0] Add pbx preferences and update down script.
+  * [bef6165] Fix down script and add base cli preference.
+  * [a5555d2] Add shared_buddylist_visibility and display_name.
+  * [7dd689a] Add PBX autoprovisioning tables.
+  * [ac7de8b] Properly reorder autoprov tables.
+  * [c6a9b30] Add preference label column.
+  * [e4fb1dc] MT#3607 Fix create time for voip_subscribers
+  * [ded890d] MT#3977 Add num_lines to autoprov_devices table
+  * [6726d8e] MT#3977 Align PBX autoprov tables to ngcp-schema.
+  * [48d62c5] MT#3929 Add client cert column to admins.
+  * [bf01fbc] MT#3977 Add firmware version column to PBX fw.
+  * [02a28fa] MT#4025 Add contract_id column to sound set table.
+  * [7fc1e6f] MT#4025 Move contract_id right after reseller_id.
+  * [0b4d677] MT#4025 Add contract_sound_set usr preference.
+  * [36fbb28] MT#4145 Change contacts.postcode to varchar.
+  * [0856d09] MT#3997 Add via_route column to voip_peer_hosts
+  * [213cf2c] MT#3997 Remove unique part of lcr_gw key.
+  * [35c2e94] MT#4007 Add schema for autoattendant dst config
+  * [5c70029] MT#4007 Rename voip_pbx_autoattendants.
+  * [b55c8fe] MT#4007 Add destination field to autoattendant.
+  * [94f933d] MT#3971 Add max_subscribers column to contracts.
+  * [daba8d6] MT#3995 Use flags as id in kamailio.lcr_gw.
+  * [92c3904] MT#4571 Set is_superuser for admins in reseller 1
+  * [cb3132b] MT#4685 Don't tie firmware to profile.
+
+  [ Andrew Pogrebennyk ]
+  * [536afbf] Insert ua_header_{mode,replace} preferences (#3061)
+  * [7c98691] Assign ua_header_{mode,replace} preferences to Internal group.
+  * [a5fbdbc] Add new up script for outbound_history_info pref (3.0).
+  * [97263b0] Assign the outbound_history_info preference to Number Manipulations group.
+  * [5be7d3f] add new outbound_* peer preference values for templates commit 634a850
+  * [b3f6fa7] Fix default value for inbound_uprn domain pref.
+
+  [ Victor Seva ]
+  * [24750af] prosody sipwise_group module needs to select on provisioning.voip_pbx_groups table
+  * [a039604] MT#3995 Also fix lcr trigger for peer rules
+
+  [ Michael Prokop ]
+  * [4b0977e] Support checking for multiple revisions at once and do batch execution
+  * [e16e487] Execute generic revision scripts before applying host specific revisions
+  * [f315906] Bump Standards-Version to 3.9.4
+  * [22bbf6c] Execute all db-schema scripts in sequential order sorted by ID revision number
+
+  [ Gerhard Jungwirth ]
+  * [15907db] MT#4461 create a default-system contact
+
+ -- Andreas Granig <agranig@sipwise.com>  Tue, 29 Oct 2013 12:42:59 +0100
+
 ngcp-db-schema (3.0.8) unstable; urgency=low
 
   * [63ff917] MT#4571 Set is_superuser for admins in reseller 1
