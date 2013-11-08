@@ -1,3 +1,9 @@
+ngcp-db-schema (3.1.2) unstable; urgency=low
+
+  * [a6e69ec] MT#3981 Clean up broken/orphaned numbers.
+
+ -- Andreas Granig <agranig@sipwise.com>  Fri, 08 Nov 2013 12:53:11 +0100
+
 ngcp-db-schema (3.1.1) unstable; urgency=low
 
   [ Victor Seva ]
