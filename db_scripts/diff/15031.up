@@ -1,0 +1,36 @@
+use provisioning;
+
+lock tables voip_dbaliases write, kamailio.dbaliases a write, voip_domains b write, voip_subscribers c write, voip_dbaliases d write;
+
+drop trigger voip_dba_crepl_trig;
+
+insert into voip_dbaliases select null, a.alias_username, b.id, c.id from kamailio.dbaliases a
+  left join voip_domains b on b.domain = a.alias_domain
+  left join voip_subscribers c on c.domain_id = b.id and a.username = c.username
+  left join voip_dbaliases d on d.username = a.alias_username and d.domain_id = b.id and d.subscriber_id = c.id
+  where d.id is null;
+
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_crepl_trig AFTER INSERT ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> NEW.subscriber_id
+                               AND b.id <=> a.domain_id;
+
+  INSERT INTO kamailio.dbaliases (alias_username, alias_domain, username, domain)
+                          VALUES(NEW.username, dbalias_domain, target_username, target_domain);
+  END */;;
+DELIMITER ;
+
+unlock tables;
+
+USE billing;
+
+DELETE FROM voip_numbers WHERE subscriber_id IN 
+  (SELECT id FROM voip_subscribers WHERE status = 'terminated');
