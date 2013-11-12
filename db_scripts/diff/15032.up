@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE voip_sound_sets 
+  ADD COLUMN contract_default TINYINT(1) NOT NULL DEFAULT 0;
