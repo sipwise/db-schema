@@ -112,7 +112,19 @@ apply_revs() {
 
   revs="$1"
 
-  for missing_revision in $(ngcp-check-rev-applied --schema db_schema --revision $revs | awk '/^No match for revision/ {print $5}') ; do
+  # generate list of rev scripts that are node specific, used inside
+  # missing_revision's ngcp-check-rev-applied ... --node $hostname
+  for rev in $revs ; do
+    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$rev")"
+
+    case "$revision_file" in
+      *_not_replicated.up)
+        node_revs="$node_revs $rev"
+        ;;
+    esac
+  done
+
+  for missing_revision in $(ngcp-check-rev-applied --schema db_schema --revision $revs | awk '/^No match for revision/ {print $5}'; ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$hostname" | awk '/^No match for revision/ {print $5}') ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
