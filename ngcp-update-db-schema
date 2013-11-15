@@ -83,6 +83,12 @@ running_on_active_node() {
   fi
 }
 
+if running_on_active_node ; then
+  ACTIVE_NODE=true
+else
+  ACTIVE_NODE=false
+fi
+
 apply_revision() {
   [ -n "$1" ] || return 1
 
@@ -174,7 +180,7 @@ revision_wrapper() {
         revlist="$revlist $(basename $rev)"
         ;;
       *)
-        if running_on_active_node ; then
+        if $ACTIVE_NODE ; then
           echo "Replication script ${revname} noted, nothing to do on active node"
         else
           revlist="$revlist $(basename $rev)"
