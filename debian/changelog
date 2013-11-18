@@ -2,8 +2,13 @@ ngcp-db-schema (3.0.9+peerroute.1) unstable; urgency=low
 
   [ Andreas Granig ]
   * [ccb9905] MT#3997 Add via_route column to voip_peer_hosts
+  * [b6af6e4] MT#3997 Remove unique part of lcr_gw key.
+  * [b50425c] MT#3995 Use flags as id in kamailio.lcr_gw.
 
- -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Mon, 18 Nov 2013 14:41:39 +0100
+  [ Victor Seva ]
+  * [0abc24a] MT#3995 Also fix lcr trigger for peer rules
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Mon, 18 Nov 2013 23:27:32 +0100
 
 ngcp-db-schema (3.0.9) unstable; urgency=low
 
