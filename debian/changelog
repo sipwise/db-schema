@@ -1,4 +1,4 @@
-ngcp-db-schema (3.0.9+peer_route.1) unstable; urgency=low
+ngcp-db-schema (3.0.9+peerroute.1) unstable; urgency=low
 
   [ Andreas Granig ]
   * [ccb9905] MT#3997 Add via_route column to voip_peer_hosts
