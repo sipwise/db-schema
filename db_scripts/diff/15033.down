@@ -1,0 +1,19 @@
+#downgrade from 4.1 to 4.0
+use kamailio;
+
+ALTER TABLE dbaliases DROP INDEX alias_idx;
+ALTER TABLE dbaliases ADD UNIQUE KEY alias_idx (alias_username,alias_domain);
+ALTER TABLE dbaliases DROP INDEX alias_user_idx;
+
+DELETE FROM version WHERE TABLE_NAME='acc_cdrs' and table_version='1';
+
+DROP TABLE acc_cdrs;
+
+DELETE FROM version WHERE TABLE_NAME='mohqcalls' and table_version='1';
+DROP TABLE mohqcalls;
+
+DELETE FROM version WHERE TABLE_NAME='mohqueues' and table_version='1';
+DROP TABLE mohqueues;
+
+DELETE FROM version WHERE TABLE_NAME='rtpproxy' and table_version='1';
+DROP TABLE rtpproxy;

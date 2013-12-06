@@ -1,0 +1,52 @@
+#upgrade from 4.0 to 4.1
+use kamailio;
+
+ALTER TABLE dbaliases DROP INDEX alias_idx;
+ALTER TABLE dbaliases ADD INDEX alias_idx (alias_username,alias_domain);
+ALTER TABLE dbaliases ADD INDEX alias_user_idx (alias_username);
+
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('acc_cdrs','1');
+CREATE TABLE acc_cdrs (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  start_time VARCHAR(32) NOT NULL DEFAULT '',
+  end_time VARCHAR(32) NOT NULL DEFAULT '',
+  duration VARCHAR(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (id),
+  KEY start_time_idx (start_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('mohqcalls','1');
+CREATE TABLE mohqcalls (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  mohq_id INT(10) UNSIGNED NOT NULL,
+  call_id VARCHAR(100) NOT NULL,
+  call_status INT(10) UNSIGNED NOT NULL,
+  call_from VARCHAR(100) NOT NULL,
+  call_contact VARCHAR(100) DEFAULT NULL,
+  call_time datetime NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY mohqcalls_idx (call_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('mohqueues','1');
+CREATE TABLE mohqueues (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(25) NOT NULL,
+  uri VARCHAR(100) NOT NULL,
+  mohdir VARCHAR(100) DEFAULT NULL,
+  mohfile VARCHAR(100) NOT NULL,
+  debug INT(11) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY mohqueue_uri_idx (uri),
+  UNIQUE KEY mohqueue_name_idx (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO version (TABLE_NAME, table_version) VALUES ('rtpproxy','1');
+CREATE TABLE rtpproxy (
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    setid VARCHAR(32) DEFAULT 00 NOT NULL,
+    url VARCHAR(64) DEFAULT '' NOT NULL,
+    flags INT DEFAULT 0 NOT NULL,
+    weight INT DEFAULT 1 NOT NULL,
+    description VARCHAR(64) DEFAULT '' NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
