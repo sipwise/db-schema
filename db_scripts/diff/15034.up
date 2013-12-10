@@ -1,0 +1,53 @@
+USE provisioning;
+set autocommit = 0;
+
+
+SELECT id INTO @vpg_id FROM voip_preference_groups 
+  WHERE name='Internals';
+
+UPDATE voip_preferences SET attribute='force_outbound_calls_to_peer_tm' 
+WHERE
+attribute='force_outbound_calls_to_peer';
+SELECT id FROM voip_preferences WHERE attribute='force_outbound_calls_to_peer_tm'  INTO @tmp_pref_id;
+
+INSERT INTO voip_preferences 
+(voip_preference_groups_id, attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description) 
+VALUES
+(@vpg_id, 'force_outbound_calls_to_peer', 0, 1, 1, 1, 1, '1970-01-01 00:00:00', 0, 'enum', 0, 'Force calls from this user/domain/peer to be routed to PSTN even if the callee is local. Use with caution, as this setting may increase your costs! When enabling this option in a peer, make sure you trust it, as the NGCP will become an open relay for it!');
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'Never', NULL, 1, 0, 0, 1),
+(@pref_id, 'Never', 'never', 0, 1, 1, 1),
+(@pref_id, 'If callee is offline', 'force_offline', 1, 1, 1, 0),
+(@pref_id, 'If callee is offline and number is primary', 'force_offline_primary', 1, 1, 1, 0),
+(@pref_id, 'If callee is offline and number is alias', 'force_offline_alias', 1, 1, 1, 0),
+(@pref_id, 'Always', 'force', 1, 1, 1, 0);
+
+
+-- finally copy over the vars to the new preference
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @pref_id, "force" FROM voip_usr_preferences p
+  WHERE p.attribute_id=@tmp_pref_id AND p.value=1;
+
+-- make update insert of insert because default values are already there for new preference
+UPDATE voip_dom_preferences a, voip_dom_preferences b SET a.value="force"
+WHERE a.attribute_id = @pref_id
+AND a.domain_id = b.domain_id
+AND b.attribute_id = @tmp_pref_id
+AND b.value = 1;
+
+-- make update insert of insert because default values are already there for new preference
+UPDATE voip_peer_preferences a, voip_peer_preferences b SET a.value="force"
+WHERE a.attribute_id = @pref_id
+AND a.peer_host_id = b.peer_host_id
+AND b.attribute_id = @tmp_pref_id
+AND b.value = 1;
+
+-- delete temporary data
+DELETE FROM voip_preferences where id=@tmp_pref_id;
+
+commit;
+
