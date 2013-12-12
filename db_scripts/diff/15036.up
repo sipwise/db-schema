@@ -1,0 +1,17 @@
+USE provisioning;
+
+DROP TRIGGER voip_phost_drepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_gw
+        WHERE lcr_id = 1
+          AND group_id <=> OLD.group_id
+          AND ip_addr <=> OLD.ip;
+
+  DELETE FROM kamailio.peer_preferences
+         WHERE uuid = OLD.id;
+
+  END */;;
+DELIMITER ;
