@@ -10,18 +10,20 @@ verbose() {
 usage() { 
   echo -e "Usage: $0 [OPTION]..." 1>&2
   echo -e "\t-f: Force update, even if running on active node" 1>&2
-  exit 1
 }
 
 FORCE_ACTIVE_NODE=false
 
-while getopts "f" opt; do
+while getopts "fh" opt; do
     case "${opt}" in
         f)
             FORCE_ACTIVE_NODE=true
             ;;
+        h)
+            usage; exit 0;
+            ;;
         *)
-            usage
+            usage; exit 1;
             ;;
     esac
 done
