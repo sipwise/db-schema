@@ -7,6 +7,27 @@ verbose() {
   fi
 }
 
+usage() { 
+  echo -e "Usage: $0 [OPTION]..." 1>&2
+  echo -e "\t-f: Force update, even if running on active node" 1>&2
+  exit 1
+}
+
+FORCE_ACTIVE_NODE=false
+
+while getopts "f" opt; do
+    case "${opt}" in
+        f)
+            FORCE_ACTIVE_NODE=true
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+
 # do not rely on hostname(1), might return hostname of the
 # deployment system when initially deploying via chroot
 if [ -r /etc/hostname ] ; then
@@ -181,7 +202,11 @@ revision_wrapper() {
         ;;
       *)
         if $ACTIVE_NODE ; then
-          echo "Replication script ${revname} noted, nothing to do on active node"
+	  if $FORCE_ACTIVE_NODE; then
+            revlist="$revlist $(basename $rev)"
+	  else
+            echo "Replication script ${revname} noted, nothing to do on active node"
+	  fi
         else
           revlist="$revlist $(basename $rev)"
         fi
