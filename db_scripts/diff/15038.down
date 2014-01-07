@@ -1,0 +1,8 @@
+USE provisioning;
+
+DELETE FROM xmlhostgroups
+  WHERE group_id = (SELECT id FROM xmlgroups WHERE name = 'pbx')
+  AND host_id = (SELECT id FROM xmlhosts WHERE description = 'Sems-PBX');
+
+DELETE FROM xmlhosts WHERE description = 'Sems-PBX';
+DELETE FROM xmlgroups WHERE name = 'pbx';

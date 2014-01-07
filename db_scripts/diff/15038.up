@@ -1,0 +1,10 @@
+USE provisioning;
+
+
+INSERT INTO xmlgroups VALUES (NULL, 'pbx');
+INSERT INTO xmlhosts VALUES (NULL, '127.0.0.1', '8095', '/', NULL, 'Sems-PBX');
+INSERT INTO xmlhostgroups VALUES (
+    NULL,
+    (SELECT id FROM xmlgroups WHERE name = 'pbx'),
+    (SELECT id FROM xmlhosts WHERE description = 'Sems-PBX')
+);
