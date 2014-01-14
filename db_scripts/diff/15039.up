@@ -1,0 +1,3 @@
+use kamailio;
+
+INSERT INTO version (table_name, table_version) values ('sca_subscriptions','1');
