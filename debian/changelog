@@ -1,3 +1,85 @@
+ngcp-db-schema (3.1.5+0~mr3.3) unstable; urgency=low
+
+  [ Jenkins Git User ]
+  * [7ba2bb4] db-schema dump: snapshot Fri Dec 13 01:30:02 +0100 2013
+  * [bf5e7e9] db-schema dump: snapshot Sat Dec 14 01:32:19 +0100 2013
+  * [9b8e973] db-schema dump: snapshot Sun Dec 15 01:30:26 +0100 2013
+  * [df0d4c7] db-schema dump: snapshot Mon Dec 16 01:30:13 +0100 2013
+  * [92a3c7a] db-schema dump: snapshot Tue Dec 17 05:48:22 +0100 2013
+  * [7c6cb58] db-schema dump: snapshot Tue Dec 17 11:19:23 +0100 2013
+  * [ec59859] db-schema dump: snapshot Tue Dec 17 14:42:58 +0100 2013
+  * [4a89a58] db-schema dump: snapshot Tue Dec 17 14:59:31 +0100 2013
+  * [1eb0dff] db-schema dump: snapshot Wed Dec 18 02:56:14 +0100 2013
+  * [c8e57ae] db-schema dump: snapshot Thu Dec 19 02:37:45 +0100 2013
+  * [48f45aa] db-schema dump: snapshot Thu Dec 19 14:16:33 +0100 2013
+  * [500d341] db-schema dump: snapshot Fri Dec 20 02:52:51 +0100 2013
+  * [6d4fbc5] db-schema dump: snapshot Fri Dec 20 09:41:51 +0100 2013
+  * [8762434] db-schema dump: snapshot Sat Dec 21 02:56:17 +0100 2013
+  * [bca0dbf] db-schema dump: snapshot Sun Dec 22 02:52:51 +0100 2013
+  * [6f2be06] db-schema dump: snapshot Mon Dec 23 02:54:33 +0100 2013
+  * [38d0aba] db-schema dump: snapshot Tue Dec 24 02:53:03 +0100 2013
+  * [00b7ee2] db-schema dump: snapshot Wed Dec 25 02:50:26 +0100 2013
+  * [78e2831] db-schema dump: snapshot Thu Dec 26 02:53:19 +0100 2013
+  * [ff6f749] db-schema dump: snapshot Fri Dec 27 02:56:11 +0100 2013
+  * [d0c5541] db-schema dump: snapshot Sat Dec 28 02:55:07 +0100 2013
+  * [65c93e8] db-schema dump: snapshot Sat Dec 28 13:39:46 +0100 2013
+  * [079931b] db-schema dump: snapshot Sun Dec 29 02:48:55 +0100 2013
+  * [1767a40] db-schema dump: snapshot Mon Dec 30 02:49:21 +0100 2013
+  * [5ebbbf0] db-schema dump: snapshot Tue Dec 31 02:54:09 +0100 2013
+  * [a1765fa] db-schema dump: snapshot Wed Jan 01 02:59:06 +0100 2014
+  * [1e928ff] db-schema dump: snapshot Thu Jan 02 02:59:26 +0100 2014
+  * [7e71e69] db-schema dump: snapshot Fri Jan 03 02:56:24 +0100 2014
+  * [9f0269b] db-schema dump: snapshot Sat Jan 04 02:53:07 +0100 2014
+  * [509f435] db-schema dump: snapshot Sun Jan 05 02:54:58 +0100 2014
+  * [9e64454] db-schema dump: snapshot Mon Jan 06 02:56:05 +0100 2014
+  * [2e3f107] db-schema dump: snapshot Tue Jan 07 02:57:52 +0100 2014
+  * [5413b9d] db-schema dump: snapshot Wed Jan 08 02:45:03 +0100 2014
+  * [9536a38] db-schema dump: snapshot Thu Jan 09 02:53:47 +0100 2014
+  * [f9653da] db-schema dump: snapshot Fri Jan 10 02:53:22 +0100 2014
+  * [0e17d14] db-schema dump: snapshot Fri Jan 10 13:28:42 +0100 2014
+  * [ac8a7c4] db-schema dump: snapshot Sat Jan 11 02:54:10 +0100 2014
+  * [3ff7218] db-schema dump: snapshot Sun Jan 12 02:49:49 +0100 2014
+  * [fcc351b] db-schema dump: snapshot Mon Jan 13 02:55:25 +0100 2014
+  * [6eb8390] db-schema dump: snapshot Tue Jan 14 02:53:56 +0100 2014
+  * [22e3c0e] db-schema dump: snapshot Wed Jan 15 02:37:09 +0100 2014
+  * [f79e51b] db-schema dump: snapshot Thu Jan 16 03:06:58 +0100 2014
+  * [d7c05b9] db-schema dump: snapshot Fri Jan 17 03:11:25 +0100 2014
+  * [3769b2e] db-schema dump: snapshot Fri Jan 17 15:30:40 +0100 2014
+  * [9bc609a] db-schema dump: snapshot Sat Jan 18 03:16:34 +0100 2014
+  * [59996cb] db-schema dump: snapshot Sun Jan 19 04:28:10 +0100 2014
+  * [485143d] db-schema dump: snapshot Mon Jan 20 04:38:51 +0100 2014
+  * [2e50fb1] db-schema dump: snapshot Tue Jan 21 04:41:25 +0100 2014
+  * [8d9dfdf] db-schema dump: snapshot Wed Jan 22 04:41:36 +0100 2014
+  * [7f13a63] db-schema dump: snapshot Wed Jan 22 16:05:47 +0100 2014
+  * [3e49b99] db-schema dump: snapshot Thu Jan 23 04:41:23 +0100 2014
+  * [c3442fe] db-schema dump: snapshot Thu Jan 23 17:18:30 +0100 2014
+  * [c865388] db-schema dump: snapshot Fri Jan 24 04:42:10 +0100 2014
+  * [f9fc666] db-schema dump: snapshot Fri Jan 24 09:24:52 +0100 2014
+  * [6ce766a] db-schema dump: snapshot Fri Jan 24 11:37:05 +0100 2014
+  * [1c2d7c3] db-schema dump: snapshot Sat Jan 25 04:40:00 +0100 2014
+  * [543db3a] db-schema dump: snapshot Sun Jan 26 04:41:52 +0100 2014
+  * [ff09fad] db-schema dump: snapshot Mon Jan 27 04:42:09 +0100 2014
+  * [174c50e] db-schema dump: snapshot Mon Jan 27 09:28:40 +0100 2014
+  * [11dfa1b] db-schema dump: snapshot Mon Jan 27 12:38:03 +0100 2014
+  * [7893411] db-schema dump: snapshot Wed Jan 29 06:01:59 +0100 2014
+  * [64b2c49] db-schema dump: snapshot Thu Jan 30 05:49:01 +0100 2014
+  * [3d75532] db-schema dump: snapshot Thu Jan 30 15:42:59 +0100 2014
+  * [979e2e6] db-schema dump: snapshot Fri Jan 31 02:02:09 +0100 2014
+  * [973bde2] db-schema dump: snapshot Sat Feb 01 02:06:27 +0100 2014
+
+  [ Andreas Granig ]
+  * [27b134a] MT#5199 Add API client certificate for admins.
+  * [5851912] MT#5427 Add -f flag to force update.
+  * [5d5ac01] MT#5427 Add -h for help.
+  * [a8c8b63] MT#5427 Clean up log messages.
+
+  [ Andrew Pogrebennyk ]
+  * [16b0067] MT#5575 add the entries for sems-pbx to xmlgroups, hosts and hostgroups
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sat, 01 Feb 2014 19:39:45 +0100
+
 ngcp-db-schema (3.1.5) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
