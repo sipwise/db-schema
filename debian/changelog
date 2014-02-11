@@ -1,3 +1,9 @@
+ngcp-db-schema (3.1.6) unstable; urgency=low
+
+  * [285d73e] MT#5933 Use from_pattern for kamailio.trusted
+
+ -- Andreas Granig <agranig@sipwise.com>  Tue, 11 Feb 2014 18:09:11 +0100
+
 ngcp-db-schema (3.1.5) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
