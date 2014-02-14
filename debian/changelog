@@ -1,3 +1,13 @@
+ngcp-db-schema (3.1.6+0~mr3.2.1) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [12514b3] MT#5933 Use from_pattern for kamailio from_pattern
+
+  [ Andrew Pogrebennyk ]
+  * [8e24466] MT#5949 Add preference for serial forking by q-value.
+
+ -- Alexander Lutay <alutay@sipwise.com>  Fri, 14 Feb 2014 14:09:02 +0100
+
 ngcp-db-schema (3.1.5+0~mr3.2.1) unstable; urgency=low
 
   [ Jenkins Git User ]
