@@ -1,0 +1,3 @@
+USE billing;
+
+DROP TABLE `invoice_template`;

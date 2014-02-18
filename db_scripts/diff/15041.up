@@ -1,0 +1,13 @@
+USE billing;
+
+ CREATE TABLE `invoice_template` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `type` enum('svg','html') NOT NULL DEFAULT 'svg',
+  `is_active` int(1) unsigned NOT NULL DEFAULT '1',
+  `base64_saved` mediumblob,
+  `base64_previewed` mediumblob,
+  PRIMARY KEY (`id`),
+  KEY `reseller_contract_ind` (`reseller_id`),
+  CONSTRAINT `invoice_template_ibfk_1` FOREIGN KEY (`reseller_id`) REFERENCES `contacts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
