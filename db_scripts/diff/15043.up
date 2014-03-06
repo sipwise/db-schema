@@ -1,0 +1,4 @@
+USE billing;
+
+
+ALTER TABLE `invoice_template` DROP INDEX `invoice_template_reseller_active_UNIQUE`;
