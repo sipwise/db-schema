@@ -1,10 +1,12 @@
-USE provisioning;
-
-
-INSERT INTO xmlgroups VALUES (NULL, 'pbx');
-INSERT INTO xmlhosts VALUES (NULL, '127.0.0.1', '8095', '/', NULL, 'Sems-PBX');
-INSERT INTO xmlhostgroups VALUES (
-    NULL,
-    (SELECT id FROM xmlgroups WHERE name = 'pbx'),
-    (SELECT id FROM xmlhosts WHERE description = 'Sems-PBX')
-);
+## MT#5571 The DB statements were commented to prevent errors on duplicate inserts.
+## The tables xmlgroups, xmlhosts and xmlhostgroups are being handled by mysql_values.cfg.services
+#USE provisioning;
+#
+#
+#INSERT INTO xmlgroups VALUES (NULL, 'pbx');
+#INSERT INTO xmlhosts VALUES (NULL, '127.0.0.1', '8095', '/', NULL, 'Sems-PBX');
+#INSERT INTO xmlhostgroups VALUES (
+#    NULL,
+#    (SELECT id FROM xmlgroups WHERE name = 'pbx'),
+#    (SELECT id FROM xmlhosts WHERE description = 'Sems-PBX')
+#);
