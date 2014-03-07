@@ -2,6 +2,7 @@ use billing;
 
 delimiter ;;
 
+drop procedure if exists del_dupes;
 create procedure del_dupes()
 begin
   declare done int default false;
