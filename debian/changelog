@@ -1,3 +1,9 @@
+ngcp-db-schema (3.1.7) unstable; urgency=medium
+
+  * [e337e59] MT#5473 delete stale kamailio.peer_preferences records.
+
+ -- Andrew Pogrebennyk <apogrebennyk@sipwise.com>  Fri, 07 Mar 2014 13:21:00 +0100
+
 ngcp-db-schema (3.1.6) unstable; urgency=low
 
   * [285d73e] MT#5933 Use from_pattern for kamailio.trusted
