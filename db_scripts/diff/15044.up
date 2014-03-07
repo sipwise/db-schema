@@ -1,0 +1,5 @@
+USE kamailio;
+
+DELETE FROM peer_preferences WHERE uuid NOT IN (
+  SELECT flags FROM lcr_gw
+);
