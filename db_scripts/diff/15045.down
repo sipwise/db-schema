@@ -1,0 +1,5 @@
+use billing;
+
+alter table contract_balances
+  drop key balance_interval,
+  add key contractid_idx (contract_id);
