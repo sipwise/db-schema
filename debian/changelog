@@ -1,10 +1,14 @@
-ngcp-db-schema (3.1.6+0~mr3.2.1) unstable; urgency=low
+ngcp-db-schema (3.2.1+0~mr3.2.1) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [f5d455c] MT#5571 Fix statements 15038.* to prevent duplicates with mysql_values.cfg.services
+
+  [ Andrew Pogrebennyk ]
+  * [4400681] MT#5473 delete stale kamailio.peer_preferences records.
+  * [8e24466] MT#5949 Add preference for serial forking by q-value.
 
   [ Andreas Granig ]
   * [12514b3] MT#5933 Use from_pattern for kamailio from_pattern
-
-  [ Andrew Pogrebennyk ]
-  * [8e24466] MT#5949 Add preference for serial forking by q-value.
 
  -- Alexander Lutay <alutay@sipwise.com>  Fri, 14 Feb 2014 14:09:02 +0100
 
