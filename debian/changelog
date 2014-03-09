@@ -1,3 +1,22 @@
+ngcp-db-schema (3.3.1+0~mr3.3) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [9590ad6] MT#5879 Add invoice_template table
+  * [653d869] MT#5879 Change is_active field to boolean and add unique index to (reseller_id,is_active) so maintain only one active template per reseller.
+  * [433f24d] MT#5879 It was rather stupid to make unique index on is_active field: there could be a lot of inactive templates.
+
+  [ Alexander Lutay ]
+  * [18e89ec] MT#5571 Fix statements 15038.* to prevent duplicates with mysql_values.cfg.services
+
+  [ Andrew Pogrebennyk ]
+  * [0dc43cf] MT#5473 delete stale kamailio.peer_preferences records.
+
+  [ Richard Fuchs ]
+  * [030e8db] MT#6013 add unique key to contract_balances
+  * [758a86f] MT#6013 adding "drop procedure if exists" just in case
+
+ -- Alexander Lutay <alutay@sipwise.com>  Sun, 09 Mar 2014 22:49:04 +0100
+
 ngcp-db-schema (3.1.6+0~mr3.3) unstable; urgency=low
 
   [ Andreas Granig ]
