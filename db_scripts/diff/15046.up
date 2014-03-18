@@ -1,0 +1,13 @@
+use billing;
+
+CREATE TABLE `invoice_template_resource` (
+  `invoice_template_id` int(11) unsigned NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `type` enum('css') DEFAULT NULL,
+  `base64` mediumblob,
+  KEY `invoice_template_id` (`invoice_template_id`),
+  CONSTRAINT `invoice_template_resource_ibfk_1` FOREIGN KEY (`invoice_template_id`) REFERENCES `invoice_template` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+alter table invoice_template add column name varchar(255) not null default '', add column x_title mediumint not null default 0, add column y_title mediumint not null default 0, add column rows_title mediumint not null default 0, add column x_mid  mediumint not null default 0, add column y_mid  mediumint not null default 0, add column rows_mid  mediumint not null default 0, add column  x_last  mediumint not null default 0,add column y_last  mediumint not null default 0,  add column rows_last  mediumint not null default 0;
+

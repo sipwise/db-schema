@@ -1,0 +1,16 @@
+use billing;
+
+
+DROP TABLE `invoice_template_resource`;
+
+alter table invoice_template 
+    drop column name,
+    drop column x_title,
+    drop column y_title,
+    drop column rows_title,
+    drop column x_mid,
+    drop column y_mid,
+    drop column rows_mid,
+    drop column x_last,
+    drop column y_last,
+    drop column rows_last;
