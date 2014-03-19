@@ -1,0 +1,10 @@
+USE provisioning;
+
+UPDATE voip_preferences SET label='User-Agent header passing mode'
+ WHERE attribute='ua_header_mode';
+
+UPDATE voip_preferences SET label='User-Agent header replacement (if mode is "replace")'
+ WHERE attribute='ua_header_replace';
+
+UPDATE voip_preferences SET label='Outbound History-Info Field'
+ WHERE attribute='outbound_history_info';
