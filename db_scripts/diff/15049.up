@@ -1,0 +1,9 @@
+USE accounting;
+
+CREATE TABLE acc_cdi (
+  id int(10) UNSIGNED AUTO_INCREMENT NOT NULL,
+  callid varchar(255) NOT NULL,
+  mark decimal(13,3) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY acc_cdi_callid_idx (callid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

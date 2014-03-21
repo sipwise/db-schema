@@ -1,0 +1,3 @@
+USE accounting;
+
+DROP TABLE acc_cdi;
