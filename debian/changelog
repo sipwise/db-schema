@@ -1,3 +1,13 @@
+ngcp-db-schema (3.2.1.1+0~mr3.2.1.1) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [0d086f2] MT#6279 Add new force_outbound_calls_to_peer mode to peer preference.
+  * [ccc32a1] MT#6317 add missing labels to some prefs.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 21 Mar 2014 17:24:05 +0100
+
 ngcp-db-schema (3.2.1+0~mr3.2.1) unstable; urgency=low
 
   [ Alexander Lutay ]
