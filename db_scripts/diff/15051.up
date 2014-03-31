@@ -1,0 +1,3 @@
+use billing;
+
+alter table contracts add column send_invoice boolean not null default 1;
