@@ -1,0 +1,10 @@
+USE billing;
+
+CREATE TABLE `reseller_brandings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `css` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reseller_idx` (`reseller_id`),
+  CONSTRAINT `branding_reseller_fk` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
