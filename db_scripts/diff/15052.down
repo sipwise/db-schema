@@ -1,0 +1,4 @@
+use billing;
+
+alter table invoice_templates rename to invoice_template;
+alter table invoice_template_resources rename to invoice_template_resource;
