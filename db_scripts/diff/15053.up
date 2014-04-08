@@ -1,0 +1,17 @@
+USE provisioning;
+
+DROP TRIGGER voip_phost_drepl_trig;
+DELIMITER ;;
+
+CREATE TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_gw
+    WHERE flags <=> OLD.id;
+
+  DELETE FROM kamailio.peer_preferences
+    WHERE uuid = OLD.id;
+
+END ;;
+
+DELIMITER ;
