@@ -1,3 +1,12 @@
+ngcp-db-schema (3.2.1.2+0~mr3.2.1.2) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [ab75a9a] MT#6359 Properly idenfity lcr_gw by id.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 08 Apr 2014 14:29:07 +0200
+
 ngcp-db-schema (3.2.1.1+0~mr3.2.1.1) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
