@@ -1,0 +1,7 @@
+USE billing;
+
+UPDATE billing.billing_mappings m SET
+    m.billing_profile_id = (
+    SELECT id FROM billing.billing_profiles p WHERE p.handle = 'default'
+    )
+WHERE m.billing_profile_id IS NULL;
