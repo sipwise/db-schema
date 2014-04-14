@@ -1,7 +1,9 @@
 USE provisioning;
 
 ALTER TABLE voip_subscribers 
+  DROP COLUMN profile_set_id,
   DROP COLUMN profile_id;
 
 DROP TABLE voip_subscriber_profile_attributes;
 DROP TABLE voip_subscriber_profiles;
+DROP TABLE voip_subscriber_profile_sets;

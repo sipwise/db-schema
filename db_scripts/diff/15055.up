@@ -1,12 +1,23 @@
 USE provisioning;
 
-CREATE TABLE `voip_subscriber_profiles` (
+CREATE TABLE `voip_subscriber_profile_sets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `vsp_resname_idx` (`reseller_id`,`name`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `voip_subscriber_profiles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `set_default` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
+  CONSTRAINT `voip_subscriber_profile_sets_ibfk_1` FOREIGN KEY (`set_id`) REFERENCES `voip_subscriber_profile_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `voip_subscriber_profile_attributes` (
@@ -17,8 +28,10 @@ CREATE TABLE `voip_subscriber_profile_attributes` (
   UNIQUE KEY `prof_attr_idx` (`profile_id`,`attribute_id`),
   KEY `attribute_id` (`attribute_id`),
   KEY `profile_idx` (`profile_id`),
-  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `voip_subscriber_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 ALTER TABLE voip_subscribers 
-  ADD COLUMN profile_id INT(11) UNSIGNED DEFAULT NULL AFTER pbx_group_id;
+  ADD COLUMN profile_set_id INT(11) UNSIGNED DEFAULT NULL AFTER pbx_group_id,
+  ADD COLUMN profile_id INT(11) UNSIGNED DEFAULT NULL AFTER profile_set_id;
