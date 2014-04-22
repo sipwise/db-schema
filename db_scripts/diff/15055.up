@@ -32,6 +32,14 @@ CREATE TABLE `voip_subscriber_profile_attributes` (
   CONSTRAINT `voip_subscriber_profile_attributes_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `voip_subscriber_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-ALTER TABLE voip_subscribers 
-  ADD COLUMN profile_set_id INT(11) UNSIGNED DEFAULT NULL AFTER pbx_group_id,
+ALTER TABLE voip_subscribers
+  ADD COLUMN pbx_hunt_policy enum('serial','parallel') DEFAULT NULL AFTER is_pbx_group,
+  ADD COLUMN pbx_hunt_timeout int(4) unsigned DEFAULT NULL AFTER pbx_hunt_policy,
+  ADD COLUMN pbx_extension varchar(255) DEFAULT NULL AFTER pbx_group_id,
+  ADD COLUMN profile_set_id INT(11) UNSIGNED DEFAULT NULL AFTER pbx_extension,
   ADD COLUMN profile_id INT(11) UNSIGNED DEFAULT NULL AFTER profile_set_id;
+
+INSERT INTO voip_preferences VALUES
+  (NULL, 5, 'music_on_hold', 'Music on Hold', 1, 1, 1, 0, 0, now(), 0, 1, 
+  'boolean', 0, '"Music on Hold" - if set to true and a music on hold file is provided, a calling party gets that file played when put on hold'
+  );

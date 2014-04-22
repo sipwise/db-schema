@@ -1,6 +1,11 @@
 USE provisioning;
 
+DELETE FROM voip_preferences WHERE attribute = 'music_on_hold';
+
 ALTER TABLE voip_subscribers 
+  DROP COLUMN pbx_hunt_policy,
+  DROP COLUMN pbx_hunt_timeout,
+  DROP COLUMN pbx_extension,
   DROP COLUMN profile_set_id,
   DROP COLUMN profile_id;
 
