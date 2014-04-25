@@ -1,0 +1,13 @@
+USE billing;
+
+CREATE TABLE `email_templates` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `from_email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `body` mediumtext NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reseller_name_idx` (`reseller_id`,`name`),
+  CONSTRAINT `fk_email_reseller` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
