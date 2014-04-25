@@ -11,3 +11,7 @@ CREATE TABLE `email_templates` (
   UNIQUE KEY `reseller_name_idx` (`reseller_id`,`name`),
   CONSTRAINT `fk_email_reseller` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+ALTER TABLE contracts 
+  ADD COLUMN subscriber_email_template_id INT(11) UNSIGNED DEFAULT NULL, 
+  ADD COLUMN passreset_email_template_id INT(11) UNSIGNED DEFAULT NULL;
