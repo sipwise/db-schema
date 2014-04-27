@@ -1,0 +1,2 @@
+USE provisioning;
+REVOKE SELECT ON provisioning.voip_subscribers FROM kamailio@localhost;

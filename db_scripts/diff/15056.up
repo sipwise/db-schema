@@ -1,0 +1,2 @@
+USE provisioning;
+GRANT SELECT ON provisioning.voip_subscribers TO kamailio@localhost;
