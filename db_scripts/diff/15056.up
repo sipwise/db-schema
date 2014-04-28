@@ -12,6 +12,20 @@ CREATE TABLE `email_templates` (
   CONSTRAINT `fk_email_reseller` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+CREATE TABLE `password_resets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `uuid` char(36) NOT NULL,
+  `timestamp` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uuid_idx` (`uuid`),
+  KEY `fk_pwd_reset_sub` (`subscriber_id`),
+  CONSTRAINT `fk_pwd_reset_sub` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 ALTER TABLE contracts 
   ADD COLUMN subscriber_email_template_id INT(11) UNSIGNED DEFAULT NULL, 
   ADD COLUMN passreset_email_template_id INT(11) UNSIGNED DEFAULT NULL;
+
+ALTER TABLE voip_subscribers
+  ADD COLUMN `contact_id` int(11) unsigned DEFAULT NULL;

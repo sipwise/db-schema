@@ -1,6 +1,11 @@
 USE billing;
 
 DROP TABLE email_templates;
+DROP TABLE password_resets;
+
 ALTER TABLE contracts 
   DROP COLUMN subscriber_email_template_id,
   DROP COLUMN passreset_email_template_id;
+
+ALTER TABLE voip_subscribers
+  DROP COLUMN contact_id;
