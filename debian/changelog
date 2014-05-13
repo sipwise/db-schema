@@ -1,3 +1,18 @@
+ngcp-db-schema (3.2.3.0+0~mr3.2.3.0) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [45c1abe] MT#6359 Properly idenfity lcr_gw by id.
+
+  [ Gerhard Jungwirth ]
+  * [e099b10] MT#6663 set billing_profile for default contract
+
+  [ Andrew Pogrebennyk ]
+  * [df782e8] MT#4541 add missing grant for kamailio on voip_subscribers.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 13 May 2014 11:52:42 +0200
+
 ngcp-db-schema (3.2.2.0+0~mr3.2.2.0) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
