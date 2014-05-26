@@ -1,3 +1,162 @@
+ngcp-db-schema (3.3.2.0+0~mr3.3.1.0) unstable; urgency=low
+
+  [ Jenkins Git User ]
+  * [6a18f82] db-schema dump: snapshot Mon Mar 10 01:37:06 +0100 2014
+  * [436cbf8] db-schema dump: snapshot Tue Mar 11 01:36:30 +0100 2014
+  * [0ffc152] db-schema dump: snapshot Wed Mar 12 01:31:52 +0100 2014
+  * [6370dec] db-schema dump: snapshot Thu Mar 13 01:34:49 +0100 2014
+  * [402a8ed] db-schema dump: snapshot Fri Mar 14 01:34:53 +0100 2014
+  * [1553de6] db-schema dump: snapshot Fri Mar 14 14:11:51 +0100 2014
+  * [18b9186] db-schema dump: snapshot Fri Mar 14 15:43:06 +0100 2014
+  * [430dbde] db-schema dump: snapshot Sat Mar 15 01:31:42 +0100 2014
+  * [7e2703a] db-schema dump: snapshot Sun Mar 16 01:36:28 +0100 2014
+  * [f4eddff] db-schema dump: snapshot Mon Mar 17 01:25:11 +0100 2014
+  * [1a7e684] db-schema dump: snapshot Tue Mar 18 01:53:06 +0100 2014
+  * [7bee71b] db-schema dump: snapshot Wed Mar 19 01:54:07 +0100 2014
+  * [14c634c] db-schema dump: snapshot Thu Mar 20 01:52:52 +0100 2014
+  * [d95082f] db-schema dump: snapshot Fri Mar 21 01:52:25 +0100 2014
+  * [56f60ae] db-schema dump: snapshot Sat Mar 22 01:52:43 +0100 2014
+  * [925da1e] db-schema dump: snapshot Sun Mar 23 01:52:14 +0100 2014
+  * [8713c14] db-schema dump: snapshot Mon Mar 24 01:51:11 +0100 2014
+  * [66b9db2] db-schema dump: snapshot Tue Mar 25 01:53:16 +0100 2014
+  * [141e45f] db-schema dump: snapshot Wed Mar 26 01:42:04 +0100 2014
+  * [26bca3f] db-schema dump: snapshot Thu Mar 27 01:56:01 +0100 2014
+  * [dcc03f3] db-schema dump: snapshot Thu Mar 27 14:00:07 +0100 2014
+  * [6dd6585] db-schema dump: snapshot Thu Mar 27 14:47:35 +0100 2014
+  * [78b3c4b] db-schema dump: snapshot Thu Mar 27 18:04:35 +0100 2014
+  * [af72dd1] db-schema dump: snapshot Fri Mar 28 09:25:03 +0100 2014
+  * [e3e7cdc] db-schema dump: snapshot Fri Mar 28 09:32:20 +0100 2014
+  * [57ba387] db-schema dump: snapshot Fri Mar 28 10:17:51 +0100 2014
+  * [cba4070] db-schema dump: snapshot Fri Mar 28 10:17:58 +0100 2014
+  * [f7777ee] db-schema dump: snapshot Fri Mar 28 11:37:31 +0100 2014
+  * [830a06a] db-schema dump: snapshot Fri Mar 28 13:46:59 +0100 2014
+  * [e147209] db-schema dump: snapshot Fri Mar 28 15:22:20 +0100 2014
+  * [dfb6517] db-schema dump: snapshot Fri Mar 28 16:14:11 +0100 2014
+  * [758338e] db-schema dump: snapshot Fri Mar 28 23:22:56 +0100 2014
+  * [d6d2495] db-schema dump: snapshot Sat Mar 29 00:06:46 +0100 2014
+  * [8fd6260] db-schema dump: snapshot Sat Mar 29 01:17:09 +0100 2014
+  * [088d5cd] db-schema dump: snapshot Sun Mar 30 01:19:51 +0100 2014
+  * [cfd76f6] db-schema dump: snapshot Mon Mar 31 01:16:51 +0200 2014
+  * [6520a43] db-schema dump: snapshot Tue Apr 01 01:31:01 +0200 2014
+  * [c606b19] db-schema dump: snapshot Tue Apr 01 11:03:43 +0200 2014
+  * [2ff8c4a] db-schema dump: snapshot Wed Apr 02 01:39:30 +0200 2014
+  * [defb957] db-schema dump: snapshot Wed Apr 02 09:51:49 +0200 2014
+  * [23d5573] db-schema dump: snapshot Thu Apr 03 01:35:23 +0200 2014
+  * [9b42bf2] db-schema dump: snapshot Thu Apr 03 10:01:22 +0200 2014
+  * [87f71d0] db-schema dump: snapshot Fri Apr 04 01:36:50 +0200 2014
+  * [06adc7a] db-schema dump: snapshot Sat Apr 05 01:38:34 +0200 2014
+  * [16b7361] db-schema dump: snapshot Sat Apr 05 22:55:06 +0200 2014
+  * [f168d89] db-schema dump: snapshot Sun Apr 06 01:35:09 +0200 2014
+  * [6f16caa] db-schema dump: snapshot Mon Apr 07 01:43:54 +0200 2014
+  * [e32959f] db-schema dump: snapshot Tue Apr 08 01:35:15 +0200 2014
+  * [a84ae88] db-schema dump: snapshot Tue Apr 08 10:22:12 +0200 2014
+  * [fc0ef58] db-schema dump: snapshot Tue Apr 08 10:55:36 +0200 2014
+  * [4e1d1c2] db-schema dump: snapshot Tue Apr 08 11:39:09 +0200 2014
+  * [1a2aac4] db-schema dump: snapshot Tue Apr 08 13:47:30 +0200 2014
+  * [58d8b2a] db-schema dump: snapshot Tue Apr 08 20:01:01 +0200 2014
+  * [70ffa1e] db-schema dump: snapshot Wed Apr 09 01:37:27 +0200 2014
+  * [138554a] db-schema dump: snapshot Thu Apr 10 01:28:02 +0200 2014
+  * [9a1642f] db-schema dump: snapshot Thu Apr 10 11:51:34 +0200 2014
+  * [c542fd5] db-schema dump: snapshot Thu Apr 10 18:03:34 +0200 2014
+  * [27e8bc5] db-schema dump: snapshot Fri Apr 11 01:42:37 +0200 2014
+  * [442c734] db-schema dump: snapshot Fri Apr 11 11:31:21 +0200 2014
+  * [e1c11b6] db-schema dump: snapshot Fri Apr 11 14:39:13 +0200 2014
+  * [d47bf9c] db-schema dump: snapshot Fri Apr 11 16:16:17 +0200 2014
+  * [e6cefa5] db-schema dump: snapshot Sat Apr 12 00:05:09 +0200 2014
+  * [0f1f4b5] db-schema dump: snapshot Sat Apr 12 02:07:39 +0200 2014
+  * [cf529f9] db-schema dump: snapshot Sun Apr 13 01:43:48 +0200 2014
+  * [0d64174] db-schema dump: snapshot Mon Apr 14 01:43:56 +0200 2014
+  * [6bd7a49] db-schema dump: snapshot Mon Apr 14 12:58:18 +0200 2014
+  * [2ece53d] db-schema dump: snapshot Tue Apr 15 00:20:57 +0200 2014
+  * [5f3b58c] db-schema dump: snapshot Tue Apr 15 01:42:07 +0200 2014
+  * [9d81818] db-schema dump: snapshot Wed Apr 16 01:41:10 +0200 2014
+  * [b9f9e97] db-schema dump: snapshot Thu Apr 17 01:37:45 +0200 2014
+  * [c5d831e] db-schema dump: snapshot Fri Apr 18 02:00:15 +0200 2014
+  * [1e1e7ef] db-schema dump: snapshot Sat Apr 19 01:37:58 +0200 2014
+  * [209a29a] db-schema dump: snapshot Sun Apr 20 01:37:16 +0200 2014
+  * [6974737] db-schema dump: snapshot Mon Apr 21 01:50:31 +0200 2014
+  * [3746637] db-schema dump: snapshot Tue Apr 22 01:36:44 +0200 2014
+  * [0760ef6] db-schema dump: snapshot Wed Apr 23 01:36:33 +0200 2014
+  * [5c1dcb4] db-schema dump: snapshot Thu Apr 24 01:36:51 +0200 2014
+  * [dfb3051] db-schema dump: snapshot Fri Apr 25 01:38:42 +0200 2014
+  * [c93d83b] db-schema dump: snapshot Tue Apr 29 14:22:28 +0200 2014
+  * [916e2a5] db-schema dump: snapshot Tue Apr 29 14:53:18 +0200 2014
+  * [fbe1d11] db-schema dump: snapshot Tue Apr 29 15:29:01 +0200 2014
+  * [02c5f5d] db-schema dump: snapshot Tue Apr 29 15:59:24 +0200 2014
+  * [bcb5c25] db-schema dump: snapshot Wed Apr 30 10:48:04 +0200 2014
+  * [5d7dd26] db-schema dump: snapshot Wed Apr 30 12:29:19 +0200 2014
+  * [402bf8c] db-schema dump: snapshot Wed Apr 30 15:28:54 +0200 2014
+  * [6540abb] db-schema dump: snapshot Wed Apr 30 16:31:13 +0200 2014
+  * [c092413] db-schema dump: snapshot Wed Apr 30 17:26:58 +0200 2014
+  * [b78f6be] db-schema dump: snapshot Thu May 01 01:35:05 +0200 2014
+  * [290cd9a] db-schema dump: snapshot Fri May 02 01:35:05 +0200 2014
+  * [47ec880] db-schema dump: snapshot Fri May 02 10:42:16 +0200 2014
+  * [09119ea] db-schema dump: snapshot Sat May 03 01:51:15 +0200 2014
+  * [f640e3b] db-schema dump: snapshot Sun May 04 20:01:33 +0200 2014
+  * [2279155] db-schema dump: snapshot Mon May 05 01:59:43 +0200 2014
+  * [67d18b8] db-schema dump: snapshot Tue May 06 01:57:09 +0200 2014
+  * [ae26f90] db-schema dump: snapshot Wed May 07 01:49:30 +0200 2014
+  * [7e8f13c] db-schema dump: snapshot Thu May 08 02:10:16 +0200 2014
+  * [174cd67] db-schema dump: snapshot Thu May 08 09:25:01 +0200 2014
+  * [c417bb6] db-schema dump: snapshot Thu May 08 10:59:45 +0200 2014
+  * [0901844] db-schema dump: snapshot Fri May 09 01:50:39 +0200 2014
+  * [fddb672] db-schema dump: snapshot Fri May 09 09:57:31 +0200 2014
+  * [1abe663] db-schema dump: snapshot Fri May 09 10:39:43 +0200 2014
+  * [a0ace1b] db-schema dump: snapshot Sat May 10 01:12:37 +0200 2014
+  * [67ed26a] db-schema dump: snapshot Sun May 11 01:12:20 +0200 2014
+  * [b2ef67c] db-schema dump: snapshot Mon May 12 01:12:12 +0200 2014
+  * [8a96a9f] db-schema dump: snapshot Tue May 13 01:12:26 +0200 2014
+  * [bd7bb20] db-schema dump: snapshot Wed May 14 01:12:28 +0200 2014
+  * [2c3e229] db-schema dump: snapshot Thu May 15 01:11:05 +0200 2014
+  * [4388ab9] db-schema dump: snapshot Fri May 16 01:11:18 +0200 2014
+  * [ebb075d] db-schema dump: snapshot Sat May 17 01:11:20 +0200 2014
+  * [d58b966] db-schema dump: snapshot Sun May 18 01:12:11 +0200 2014
+  * [ef147aa] db-schema dump: snapshot Mon May 19 01:11:45 +0200 2014
+  * [84dcd2b] db-schema dump: snapshot Mon May 19 11:41:01 +0200 2014
+  * [f06e89e] db-schema dump: snapshot Tue May 20 01:11:26 +0200 2014
+  * [8c1671d] db-schema dump: snapshot Wed May 21 01:11:45 +0200 2014
+  * [044bd78] db-schema dump: snapshot Thu May 22 01:11:31 +0200 2014
+  * [aba37a1] db-schema dump: snapshot Fri May 23 01:11:23 +0200 2014
+  * [ff5c095] db-schema dump: snapshot Fri May 23 16:15:35 +0200 2014
+  * [279ca66] db-schema dump: snapshot Fri May 23 16:29:02 +0200 2014
+  * [b024cab] db-schema dump: snapshot Sat May 24 01:11:36 +0200 2014
+  * [6283c65] db-schema dump: snapshot Sun May 25 01:11:11 +0200 2014
+  * [7ddde85] db-schema dump: snapshot Mon May 26 01:11:58 +0200 2014
+
+  [ Irina Peshinskaya ]
+  * [7246a8d] MT#5879 Add name column for template. Preparing for "fixed" template, where only position of rows and their amount can be modified. And resources, which may connect one template with some different css.
+  * [3c6d96c] MT#5879 Add name column to invoices template, necessary changes for further pdf templating, marker for customers and their subscribers about sending/not sending invoices.
+  * [6c9ff74] MT#5879 Were added occasionally, are full copy of 15046.
+  * [6941698] MT#5879 Rename invoice template tables with s sufficses.
+
+  [ Andrew Pogrebennyk ]
+  * [f1c40e8] MT#6279 Add new force_outbound_calls_to_peer mode to peer preference.
+  * [8c053c1] MT#6317 add missing labels to some prefs.
+  * [e16d342] MT#4541 add missing grant for kamailio on voip_subscribers.
+
+  [ Kirill Solomko ]
+  * [7088e3a] MT#6191 add accounting.acc_cdi table
+
+  [ Andreas Granig ]
+  * [ba66dde] MT#6461 Add reseller branding table.
+  * [717785f] MT#6461 Fix branding table structure.
+  * [0a60e09] MT#6359 Properly idenfity lcr_gw by id.
+  * [61c38c9] MT#6693 Add subscriber profile tables.
+  * [b374549] MT#6693 Add voip_subscriber_profile_sets table.
+  * [ead92dc] MT#6693 Align to new pbx schema.
+  * [c86f8ed] MT#6789 Add email template schema.
+  * [a6136ca] MT#6827 Deprecate linerange_num field.
+
+  [ Michael Prokop ]
+  * [dd781a2] MT#6511 Bump Standards-Version to 3.9.5
+
+  [ Gerhard Jungwirth ]
+  * [6c71e81] MT#6663 set billing_profile for default contract
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 May 2014 15:38:29 +0200
+
 ngcp-db-schema (3.3.1+0~mr3.3) unstable; urgency=low
 
   [ Irina Peshinskaya ]
