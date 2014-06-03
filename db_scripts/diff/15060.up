@@ -2,10 +2,9 @@ USE billing;
 
 ALTER TABLE contracts
   ADD COLUMN invoice_email_template_id int(11) unsigned DEFAULT NULL;
---we will keep very default templates with reseller_id=null to create new reseller templates when create resellers
 ALTER TABLE email_templates modify reseller_id int(11) unsigned;
 
-insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'subscriber_default_email','default@sipwise.com',
+insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'subscriber_default_email','default@sipwise.com','Subscriber created',
 'Dear Customer,
 
 A new subscriber [% subscriber %] has been created for you.
@@ -14,7 +13,7 @@ Your faithful Sipwise system
 
 -- 
 This is an automatically generated message. Do not reply.');
-insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'passreset_default_email','default@sipwise.com',
+insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'passreset_default_email','default@sipwise.com','Password reset email',
 'Dear Customer,
 
 Please go to [% url %] to set your password and log into your self-care interface.
@@ -23,7 +22,7 @@ Your faithful Sipwise system
 
 -- 
 This is an automatically generated message. Do not reply.');
-insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'invoice_default_email','default@sipwise.com',
+insert into email_templates (reseller_id,name,from_email,subject,body)values(null,'invoice_default_email','default@sipwise.com','Invoice',
 'Invoice #[%invoice.serial%] | Dear Customer,
 
 Please find your invoice #[%invoice.serial%] for [%invoice.month%], [%invoice.year%] in attachment of this letter.
