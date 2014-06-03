@@ -1,0 +1,9 @@
+USE billing;
+
+ALTER TABLE contracts
+  DROP COLUMN invoice_email_template_id;
+ALTER TABLE email_templates modify reseller_id int(11) unsigned not null;
+
+delete from email_templates where reseller_id is null and name='subscriber_default_email'; 
+delete from email_templates where reseller_id is null and name='passreset_default_email'; 
+delete from email_templates where reseller_id is null and name='invoice_default_email'; 
