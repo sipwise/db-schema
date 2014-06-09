@@ -1,0 +1,4 @@
+USE billing;
+
+alter table contacts 
+  change column bank_name bankname varchar(255) default null;
