@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers 
+  DROP COLUMN is_pbx_pilot;

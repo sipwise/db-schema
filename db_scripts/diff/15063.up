@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers 
+  ADD COLUMN is_pbx_pilot TINYINT(1) NOT NULL DEFAULT 0 AFTER webpassword;
