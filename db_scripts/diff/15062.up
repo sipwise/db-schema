@@ -1,0 +1,56 @@
+USE billing;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+ALTER TABLE billing_profiles 
+  DROP COLUMN vat_rate, 
+  DROP COLUMN vat_included;
+
+ALTER TABLE contracts 
+  ADD COLUMN vat_rate TINYINT(3) UNSIGNED NOT NULL DEFAULT 0, 
+  ADD COLUMN add_vat TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+
+DROP TABLE IF EXISTS invoice_templates;
+CREATE TABLE `invoice_templates` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `type` enum('svg','html') NOT NULL DEFAULT 'svg',
+  `is_active` tinyint(1) NOT NULL DEFAULT '0',
+  `data` mediumblob,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `invoice_templates_ibfk_1` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS invoices;
+CREATE TABLE `invoices` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `serial` varchar(32) NOT NULL,
+  `period_start` datetime NOT NULL,
+  `period_end` datetime NOT NULL,
+  `amount_net` double NOT NULL DEFAULT '0',
+  `amount_vat` double NOT NULL DEFAULT '0',
+  `amount_total` double NOT NULL DEFAULT '0',
+  `data` blob,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `serial_idx` (`serial`),
+  CONSTRAINT `invoice_contract_fk` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS invoice_template_resources;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+alter table contacts 
+  add column bank_name varchar(255) default null, 
+  add column gpp0 varchar(255) default null, 
+  add column gpp1 varchar(255) default null, 
+  add column gpp2 varchar(255) default null, 
+  add column gpp3 varchar(255) default null, 
+  add column gpp4 varchar(255) default null, 
+  add column gpp5 varchar(255) default null, 
+  add column gpp6 varchar(255) default null, 
+  add column gpp7 varchar(255) default null, 
+  add column gpp8 varchar(255) default null, 
+  add column gpp9 varchar(255) default null;
