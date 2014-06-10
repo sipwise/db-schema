@@ -1,0 +1,4 @@
+UPDATE provisioning.voip_preferences SET
+    internal=0,
+    voip_preference_groups_id=(select id from provisioning.voip_preference_groups where name='Internals')
+WHERE attribute='ringtimeout';
