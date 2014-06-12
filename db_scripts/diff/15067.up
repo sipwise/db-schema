@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE voip_preferences SET contract_pref=1 WHERE attribute like 'ncos%';
+UPDATE voip_preferences SET contract_pref=1 WHERE attribute like '%block%';
