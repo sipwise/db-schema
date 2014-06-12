@@ -1,0 +1,67 @@
+SET AUTOCOMMIT=0;
+
+USE kamailio;
+
+CREATE TABLE contract_preferences LIKE peer_preferences;
+
+USE provisioning;
+
+ALTER TABLE voip_preferences
+  ADD COLUMN contract_pref tinyint(1) NOT NULL DEFAULT '0' AFTER peer_pref;
+ALTER TABLE voip_preferences_enum
+  ADD COLUMN contract_pref tinyint(1) DEFAULT NULL AFTER peer_pref;
+
+CREATE TABLE `voip_contract_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `conidattrid_idx` (`contract_id`,`attribute_id`),
+  KEY `contractid_idx` (`contract_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_c_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+) ENGINE=InnoDB;
+
+DELIMITER ;;
+
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_crepl_trig AFTER INSERT ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.contract_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.contract_id, attribute, type, NEW.value, '0'
+         FROM provisioning.voip_preferences
+        WHERE id <=> NEW.attribute_id;
+
+  END */;;
+
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_urepl_trig AFTER UPDATE ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.contract_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.contract_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
+   WHERE pp.id <=> OLD.id
+     AND vp.id <=> NEW.attribute_id;
+
+  END */;;
+
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_drepl_trig BEFORE DELETE ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.contract_preferences
+        WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+
+
+INSERT INTO voip_preferences
+  (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+
+  (2, 'clir_intrapbx', 'Hide own number for calls within own PBX', 1, 1, 1, 0, 0, 0, now(), 0, 1, 'boolean', 0, '"Calling line identification restriction" - if set to true, the CLI is not displayed on outgoing calls to other users within the same PBX.');
+
+COMMIT;
