@@ -1,0 +1,3 @@
+USE billing;
+
+alter table invoices drop column sent_date;

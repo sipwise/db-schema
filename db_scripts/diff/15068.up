@@ -1,0 +1,2 @@
+use billing;
+alter table invoices add column sent_date datetime default null;
