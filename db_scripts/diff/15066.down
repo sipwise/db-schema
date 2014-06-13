@@ -1,0 +1,12 @@
+USE kamailio;
+
+drop table contract_preferences;
+
+use provisioning;
+
+ALTER TABLE voip_preferences drop column contract_pref;
+ALTER TABLE voip_preferences_enum drop column contract_pref;
+
+drop table voip_contract_preferences;
+
+delete from voip_preferences where attribute = 'clir_intrapbx';
