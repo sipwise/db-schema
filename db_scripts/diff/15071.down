@@ -1,0 +1,5 @@
+use provisioning
+
+select id into @pref_id from voip_preferences where attribute='bypass_rtpproxy';
+delete from voip_preferences_enum where preference_id=@pref_id;
+delete from voip_preferences where id=@pref_id;

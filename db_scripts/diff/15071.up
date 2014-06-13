@@ -1,0 +1,20 @@
+use provisioning
+set autocommit = 0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name='NAT and Media Flow Control';
+
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, label, description)
+VALUES (@vpg_id, 'bypass_rtpproxy', 0, 1, 1, 1, 0, '1970-01-01 00:00:00', 0, 'enum', 0, 'Disable RTP-Proxy in the selected case', 'Set to \'if both parties are behind same NAT\' if you want to allow RTP to bypass RTP-Proxy if the SIP UAs are within the same LAN of each other as determined by the \'received\' IP address check (peer-to-peer mode)');
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 1),
+(@pref_id, 'Never', 'never', 1, 1, 0, 0),
+(@pref_id, 'If both parties are behind same NAT', 'same_nat', 1, 1, 0, 0);
+
+
+commit;
+
