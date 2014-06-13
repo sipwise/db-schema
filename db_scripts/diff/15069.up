@@ -1,0 +1,3 @@
+use billing;
+alter table invoices change column data data MEDIUMBLOB;
+
