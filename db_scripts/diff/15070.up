@@ -1,0 +1,11 @@
+USE billing;
+update email_templates set subject = 'Invoice #[%invoice.serial%] from [%invoice.period_start_obj.ymd%] to [%invoice.period_end_obj.ymd%]',
+body = 'Dear Customer,
+
+Please find your invoice #[%invoice.serial%] for [%invoice.period_start_obj.month_name%], [%invoice.period_start_obj.year%] in attachment of this letter.
+
+Your faithful Sipwise system
+
+--
+This is an automatically generated message. Do not reply.' 
+where name = 'invoice_default_email' and reseller_id is null;
