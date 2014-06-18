@@ -57,11 +57,13 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Call Blockings';
 
 INSERT INTO voip_preferences
   (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
 VALUES
 
-  (2, 'clir_intrapbx', 'Hide own number for calls within own PBX', 1, 1, 1, 0, 0, 0, now(), 0, 1, 'boolean', 0, '"Calling line identification restriction" - if set to true, the CLI is not displayed on outgoing calls to other users within the same PBX.');
+  (@vpg_id, 'clir_intrapbx', 'Hide own number for calls within own PBX', 1, 1, 1, 0, 0, 0, now(), 0, 1, 'boolean', 0, '"Calling line identification restriction" - if set to true, the CLI is not displayed on outgoing calls to other users within the same PBX.');
 
 COMMIT;
