@@ -8,3 +8,13 @@ GRANT SELECT ON provisioning.voip_dom_preferences TO prosody@localhost;
 GRANT SELECT ON kamailio.dbaliases TO prosody@localhost;
 GRANT SELECT ON kamailio.subscriber TO prosody@localhost;
 GRANT SELECT ON kamailio.domain TO prosody@localhost;
+
+CREATE TABLE prosody.prosody (
+  host text,
+  user text,
+  store text,
+  key text,
+  type text,
+  value mediumtext,
+  KEY prosody_index (host(20),user(20),store(20),key(20))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
