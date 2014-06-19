@@ -1,3 +1,31 @@
+ngcp-db-schema (3.3.2.1+0~mr3.3.1.1) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [929657c] MT#7199 add iban and bic fields.
+  * [d3bd58d] MT#5879 Add VAT number to contacts.
+  * [a30b006] MT#7377 Add is_pbx_pilot to prov subscriber
+  * [ae1efa8] MT#5879 Rework invoice-relevant tables.
+  * [4477efa] MT#5879 Rename bank_name to bankname.
+  * [09d1294] MT#7471 Add contract preferences schema.
+  * [6decf72] MT#7471 Make ncos and block list contract prefs
+  * [f4c2be9] MT#7471 Fix contract schema and add down script
+  * [e6eacbf] MT#7471 Fix foreign key constraint.
+
+  [ Gerhard Jungwirth ]
+  * [1ded884] MT#5775 unset internal flag from ringtimeout
+
+  [ Irina Peshinskaya ]
+  * [2f3bcea] MT#5879 Create default invoice email template.
+  * [c7401d6] MT#5879 Fix forgotten subject field for default invoice email template.
+  * [789f26f] MT#5879 Set invoice data column to 16M size.
+  * [7416102] MT#5879 Add sent masrker to invoices.
+  * [f48ff9e] MT#5879 Set invoice data column to 16M size.
+  * [d44bc19] MT#5879 Change default invoice email template.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 19 Jun 2014 07:12:50 +0200
+
 ngcp-db-schema (3.3.2.0+0~mr3.3.1.0) unstable; urgency=low
 
   [ Jenkins Git User ]
