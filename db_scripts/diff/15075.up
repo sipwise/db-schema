@@ -1,0 +1,17 @@
+USE provisioning;
+
+DROP TABLE IF EXISTS voip_subscriber_groups;
+CREATE TABLE `voip_subscriber_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `group_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_provisioning_subscriber` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_pbx_group` FOREIGN KEY (`group_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+INSERT INTO voip_subscriber_groups (subscriber_id, group_id)
+    SELECT s.id, s2.id
+    FROM voip_subscribers s JOIN billing.voip_subscribers bs ON bs.id = pbx_group_id JOIN voip_subscribers s2 ON s2.uuid = bs.uuid
+    WHERE s.pbx_group_id IS NOT NULL;
+
