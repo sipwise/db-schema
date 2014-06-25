@@ -1,3 +1,9 @@
+ngcp-db-schema (3.0.10) unstable; urgency=medium
+
+  * [2a40ccf] MT#5073 Add the statement of the prosody table creation.
+
+ -- Victor Seva <vseva@sipwise.com>  Wed, 25 Jun 2014 07:37:44 +0200
+
 ngcp-db-schema (3.0.9) unstable; urgency=low
 
   * [4e13f35] MT#3981 Clean up broken/orphaned numbers.
