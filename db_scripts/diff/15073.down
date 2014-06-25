@@ -1,0 +1,8 @@
+USE provisioning;
+
+UPDATE voip_subscribers SET pbx_hunt_policy = 'serial' 
+  WHERE pbx_hunt_policy IN ('random', 'circular');
+
+ALTER TABLE voip_subscribers 
+  CHANGE COLUMN `pbx_hunt_policy` `pbx_hunt_policy` 
+    enum('serial','parallel') DEFAULT NULL;
