@@ -1,3 +1,10 @@
+ngcp-db-schema (3.0.11) unstable; urgency=medium
+
+  * [05549ab] MT#5073 Add the statement of the prosody table creation. fix 1083b39a8c9
+  * [abc8d12] MT#5073 sync with 3.0 branch.
+
+ -- Victor Seva <vseva@sipwise.com>  Thu, 26 Jun 2014 08:23:32 +0200
+
 ngcp-db-schema (3.0.10) unstable; urgency=medium
 
   * [2a40ccf] MT#5073 Add the statement of the prosody table creation.
