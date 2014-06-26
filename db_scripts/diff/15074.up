@@ -1,0 +1,15 @@
+USE provisioning;
+
+-- not in use anymore
+DELETE FROM voip_pbx_groups;
+
+-- rework to be a mapping table instead
+ALTER TABLE voip_pbx_groups
+  DROP COLUMN contract_id,
+  DROP COLUMN name,
+  DROP COLUMN extension,
+  DROP COLUMN hunt_policy,
+  DROP COLUMN hunt_policy_timeout,
+  ADD COLUMN group_id INT(11) UNSIGNED NOT NULL,
+  ADD KEY group_idx(group_id);
+
