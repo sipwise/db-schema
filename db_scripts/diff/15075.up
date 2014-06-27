@@ -1,0 +1,4 @@
+USE provisioning;
+
+select id into @vpid from voip_preference_groups where name = 'Cloud PBX';
+insert into voip_preferences values(NULL, @vpid, 'cloud_pbx_ext', 'Extension of CloudPBX Subscriber', 0, 1, 1, 0, 0, 0, now(), 1, 0, 'string', 0, 'The extension for the PBX subscriber');
