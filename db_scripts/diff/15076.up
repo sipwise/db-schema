@@ -1,0 +1,15 @@
+USE provisioning;
+
+-- needed for new cloud_pbx_account_cli_list pref query
+GRANT SELECT ON provisioning.voip_dbaliases to kamailio@localhost;
+
+-- populate new cloud_pbx_ext preference for existing subscribers
+select id into @vpid from voip_preferences where attribute = 'cloud_pbx_ext';
+insert into voip_usr_preferences 
+  (modify_timestamp, attribute_id, subscriber_id, value) 
+  (select now(), @vpid, id, pbx_extension 
+    from voip_subscribers where pbx_extension is not null);
+
+-- migrate pbx_group_id over to new voip_pbx_groups mapping table
+insert into voip_pbx_groups (subscriber_id, group_id) (select pvs.id, pvg.id from voip_subscribers pvs left join billing.voip_subscribers bvs on bvs.id = pvs.pbx_group_id left join voip_subscribers pvg on bvs.uuid = pvg.uuid where pvs.pbx_group_id is not null);
+alter table voip_subscribers drop column pbx_group_id;
