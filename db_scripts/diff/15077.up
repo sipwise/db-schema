@@ -1,0 +1,13 @@
+use accounting;
+
+CREATE TABLE `events` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `old_status` varchar(255) DEFAULT NULL,
+  `new_status` varchar(255) NOT NULL,
+  `timestamp` decimal(13,3) NOT NULL,
+  `export_status` enum('unexported','ok','failed') DEFAULT 'unexported',
+  `exported_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
