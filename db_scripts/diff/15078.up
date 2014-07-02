@@ -1,0 +1,32 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+-- we hardcoded moh to group 5 before, which is wrong in most cases
+SELECT id INTO @vpid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
+UPDATE voip_preferences SET voip_preference_groups_id=@vpid WHERE attribute = 'music_on_hold';
+
+SELECT id INTO @vpintid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'speed_dial', 'Speed Dial', 1, 1, 1, 0, 0, 0, now(), 1, 1, 
+  'boolean', 0, '"Speed Dial" - An internal flag for the speed dial pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.'
+  );
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'reminder', 'Reminder', 1, 1, 1, 0, 0, 0, now(), 1, 1, 
+  'boolean', 0, '"Reminder" - An internal flag for the reminder pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.'
+  );
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'auto_attendant', 'Auto Attendant', 1, 1, 1, 0, 0, 0, now(), 1, 1, 
+  'boolean', 0, '"Auto Attendant" - An internal flag for the auto_attendant pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.'
+  );
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'voice_mail', 'Voice Mail', 1, 1, 1, 0, 0, 0, now(), 1, 1, 
+  'boolean', 0, '"Voice Mail" - An internal flag for the voice_mail pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.'
+  );
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'fax_server', 'Fax Server', 1, 1, 1, 0, 0, 0, now(), 1, 1, 
+  'boolean', 0, '"Fax Server" - An internal flag for the fax_server pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.'
+  );
+
+COMMIT;
