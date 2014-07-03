@@ -1,3 +1,5 @@
 use accounting;
 grant select, update on accounting.events to export@localhost;
 grant select, insert, update on accounting.mark to export@localhost;
+grant select on provisioning.* to export@localhost;
+grant select on billing.* to export@localhost;
