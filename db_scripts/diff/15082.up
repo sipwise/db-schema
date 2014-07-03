@@ -3,3 +3,9 @@ use accounting;
 alter table events 
   change column export_status export_status 
     enum('unexported','ok','filtered','failed') not null default 'unexported';
+
+-- for event exporter
+grant select on provisioning.* to exporter@localhost;
+grant select on billing.* to exporter@localhost;
+grant select, update on accounting.events to exporter@localhost;
+grant select, insert, update on accounting.mark to exporter@localhost;
