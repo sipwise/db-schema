@@ -1,0 +1,3 @@
+use accounting;
+grant select, update on accounting.events to export@localhost;
+grant select, insert, update on accounting.mark to export@localhost;
