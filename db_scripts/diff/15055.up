@@ -39,7 +39,10 @@ ALTER TABLE voip_subscribers
   ADD COLUMN profile_set_id INT(11) UNSIGNED DEFAULT NULL AFTER pbx_extension,
   ADD COLUMN profile_id INT(11) UNSIGNED DEFAULT NULL AFTER profile_set_id;
 
+-- we hardcoded moh to group 5 before, which is wrong in most cases
+SELECT id INTO @mohvpid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
+
 INSERT INTO voip_preferences VALUES
-  (NULL, 5, 'music_on_hold', 'Music on Hold', 1, 1, 1, 0, 0, now(), 0, 1, 
+  (NULL, @mohvpid, 'music_on_hold', 'Music on Hold', 1, 1, 1, 0, 0, now(), 0, 1, 
   'boolean', 0, '"Music on Hold" - if set to true and a music on hold file is provided, a calling party gets that file played when put on hold'
   );
