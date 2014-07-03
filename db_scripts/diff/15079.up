@@ -1,0 +1,5 @@
+use accounting;
+
+alter table events 
+  add key subscriber_idx(subscriber_id),
+  add key exstatus_idx(export_status);
