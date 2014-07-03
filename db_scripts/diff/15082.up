@@ -1,0 +1,5 @@
+use accounting;
+
+alter table events 
+  change column export_status export_status 
+    enum('unexported','ok','filtered','failed') not null default 'unexported';
