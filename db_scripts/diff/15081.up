@@ -1,0 +1,18 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpgid, 'force_strict_number_match', 'Strict Number Matching', 1, 1, 1, 1, 0, 0, now(), 0, 1, 
+  'boolean', 0, '"Strict Number Matching" - if set to true the dialed number must match subscriber exactly. Dialing arbitrary extension behind subscriber number is not allowed.'
+  );
+
+-- move clir_intrapbx from the Call Blockings to Number Manipulations group
+
+SELECT id INTO @old_vpgid FROM voip_preference_groups WHERE name = 'Call Blockings';
+
+UPDATE voip_preferences SET voip_preference_groups_id=@vpgid WHERE attribute='clir_intrapbx'
+  AND voip_preference_groups_id=@old_vpgid;
+
+commit;

@@ -1,0 +1,9 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'force_strict_number_match';
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+SELECT id INTO @new_vpgid FROM voip_preference_groups WHERE name = 'Call Blockings';
+
+UPDATE voip_preferences SET voip_preference_groups_id=@new_vpgid WHERE attribute='clir_intrapbx'
+  AND voip_preference_groups_id=@vpgid;
