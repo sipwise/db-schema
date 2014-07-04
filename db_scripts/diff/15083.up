@@ -1,0 +1,4 @@
+use provisioning;
+
+grant select on provisioning.voip_subscribers to "asterisk"@"localhost";
+grant select on provisioning.voip_dbaliases to "asterisk"@"localhost";
