@@ -1,0 +1,5 @@
+USE provisioning;
+
+select id into @vpid from voip_preference_groups where name = 'Number Manipulations';
+
+insert into voip_preferences values(NULL, @vpid, 'emergency_location_object', 'MIME encapsulated Location Information in the INVITE', 0, 1, 1, 0, 0, 0, now(), 1, 0, 'string', 0, 'Provide this field as pre-coded value to add it to the SDP as MIME object with content-type \"application/vnd.cirpack.isdn-ext\" and \"content-disposition: signal;handling=required\" according to the German NGN interconnect specification');
