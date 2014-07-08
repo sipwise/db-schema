@@ -1,0 +1,2 @@
+use billing;
+alter table contracts drop column invoice_template_id;
