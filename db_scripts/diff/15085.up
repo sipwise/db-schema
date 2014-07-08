@@ -1,0 +1,2 @@
+use billing;
+alter table contracts add column invoice_template_id integer (11) unsigned default null after invoice_email_template_id;
