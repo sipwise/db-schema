@@ -29,24 +29,9 @@ while getopts "fh" opt; do
 done
 shift $((OPTIND-1))
 
-
-# do not rely on hostname(1), might return hostname of the
-# deployment system when initially deploying via chroot
-if [ -r /etc/hostname ] ; then
-  hostname="$(cat /etc/hostname)"
-
-  # on Amazon EC2 /etc/hostname might contain just 'localhost'
-  case "$hostname" in
-    localhost)
-      hostname=$(hostname)
-      ;;
-  esac
-else
-  hostname=$(hostname)
-fi
-
-if [ -z "${hostname}" ] ; then
-  echo "Error: hostname could not be identified." >&2
+nodename=$(/usr/sbin/ngcp-nodename 2>/dev/null || echo "unknown")
+if [ "${nodename}" = "unknown" ] ; then
+  echo "Error: nodename could not be identified." >&2
   exit 1
 fi
 
@@ -131,10 +116,10 @@ apply_revision() {
     exit 1
   fi
 
-  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${hostname}"\", CURRENT_TIMESTAMP);" ; then
+  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${nodename}"\", CURRENT_TIMESTAMP);" ; then
     verbose "Marked revision $rev as applied."
   else
-    echo "Error while executing DB commands using revision $rev for host $hostname" >&2
+    echo "Error while executing DB commands using revision $rev for node $nodename" >&2
     exit 1
   fi
 }
@@ -146,7 +131,7 @@ apply_revs() {
   revs="$1"
 
   # generate list of rev scripts that are node specific, used inside
-  # missing_revision's ngcp-check-rev-applied ... --node $hostname
+  # missing_revision's ngcp-check-rev-applied ... --node $nodename
   for rev in $revs ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$rev")"
 
@@ -160,14 +145,14 @@ apply_revs() {
   for missing_revision in \
     $( {
         ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
-        ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$hostname" | awk '/^No match for revision/ {print $5}' ;
+        ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
        } | sort -z -n -u ) ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
-        if ngcp-check-rev-applied --schema db_schema --revision $missing_revision --node "$hostname" | grep -q 'already executed' ; then
+        if ngcp-check-rev-applied --schema db_schema --revision $missing_revision --node "$nodename" | grep -q 'already executed' ; then
           continue
         fi
         ;;

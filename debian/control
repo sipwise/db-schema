@@ -8,6 +8,7 @@ Homepage: http://sipwise.com/
 
 Package: ngcp-db-schema
 Architecture: all
+Pre-Depends: ngcp-system-tools
 Depends: libconfig-tiny-perl,
          liblist-moreutils-perl,
          ${misc:Depends}
