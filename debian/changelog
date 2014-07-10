@@ -1,3 +1,109 @@
+ngcp-db-schema (3.4.1.0+0~mr3.4.1.0) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [9ef559b] MT#7199 add iban and bic fields.
+  * [72480c8] MT#5879 Add VAT number to contacts.
+  * [f6b7153] MT#7377 Add is_pbx_pilot to prov subscriber
+  * [b956910] MT#5879 Rework invoice-relevant tables.
+  * [3457699] MT#5879 Rename bank_name to bankname.
+  * [3e11d54] MT#7471 Add contract preferences schema.
+  * [70c48dc] MT#7471 Make ncos and block list contract prefs
+  * [806453a] MT#7471 Fix contract schema and add down script
+  * [0b9ace0] MT#7471 Fix foreign key constraint.
+  * [8ecd8fb] MT#7679 Add random and circular hunt policy.
+  * [62fd745] MT#7545 Rework pbxgroup table to mapping table
+  * [c250a7a] MT#7771 Add cloud_pbx_ext preference.
+  * [f058a1d] MT#7545 MT#7771: migrate subs to new schema.
+  * [683f0fb] MT#7793 Add accounting.events table.
+  * [d9e2305] MT#6693 Handle pseudo-preferences for subprofs.
+  * [53c205d] MT#7793 Add keys to accounting.events
+  * [c3dc661] MT#6693 Fix hardcoded group.
+  * [2b4365b] MT#7793 Add grants for event exporter
+  * [6b96c44] MT#7793 Allow select grants for event exporter
+  * [e1550dd] MT#7793 Add "filtered" option in export status
+  * [60b1b95] MT#7793 Fix grants for exporter.
+  * [2ada5d9] MT#7955 Grant some rights to asterisk user
+
+  [ Jenkins Git User ]
+  * [4a8333e] db-schema dump: snapshot Tue May 27 01:12:00 +0200 2014
+  * [a17b551] db-schema dump: snapshot Thu May 29 01:11:49 +0200 2014
+  * [f7a213c] db-schema dump: snapshot Fri May 30 01:12:21 +0200 2014
+  * [0357cdb] db-schema dump: snapshot Sat May 31 01:12:06 +0200 2014
+  * [24fe382] db-schema dump: snapshot Sun Jun 01 01:12:31 +0200 2014
+  * [e541bb4] db-schema dump: snapshot Mon Jun 02 01:12:47 +0200 2014
+  * [e10b654] db-schema dump: snapshot Tue Jun 03 01:13:08 +0200 2014
+  * [198e9f7] db-schema dump: snapshot Tue Jun 03 16:38:37 +0200 2014
+  * [bc60dc7] db-schema dump: snapshot Tue Jun 03 18:45:08 +0200 2014
+  * [4c7f998] db-schema dump: snapshot Wed Jun 04 01:11:56 +0200 2014
+  * [a845e60] db-schema dump: snapshot Thu Jun 05 01:14:14 +0200 2014
+  * [1ff259c] db-schema dump: snapshot Fri Jun 06 11:05:27 +0200 2014
+  * [546bb1f] db-schema dump: snapshot Sat Jun 07 01:13:17 +0200 2014
+  * [77200dc] db-schema dump: snapshot Tue Jun 10 01:13:23 +0200 2014
+  * [a194321] db-schema dump: snapshot Wed Jun 11 01:14:33 +0200 2014
+  * [09e0042] db-schema dump: snapshot Sat Jun 14 01:12:51 +0200 2014
+  * [c995632] db-schema dump: snapshot Sun Jun 15 01:13:21 +0200 2014
+  * [1481a57] db-schema dump: snapshot Mon Jun 16 01:13:24 +0200 2014
+  * [8874fd5] db-schema dump: snapshot Tue Jun 17 01:13:37 +0200 2014
+  * [30fe2f8] db-schema dump: snapshot Wed Jun 18 01:12:57 +0200 2014
+  * [251c7b6] db-schema dump: snapshot Thu Jun 19 01:13:28 +0200 2014
+  * [b281cb0] db-schema dump: snapshot Fri Jun 20 01:13:31 +0200 2014
+  * [5d89ced] db-schema dump: snapshot Sat Jun 21 01:13:30 +0200 2014
+  * [67623ef] db-schema dump: snapshot Sun Jun 22 01:13:09 +0200 2014
+  * [9f85884] db-schema dump: snapshot Mon Jun 23 01:13:10 +0200 2014
+  * [ba66791] db-schema dump: snapshot Tue Jun 24 01:13:33 +0200 2014
+  * [53ba665] db-schema dump: snapshot Wed Jun 25 01:13:53 +0200 2014
+  * [564b134] db-schema dump: snapshot Fri Jun 27 01:13:25 +0200 2014
+  * [e944a76] db-schema dump: snapshot Sat Jun 28 01:13:22 +0200 2014
+  * [de6438f] db-schema dump: snapshot Sun Jun 29 01:13:09 +0200 2014
+  * [7d8f0a7] db-schema dump: snapshot Mon Jun 30 01:13:12 +0200 2014
+  * [d976fe9] db-schema dump: snapshot Tue Jul 01 01:13:20 +0200 2014
+  * [85cadec] db-schema dump: snapshot Wed Jul 02 01:12:56 +0200 2014
+  * [7fe94f9] db-schema dump: snapshot Thu Jul 03 01:13:07 +0200 2014
+  * [c7e1b7d] db-schema dump: snapshot Fri Jul 04 01:13:26 +0200 2014
+  * [8e60b7b] db-schema dump: snapshot Sat Jul 05 01:13:26 +0200 2014
+  * [66c60c4] db-schema dump: snapshot Sun Jul 06 01:13:43 +0200 2014
+  * [e84708c] db-schema dump: snapshot Mon Jul 07 01:13:22 +0200 2014
+  * [9475681] db-schema dump: snapshot Mon Jul 07 11:44:32 +0200 2014
+  * [ae15476] db-schema dump: snapshot Mon Jul 07 12:29:55 +0200 2014
+  * [21d282a] db-schema dump: snapshot Mon Jul 07 12:44:26 +0200 2014
+  * [ed34a1b] db-schema dump: snapshot Mon Jul 07 16:07:21 +0200 2014
+  * [031de0c] db-schema dump: snapshot Mon Jul 07 18:58:01 +0200 2014
+  * [6b24c00] db-schema dump: snapshot Mon Jul 07 20:20:59 +0200 2014
+  * [e7cf5f0] db-schema dump: snapshot Tue Jul 08 01:12:23 +0200 2014
+  * [6dbf59e] db-schema dump: snapshot Tue Jul 08 11:55:56 +0200 2014
+  * [a720025] db-schema dump: snapshot Tue Jul 08 12:26:55 +0200 2014
+  * [d101959] db-schema dump: snapshot Tue Jul 08 12:43:57 +0200 2014
+  * [89f62cc] db-schema dump: snapshot Wed Jul 09 01:12:19 +0200 2014
+  * [1f6fae6] db-schema dump: snapshot Thu Jul 10 01:12:51 +0200 2014
+
+  [ Irina Peshinskaya ]
+  * [f267681] MT#5879 Create default invoice email template.
+  * [1fa7b70] MT#5879 Fix forgotten subject field for default invoice email template.
+  * [6edbf0d] MT#5879 Set invoice data column to 16M size.
+  * [d3cb005] MT#5879 Add sent masrker to invoices.
+  * [604ab9c] MT#5879 Set invoice data column to 16M size.
+  * [3d8a8fb] MT#5879 Change default invoice email template.
+  * [5193028] MT#7867 Changes for invoice_template per subscriber.
+
+  [ Gerhard Jungwirth ]
+  * [187af22] MT#5775 unset internal flag from ringtimeout
+
+  [ Andrew Pogrebennyk ]
+  * [5b32bac] MT#7319 add preference bypass_rtpproxy
+  * [dd14e75] MT#5101 add 'use domain defalut' enum choice for subscriber.
+  * [f3804fe] MT#7905 add new preference force_strict_number_match
+  * [0b441e9] MT#6039 new preference emergency_location_object
+  * [ab052c6] MT#6039 fix 0b441e9
+
+  [ Victor Seva ]
+  * [1083b39] MT#5073 Add the statement of the prosody table creation.
+  * [e6ca2a5] MT#5073 Add the statement of the prosody table creation. fix 1083b39a8c9
+  * [78aaaa4] MT#5073 sync with 3.0 branch.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Jul 2014 15:21:26 +0200
+
 ngcp-db-schema (3.4.0.0+0~mr3.4.0.0) unstable; urgency=low
 
   [ Jenkins Git User ]
