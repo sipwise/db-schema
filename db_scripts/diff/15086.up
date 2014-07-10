@@ -1,0 +1,9 @@
+use billing;
+
+insert into contract_balances (
+  contract_id, cash_balance, cash_balance_interval, 
+  free_time_balance, free_time_balance_interval, 
+  start, end) 
+  select * from (
+    select '1' as c1, '0' as c2, '0' as c3, '0' as c4, '0' as c5, '2014-01-01 00:00:00', '2014-01-31 23:59:59'
+  ) as tmp where not exists (select id from contract_balances where contract_id = 1) limit 1;
