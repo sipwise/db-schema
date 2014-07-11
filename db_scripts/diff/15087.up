@@ -1,0 +1,16 @@
+use provisioning
+set autocommit=0;
+
+UPDATE `voip_preferences` SET label='Maximum number of concurrent calls', description='Maximum number of overall (incoming and outgoing) concurrent on-net and off-net calls for a subscriber or peer, excluding calls from subscriber to the application server and intra-PBX calls.' WHERE attribute='concurrent_max';
+
+UPDATE `voip_preferences` SET label='Maximum number of outbound concurrent calls', description='Maximum number of outgoing concurrent on-net and off-net calls coming from a subscriber or going to a peer, excluding calls from subscriber to the application server and intra-PBX calls.' WHERE attribute='concurrent_max_out';
+
+UPDATE `voip_preferences` SET label='Maximum number of concurrent calls of Customer', description='Maximum number of overall (incoming and outgoing) concurrent on-net and off-net calls for subscribers within the same Customer account, excluding calls to the application server and intra-PBX calls.' WHERE attribute='concurrent_max_per_account';
+
+UPDATE `voip_preferences` SET label='Maximum number of outbound concurrent calls of Customer', description='Maximum number of outgoing concurrent on-net and off-net calls for subscribers within the same Customer account, excluding calls to the application server and intra-PBX calls.' WHERE attribute='concurrent_max_out_per_account';
+
+select id into @vpid from voip_preference_groups where name = 'Access Restrictions';
+INSERT INTO `voip_preferences` VALUES (NULL,@vpid,'concurrent_max_total','Total max number of overall concurrent calls',1,1,1,1,0,1,now(),0,0,'int',0,'Maximum total number of overall (incoming and outgoing) concurrent calls for subscribers.');
+INSERT INTO `voip_preferences` VALUES (NULL,@vpid,'concurrent_max_out_total','Total max number of outbound concurrent calls',1,1,1,1,0,1,now(),0,0,'int',0,'Maximum total number of outgoing concurrent calls coming from subscribers.');
+
+commit;
