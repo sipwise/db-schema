@@ -1,0 +1,30 @@
+USE billing;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- note that the vat information is lost, when this script is executed
+
+BEGIN WORK;
+
+ALTER TABLE billing_profiles 
+  ADD COLUMN vat_rate TINYINT(3) UNSIGNED NOT NULL DEFAULT 0,
+  ADD COLUMN vat_included TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+
+ALTER TABLE contracts
+  DROP COLUMN vat_rate,
+  DROP COLUMN add_vat;
+
+alter table contacts 
+  DROP column bank_name, 
+  DROP column gpp0,
+  DROP column gpp1,
+  DROP column gpp2,
+  DROP column gpp3,
+  DROP column gpp4,
+  DROP column gpp5,
+  DROP column gpp6,
+  DROP column gpp7,
+  DROP column gpp8,
+  DROP column gpp9;
+
+COMMIT;
