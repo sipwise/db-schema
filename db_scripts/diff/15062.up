@@ -2,13 +2,26 @@ USE billing;
 
 SET FOREIGN_KEY_CHECKS = 0;
 
-ALTER TABLE billing_profiles 
-  DROP COLUMN vat_rate, 
-  DROP COLUMN vat_included;
+BEGIN WORK;
 
 ALTER TABLE contracts 
   ADD COLUMN vat_rate TINYINT(3) UNSIGNED NOT NULL DEFAULT 0, 
   ADD COLUMN add_vat TINYINT(1) UNSIGNED NOT NULL DEFAULT 0;
+
+-- preserve the vat information by copying it from billing_profiles to contracts
+UPDATE contracts c
+    JOIN billing_mappings m ON c.id = m.contract_id AND
+        m.id = (
+            SELECT mi.id FROM billing_mappings mi WHERE mi.contract_id = c.id
+            ORDER BY start_date DESC LIMIT 1)
+    JOIN billing_profiles p ON m.billing_profile_id = p.id
+SET
+    c.vat_rate = p.vat_rate,
+    c.add_vat = p.vat_included;
+
+ALTER TABLE billing_profiles
+  DROP COLUMN vat_rate,
+  DROP COLUMN vat_included;
 
 DROP TABLE IF EXISTS invoice_templates;
 CREATE TABLE `invoice_templates` (
@@ -54,3 +67,5 @@ alter table contacts
   add column gpp7 varchar(255) default null, 
   add column gpp8 varchar(255) default null, 
   add column gpp9 varchar(255) default null;
+
+COMMIT;
