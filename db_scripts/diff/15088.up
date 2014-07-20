@@ -1,0 +1,2 @@
+use billing;
+alter table invoices add column generator enum('auto','web') default null;

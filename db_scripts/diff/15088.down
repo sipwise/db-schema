@@ -1,0 +1,2 @@
+use billing;
+alter table invoices drop column generator;
