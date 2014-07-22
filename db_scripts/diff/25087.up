@@ -1,0 +1,5 @@
+USE provisioning
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+INSERT INTO `voip_preferences` VALUES (NULL,@vpgid,'voicemail_echo_number','Number to be played in voicebox',1,1,1,0,0,0,now(),0,0,'string',0,'If set, will be played as Number of the voicebox owner. Otherwise the number of the preference "cli" is used.');
+
