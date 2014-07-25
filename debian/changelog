@@ -1,3 +1,12 @@
+ngcp-db-schema (3.4.1.2+0~mr3.4.1.2) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [6780a86] MT#8329 make allowed_clis also contract preference.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Jul 2014 16:13:24 +0200
+
 ngcp-db-schema (3.4.1.1+0~mr3.4.1.1) unstable; urgency=low
 
   [ Andreas Granig ]
