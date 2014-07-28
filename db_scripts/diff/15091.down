@@ -1,0 +1,2 @@
+USE billing;
+alter table invoice_templates add column is_active boolean not null default 0;

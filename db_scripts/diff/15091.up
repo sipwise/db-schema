@@ -1,0 +1,2 @@
+USE billing;
+alter table invoice_templates drop column is_active;
