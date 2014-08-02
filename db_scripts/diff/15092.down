@@ -1,0 +1,3 @@
+USE billing;
+alter table contract_balances drop foreign key `cb_invoiceid_ref`;
+alter table contract_balances add CONSTRAINT cb_invoiceid_ref FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) on delete CASCADE ON UPDATE CASCADE;
