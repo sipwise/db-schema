@@ -1,0 +1,14 @@
+use provisioning;
+
+CREATE TABLE `autoprov_device_line_annotations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `range_id` int(11) unsigned NOT NULL,
+  `line_index` int(4) unsigned NOT NULL,
+  `x` int(4) unsigned NOT NULL DEFAULT '0',
+  `y` int(4) unsigned NOT NULL DEFAULT '0',
+  `position` enum('top','bottom','left','right') NOT NULL DEFAULT 'top',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `range_idx_k` (`range_id`,`line_index`),
+  KEY `fk_anno_range` (`range_id`),
+  CONSTRAINT `fk_anno_range` FOREIGN KEY (`range_id`) REFERENCES `autoprov_device_line_ranges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
