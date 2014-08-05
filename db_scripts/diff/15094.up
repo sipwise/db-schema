@@ -1,0 +1,15 @@
+GRANT SELECT ON `billing`.`ncos_pattern_list` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_cf_time_sets` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_sound_sets` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_cf_destinations` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `billing`.`ncos_levels` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_subscribers` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `billing`.`ncos_lnp_list` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_dbaliases` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_cf_periods` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_peer_hosts` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `billing`.`lnp_numbers` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_cf_destination_sets` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_sound_files` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_cf_mappings` TO 'kamailioro'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_sound_handles` TO 'kamailioro'@'localhost'
