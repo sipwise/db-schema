@@ -78,6 +78,12 @@ else
   fi
 fi
 
+# check connection with sipwise user
+if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
+  echo 'Error: cant connect to local MySQL with sipwise user' >&2
+  exit 1
+fi
+
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
   mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
