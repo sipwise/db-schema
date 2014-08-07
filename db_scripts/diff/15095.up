@@ -1,5 +1,5 @@
 use provisioning;
 
 SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
-INSERT INTO `voip_preferences` VALUES (NULL,@vpgid,'lbrtp_set','The cluster set used for SIP lb and RTP',0,1,0,1,1,0,now(),0,0,'int',0,'Use a particular cluster set of load-balancers for SIP towards this endpoint (only for peers, as for subscribers it is defined by Path during registration) and of RTP relays (both peers and subscribers).');
+INSERT INTO `voip_preferences` VALUES (NULL,@vpgid,'lbrtp_set','The cluster set used for SIP lb and RTP',0,1,0,1,1,0,now(),0,0,'enum',0,'Use a particular cluster set of load-balancers for SIP towards this endpoint (only for peers, as for subscribers it is defined by Path during registration) and of RTP relays (both peers and subscribers).');
 
