@@ -1,0 +1,2 @@
+use provisioning;
+delete from voip_preferences where attribute = 'lbrtp_set';
