@@ -1,0 +1,3 @@
+use billing;
+
+DROP INDEX billing_mappings_start_date on billing_mappings;

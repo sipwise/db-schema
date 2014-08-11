@@ -1,0 +1,3 @@
+use billing;
+
+CREATE INDEX billing_mappings_start_date ON billing_mappings (start_date);
