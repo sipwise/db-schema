@@ -1,3 +1,15 @@
+ngcp-db-schema (3.4.1.3+0~mr3.4.1.3) unstable; urgency=low
+
+  [ Irka ]
+  * [72dfdc6] MT#8433 Don't clear contract_balances on invoice deletion.
+
+  [ Victor Seva ]
+  * [fcc0d37] MT#8067 use nodename (spce|sp1|sp2) from ngcp-nodename script not hostname
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 13 Aug 2014 14:47:53 +0200
+
 ngcp-db-schema (3.4.1.2+0~mr3.4.1.2) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
