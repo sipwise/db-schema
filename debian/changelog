@@ -1,3 +1,12 @@
+ngcp-db-schema (3.4.1.4+0~mr3.4.1.4) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [c36e613] MT#8633 Fix is_primary flag for primary numbers
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Aug 2014 18:58:15 +0200
+
 ngcp-db-schema (3.4.1.3+0~mr3.4.1.3) unstable; urgency=low
 
   [ Irka ]
