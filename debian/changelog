@@ -1,3 +1,9 @@
+ngcp-db-schema (2.8.7) unstable; urgency=low
+
+  * [b731a7b] MT#6013 adapted 15045.up procedure for mysql 5.1 syntax
+
+ -- Kirill Solomko <ksolomko@sipwise.com>  Thu, 14 Aug 2014 13:29:11 +0200
+
 ngcp-db-schema (2.8.6) unstable; urgency=low
 
   [ rfuchs ]
