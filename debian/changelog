@@ -1,3 +1,12 @@
+ngcp-db-schema (3.3.3.4+0~mr3.3.2.4) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [48f1d7d] MT#7867 Changes for invoice_template per subscriber.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Aug 2014 18:19:05 +0200
+
 ngcp-db-schema (3.3.3.3+0~mr3.3.2.3) unstable; urgency=low
 
   [ Irka ]
