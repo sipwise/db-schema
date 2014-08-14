@@ -14,17 +14,26 @@ begin
 
   open x;
 
+  prepare stmt from
+    "delete from contract_balances where contract_id = ? and start = ?
+      and end = ? and cash_balance = 0 and cash_balance_interval = 0 and
+      free_time_balance = 0 and free_time_balance_interval = 0
+      and invoice_id is null limit ?";
+
   rl: loop
     fetch x into cid, s, e, c;
     if done then
       leave rl;
     end if;
     set c = c - 1;
-    delete from contract_balances where contract_id = cid and start = s
-      and end = e and cash_balance = 0 and cash_balance_interval = 0 and
-      free_time_balance = 0 and free_time_balance_interval = 0
-      and invoice_id is null limit c;
+    set @cid   = cid;
+    set @start = s;
+    set @end   = e;
+    set @limit = c;
+    execute stmt using @cid, @start, @end, @limit;
   end loop;
+
+  deallocate prepare stmt;
 
   close x;
 end;;
