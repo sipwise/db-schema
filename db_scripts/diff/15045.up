@@ -1,0 +1,44 @@
+use billing;
+
+delimiter ;;
+
+drop procedure if exists del_dupes;
+create procedure del_dupes()
+begin
+  declare done int default false;
+  declare cid, c int;
+  declare s, e datetime;
+  declare x cursor for select contract_id, start, end, count(*) ct
+    from contract_balances group by contract_id, start, end having ct > 1;
+  declare continue handler for sqlstate '02000' set done = true;
+
+  open x;
+
+  rl: loop
+    fetch x into cid, s, e, c;
+    if done then
+      leave rl;
+    end if;
+    set c = c - 1;
+    delete from contract_balances where contract_id = cid and start = s
+      and end = e and cash_balance = 0 and cash_balance_interval = 0 and
+      free_time_balance = 0 and free_time_balance_interval = 0
+      and invoice_id is null limit c;
+  end loop;
+
+  close x;
+end;;
+
+delimiter ;
+call del_dupes;
+drop procedure del_dupes;
+
+
+
+-- If this throws an error, then the contracts_balances table contains entries
+-- that the above procedure could not delete, which are duplicate entries with
+-- non-zero balances. Manual cleanup is required.
+
+alter table contract_balances
+  add unique key balance_interval (contract_id, start, end),
+  drop key contractid_idx;
