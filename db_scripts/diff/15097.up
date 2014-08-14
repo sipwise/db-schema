@@ -1,0 +1,3 @@
+use provisioning;
+
+update provisioning.voip_dbaliases set is_primary = 1 where username in (select distinct(concat(vn.cc,vn.ac,vn.sn)) from billing.voip_numbers vn, billing.voip_subscribers vs where vs.primary_number_id = vn.id and vs.status != 'terminated');
