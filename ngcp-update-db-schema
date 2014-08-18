@@ -43,6 +43,12 @@ if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
   exit 1
 fi
 
+# check connection with sipwise user
+if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
+  echo 'Error: cant connect to local MySQL with sipwise user' >&2
+  exit 1
+fi
+
 # support automated installation
 if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
   echo "Running in automated installation mode, ignoring check for empty db_schema."
@@ -61,12 +67,6 @@ else
       exit 1
     fi
   fi
-fi
-
-# check connection with sipwise user
-if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
-  echo 'Error: cant connect to local MySQL with sipwise user' >&2
-  exit 1
 fi
 
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
