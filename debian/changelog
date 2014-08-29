@@ -1,3 +1,21 @@
+ngcp-db-schema (3.4.3.0+0~mr3.4.3.0) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [7625df9] MT#8329 make allowed_clis also contract preference.
+
+  [ Irka ]
+  * [aead4bc] MT#8433 Don't clear contract_balances on invoice deletion.
+
+  [ Victor Seva ]
+  * [52e959b] MT#8067 use nodename (spce|sp1|sp2) from ngcp-nodename script not hostname
+
+  [ Andreas Granig ]
+  * [cd90acb] MT#8633 Fix is_primary flag for primary numbers
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 29 Aug 2014 15:41:35 +0200
+
 ngcp-db-schema (3.4.2.0+0~mr3.4.2.0) unstable; urgency=low
 
   [ Andreas Granig ]
