@@ -1,9 +1,9 @@
 USE provisioning;
 
-DELETE FROM language_strings WHERE code in ('Client.Voip.PasswordMusthaveLowercase','Client.Voip.PasswordMusthaveUppercase','Client.Voip.PasswordMusthaveDigit','Client.Voip.PasswordMusthaveSpecialchar','Client.Voip.PasswordMaxLength');
+DELETE FROM language_strings WHERE code in ('Client.Voip.PasswordMusthaveLowercase','Client.Voip.PasswordMusthaveUppercase','Client.Voip.PasswordMusthaveDigit','Client.Voip.PasswordMusthaveSpecialchar','Client.Voip.PasswordMaxLength','Client.Voip.PasswordMinLength');
 
-UPDATE language_strings set string = 'The password is too short, please use 6 characters at least.' where code = 'Client.Voip.PasswordMaxLength' and language = 'en';
-UPDATE language_strings set string = 'Das Passwort ist zu kurz, bitte verwenden Sie mindestens 6 Zeichen.' where code = 'Client.Voip.PasswordMaxLength' and language = 'de';
-UPDATE language_strings set string = 'La contraseña es demasiado corta. Por favor use una de al menos 6 caracteres.' where code = 'Client.Voip.PasswordMaxLength' and language = 'es';
-UPDATE language_strings set string = 'Le mot de passe est trop court, utilisez au moins 6 caractères.' where code = 'Client.Voip.PasswordMaxLength' and language = 'fr';
-UPDATE language_strings set string = 'La password e\' troppo breve, prego usare almeno 6 caratteri.' where code = 'Client.Voip.PasswordMaxLength' and language = 'it';
+UPDATE language_strings set string = 'The password is too short, please use 6 characters at least.' where code = 'Client.Voip.PassLength' and language = 'en';
+UPDATE language_strings set string = 'Das Passwort ist zu kurz, bitte verwenden Sie mindestens 6 Zeichen.' where code = 'Client.Voip.PassLength' and language = 'de';
+UPDATE language_strings set string = 'La contraseña es demasiado corta. Por favor use una de al menos 6 caracteres.' where code = 'Client.Voip.PassLength' and language = 'es';
+UPDATE language_strings set string = 'Le mot de passe est trop court, utilisez au moins 6 caractères.' where code = 'Client.Voip.PassLength' and language = 'fr';
+UPDATE language_strings set string = 'La password e\' troppo breve, prego usare almeno 6 caratteri.' where code = 'Client.Voip.PassLength' and language = 'it';

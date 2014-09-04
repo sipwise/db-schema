@@ -2,11 +2,17 @@ USE provisioning;
 
 SET AUTOCOMMIT=0;
 
-UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'en';
-UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'de';
-UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'es';
-UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'fr';
-UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'it';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PassLength' and language = 'en';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PassLength' and language = 'de';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PassLength' and language = 'es';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PassLength' and language = 'fr';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PassLength' and language = 'it';
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMinLength', 'en', 'The password is too short');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMinLength', 'de', 'The password is too short');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMinLength', 'es', 'The password is too short');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMinLength', 'fr', 'The password is too short');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMinLength', 'it', 'The password is too short');
 
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'en', 'The password is too long');
 INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'de', 'The password is too long');
