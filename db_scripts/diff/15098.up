@@ -1,0 +1,39 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'en';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'de';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'es';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'fr';
+UPDATE language_strings set string = 'The password is too short' where code = 'Client.Voip.PasswordMaxLength' and language = 'it';
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'en', 'The password is too long');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'de', 'The password is too long');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'es', 'The password is too long');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'fr', 'The password is too long');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMaxLength', 'it', 'The password is too long');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveLowercase', 'en', 'The password must contain lower-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveLowercase', 'de', 'Kleinbuchstaben müssen enthalten sein');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveLowercase', 'fr', 'The password must contain lower-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveLowercase', 'es', 'The password must contain lower-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveLowercase', 'it', 'The password must contain lower-case character');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveUppercase', 'en', 'The password must contain upper-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveUppercase', 'de', 'Spezialzeichen müssen enthalten sein');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveUppercase', 'fr', 'The password must contain upper-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveUppercase', 'es', 'The password must contain upper-case character');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveUppercase', 'it', 'The password must contain upper-case character');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveDigit', 'en', 'The password must contain digit');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveDigit', 'de', 'Ziffern müssen enthalten sein');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveDigit', 'fr', 'The password must contain digit');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveDigit', 'es', 'The password must contain digit');
+
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveSpecialchar', 'en', 'The password must contain special characters');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveSpecialchar', 'de', 'Spezialzeichen müssen enthalten sein');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveSpecialchar', 'fr', 'The password must contain special characters');
+INSERT INTO language_strings (code, language, string) VALUES ('Client.Voip.PasswordMusthaveSpecialchar', 'es', 'The password must contain special characters');
+
+COMMIT;
