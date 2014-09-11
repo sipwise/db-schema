@@ -13,7 +13,7 @@ update voip_usr_preferences set value = value + @gid where attribute_id in(@aigi
 -- reset sequence table 
 -- "alter table x auto_increment=@y" fails, so work around it:
 truncate table voip_aig_sequence;
-select @ai := (select max(group_id)+1 from voip_allowed_ip_groups);
+select @ai := (select ifnull(max(group_id)+1,100) from voip_allowed_ip_groups);
 set @qry = concat('alter table voip_aig_sequence auto_increment=',@ai);
 prepare stmt from @qry; 
 execute stmt;
