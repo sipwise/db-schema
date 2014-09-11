@@ -1,13 +1,21 @@
 use provisioning;
 
 -- reserve 1-99 for internal use
-alter table voip_aig_sequence auto_increment=100;
-
-lock tables voip_allowed_ip_groups write, voip_usr_preferences write, voip_preferences write;
+lock tables voip_allowed_ip_groups write, 
+  voip_usr_preferences write, voip_preferences write, 
+  voip_aig_sequence write;
 select ifnull(max(group_id), 1)+100 into @gid from voip_allowed_ip_groups;
 select id into @aigid from voip_preferences where attribute = 'allowed_ips_grp';
 select id into @maigid from voip_preferences where attribute = 'man_allowed_ips_grp';
 update voip_allowed_ip_groups set group_id = group_id + @gid where group_id <= 100;
 update voip_usr_preferences set value = value + @gid where attribute_id in(@aigid, @maigid);
-update voip_aig_sequence set id = id + @gid;
+
+-- reset sequence table 
+-- "alter table x auto_increment=@y" fails, so work around it:
+truncate table voip_aig_sequence;
+select @ai := (select max(group_id)+1 from voip_allowed_ip_groups);
+set @qry = concat('alter table voip_aig_sequence auto_increment=',@ai);
+prepare stmt from @qry; 
+execute stmt;
+
 unlock tables;
