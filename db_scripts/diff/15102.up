@@ -1,0 +1,12 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+select id into @vpid from voip_preferences where attribute = 'allowed_clis';
+INSERT INTO provisioning.voip_usr_preferences
+  (modify_timestamp, attribute_id, subscriber_id, value) 
+  (select now(), @vpid, vs.id, vda.username from provisioning.voip_dbaliases vda left join provisioning.voip_subscribers vs on vda.subscriber_id = vs.id
+WHERE NOT EXISTS (SELECT vp.id FROM voip_usr_preferences vp WHERE attribute_id=@vpid AND subscriber_id=vs.id AND value=vda.username));
+
+COMMIT;
+SET AUTOCOMMIT=1;

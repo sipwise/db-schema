@@ -1,0 +1,30 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups 
+  WHERE name='Access Restrictions';
+
+INSERT INTO voip_preferences
+  (voip_preference_groups_id, attribute, type, max_occur, 
+   usr_pref, dom_pref, peer_pref, contract_pref, internal, data_type, read_only,
+   label, description)
+  VALUES
+  (@vpg_id, 'allowed_clis_reject_policy', 0, 1,
+   1, 1, 0, 1, 0, 'enum', 0,
+   'User-Provided CLI rejection mode',
+   'Define an action to be executed if User-Provided Number doesn\'t match the \'allowed_clis\' list');
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+  VALUES
+  (@pref_id, 'use customer/domain default', NULL, 1, 0, 0, 0, 1),
+  (@pref_id, 'Replace with Network-Provided Number', 'override_by_usernpn', 1, 0, 0, 1, 0),
+  (@pref_id, 'Replace with Network-Provided Number', 'override_by_usernpn', 0, 1, 0, 0, 1),
+  (@pref_id, 'Force CLIR', 'override_by_clir', 1, 1, 0, 1, 0),
+  (@pref_id, 'Reject with 403', 'reject', 1, 1, 0, 1, 0);
+
+COMMIT;
+SET AUTOCOMMIT=1;
