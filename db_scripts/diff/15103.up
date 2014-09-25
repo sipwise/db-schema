@@ -1,0 +1,13 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+select id into @pref_id from voip_preferences where attribute = 'allowed_clis_reject_policy';
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+  VALUES
+  (@pref_id, 'use domain default', NULL, 0, 0, 0, 1, 1);
+
+COMMIT;
+SET AUTOCOMMIT=1;
