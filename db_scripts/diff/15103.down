@@ -1,0 +1,9 @@
+USE provisioning;
+
+SET AUTOCOMMIT=0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='allowed_clis_reject_policy';
+DELETE FROM voip_preferences_enum WHERE preference_id = @pref_id AND contract_pref=1 AND value IS NULL;
+
+COMMIT;
+SET AUTOCOMMIT=1;
