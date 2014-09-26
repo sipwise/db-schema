@@ -1,0 +1,4 @@
+GRANT SELECT ON provisioning.voip_dbaliases TO prosody@localhost;
+GRANT SELECT ON billing.voip_subscribers TO prosody@localhost;
+GRANT SELECT ON billing.contacts TO prosody@localhost;
+GRANT SELECT ON billing.contracts TO prosody@localhost;

@@ -1,0 +1,4 @@
+REVOKE SELECT ON provisioning.voip_dbaliases FROM prosody@localhost;
+REVOKE SELECT ON billing.voip_subscribers FROM prosody@localhost;
+REVOKE SELECT ON billing.contacts FROM prosody@localhost;
+REVOKE SELECT ON billing.contracts FROM prosody@localhost;
