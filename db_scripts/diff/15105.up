@@ -1,0 +1,21 @@
+USE billing;
+
+CREATE TABLE `vouchers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) NOT NULL,
+  `amount` double NOT NULL DEFAULT '0',
+  `reseller_id` int(11) unsigned NOT NULL,
+  `customer_id` int(11) unsigned DEFAULT NULL,
+  `used_by_subscriber_id` int(11) unsigned DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `used_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `valid_until` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `code_sub_valid_idx` (`code`,`used_by_subscriber_id`,`valid_until`),
+  KEY `reseller_idx` (`reseller_id`),
+  KEY `customer_idx` (`customer_id`),
+  KEY `subscriber_idx` (`used_by_subscriber_id`),
+  CONSTRAINT `vouchers_ibfk_1` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vouchers_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vouchers_ibfk_3` FOREIGN KEY (`used_by_subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
