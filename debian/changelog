@@ -1,3 +1,153 @@
+ngcp-db-schema (3.6.0.0+0~mr3.6.0.0) unstable; urgency=low
+
+  [ Andreas Granig ]
+  * [e6e1e16] MT#8065 Create #1 contract balance if none exists.
+  * [6b13c15] MT#8299 Add device annotations schema.
+  * [c16a109] MT#8503 Set lbrtp destination set id.
+  * [a3e871d] MT#8503 Use enum for lbrtp_set.
+  * [1f291b9] MT#8503 Enter a default lbrtp_set "None"
+  * [a6a2c1d] MT#8633 Fix is_primary flag for primary numbers
+  * [a77663e] MT#6969 Shift aig sequence up by 100.
+  * [aa2a726] MT#6969 Properly reset aig sequence.
+  * [fd84502] MT#9051 Grant select on p.voip_domains to kamro
+  * [016b4d5] MT#9277 Add voucher schema.
+
+  [ Jenkins Git User ]
+  * [131a555] db-schema dump: snapshot Thu Jul 10 15:58:41 +0200 2014
+  * [1e7ac93] db-schema dump: snapshot Fri Jul 11 01:12:26 +0200 2014
+  * [4a485f1] db-schema dump: snapshot Sat Jul 12 01:15:42 +0200 2014
+  * [b7db81f] db-schema dump: snapshot Sun Jul 13 01:17:15 +0200 2014
+  * [5390a42] db-schema dump: snapshot Mon Jul 14 01:12:28 +0200 2014
+  * [6ca2e4a] db-schema dump: snapshot Tue Jul 15 01:13:02 +0200 2014
+  * [26cd0f0] db-schema dump: snapshot Wed Jul 16 01:12:35 +0200 2014
+  * [ada11dd] db-schema dump: snapshot Wed Jul 16 14:34:38 +0200 2014
+  * [5aa0cf8] db-schema dump: snapshot Thu Jul 17 01:12:30 +0200 2014
+  * [e446761] db-schema dump: snapshot Fri Jul 18 01:12:33 +0200 2014
+  * [da29bc5] db-schema dump: snapshot Sat Jul 19 01:12:44 +0200 2014
+  * [2387631] db-schema dump: snapshot Sun Jul 20 01:12:29 +0200 2014
+  * [2069eb1] db-schema dump: snapshot Mon Jul 21 01:12:53 +0200 2014
+  * [beb6a3c] db-schema dump: snapshot Tue Jul 22 01:12:47 +0200 2014
+  * [3ead040] db-schema dump: snapshot Wed Jul 23 01:12:46 +0200 2014
+  * [52edc2f] db-schema dump: snapshot Thu Jul 24 01:13:22 +0200 2014
+  * [a9614b5] db-schema dump: snapshot Fri Jul 25 01:12:46 +0200 2014
+  * [2bdd81f] db-schema dump: snapshot Sat Jul 26 01:12:37 +0200 2014
+  * [0af94b3] db-schema dump: snapshot Sun Jul 27 01:12:52 +0200 2014
+  * [bb4c61b] db-schema dump: snapshot Mon Jul 28 01:12:33 +0200 2014
+  * [6fbee48] db-schema dump: snapshot Tue Jul 29 01:12:13 +0200 2014
+  * [4ba1873] db-schema dump: snapshot Wed Jul 30 01:12:48 +0200 2014
+  * [9f138af] db-schema dump: snapshot Thu Jul 31 01:12:50 +0200 2014
+  * [5502728] db-schema dump: snapshot Thu Jul 31 11:47:37 +0200 2014
+  * [64b3fce] db-schema dump: snapshot Fri Aug 01 01:12:46 +0200 2014
+  * [a037063] db-schema dump: snapshot Sat Aug 02 01:11:32 +0200 2014
+  * [cbf08ad] db-schema dump: snapshot Sun Aug 03 01:12:09 +0200 2014
+  * [5f60f7d] db-schema dump: snapshot Mon Aug 04 01:12:09 +0200 2014
+  * [48c173f] db-schema dump: snapshot Wed Aug 06 01:13:38 +0200 2014
+  * [fcb42d6] db-schema dump: snapshot Thu Aug 07 01:13:14 +0200 2014
+  * [5177c70] db-schema dump: snapshot Fri Aug 08 01:13:05 +0200 2014
+  * [8b5f17b] db-schema dump: snapshot Sat Aug 09 01:13:37 +0200 2014
+  * [ca5f6b5] db-schema dump: snapshot Sun Aug 10 01:13:39 +0200 2014
+  * [6694d31] db-schema dump: snapshot Tue Aug 12 01:10:41 +0200 2014
+  * [3cdf15d] db-schema dump: snapshot Wed Aug 13 01:11:44 +0200 2014
+  * [2c0e421] db-schema dump: snapshot Thu Aug 14 01:12:12 +0200 2014
+  * [858b792] db-schema dump: snapshot Fri Aug 15 01:11:36 +0200 2014
+  * [cf5950f] db-schema dump: snapshot Sat Aug 16 01:12:03 +0200 2014
+  * [d007160] db-schema dump: snapshot Sun Aug 17 01:12:20 +0200 2014
+  * [750d854] db-schema dump: snapshot Mon Aug 18 01:12:10 +0200 2014
+  * [094cc46] db-schema dump: snapshot Tue Aug 19 01:11:54 +0200 2014
+  * [0844577] db-schema dump: snapshot Wed Aug 20 01:11:40 +0200 2014
+  * [247f894] db-schema dump: snapshot Thu Aug 21 22:59:11 +0200 2014
+  * [d2c4023] db-schema dump: snapshot Fri Aug 22 01:10:22 +0200 2014
+  * [ab80214] db-schema dump: snapshot Sat Aug 23 01:11:47 +0200 2014
+  * [6de0d6f] db-schema dump: snapshot Mon Aug 25 01:12:03 +0200 2014
+  * [da8354b] db-schema dump: snapshot Tue Aug 26 01:12:19 +0200 2014
+  * [849b7fd] db-schema dump: snapshot Wed Aug 27 01:12:03 +0200 2014
+  * [ce974fb] db-schema dump: snapshot Thu Aug 28 01:10:38 +0200 2014
+  * [c063b51] db-schema dump: snapshot Fri Aug 29 01:11:42 +0200 2014
+  * [6263458] db-schema dump: snapshot Fri Aug 29 17:17:59 +0200 2014
+  * [e868964] db-schema dump: snapshot Sat Aug 30 01:11:49 +0200 2014
+  * [ac901aa] db-schema dump: snapshot Sun Aug 31 01:12:21 +0200 2014
+  * [621d043] db-schema dump: snapshot Mon Sep 01 01:12:06 +0200 2014
+  * [6c8cefa] db-schema dump: snapshot Mon Sep 01 10:45:31 +0200 2014
+  * [e224b7e] db-schema dump: snapshot Tue Sep 02 01:11:47 +0200 2014
+  * [5ed2dea] db-schema dump: snapshot Wed Sep 03 01:11:51 +0200 2014
+  * [58dd0ed] db-schema dump: snapshot Thu Sep 04 01:11:10 +0200 2014
+  * [412fb56] db-schema dump: snapshot Fri Sep 05 01:11:55 +0200 2014
+  * [f4a522e] db-schema dump: snapshot Fri Sep 05 15:23:55 +0200 2014
+  * [967f721] db-schema dump: snapshot Sat Sep 06 01:11:56 +0200 2014
+  * [41edc0a] db-schema dump: snapshot Tue Sep 09 01:11:49 +0200 2014
+  * [f43ac46] db-schema dump: snapshot Wed Sep 10 01:11:47 +0200 2014
+  * [71a6dc1] db-schema dump: snapshot Wed Sep 10 10:16:28 +0200 2014
+  * [fb76107] db-schema dump: snapshot Thu Sep 11 01:11:04 +0200 2014
+  * [8792fba] db-schema dump: snapshot Fri Sep 12 01:11:06 +0200 2014
+  * [d2ad066] db-schema dump: snapshot Sat Sep 13 01:40:45 +0200 2014
+  * [9f18924] db-schema dump: snapshot Sun Sep 14 01:41:05 +0200 2014
+  * [ce07a76] db-schema dump: snapshot Mon Sep 15 01:12:17 +0200 2014
+  * [5ed13f9] db-schema dump: snapshot Tue Sep 16 01:11:48 +0200 2014
+  * [3e13001] db-schema dump: snapshot Wed Sep 17 01:12:07 +0200 2014
+  * [03df625] db-schema dump: snapshot Thu Sep 18 01:12:09 +0200 2014
+  * [86ad401] db-schema dump: snapshot Fri Sep 19 01:12:07 +0200 2014
+  * [f6646cc] db-schema dump: snapshot Sat Sep 20 01:11:09 +0200 2014
+  * [a37b5f4] db-schema dump: snapshot Sun Sep 21 01:10:53 +0200 2014
+  * [5115110] db-schema dump: snapshot Mon Sep 22 01:11:38 +0200 2014
+  * [bba49ef] db-schema dump: snapshot Tue Sep 23 01:12:20 +0200 2014
+  * [da49f68] db-schema dump: snapshot Wed Sep 24 01:12:05 +0200 2014
+  * [796b930] db-schema dump: snapshot Thu Sep 25 01:11:35 +0200 2014
+  * [c23d6ed] db-schema dump: snapshot Fri Sep 26 01:12:10 +0200 2014
+  * [c3c0fc7] db-schema dump: snapshot Sat Sep 27 01:11:22 +0200 2014
+  * [1a9406c] db-schema dump: snapshot Sat Sep 27 12:12:45 +0200 2014
+  * [5a05934] db-schema dump: snapshot Sun Sep 28 01:14:27 +0200 2014
+  * [596e7e5] db-schema dump: snapshot Mon Sep 29 01:15:00 +0200 2014
+  * [7c7151c] db-schema dump: snapshot Tue Sep 30 01:12:14 +0200 2014
+  * [a2b855c] db-schema dump: snapshot Wed Oct 01 01:11:34 +0200 2014
+  * [df8afd1] db-schema dump: snapshot Thu Oct 02 01:12:40 +0200 2014
+  * [06823c8] db-schema dump: snapshot Fri Oct 03 01:11:59 +0200 2014
+  * [441a33f] db-schema dump: snapshot Sat Oct 04 01:11:38 +0200 2014
+  * [bf08149] db-schema dump: snapshot Sun Oct 05 01:12:24 +0200 2014
+  * [1bb5d08] db-schema dump: snapshot Mon Oct 06 01:15:46 +0200 2014
+  * [87741b1] db-schema dump: snapshot Tue Oct 07 01:12:13 +0200 2014
+  * [9d77f4f] db-schema dump: snapshot Wed Oct 08 01:17:59 +0200 2014
+  * [3be6fca] db-schema dump: snapshot Thu Oct 09 01:15:56 +0200 2014
+
+  [ Victor Seva ]
+  * [4fdb4d4] MT#8067 use nodename (spce|sp1|sp2) from ngcp-nodename script not hostname
+  * [b7f74b0] MT#8117 ngcp-update-db-schema: add mysql sipwise user connection check
+  * [26cad40] MT#8117 add READ grants to kamailioro user too.
+  * [9637565] MT#8117 fix b7f74b0737. Move sipwise user connection check earlier
+  * [4fa48e0] MT#8727 fix check for active node
+  * [b6856d7] MT#8951 grant access on more tables to prosody
+  * [3d7f34b] MT#8951 grant access on more tables to prosody
+
+  [ Andrew Pogrebennyk ]
+  * [ee368b6] MT#7319 add new concurrent_max*_total preferences.
+  * [5c3a8e1] MT#8329 make allowed_clis also contract preference.
+  * [4ad4631] MT#6969 MT#9041 fix the aig sequence on new clean DB
+  * [b01f1b4] MT#6969 MT#9041 fix the aig sequence auto-increment
+  * [122c3ba] MT#9209 MT#9225 add allowed_clis_reject_policy; populate allowed_clis
+  * [4e08463] MT#9209 add 'use domain default' option to contract preference
+
+  [ Gerhard Jungwirth ]
+  * [dc59791] MT#7843 copy vat data from billing_profiles to contracts
+  * [c93ca4b] MT#7673 create preference voicemail_echo_number
+
+  [ Irka ]
+  * [2dcd09f] MT#5879 Allow continue or regenration to auto-generation script.
+  * [3ad099d] MT#5879 Clean up code and db from invoice templates active flag.
+  * [69cf0b8] MT#8433 Don't clear contract_balances on invoice deletion.
+  * [92921b4] MT#8371 Make billing_mappings actual id selection faster.
+  * [f44535f] MT#8437 Translation of errors for ngcp-panel password policy
+  * [9b2dc95] MT#8437 Fixes in translation of passwd policy messages
+
+  [ Michael Prokop ]
+  * [c88e0bc] MT#7505 Add .gitreview file for db-schema
+
+  [ Irina Peshinskaya ]
+  * [a8be7dd] MT#7673 Fix for columns count in insert
+  * [eb7a379] Revert "MT#7673 Fix for columns count in insert"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 09 Oct 2014 16:27:15 +0200
+
 ngcp-db-schema (3.5.0.0+0~mr3.5.0.0) unstable; urgency=low
 
   [ Andreas Granig ]
