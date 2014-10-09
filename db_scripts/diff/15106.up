@@ -1,0 +1,9 @@
+use provisioning
+
+insert into voip_sound_groups values (NULL, 'voucher_recharge');
+SELECT last_insert_id() into @grp_id;
+
+INSERT into voip_sound_handles (name,group_id) VALUES ('enter_voucher_number', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('voucher_incorrect', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('error_please_try_later', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('credits_successfully_transferred', @grp_id);
