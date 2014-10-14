@@ -1,0 +1,14 @@
+USE provisioning;
+
+select id into @vpid from voip_preference_groups where name = 'Internals';
+
+insert into voip_preferences values(NULL, @vpid, 'gpp0', 'General Purpose Parameter 0', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp0 or destination_gpp0, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp1', 'General Purpose Parameter 1', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp1 or destination_gpp1, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp2', 'General Purpose Parameter 2', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp2 or destination_gpp2, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp3', 'General Purpose Parameter 3', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp3 or destination_gpp3, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp4', 'General Purpose Parameter 4', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp4 or destination_gpp4, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp5', 'General Purpose Parameter 5', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp5 or destination_gpp5, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp6', 'General Purpose Parameter 6', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp6 or destination_gpp6, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp7', 'General Purpose Parameter 7', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp7 or destination_gpp7, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp8', 'General Purpose Parameter 8', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp8 or destination_gpp8, depending on the call direction.');
+insert into voip_preferences values(NULL, @vpid, 'gpp9', 'General Purpose Parameter 9', 0, 1, 1, 0, 0, 0, now(), 0, 0, 'string', 0, 'A general purpose parameter, which is reflected in CDRs of this subscriber either as source_gpp9 or destination_gpp9, depending on the call direction.');
