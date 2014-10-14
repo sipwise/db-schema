@@ -21,3 +21,25 @@ ALTER TABLE cdr
   ADD COLUMN destination_gpp7 varchar(255) default NULL AFTER destination_gpp6,
   ADD COLUMN destination_gpp8 varchar(255) default NULL AFTER destination_gpp7,
   ADD COLUMN destination_gpp9 varchar(255) default NULL AFTER destination_gpp8;
+
+ALTER TABLE acc
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+ALTER TABLE acc_backup
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+ALTER TABLE acc_trash
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+
+USE kamailio;
+
+ALTER TABLE acc
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+ALTER TABLE acc_backup
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+ALTER TABLE acc_trash
+  CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
+  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
