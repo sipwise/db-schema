@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_2c030b75",
+        "filename": "db_scripts/diff/15106_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2014-10-14T12:38:49Z",
+      "side": 1,
+      "message": "I\u0027m doing not_replicated because the alter table will potentially take looooong, so we first do the change on the standby node, then switch over and do the same change on the other node.\n\nThe mediator would need to be stopped until both nodes are upgraded, not sure how this would work in practice. Advice needed :)",
+      "revId": "7cb46cb7978aca080aa0c129fc44d71d29b8ac51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
