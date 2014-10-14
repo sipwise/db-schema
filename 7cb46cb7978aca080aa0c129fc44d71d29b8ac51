@@ -16,6 +16,24 @@
       "revId": "7cb46cb7978aca080aa0c129fc44d71d29b8ac51",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_0c3f2727",
+        "filename": "db_scripts/diff/15106_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2014-10-14T13:53:15Z",
+      "side": 1,
+      "message": "JFYI 15106 is already used in https://gerrit.mgm.sipwise.com/#/c/320/ \n\nBut is it not yet merged. \n\nP.S. discussed personally, need to test this way.",
+      "parentUuid": "ba092121_2c030b75",
+      "revId": "7cb46cb7978aca080aa0c129fc44d71d29b8ac51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
