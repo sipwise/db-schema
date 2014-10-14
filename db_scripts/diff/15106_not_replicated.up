@@ -1,0 +1,23 @@
+USE accounting;
+
+ALTER TABLE cdr
+  ADD COLUMN source_gpp0 varchar(255) default NULL AFTER source_ip,
+  ADD COLUMN source_gpp1 varchar(255) default NULL AFTER source_gpp0,
+  ADD COLUMN source_gpp2 varchar(255) default NULL AFTER source_gpp1,
+  ADD COLUMN source_gpp3 varchar(255) default NULL AFTER source_gpp2,
+  ADD COLUMN source_gpp4 varchar(255) default NULL AFTER source_gpp3,
+  ADD COLUMN source_gpp5 varchar(255) default NULL AFTER source_gpp4,
+  ADD COLUMN source_gpp6 varchar(255) default NULL AFTER source_gpp5,
+  ADD COLUMN source_gpp7 varchar(255) default NULL AFTER source_gpp6,
+  ADD COLUMN source_gpp8 varchar(255) default NULL AFTER source_gpp7,
+  ADD COLUMN source_gpp9 varchar(255) default NULL AFTER source_gpp8,
+  ADD COLUMN destination_gpp0 varchar(255) default NULL AFTER destination_domain_in,
+  ADD COLUMN destination_gpp1 varchar(255) default NULL AFTER destination_gpp0,
+  ADD COLUMN destination_gpp2 varchar(255) default NULL AFTER destination_gpp1,
+  ADD COLUMN destination_gpp3 varchar(255) default NULL AFTER destination_gpp2,
+  ADD COLUMN destination_gpp4 varchar(255) default NULL AFTER destination_gpp3,
+  ADD COLUMN destination_gpp5 varchar(255) default NULL AFTER destination_gpp4,
+  ADD COLUMN destination_gpp6 varchar(255) default NULL AFTER destination_gpp5,
+  ADD COLUMN destination_gpp7 varchar(255) default NULL AFTER destination_gpp6,
+  ADD COLUMN destination_gpp8 varchar(255) default NULL AFTER destination_gpp7,
+  ADD COLUMN destination_gpp9 varchar(255) default NULL AFTER destination_gpp8;
