@@ -1,3 +1,12 @@
+ngcp-db-schema (3.5.1.2+0~mr3.5.1.2) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [8ae87e7] MT#9431 Add proper enum values for cloud_pbx_hunt_policy preferences.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Oct 2014 14:51:51 +0200
+
 ngcp-db-schema (3.5.1.1+0~mr3.5.1.1) unstable; urgency=low
 
   * New release.
