@@ -1,0 +1,6 @@
+USE provisioning;
+
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='cloud_pbx_hunt_policy';
+
+delete from voip_preferences_enum where preference_id=@pref_id and value in('random','circular');
