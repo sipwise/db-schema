@@ -1,0 +1,20 @@
+use provisioning;
+
+
+alter table autoprov_devices 
+add column `sync_uri` varchar(255) DEFAULT NULL,
+add column `sync_method` enum('GET','POST') DEFAULT 'GET',
+add column `sync_params` varchar(255) DEFAULT NULL,
+add column `security_handler` varchar(255) DEFAULT NULL,
+drop column `sync_type`;
+
+update autoprov_devices d 
+    inner join autoprov_sync s on d.id=s.device_id 
+    inner join autoprov_sync_parameters p on p.id=s.parameter_id 
+set d.sync_uri=if(p.parameter_name='sync_uri',s.parameter_value,d.sync_uri),
+    d.sync_method=if(p.parameter_name='sync_method',s.parameter_value,d.sync_method),
+    d.sync_params=if(p.parameter_name='sync_params',s.parameter_value,d.sync_params),
+    d.security_handler=if(p.parameter_name='security_handler',s.parameter_value,d.security_handler);
+
+drop table autoprov_sync;
+drop table autoprov_sync_parameters;
