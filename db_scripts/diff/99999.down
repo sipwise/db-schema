@@ -6,7 +6,7 @@ add column `sync_uri` varchar(255) DEFAULT NULL,
 add column `sync_method` enum('GET','POST') DEFAULT 'GET',
 add column `sync_params` varchar(255) DEFAULT NULL,
 add column `security_handler` varchar(255) DEFAULT NULL,
-drop column `sync_type`;
+drop column `bootstrap_method`;
 
 update autoprov_devices d 
     inner join autoprov_sync s on d.id=s.device_id 

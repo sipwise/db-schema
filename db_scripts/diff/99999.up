@@ -1,21 +1,21 @@
 use provisioning;
 
 alter table autoprov_devices 
-add column sync_type enum('http','zte_panasonic','zte_linksys') not null default 'http';
+add column bootstrap_method enum('http','zte_panasonic','zte_linksys') not null default 'http';
 
-update autoprov_devices set sync_type='http' where vendor='Cisco';
+update autoprov_devices set bootstrap_method='http' where vendor='Cisco';
 
 create table autoprov_sync_parameters(
   `id` integer unsigned not null auto_increment primary key,
-  `sync_type` enum('http','zte_panasonic','zte_linksys') not null default 'http',
+  `bootstrap_method` enum('http','zte_panasonic','zte_linksys') not null default 'http',
   `parameter_name` enum('sync_uri','sync_method','sync_params','security_handler'),
   `parameter_constraint` varchar(255),
-  UNIQUE KEY sync_parameter (sync_type,parameter_name)
+  UNIQUE KEY sync_parameter (bootstrap_method,parameter_name)
 );
-insert into autoprov_sync_parameters(sync_type,parameter_name,parameter_constraint) values('http','sync_uri','');
-insert into autoprov_sync_parameters(sync_type,parameter_name,parameter_constraint) values('http','sync_params','');
-insert into autoprov_sync_parameters(sync_type,parameter_name,parameter_constraint) values('http','sync_method','/^(?:GET|POST)$/i');
-insert into autoprov_sync_parameters(sync_type,parameter_name,parameter_constraint) values('http','security_handler','');
+insert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint) values('http','sync_uri','');
+insert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint) values('http','sync_params','');
+insert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint) values('http','sync_method','/^(?:GET|POST)$/i');
+insert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint) values('http','security_handler','');
 
 create table autoprov_sync(
   `id` integer unsigned not null auto_increment primary key,
@@ -28,14 +28,14 @@ create table autoprov_sync(
 
 insert into autoprov_sync(device_id,parameter_id,parameter_value)
 select a.id,p.id,a.val from (
-    select id,'sync_uri'    as name, sync_uri    as val, sync_type from autoprov_devices
+    select id,'sync_uri'    as name, sync_uri    as val, bootstrap_method from autoprov_devices
     union
-    select id,'sync_method' as name, sync_method as val, sync_type from autoprov_devices
+    select id,'sync_method' as name, sync_method as val, bootstrap_method from autoprov_devices
     union
-    select id,'sync_params' as name, sync_params as val, sync_type from autoprov_devices
+    select id,'sync_params' as name, sync_params as val, bootstrap_method from autoprov_devices
     union
-    select id,'security_handler' as name, security_handler as val, sync_type from autoprov_devices
-) a inner join autoprov_sync_parameters p on a.name=p.parameter_name and a.sync_type=p.sync_type;
+    select id,'security_handler' as name, security_handler as val, bootstrap_method from autoprov_devices
+) a inner join autoprov_sync_parameters p on a.name=p.parameter_name and a.bootstrap_method=p.bootstrap_method;
 
 
 alter table autoprov_devices 

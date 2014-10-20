@@ -1,0 +1,25 @@
+use provisioning;
+
+alter table autoprov_devices 
+add column bootstrap_method enum('http','redirect_panasonic','redirect_linksys') not null default 'http';
+
+update autoprov_devices set bootstrap_method='http' where vendor='Cisco';
+
+create table autoprov_sync_cisco(
+  `device_id` integer unsigned not null,
+  `sync_uri` varchar(255) DEFAULT NULL,
+  `sync_method` enum('GET','POST') DEFAULT 'GET',
+  `sync_params` varchar(255) DEFAULT NULL,
+  `security_handler` varchar(255) DEFAULT NULL,
+   CONSTRAINT `a_s_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+insert into autoprov_sync_cisco(device_id,sync_uri,sync_method,sync_params)
+select d.id,d.sync_uri,d.sync_method,d.sync_params from autoprov_devices d where d.bootstrap_method='http';
+
+
+alter table autoprov_devices 
+drop column sync_uri, 
+drop column sync_method, 
+drop column sync_params, 
+drop column security_handler;
