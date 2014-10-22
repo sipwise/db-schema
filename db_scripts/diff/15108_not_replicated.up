@@ -24,22 +24,22 @@ ALTER TABLE cdr
 
 ALTER TABLE acc
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
 ALTER TABLE acc_backup
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
 ALTER TABLE acc_trash
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
 
 USE kamailio;
 
 ALTER TABLE acc
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
 ALTER TABLE acc_backup
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
 ALTER TABLE acc_trash
   CHANGE COLUMN src_leg src_leg varchar(10240) DEFAULT NULL,
-  CHANGE COLUMN dst_leg src_leg varchar(10240) DEFAULT NULL;
+  CHANGE COLUMN dst_leg dst_leg varchar(10240) DEFAULT NULL;
