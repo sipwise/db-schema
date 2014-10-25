@@ -1,0 +1,2 @@
+use billing;
+drop table contract_vendor_credentials;

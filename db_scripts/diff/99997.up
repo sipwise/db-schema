@@ -1,0 +1,10 @@
+use billing;
+
+create table contract_vendor_credentials(
+    id int(11) unsigned not null primary key auto_increment,
+    contract_id int(11) unsigned not null,
+    vendor enum('panasonic','linksys','yealink'),
+    user varchar(255),
+    password varchar(255),
+    CONSTRAINT `c_v_c_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);

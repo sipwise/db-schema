@@ -1,13 +1,13 @@
 use provisioning;
 
 alter table autoprov_devices 
-add column bootstrap_method enum('http','zte_panasonic','zte_linksys') not null default 'http';
+add column bootstrap_method enum('http','redirect_panasonic','redirect_linksys','redirect_yealink') not null default 'http';
 
 update autoprov_devices set bootstrap_method='http' where vendor='Cisco';
 
 create table autoprov_sync_parameters(
   `id` integer unsigned not null auto_increment primary key,
-  `bootstrap_method` enum('http','zte_panasonic','zte_linksys') not null default 'http',
+  `bootstrap_method` enum('http','redirect_panasonic','redirect_linksys','redirect_yealink') not null default 'http',
   `parameter_name` enum('sync_uri','sync_method','sync_params','security_handler'),
   `parameter_constraint` varchar(255),
   UNIQUE KEY sync_parameter (bootstrap_method,parameter_name)
