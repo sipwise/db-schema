@@ -1,0 +1,4 @@
+use provisioning
+
+DELETE FROM voip_sound_handles WHERE name IN ('enter_voucher_number', 'voucher_incorrect', 'error_please_try_later', 'credits_successfully_transferred', 'units');
+DELETE FROM voip_sound_groups WHERE name = 'voucher_recharge';
