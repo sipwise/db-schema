@@ -1,0 +1,4 @@
+use provisioning
+
+DELETE FROM voip_sound_handles WHERE name IN ('you_have_in_your_account', 'units', 'and', 'cents');
+DELETE FROM voip_sound_groups WHERE name = 'play_balance';
