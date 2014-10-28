@@ -1,0 +1,9 @@
+USE provisioning
+
+INSERT INTO voip_sound_groups VALUES (NULL, 'play_balance');
+SELECT last_insert_id() INTO @grp_id;
+
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('you_have_in_your_account', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('units', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('and', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('cents', @grp_id);
