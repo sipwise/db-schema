@@ -1,3 +1,43 @@
+ngcp-db-schema (3.6.1.0+0~mr3.6.1.0) unstable; urgency=low
+
+  [ Jenkins Git User ]
+  * [bb71c6d] db-schema dump: snapshot Sat Oct 11 01:12:30 +0200 2014
+  * [09a98ca] db-schema dump: snapshot Sun Oct 12 01:12:18 +0200 2014
+  * [2fbbaf9] db-schema dump: snapshot Mon Oct 13 01:14:54 +0200 2014
+  * [102239d] db-schema dump: snapshot Tue Oct 14 01:12:13 +0200 2014
+  * [44b3453] db-schema dump: snapshot Wed Oct 15 01:12:08 +0200 2014
+  * [828b5db] db-schema dump: snapshot Wed Oct 15 09:41:35 +0200 2014
+  * [0dcf406] db-schema dump: snapshot Thu Oct 16 01:12:12 +0200 2014
+  * [a1aa7b8] db-schema dump: snapshot Fri Oct 17 01:12:23 +0200 2014
+  * [722513b] db-schema dump: snapshot Sat Oct 18 01:11:27 +0200 2014
+  * [30c3707] db-schema dump: snapshot Sun Oct 19 01:10:54 +0200 2014
+  * [efbbcad] db-schema dump: snapshot Mon Oct 20 01:10:53 +0200 2014
+  * [5c5c5f1] db-schema dump: snapshot Tue Oct 21 01:10:23 +0200 2014
+  * [b31be51] db-schema dump: snapshot Fri Oct 24 01:10:33 +0200 2014
+  * [dbb67bc] db-schema dump: snapshot Sat Oct 25 01:11:06 +0200 2014
+  * [d073878] db-schema dump: snapshot Sun Oct 26 01:15:10 +0200 2014
+  * [9d3be0d] db-schema dump: snapshot Mon Oct 27 01:11:21 +0100 2014
+  * [9f079b0] db-schema dump: snapshot Tue Oct 28 01:11:23 +0100 2014
+  * [3aae611] db-schema dump: snapshot Wed Oct 29 01:10:55 +0100 2014
+  * [ee049ae] db-schema dump: snapshot Thu Oct 30 14:05:07 +0100 2014
+
+  [ Irina Peshinskaya ]
+  * [21eafde] MT#9431 Add proper enum values for cloud_pbx_hunt_policy preferences.
+
+  [ Andreas Granig ]
+  * [79a6e54] MT#9565 Introduce gpp0-gpp9 and change cdr schema.
+  * [30a67a3] MT#9565 Increase src/dst-leg acc columns
+
+  [ Andrew Pogrebennyk ]
+  * [e0ad744] MT#9565 rename to 15108 because 15106 was already taken.
+  * [9bfb7ff] MT#9565 move new columns on CDR to separate file
+  * [5a58058] MT#9277 voice prompts list for the voucher app
+  * [50a6588] MT#9277 voice prompts list for the playbalance app
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 30 Oct 2014 17:15:17 +0100
+
 ngcp-db-schema (3.6.0.0+0~mr3.6.0.0) unstable; urgency=low
 
   [ Andreas Granig ]
