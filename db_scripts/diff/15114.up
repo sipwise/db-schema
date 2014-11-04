@@ -1,6 +1,6 @@
 USE provisioning;
 
-DROP TABLE billing.contract_vendor_credentials;
+DROP TABLE IF EXISTS billing.contract_vendor_credentials;
 
 CREATE TABLE `autoprov_redirect_credentials` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
