@@ -9,6 +9,5 @@ CREATE TABLE `autoprov_redirect_credentials` (
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ap_devid_fk` (`device_id`),
-  KEY `vendor_idx` (`vendor`),
   CONSTRAINT `autoprov_redirect_credentials_ibfk_1` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
