@@ -1,11 +1,1 @@
-USE provisioning;
-
-CREATE TABLE `autoprov_redirect_credentials` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `device_id` int(11) unsigned NOT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ap_devid_fk` (`device_id`),
-  CONSTRAINT `autoprov_redirect_credentials_ibfk_1` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
+-- duplicate file
