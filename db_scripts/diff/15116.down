@@ -1,0 +1,3 @@
+USE provisioning;
+
+alter TABLE `autoprov_devices` drop column bootstrap_uri;

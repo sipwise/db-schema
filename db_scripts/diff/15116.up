@@ -1,0 +1,3 @@
+USE provisioning;
+
+alter TABLE `autoprov_devices` add column bootstrap_uri varchar(255) not null default '';
