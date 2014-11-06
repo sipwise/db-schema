@@ -1,0 +1,8 @@
+USE billing;
+
+ALTER TABLE billing_profiles DROP COLUMN terminate_timestamp;
+ALTER TABLE billing_profiles DROP COLUMN create_timestamp;
+ALTER TABLE billing_profiles DROP COLUMN modify_timestamp;
+ALTER TABLE billing_profiles DROP COLUMN status;
+
+
