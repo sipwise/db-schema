@@ -1,0 +1,34 @@
+USE provisioning;
+set autocommit=0;
+
+-- insert the new preference
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES (@vpgid, 'extended_dialing_mode', 'Incoming Dialed Number Matching', 0, 1, 1, 1, 0, 0, now(), 0, 1, 
+  'enum', 0, '"Incoming Dialed Number Matching" - configure between strict number matching for incoming calls where dialing arbitrary extension behind subscriber number is not allowed and the extended number matching, where the system will locate the subscriber by longest matching prefix and will send either the base matching number or the original dialed number with extension (with possible fallback to user on 404 response from callee).'
+  );
+SELECT last_insert_id() INTO @new_pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@new_pref_id, 'use domain default', NULL, 1, 0, 0, 0, 1),
+(@new_pref_id, 'Strict number matching', 'strict', 1, 1, 0, 0, 0),
+(@new_pref_id, 'Extended matching, send dialed number with extension', 'extended_send_dialed', 0, 1, 0, 0, 1),
+(@new_pref_id, 'Extended matching, send dialed number with extension', 'extended_send_dialed', 1, 0, 0, 0, 0),
+(@new_pref_id, 'Extended matching, send base matching number', 'extended_send_base', 1, 1, 0, 0, 0);
+
+-- migrate the preferences
+SELECT id FROM voip_preferences   WHERE attribute='force_strict_number_match' INTO @old_pref_id;
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value) 
+  SELECT p.subscriber_id, @new_pref_id, "extended_send_dialed" from voip_usr_preferences p
+  WHERE p.attribute_id=@old_pref_id;
+
+-- drop the old preference
+DELETE FROM voip_usr_preferences  WHERE attribute_id=@old_pref_id;
+DELETE FROM voip_dom_preferences  WHERE attribute_id=@old_pref_id;
+DELETE FROM voip_contract_preferences WHERE attribute_id=@old_pref_id;
+DELETE FROM voip_preferences      WHERE id=@old_pref_id;
+
+commit;
