@@ -1,0 +1,21 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES (@vpgid, 'outbound_to_user', ' Outbound To-Username Field ', 0, 1, 1, 1, 1, 0, now(), 0, 1, 
+  'enum', 0, 'The content to put into the To username for outbound calls from the platform to the subscriber or peer.'
+  );
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 1),
+(@pref_id, 'Called user', 'callee', 0, 1, 1, 0, 1),
+(@pref_id, 'Called user', 'callee', 1, 0, 0, 0, 0),
+(@pref_id, 'Received To header', 'rcvd_to', 1, 1, 1, 0, 0),
+(@pref_id, 'Original (Forwarding) called user', 'orig_callee', 1, 1, 1, 0, 0);
+
+commit;
