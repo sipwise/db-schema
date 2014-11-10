@@ -1,3 +1,9 @@
+ngcp-db-schema (3.6.2.0+0~mr3.6.2.0) unstable; urgency=low
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Nov 2014 13:40:20 +0100
+
 ngcp-db-schema (3.6.1.0+0~mr3.6.1.0) unstable; urgency=low
 
   [ Jenkins Git User ]
