@@ -1,0 +1,347 @@
+use kamailio;
+create table prof_preferences like usr_preferences;
+
+use provisioning;
+drop trigger voip_pref_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  IF OLD.attribute != NEW.attribute THEN
+    UPDATE kamailio.usr_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.dom_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.prof_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+  END IF; 
+
+  END */;;
+DELIMITER ;
+
+drop trigger voip_pref_drepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+
+drop trigger enum_set_default;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    IF (NEW.dom_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_domains;
+    END IF;
+    IF (NEW.peer_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts;
+    END IF;
+    IF (NEW.usr_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscribers;
+    END IF;
+    IF (NEW.prof_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_prof_preferences (profile_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscriber_profiles;
+    END IF;
+END */;;
+DELIMITER ;
+
+drop trigger enum_update;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    UPDATE voip_usr_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_dom_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_peer_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_prof_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+END */;;
+DELIMITER ;
+
+drop trigger voip_rwrulesets_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid <=> OLD.caller_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+  END IF;
+
+  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid <=> OLD.callee_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+  END IF;
+
+  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid <=> OLD.caller_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+  END IF;
+
+  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid <=> OLD.callee_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+drop trigger voip_rwrulesets_drepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_out_dpid;
+
+  END */;;
+DELIMITER ;
+
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_crepl_trig AFTER INSERT ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id <=> NEW.attribute_id;
+
+  INSERT INTO kamailio.prof_preferences (uuid, attribute, type, value)
+                                 VALUES(NEW.profile_id, attribute_name, attribute_type, NEW.value);
+  END */;;
+DELIMITER ;
+
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_urepl_trig AFTER UPDATE ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> NEW.attribute_id;
+
+  UPDATE kamailio.prof_preferences SET uuid = NEW.profile_id,
+                                      attribute = new_attribute_name,
+                                      value = NEW.value
+                                WHERE uuid <=> OLD.profile_id
+                                  AND attribute <=> old_attribute_name
+                                  AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_drepl_trig BEFORE DELETE ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE attribute_name varchar(31);
+
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+
+  DELETE FROM kamailio.prof_preferences WHERE uuid <=> OLD.profile_id
+                                         AND attribute <=> attribute_name
+                                         AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prof_crepl_trig AFTER INSERT ON voip_subscriber_profiles
+FOR EACH ROW BEGIN
+
+    INSERT INTO voip_prof_preferences (profile_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.prof_pref=1 AND pe.prof_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
+DELIMITER ;
+
+drop trigger voip_pref_drepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+
+
+  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
+
+  END */;;
+DELIMITER 
