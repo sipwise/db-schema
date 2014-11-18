@@ -1,0 +1,19 @@
+USE provisioning;
+
+-- TODO: add foreign keys, but the will fail, right?
+CREATE TABLE `voip_prof_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `profidattrid_idx` (`profile_id`,`attribute_id`),
+  KEY `profid_idx` (`profile_id`),
+  KEY `attrid_idx` (`attribute_id`)
+) ENGINE=InnoDB;
+
+alter table voip_preferences add column prof_pref tinyint(1) not null default 0 after usr_pref;
+alter table voip_preferences_enum add column prof_pref tinyint(1) DEFAULT '0' after usr_pref;
+update voip_preferences_enum set prof_pref=1 where dom_pref=1;
+update voip_preferences set prof_pref=1 where dom_pref=1;
