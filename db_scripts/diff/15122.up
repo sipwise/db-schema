@@ -1,8 +1,8 @@
 use kamailio;
-create table prof_preferences like usr_preferences;
+create table if not exists prof_preferences like usr_preferences;
 
 use provisioning;
-drop trigger voip_pref_urepl_trig;
+drop trigger if exists voip_pref_urepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
   FOR EACH ROW BEGIN
@@ -28,7 +28,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
-drop trigger voip_pref_drepl_trig;
+drop trigger if exists voip_pref_drepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
   FOR EACH ROW BEGIN
@@ -41,7 +41,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
-drop trigger enum_set_default;
+drop trigger if exists enum_set_default;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
 FOR EACH ROW BEGIN
@@ -68,7 +68,7 @@ FOR EACH ROW BEGIN
 END */;;
 DELIMITER ;
 
-drop trigger enum_update;
+drop trigger if exists enum_update;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
 FOR EACH ROW BEGIN
@@ -83,7 +83,7 @@ FOR EACH ROW BEGIN
 END */;;
 DELIMITER ;
 
-drop trigger voip_rwrulesets_urepl_trig;
+drop trigger if exists voip_rwrulesets_urepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
   FOR EACH ROW BEGIN
@@ -187,7 +187,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
-drop trigger voip_rwrulesets_drepl_trig;
+drop trigger if exists voip_rwrulesets_drepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
   FOR EACH ROW BEGIN
@@ -268,6 +268,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
+drop trigger if exists voip_profpref_crepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_crepl_trig AFTER INSERT ON voip_prof_preferences
   FOR EACH ROW BEGIN
@@ -283,8 +284,9 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
+drop trigger if exists voip_profpref_urepl_trig;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_urepl_trig AFTER UPDATE ON voip_prof_preferences
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_urepl_trig AFTER UPDATE ON voip_prof_preferences
   FOR EACH ROW BEGIN
   DECLARE old_attribute_name varchar(31);
   DECLARE new_attribute_name varchar(31);
@@ -305,6 +307,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
+drop trigger if exists voip_profpref_drepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_drepl_trig BEFORE DELETE ON voip_prof_preferences
   FOR EACH ROW BEGIN
@@ -320,6 +323,7 @@ DELIMITER ;;
   END */;;
 DELIMITER ;
 
+drop trigger if exists voip_prof_crepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prof_crepl_trig AFTER INSERT ON voip_subscriber_profiles
 FOR EACH ROW BEGIN
@@ -331,7 +335,7 @@ FOR EACH ROW BEGIN
 END */;;
 DELIMITER ;
 
-drop trigger voip_pref_drepl_trig;
+drop trigger if exists voip_pref_drepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
   FOR EACH ROW BEGIN
@@ -344,4 +348,4 @@ DELIMITER ;;
   DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
 
   END */;;
-DELIMITER 
+DELIMITER ;
