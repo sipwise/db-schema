@@ -1,0 +1,3 @@
+use kamailio;
+
+alter table mobile_push_registrations add column device_id varbinary(255) not null after subscriber_id;
