@@ -1,0 +1,2 @@
+USE provisioning
+UPDATE voip_preferences SET contract_pref=0 WHERE attribute IN ('concurrent_max','concurrent_max_out');
