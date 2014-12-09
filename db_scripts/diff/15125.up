@@ -1,0 +1,5 @@
+USE provisioning;
+
+select id into @pgid from voip_preference_groups where name = 'Cloud PBX';
+
+insert into voip_preferences values(NULL, @pgid, 'enable_t38', 'Enable T38 Fax-over-IP', 1, 1, 1, 0, 0, 0, 0, now(), 0, 1, 'boolean', 0, 'Enable T38 Fax-over-IP via auto-provisioning if the end device supports it.');
