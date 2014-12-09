@@ -1,0 +1,47 @@
+START TRANSACTION;
+
+USE kamailio;
+
+-- table: acc
+-- we have already 128
+-- ALTER TABLE acc CHANGE COLUMN sip_reason sip_reason VARCHAR(128) DEFAULT '' NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='acc';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('acc','5');
+
+-- table: dialplan
+-- we have already 128
+-- ALTER TABLE dialplan CHANGE COLUMN repl_exp repl_exp VARCHAR(64) NOT NULL;
+ALTER TABLE dialplan CHANGE COLUMN attrs attrs VARCHAR(64) NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='dialplan';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('dialplan','2');
+
+-- table: location
+ALTER TABLE location ADD COLUMN server_id INT(11) DEFAULT 0 NOT NULL;
+ALTER TABLE location ADD COLUMN connection_id INT(11) DEFAULT 0 NOT NULL;
+ALTER TABLE location ADD COLUMN keepalive INT(11) DEFAULT 0 NOT NULL;
+ALTER TABLE location ADD COLUMN partition INT(11) DEFAULT 0 NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='location';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('location','8');
+
+-- table: presentity
+ALTER TABLE presentity ADD COLUMN priority INT(11) DEFAULT 0 NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='presentity';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('presentity','4');
+
+-- table: acc_cdrs
+-- For previous values
+-- STRING -> DATETIME ??
+-- STRING -> FLOAT ??
+ALTER TABLE acc_cdrs MODIFY COLUMN start_time DATETIME DEFAULT '2000-01-01 00:00:00' NOT NULL;
+ALTER TABLE acc_cdrs MODIFY COLUMN end_time DATETIME DEFAULT '2000-01-01 00:00:00' NOT NULL;
+ALTER TABLE acc_cdrs MODIFY COLUMN duration FLOAT(10,3) DEFAULT 0 NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='acc_cdrs';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('acc_cdrs','2');
+
+-- table: silo
+ALTER TABLE silo MODIFY COLUMN body BLOB;
+ALTER TABLE silo MODIFY COLUMN extra_hdrs TEXT;
+DELETE FROM version WHERE TABLE_NAME='silo';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('silo','8');
+
+COMMIT;
