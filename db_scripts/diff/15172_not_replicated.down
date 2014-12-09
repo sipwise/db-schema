@@ -1,0 +1,39 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+-- table: acc
+-- we have already 128
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('acc','4');
+
+-- table: dialplan
+ALTER TABLE dialplan CHANGE COLUMN attrs attrs VARCHAR(32) NOT NULL;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('dialplan','1');
+
+-- table: location
+ALTER TABLE location DROP COLUMN server_id;
+ALTER TABLE location DROP COLUMN connection_id;
+ALTER TABLE location DROP COLUMN keepalive;
+ALTER TABLE location DROP COLUMN partition;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('location','7');
+
+-- table: presentity
+ALTER TABLE presentity DROP COLUMN priority;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('presentity','3');
+
+-- table: acc_cdrs
+-- we are not using this
+ALTER TABLE acc_cdrs MODIFY COLUMN start_time VARCHAR(32) NOT NULL;
+ALTER TABLE acc_cdrs MODIFY COLUMN end_time VARCHAR(32) NOT NULL;
+ALTER TABLE acc_cdrs MODIFY COLUMN duration VARCHAR(32) NOT NULL;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('acc_cdrs','1');
+
+-- table: silo
+-- we are not using this
+ALTER TABLE silo MODIFY COLUMN body BLOB DEFAULT NULL;
+ALTER TABLE silo MODIFY COLUMN extra_hdrs TEXT DEFAULT NULL;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('silo','7');
+
+COMMIT;
