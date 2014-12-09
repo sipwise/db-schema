@@ -1,0 +1,19 @@
+USE kamailio;
+-- table: acc
+-- we have already 128
+-- ALTER TABLE acc CHANGE COLUMN sip_reason sip_reason VARCHAR(128) DEFAULT '' NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='acc';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('acc','5');
+
+-- table: dialplan
+-- we have already 128
+-- ALTER TABLE dialplan CHANGE COLUMN repl_exp repl_exp VARCHAR(64) NOT NULL;
+ALTER TABLE dialplan CHANGE COLUMN attrs attrs VARCHAR(64) NOT NULL;
+DELETE FROM version WHERE TABLE_NAME='dialplan';
+INSERT INTO version (`table_name`, `table_version`) VALUES ('dialplan','2');
+
+-- table: missed_calls
+-- We don't have this?
+-- ALTER TABLE missed_calls CHANGE COLUMN sip_reason sip_reason VARCHAR(128) DEFAULT '' NOT NULL;
+-- DELETE FROM version WHERE TABLE_NAME='missed_calls';
+-- INSERT INTO version (`table_name`, `table_version`) VALUES ('missed_calls','4');
