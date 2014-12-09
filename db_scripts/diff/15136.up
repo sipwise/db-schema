@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE autoprov_field_devices 
+  ADD COLUMN encryption_key VARCHAR(255) DEFAULT NULL;
