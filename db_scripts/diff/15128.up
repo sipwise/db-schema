@@ -1,0 +1,21 @@
+use provisioning
+
+SELECT id INTO @vpintid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpintid, 'language', 'Language for voicemail and app server', 0, 1, 1, 1, 0, 0, 0, now(), 0, 1, 
+  'enum', 0, 'Voice prompts language for voicemail, conference and application server.'
+  );
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'German',  'de', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'English', 'en', 0, 1, 0, 0, 0, 1),
+(@pref_id, 'English', 'en', 1, 0, 0, 0, 0, 0),
+(@pref_id, 'Spanish', 'es', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Italian', 'it', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Russian', 'ru', 1, 1, 0, 0, 0, 0);
