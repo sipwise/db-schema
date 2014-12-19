@@ -1,0 +1,62 @@
+USE provisioning
+set autocommit=0;
+
+use provisioning
+
+SELECT id INTO @vppbxid FROM voip_preference_groups WHERE name = 'Cloud PBX';
+
+INSERT INTO voip_preferences VALUES
+  (NULL, @vppbxid, 'cloud_pbx_callqueue', 'PBX Call Queue', 1, 1, 1, 1, 0, 0, 0, now(), 0, 1, 
+  'boolean', 0, 'Marks subscriber for CloudPBX Call Queue that queues incoming calls if it is busy and serves them to this subscriber when it becomes available'
+  );
+
+select id from voip_sound_groups where name='pbx' into @grp_id;
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('queue_greeting', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('queue_full', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('queue_prefix', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('queue_suffix', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('queue_waiting_music', @grp_id);
+
+INSERT INTO voip_sound_groups VALUES (NULL, 'digits');
+SELECT last_insert_id() INTO @grp_id;
+
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('0', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('1', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('2', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('3', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('4', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('5', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('6', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('7', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('8', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('9', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x1', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x2', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x3', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x4', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x5', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x6', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x7', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x8', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('x9', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('10', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('11', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('12', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('13', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('14', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('15', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('16', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('17', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('18', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('19', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('20', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('30', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('40', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('50', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('60', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('70', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('80', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('90', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('100', @grp_id);
+
+commit;
