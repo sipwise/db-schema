@@ -6,6 +6,3 @@
 
 %:
 	dh $@
-
-override_dh_auto_build:
-	pod2man ./ngcp-check-rev-applied > ./ngcp-check-rev-applied.1
