@@ -63,3 +63,7 @@ DELIMITER ;;
 
   END */;;
 DELIMITER ;
+
+ALTER TABLE voip_peer_hosts DROP column `enabled`;
+ALTER TABLE voip_peer_rules DROP column `enabled`;
+ALTER TABLE voip_rewrite_rules DROP column `enabled`;

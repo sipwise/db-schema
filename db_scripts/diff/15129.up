@@ -1,5 +1,9 @@
 USE provisioning;
 
+ALTER TABLE voip_peer_hosts ADD column `enabled` tinyint(1) NOT NULL DEFAULT '1' AFTER via_lb;
+ALTER TABLE voip_peer_rules ADD column `enabled` tinyint(1) NOT NULL DEFAULT '1' AFTER description;
+ALTER TABLE voip_rewrite_rules ADD column `enabled` tinyint(1) NOT NULL DEFAULT '1' AFTER priority;
+
 DROP TRIGGER IF EXISTS voip_rwrules_crepl_trig;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
