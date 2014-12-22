@@ -1,0 +1,65 @@
+USE provisioning;
+
+DROP TRIGGER IF EXISTS voip_rwrules_crepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE new_set_id int(11) unsigned;
+
+  IF NEW.enabled = 1 THEN
+    SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_rwrules_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+  DECLARE new_set_id int(11) unsigned;
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+    SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+      INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+      INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+
+    UPDATE kamailio.dialplan
+       SET dpid      = new_set_id,
+           pr        = NEW.priority,
+           match_exp = NEW.match_pattern,
+           subst_exp = NEW.match_pattern,
+           repl_exp  = NEW.replace_pattern
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+    SELECT IF(NEW.direction = 'in', IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid), IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid))
+    INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+    SELECT IF(OLD.direction = 'in', IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid), IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid))
+      INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+
+    DELETE FROM kamailio.dialplan
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  END IF;
+
+  END */;;
+DELIMITER ;
