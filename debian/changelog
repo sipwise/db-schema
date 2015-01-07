@@ -1,3 +1,125 @@
+ngcp-db-schema (3.8.0.0+0~mr3.8.0.0) unstable; urgency=low
+
+  [ Jenkins Git User ]
+  * [243a612] db-schema dump: snapshot Fri Oct 31 01:10:48 +0100 2014
+  * [60c5418] db-schema dump: snapshot Sat Nov 01 01:11:17 +0100 2014
+  * [a70018c] db-schema dump: snapshot Sun Nov 02 01:15:48 +0100 2014
+  * [0532f33] db-schema dump: snapshot Mon Nov 03 01:11:07 +0100 2014
+  * [39689c5] db-schema dump: snapshot Wed Nov 05 01:12:11 +0100 2014
+  * [8317b29] db-schema dump: snapshot Thu Nov 06 16:14:40 +0100 2014
+  * [31dd82b] db-schema dump: snapshot Fri Nov 07 01:50:19 +0100 2014
+  * [2033035] db-schema dump: snapshot Sat Nov 08 01:10:43 +0100 2014
+  * [53edf1e] db-schema dump: snapshot Sun Nov 09 01:13:10 +0100 2014
+  * [4b06263] db-schema dump: snapshot Mon Nov 10 01:10:46 +0100 2014
+  * [4cef19c] db-schema dump: snapshot Tue Nov 11 01:10:41 +0100 2014
+  * [6330d85] db-schema dump: snapshot Wed Nov 12 01:11:57 +0100 2014
+  * [96ca41d] db-schema dump: snapshot Thu Nov 13 10:08:36 +0100 2014
+  * [f83da65] db-schema dump: snapshot Thu Nov 13 16:54:15 +0100 2014
+  * [be75a33] db-schema dump: snapshot Thu Nov 13 17:14:01 +0100 2014
+  * [fedd28c] db-schema dump: snapshot Fri Nov 14 01:10:45 +0100 2014
+  * [030152c] db-schema dump: snapshot Sat Nov 15 01:10:39 +0100 2014
+  * [f20f070] db-schema dump: snapshot Sun Nov 16 01:12:08 +0100 2014
+  * [de33ad2] db-schema dump: snapshot Mon Nov 17 01:13:05 +0100 2014
+  * [2f7b5cf] db-schema dump: snapshot Mon Nov 17 12:04:16 +0100 2014
+  * [bceeb61] db-schema dump: snapshot Mon Nov 17 12:24:46 +0100 2014
+  * [750523d] db-schema dump: snapshot Tue Nov 18 10:29:25 +0100 2014
+  * [9158b7a] db-schema dump: snapshot Wed Nov 19 01:10:56 +0100 2014
+  * [681419e] db-schema dump: snapshot Thu Nov 20 01:12:12 +0100 2014
+  * [0cfb8ae] db-schema dump: snapshot Fri Nov 21 01:11:10 +0100 2014
+  * [65a2143] db-schema dump: snapshot Sat Nov 22 01:11:02 +0100 2014
+  * [f04b904] db-schema dump: snapshot Sun Nov 23 01:13:19 +0100 2014
+  * [1291cfc] db-schema dump: snapshot Mon Nov 24 01:11:00 +0100 2014
+  * [af46eee] db-schema dump: snapshot Tue Nov 25 01:12:06 +0100 2014
+  * [1b8de0d] db-schema dump: snapshot Wed Nov 26 01:11:54 +0100 2014
+  * [711c817] db-schema dump: snapshot Thu Nov 27 01:10:47 +0100 2014
+  * [882b425] db-schema dump: snapshot Fri Nov 28 01:10:53 +0100 2014
+  * [bdb9ee6] db-schema dump: snapshot Sat Nov 29 01:10:59 +0100 2014
+  * [db09790] db-schema dump: snapshot Sun Nov 30 01:13:27 +0100 2014
+  * [9a7d5a4] db-schema dump: snapshot Mon Dec 01 01:12:00 +0100 2014
+  * [b00d367] db-schema dump: snapshot Tue Dec 02 01:12:58 +0100 2014
+  * [d9b337b] db-schema dump: snapshot Wed Dec 03 01:12:00 +0100 2014
+  * [9ba580a] db-schema dump: snapshot Thu Dec 04 01:14:22 +0100 2014
+  * [acbe5f1] db-schema dump: snapshot Fri Dec 05 01:11:31 +0100 2014
+  * [af7c2ee] db-schema dump: snapshot Sat Dec 06 01:11:16 +0100 2014
+  * [f1d2814] db-schema dump: snapshot Tue Dec 09 12:00:25 +0100 2014
+  * [4a58188] db-schema dump: snapshot Wed Dec 10 01:12:12 +0100 2014
+  * [504a382] db-schema dump: snapshot Thu Dec 11 01:12:15 +0100 2014
+  * [1ca5680] db-schema dump: snapshot Fri Dec 12 01:13:37 +0100 2014
+  * [a7c6ddb] db-schema dump: snapshot Sat Dec 13 01:11:15 +0100 2014
+  * [015b1d3] db-schema dump: snapshot Sun Dec 14 01:12:21 +0100 2014
+  * [a0f51ec] db-schema dump: snapshot Mon Dec 15 01:13:22 +0100 2014
+  * [5e692c0] db-schema dump: snapshot Tue Dec 16 01:10:58 +0100 2014
+  * [6ed3aa1] db-schema dump: snapshot Wed Dec 17 01:11:01 +0100 2014
+  * [196f899] db-schema dump: snapshot Thu Dec 18 01:11:13 +0100 2014
+  * [d44fc38] db-schema dump: snapshot Fri Dec 19 01:12:18 +0100 2014
+  * [62d70ba] db-schema dump: snapshot Sat Dec 20 01:11:53 +0100 2014
+  * [c4eba2f] db-schema dump: snapshot Sun Dec 21 01:11:52 +0100 2014
+  * [02f787c] db-schema dump: snapshot Mon Dec 22 01:11:56 +0100 2014
+  * [a6a3fb2] db-schema dump: snapshot Tue Dec 23 16:15:57 +0100 2014
+  * [ae723d1] db-schema dump: snapshot Wed Dec 24 01:12:03 +0100 2014
+  * [112abac] db-schema dump: snapshot Thu Dec 25 01:10:41 +0100 2014
+  * [f9c65c0] db-schema dump: snapshot Fri Dec 26 01:14:25 +0100 2014
+  * [689d482] db-schema dump: snapshot Sat Dec 27 01:12:04 +0100 2014
+  * [7af4be0] db-schema dump: snapshot Sun Dec 28 01:10:47 +0100 2014
+  * [db04607] db-schema dump: snapshot Mon Dec 29 01:11:03 +0100 2014
+  * [cb2f818] db-schema dump: snapshot Tue Dec 30 01:10:41 +0100 2014
+  * [462f09a] db-schema dump: snapshot Wed Dec 31 01:10:47 +0100 2014
+  * [29ef305] db-schema dump: snapshot Thu Jan 01 01:10:40 +0100 2015
+  * [0c8cb5c] db-schema dump: snapshot Fri Jan 02 01:14:46 +0100 2015
+  * [635a76d] db-schema dump: snapshot Sat Jan 03 01:10:37 +0100 2015
+  * [0077835] db-schema dump: snapshot Sun Jan 04 01:13:31 +0100 2015
+  * [b629bbe] db-schema dump: snapshot Mon Jan 05 01:12:26 +0100 2015
+  * [d1b3abc] db-schema dump: snapshot Tue Jan 06 01:11:21 +0100 2015
+
+  [ Irina Peshinskaya ]
+  * [58515ef] MT#9177 Centralized sync preferences table
+  * [b91916f] MT#9177 Restore separated table schema too.
+  * [3cac4cb] MT#9177 Add potentially yealink. Add storage for credentials.
+  * [a6e4041] MT#9177 Rename scripts to proper numbers.
+  * [26bfba0] MT#9177 Remove DB version with searated cisco sync fields
+  * [82ed0d7] MT#9177 Fix device vendor credentials table creation.
+  * [3a5fdb7] MT#9177 Add custom provisionin uri
+  * [71e1006] MT#9177 No linksys redirect
+  * [b1a81d0] MT#10715 Add Polycom vendor
+
+  [ Andreas Granig ]
+  * [6c51a53] MT#9177 Rework autoprov vendor credentials.
+  * [942dcd0] MT#9177 Fix stray key on non-existent column
+  * [576ed43] MT#9177 More fixes.
+  * [f65e3ae] MT#9177 Remove duplicate file.
+  * [d030a61] MT#10199 Add subscriber profile preferences.
+  * [a8b2250] MT#10199 Add triggers for subscriber profile pref.
+  * [2188e1b] MT#10199 Fix triggers for subscriber profile pref.
+  * [a35672e] MT#10543 Add enable_t38 preference.
+  * [c27ba3e] MT#10587 Add autoprov_field_devices.encryption_key
+
+  [ Andrew Pogrebennyk ]
+  * [62901ad] MT#10025 migrate force_strict_number_match to "extended_dialing_mode"
+  * [96fa869] MT#10029 add preference outbound_to_user
+  * [1c9ffd2] MT#10381 add concurrent_max[_out] as contract pref
+  * [cef7010] MT#10691 add cloud_pbx_callqueue preference and sound_handles
+  * [5eaef5f] MT#10367 add language for voicemail/conf sounds a preference
+  * [d533529] MT#9453 introduce CF adm NCOS level.
+  * [c637b34] MT#8129 introduce conference_pin preference
+
+  [ Kirill Solomko ]
+  * [27d0699] MT#8645 - add billing_profiles columns status, create_timestamp,           modify_timestamp, terminate_timestamp
+  * [2ba55d1] MT#10169 - add voip_rewrute_rules.enabled logic into the dialplan triggers
+  * [dc1c7e6] MT#10169 - add voip_rewrute_rules.enabled columns creation into 15129.up/down
+
+  [ Victor Seva ]
+  * [010d3f5] MT#7141 update package to 3.0 style
+  * [df6902d] MT#10699 move ngcp-check-rev to ngcp-system-tools
+  * [26ae24b] MT#10699 remove ngcp.cfg_schema creation
+
+  [ Richard Fuchs ]
+  * [9b6ddd4] MT#9763 add device_id column for pushd
+  * [18ed7a9] MT#9763 add key for device_id column
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Jan 2015 21:22:26 +0100
+
 ngcp-db-schema (3.7.0.0+0~mr3.7.0.0) unstable; urgency=low
 
   [ Jenkins Git User ]
