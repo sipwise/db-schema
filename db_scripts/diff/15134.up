@@ -1,0 +1,3 @@
+use provisioning
+
+delete from  autoprov_sync_parameters where bootstrap_method='redirect_polycom' and parameter_name = 'profile';
