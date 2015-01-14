@@ -1,0 +1,15 @@
+USE provisioning
+set autocommit=0;
+
+INSERT INTO voip_sound_groups VALUES (NULL, 'conference');
+SELECT last_insert_id() INTO @grp_id;
+
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_greeting', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_pin', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_pin_wrong', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_joined', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_join', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_leave', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('goodbye', @grp_id);
+
+commit;
