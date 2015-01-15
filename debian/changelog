@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.1.1+0~mr3.7.1.1) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [feb7b6e] MT#8129 add conference sound group and handles
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 15 Jan 2015 14:58:01 +0100
+
 ngcp-db-schema (3.7.1.0+0~mr3.7.1.0) unstable; urgency=low
 
   [ Jenkins Git User ]
