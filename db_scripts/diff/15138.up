@@ -1,0 +1,5 @@
+use provisioning;
+
+update voip_preferences set dom_pref=1 where attribute='language' and dom_pref=0;
+delete from voip_sound_handles where name='conference_pin';
+
