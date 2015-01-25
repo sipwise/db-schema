@@ -1,3 +1,5 @@
+USE provisioning;
+
 CREATE TABLE `provisioning`.`voip_peer_preferences` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `peer_host_id` int(11) UNSIGNED NOT NULL REFERENCES `voip_peer_hosts` (`id`),
@@ -14,6 +16,8 @@ CREATE TABLE `provisioning`.`voip_peer_preferences` (
                                      REFERENCES `voip_preferences` (`id`)
                                      ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
+
+USE kamailio;
 
 CREATE TABLE `kamailio`.`peer_preferences` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
