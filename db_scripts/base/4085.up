@@ -1,6 +1,8 @@
 -- do not run systems between r4085 and r4091, but upgrade further
 -- there is no clean upgrade path if data is changed between these revisions
 
+USE billing;
+
 CREATE TABLE `billing`.`billing_zones_history` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `bz_id` int(11) UNSIGNED,
