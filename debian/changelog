@@ -1,3 +1,12 @@
+ngcp-db-schema (3.4.2.3+0~mr3.4.2.3) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [8db4b31] MT#11123 Fix MySQL 5.5.41 error 'No database selected'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 Jan 2015 14:29:17 +0100
+
 ngcp-db-schema (3.4.2.2+0~mr3.4.2.2) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
