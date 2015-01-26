@@ -1,3 +1,9 @@
+ngcp-db-schema (3.0.12) unstable; urgency=medium
+
+  * [2c67da2] MT#11123 Fix MySQL 5.5.41 error 'No database selected'
+
+ -- Alexander Lutay <alutay@sipwise.com>  Mon, 26 Jan 2015 15:14:51 +0100
+
 ngcp-db-schema (3.0.11) unstable; urgency=medium
 
   * [05549ab] MT#5073 Add the statement of the prosody table creation. fix 1083b39a8c9
