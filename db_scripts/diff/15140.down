@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices drop column type ;
+drop table autoprov_device_extensions;
+
+commit;
