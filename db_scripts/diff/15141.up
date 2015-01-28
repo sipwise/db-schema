@@ -1,0 +1,18 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices add column type enum('basic','extension') default 'basic',
+change column bootstrap_method `bootstrap_method` enum('http','redirect_panasonic','redirect_yealink','redirect_polycom') DEFAULT NULL;
+
+create table if not exists autoprov_device_extensions (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `extension_id` int(11) unsigned NOT NULL,
+  `order` int(11) unsigned,
+  PRIMARY KEY (`id`),
+  KEY `fk_dev_dev_const` (`device_id`),
+  KEY `fk_dev_ext_const` (`extension_id`),
+  CONSTRAINT `fk_dev_dev_const` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_dev_ext_const` FOREIGN KEY (`extension_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+commit;
