@@ -1,0 +1,2 @@
+USE kamailio;
+alter table kamailio.voicemail_users change column mailbox mailbox varchar(64) NOT NULL;
