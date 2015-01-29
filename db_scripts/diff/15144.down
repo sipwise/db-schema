@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices drop column extensions_num;
+
+commit;
