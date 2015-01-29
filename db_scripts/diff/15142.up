@@ -1,0 +1,18 @@
+USE provisioning
+SET autocommit=0;
+
+UPDATE voip_sound_handles SET name='1-and' WHERE name='x1';
+UPDATE voip_sound_handles SET name='2-and' WHERE name='x2';
+UPDATE voip_sound_handles SET name='3-and' WHERE name='x3';
+UPDATE voip_sound_handles SET name='4-and' WHERE name='x4';
+UPDATE voip_sound_handles SET name='5-and' WHERE name='x5';
+UPDATE voip_sound_handles SET name='6-and' WHERE name='x6';
+UPDATE voip_sound_handles SET name='7-and' WHERE name='x7';
+UPDATE voip_sound_handles SET name='8-and' WHERE name='x8';
+UPDATE voip_sound_handles SET name='9-and' WHERE name='x9';
+
+SELECT id FROM voip_sound_groups WHERE name='conference' INTO @grp_id;
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_first', @grp_id);
+
+commit;
+
