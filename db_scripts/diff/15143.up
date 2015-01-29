@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices change column bootstrap_uri `bootstrap_uri` varchar(255) DEFAULT '',
+change column type `type` enum('phone','extension') DEFAULT 'phone';
+
+commit;
