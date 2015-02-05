@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.1.5+0~mr3.7.1.5) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [be49ef6] MT#11219 rename prompts x1..9.wav to 1..9-and.wav
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 05 Feb 2015 17:22:52 +0100
+
 ngcp-db-schema (3.7.1.4+0~mr3.7.1.4) unstable; urgency=low
 
   [ Alexander Lutay ]
