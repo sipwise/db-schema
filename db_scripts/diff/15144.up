@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices add column extensions_num tinyint unsigned;
+
+commit;
