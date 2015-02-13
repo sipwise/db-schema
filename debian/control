@@ -8,8 +8,8 @@ Homepage: http://sipwise.com/
 
 Package: ngcp-db-schema
 Architecture: all
-Pre-Depends: ngcp-system-tools
-Depends: ${misc:Depends}
+Depends: ngcp-system-tools-ce | ngcp-system-tools,
+         ${misc:Depends}
 Description: database schema for Sipwise's NGCP platform
  This package provides the database schema for Sipwise's NGCP
  platform.
