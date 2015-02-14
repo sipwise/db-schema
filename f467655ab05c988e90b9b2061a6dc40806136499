@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_8960ad36",
+        "filename": "debian/control",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-02-14T07:20:55Z",
+      "side": 1,
+      "message": "What about ngcp-system-tools-ce | ngcp-system-tools instead",
+      "revId": "f467655ab05c988e90b9b2061a6dc40806136499",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
