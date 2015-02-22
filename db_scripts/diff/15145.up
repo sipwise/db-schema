@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+update autoprov_devices set type = 'phone' where type='basic';
+
+commit;
