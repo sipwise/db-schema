@@ -1,0 +1,9 @@
+USE provisioning
+SET autocommit=0;
+
+SELECT id FROM voip_sound_groups WHERE name='conference' INTO @grp_id;
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_pin', @grp_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_waiting_music', @grp_id);
+
+commit;
+
