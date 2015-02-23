@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.1.6+0~mr3.7.1.6) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [32bdaf9] MT#11241 add sound handles: conference_pin, conference_waiting_music
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 Feb 2015 13:12:47 +0100
+
 ngcp-db-schema (3.7.1.5+0~mr3.7.1.5) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
