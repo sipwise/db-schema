@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a288981_42d182cc",
+        "filename": "db_scripts/diff/15148.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2015-02-24T13:41:43Z",
+      "side": 1,
+      "message": "We usually use \"int(11) unsigned\" throughout the db for ids. Any advantage on using signed bigint?",
+      "revId": "d5f8cea5329105fbf3ed3520d698d08b8efbb94f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
