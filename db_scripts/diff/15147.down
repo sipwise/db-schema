@@ -1,0 +1,6 @@
+use sipstats;
+set autocommit=0;
+
+DROP TABLE IF EXISTS sipstats.call_info;
+
+commit;

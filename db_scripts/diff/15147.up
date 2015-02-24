@@ -1,0 +1,13 @@
+use sipstats;
+set autocommit=0;
+
+CREATE TABLE `call_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `sip_code` varchar(3) NOT NULL,
+  `period` datetime NOT NULL,
+  `amount` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `call_info_sip_code_period_idx` (`sip_code`,`period`)
+) ENGINE=InnoDB;
+
+commit;
