@@ -1,0 +1,15 @@
+use sipstats;
+set autocommit=0;
+
+CREATE TABLE `call_info` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sip_code` varchar(3) NOT NULL,
+  `period` datetime NOT NULL,
+  `amount` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `call_info_sip_code_period_idx` (`sip_code`,`period`)
+) ENGINE=InnoDB;
+
+GRANT SELECT,INSERT,UPDATE ON sipstats.call_info TO 'mediator'@'localhost';
+
+commit;

@@ -1,0 +1,8 @@
+use sipstats;
+set autocommit=0;
+
+REVOKE SELECT,INSERT,UPDATE ON sipstats.call_info FROM 'mediator'@'localhost';
+
+DROP TABLE IF EXISTS sipstats.call_info;
+
+commit;
