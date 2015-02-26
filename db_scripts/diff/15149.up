@@ -1,0 +1,11 @@
+USE provisioning
+
+SELECT id INTO @vppbxid FROM voip_preference_groups WHERE name = 'Cloud PBX';
+
+INSERT INTO voip_preferences(
+   id,voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer,
+   data_type, read_only, description
+  ) VALUES
+  (NULL, @vppbxid, 'ignore_cf_when_hunting', 'Ignore Call Forward when Hunting', 1, 1, 0, 0, 1, 0, 1, now(), 0, 1,
+  'boolean', 0, 'Ignore the Call Forward from a Cloud PBX subscriber when it is called within a huntgroup'
+  );
