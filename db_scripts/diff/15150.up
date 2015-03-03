@@ -1,0 +1,14 @@
+USE billing;
+CREATE TABLE `journals` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` enum('create','update','delete') NOT NULL DEFAULT 'create',
+  `resource` varchar(64) NOT NULL,
+  `resource_id` int(11) unsigned NOT NULL,
+  `timestamp` decimal(13,3) NOT NULL,
+  `content` longblob,
+  PRIMARY KEY (`id`),
+  KEY `res_idx` (`resource`,`resource_id`),
+  KEY `ts_idx` (`timestamp`),
+  KEY `type_idx` (`type`)
+) ENGINE=InnoDB;
+
