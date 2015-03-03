@@ -1,3 +1,18 @@
+ngcp-db-schema (3.7.2.1+0~mr3.7.2.1) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [b7f0695] MT#11005 add queue wrap-up time and max length prefs
+  * [2719838] MT#8129 fix the conference prompts and language preference
+  * [3e5eb5f] MT#11219 rename prompts x1..9.wav to 1..9-and.wav
+  * [c2df43d] MT#11241 add sound handles: conference_pin, conference_waiting_music
+
+  [ Alexander Lutay ]
+  * [41ef666] MT#11123 Fix MySQL 5.5.41 error 'No database selected'
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Mar 2015 16:37:41 +0100
+
 ngcp-db-schema (3.7.2.0+0~mr3.7.2.0) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
