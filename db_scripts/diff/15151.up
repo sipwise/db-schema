@@ -1,0 +1,12 @@
+use sipstats;
+set autocommit=0;
+
+REVOKE SELECT,INSERT,UPDATE ON sipstats.call_info FROM 'mediator'@'localhost';
+
+CREATE DATABASE stats;
+
+ALTER TABLE sipstats.call_info RENAME stats.call_info;
+
+GRANT SELECT,INSERT,UPDATE ON stats.call_info TO 'mediator'@'localhost';
+
+commit;
