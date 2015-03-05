@@ -1,0 +1,35 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+INSERT INTO `provisioning`.`voip_preference_groups` (`name`) VALUES ('Dialogic Settings');
+SELECT LAST_INSERT_ID() INTO @dialogic_id;
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, label,
+   internal, data_type, max_occur, description, modify_timestamp)
+VALUES
+  (@dialogic_id, 'dialogic_mode', 1, 0, 0, 1, 'Dialogic Mode',
+   0, 'enum', 1, 'Set dialogic mode, which is used to autoprovision configuration on a Dialogic IMG.', '1970-01-01 00:00:00'),
+  (@dialogic_id, 'dialogic_ip_rtp', 1, 0, 0, 1, 'Dialogic RTP IP',
+   0, 'string', 1, 'IP that the Dialogic IMG will configure on it\'s second port for the RTP traffic. Must be different from the SIP IP.', '1970-01-01 00:00:00'),
+  (@dialogic_id, 'dialogic_ip_config', 1, 0, 0, 1, 'Dialogic Configuration IP',
+   0, 'string', 1, 'IP under which the Dialogic IMG\'s webinterface is accessible for confiuration.', '1970-01-01 00:00:00'),
+  (@dialogic_id, 'dialogic_out_codecs', 1, 0, 0, 1, 'Dialogic Out Codecs',
+   0, 'enum', 1, 'The chosen Codecs will be used from the IMG to transcode to, in the given order of priority.', '1970-01-01 00:00:00');
+
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@mode_id, '(none)', 'none', 0, 0, 1, 0),
+  (@mode_id, 'SIP 2 SIP', 'sipsip', 0, 0, 1, 0);
+
+SELECT id INTO @codecs_id FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@codecs_id, 'G711 ulaw, G711 alaw, G729, AMR', 'G711 ulaw, G711 alaw, G729, AMR', 0, 0, 1, 0),
+  (@codecs_id, 'G711 ulaw, G711 alaw',            'G711 ulaw, G711 alaw', 0, 0, 1, 0),
+  (@codecs_id, 'AMR',                             'AMR', 0, 0, 1, 0);
+
+COMMIT;
