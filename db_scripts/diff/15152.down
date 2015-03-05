@@ -1,0 +1,15 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+SELECT id INTO @codecs_id FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+DELETE FROM voip_preferences_enum WHERE preference_id = @mode_id;
+DELETE FROM voip_preferences_enum WHERE preference_id = @codecs_id;
+
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_mode';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_rtp';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_config';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+DELETE FROM voip_preference_groups WHERE name = 'Dialogic Settings';
+
+COMMIT;
