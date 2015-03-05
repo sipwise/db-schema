@@ -1,0 +1,17 @@
+USE provisioning;
+
+CREATE  TABLE `provisioning`.`voip_peer_hosts_dialogic` (
+  `host_id` INT UNSIGNED NOT NULL ,
+  `mode` ENUM('sipsip') NOT NULL ,
+  `ip_rtp` VARCHAR(64) NOT NULL ,
+  `ip_config` VARCHAR(64) NOT NULL ,
+  `out_codecs` VARCHAR(512) NOT NULL ,
+  `config_hash` VARCHAR(64) NOT NULL ,
+  PRIMARY KEY (`host_id`) ,
+  INDEX `fk_voip_peer_hosts_id` (`host_id` ASC) ,
+  CONSTRAINT `fk_voip_peer_hosts_id`
+    FOREIGN KEY (`host_id` )
+    REFERENCES `provisioning`.`voip_peer_hosts` (`id` )
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
