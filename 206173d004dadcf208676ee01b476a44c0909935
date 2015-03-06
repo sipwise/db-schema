@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_2cd666c6",
+        "filename": "db_scripts/diff/15152.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-03-06T12:50:24Z",
+      "side": 1,
+      "message": "what is the point to use \u00271970-01-01...\u0027 here?\n\nIt produces warnings: http://paste.mgm.sipwise.com/show/1206/\n\nIMHO now() is perfectly fine there, isn\u0027t it?",
+      "revId": "206173d004dadcf208676ee01b476a44c0909935",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
