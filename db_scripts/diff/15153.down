@@ -1,0 +1,6 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+alter table autoprov_field_device_lines drop column extension_unit;
+
+COMMIT;
