@@ -1,0 +1,6 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+alter table autoprov_field_device_lines add column extension_unit tinyint  unsigned not null default 0;
+
+COMMIT;
