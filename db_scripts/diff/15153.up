@@ -1,0 +1,17 @@
+USE provisioning
+SET autocommit=0;
+
+SELECT id INTO @grpid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences(
+   id,voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer,
+   data_type, read_only, description
+  ) VALUES
+  (NULL, @grpid, 'conference_max_participants', 'Maximum Number of Participants in Conference Room', 0, 1, 0, 0, 0, 0, 1, now(), 0, 1,
+  'string', 0, 'Maximum Number of simultaneous participants in one conference room.'
+  );
+
+SELECT id FROM voip_sound_groups WHERE name='conference' INTO @grp_id;
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('conference_max_participants', @grp_id);
+
+commit;
