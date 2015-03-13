@@ -1,0 +1,6 @@
+use sipstats;
+set autocommit=0;
+
+GRANT SELECT ON stats.call_info TO 'nagios'@'localhost';
+
+commit;

@@ -1,0 +1,6 @@
+use sipstats;
+set autocommit=0;
+
+REVOKE SELECT ON stats.call_info FROM 'nagios'@'localhost';
+
+commit;
