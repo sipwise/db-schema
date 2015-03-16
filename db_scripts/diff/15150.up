@@ -1,14 +1,15 @@
 USE billing;
 CREATE TABLE `journals` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `type` enum('create','update','delete') NOT NULL DEFAULT 'create',
-  `resource` varchar(64) NOT NULL,
+  `operation` enum('create','update','delete') NOT NULL DEFAULT 'create',
+  `resource_name` varchar(64) NOT NULL,
   `resource_id` int(11) unsigned NOT NULL,
   `timestamp` decimal(13,3) NOT NULL,
+  `username` varchar(127) DEFAULT NULL,
+  `content_format` enum('storable','json','json_deflate') NOT NULL DEFAULT 'json',
   `content` longblob,
   PRIMARY KEY (`id`),
-  KEY `res_idx` (`resource`,`resource_id`),
+  KEY `res_idx` (`resource_name`,`resource_id`),
   KEY `ts_idx` (`timestamp`),
-  KEY `type_idx` (`type`)
+  KEY `op_idx` (`operation`)
 ) ENGINE=InnoDB;
-
