@@ -1,0 +1,2 @@
+USE billing;
+DROP TABLE `journals` IF EXISTS;

@@ -11,4 +11,3 @@ CREATE TABLE `journals` (
   KEY `ts_idx` (`timestamp`),
   KEY `type_idx` (`type`)
 ) ENGINE=InnoDB;
-
