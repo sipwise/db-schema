@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@mode_id, 'SIP 2 ISDN', 'sipisdn', 0, 0, 1, 0);
+
+COMMIT;
