@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_5dddd06f",
+        "filename": "db_scripts/diff/15156.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2015-03-18T11:19:45Z",
+      "side": 1,
+      "message": "Can we do \"SIP/ISDN\" here, since it\u0027s supposed to work in both directions.",
+      "revId": "941b1d9c047a2e3d747d5132bf16363049e350a0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
