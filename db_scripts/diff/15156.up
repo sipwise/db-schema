@@ -1,0 +1,283 @@
+use provisioning;
+
+set autocommit=0;
+
+select id into @vpgid from voip_preference_groups where name = 'NAT and Media Flow Control';
+select id into @srtpid from voip_preferences where attribute = 'srtp_transcoding';
+select id into @avpfid from voip_preferences where attribute = 'rtcp_feedback';
+
+insert into voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref,
+  prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer,
+  data_type, read_only, description)
+  values (@vpgid, 'transport_protocol', 'Media transport protocol', 0, 1, 1, 1, 1, 1, 0,
+  now(), 0, 0, 'enum', 0, 'Which transport protocol (e.g. RTP, SRTP, etc) to use');
+select last_insert_id() into @vpid;
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'use domain default', NULL, 1, 0, 0, 0, 0, 1);
+select last_insert_id() into @defid;
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'Transparent', 'transparent', 1, 0, 0, 0, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'Transparent', 'transparent', 0, 1, 1, 1, 0, 1);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'RTP/AVP (plain RTP)', 'RTP/AVP', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'RTP/SAVP (encrypted SRTP)', 'RTP/SAVP', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'RTP/AVPF (RTP with RTCP feedback)', 'RTP/AVPF', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'RTP/SAVPF (encrypted SRTP with RTCP feedback)', 'RTP/SAVPF', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'UDP/TLS/RTP/SAVP (encrypted SRTP using DTLS-SRTP)', 'UDP/TLS/RTP/SAVP', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'UDP/TLS/RTP/SAVPF (encrypted SRTP using DTLS-SRTP with RTCP feedback)',
+  'UDP/TLS/RTP/SAVPF', 1, 1, 1, 1, 0, 0);
+
+
+-- translate old prefs to new
+
+-- fully hard-coded prefs first
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVP', now() from
+   voip_usr_preferences a, voip_usr_preferences b where a.subscriber_id = b.subscriber_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVPF', now() from
+   voip_usr_preferences a, voip_usr_preferences b where a.subscriber_id = b.subscriber_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avpf';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVP', now() from
+   voip_usr_preferences a, voip_usr_preferences b where a.subscriber_id = b.subscriber_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVPF', now() from
+   voip_usr_preferences a, voip_usr_preferences b where a.subscriber_id = b.subscriber_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avpf';
+
+-- dom
+
+insert into voip_dom_preferences (domain_id, attribute_id, value, modify_timestamp)
+   select a.domain_id, @vpid, 'RTP/AVP', now() from
+   voip_dom_preferences a, voip_dom_preferences b where a.domain_id = b.domain_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avp';
+
+insert into voip_dom_preferences (domain_id, attribute_id, value, modify_timestamp)
+   select a.domain_id, @vpid, 'RTP/AVPF', now() from
+   voip_dom_preferences a, voip_dom_preferences b where a.domain_id = b.domain_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avpf';
+
+insert into voip_dom_preferences (domain_id, attribute_id, value, modify_timestamp)
+   select a.domain_id, @vpid, 'RTP/SAVP', now() from
+   voip_dom_preferences a, voip_dom_preferences b where a.domain_id = b.domain_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avp';
+
+insert into voip_dom_preferences (domain_id, attribute_id, value, modify_timestamp)
+   select a.domain_id, @vpid, 'RTP/SAVPF', now() from
+   voip_dom_preferences a, voip_dom_preferences b where a.domain_id = b.domain_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avpf';
+
+-- peer
+
+insert into voip_peer_preferences (peer_host_id, attribute_id, value, modify_timestamp)
+   select a.peer_host_id, @vpid, 'RTP/AVP', now() from
+   voip_peer_preferences a, voip_peer_preferences b where a.peer_host_id = b.peer_host_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avp';
+
+insert into voip_peer_preferences (peer_host_id, attribute_id, value, modify_timestamp)
+   select a.peer_host_id, @vpid, 'RTP/AVPF', now() from
+   voip_peer_preferences a, voip_peer_preferences b where a.peer_host_id = b.peer_host_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avpf';
+
+insert into voip_peer_preferences (peer_host_id, attribute_id, value, modify_timestamp)
+   select a.peer_host_id, @vpid, 'RTP/SAVP', now() from
+   voip_peer_preferences a, voip_peer_preferences b where a.peer_host_id = b.peer_host_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avp';
+
+insert into voip_peer_preferences (peer_host_id, attribute_id, value, modify_timestamp)
+   select a.peer_host_id, @vpid, 'RTP/SAVPF', now() from
+   voip_peer_preferences a, voip_peer_preferences b where a.peer_host_id = b.peer_host_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avpf';
+
+-- prof
+
+insert into voip_prof_preferences (profile_id, attribute_id, value, modify_timestamp)
+   select a.profile_id, @vpid, 'RTP/AVP', now() from
+   voip_prof_preferences a, voip_prof_preferences b where a.profile_id = b.profile_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avp';
+
+insert into voip_prof_preferences (profile_id, attribute_id, value, modify_timestamp)
+   select a.profile_id, @vpid, 'RTP/AVPF', now() from
+   voip_prof_preferences a, voip_prof_preferences b where a.profile_id = b.profile_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_rtp' and b.value = 'force_avpf';
+
+insert into voip_prof_preferences (profile_id, attribute_id, value, modify_timestamp)
+   select a.profile_id, @vpid, 'RTP/SAVP', now() from
+   voip_prof_preferences a, voip_prof_preferences b where a.profile_id = b.profile_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avp';
+
+insert into voip_prof_preferences (profile_id, attribute_id, value, modify_timestamp)
+   select a.profile_id, @vpid, 'RTP/SAVPF', now() from
+   voip_prof_preferences a, voip_prof_preferences b where a.profile_id = b.profile_id and
+   a.attribute_id = @srtpid and b.attribute_id = @avpfid and
+   a.value = 'force_srtp' and b.value = 'force_avpf';
+
+
+-- if either value is given as transparent, we go with transparent
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'transparent', now() from
+   voip_usr_preferences a where
+   a.attribute_id in (@srtpid, @avpfid) and
+   a.value = 'transparent'
+   group by a.subscriber_id;
+
+insert into voip_dom_preferences (domain_id, attribute_id, value, modify_timestamp)
+   select a.domain_id, @vpid, 'transparent', now() from
+   voip_dom_preferences a where
+   a.attribute_id in (@srtpid, @avpfid) and
+   a.value = 'transparent'
+   group by a.domain_id;
+
+insert into voip_peer_preferences (peer_host_id, attribute_id, value, modify_timestamp)
+   select a.peer_host_id, @vpid, 'transparent', now() from
+   voip_peer_preferences a where
+   a.attribute_id in (@srtpid, @avpfid) and
+   a.value = 'transparent'
+   group by a.peer_host_id;
+
+insert into voip_prof_preferences (profile_id, attribute_id, value, modify_timestamp)
+   select a.profile_id, @vpid, 'transparent', now() from
+   voip_prof_preferences a where
+   a.attribute_id in (@srtpid, @avpfid) and
+   a.value = 'transparent'
+   group by a.profile_id;
+
+
+-- handle subscribers with one pref specified and the other one taken from dom prefs
+
+-- srtp in usr, avpf in domain
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVP', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @avpfid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @avpfid
+   where a.attribute_id = @srtpid and
+   a.value = 'force_rtp' and b.value is null and d.value = 'force_avp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVPF', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @avpfid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @avpfid
+   where a.attribute_id = @srtpid and
+   a.value = 'force_rtp' and b.value is null and d.value = 'force_avpf';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVP', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @avpfid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @avpfid
+   where a.attribute_id = @srtpid and
+   a.value = 'force_srtp' and b.value is null and d.value = 'force_avp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVPF', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @avpfid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @avpfid
+   where a.attribute_id = @srtpid and
+   a.value = 'force_srtp' and b.value is null and d.value = 'force_avpf';
+
+-- srtp in domain, avpf in usr
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVP', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @srtpid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @srtpid
+   where a.attribute_id = @avpfid and
+   a.value = 'force_avp' and b.value is null and d.value = 'force_rtp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/AVPF', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @srtpid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @srtpid
+   where a.attribute_id = @avpfid and
+   a.value = 'force_avpf' and b.value is null and d.value = 'force_rtp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVP', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @srtpid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @srtpid
+   where a.attribute_id = @avpfid and
+   a.value = 'force_avp' and b.value is null and d.value = 'force_srtp';
+
+insert into voip_usr_preferences (subscriber_id, attribute_id, value, modify_timestamp)
+   select a.subscriber_id, @vpid, 'RTP/SAVPF', now() from
+   voip_usr_preferences a left join voip_usr_preferences b on a.subscriber_id = b.subscriber_id
+   and b.attribute_id = @srtpid
+   left join voip_subscribers c on c.id = a.subscriber_id
+   left join voip_dom_preferences d on d.domain_id = c.domain_id and d.attribute_id = @srtpid
+   where a.attribute_id = @avpfid and
+   a.value = 'force_avpf' and b.value is null and d.value = 'force_srtp';
+
+
+-- finally, delete old prefs
+
+delete from voip_usr_preferences where attribute_id in (@srtpid, @avpfid);
+delete from voip_dom_preferences where attribute_id in (@srtpid, @avpfid);
+delete from voip_peer_preferences where attribute_id in (@srtpid, @avpfid);
+delete from voip_prof_preferences where attribute_id in (@srtpid, @avpfid);
+delete from voip_preferences_enum where preference_id in (@srtpid, @avpfid);
+delete from voip_preferences where id in (@srtpid, @avpfid);
+
+
+commit;
+set autocommit=1;
