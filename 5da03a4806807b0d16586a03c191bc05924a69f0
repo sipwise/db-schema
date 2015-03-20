@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_71231406",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-03-20T15:24:29Z",
+      "side": 1,
+      "message": "do you really need eval here?",
+      "revId": "5da03a4806807b0d16586a03c191bc05924a69f0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
