@@ -1,0 +1,17 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute = 'lbrtp_set';
+SELECT id INTO @def_id  FROM voip_preferences_enum WHERE
+	preference_id = @pref_id and label = 'default';
+INSERT IGNORE INTO voip_preferences_enum
+	VALUES (@def_id, @pref_id, 'default', 50, 0, 1, 1, 1, 0, NULL);
+
+USE kamailio;
+-- remove duplicated defaults on PRO
+DELETE FROM dispatcher WHERE
+	setid = 50 and description = 'SIP loadbalancer' and
+	destination='sip:127.0.0.1:5060';
+INSERT INTO dispatcher
+	VALUES(NULL, 50, 'sip:127.0.0.1:5060', 0, 0, '', 'SIP loadbalancer');
+COMMIT;
