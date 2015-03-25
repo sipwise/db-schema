@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute = 'lbrtp_set';
+SELECT id INTO @def_id  FROM voip_preferences_enum WHERE
+	preference_id = @pref_id and label = 'default';
+INSERT IGNORE INTO voip_preferences_enum
+	VALUES (@def_id, @pref_id, 'default', 50, 0, 1, 1, 1, 0, NULL);
+
+COMMIT;
