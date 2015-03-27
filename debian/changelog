@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.2.2+0~mr3.7.2.2) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [65e8414] MT#12053 Add conference_max_participants preference and sound handle
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 27 Mar 2015 12:08:23 +0100
+
 ngcp-db-schema (3.7.2.1+0~mr3.7.2.1) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
