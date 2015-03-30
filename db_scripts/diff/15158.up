@@ -1,0 +1,23 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@mode_id, 'SIP/SS7', 'sipss7', 0, 0, 1, 0);
+
+SELECT id INTO @dialogic_id FROM voip_preference_groups WHERE name = 'Dialogic Settings';
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, label,
+   internal, data_type, max_occur, description)
+VALUES
+  (@dialogic_id, 'dialogic_ss7_opc', 1, 0, 0, 1, 'SS7 OPC',
+   0, 'string', 1, 'SS7 Own Point Code.'),
+  (@dialogic_id, 'dialogic_ss7_apc', 1, 0, 0, 1, 'SS7 OPC',
+   0, 'string', 1, 'SS7 Adjacent Point Code.'),
+  (@dialogic_id, 'dialogic_ss7_dpc', 1, 0, 0, 1, 'SS7 OPC',
+   0, 'string', 1, 'SS7 Destination Point Code.'),
+
+COMMIT;
