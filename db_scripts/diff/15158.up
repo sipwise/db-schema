@@ -1,0 +1,12 @@
+SET AUTOCOMMIT=0;
+USE billing;
+
+ALTER TABLE journals CHANGE type operation ENUM('create','update','delete') NOT NULL DEFAULT 'create';
+ALTER TABLE journals CHANGE resource resource_name VARCHAR(64) NOT NULL;
+ALTER TABLE journals ADD username varchar(127) DEFAULT NULL AFTER timestamp;
+ALTER TABLE journals ADD content_format ENUM('storable','json','json_deflate','sereal') NOT NULL DEFAULT 'json' AFTER username;
+
+ALTER TABLE journals DROP KEY type_idx;
+ALTER TABLE journals ADD KEY `op_idx` (`operation`);
+
+COMMIT;

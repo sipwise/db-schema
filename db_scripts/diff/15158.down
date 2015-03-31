@@ -1,0 +1,12 @@
+SET AUTOCOMMIT=0;
+USE billing;
+
+ALTER TABLE journals CHANGE operation type ENUM('create','update','delete') NOT NULL DEFAULT 'create';
+ALTER TABLE journals CHANGE resource_name resource VARCHAR(64) NOT NULL;
+ALTER TABLE journals DROP username;
+ALTER TABLE journals DROP content_format;
+
+ALTER TABLE journals DROP KEY op_idx;
+ALTER TABLE journals ADD KEY `type_idx` (`type`);
+
+COMMIT;
