@@ -1,0 +1,3 @@
+USE accounting;
+ALTER TABLE events ADD COLUMN reseller_id INT(11) UNSIGNED NOT NULL DEFAULT 1
+  AFTER subscriber_id;
