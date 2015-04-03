@@ -8,13 +8,13 @@ INSERT INTO voip_preferences
   (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, label,
    internal, data_type, max_occur, description)
 VALUES
-  (@dialogic_id, 'dialogic_mode', 1, 0, 0, 1, 'Dialogic Mode',
+  (@dialogic_id, 'dialogic_mode', 0, 0, 0, 1, 'Dialogic Mode',
    0, 'enum', 1, 'Set dialogic mode, which is used to autoprovision configuration on a Dialogic IMG.'),
   (@dialogic_id, 'dialogic_ip_rtp', 1, 0, 0, 1, 'Dialogic RTP IP',
    0, 'string', 1, 'IP that the Dialogic IMG will configure on it\'s second port for the RTP traffic. Must be different from the SIP IP.'),
   (@dialogic_id, 'dialogic_ip_config', 1, 0, 0, 1, 'Dialogic Configuration IP',
    0, 'string', 1, 'IP under which the Dialogic IMG\'s webinterface is accessible for confiuration.'),
-  (@dialogic_id, 'dialogic_out_codecs', 1, 0, 0, 1, 'Dialogic Out Codecs',
+  (@dialogic_id, 'dialogic_out_codecs', 0, 0, 0, 1, 'Dialogic Out Codecs',
    0, 'enum', 1, 'The chosen Codecs will be used from the IMG to transcode to, in the given order of priority.');
 
 SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
