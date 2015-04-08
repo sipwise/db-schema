@@ -1,3 +1,22 @@
+ngcp-db-schema (3.8.2.0+0~mr3.8.2.0) unstable; urgency=low
+
+  [ Gerhard Jungwirth ]
+  * [67cd402] MT#11501 dialogic add isdn config option
+
+  [ Kirill Solomko ]
+  * [018c740] MT#11493 - add set sql_log_bin=0 to 15148 and 15151 not_replicated
+
+  [ Richard Fuchs ]
+  * [ed60572] MT#12227 unify srtp/avpf prefences into a single protocol preference
+
+  [ Andrew Pogrebennyk ]
+  * [6a63bcb] MT#11501 fix the type for dialogic enum prefs
+  * [ef07c0d] MT#11859 update kamailio.version for table sca_subscriptions
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 08 Apr 2015 12:47:52 +0200
+
 ngcp-db-schema (3.8.1.0+0~mr3.8.1.0) unstable; urgency=low
 
   [ Irina Peshinskaya ]
