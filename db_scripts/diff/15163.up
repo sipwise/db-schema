@@ -1,0 +1,2 @@
+USE ngcp;
+DROP TABLE IF EXISTS cfg_schema;
