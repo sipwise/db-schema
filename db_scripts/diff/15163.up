@@ -1,0 +1,2 @@
+USE ngcp;
+drop table cfg_schema;
