@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_7e586656",
+        "filename": "db_scripts/diff/15163.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-04-11T12:14:33Z",
+      "side": 1,
+      "message": "I prefer to see here drop table if exist, to be able to restart statement several times without error.",
+      "revId": "d709750d5aa777aa511d6225a42d1ab146ee34eb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
