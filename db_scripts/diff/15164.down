@@ -1,0 +1,5 @@
+USE provisioning;
+
+UPDATE voip_preferences SET
+  data_type='int'
+WHERE attribute = 'sound_set' OR attribute = 'contract_sound_set';
