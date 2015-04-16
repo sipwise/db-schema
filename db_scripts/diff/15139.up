@@ -1,7 +1,8 @@
 use provisioning;
 set autocommit=0;
 
-insert into voip_preferences values (null, 5, 'rtp_interface', 'RTP interface', 0, 1, 1, 0, 1, 1, 0, now(), 0, 0, 'enum', 0, 'Logical RTP interface to use for media packets');
+select id into @vpg_id from voip_preference_groups where name="NAT and Media Flow Control";
+insert into voip_preferences values (null, @vpg_id, 'rtp_interface', 'RTP interface', 0, 1, 1, 0, 1, 1, 0, now(), 0, 0, 'enum', 0, 'Logical RTP interface to use for media packets');
 select last_insert_id() into @ins_id;
 insert into voip_preferences_enum values (null, @ins_id, 'default', null, 1, 1, 1, 1, null, 1);
 
