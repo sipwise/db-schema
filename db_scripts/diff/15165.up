@@ -1,0 +1,8 @@
+use billing;
+set autocommit=0;
+
+ALTER TABLE billing_profiles ADD COLUMN fraud_use_reseller_rates tinyint(3) unsigned default 0 AFTER fraud_daily_notify;
+
+CREATE INDEX said_stime_idx ON accounting.cdr (source_account_id, start_time);
+
+commit;
