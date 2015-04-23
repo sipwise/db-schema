@@ -1,0 +1,6 @@
+use billing;
+set autocommit=0;
+
+ALTER TABLE billing_profiles ADD COLUMN fraud_use_reseller_rates tinyint(3) unsigned default 0 AFTER fraud_daily_notify;
+
+commit;
