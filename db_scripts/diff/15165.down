@@ -1,0 +1,8 @@
+use billing;
+set autocommit=0;
+
+ALTER TABLE billing_profiles DROP COLUMN fraud_use_reseller_rates;
+
+DROP INDEX said_stime_idx ON accounting.cdr;
+
+commit;
