@@ -1,0 +1,9 @@
+USE accounting;
+
+ALTER TABLE accounting.cdr 
+MODIFY source_carrier_cost       decimal(10,2) DEFAULT NULL,
+MODIFY source_reseller_cost      decimal(10,2) DEFAULT NULL,
+MODIFY source_customer_cost      decimal(10,2) DEFAULT NULL,
+MODIFY destination_carrier_cost  decimal(10,2) DEFAULT NULL,
+MODIFY destination_reseller_cost decimal(10,2) DEFAULT NULL,
+MODIFY destination_customer_cost decimal(10,2) DEFAULT NULL;
