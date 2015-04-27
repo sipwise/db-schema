@@ -1,0 +1,14 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_nfs_server';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_nfs_path';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_name';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_location';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_contact';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_community_name';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_snmp_manager';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_use_optical_spans';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_is_isdn_userside';
+
+COMMIT;
