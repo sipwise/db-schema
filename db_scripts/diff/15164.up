@@ -1,0 +1,31 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+SELECT id INTO @dialogic_id FROM voip_preference_groups WHERE name = 'Dialogic Settings';
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, label,
+   internal, data_type, max_occur, description)
+VALUES
+  (@dialogic_id, 'dialogic_nfs_server', 1, 0, 0, 1, 'NFS Server',
+   0, 'string', 1, 'An IP or hostname of an external NFS server which can be used to log data to.'),
+  (@dialogic_id, 'dialogic_nfs_path', 1, 0, 0, 1, 'NFS Path',
+   0, 'string', 1, 'A path describing the folder on the NFS server, where the logfiles will be stored.'),
+
+  (@dialogic_id, 'dialogic_snmp_system_name', 1, 0, 0, 1, 'SNMP System Name',
+   0, 'string', 1, 'The system name, appearing in the output when acting as an SNMP Agent.');
+  (@dialogic_id, 'dialogic_snmp_system_location', 1, 0, 0, 1, 'SNMP System Location',
+   0, 'string', 1, 'The system location, appearing in the output when acting as an SNMP Agent.');
+  (@dialogic_id, 'dialogic_snmp_system_contact', 1, 0, 0, 1, 'SNMP System Contact',
+   0, 'string', 1, 'The system contact, appearing in the output when acting as an SNMP Agent.');
+  (@dialogic_id, 'dialogic_snmp_community_name', 1, 0, 0, 1, 'SNMP Community Name',
+   0, 'string', 1, 'The community name, used by the SNMP manager, to access this IMG as an Agent.');
+  (@dialogic_id, 'dialogic_ip_snmp_manager', 1, 0, 0, 1, 'SNMP Manager IP',
+   0, 'string', 1, 'The IP address of the SNMP manager which is supposed to access this IMG. Only this IP will have access to the SNMP Agent.');
+
+  (@dialogic_id, 'dialogic_use_optical_spans', 1, 0, 0, 1, 'Dialogic Optical Link',
+   0, 'boolean', 1, 'When set to true, use the optical link instead of the ISDN ports. This only has an effect in the SS7 or ISDN mode.');
+  (@dialogic_id, 'dialogic_is_isdn_userside', 1, 0, 0, 1, 'ISDN Userside',
+   0, 'boolean', 1, 'When set to true, the ISDN ports are configured to be the Userside end of an ISDN network. This only has an effect in the ISDN mode.');
+
+COMMIT;
