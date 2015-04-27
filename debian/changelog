@@ -1,3 +1,18 @@
+ngcp-db-schema (3.8.1.2+0~mr3.8.1.2) unstable; urgency=low
+
+  [ Andrew Pogrebennyk ]
+  * [bceb072] MT#12465 add new option to force_outbound_calls_to_peer enum pref
+
+  [ Alexander Lutay ]
+  * [d550215] MT#12507 Fix 15139.up: remove hardcoded reference to voip_preference_groups
+
+  [ Irina Peshinskaya ]
+  * [11b122f] MT#11791 Increase costs precisions to 6 number after point
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2015 19:12:57 +0200
+
 ngcp-db-schema (3.8.1.1+0~mr3.8.1.1) unstable; urgency=low
 
   [ Gerhard Jungwirth ]
