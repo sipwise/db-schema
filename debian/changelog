@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.1.8+0~mr3.7.1.8) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [67ea446] MT#11791 Increase costs precisions to 6 number after point
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2015 19:12:03 +0200
+
 ngcp-db-schema (3.7.1.7+0~mr3.7.1.7) unstable; urgency=low
 
   [ Andrew Pogrebennyk ]
