@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.2.4+0~mr3.7.2.4) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [b914115] MT#11791 Fix broken PRO SP2 installation.
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 30 Apr 2015 11:47:25 +0200
+
 ngcp-db-schema (3.7.2.3+0~mr3.7.2.3) unstable; urgency=low
 
   [ Irina Peshinskaya ]
