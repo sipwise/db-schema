@@ -1,0 +1,12 @@
+SET AUTOCOMMIT=0;
+USE billing;
+
+drop index billing_fees_unique on billing_fees;
+delete from billing_fees;
+insert into billing_fees select * from billing_fees_raw;
+drop table if exists billing_fees_raw;
+drop procedure if exists fill_billing_fees;
+
+COMMIT;
+
+
