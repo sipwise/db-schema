@@ -1,0 +1,2 @@
+USE accounting;
+ALTER TABLE cdr ADD KEY duri_in (destination_user_in, destination_domain_in);
