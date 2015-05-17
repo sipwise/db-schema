@@ -1,0 +1,89 @@
+USE billing;
+
+CREATE TABLE `billing_networks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `bn_resname_idx` (`reseller_id`,`name`),
+  CONSTRAINT `bn_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `billing_network_blocks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `network_id` int(11) unsigned NOT NULL,
+  `ip` varchar(39) NOT NULL,
+  `mask` tinyint(1) unsigned DEFAULT NULL,
+  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
+  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
+  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
+  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `bnb_ipv4_from_idx` (`_ipv4_net_from`),
+  INDEX `bnb_ipv4_to_idx` (`_ipv4_net_to`),
+  INDEX `bnb_ipv6_from_idx` (`_ipv6_net_from`),
+  INDEX `bnb_ipv6_to_idx` (`_ipv6_net_to`),
+  CONSTRAINT `bnb_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `billing_mappings` ADD `network_id` int(11) unsigned DEFAULT NULL AFTER `product_id`;
+#set null or delete?
+ALTER TABLE `billing_mappings` ADD CONSTRAINT `bm_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE TABLE `profile_packages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `status` enum('active','terminated') NOT NULL DEFAULT 'active',
+
+  `initial_balance` double NOT NULL DEFAULT '0',
+  `service_charge` double NOT NULL DEFAULT '0',
+  `balance_interval_unit` enum('day','week','month') NOT NULL DEFAULT 'month',
+  `balance_interval_value` int(3) unsigned NOT NULL DEFAULT '1',
+  `balance_interval_start_mode` enum('create','1st','topup') NOT NULL DEFAULT 'create',
+
+  `carry_over_mode` enum('carry_over','carry_over_timely','discard') NOT NULL DEFAULT 'carry_over',
+  #`timely_carry_over_mode` enum('carry_over','discard') NOT NULL DEFAULT 'carry_over',
+  `timely_duration_unit` enum('day','week','month') DEFAULT NULL,
+  `timely_duration_value` int(3) unsigned DEFAULT NULL,
+  `notopup_discard_intervals` int(3) unsigned DEFAULT NULL,
+
+  `underrun_lock_threshold` double DEFAULT NULL, #unsigned
+  `underrun_lock_level` tinyint(3) DEFAULT NULL,
+  `underrun_profile_threshold` double DEFAULT NULL, #unsigned
+  
+  `topup_lock_level` tinyint(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pp_resname_idx` (`reseller_id`,`name`),
+  CONSTRAINT `pp_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#CREATE TABLE `package_topups` (
+#  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+#  `package_id` int(11) unsigned NOT NULL,
+#  `amount` double NOT NULL,
+#  PRIMARY KEY (`id`),
+#  UNIQUE KEY `pt_packamount_idx` (`package_id`,`amount`),
+#  CONSTRAINT `pt_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+#) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `package_profile_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `package_id` int(11) unsigned NOT NULL, #DEFAULT NULL,
+  #`topup_id` int(11) unsigned DEFAULT NULL,
+  `discriminator` enum('initial','underrun','topup') NOT NULL,
+  `profile_id` int(11) unsigned NOT NULL,
+  `network_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `pps_packdiscr_idx` (`package_id`,`discriminator`),
+  #INDEX `pps_topupdiscr_idx` (`topup_id`,`discriminator`),
+  CONSTRAINT `pps_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  #CONSTRAINT `pps_topup_ref` FOREIGN KEY (`package_id`) REFERENCES `package_topups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pps_profile_ref` FOREIGN KEY (`profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `pps_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `contracts` ADD `profile_package_id` int(11) unsigned DEFAULT NULL AFTER `order_id`;
+ALTER TABLE `contracts` ADD CONSTRAINT `c_package_ref` FOREIGN KEY (`profile_package_id`) REFERENCES `profile_packages` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
