@@ -8,5 +8,3 @@ drop table if exists billing_fees_raw;
 drop procedure if exists fill_billing_fees;
 
 COMMIT;
-
-
