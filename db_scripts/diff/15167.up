@@ -58,5 +58,3 @@ CALL fill_billing_fees(null);
  
 
 COMMIT;
-
-
