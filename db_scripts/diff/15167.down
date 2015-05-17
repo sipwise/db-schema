@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 SET AUTOCOMMIT=0;
 USE billing;
 
@@ -10,3 +11,12 @@ drop procedure if exists fill_billing_fees;
 COMMIT;
 
 
+=======
+USE billing;
+
+#DROP TRIGGER IF EXISTS `bnb_net_from_to_trig`;
+ALTER TABLE `billing_mappings` DROP FOREIGN KEY `bm_network_ref`;
+ALTER TABLE `billing_mappings` DROP `network_id`;
+DROP TABLE IF EXISTS `billing_network_blocks`;
+DROP TABLE IF EXISTS `billing_networks`;
+>>>>>>> aa461d6... MT#12643 billing network, profile packages

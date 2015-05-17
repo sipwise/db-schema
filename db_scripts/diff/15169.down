@@ -1,0 +1,5 @@
+USE billing;
+
+DROP TABLE IF EXISTS `package_profile_sets`;
+#DROP TABLE IF EXISTS `package_topups`;
+DROP TABLE IF EXISTS `profile_packages`;

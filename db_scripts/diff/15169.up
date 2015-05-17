@@ -1,0 +1,54 @@
+USE billing;
+
+CREATE TABLE `profile_packages` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `status` enum('active','terminated') NOT NULL DEFAULT 'active',
+
+  `initial_balance` double NOT NULL DEFAULT '0',
+  `balance_interval_unit` enum('day','week','month') NOT NULL DEFAULT 'month',
+  `balance_interval_value` int(3) unsigned NOT NULL DEFAULT '1',
+  `balance_interval_start_mode` enum('create','1st') NOT NULL DEFAULT 'create',
+
+  `carry_over_mode` enum('carry_over','carry_over_timely','discard') NOT NULL DEFAULT 'carry_over',
+  #`timely_carry_over_mode` enum('carry_over','discard') NOT NULL DEFAULT 'carry_over',
+  `timely_duration_unit` enum('day','week','month') DEFAULT NULL,
+  `timely_duration_value` int(3) unsigned DEFAULT NULL,
+  `notopup_discard_intervals` int(3) unsigned DEFAULT NULL,
+
+  `underrun_lock_threshold` int(11) unsigned DEFAULT NULL,
+  `underrun_lock_level` tinyint(3) DEFAULT NULL,
+  `underrun_profile_threshold` int(11) unsigned DEFAULT NULL,
+  
+  `topup_lock_level` tinyint(3) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `pp_resname_idx` (`reseller_id`,`name`),
+  CONSTRAINT `pp_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#CREATE TABLE `package_topups` (
+#  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+#  `package_id` int(11) unsigned NOT NULL,
+#  `amount` double NOT NULL,
+#  PRIMARY KEY (`id`),
+#  UNIQUE KEY `pt_packamount_idx` (`package_id`,`amount`),
+#  CONSTRAINT `pt_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+#) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `package_profile_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `package_id` int(11) unsigned DEFAULT NULL,
+  #`topup_id` int(11) unsigned DEFAULT NULL,
+  `discriminator` enum('initial','underrun','topup') NOT NULL,
+  `profile_id` int(11) unsigned NOT NULL,
+  `network_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `pps_packdiscr_idx` (`package_id`,`discriminator`),
+  #INDEX `pps_topupdiscr_idx` (`topup_id`,`discriminator`),
+  CONSTRAINT `pps_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  #CONSTRAINT `pps_topup_ref` FOREIGN KEY (`package_id`) REFERENCES `package_topups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pps_profile_ref` FOREIGN KEY (`profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `pps_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
