@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3291f1_f60f0d2d",
+        "filename": "db_scripts/diff/15167.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2015-05-18T14:49:49Z",
+      "side": 1,
+      "message": "Maybe need to DROP TABLE billing_fees_raw?",
+      "revId": "c8aba0803b16ff283ebb9e86f6f3054e0c4dd3a5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
