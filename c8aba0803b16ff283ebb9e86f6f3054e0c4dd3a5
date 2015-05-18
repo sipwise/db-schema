@@ -16,6 +16,24 @@
       "revId": "c8aba0803b16ff283ebb9e86f6f3054e0c4dd3a5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a3291f1_d661b1d4",
+        "filename": "db_scripts/diff/15167.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2015-05-18T15:13:23Z",
+      "side": 1,
+      "message": "No, it is not temporary table - it is special table for the csv upload. We can\u0027t insert big csv data row-by-row - it is too slowly (ticket 5251) and in the same time - we can\u0027t just ask to insert all csv rows, because some of them contains not unique values. So first we do bulk inert of the not unique rows, after this reorganize it into consistent unique values. For each billing fees csv upload.",
+      "parentUuid": "3a3291f1_f60f0d2d",
+      "revId": "c8aba0803b16ff283ebb9e86f6f3054e0c4dd3a5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
