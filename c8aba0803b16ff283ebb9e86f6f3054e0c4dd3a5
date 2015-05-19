@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3a3291f1_d61f71b6",
+        "filename": "db_scripts/diff/15167.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2015-05-19T10:56:01Z",
+      "side": 1,
+      "message": "Want to turn reviewers attention on the fact that I selected to base on billing_fees_raw table columns - I suspect that it will be rather easy to forget about this table and procedure, and change only the billing_fees. More conservative billing_fees_raw will keep at least base functionality going, I suppose.",
+      "range": {
+        "startLine": 23,
+        "startChar": 88,
+        "endLine": 23,
+        "endChar": 148
+      },
+      "revId": "c8aba0803b16ff283ebb9e86f6f3054e0c4dd3a5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3291f1_f60f0d2d",
         "filename": "db_scripts/diff/15167.up",
         "patchSetId": 1
