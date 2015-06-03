@@ -1,3 +1,27 @@
+ngcp-db-schema (3.8.2.1+0~mr3.8.2.1) unstable; urgency=low
+
+  [ Alexander Lutay ]
+  * [4b1d642] MT#12507 Fix 15139.up: remove hardcoded reference to voip_preference_groups
+
+  [ Andrew Pogrebennyk ]
+  * [930d990] MT#12465 add new option to force_outbound_calls_to_peer enum pref
+
+  [ Irina Peshinskaya ]
+  * [eee579d] MT#11791 Increase costs precisions to 6 number after point
+  * [ec680ba] MT#11791 Fix broken PRO SP2 installation.
+  * [91b3d52] MT#11791 Fix typo in the build fix
+
+  [ Andreas Granig ]
+  * [ca587cc] MT#12385 Add reseller_id to EDR head.
+
+  [ Gerhard Jungwirth ]
+  * [951e1dd] MT#12303 peer preferences for dialogic as ss7
+  * [4141f75] MT#12303 expose dialogic configs optical, nfs and snmp
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 03 Jun 2015 16:22:47 +0200
+
 ngcp-db-schema (3.8.2.0+0~mr3.8.2.0) unstable; urgency=low
 
   [ Gerhard Jungwirth ]
