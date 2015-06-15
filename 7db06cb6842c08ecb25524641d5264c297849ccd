@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a3291f1_a14ffa91",
+        "filename": "db_scripts/diff/15170.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-06-15T20:43:26Z",
+      "side": 1,
+      "message": "Are we sure that such kind of ALTER will be successful always?",
+      "revId": "7db06cb6842c08ecb25524641d5264c297849ccd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a3291f1_c14a0683",
+        "filename": "db_scripts/diff/15170.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-06-15T20:43:26Z",
+      "side": 1,
+      "message": "JFMI, why you used before DELETE/INSERT but UPDATE here ? :-)",
+      "revId": "7db06cb6842c08ecb25524641d5264c297849ccd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
