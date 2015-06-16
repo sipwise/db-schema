@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a3291f1_4125f6c0",
+        "filename": "db_scripts/diff/15170.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-06-16T08:15:04Z",
+      "side": 1,
+      "message": "No, I don\u0027t and actually I have to keep this in mind. Thanks for noticing.",
+      "parentUuid": "3a3291f1_a14ffa91",
+      "revId": "7db06cb6842c08ecb25524641d5264c297849ccd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a3291f1_c14a0683",
         "filename": "db_scripts/diff/15170.up",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2015-06-15T20:43:26Z",
       "side": 1,
       "message": "JFMI, why you used before DELETE/INSERT but UPDATE here ? :-)",
+      "revId": "7db06cb6842c08ecb25524641d5264c297849ccd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a3291f1_6140f256",
+        "filename": "db_scripts/diff/15170.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-06-16T08:15:04Z",
+      "side": 1,
+      "message": "copy \u0026 paste from https://www.kamailio.org/wiki/install/upgrade/4.2.x-to-4.3.0\n\nI will use delete \u0026 insert on next patchset",
+      "parentUuid": "3a3291f1_c14a0683",
       "revId": "7db06cb6842c08ecb25524641d5264c297849ccd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
