@@ -1,0 +1,3 @@
+USE provisioning;
+
+alter table autoprov_device_line_annotations change column position position enum('top','bottom','left','right','bottomleft','bottomright','topleft','topright');
