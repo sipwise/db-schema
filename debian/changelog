@@ -1,3 +1,12 @@
+ngcp-db-schema (3.7.1.12+0~mr3.7.1.12) unstable; urgency=low
+
+  [ Irina Peshinskaya ]
+  * [a031832] MT#13369 Extend enum for lineranges positions variants
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 24 Jun 2015 17:11:50 +0200
+
 ngcp-db-schema (3.7.1.11+0~mr3.7.1.11) unstable; urgency=low
 
   [ Andreas Granig ]
