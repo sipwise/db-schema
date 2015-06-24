@@ -1,0 +1,8 @@
+use provisioning
+
+select id from voip_preferences where attribute='bypass_rtpproxy' into @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, contract_pref, prof_pref, peer_pref, default_val)
+VALUES
+(@pref_id, 'If both parties are on public IP', 'both_public', 1, 1, 1, 0, 0, 0);
+
