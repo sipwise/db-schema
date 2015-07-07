@@ -1,0 +1,20 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE provisioning;
+
+CREATE TEMPORARY TABLE temp_match SELECT id, REPLACE(match_pattern, '[*]', '[+]') as match_pattern FROM voip_rewrite_rules WHERE match_pattern REGEXP '\\$\\(avp\\(.+\\)\\[\\*\\]\\)';
+
+UPDATE voip_rewrite_rules as d INNER JOIN temp_match as t
+ON d.id = t.id
+SET d.match_pattern = t.match_pattern;
+
+CREATE TEMPORARY TABLE temp_subst SELECT id, REPLACE(replace_pattern, '[*]', '[+]') as replace_pattern FROM voip_rewrite_rules WHERE replace_pattern REGEXP '\\$\\(avp\\(.+\\)\\[\\*\\]\\)';
+
+UPDATE voip_rewrite_rules as d INNER JOIN temp_subst as t
+ON d.id = t.id
+SET d.replace_pattern = t.replace_pattern;
+
+COMMIT;
