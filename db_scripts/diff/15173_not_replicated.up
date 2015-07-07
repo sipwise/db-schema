@@ -1,0 +1,20 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+CREATE TEMPORARY TABLE temp_match SELECT id, REPLACE(match_exp, '[*]', '[+]') as match_exp FROM dialplan WHERE match_exp REGEXP '\\$\\(avp\\(.+\\)\\[\\*\\]\\)';
+
+UPDATE dialplan as d INNER JOIN temp_match as t
+ON d.id = t.id
+SET d.match_exp = t.match_exp;
+
+CREATE TEMPORARY TABLE temp_subst SELECT id, REPLACE(subst_exp, '[*]', '[+]') as subst_exp FROM dialplan WHERE subst_exp REGEXP '\\$\\(avp\\(.+\\)\\[\\*\\]\\)';
+
+UPDATE dialplan as d INNER JOIN temp_subst as t
+ON d.id = t.id
+SET d.subst_exp = t.subst_exp;
+
+COMMIT;
