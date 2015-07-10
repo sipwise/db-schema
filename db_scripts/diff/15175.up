@@ -1,0 +1,86 @@
+CREATE DATABASE IF NOT EXISTS ldap;
+
+GRANT SELECT ON provisioning.voip_subscribers TO ldap@localhost;
+GRANT SELECT ON provisioning.voip_preferences TO ldap@localhost;
+GRANT SELECT ON provisioning.voip_usr_preferences TO ldap@localhost;
+GRANT SELECT ON billing.contracts TO ldap@localhost;
+GRANT SELECT ON ldap.* TO ldap@localhost;
+
+USE ldap;
+DROP VIEW IF EXISTS org;
+DROP TABLE IF EXISTS org;
+CREATE VIEW org
+    (id, o, dc)
+    AS
+    SELECT
+        id, id, 'dc=hpbx,dc=sipwise,dc=com'
+    FROM billing.contracts;
+
+DROP VIEW IF EXISTS users;
+DROP TABLE IF EXISTS users;
+CREATE VIEW users
+    (id, account_id, uuid, username, password, displayname, phone)
+    AS
+    SELECT
+        pvs.id,
+        pvs.account_id,
+        pvs.uuid,
+        pvs.username,
+        pvs.password,
+        vup.value,
+        pvs.pbx_extension
+    FROM provisioning.voip_subscribers pvs
+    LEFT JOIN provisioning.voip_preferences vp ON vp.attribute = 'display_name'
+    LEFT JOIN provisioning.voip_usr_preferences vup ON vup.subscriber_id = pvs.id AND vup.attribute_id = vp.id;
+
+DROP TABLE IF EXISTS `ldap_attr_mappings`;
+CREATE TABLE `ldap_attr_mappings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `oc_map_id` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `sel_expr` varchar(255) NOT NULL,
+  `sel_expr_u` varchar(255) DEFAULT NULL,
+  `from_tbls` varchar(255) NOT NULL,
+  `join_where` varchar(255) DEFAULT NULL,
+  `add_proc` varchar(255) DEFAULT NULL,
+  `delete_proc` varchar(255) DEFAULT NULL,
+  `param_order` tinyint(4) NOT NULL,
+  `expect_return` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `ldap_attr_mappings` WRITE;
+INSERT INTO `ldap_attr_mappings` VALUES
+    (NULL,1,'uidNumber','users.id',NULL,'users',NULL,NULL,NULL,3,0),
+    (NULL,1,'uid','users.uuid',NULL,'users',NULL,NULL,NULL,3,0),
+    (NULL,1,'userPassword','users.password',NULL,'users',NULL,NULL,NULL,3,0),
+    (NULL,1,'cn','users.username',NULL,'users',NULL,NULL,NULL,3,0),
+    (NULL,1,'telephoneNumber','users.phone',NULL,'users',NULL,NULL,NULL,3,0),
+    (NULL,1,'displayName','users.displayname',NULL,'users',NULL,NULL,NULL,3,0);
+UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `ldap_entries`;
+DROP VIEW IF EXISTS `ldap_entries`;
+CREATE VIEW ldap_entries
+    (id, dn, oc_map_id, parent, keyval) AS
+        SELECT id as org_id, CONCAT('o=',id,',dc=hpbx,dc=sipwise,dc=com'), 3, 0, id FROM billing.contracts
+        UNION
+        SELECT id+100000 as org_id, CONCAT('uid=',uuid,',o=',account_id,',dc=hpbx,dc=sipwise,dc=com'), 1, account_id, id FROM users;
+
+DROP TABLE IF EXISTS `ldap_oc_mappings`;
+CREATE TABLE `ldap_oc_mappings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `keytbl` varchar(64) NOT NULL,
+  `keycol` varchar(64) NOT NULL,
+  `create_proc` varchar(255) DEFAULT NULL,
+  `delete_proc` varchar(255) DEFAULT NULL,
+  `expect_return` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `ldap_oc_mappings` WRITE;
+INSERT INTO `ldap_oc_mappings` VALUES
+    (1,'inetOrgPerson','users','id',NULL,NULL,0),
+    (3,'organization','org','id',NULL,NULL,0);
+UNLOCK TABLES;
