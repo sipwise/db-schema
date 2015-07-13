@@ -1,3 +1,48 @@
+ngcp-db-schema (4.0.0.0+0~mr4.0.0.0) unstable; urgency=medium
+
+  [ Gerhard Jungwirth ]
+  * [b9d20d8] MT#11501 dialogic add isdn config option
+  * [db5440d] MT#12303 peer preferences for dialogic as ss7
+  * [5b61f81] MT#12303 expose dialogic configs optical, nfs and snmp
+
+  [ Kirill Solomko ]
+  * [08252f5] MT#11493 - add set sql_log_bin=0 to 15148 and 15151 not_replicated
+  * [63e368d] MT#11225 - add billing_profiles.fraud_use_reseller_rates
+
+  [ Richard Fuchs ]
+  * [5781912] MT#12227 unify srtp/avpf prefences into a single protocol preference
+
+  [ Rene Krenn ]
+  * [7c6ab9d] MT#11917 Adapt journals table
+
+  [ Andreas Granig ]
+  * [6927670] MT#12385 Add reseller_id to EDR head.
+  * [6d0b93f] MT#12503 Drop ngcp.cfg_schema table
+  * [2f03406] MT#13201 Add billing_data acl to admins
+
+  [ Andrew Pogrebennyk ]
+  * [2e9ce24] MT#11501 fix the type for dialogic enum prefs
+  * [d4c006e] MT#11859 update kamailio.version for table sca_subscriptions
+  * [17420f0] MT#12465 add new option to force_outbound_calls_to_peer enum pref
+  * [750e43a] MT#13595 add new option to pref bypass_rtpproxy
+
+  [ Alexander Lutay ]
+  * [178736d] MT#12507 Fix 15139.up: remove hardcoded reference to voip_preference_groups
+
+  [ Irina Peshinskaya ]
+  * [8bf9cdd] MT#11791 Increase costs precisions to 6 number after point
+  * [07431b9] MT#11791 Fix broken PRO SP2 installation.
+  * [7c19a94] MT#11791 Fix typo in the build fix
+  * [086250d] MT#7227 Fill billing_fees from temporary location with not unique records.
+  * [ce35386] MT#13369 Extend enum for lineranges positions variants
+
+  [ Victor Seva ]
+  * [1c77b0c] MT#10339 kamailio: upgrade to 4.3.0
+  * [7588c96] MT#13329 adapt rewrite rules to new upstream syntax [*] -> [+]
+  * [5f024cd] MT#13919 PRO: add ldap database
+
+ -- Alexander Lutay <alutay@sipwise.com>  Mon, 13 Jul 2015 11:27:18 +0200
+
 ngcp-db-schema (3.9.0.0+0~mr4.0.0.0) unstable; urgency=low
 
   [ Irina Peshinskaya ]
