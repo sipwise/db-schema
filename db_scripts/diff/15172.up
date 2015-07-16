@@ -1,0 +1,40 @@
+SET AUTOCOMMIT=0;
+USE billing;
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS fill_billing_fees;
+CREATE PROCEDURE fill_billing_fees(IN in_profile_id INT)
+BEGIN
+
+    DECLARE columns varchar(1023);
+    DECLARE statement varchar(1023);
+    
+    SET @profile_id = in_profile_id;
+    
+    SELECT group_concat(COLUMN_NAME) INTO columns FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = database() AND TABLE_NAME = 'billing_fees_raw' AND COLUMN_NAME NOT IN ('id');
+    
+SET @statement = concat("insert into billing_fees(id,",columns,")
+select min_id,",columns,"
+from billing_fees_raw bnu 
+inner join (
+    select min(i_nu.id) min_id 
+    from billing_fees_raw i_nu 
+    left join billing.billing_fees i_u 
+        on i_nu.billing_profile_id=i_u.billing_profile_id 
+        and i_nu.source=i_u.source 
+        and i_nu.destination=i_u.destination 
+        and i_nu.direction=i_u.direction 
+        and i_nu.type=i_u.type 
+    where i_u.id is null ",
+    if( @profile_id is not null, " and i_nu.billing_profile_id = ? ", " and 1 = ? "),
+    " group by i_nu.billing_profile_id,i_nu.source,i_nu.destination,i_nu.direction,i_nu.type
+) u on bnu.id=u.min_id");
+    IF @profile_id is null THEN SET @profile_id = 1; END IF;
+    PREPARE stmt FROM @statement;
+    EXECUTE stmt USING @profile_id;
+    DEALLOCATE PREPARE stmt;
+END//
+
+DELIMITER ;
+
+COMMIT;
