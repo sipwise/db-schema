@@ -38,7 +38,6 @@ inner join (
     if( @profile_id is not null, " and i_nu.billing_profile_id = ? ", " and 1 = ? "),
     " group by i_nu.billing_profile_id,i_nu.source,i_nu.destination,i_nu.direction,i_nu.type
 ) u on bnu.id=u.min_id");
-    select @statement;
     IF @profile_id is null THEN SET @profile_id = 1; END IF;
     PREPARE stmt FROM @statement;
     EXECUTE stmt USING @profile_id;
