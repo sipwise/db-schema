@@ -1,6 +1,0 @@
-SET AUTOCOMMIT=0;
-USE billing;
-
-drop procedure if exists fill_billing_fees;
-
-COMMIT;
