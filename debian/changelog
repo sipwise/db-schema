@@ -1,3 +1,13 @@
+ngcp-db-schema (4.0.1.1+0~mr4.0.1.1) unstable; urgency=medium
+
+  [ Irina Peshinskaya ]
+  * [f78aa5b] MT#13971 Remove unnecessary debug from fill_billing_fees procedure
+  * [7168537] MT#13971 Remove unnecessary debug from fill_billing_fees procedure
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Jul 2015 23:52:55 +0200
+
 ngcp-db-schema (4.0.1.0+0~mr4.0.1.0) unstable; urgency=low
 
   * New release.
