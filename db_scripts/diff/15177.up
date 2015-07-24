@@ -1,0 +1,10 @@
+use billing;
+
+ALTER TABLE `contract_balances` ADD `topup_count` int(3) unsigned NOT NULL DEFAULT 0 AFTER `free_time_balance_interval`;
+ALTER TABLE `contract_balances` ADD `timely_topup_count` int(3) unsigned NOT NULL DEFAULT 0 AFTER `topup_count`;
+
+ALTER TABLE `vouchers` ADD `package_id` int(11) unsigned DEFAULT NULL AFTER `customer_id`;
+ALTER TABLE `vouchers` ADD CONSTRAINT `vouchers_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `vouchers` ADD CONSTRAINT UNIQUE KEY `vouchers_rescode_idx` (`reseller_id`,`code`);
+
+#ALTER TABLE `vouchers` ADD `active` int(3) unsigned DEFAULT 1 NOT NULL AFTER `customer_id`;
