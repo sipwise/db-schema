@@ -1,0 +1,3 @@
+use billing;
+
+ALTER TABLE `profile_packages` DROP COLUMN `status`;
