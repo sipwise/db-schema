@@ -1,3 +1,12 @@
+ngcp-db-schema (4.0.1.3+0~mr4.0.1.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d606094] MT#14301 drop prof package 'status' column
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 31 Jul 2015 14:33:59 +0200
+
 ngcp-db-schema (4.0.1.2+0~mr4.0.1.2) unstable; urgency=medium
 
   [ Rene Krenn ]
