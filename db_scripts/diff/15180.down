@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+SELECT id FROM voip_preferences where attribute='prepaid_library' INTO @pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+DELETE FROM voip_preferences WHERE id=@pref_id;
+
+COMMIT;
+SET AUTOCOMMIT=1;
