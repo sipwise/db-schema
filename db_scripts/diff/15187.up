@@ -1,0 +1,8 @@
+use provisioning;
+set autocommit=0;
+
+INSERT INTO voip_sound_groups (name) values ('malicious_call_identification');
+SELECT id into @mcid_id from voip_sound_groups where name = 'malicious_call_identification';
+INSERT INTO voip_sound_handles (name, group_id) VALUES ('malicious_call_report', @mcid_id);
+
+commit;

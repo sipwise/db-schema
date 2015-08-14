@@ -1,0 +1,18 @@
+use accounting;
+set autocommit=0;
+
+CREATE TABLE accounting.malicious_calls (
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  callee_uuid varchar(255) NOT NULL,
+  call_id varchar(255) NOT NULL,
+  start_time decimal(13,3) NOT NULL,
+  duration decimal(13,3) NOT NULL,
+  caller varchar(255) NOT NULL,
+  callee varchar(255) NOT NULL,
+  reported_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY mcid_callee_uuid_idx (callee_uuid),
+  UNIQUE KEY mcid_callid_idx (call_id)
+) ENGINE=InnoDB;
+
+commit;
