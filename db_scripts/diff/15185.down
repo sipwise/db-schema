@@ -1,0 +1,6 @@
+use accounting;
+set autocommit=0;
+
+DROP TABLE accounting.malicious_calls;
+
+commit;

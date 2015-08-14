@@ -1,0 +1,11 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @attr_id from voip_preferences where attribute = 'malicious_call_identification';
+DELETE from voip_dom_preferences WHERE attribute_id=@attr_id;
+DELETE from voip_usr_preferences WHERE attribute_id=@attr_id;
+DELETE from voip_contract_preferences WHERE attribute_id=@attr_id;
+DELETE from voip_preferences WHERE id=@attr_id;
+DELETE from voip_preference_groups where name = 'Applications';
+
+commit;

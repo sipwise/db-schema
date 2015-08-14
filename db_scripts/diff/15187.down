@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+DELETE FROM voip_sound_handles WHERE name = 'malicious_call_report';
+DELETE FROM voip_sound_groups WHERE name = 'malicious_call_identification';
+
+commit;
