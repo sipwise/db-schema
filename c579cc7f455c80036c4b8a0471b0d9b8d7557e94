@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_b22e46a4",
+        "filename": "db_scripts/diff/15186.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2015-08-18T07:45:00Z",
+      "side": 1,
+      "message": "Please avoid hardcoding the vp_group_id, instead select it from the voip_preference_groups table by name.",
+      "revId": "c579cc7f455c80036c4b8a0471b0d9b8d7557e94",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
