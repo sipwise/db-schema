@@ -1,0 +1,14 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+SELECT id FROM voip_preferences where attribute='language' INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'Romanian', 'ro', 1, 1, 0, 0, 0, 0);
+
+COMMIT;
+SET AUTOCOMMIT=1;
+
