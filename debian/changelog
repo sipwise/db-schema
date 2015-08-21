@@ -1,3 +1,12 @@
+ngcp-db-schema (3.8.3.2+0~mr3.8.3.2) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [3a8c4cd] MT#13459 MT#11831 add Romanian language to the enum preference
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 21 Aug 2015 12:58:33 +0200
+
 ngcp-db-schema (3.8.3.1+0~mr3.8.3.1) unstable; urgency=medium
 
   [ Irina Peshinskaya ]
