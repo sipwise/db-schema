@@ -1,0 +1,4 @@
+use billing;
+
+ALTER TABLE `contract_balances` DROP COLUMN `underrun_profiles`;
+ALTER TABLE `contract_balances` DROP COLUMN `underrun_lock`;

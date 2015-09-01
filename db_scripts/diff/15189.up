@@ -1,0 +1,4 @@
+use billing;
+
+ALTER TABLE `contract_balances` ADD COLUMN `underrun_profiles` DATETIME DEFAULT NULL AFTER `invoice_id`;
+ALTER TABLE `contract_balances` ADD COLUMN `underrun_lock` DATETIME DEFAULT NULL AFTER `underrun_profiles`;
