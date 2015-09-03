@@ -1,0 +1,52 @@
+set autocommit=0;
+USE provisioning;
+
+DROP TRIGGER IF EXISTS voip_phost_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+
+    UPDATE kamailio.lcr_gw
+       SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id
+     WHERE lcr_id = 1
+       AND flags <=> NEW.id;
+
+    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+       SET rt.weight = NEW.weight
+     WHERE gw.id <=> rt.gw_id
+       AND gw.lcr_id = 1
+       AND gw.group_id <=> NEW.group_id
+       AND gw.flags <=> NEW.id;
+
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id <=> NEW.group_id;
+
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+
+    DELETE FROM kamailio.lcr_gw
+          WHERE lcr_id = 1
+            AND flags <=> NEW.id;
+
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+SELECT id into @att_id FROM voip_preferences where attribute = 'transport_protocol';
+DELETE p1 FROM provisioning.voip_peer_preferences p1, provisioning.voip_peer_preferences p2
+WHERE p1.attribute_id = @att_id
+  AND p1.attribute_id = p2.attribute_id
+  AND p1.peer_host_id = p2.peer_host_id
+  AND p1.id < p2.id;
+
+commit;
