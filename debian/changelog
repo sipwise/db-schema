@@ -1,3 +1,12 @@
+ngcp-db-schema (3.8.3.3+0~mr3.8.3.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ee2089d] MT#14875 - Peer preferences update trigger fixes     - fix updates based on id instead of ip     - fix duplicate kamailio.peer_preferences on peer enable/disable     - fix duplicate 'transport_protocol' peer_preferences
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 09 Sep 2015 10:47:02 +0200
+
 ngcp-db-schema (3.8.3.2+0~mr3.8.3.2) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
