@@ -1,0 +1,11 @@
+set autocommit=0;
+use accounting;
+
+ALTER TABLE accounting.malicious_calls DROP COLUMN source;
+
+SELECT id into @vp_id FROM provisioning.voip_preferences where attribute = 'identifier';
+DELETE FROM provisioning.voip_dom_preferences WHERE attribute_id = @vp_id;
+DELETE FROM provisioning.voip_peer_preferences WHERE attribute_id = @vp_id;
+DELETE FROM provisioning.voip_preferences WHERE attribute = 'identifier';
+
+commit;
