@@ -1,0 +1,7 @@
+SET autocommit=0;
+USE provisioning;
+
+SELECT id INTO @pref_id FROM provisioning.voip_preferences WHERE attribute = 'force_outbound_calls_to_peer';
+UPDATE provisioning.voip_preferences_enum SET label='use domain default' WHERE id=@pref_id;
+
+COMMIT;
