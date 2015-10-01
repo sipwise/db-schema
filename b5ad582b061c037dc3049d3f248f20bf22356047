@@ -33,6 +33,24 @@
       "revId": "b5ad582b061c037dc3049d3f248f20bf22356047",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_332fcfa3",
+        "filename": "db_scripts/diff/15193.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2015-10-01T07:35:06Z",
+      "side": 1,
+      "message": "yep, I\u0027ve noticed already, thanks",
+      "parentUuid": "da6255ed_9340bb57",
+      "revId": "b5ad582b061c037dc3049d3f248f20bf22356047",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
