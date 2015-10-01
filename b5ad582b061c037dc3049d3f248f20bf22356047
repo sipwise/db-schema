@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da6255ed_732547c1",
+        "filename": "db_scripts/diff/15193.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2015-10-01T07:29:10Z",
+      "side": 1,
+      "message": "same here, WHERE preference_id\u003d@pref_id AND value IS NULL;",
+      "revId": "b5ad582b061c037dc3049d3f248f20bf22356047",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_9340bb57",
+        "filename": "db_scripts/diff/15193.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2015-10-01T07:29:10Z",
+      "side": 1,
+      "message": "WHERE preference_id\u003d@pref_id AND value IS NULL AND label\u003d\"use domain defalut\"?",
+      "revId": "b5ad582b061c037dc3049d3f248f20bf22356047",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
