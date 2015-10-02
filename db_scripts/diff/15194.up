@@ -1,0 +1,50 @@
+use billing;
+
+create table `topup_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+
+  `username` varchar(127) DEFAULT NULL,
+  `timestamp` decimal(13,3) NOT NULL,  
+
+  `type` enum('cash','voucher') NOT NULL,
+  `outcome` enum('ok','failed') NOT NULL,
+  `message` varchar(255) DEFAULT NULL,
+
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `contract_id` int(11) unsigned DEFAULT NULL,
+  
+  `amount` double DEFAULT NULL,
+  `voucher_id` int(11) unsigned DEFAULT NULL,
+  
+  `cash_balance_before` double DEFAULT NULL,
+  `cash_balance_after` double DEFAULT NULL,
+  
+  `package_before_id` int(11) unsigned DEFAULT NULL,
+  `package_after_id` int(11) unsigned DEFAULT NULL,
+  
+  `profile_before_id` int(11) unsigned DEFAULT NULL,
+  `profile_after_id` int(11) unsigned DEFAULT NULL,
+
+  `lock_level_before` tinyint(3) DEFAULT NULL,
+  `lock_level_after` tinyint(3) DEFAULT NULL,
+  
+  `contract_balance_before_id` int(11) unsigned DEFAULT NULL,
+  `contract_balance_after_id` int(11) unsigned DEFAULT NULL,
+  
+  `request_token` varchar(255) DEFAULT NULL,
+
+  PRIMARY KEY (`id`),
+  KEY `tl_requesttoken_idx` (`request_token`),
+  
+  CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_contract_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_voucher_ref` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_package_before_ref` FOREIGN KEY (`package_before_id`) REFERENCES `profile_packages` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_package_after_ref` FOREIGN KEY (`package_after_id`) REFERENCES `profile_packages` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_profile_before_ref` FOREIGN KEY (`profile_before_id`) REFERENCES `billing_profiles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_profile_after_ref` FOREIGN KEY (`profile_after_id`) REFERENCES `billing_profiles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_balance_before_ref` FOREIGN KEY (`contract_balance_before_id`) REFERENCES `contract_balances` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `tl_balance_after_ref` FOREIGN KEY (`contract_balance_after_id`) REFERENCES `contract_balances` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
