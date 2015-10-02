@@ -1,0 +1,3 @@
+use billing;
+
+drop table `topup_logs`;
