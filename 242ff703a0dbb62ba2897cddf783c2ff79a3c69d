@@ -16,6 +16,24 @@
       "revId": "242ff703a0dbb62ba2897cddf783c2ff79a3c69d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_5906e1cf",
+        "filename": "db_scripts/diff/15194.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2015-10-02T11:48:35Z",
+      "side": 1,
+      "message": "I lean more towards topup_log, also the common sql naming convention uses singular.\nAlthough we are quite far away from that and mainly use plural names :)\nUp to Rene.",
+      "parentUuid": "da6255ed_59838156",
+      "revId": "242ff703a0dbb62ba2897cddf783c2ff79a3c69d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
