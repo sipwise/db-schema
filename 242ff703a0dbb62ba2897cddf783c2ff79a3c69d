@@ -34,6 +34,24 @@
       "revId": "242ff703a0dbb62ba2897cddf783c2ff79a3c69d",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da6255ed_994e99c0",
+        "filename": "db_scripts/diff/15194.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-10-05T13:28:27Z",
+      "side": 1,
+      "message": "What about to add \"drop table if exist\" on top?",
+      "parentUuid": "da6255ed_5906e1cf",
+      "revId": "242ff703a0dbb62ba2897cddf783c2ff79a3c69d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
