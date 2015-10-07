@@ -1,3 +1,12 @@
+ngcp-db-schema (4.0.1.6+0~mr4.0.1.6) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [574212f] MT#14227 add preference for choosing libswrate/libinewrate for prepaid
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Oct 2015 12:26:40 +0200
+
 ngcp-db-schema (4.0.1.5+0~mr4.0.1.5) unstable; urgency=medium
 
   [ Kirill Solomko ]
