@@ -1,0 +1,7 @@
+set autocommit=0;
+use kamailio;
+
+ALTER TABLE kamailio.voicemail_spool DROP msg_id;
+ALTER TABLE kamailio.voicemail_spool DROP flag;
+
+commit;
