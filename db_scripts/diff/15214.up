@@ -1,0 +1,7 @@
+set autocommit=0;
+use kamailio;
+
+ALTER TABLE kamailio.voicemail_spool ADD flag varchar(128) DEFAULT '';
+ALTER TABLE kamailio.voicemail_spool ADD msg_id varchar(40) DEFAULT NULL;
+
+commit;

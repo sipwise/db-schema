@@ -1,0 +1,168 @@
+set autocommit=0;
+use provisioning;
+
+DROP TABLE voip_mail_to_fax_acl;
+DROP TABLE voip_mail_to_fax_secret_renew_notify;
+DROP TABLE voip_mail_to_fax_preferences;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxd_crepl_trig AFTER INSERT ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> NEW.subscriber_id
+     AND b.id = a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> subscriber_username AND domain <=> subscriber_domain;
+
+  INSERT INTO kamailio.fax_destinations (subscriber_id, destination, filetype,
+                                        cc, incoming, outgoing, status)
+                                 VALUES(os_subscriber_id, NEW.destination, NEW.filetype,
+                                        IF(NEW.cc, 'true', 'false'), IF(NEW.incoming, 'true', 'false'),
+                                        IF(NEW.outgoing, 'true', 'false'), IF(NEW.status, 'true', 'false'));
+
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxd_urepl_trig AFTER UPDATE ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> NEW.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> subscriber_username AND domain <=> subscriber_domain;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> OLD.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> old_subscriber_username AND domain <=> old_subscriber_domain;
+
+  UPDATE kamailio.fax_destinations SET subscriber_id = os_subscriber_id, destination = NEW.destination,
+                                      filetype = NEW.filetype, cc = IF(NEW.cc, 'true', 'false'),
+                                      incoming = IF(NEW.incoming, 'true', 'false'),
+                                      outgoing = IF(NEW.outgoing, 'true', 'false'),
+                                      status = IF(NEW.status, 'true', 'false')
+                                WHERE subscriber_id <=> old_os_subscriber_id
+                                  AND destination <=> OLD.destination;
+
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxd_drepl_trig BEFORE DELETE ON voip_fax_destinations
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> OLD.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> old_subscriber_username AND domain <=> old_subscriber_domain;
+
+  DELETE FROM kamailio.fax_destinations WHERE subscriber_id <=> old_os_subscriber_id
+                                         AND destination <=> OLD.destination;
+
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxp_crepl_trig AFTER INSERT ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> NEW.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> subscriber_username AND domain <=> subscriber_domain;
+
+  INSERT INTO kamailio.fax_preferences
+             (subscriber_id, password, name, active, send_status, send_copy)
+       VALUES(os_subscriber_id, NEW.password, NEW.name, IF(NEW.active, 'true', 'false'),
+              IF(NEW.send_status, 'true', 'false'), IF(NEW.send_copy, 'true', 'false'));
+
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxp_urepl_trig AFTER UPDATE ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> NEW.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> subscriber_username AND domain <=> subscriber_domain;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> OLD.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> old_subscriber_username AND domain <=> old_subscriber_domain;
+
+  UPDATE kamailio.fax_preferences SET subscriber_id = os_subscriber_id, password = NEW.password,
+                                      name = NEW.name, active = IF(NEW.active, 'true', 'false'),
+                                      send_status = IF(NEW.send_status, 'true', 'false'),
+                                      send_copy = IF(NEW.send_copy, 'true', 'false')
+                                WHERE subscriber_id <=> old_os_subscriber_id;
+
+END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_faxp_drepl_trig BEFORE DELETE ON voip_fax_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE old_os_subscriber_id int(10) UNSIGNED;
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+    FROM voip_subscribers a, voip_domains b
+   WHERE a.id <=> OLD.subscriber_id
+     AND b.id <=> a.domain_id;
+
+  SELECT id INTO old_os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> old_subscriber_username AND domain <=> old_subscriber_domain;
+
+  DELETE FROM kamailio.fax_preferences WHERE subscriber_id <=> old_os_subscriber_id;
+
+END;;
+DELIMITER ;
+
+commit;
