@@ -1,0 +1,8 @@
+set autocommit=0;
+use provisioning;
+
+DROP TABLE `voip_mail_to_fax_acl`;
+DROP TABLE `voip_mail_to_fax_secret_renew_notify`;
+DROP TABLE `voip_mail_to_fax_preferences`;
+
+commit;
