@@ -1,0 +1,13 @@
+set autocommit=0;
+use provisioning;
+
+REVOKE SELECT ON `provisioning`.`voip_subscribers` FROM 'mail2fax'@'localhost';
+REVOKE SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_acl` FROM 'mail2fax'@'localhost';
+REVOKE SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_preferences` FROM 'mail2fax'@'localhost';
+REVOKE SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_secret_renew_notify` FROM 'mail2fax'@'localhost';
+
+DROP TABLE `voip_mail_to_fax_acl`;
+DROP TABLE `voip_mail_to_fax_secret_renew_notify`;
+DROP TABLE `voip_mail_to_fax_preferences`;
+
+commit;
