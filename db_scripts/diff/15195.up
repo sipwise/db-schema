@@ -1,0 +1,42 @@
+set autocommit=0;
+use provisioning;
+
+CREATE TABLE `voip_mail_to_fax_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `secret_key` varchar(255) DEFAULT NULL,
+  `last_secret_key_modify` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `secret_key_renew` enum('never','daily','weekly','monthly') NOT NULL DEFAULT 'never',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mtf_p_sub_idx` (`subscriber_id`),
+  CONSTRAINT `v_mtf_p_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_mail_to_fax_secret_renew_notify` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mtf_srn_subdest_idx` (`subscriber_id`,`destination`),
+  CONSTRAINT `v_mtf_secret_renew_notify_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_mail_to_fax_acl` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `from_email` varchar(255) DEFAULT NULL,
+  `received_from` varchar(255) DEFAULT NULL,
+  `destination` varchar(255) DEFAULT NULL,
+  `use_regex` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `mtf_acl_sub_idx` (`subscriber_id`),
+  CONSTRAINT `v_mtf_acl_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_secret_renew_notify` TO 'mailtofax'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_preferences` TO 'mailtofax'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON `provisioning`.`voip_mail_to_fax_acl` TO 'mailtofax'@'localhost';
+GRANT SELECT ON `provisioning`.`voip_subscribers` TO 'mailtofax'@'localhost';
+
+commit;
