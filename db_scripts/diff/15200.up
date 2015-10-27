@@ -1,0 +1,3 @@
+USE provisioning
+UPDATE voip_preferences SET description='Force calls from this user/domain/peer to be routed to the peering servers after optional check of called number (if offline, non-local user or user of another customer). To enable peer relay set to "If callee is not local" or "Always" on the originating peer. Use with caution, as this setting may increase your costs!'
+WHERE attribute='force_outbound_calls_to_peer';
