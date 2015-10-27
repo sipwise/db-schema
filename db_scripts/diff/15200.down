@@ -1,0 +1,3 @@
+USE provisioning
+UPDATE voip_preferences SET description='Force calls from this user/domain/peer to be routed to PSTN even if the callee is local. Use with caution, as this setting may increase your costs! When enabling this option in a peer, make sure you trust it, as the NGCP will become an open relay for it!'
+WHERE attribute='force_outbound_calls_to_peer';
