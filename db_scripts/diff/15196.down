@@ -1,0 +1,3 @@
+REVOKE SELECT ON `provisioning`.`voip_subscribers` TO 'sems_prepaid'@'localhost';
+REVOKE SELECT ON `provisioning`.`voip_preferences` TO 'sems_prepaid'@'localhost';
+REVOKE SELECT,DELETE,UPDATE,INSERT ON `provisioning`.`voip_usr_preferences` TO 'sems_prepaid'@'localhost';
