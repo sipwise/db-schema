@@ -1,3 +1,12 @@
+ngcp-db-schema (4.1.1.2+0~mr4.1.1.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [7fa5fdb] MT#15977 add grants for sems/prepaid/libswrate
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 28 Oct 2015 19:08:28 +0100
+
 ngcp-db-schema (4.1.1.1+0~mr4.1.1.1) unstable; urgency=medium
 
   * New release.
