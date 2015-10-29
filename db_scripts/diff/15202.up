@@ -1,0 +1,97 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_pai_user' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "npn" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "npn" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='npn';
+
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_from_user' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "upn" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "upn" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='upn';
+
+
+SELECT id FROM voip_preferences WHERE attribute='outbound_to_user' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "callee" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "callee" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='callee';
+
+
+SELECT id FROM voip_preferences WHERE attribute='inbound_uprn' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "npn" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "npn" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='npn';
+
+
+SELECT id FROM voip_preferences WHERE attribute='sst_enable' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "no" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "no" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='no';
+
+
+SELECT id FROM voip_preferences WHERE attribute='sst_refresh_method' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "UPDATE_FALLBACK_INVITE" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "UPDATE_FALLBACK_INVITE" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='UPDATE_FALLBACK_INVITE';
+
+
+SELECT id FROM voip_preferences WHERE attribute='use_rtpproxy' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "ice_strip_candidates" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "ice_strip_candidates" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='ice_strip_candidates';
+
+
+SELECT id FROM voip_preferences WHERE attribute='ipv46_for_rtpproxy' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "auto" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "auto" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='auto';
+
+
+SELECT id FROM voip_preferences WHERE attribute='ua_header_mode' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "strip" AND prof_pref=1 AND default_val=1;
+-- profile pref. has been fixed by 15201.up
+-- UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "strip" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='strip';
+
+
+SELECT id FROM voip_preferences WHERE attribute='force_outbound_calls_to_peer' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "never" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "never" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='never';
+
+
+SELECT id FROM voip_preferences WHERE attribute='allowed_clis_reject_policy' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "override_by_usernpn" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "override_by_usernpn" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='override_by_usernpn';
+
+
+SELECT id FROM voip_preferences WHERE attribute='extended_dialing_mode' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "extended_send_dialed" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "extended_send_dialed" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='extended_send_dialed';
+
+
+SELECT id FROM voip_preferences WHERE attribute='transport_protocol' into @vpid;
+UPDATE voip_preferences_enum SET prof_pref=0 WHERE preference_id=@vpid AND value = "transparent" AND prof_pref=1 AND default_val=1;
+UPDATE voip_preferences_enum SET prof_pref=1 WHERE preference_id=@vpid AND value = "transparent" AND usr_pref=1;
+-- delete default values from prof_preferences
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vpid AND value='transparent';
+
+
+COMMIT;
+set autocommit=1;
