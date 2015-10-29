@@ -1,0 +1,11 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='ua_header_mode' into @vpid;
+UPDATE voip_preferences_enum SET label='use domain default' WHERE preference_id=@vpid AND value IS NULL;
+INSERT INTO voip_preferences_enum  (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, default_val) VALUES 
+ (@pref_id, 'Strip', 'strip', 1, 1, 0, 0, 0);
+
+COMMIT;
+set autocommit=1;
+
