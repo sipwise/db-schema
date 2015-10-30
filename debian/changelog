@@ -1,3 +1,12 @@
+ngcp-db-schema (4.0.1.7+0~mr4.0.1.7) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [6718a91] MT#16083 remove the default values of enum profile preferences
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 30 Oct 2015 12:09:45 +0100
+
 ngcp-db-schema (4.0.1.6+0~mr4.0.1.6) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
