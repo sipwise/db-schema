@@ -1,3 +1,20 @@
+ngcp-db-schema (3.8.4.1+0~mr3.8.4.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [8df9994] MT#13459 MT#11831 add Romanian language to the enum preference
+  * [64b2602] MT#16083 remove the default values of enum profile preferences
+  * [0f22d29] MT#16329 MT#2161 add outbound_*_user_is_phone preferences
+
+  [ Kirill Solomko ]
+  * [e808801] MT#14875 - Peer preferences update trigger fixes     - fix updates based on id instead of ip     - fix duplicate kamailio.peer_preferences on peer enable/disable     - fix duplicate 'transport_protocol' peer_preferences
+
+  [ Andreas Granig ]
+  * [19bc8d1] MT#13367 Add softphone autoprov preference
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Nov 2015 17:00:48 +0100
+
 ngcp-db-schema (3.8.4.0+0~mr3.8.4.0) unstable; urgency=medium
 
   [ Irina Peshinskaya ]
