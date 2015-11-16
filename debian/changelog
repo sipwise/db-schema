@@ -1,3 +1,26 @@
+ngcp-db-schema (4.0.3.0+0~mr4.0.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [2ed1e03] MT#13903 add package_id column to vouchers
+  * [4a1eb07] MT#13903 add 'topup_interval' start mode
+  * [f21791a] MT#14301 drop prof package 'status' column
+
+  [ Andrew Pogrebennyk ]
+  * [b5d29a5] MT#13459 MT#11831 add Romanian language to the enum preference
+  * [30d3b85] MT#14227 add preference for choosing libswrate/libinewrate for prepaid
+  * [67e4367] MT#16083 remove the default values of enum profile preferences
+  * [ac21837] MT#16329 MT#2161 add outbound_*_user_is_phone preferences
+
+  [ Kirill Solomko ]
+  * [cd3e640] MT#14875 - Peer preferences update trigger fixes     - fix updates based on id instead of ip     - fix duplicate kamailio.peer_preferences on peer enable/disable     - fix duplicate 'transport_protocol' peer_preferences
+
+  [ Andreas Granig ]
+  * [c9faaa0] MT#13367 Add softphone autoprov preference
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Nov 2015 14:17:31 +0100
+
 ngcp-db-schema (4.0.2.0+0~mr4.0.2.0) unstable; urgency=medium
 
   [ Irina Peshinskaya ]
