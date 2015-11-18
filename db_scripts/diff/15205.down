@@ -1,0 +1,6 @@
+use accounting;
+set autocommit=0;
+
+DROP INDEX src_dst_stime_idx ON accounting.cdr;
+
+commit;
