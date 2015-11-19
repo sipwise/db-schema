@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit=0;
+
+ALTER TABLE billing.resellers ADD COLUMN `rtc_user_id` VARCHAR(20) NULL;
+
+ALTER TABLE provisioning.voip_subscribers ADD COLUMN `rtc_session_id` VARCHAR(20) NULL AFTER `profile_id`;
+
+commit;

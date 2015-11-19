@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit=0;
+
+ALTER TABLE billing.resellers DROP COLUMN `rtc_user_id`;
+
+ALTER TABLE provisioning.voip_subscribers DROP COLUMN `rtc_session_id`;
+
+commit;
