@@ -1,0 +1,32 @@
+USE provisioning;
+SET autocommit=0;
+
+create table `rtc_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `rtc_user_id` VARCHAR(20) unsigned NOT NULL,
+
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reseller_idx` (`reseller_id`),
+  UNIQUE KEY `rtc_user_idx` (`rtc_user_id`),
+
+  CONSTRAINT `tl_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table `rtc_session` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `rtc_session_id` VARCHAR(20) unsigned NOT NULL,
+
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subscriber_idx` (`subscriber_id`),
+  UNIQUE KEY `rtc_session_idx` (`rtc_session_id`),
+
+  CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `provisioning`.`voip_subscribers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+COMMIT;
