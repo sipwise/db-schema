@@ -1,6 +1,0 @@
-use accounting;
-set autocommit=0;
-
-CREATE INDEX src_dst_stime_idx ON accounting.cdr(source_cli, destination_user_in, start_time);
-
-commit;
