@@ -1,0 +1,4 @@
+use billing;
+
+ALTER TABLE profile_packages CHANGE balance_interval_unit balance_interval_unit ENUM('hour','day','week','month') NOT NULL DEFAULT 'month';
+ALTER TABLE profile_packages CHANGE timely_duration_unit timely_duration_unit ENUM('hour','day','week','month') DEFAULT NULL;
