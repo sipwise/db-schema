@@ -1,0 +1,4 @@
+USE billing;
+
+ALTER TABLE lnp_providers ADD COLUMN prefix VARCHAR(32) NOT NULL DEFAULT '';
+ALTER TABLE lnp_numbers ADD KEY number_idx(number);
