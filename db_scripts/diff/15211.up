@@ -1,0 +1,3 @@
+USE billing;
+
+ALTER TABLE lnp_providers MODIFY id int(11) unsigned not null auto_increment;
