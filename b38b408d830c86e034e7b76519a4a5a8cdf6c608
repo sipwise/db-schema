@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_7e2bd182",
+        "filename": "db_scripts/diff/15208.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2015-12-10T12:26:15Z",
+      "side": 1,
+      "message": "It\u0027s cleaner and more readable to also explicitly set the columns, as in\nINSERT INTO voip_preferences (id, group_id, xxx, yyy, ...) VALUES (foo, bar, bla, ...)",
+      "revId": "b38b408d830c86e034e7b76519a4a5a8cdf6c608",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a96c907_3e0ea935",
+        "filename": "db_scripts/diff/15208.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2015-12-10T12:26:15Z",
+      "side": 1,
+      "message": "typo, missing double-s in \"regardless\"\n\nalso I think we usually use normal single quote as in \"caller\\\u0027s\" instead of \"caller´s\". Not sure about the backslash for quoting, but should work.",
+      "revId": "b38b408d830c86e034e7b76519a4a5a8cdf6c608",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
