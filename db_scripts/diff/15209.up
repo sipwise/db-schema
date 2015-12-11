@@ -1,0 +1,1 @@
+GRANT SELECT ON billing.voip_intercept to 'voisniff'@'localhost';
