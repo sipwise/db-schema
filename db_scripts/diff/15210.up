@@ -1,0 +1,11 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences VALUES
+  (NULL, @vpgid, 'clir_override', 'Override clir', 1, 1, 1, 1, 0, 0, 0, now(), 0, 1,
+  'boolean', 0, 'If true, calling party number is shown regardles of caller´s CLIR settings.'
+  );
+
+commit;
