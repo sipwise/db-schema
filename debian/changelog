@@ -1,3 +1,63 @@
+ngcp-db-schema (4.2.1.0+0~mr4.2.1.0) unstable; urgency=medium
+
+  [ Jenkins Git User ]
+  * [fa4a164] db-schema dump: snapshot 2015-10-13 01:12:06 +0200
+  * [89e72e9] db-schema dump: snapshot 2015-10-14 01:11:14 +0200
+  * [66d4107] db-schema dump: snapshot 2015-10-16 01:12:13 +0200
+  * [92d71a4] db-schema dump: snapshot 2015-10-17 01:11:19 +0200
+  * [c60cfa9] db-schema dump: snapshot 2015-10-18 01:12:39 +0200
+  * [1f3d8d8] db-schema dump: snapshot 2015-10-19 01:17:31 +0200
+  * [8eafd95] db-schema dump: snapshot 2015-10-20 01:11:55 +0200
+  * [8c0f009] db-schema dump: snapshot 2015-10-21 01:11:00 +0200
+  * [79e1649] db-schema dump: snapshot 2015-10-22 01:11:44 +0200
+  * [1db9d36] db-schema dump: snapshot 2015-10-23 01:19:17 +0200
+  * [59acc37] db-schema dump: snapshot 2015-10-24 01:11:10 +0200
+  * [12d41ae] db-schema dump: snapshot 2015-10-25 01:18:31 +0200
+  * [465fb5a] db-schema dump: snapshot 2015-10-26 01:13:39 +0100
+  * [796b7c6] db-schema dump: snapshot 2015-10-27 01:11:14 +0100
+  * [5236ba8] db-schema dump: snapshot 2015-10-28 01:12:01 +0100
+  * [5fe0129] db-schema dump: snapshot 2015-10-29 01:11:18 +0100
+  * [e972bbc] db-schema dump: snapshot 2015-10-30 01:56:49 +0100
+  * [3d629e9] db-schema dump: snapshot 2015-10-30 09:03:52 +0100
+  * [ac02053] db-schema dump: snapshot 2015-10-31 01:12:05 +0100
+  * [792ea10] db-schema dump: snapshot 2015-11-01 01:12:43 +0100
+  * [5e456c6] db-schema dump: snapshot 2015-11-02 01:12:39 +0100
+  * [d91a5ad] db-schema dump: snapshot 2015-11-03 01:19:35 +0100
+  * [0e53ade] db-schema dump: snapshot 2015-11-04 01:11:42 +0100
+  * [8eeab6e] db-schema dump: snapshot 2015-11-05 01:13:13 +0100
+  * [47b7bd3] db-schema dump: snapshot 2015-11-06 01:12:08 +0100
+  * [759ed13] db-schema dump: snapshot 2015-11-07 01:11:46 +0100
+
+  [ Richard Fuchs ]
+  * [126594e] MT#15977 add grants for sems/prepaid/libswrate
+  * [88d326c] MT#16273 add DB grants for voisniff LI operation
+
+  [ Andrew Pogrebennyk ]
+  * [ee1313e] MT#16033 Improve preference description for "force_outbound_calls_to_peer"
+  * [7a37fc9] MT#16083 remove the default values of enum profile preferences
+  * [601f858] MT#16329 MT#2161 add outbound_*_user_is_phone preferences
+
+  [ Andreas Granig ]
+  * [c9d4caa] MT#13367 Add softphone autoprov preference
+  * [ce73e66] MT#16777 Add prefix and number key to lnp tbl
+  * [6346e10] MT#16777 Add auto_increment to lnp_providers.id
+
+  [ Kirill Solomko ]
+  * [f080027] MT#16491 accounting.cdr index for calls query optimization
+
+  [ Rene Krenn ]
+  * [aeb1349] MT#16655 add "minute" interval unit
+
+  [ Gerhard Jungwirth ]
+  * [01087ba] MT#15883 introduce rtc connection variables
+
+  [ Joyef Kenyeres ]
+  * [d3c24b3] MT#2013 adds/removes "clir_override" preference to voip_preferences
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 16 Dec 2015 09:08:38 +0100
+
 ngcp-db-schema (4.2.0.0+0~mr4.2.0.0) unstable; urgency=medium
 
   [ Jenkins Git User ]
