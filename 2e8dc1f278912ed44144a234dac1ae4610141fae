@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a96c907_40acdced",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2015-12-17T17:11:41Z",
+      "side": 1,
+      "message": "no\n\n\u003cverbose\u003e\nPlease be more verbose and strict in commit message\n\u003c/verbose\u003e",
+      "revId": "2e8dc1f278912ed44144a234dac1ae4610141fae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
