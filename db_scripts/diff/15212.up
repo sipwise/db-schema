@@ -1,0 +1,3 @@
+USE provisioning;
+
+UPDATE voip_preferences SET usr_pref = 1, dom_pref = 1  WHERE attribute = "conference_max_participants";
