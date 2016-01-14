@@ -1,3 +1,12 @@
+ngcp-db-schema (4.2.2.0+0~mr4.2.2.0) unstable; urgency=medium
+
+  [ Jozef Kenyeres ]
+  * [0a8a253] MT#2013 Remove UTF symbol from DB statement which fails SOAP WSDL generation
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Jan 2016 23:24:19 +0100
+
 ngcp-db-schema (4.2.1.0+0~mr4.2.1.0) unstable; urgency=medium
 
   [ Jenkins Git User ]
