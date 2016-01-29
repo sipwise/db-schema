@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`rtc_session`
+    ADD COLUMN `rtc_network_tag` VARCHAR(45) NOT NULL;
