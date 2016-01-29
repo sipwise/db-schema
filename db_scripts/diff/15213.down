@@ -1,0 +1,6 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`rtc_session`
+DROP COLUMN `rtc_network_tag`
+#DROP INDEX `subscriber_idx`
+;
