@@ -1,0 +1,6 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`rtc_session`
+ADD COLUMN `rtc_network_tag` VARCHAR(45) NOT NULL AFTER `rtc_session_id`   -- will probably fail if there is already data in this table
+#DROP INDEX `subscriber_idx`;
+;
