@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c1377faf",
+        "filename": "db_scripts/diff/15215.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-02-03T14:53:40Z",
+      "side": 1,
+      "message": "foreign key?",
+      "revId": "0f3a075fef888f8495ed06dd4f7c6afaac34d800",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
