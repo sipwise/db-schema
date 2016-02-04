@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d31190ad",
+        "filename": "db_scripts/diff/15213.down",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "one line please, this is one statement, or use indent if you want to wrap it.",
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_b30c1c96",
+        "filename": "db_scripts/diff/15213.down",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "\";\" is missing here.",
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_73268418",
+        "filename": "db_scripts/diff/15213.down",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "remove this please, no commented statements in db changes, only comments that bring useful information.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 28
+      },
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_d33af035",
+        "filename": "db_scripts/diff/15213.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "one line please, this is one statement, or use indent if you want to wrap it.",
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_3349ecd0",
+        "filename": "db_scripts/diff/15213.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "db change statements are strict with versioning consistency, means if there is already a column \"rtc_network_tag\" or no \"rtc_session_id\" column the statement WILL fail, then the issue is not with this particular statement but rather with the db and why the schema there is inconsistent.\nalso no need to add \"AFTER column ... \" if the column is last anyways.",
+      "range": {
+        "startLine": 4,
+        "startChar": 75,
+        "endLine": 4,
+        "endChar": 135
+      },
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_733f6426",
+        "filename": "db_scripts/diff/15213.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "\";\" is missing",
+      "range": {
+        "startLine": 4,
+        "startChar": 72,
+        "endLine": 4,
+        "endChar": 73
+      },
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_131868d2",
+        "filename": "db_scripts/diff/15213.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-02-04T19:59:40Z",
+      "side": 1,
+      "message": "remove this please, no commented statements in db changes, only comments that bring useful information.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 29
+      },
+      "revId": "76978589c4e2b51aedb40fc0ac5a9f23cfa0b407",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
