@@ -1,3 +1,25 @@
+ngcp-db-schema (4.1.2.1+0~mr4.1.2.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [2b4c271] MT#15977 add grants for sems/prepaid/libswrate
+
+  [ Andrew Pogrebennyk ]
+  * [0df003c] MT#16083 remove the default values of enum profile preferences
+  * [6ea151b] MT#16329 MT#2161 add outbound_*_user_is_phone preferences
+
+  [ Andreas Granig ]
+  * [1ec9f66] MT#13367 Add softphone autoprov preference
+
+  [ Kirill Solomko ]
+  * [b03efed] MT#16491 accounting.cdr index for calls query optimization
+
+  [ Rene Krenn ]
+  * [e20a5b6] MT#16655 add "minute" interval unit
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 09 Feb 2016 11:47:13 +0100
+
 ngcp-db-schema (4.1.2.0+0~mr4.1.2.0) unstable; urgency=medium
 
   * New release.
