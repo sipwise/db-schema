@@ -1,0 +1,10 @@
+USE provisioning;
+
+ALTER TABLE provisioning.rtc_session
+    DROP FOREIGN KEY tl_subscriber_ref,
+    DROP KEY subscriber_idx;
+
+ALTER TABLE provisioning.rtc_session
+    ADD UNIQUE KEY subscriber_idx (subscriber_id),
+    ADD CONSTRAINT tl_subscriber_ref FOREIGN KEY subscriber_idx (subscriber_id)
+        REFERENCES voip_subscribers (id) ON DELETE CASCADE ON UPDATE CASCADE;
