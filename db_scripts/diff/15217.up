@@ -1,0 +1,5 @@
+use provisioning;
+set autocommit=0;
+select id into @pref_id from voip_preferences where attribute='inbound_uprn';
+insert into voip_preferences_enum values(NULL, @pref_id, 'Forwarder\'s UPN', 'upn', 1, 1, 1, 0, 0, 0);
+commit;
