@@ -1,0 +1,2 @@
+use kamailio;
+alter table usr_preferences add key av_idx(attribute, value);
