@@ -1,3 +1,15 @@
+ngcp-db-schema (3.8.4.2+0~mr3.8.4.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [cbac0a3] MT#16491 accounting.cdr index for calls query optimization
+
+  [ Andrew Pogrebennyk ]
+  * [471297f] MT#18255 create index on usr_preferences (attribute, value)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 29 Feb 2016 15:17:19 +0100
+
 ngcp-db-schema (3.8.4.1+0~mr3.8.4.1) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
