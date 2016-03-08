@@ -1,0 +1,4 @@
+use billing;
+
+grant select on billing.lnp_numbers to kamailioro@localhost;
+grant select on billing.lnp_providers to kamailioro@localhost;
