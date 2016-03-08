@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad0f9df_4c5f5373",
+        "filename": "db_scripts/diff/15221.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-03-08T15:12:12Z",
+      "side": 1,
+      "message": "please enclose multi sql statements it into a transaction\n\nset autocommit\u003d0;\n...\ncommit;",
+      "revId": "db9a26c7ee4db08181579b82211b3cfa5cdc872d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
