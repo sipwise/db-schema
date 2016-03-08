@@ -1,0 +1,510 @@
+USE billing;
+
+alter table lnp_numbers 
+  add column routing_number varchar(31) default null after number;
+
+USE provisioning;
+
+ALTER TABLE voip_rewrite_rules 
+  CHANGE COLUMN direction direction ENUM('in', 'out', 'lnp') NOT NULL DEFAULT 'in';
+
+ALTER TABLE voip_rewrite_rule_sets 
+  ADD COLUMN caller_lnp_dpid INT(11) UNSIGNED DEFAULT NULL,
+  ADD COLUMN callee_lnp_dpid INT(11) UNSIGNED DEFAULT NULL;
+
+set @pid = 0;
+select id into @pid from voip_preference_groups where name = 'Number Manipulations';
+insert into voip_preferences
+  (voip_preference_groups_id, attribute, label, type, max_occur,
+   usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+   modify_timestamp, internal, expose_to_customer, data_type, read_only,
+   description)
+  values
+  (@pid, 'rewrite_caller_lnp_dpid', 'Internal # for lnp caller rewrite rule set', 1, 1,
+   1, 1, 1, 1, 0,
+   now(), 1, 0, 'int', 0,
+   NULL),
+  (@pid, 'rewrite_callee_lnp_dpid', 'Internal # for lnp callee rewrite rule set', 1, 1,
+   1, 1, 1, 1, 0,
+   now(), 1, 0, 'int', 0,
+   NULL);
+
+DROP TRIGGER voip_rwrulesets_crepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrulesets_crepl_trig BEFORE INSERT ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_lnp_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_lnp_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_lnp_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_lnp_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+
+  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;
+END;;
+DELIMITER ;
+
+DROP TRIGGER voip_rwrulesets_urepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid <=> OLD.caller_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+  END IF;
+
+  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid <=> OLD.callee_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+  END IF;
+
+  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid <=> OLD.caller_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+  END IF;
+
+  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid <=> OLD.callee_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+  END IF;
+
+  IF NEW.caller_lnp_dpid != OLD.caller_lnp_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_lnp_dpid WHERE dpid <=> OLD.caller_lnp_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+  END IF;
+
+  IF NEW.callee_lnp_dpid != OLD.callee_lnp_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_lnp_dpid WHERE dpid <=> OLD.callee_lnp_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+  END IF;
+END;;
+DELIMITER ;
+
+DROP TRIGGER voip_rwrulesets_drepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_lnp_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_lnp_dpid;
+
+END;;
+DELIMITER ;
+
+DROP TRIGGER voip_rwrules_crepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE new_set_id int(11) unsigned;
+
+  IF NEW.enabled = 1 THEN
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+        VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  END IF;
+
+END;;
+DELIMITER ;
+
+DROP TRIGGER voip_rwrules_urepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+  DECLARE new_set_id int(11) unsigned;
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+
+    IF OLD.direction = 'in' THEN
+      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'out' THEN
+      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'lnp' THEN
+      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    END IF;
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    UPDATE kamailio.dialplan
+       SET dpid      = new_set_id,
+           pr        = NEW.priority,
+           match_exp = NEW.match_pattern,
+           subst_exp = NEW.match_pattern,
+           repl_exp  = NEW.replace_pattern
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+
+    IF OLD.direction = 'in' THEN
+      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'out' THEN
+      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'lnp' THEN
+      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    END IF;
+
+    DELETE FROM kamailio.dialplan
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  END IF;
+
+END;;
+DELIMITER ;
+
+DROP TRIGGER voip_rwrules_drepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+
+  IF OLD.direction = 'in' THEN
+    SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+  	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  ELSEIF OLD.direction = 'out' THEN
+    SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  ELSEIF OLD.direction = 'lnp' THEN
+    SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  END IF;
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      <=> old_set_id
+     AND pr        <=> OLD.priority
+     AND match_exp <=> OLD.match_pattern
+     AND subst_exp <=> OLD.match_pattern
+     AND repl_exp  <=> OLD.replace_pattern;
+
+END ;;
+DELIMITER ;
+
+delimiter ;;
+create procedure tmp_update_rwr_seq() begin
+  declare done boolean default false;
+  declare _id int(11) unsigned;
+  declare last_seq int(11) unsigned;
+  declare caller_cur cursor for select id from provisioning.voip_rewrite_rule_sets where caller_lnp_dpid is null;
+  declare callee_cur cursor for select id from provisioning.voip_rewrite_rule_sets where callee_lnp_dpid is null;
+  declare continue handler for not found set done := true;
+
+  open caller_cur;
+  testloop: loop
+    fetch caller_cur into _id;
+    if done then
+      leave testloop;
+    end if;
+    insert into voip_rwrs_sequence values();
+    set last_seq := last_insert_id();
+    update provisioning.voip_rewrite_rule_sets set caller_lnp_dpid = last_seq where id = _id;
+  end loop testloop;
+  close caller_cur;
+
+  set done := false;
+  open callee_cur;
+  testloop: loop
+    fetch callee_cur into _id;
+    if done then
+      leave testloop;
+    end if;
+    insert into voip_rwrs_sequence values();
+    set last_seq := last_insert_id();
+    update provisioning.voip_rewrite_rule_sets set callee_lnp_dpid = last_seq where id = _id;
+  end loop testloop;
+  close callee_cur;
+
+  delete from provisioning.voip_rwrs_sequence where id < last_seq;
+
+end;;
+delimiter ;
+
+call tmp_update_rwr_seq();
+
+drop procedure tmp_update_rwr_seq;
