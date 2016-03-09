@@ -1,0 +1,16 @@
+use billing;
+set autocommit=0;
+
+DELETE from email_templates
+ WHERE reseller_id IS NULL
+   AND name = 'credit_warning_default_email';
+
+DELETE from email_templates
+ WHERE reseller_id IS NULL
+   AND name = 'customer_fraud_lock_default_email';
+
+DELETE from email_templates
+ WHERE reseller_id IS NULL
+   AND name = 'customer_fraud_warning_default_email';
+
+commit;

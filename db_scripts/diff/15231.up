@@ -1,0 +1,50 @@
+use billing;
+set autocommit=0;
+
+INSERT INTO email_templates (reseller_id, name, from_email, subject, body)
+VALUES
+(NULL, 'credit_warning_default_email', '[% adminmail %]',
+'Sipwise NGCP credit threshold notification',
+'Credit threshold warning for: [% domain %]
+The following contracts are below the configured threshold of [% threshold %]:
+
+[% contracts %]
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.');
+
+INSERT INTO email_templates (reseller_id, name, from_email, subject, body)
+VALUES
+(NULL, 'customer_fraud_lock_default_email', '[% adminmail %]',
+'Customer # [% customer_id %] locked by fraud detection',
+'Customer # [% customer_id %] has been locked due to exceeding the configured
+credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings.
+
+Affected subscribers:
+[% subscribers %]
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.');
+
+INSERT INTO email_templates (reseller_id, name, from_email, subject, body)
+VALUES
+(NULL, 'customer_fraud_warning_default_email', '[% adminmail %]',
+'Customer # [% customer_id %] exceeding fraud detection limit',
+'Customer # [% customer_id %] is currently exceeding the configured credit balance
+threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings,
+but has not been locked due to configuration.
+
+Affected subscribers:
+[% subscribers %]
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.');
+
+commit;
+
