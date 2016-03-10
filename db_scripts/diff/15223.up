@@ -1,0 +1,13 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+SELECT id INTO @vpid FROM voip_preferences
+    WHERE attribute = 'force_outbound_calls_to_peer';
+INSERT INTO voip_preferences_enum VALUES (
+    NULL, @vpid, 'If callee is not local and is ported',
+    'force_nonlocal_lnp',
+    0, 0, 0, 1, NULL, 0
+);
+
+COMMIT;
