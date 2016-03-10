@@ -1,0 +1,4 @@
+USE provisioning;
+
+DELETE FROM voip_preferences
+    WHERE attribute = 'default_lnp_prefix';
