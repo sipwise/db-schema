@@ -1,0 +1,5 @@
+USE accounting;
+
+ALTER TABLE cdr
+	DROP COLUMN source_lnp_prefix,
+	DROP COLUMN destination_lnp_prefix;

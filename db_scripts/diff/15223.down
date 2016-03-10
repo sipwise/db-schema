@@ -1,0 +1,4 @@
+USE PROVISIONING;
+
+DELETE FROM voip_preferences_enum
+    WHERE value = 'force_nonlocal_lnp';
