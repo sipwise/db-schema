@@ -1,5 +1,6 @@
 USE accounting;
 
 ALTER TABLE cdr
-	ADD COLUMN source_lnp_prefix VARCHAR(255) NOT NULL DEFAULT '' AFTER source_gpp9,
-	ADD COLUMN destination_lnp_prefix VARCHAR(255) NOT NULL DEFAULT '' AFTER destination_gpp9;
+    ADD COLUMN source_lnp_prefix VARCHAR(255) NOT NULL DEFAULT '' AFTER source_gpp9,
+    ADD COLUMN destination_lnp_prefix VARCHAR(255) NOT NULL DEFAULT '' AFTER destination_gpp9,
+    ADD KEY duri_in_idx (destination_user_in, destination_domain_in);
