@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+UPDATE voip_preferences SET contract_pref = 0 where attribute = 'emergency_prefix';
+UPDATE voip_preferences SET contract_pref = 0 where attribute = 'emergency_suffix';
+
+commit;
