@@ -1,0 +1,11 @@
+use provisioning;
+set autocommit=0;
+
+ALTER TABLE `voip_contract_preferences`
+        DROP FOREIGN KEY `v_c_p_locationid_ref`,
+        DROP COLUMN `location_id`;
+
+DROP TABLE `voip_contract_location_blocks`;
+DROP TABLE `voip_contract_locations`;
+
+commit;

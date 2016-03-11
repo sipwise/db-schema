@@ -1,0 +1,37 @@
+use provisioning;
+set autocommit=0;
+
+CREATE TABLE `voip_contract_locations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vcl_contract_name_idx` (`contract_id`,`name`),
+  CONSTRAINT `vcl_contract_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_contract_location_blocks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) unsigned NOT NULL,
+  `ip` varchar(39) NOT NULL,
+  `mask` tinyint(1) unsigned DEFAULT NULL,
+  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
+  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
+  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
+  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vclb_unique_location_block` (`location_id`,`ip`,`mask`),
+  KEY `vclb_ipv4_from_idx` (`_ipv4_net_from`),
+  KEY `vclb_ipv4_to_idx` (`_ipv4_net_to`),
+  KEY `vclb_ipv6_from_idx` (`_ipv6_net_from`),
+  KEY `vclb_ipv6_to_idx` (`_ipv6_net_to`),
+  KEY `vclb_location_ref` (`location_id`),
+  CONSTRAINT `vclb_location_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `voip_contract_preferences`
+    ADD COLUMN `location_id` int(11) unsigned DEFAULT NULL,
+    ADD CONSTRAINT `v_c_p_locationid_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+commit;
