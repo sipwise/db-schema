@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute = 'call_deflection';
+DELETE FROM voip_preferences_enum WHERE preference_id = @pref_id;
+DELETE FROM voip_preferences WHERE id = @pref_id;
+
+commit;
