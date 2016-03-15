@@ -1,0 +1,18 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'caller_lnp_lookup', 'Default LNP prefix', 1, 1,
+     0, 0, 0, 1, 0,
+     now(), 0, 0, 'boolean', 0,
+     'If enabled, an LNP lookup is performed for calls from this peer using the network-provided calling party number. The resulting LNP prefix is written to CDRs as source_lnp_prefix.');
+
+COMMIT;
