@@ -1,0 +1,8 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+ALTER TABLE voip_preferences DROP COLUMN contract_location_pref;
+ALTER TABLE voip_preferences_enum DROP COLUMN contract_location_pref;
+
+COMMIT;

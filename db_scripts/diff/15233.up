@@ -1,0 +1,21 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+ALTER TABLE voip_preferences
+    ADD COLUMN contract_location_pref tinyint(1) NOT NULL DEFAULT '0' AFTER contract_pref;
+
+ALTER TABLE voip_preferences_enum
+    ADD COLUMN contract_location_pref tinyint(1) NOT NULL DEFAULT '0' AFTER contract_pref;
+
+UPDATE voip_preferences SET contract_pref = 1 where attribute = 'emergency_cli';
+
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'emergency_prefix';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'emergency_suffix';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'emergency_cli';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'concurrent_max';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'concurrent_max_out';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'concurrent_max_total';
+UPDATE voip_preferences SET contract_location_pref = 1 where attribute = 'concurrent_max_out_total';
+
+COMMIT;
