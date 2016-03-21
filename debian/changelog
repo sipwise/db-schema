@@ -1,3 +1,44 @@
+ngcp-db-schema (4.3.1.0+0~mr4.3.1.0) unstable; urgency=medium
+
+  [ Jozef Kenyeres ]
+  * [da23b4d] MT#2013 Remove UTF symbol from DB statement which fails SOAP WSDL generation
+  * [6f554f4] MT#17043 Limit conference room participants per subscriber, conference_max_participants is user, domain and contract preference now.
+
+  [ Guillem Jover ]
+  * [bb43de2] MT#16473 Convert debian/copyright to machine-readable format
+
+  [ Kirill Solomko ]
+  * [ace0de4] MT#16017 voicemail, fax provisioning, mail_to_fax db changes
+  * [d0c8242] MT#18499 added voip_contract_locations, voip_contract_location_blocks
+  * [b0f3460] MT#18499 expose emergency_prefix and emergency_suffix voip preferences to contracts
+  * [8597401] MT#18411 added credit_warning and customer fraud email templates
+  * [1a423fe] MT#18499 kamailio.contract_preferences contract_location_pref
+
+  [ Gerhard Jungwirth ]
+  * [e003ede] MT#15883 adapt rtcsessions table
+  * [d761c0f] MT#15883 rtc_session allow non-unique subscriber_id
+
+  [ Michael Prokop ]
+  * [61b2799] MT#17699 Bump Standards-Version to 3.9.7
+
+  [ Andrew Pogrebennyk ]
+  * [6209aea] MT#18199 add ability to use forwarder's UPN as inbound_uprn
+  * [3a2c5e4] MT#18255 create index on usr_preferences (attribute, value)
+  * [234cf52] MT#18505 add preference call_deflection to disallow 302 redirect
+
+  [ Andreas Granig ]
+  * [1710f50] MT#16777 Add lnp rewrite columns and routing num
+  * [ed26ccd] MT#16777 grant select for lnp tables to kamailioro
+  * [8bfcb84] MT#16777 Add lnp peer pref and lnp prefix cdr col
+  * [27682f7] MT#16777 Add default_lnp_prefix usr/dom/peer pref.
+  * [de7c77b] MT#10537 Add duri_in_idx key to cdr table
+  * [ae91ea8] MT#16777 Add caller lnp lookup peer pref
+  * [41ef61b] MT#18593 Add emergency priorization prefs
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 21 Mar 2016 22:12:09 +0100
+
 ngcp-db-schema (4.3.0.0+0~mr4.3.0.0) unstable; urgency=medium
 
   [ Jenkins Git User ]
