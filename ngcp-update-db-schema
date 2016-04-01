@@ -135,6 +135,7 @@ apply_revs() {
   [ -n "$1" ] || return 1
 
   revs="$1"
+  not_replicated_rev_applied=0
 
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
@@ -166,10 +167,27 @@ apply_revs() {
 
     if [ -r "$revision_file" ] ; then
       apply_revision "$revision_file"
+      if [[ $revision_file == *_not_replicated.up ]] ; then
+        not_replicated_rev_applied=1
+      fi
     else
       echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
     fi
   done
+
+  # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
+  if [ $not_replicated_rev_applied -eq 1 ] && [[ $nodename == prx* ]] ; then
+    if [ -x "/usr/sbin/ngcp-sync-db" ] ; then
+        PRX_SYNC_DBS="billing carrier kamailio provisioning prosody"
+        if /usr/sbin/ngcp-sync-db --verbose --force --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125; then
+            echo "Syncing not_replicated statements from the central node"
+        else
+            echo "There were errors while syncing not_replicated statements from the central node, please run ngcp-sync-db manually to fix them"
+        fi
+    else
+        echo "Error while syncing not_replicated statements from the central node: $!"
+    fi
+  fi
 }
 
 
