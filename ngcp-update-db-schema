@@ -13,6 +13,8 @@ usage() {
 }
 
 FORCE_ACTIVE_NODE=false
+RUN_SYNC_DB=false
+SYNC_DB="/usr/sbin/ngcp-sync-db"
 
 while getopts "fh" opt; do
     case "${opt}" in
@@ -37,6 +39,8 @@ fi
 
 /etc/init.d/mysql start || true
 . /etc/mysql/sipwise.cnf
+
+. /etc/default/ngcp-roles
 
 if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
   echo 'Error: SIPWISE_DB_PASSWORD is unset (using /etc/mysql/sipwise.cnf).' >&2
@@ -81,6 +85,14 @@ fi
 if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e 'describe db_schema'  >/dev/null; then
   echo 'Error: db_schema table does not exit.' >&2
   exit 1
+fi
+
+if [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
+  if ! $FORCE_ACTIVE_NODE && [ ! -x "$SYNC_DB" ] ; then
+    echo "Error: ${SYNC_DB} is required for carrier proxy (or lacking execute permissions)." >&2
+    exit 1
+  fi
+  RUN_SYNC_DB=true
 fi
 
 running_on_active_node() {
@@ -135,6 +147,7 @@ apply_revs() {
   [ -n "$1" ] || return 1
 
   revs="$1"
+  not_replicated_rev_applied=false
 
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
@@ -166,10 +179,28 @@ apply_revs() {
 
     if [ -r "$revision_file" ] ; then
       apply_revision "$revision_file"
+      if [[ $revision_file == *_not_replicated.up ]] ; then
+        not_replicated_rev_applied=true
+      fi
     else
       echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
     fi
   done
+
+  # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
+  if $RUN_SYNC_DB && $not_replicated_rev_applied ; then
+    if [ -x "$SYNC_DB" ] ; then
+        PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
+        if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125; then
+            echo "Syncing 'not_replicated' statements from the central node."
+        else
+            echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
+            exit 1
+        fi
+    else
+        echo "Warning: Skipping sync of 'not_replicated' statements from the central node as ${SYNC_DB} is missing on the current node." >&2
+    fi
+  fi
 }
 
 
