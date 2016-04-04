@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad5f5cf_fcaca28e",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-04T10:51:54Z",
+      "side": 1,
+      "message": "why not to use true/false here?\nso later it will hava nicer IF statement:\n\nIF $not_replicated_rev_applied \u0026\u0026 [ \"$NGCP_IS_PROXY\" ...\n\nP.S. Minor...",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dad5f5cf_1caac670",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-04T10:51:54Z",
+      "side": 1,
+      "message": "where do we check IS_CARIER here?",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
