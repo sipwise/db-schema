@@ -1,0 +1,168 @@
+
+SET autocommit=0; #not only DDL stmts
+CREATE TABLE IF NOT EXISTS accounting.cdr_cash_balance_col (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  col ENUM(
+    'source_carrier_cash_balance',
+    'source_reseller_cash_balance',
+    'source_customer_cash_balance',
+    'destination_carrier_cash_balance',
+    'destination_reseller_cash_balance',
+    'destination_customer_cash_balance'
+    #,'source_carrier_free_cash_balance',
+    #'source_reseller_free_cash_balance',
+    #'source_customer_free_cash_balance',
+    #'destination_carrier_free_cash_balance',
+    #'destination_reseller_free_cash_balance',
+    #'destination_customer_free_cash_balance',
+    #'source_carrier_persistent_free_cash_balance',
+    #'source_reseller_persistent_free_cash_balance',
+    #'source_customer_persistent_free_cash_balance',
+    #'destination_carrier_persistent_free_cash_balance',
+    #'destination_reseller_persistent_free_cash_balance',
+    #'destination_customer_persistent_free_cash_balance'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY ccbc_col_idx (col)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='source_carrier_cash_balance';
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='source_reseller_cash_balance';
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='source_customer_cash_balance';
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='destination_carrier_cash_balance';
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='destination_reseller_cash_balance';
+INSERT INTO accounting.cdr_cash_balance_col SET id=null, col='destination_customer_cash_balance';
+
+#up to 4 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_cash_balance_col_data ( #implicit commit
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  cdr_id int(10) unsigned NOT NULL,
+  col_id int(3) unsigned NOT NULL,
+  val_before decimal(14,6) NOT NULL,
+  val_after decimal(14,6) NOT NULL,
+  ##with partitioning:
+  #  cdr_st int unsigned NOT NULL, #start time from accounting.cdr
+  #  #every unique key on the table must use every column in the table's partitioning expression:
+  #  PRIMARY KEY (id,cdr_st),
+  #  UNIQUE KEY ccbcd_cdr_col_idx (cdr_id, col_id, cdr_st)
+  #  #foreign keys not supported for partitioned InnoDB tables.
+  #w/o partitioning:
+    PRIMARY KEY (id),
+    UNIQUE KEY ccbcd_cdr_col_idx (cdr_id, col_id),
+    KEY ccbcd_col_id_idx (col_id),
+    FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (col_id) REFERENCES accounting.cdr_cash_balance_col(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+##with partitioning:
+#PARTITION BY RANGE(cdr_st) (
+#    PARTITION p0 VALUES LESS THAN MAXVALUE
+#)
+;
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_time_balance_col (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  col ENUM(
+    'source_carrier_free_time_balance',
+    'source_reseller_free_time_balance',
+    'source_customer_free_time_balance',
+    'destination_carrier_free_time_balance',
+    'destination_reseller_free_time_balance',
+    'destination_customer_free_time_balance'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY ctbc_col_idx (col)
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='source_carrier_free_time_balance';
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='source_reseller_free_time_balance';
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='source_customer_free_time_balance';
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='destination_carrier_free_time_balance';
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='destination_reseller_free_time_balance';
+INSERT INTO accounting.cdr_time_balance_col SET id=null, col='destination_customer_free_time_balance';
+
+#up to 4 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_time_balance_col_data ( #implicit commit
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  cdr_id int(10) unsigned NOT NULL,
+  col_id int(3) unsigned NOT NULL,
+  val_before int(10) unsigned NOT NULL,
+  val_after int(10) unsigned NOT NULL,
+  ##with partitioning:
+  #  cdr_st int unsigned NOT NULL, #start time from accounting.cdr
+  #  #every unique key on the table must use every column in the table's partitioning expression:
+  #  PRIMARY KEY (id,cdr_st),
+  #  UNIQUE KEY ctbcd_cdr_col_idx (cdr_id, col_id, cdr_st)
+  #  #foreign keys not supported for partitioned InnoDB tables.
+  #w/o partitioning:
+    PRIMARY KEY (id),
+    UNIQUE KEY ctbcd_cdr_col_idx (cdr_id, col_id),
+    KEY ctbcd_col_id_idx (col_id),
+    FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (col_id) REFERENCES accounting.cdr_time_balance_col(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+##with partitioning:
+#PARTITION BY RANGE(cdr_st) (
+#    PARTITION p0 VALUES LESS THAN MAXVALUE
+#)
+;
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_billing_fk_col (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  col ENUM(
+    'source_carrier_profile_package_id',
+    'source_reseller_profile_package_id',
+    'source_customer_profile_package_id',
+    'source_carrier_contract_balance_id',
+    'source_reseller_contract_balance_id',
+    'source_customer_contract_balance_id',
+    'destination_carrier_profile_package_id',
+    'destination_reseller_profile_package_id',
+    'destination_customer_profile_package_id',
+    'destination_carrier_contract_balance_id',
+    'destination_reseller_contract_balance_id',
+    'destination_customer_contract_balance_id'
+  ) NOT NULL,
+  #ref varchar(255) DEFAULT NULL, #e.g. "billing.contract_balances.id"
+  PRIMARY KEY (id),
+  UNIQUE KEY cbfkc_col_idx (col)
+) ENGINE=InnoDB AUTO_INCREMENT=300 DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_carrier_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_reseller_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_customer_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_carrier_contract_balance_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_reseller_contract_balance_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='source_customer_contract_balance_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_carrier_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_reseller_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_customer_profile_package_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_carrier_contract_balance_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_reseller_contract_balance_id';
+INSERT INTO accounting.cdr_billing_fk_col SET id=null, col='destination_customer_contract_balance_id';
+
+#6 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_billing_fk_col_data ( #implicit commit
+  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  cdr_id int(10) unsigned NOT NULL,
+  col_id int(3) unsigned NOT NULL,
+  fk_id int(10) unsigned NOT NULL,
+  ##with partitioning:
+  #  cdr_st int unsigned NOT NULL, #start time from accounting.cdr
+  #  #every unique key on the table must use every column in the table's partitioning expression:
+  #  PRIMARY KEY (id,cdr_st),
+  #  UNIQUE KEY cbfkcd_cdr_col_idx (cdr_id, col_id, cdr_st)
+  #  #foreign keys not supported for partitioned InnoDB tables.
+  #w/o partitioning:
+    PRIMARY KEY (id),
+    UNIQUE KEY cbfkcd_cdr_col_idx (cdr_id, col_id),
+    KEY cbfkcd_col_id_idx (col_id),
+    FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (col_id) REFERENCES accounting.cdr_billing_fk_col(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
+##with partitioning:
+#PARTITION BY RANGE(cdr_st) (
+#    PARTITION p0 VALUES LESS THAN MAXVALUE
+#)
+;
+
+COMMIT; #final commit
