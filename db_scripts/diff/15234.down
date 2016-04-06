@@ -1,0 +1,11 @@
+
+#only DDL stmts with implicit commits
+
+DROP TABLE IF EXISTS accounting.cdr_cash_balance_col_data;
+DROP TABLE IF EXISTS accounting.cdr_cash_balance_col;
+
+DROP TABLE IF EXISTS accounting.cdr_time_balance_col_data;
+DROP TABLE IF EXISTS accounting.cdr_time_balance_col;
+
+DROP TABLE IF EXISTS accounting.cdr_billing_fk_col_data;
+DROP TABLE IF EXISTS accounting.cdr_billing_fk_col;
