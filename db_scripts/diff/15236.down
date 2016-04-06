@@ -1,0 +1,26 @@
+#only DDL stmts with implicit commits
+
+REVOKE SELECT ON accounting.cdr_direction FROM 'exporter'@'localhost';
+
+REVOKE SELECT ON accounting.cdr_provider FROM 'exporter'@'localhost';
+
+REVOKE SELECT ON accounting.cdr_cash_balance FROM 'exporter'@'localhost';
+REVOKE SELECT ON accounting.cdr_cash_balance_data FROM 'exporter'@'localhost';
+
+REVOKE SELECT ON accounting.cdr_time_balance FROM 'exporter'@'localhost';
+REVOKE SELECT ON accounting.cdr_time_balance_data FROM 'exporter'@'localhost';
+
+REVOKE SELECT ON accounting.cdr_relation FROM 'exporter'@'localhost';
+REVOKE SELECT ON accounting.cdr_relation_data FROM 'exporter'@'localhost';
+
+DROP TABLE accounting.cdr_cash_balance_data;
+DROP TABLE accounting.cdr_cash_balance;
+
+DROP TABLE accounting.cdr_time_balance_data;
+DROP TABLE accounting.cdr_time_balance;
+
+DROP TABLE accounting.cdr_relation_data;
+DROP TABLE accounting.cdr_relation;
+
+DROP TABLE accounting.cdr_provider;
+DROP TABLE accounting.cdr_direction;
