@@ -1,0 +1,117 @@
+SET autocommit=0; #not only DDL stmts
+CREATE TABLE IF NOT EXISTS accounting.cdr_provider (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'carrier',
+    'reseller',
+    'customer'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY cpc_type_idx (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_provider SET id=null, type='carrier';
+INSERT INTO accounting.cdr_provider SET id=null, type='reseller';
+INSERT INTO accounting.cdr_provider SET id=null, type='customer';
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_direction ( #implicit commit
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'source',
+    'destination'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY cdc_type_idx (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#the name "direction" for "source" and "destination" is still not ideal,
+#it must not be confused with a fee record's 'in' and 'out'.
+INSERT INTO accounting.cdr_direction SET id=null, type='source';
+INSERT INTO accounting.cdr_direction SET id=null, type='destination';
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_cash_balance ( #implicit commit
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'cash_balance'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY ccbc_type_idx (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_cash_balance SET id=null, type='cash_balance';
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_time_balance ( #implicit commit
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'free_time_balance'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY ctbc_type_idx (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_time_balance SET id=null, type='free_time_balance';
+
+CREATE TABLE IF NOT EXISTS accounting.cdr_relation (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'profile_package_id',
+    'contract_balance_id'
+  ) NOT NULL,
+  #ref varchar(255) DEFAULT NULL, #e.g. "billing.contract_balances.id"
+  PRIMARY KEY (id),
+  UNIQUE KEY crc_type_idx (type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO accounting.cdr_relation SET id=null, type='profile_package_id';
+INSERT INTO accounting.cdr_relation SET id=null, type='contract_balance_id';
+
+#up to 4 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_cash_balance_data ( #implicit commit
+  cdr_id int(10) unsigned NOT NULL,
+  provider_id int(3) unsigned NOT NULL,  
+  direction_id int(3) unsigned NOT NULL,    
+  cash_balance_id int(3) unsigned NOT NULL,
+  val_before decimal(14,6) NOT NULL,
+  val_after decimal(14,6) NOT NULL,
+  cdr_start_time decimal(13,3) NOT NULL, #partitioning key, but https://bugs.mysql.com/bug.php?id=72274
+  PRIMARY KEY (cdr_id, provider_id, direction_id, cash_balance_id, cdr_start_time)
+  ## Partitioned tables using the InnoDB storage engine do not support foreign keys.
+  #,FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  #FOREIGN KEY (provider_id) REFERENCES accounting.cdr_provider(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (direction_id) REFERENCES accounting.cdr_direction(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (cash_balance_id) REFERENCES accounting.cdr_cash_balance(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#up to 4 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_time_balance_data ( 
+  cdr_id int(10) unsigned NOT NULL,
+  provider_id int(3) unsigned NOT NULL,  
+  direction_id int(3) unsigned NOT NULL,    
+  time_balance_id int(3) unsigned NOT NULL,
+  val_before int(10) unsigned NOT NULL,
+  val_after int(10) unsigned NOT NULL,
+  cdr_start_time decimal(13,3) NOT NULL, #partitioning key, but https://bugs.mysql.com/bug.php?id=72274
+  PRIMARY KEY (cdr_id, provider_id, direction_id, time_balance_id, cdr_start_time)
+  ## Partitioned tables using the InnoDB storage engine do not support foreign keys.
+  #,FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  #FOREIGN KEY (provider_id) REFERENCES accounting.cdr_provider(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (direction_id) REFERENCES accounting.cdr_direction(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (time_balance_id) REFERENCES accounting.cdr_time_balance(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#6 times the cardinality of accounting.cdr:
+CREATE TABLE IF NOT EXISTS accounting.cdr_relation_data ( 
+  cdr_id int(10) unsigned NOT NULL,
+  provider_id int(3) unsigned NOT NULL,  
+  direction_id int(3) unsigned NOT NULL,    
+  relation_id int(3) unsigned NOT NULL,
+  val int(10) unsigned NOT NULL,
+  cdr_start_time decimal(13,3) NOT NULL, #partitioning key, but https://bugs.mysql.com/bug.php?id=72274
+  PRIMARY KEY (cdr_id, provider_id, direction_id, relation_id, cdr_start_time)
+  ## Partitioned tables using the InnoDB storage engine do not support foreign keys.
+  #,FOREIGN KEY (cdr_id) REFERENCES accounting.cdr(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  #FOREIGN KEY (provider_id) REFERENCES accounting.cdr_provider(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (direction_id) REFERENCES accounting.cdr_direction(id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  #FOREIGN KEY (relation_id) REFERENCES accounting.cdr_relation(id) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+COMMIT; #final commit
