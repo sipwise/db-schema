@@ -1,0 +1,7 @@
+USE accounting;
+
+DROP TRIGGER cdr_cascade_update_trig;
+DROP TRIGGER cdr_cascade_delete_trig;
+DROP TRIGGER cdr_relation_rest_cascade_delete_trig;
+DROP TRIGGER cdr_provider_rest_cascade_delete_trig;
+DROP TRIGGER cdr_direction_rest_cascade_delete_trig;

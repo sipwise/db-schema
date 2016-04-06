@@ -1,0 +1,13 @@
+#only DDL stmts with implicit commits
+
+DROP TABLE accounting.cdr_cash_balance_data;
+DROP TABLE accounting.cdr_cash_balance;
+
+DROP TABLE accounting.cdr_time_balance_data;
+DROP TABLE accounting.cdr_time_balance;
+
+DROP TABLE accounting.cdr_relation_data;
+DROP TABLE accounting.cdr_relation;
+
+DROP TABLE accounting.cdr_provider;
+DROP TABLE accounting.cdr_direction;
