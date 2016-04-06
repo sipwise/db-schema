@@ -1,0 +1,143 @@
+SET sql_log_bin = 0;
+ALTER TABLE accounting.cdr
+  # MT#18335:
+  # to support switching a billing profile's prepaid flag, mediator should populate it
+  # here. rate-o-mat will subsequently read this value in favour of the billing profile
+  # record's value.
+  ADD COLUMN source_user_prepaid tinyint(1) DEFAULT NULL AFTER source_lnp_prefix,
+  ADD COLUMN source_provider_prepaid tinyint(1) DEFAULT NULL AFTER source_user_prepaid, #provider prepaid not effectively supported yet
+  
+  # MT#18077: (not implemented yet)
+  # postpaid with balance: (source)|(destination)_(reseller|customer)_cost values
+  # currently do not reflect call costs, if there is cash balance left. this column
+  # will hold the actual call cost, regardless of rates reduced from cash balance value.
+  ADD COLUMN source_carrier_real_cost decimal(14,6) DEFAULT NULL AFTER source_customer_cost,
+  ADD COLUMN source_reseller_real_cost decimal(14,6) DEFAULT NULL AFTER source_carrier_real_cost,
+  ADD COLUMN source_customer_real_cost decimal(14,6) DEFAULT NULL AFTER source_reseller_real_cost,
+  
+  # MT#18077: (not implemented yet)
+  # "(non-persistent) free cash wallet": separate free cash from the cash balance.
+  # this column will hold the amount of non-persistent free cash (e.g. monthly free cash)
+  # used for this call.
+  ADD COLUMN source_carrier_free_cash decimal(14,6) DEFAULT NULL AFTER source_customer_real_cost,
+  ADD COLUMN source_reseller_free_cash decimal(14,6) DEFAULT NULL AFTER source_carrier_free_cash,
+  ADD COLUMN source_customer_free_cash decimal(14,6) DEFAULT NULL AFTER source_reseller_free_cash,
+
+  # MT#18077: (not implemented yet)
+  # "persistent free cash wallet": separate non-persistent free cash from persistent
+  # (carried over) free cash. this column will hold the amount of persistent (e.g. promo)
+  # free cash used for this call.
+  # (non-persistent) free cash is to be used up before persistent free cash, which is to
+  # be used up before reducing cash balance.
+  ADD COLUMN source_carrier_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER source_customer_free_cash,
+  ADD COLUMN source_reseller_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER source_carrier_persistent_free_cash,
+  ADD COLUMN source_customer_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER source_reseller_persistent_free_cash,  
+  
+  # MT#17795: (not implemented yet)
+  # Melita needs the billing profile package id tracked in cdrs. Note that this is the
+  # package assigned to the contract at the time rate-o-mat processes the cdr (no
+  # history!), which also specifies the interval for creating balance interval records.
+  ADD COLUMN source_carrier_profile_package_id int(11) unsigned DEFAULT NULL AFTER source_customer_billing_zone_id, #not in use, no packages for system contracts atm
+  ADD COLUMN source_reseller_profile_package_id int(11) unsigned DEFAULT NULL AFTER source_carrier_billing_zone_id, #not in use, no packages for system contracts atm
+  ADD COLUMN source_customer_profile_package_id int(11) unsigned DEFAULT NULL AFTER source_reseller_profile_package_id,
+  
+  # MT#17795:
+  # Link to the balance interval (billing.contract_balances record) for the sake
+  # of completeness. It might also be useful for invoice generation (MT#14253).
+  ADD COLUMN source_carrier_contract_balance_id int(11) unsigned DEFAULT NULL AFTER source_customer_profile_package_id,
+  ADD COLUMN source_reseller_contract_balance_id int(11) unsigned DEFAULT NULL AFTER source_carrier_profile_package_id,
+  ADD COLUMN source_customer_contract_balance_id int(11) unsigned DEFAULT NULL AFTER source_reseller_contract_balance_id, 
+  
+  # MT#17795:
+  # The balance interval's cash balance values before and after rating the call.
+  ADD COLUMN source_carrier_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_customer_contract_balance_id,
+  ADD COLUMN source_reseller_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_carrier_contract_balance_id,
+  ADD COLUMN source_customer_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_reseller_cash_balance_before,
+  ADD COLUMN source_carrier_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_customer_cash_balance_before,
+  ADD COLUMN source_reseller_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_carrier_cash_balance_before,
+  ADD COLUMN source_customer_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_reseller_cash_balance_after,
+
+  # MT#17795, MT#18077: (not implemented yet)
+  # The balance interval's (non-persistent) free cash balance values before and
+  # after rating the call.
+  ADD COLUMN source_carrier_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_customer_cash_balance_after,
+  ADD COLUMN source_reseller_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_carrier_cash_balance_after,
+  ADD COLUMN source_customer_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_reseller_free_cash_balance_before,
+  ADD COLUMN source_carrier_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_customer_free_cash_balance_before,
+  ADD COLUMN source_reseller_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_carrier_free_cash_balance_before,
+  ADD COLUMN source_customer_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_reseller_free_cash_balance_after,
+
+  # MT#17795, MT#18077: (not implemented yet)
+  # The balance interval's persistent free cash balance values before and after
+  # rating the call.
+  ADD COLUMN source_carrier_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_customer_free_cash_balance_after,
+  ADD COLUMN source_reseller_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_carrier_free_cash_balance_after,
+  ADD COLUMN source_customer_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER source_reseller_persistent_free_cash_balance_before,
+  ADD COLUMN source_carrier_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_customer_persistent_free_cash_balance_before,
+  ADD COLUMN source_reseller_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_carrier_persistent_free_cash_balance_before,
+  ADD COLUMN source_customer_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER source_reseller_persistent_free_cash_balance_after,
+
+  # MT#17795:
+  # The balance interval's free time balance values before and after
+  # rating the call.
+  ADD COLUMN source_carrier_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER source_customer_persistent_free_cash_balance_after,
+  ADD COLUMN source_reseller_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER source_carrier_persistent_free_cash_balance_after,
+  ADD COLUMN source_customer_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER source_reseller_free_time_balance_before,
+  ADD COLUMN source_carrier_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER source_customer_free_time_balance_before,
+  ADD COLUMN source_reseller_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER source_carrier_free_time_balance_before,
+  ADD COLUMN source_customer_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER source_reseller_free_time_balance_after
+  
+  , # symmetric columns for destination:
+  
+  ADD COLUMN destination_user_prepaid tinyint(1) DEFAULT NULL AFTER destination_lnp_prefix,
+  ADD COLUMN destination_provider_prepaid tinyint(1) DEFAULT NULL AFTER destination_user_prepaid, #provider prepaid not effectively supported yet
+  
+  ADD COLUMN destination_carrier_real_cost decimal(14,6) DEFAULT NULL AFTER destination_customer_cost,
+  ADD COLUMN destination_reseller_real_cost decimal(14,6) DEFAULT NULL AFTER destination_carrier_real_cost,
+  ADD COLUMN destination_customer_real_cost decimal(14,6) DEFAULT NULL AFTER destination_reseller_real_cost,
+  
+  ADD COLUMN destination_carrier_free_cash decimal(14,6) DEFAULT NULL AFTER destination_customer_real_cost,
+  ADD COLUMN destination_reseller_free_cash decimal(14,6) DEFAULT NULL AFTER destination_carrier_free_cash,
+  ADD COLUMN destination_customer_free_cash decimal(14,6) DEFAULT NULL AFTER destination_reseller_free_cash,
+
+  ADD COLUMN destination_carrier_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER destination_customer_free_cash,
+  ADD COLUMN destination_reseller_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER destination_carrier_persistent_free_cash,
+  ADD COLUMN destination_customer_persistent_free_cash decimal(14,6) DEFAULT NULL AFTER destination_reseller_persistent_free_cash,  
+  
+  ADD COLUMN destination_carrier_profile_package_id int(11) unsigned DEFAULT NULL AFTER destination_customer_billing_zone_id, #not in use, no packages for system contracts atm
+  ADD COLUMN destination_reseller_profile_package_id int(11) unsigned DEFAULT NULL AFTER destination_carrier_billing_zone_id, #not in use, no packages for system contracts atm
+  ADD COLUMN destination_customer_profile_package_id int(11) unsigned DEFAULT NULL AFTER destination_reseller_profile_package_id,
+  
+  ADD COLUMN destination_carrier_contract_balance_id int(11) unsigned DEFAULT NULL AFTER destination_customer_profile_package_id,
+  ADD COLUMN destination_reseller_contract_balance_id int(11) unsigned DEFAULT NULL AFTER destination_carrier_profile_package_id,
+  ADD COLUMN destination_customer_contract_balance_id int(11) unsigned DEFAULT NULL AFTER destination_reseller_contract_balance_id, 
+  
+  ADD COLUMN destination_carrier_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_customer_contract_balance_id,
+  ADD COLUMN destination_reseller_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_carrier_contract_balance_id,
+  ADD COLUMN destination_customer_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_reseller_cash_balance_before,
+  ADD COLUMN destination_carrier_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_customer_cash_balance_before,
+  ADD COLUMN destination_reseller_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_carrier_cash_balance_before,
+  ADD COLUMN destination_customer_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_reseller_cash_balance_after,
+
+  ADD COLUMN destination_carrier_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_customer_cash_balance_after,
+  ADD COLUMN destination_reseller_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_carrier_cash_balance_after,
+  ADD COLUMN destination_customer_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_reseller_free_cash_balance_before,
+  ADD COLUMN destination_carrier_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_customer_free_cash_balance_before,
+  ADD COLUMN destination_reseller_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_carrier_free_cash_balance_before,
+  ADD COLUMN destination_customer_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_reseller_free_cash_balance_after,
+
+  ADD COLUMN destination_carrier_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_customer_free_cash_balance_after,
+  ADD COLUMN destination_reseller_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_carrier_free_cash_balance_after,
+  ADD COLUMN destination_customer_persistent_free_cash_balance_before decimal(14,6) DEFAULT NULL AFTER destination_reseller_persistent_free_cash_balance_before,
+  ADD COLUMN destination_carrier_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_customer_persistent_free_cash_balance_before,
+  ADD COLUMN destination_reseller_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_carrier_persistent_free_cash_balance_before,
+  ADD COLUMN destination_customer_persistent_free_cash_balance_after decimal(14,6) DEFAULT NULL AFTER destination_reseller_persistent_free_cash_balance_after,
+
+  ADD COLUMN destination_carrier_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER destination_customer_persistent_free_cash_balance_after,
+  ADD COLUMN destination_reseller_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER destination_carrier_persistent_free_cash_balance_after,
+  ADD COLUMN destination_customer_free_time_balance_before int(10) unsigned DEFAULT NULL AFTER destination_reseller_free_time_balance_before,
+  ADD COLUMN destination_carrier_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER destination_customer_free_time_balance_before,
+  ADD COLUMN destination_reseller_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER destination_carrier_free_time_balance_before,
+  ADD COLUMN destination_customer_free_time_balance_after int(10) unsigned DEFAULT NULL AFTER destination_reseller_free_time_balance_after
+  
+;
