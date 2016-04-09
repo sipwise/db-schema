@@ -255,6 +255,29 @@
     },
     {
       "key": {
+        "uuid": "bada0100_701790a4",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T11:40:08Z",
+      "side": 1,
+      "message": "please use this one below instead of cdr_start_time\ncdr_p_date datetime not null\n\nwith partitioning implementation as the next step there be will a new column added to accounting.cdr used purely for partitioniong.\n\np_date datetime not null after id\ndrop primary key, add primary key (id, p_date)\n\nas start_time decimal(13,3) cannot be used for partitioning nor can it be converted to datetime as it contains microseconds + too integrated into the logic now.\nthere will be a trigger that during insert/update  accounting.cdr auto fills it with the value from start_time.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
