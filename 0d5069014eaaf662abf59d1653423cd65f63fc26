@@ -517,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_70655044",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:06:32Z",
+      "side": 1,
+      "message": "I have tested it with our current 5.5 and it is not possible to use decimal(13,3) where datetime is what partitioning expects there.\n\nCreate Table: CREATE TABLE `part_test` (\n  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,\n  `p_date` datetime NOT NULL,\n  `start_time` decimal(13,3) NOT NULL,\n  `value` varchar(255) DEFAULT NULL,\n  PRIMARY KEY (`id`,`p_date`)\n) ENGINE\u003dInnoDB AUTO_INCREMENT\u003d120 DEFAULT CHARSET\u003dutf8\n/*!50100 PARTITION BY RANGE (TO_DAYS(p_date))\n(PARTITION cdr_2016_03_21 VALUES LESS THAN (736409) ENGINE \u003d InnoDB,\n PARTITION cdr_2016_03_22 VALUES LESS THAN (736410) ENGINE \u003d InnoDB,\n PARTITION cdr_2016_03_23 VALUES LESS THAN (736411) ENGINE \u003d InnoDB,\n PARTITION cdr_max VALUES LESS THAN MAXVALUE ENGINE \u003d InnoDB) */",
+      "parentUuid": "bada0100_1083a4cd",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
