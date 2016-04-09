@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "bada0100_303a6837",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T11:28:04Z",
+      "side": 1,
+      "message": "remove \"IF NOT EXISTS\"\nif there is a table exists during ngcp-update-db-schema we MUST produce an error as it breaks consistency. (e.g. someone added similar table for some reason or even worse, someone already added a \"beta\" version of such table and it may simply silently break the logic).\nif you need to apply it to a customer separately, use the final .up script and apply it via \u0027ngcp-update-db-schema\u0027, that way you will have a record in ngcp.db_schema and consequitive ngcp-update-db-schema runs skip it normally.",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_7009d094",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
