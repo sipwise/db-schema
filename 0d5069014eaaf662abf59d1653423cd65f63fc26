@@ -637,6 +637,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_90fb1447",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:21:50Z",
+      "side": 1,
+      "message": "I see, \nthen \"balance_before\", \"balance_after\"\nas we have it as \"balance\" in contract_balances and \"balance_before\", \"balance_after\" in billing.topup_log.",
+      "parentUuid": "bada0100_d0019c3a",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -719,6 +743,30 @@
       "writtenOn": "2016-04-09T11:23:13Z",
       "side": 1,
       "message": "just \u0027provider_id\u0027 as  basically \u0027_col_\u0027 is just a useless extra imho and in all similar places.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b0f8984a",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_90f1d497",
       "range": {
         "startLine": 91,
         "startChar": 2,
