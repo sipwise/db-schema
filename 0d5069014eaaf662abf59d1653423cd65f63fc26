@@ -565,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_f0506060",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-04-09T12:11:20Z",
+      "side": 1,
+      "message": "yup, but as in the mysql bug report,\nPARTITION BY (floor(start_time)) should do it (although with suboptimal pruning).\nok, so whatever we take, should fixate it. with datetime there is the sensible thing with transforming cdr\u0027s epoch using the appropriate timezone.\nhence, just taking int?",
+      "parentUuid": "bada0100_70655044",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
