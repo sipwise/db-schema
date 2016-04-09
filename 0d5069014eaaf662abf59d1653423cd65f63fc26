@@ -541,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_305fc874",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:10:56Z",
+      "side": 1,
+      "message": "P.S. update by months\n\nALTER table accounting.part_test REMOVE PARTITIONING;\nALTER table accounting.part_test\n  PARTITION BY RANGE (TO_DAYS(p_date)) (\n       PARTITION cdr_2016_02 VALUES LESS THAN (TO_DAYS(\u00272016-03-01\u0027)),\n       PARTITION cdr_2016_03 VALUES LESS THAN (TO_DAYS(\u00272016-04-01\u0027)),\n       PARTITION cdr_2016_04 VALUES LESS THAN (TO_DAYS(\u00272016-05-01\u0027)),\n       PARTITION cdr_max VALUES LESS THAN MAXVALUE\n);",
+      "parentUuid": "bada0100_70655044",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
