@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_50792cfb",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "no, it is never helpful with for us with \"create table\".\nonly with triggers when we update already existing triggers as there is no other way for that.",
+      "parentUuid": "bada0100_b045f8b4",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_7009d094",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "yup, but aligning the naming in rateomat changes will be part of another ticket then :-)",
       "parentUuid": "bada0100_7009d094",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_707eb0e6",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "we MUST name them with \"final names\" before the merge\nas otherwise \"later\" may never happen which means that someone may start using it in his/her logic straight away.\nso please lets name them properly before that actual merge.",
+      "parentUuid": "bada0100_50128cb5",
       "range": {
         "startLine": 17,
         "startChar": 38,
@@ -223,6 +271,30 @@
       "writtenOn": "2016-04-09T11:50:08Z",
       "side": 1,
       "message": "would prefer to have ranged autoinc starting points for the dicts.",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_d06c3c39",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "there is totally no need for that.",
+      "parentUuid": "bada0100_d0251c0b",
       "range": {
         "startLine": 40,
         "startChar": 31,
@@ -421,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_f0694026",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "please read my comment carefully, I provided there with the column name/type for accounting.cdr",
+      "parentUuid": "bada0100_f03b8036",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -456,6 +552,30 @@
       "side": 1,
       "message": "this table has not autoinc any more at all, so needs to be removed here. but in general its preferrable to have ranged autoinc values , especially for these dicts?",
       "parentUuid": "bada0100_f0cdc05e",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_9076b405",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "could you please describe what you have in mind with that ?\nas normally shifting auto inc is when you want to reserve some \"lesser\" range for values.",
+      "parentUuid": "bada0100_901f94b7",
       "range": {
         "startLine": 86,
         "startChar": 16,
@@ -526,6 +646,30 @@
       "side": 1,
       "message": "before and after processing (rating and reduction) by rateomat.\n\nideally those values in the data tables should have no names at all (i.e. just indexed values) while semantics come from some code \n\nthe thing with short \u0027val\u0027 is, for the \"relations\" data table there is only \"value\", so that column should to be quoted everywhere, and \"val\" not.",
       "parentUuid": "bada0100_502b6ceb",
+      "range": {
+        "startLine": 94,
+        "startChar": 2,
+        "endLine": 94,
+        "endChar": 12
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b073b814",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:04:35Z",
+      "side": 1,
+      "message": "name it as \"balance\" then (also in par with our contract_balance naming convention for that)\n\nit is more up to you really but \"after\" is kinda bad imho and here is why:\n\"balance_before\" - a value before now\n\"balance\" - current balance\n\"balance_after\" - now this value may be used theoretically for something that \"will\" happen\n\nand using it now as \"balance_after\" it negates the aforementioned possibility + confusing a little for \"manual selects\". as it is just great to select ... \"balance\" as in the current one.",
+      "parentUuid": "bada0100_9048f4cd",
       "range": {
         "startLine": 94,
         "startChar": 2,
