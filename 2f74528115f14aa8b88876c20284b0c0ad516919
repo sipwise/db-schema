@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_13096e2c",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 13
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:45:01Z",
+      "side": 1,
+      "message": "please do not forget to remove \"IF NOT EXISTS\" everywhere for the tables before the final merge :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "2f74528115f14aa8b88876c20284b0c0ad516919",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
