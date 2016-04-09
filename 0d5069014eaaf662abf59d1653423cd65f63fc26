@@ -96,6 +96,102 @@
     },
     {
       "key": {
+        "uuid": "bada0100_50bccc6c",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_303a6837",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_10b6448b",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_b045f8b4",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_70c1d0e3",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_50792cfb",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 26
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b08f38cc",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_90c31438",
+      "range": {
+        "startLine": 2,
+        "startChar": 50,
+        "endLine": 2,
+        "endChar": 54
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_7009d094",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -167,6 +263,78 @@
     },
     {
       "key": {
+        "uuid": "bada0100_d0af5c2a",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_50128cb5",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_30bb4874",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_7009d094",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_f0ace037",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_707eb0e6",
+      "range": {
+        "startLine": 17,
+        "startChar": 38,
+        "endLine": 17,
+        "endChar": 55
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_50ddac13",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -201,6 +369,30 @@
       "writtenOn": "2016-04-09T11:23:13Z",
       "side": 1,
       "message": "would name it as cdr_cash_balance",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_90a9d426",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_10fe446c",
       "range": {
         "startLine": 31,
         "startChar": 38,
@@ -260,6 +452,54 @@
     },
     {
       "key": {
+        "uuid": "bada0100_b0a65852",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_70e230d7",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_50636c1a",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_301108ad",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_d0251c0b",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -307,6 +547,54 @@
     },
     {
       "key": {
+        "uuid": "bada0100_106de404",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_d06c3c39",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_7068f0f5",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_d0251c0b",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_10e724e6",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -318,6 +606,30 @@
       "writtenOn": "2016-04-09T11:23:13Z",
       "side": 1,
       "message": "same, such comments are allowed only for DRAFTs.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 11
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_307268e6",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_10e724e6",
       "range": {
         "startLine": 43,
         "startChar": 0,
@@ -353,6 +665,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_909234f5",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_f0f4e088",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 58
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_d0f75c8b",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -376,6 +712,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_f085c0ad",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_d0f75c8b",
+      "range": {
+        "startLine": 57,
+        "startChar": 38,
+        "endLine": 57,
+        "endChar": 54
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_b0d738ed",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -387,6 +747,30 @@
       "writtenOn": "2016-04-09T11:23:13Z",
       "side": 1,
       "message": "would name simply it as cdr_cash_balance",
+      "range": {
+        "startLine": 72,
+        "startChar": 38,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_d0767cd8",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_b0d738ed",
       "range": {
         "startLine": 72,
         "startChar": 38,
@@ -756,6 +1140,102 @@
     },
     {
       "key": {
+        "uuid": "bada0100_9080f48c",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_9076b405",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_b07df8b3",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_901f94b7",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_504a8c84",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_f0cdc05e",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_f07380e5",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_30a4a856",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_90f1d497",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
@@ -788,6 +1268,30 @@
         "id": 1000004
       },
       "writtenOn": "2016-04-09T12:21:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_90f1d497",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_704f9093",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
       "side": 1,
       "message": "Done",
       "parentUuid": "bada0100_90f1d497",
@@ -885,6 +1389,30 @@
       "writtenOn": "2016-04-09T11:23:13Z",
       "side": 1,
       "message": "please remove all those useless _col_ extra.\njust \u0027provider_id\u0027, \u0027direction_id\u0027, \u0027relation_id\u0027.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 17
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_10440473",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:34:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bada0100_7030f056",
       "range": {
         "startLine": 108,
         "startChar": 2,
