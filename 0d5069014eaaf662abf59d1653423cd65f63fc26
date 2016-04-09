@@ -732,6 +732,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_30a4a856",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-04-09T12:30:56Z",
+      "side": 1,
+      "message": "the data tables don\u0027t have an autoincrement id column any more, so this is obsolete here.\n\nbut as for the dict tables above, it could be advantageous one day to have tiered (\"ranged\") ids (e.g. if dict tables should be merged or something).\n\nin the data tables you see an id \"127\" and you immediately know that must be from the cash_balance dict table for example, because its in the 100-range.\n\nbut thats of less importance, if autoincrement starting points are somehow managed separately here.",
+      "parentUuid": "bada0100_9076b405",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_90f1d497",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
