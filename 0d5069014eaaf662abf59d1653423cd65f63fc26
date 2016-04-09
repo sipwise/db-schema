@@ -613,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_d0019c3a",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-04-09T12:19:11Z",
+      "side": 1,
+      "message": "the event is an subtraction here, so there is no value \"during\" the subtraction. apart from that it should be consistent with column names in billing.topup_logs",
+      "parentUuid": "bada0100_70cc7036",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
