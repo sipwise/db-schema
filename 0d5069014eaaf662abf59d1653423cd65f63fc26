@@ -397,6 +397,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_1083a4cd",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-04-09T11:54:33Z",
+      "side": 1,
+      "message": "not sure if partitioning by datetime col is available first in 5.7",
+      "parentUuid": "bada0100_f03b8036",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
