@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_709a3016",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 11
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:29:23Z",
+      "side": 1,
+      "message": "minor: maybe rename it as well to \"type\"",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 5
+      },
+      "revId": "ad1b878c1ae735eb1a4bff3ec2600efde5c1d4b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
