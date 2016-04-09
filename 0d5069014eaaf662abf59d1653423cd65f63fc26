@@ -589,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_70cc7036",
+        "filename": "db_scripts/diff/15234.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-09T12:14:46Z",
+      "side": 1,
+      "message": "you are right, it is good with \"floor\".\nyes then we just use \"start_time\" as you have it now.\nno need for p_date datetime as even if it is used only for partitioning we gonna have at least a trigger around it which is excessive.",
+      "parentUuid": "bada0100_f0506060",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 40
+      },
+      "revId": "0d5069014eaaf662abf59d1653423cd65f63fc26",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_f0cdc05e",
         "filename": "db_scripts/diff/15234.up",
         "patchSetId": 10
