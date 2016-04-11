@@ -1,0 +1,20 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+-- table: active_watchers
+ALTER TABLE active_watchers
+  ADD COLUMN flags INT(11) NOT NULL DEFAULT '0',
+  ADD COLUMN user_agent VARCHAR(255) NOT NULL;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('active_watchers','12');
+
+-- table: trusted
+ALTER TABLE trusted
+  ADD COLUMN priority INT(11) NOT NULL DEFAULT '0',
+  ADD COLUMN ruri_pattern VARCHAR(64) NULL;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('trusted','6');
+
+COMMIT;
