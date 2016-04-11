@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_b9ee43b3",
+        "filename": "db_scripts/diff/15234_not_replicated.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-11T16:14:56Z",
+      "side": 1,
+      "message": "lower case please unless the table is truly uppercase there.",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "902ee1b387e545c871c5241b1caee50ea89ba679",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
