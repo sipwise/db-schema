@@ -1,0 +1,29 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+-- table: active_watchers
+ALTER TABLE active_watchers
+  DROP COLUMN flags;
+ALTER TABLE active_watchers
+  DROP COLUMN user_agent;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('active_watchers','11');
+
+-- table: trusted
+ALTER TABLE trusted
+  DROP COLUMN priority;
+ALTER TABLE trusted
+  DROP COLUMN ruri_pattern;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('trusted','5');
+
+-- table: uacreg
+ALTER TABLE uacreg
+  DROP COLUMN reg_delay;
+ALTER TABLE uacreg
+  ADD COLUMN flags;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('uacreg','1');
+
+COMMIT;
