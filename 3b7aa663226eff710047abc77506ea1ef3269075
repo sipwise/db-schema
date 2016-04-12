@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_794f7b93",
+        "filename": "db_scripts/diff/15234_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-12T09:35:11Z",
+      "side": 1,
+      "message": "remove this if we are not going to alter it as such \"nonexisting\" changes are confusing. \nonly actual changes please.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 78
+      },
+      "revId": "3b7aa663226eff710047abc77506ea1ef3269075",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
