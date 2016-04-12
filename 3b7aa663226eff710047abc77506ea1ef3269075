@@ -22,6 +22,30 @@
       "revId": "3b7aa663226eff710047abc77506ea1ef3269075",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_992edfa4",
+        "filename": "db_scripts/diff/15234_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-12T09:48:32Z",
+      "side": 1,
+      "message": "the point here is to share necessary changes with spce guys.\n\nSipwise doesn\u0027t have that table, so cannot execute it.\nAlso MySQL doesn\u0027t have \u0027IF EXIST\u0027 for ALTER statement.\n\nWhile spce users can load module using customtt and then ask,\nwhy kamailio doesn\u0027t start after upgrade on mr4.4\n\nThe solution which will probably satisfy all is http://stackoverflow.com/questions/24571611/mysql-alter-table-if-column-not-exists\n\nIF NOT EXISTS( SELECT NULL\n            FROM INFORMATION_SCHEMA.COLUMNS ...",
+      "parentUuid": "bada0100_794f7b93",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 78
+      },
+      "revId": "3b7aa663226eff710047abc77506ea1ef3269075",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
