@@ -1,0 +1,8 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+DELETE FROM voip_preferences
+    WHERE attribute IN ('lnp_to_rn', 'lnp_add_npdi', 'lnp_for_local_sub');
+
+COMMIT;
