@@ -1,0 +1,40 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'lnp_to_rn', 'LNP Routing number to rn param', 1, 1,
+     1, 0, 1, 1, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'Defines how to provide the routing number after a LNP query. If enabled, rn parameter will be used.');
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'lnp_add_npdi', 'LNP npdi param', 1, 1,
+     1, 0, 1, 1, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'If enabled, npdi parameter will be added if there is a LNP query.');
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'lnp_for_local_sub', 'LNP for local subscribers', 1, 1,
+     1, 0, 1, 0, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'If enabled allows LNP queries for local subscribers.');
+
+COMMIT;
