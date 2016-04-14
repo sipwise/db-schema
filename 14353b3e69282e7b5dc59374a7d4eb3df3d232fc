@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bada0100_d78c2b82",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_fcaca28e",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_1caac670",
         "filename": "ngcp-update-db-schema",
         "patchSetId": 4
@@ -54,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "bada0100_97eea321",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_77268d6a",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_77e9bf19",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_1caac670",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_971451f6",
         "filename": "ngcp-update-db-schema",
         "patchSetId": 4
@@ -71,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "bada0100_37f3370c",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dad5f5cf_971451f6",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad5f5cf_972bf12f",
         "filename": "ngcp-update-db-schema",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2016-04-04T13:23:30Z",
       "side": 1,
       "message": "Output to stderr please.\nAnd shouldn\u0027t we fail here?",
+      "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_57f83be5",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:25:14Z",
+      "side": 1,
+      "message": "implemented it as a \"Warning\" to STDERR in the last patchset.",
+      "parentUuid": "dad5f5cf_972bf12f",
       "revId": "14353b3e69282e7b5dc59374a7d4eb3df3d232fc",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
