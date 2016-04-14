@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='use_rtpproxy' INTO @pref_id;
+
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id AND value='ice_force_relay_candidates';
+
+commit;

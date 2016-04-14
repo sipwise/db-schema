@@ -1,0 +1,11 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='use_rtpproxy' INTO @pref_id;
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'Always with rtpproxy as ICE relay candidate', 'ice_force_relay_candidates', 1, 1, 1, 1, 0, 0, 0);
+
+commit;
