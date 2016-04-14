@@ -22,6 +22,30 @@
       "revId": "d4a7d626397592cadfb0927e560eec090f3103e5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_17f633d8",
+        "filename": "db_scripts/diff/15235.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-04-14T09:37:42Z",
+      "side": 1,
+      "message": "Good catch, better explicitly add it imho.",
+      "parentUuid": "bada0100_173713e5",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "d4a7d626397592cadfb0927e560eec090f3103e5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
