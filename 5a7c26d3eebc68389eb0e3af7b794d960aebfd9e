@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bada0100_ed0ba229",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-15T08:11:30Z",
+      "side": 1,
+      "message": "cah you please shrare why do you need it here?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "5a7c26d3eebc68389eb0e3af7b794d960aebfd9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_0d094631",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-04-15T08:11:30Z",
+      "side": 1,
+      "message": "you will exit 1 in line 91 if the script doesn\u0027t exist... so why do you need it here?",
+      "range": {
+        "startLine": 192,
+        "startChar": 3,
+        "endLine": 192,
+        "endChar": 31
+      },
+      "revId": "5a7c26d3eebc68389eb0e3af7b794d960aebfd9e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
