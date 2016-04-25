@@ -1,3 +1,12 @@
+ngcp-db-schema (4.2.2.1+0~mr4.2.2.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [0553360] MT#18255 create index on usr_preferences (attribute, value)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Apr 2016 09:14:01 +0200
+
 ngcp-db-schema (4.2.2.0+0~mr4.2.2.0) unstable; urgency=medium
 
   [ Jozef Kenyeres ]
