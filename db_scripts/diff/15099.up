@@ -8,7 +8,7 @@ select ifnull(max(group_id), 1)+100 into @gid from voip_allowed_ip_groups;
 select id into @aigid from voip_preferences where attribute = 'allowed_ips_grp';
 select id into @maigid from voip_preferences where attribute = 'man_allowed_ips_grp';
 update voip_allowed_ip_groups set group_id = group_id + @gid where group_id <= 100;
-update voip_usr_preferences set value = value + @gid where attribute_id in(@aigid, @maigid);
+update voip_usr_preferences set value = value + @gid where attribute_id in(@aigid, @maigid) and value <= 100;
 
 -- reset sequence table 
 truncate table voip_aig_sequence;
