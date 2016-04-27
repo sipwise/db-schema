@@ -1,0 +1,79 @@
+USE provisioning;
+
+DROP PROCEDURE IF EXISTS fix_voip_allowed_ips_proc;
+DELIMITER ;;
+CREATE PROCEDURE fix_voip_allowed_ips_proc()
+BEGIN
+
+    DECLARE max_grp_id, at_id, man_at_id int;
+    DECLARE min_int_grp_id int;
+    DECLARE up_usr_val, fix_usr_val varchar(128);
+    DECLARE grp_exists int;
+    DECLARE done int DEFAULT 0;
+    -- cursor for orphan rows
+    DECLARE x CURSOR FOR
+        SELECT p.value FROM voip_usr_preferences p
+         WHERE p.attribute_id IN (at_id, man_at_id)
+           AND NOT EXISTS (SELECT d.group_id FROM voip_allowed_ip_groups d
+                            WHERE d.group_id = p.value);
+    DECLARE continue handler FOR NOT FOUND SET done = true;
+
+    -- save current attribute ids
+    SELECT id INTO at_id
+      FROM voip_preferences where attribute = 'allowed_ips_grp';
+    SELECT id INTO man_at_id
+      FROM voip_preferences where attribute = 'man_allowed_ips_grp';
+
+    -- fetch max orphan group_id from voip_allowed_ip_group 'magic key'
+    SELECT max(d.group_id)+100 into max_grp_id FROM voip_allowed_ip_groups d
+     WHERE d.ipnet != '127.0.0.1'
+       AND EXISTS (SELECT p.value FROM voip_usr_preferences p
+                    WHERE p.attribute_id IN (at_id, man_at_id)
+                      AND p.value = d.group_id*2+100
+                      AND (SELECT count(m.modify_timestamp)
+                             FROM voip_usr_preferences m
+                            WHERE m.modify_timestamp = p.modify_timestamp) > 1)
+       AND NOT EXISTS (SELECT p.value FROM voip_usr_preferences p
+                        WHERE p.attribute_id IN (at_id, man_at_id)
+                          AND p.value = d.group_id);
+
+    -- fix voip_usr_preferences values
+    IF max_grp_id IS NOT NULL THEN
+        OPEN x;
+        up_fix: LOOP
+            FETCH x INTO up_usr_val;
+            IF done THEN
+                LEAVE up_fix;
+            END IF;
+            SELECT up_usr_val-max_grp_id INTO fix_usr_val;
+            SELECT group_id INTO grp_exists FROM voip_allowed_ip_groups
+             WHERE group_id = fix_usr_val
+             LIMIT 1;
+            IF grp_exists IS NOT NULL THEN
+                -- fix usr value if the target group exists
+                UPDATE voip_usr_preferences SET value = fix_usr_val
+                 WHERE attribute_id IN (at_id, man_at_id)
+                   AND value = up_usr_val;
+            ELSE
+                -- delete usr value if the target does not exist
+                DELETE FROM voip_usr_preferences
+                 WHERE attribute_id IN (at_id, man_at_id)
+                   AND value = up_usr_val;
+            END IF;
+        END LOOP;
+        CLOSE x;
+    END IF;
+
+    -- delete "orphan" leftovers from voip_usr_preferences
+    DELETE p FROM voip_usr_preferences p
+     WHERE p.attribute_id IN (at_id, man_at_id)
+       AND NOT EXISTS (SELECT d.group_id
+                         FROM voip_allowed_ip_groups d
+                        WHERE d.group_id = p.value);
+
+END;;
+DELIMITER ;
+
+CALL fix_voip_allowed_ips_proc;
+DROP PROCEDURE fix_voip_allowed_ips_proc;
+
