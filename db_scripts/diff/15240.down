@@ -1,0 +1,6 @@
+use kamailio;
+set autocommit=0;
+
+alter table subscriber drop key uuid_idx;
+
+commit;
