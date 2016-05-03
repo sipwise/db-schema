@@ -1,3 +1,12 @@
+ngcp-db-schema (3.8.6.2+0~mr3.8.6.2) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [881ee94] MT#19565 add key uuid_idx on kamailio.subscriber
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 May 2016 16:41:58 +0200
+
 ngcp-db-schema (3.8.6.1+0~mr3.8.6.1) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
