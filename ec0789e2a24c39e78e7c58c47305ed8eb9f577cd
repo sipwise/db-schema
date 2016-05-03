@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac10518_4d31990a",
+        "filename": "db_scripts/diff/15240.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-05-03T10:55:24Z",
+      "side": 1,
+      "message": "transactions do not work with DDL statements (alter table, create/drop index/field/db). however it does totally no harm an a good practice with such enclosure.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "ec0789e2a24c39e78e7c58c47305ed8eb9f577cd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
