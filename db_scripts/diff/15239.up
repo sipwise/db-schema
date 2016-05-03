@@ -1,0 +1,5 @@
+USE provisioning;
+set autocommit=0;
+
+UPDATE voip_preferences SET contract_pref=1 WHERE attribute IN ('adm_ncos', 'adm_ncos_id');
+commit;
