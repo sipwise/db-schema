@@ -1,0 +1,112 @@
+use provisioning;
+set autocommit=0;
+
+drop procedure if exists tmp_update_lnp_rwr_preferences;
+
+delimiter ;;
+create procedure tmp_update_lnp_rwr_preferences() begin
+  declare done boolean default false;
+  declare a_caller_in, a_caller_lnp, a_callee_lnp, _id, _val, _set_id int(11) unsigned;
+  declare domain_cur cursor for
+    select p.domain_id, p.value
+      from voip_dom_preferences p
+     where p.attribute_id = a_caller_in
+       and not exists (select s.domain_id
+                         from voip_dom_preferences s
+                        where s.domain_id = p.domain_id
+                          and s.attribute_id IN (a_caller_lnp, a_callee_lnp)
+                        limit 1);
+  declare usr_cur cursor for
+    select p.subscriber_id, p.value
+      from voip_usr_preferences p
+     where p.attribute_id = a_caller_in
+       and not exists (select s.subscriber_id
+                         from voip_usr_preferences s
+                        where s.subscriber_id = p.subscriber_id
+                          and s.attribute_id IN (a_caller_lnp, a_callee_lnp)
+                        limit 1);
+  declare peer_cur cursor for
+    select p.peer_host_id, p.value
+      from voip_peer_preferences p
+     where p.attribute_id = a_caller_in
+       and not exists (select s.peer_host_id
+                         from voip_peer_preferences s
+                        where s.peer_host_id = p.peer_host_id
+                          and s.attribute_id IN (a_caller_lnp, a_callee_lnp)
+                        limit 1);
+  declare continue handler for not found set done := true;
+
+  select id into a_caller_in from voip_preferences where attribute = 'rewrite_caller_in_dpid';
+  select id into a_caller_lnp from voip_preferences where attribute = 'rewrite_caller_lnp_dpid';
+  select id into a_callee_lnp from voip_preferences where attribute = 'rewrite_callee_lnp_dpid';
+
+  open domain_cur;
+  fix_loop: loop
+    fetch domain_cur into _id, _val;
+    if done then
+      leave fix_loop;
+    end if;
+    select id into _set_id
+      from voip_rewrite_rule_sets
+     where caller_in_dpid = _val;
+    insert into voip_dom_preferences (domain_id, attribute_id, value)
+        select _id, a_caller_lnp, rs.caller_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+    insert into voip_dom_preferences (domain_id, attribute_id, value)
+        select _id, a_callee_lnp, rs.callee_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+  end loop fix_loop;
+  close domain_cur;
+
+  set done := false;
+  open usr_cur;
+  fix_loop: loop
+    fetch usr_cur into _id, _val;
+    if done then
+      leave fix_loop;
+    end if;
+    select id into _set_id
+      from voip_rewrite_rule_sets
+     where caller_in_dpid = _val;
+    insert into voip_usr_preferences (subscriber_id, attribute_id, value)
+        select _id, a_caller_lnp, rs.caller_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+    insert into voip_usr_preferences (subscriber_id, attribute_id, value)
+        select _id, a_callee_lnp, rs.callee_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+  end loop fix_loop;
+  close usr_cur;
+
+  set done := false;
+  open peer_cur;
+  fix_loop: loop
+    fetch peer_cur into _id, _val;
+    if done then
+      leave fix_loop;
+    end if;
+    select id into _set_id
+      from voip_rewrite_rule_sets
+     where caller_in_dpid = _val;
+    insert into voip_peer_preferences (peer_host_id, attribute_id, value)
+        select _id, a_caller_lnp, rs.caller_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+    insert into voip_peer_preferences (peer_host_id, attribute_id, value)
+        select _id, a_callee_lnp, rs.callee_lnp_dpid
+          from voip_rewrite_rule_sets rs
+         where id = _set_id;
+  end loop fix_loop;
+  close peer_cur;
+
+end;;
+delimiter ;
+
+call tmp_update_lnp_rwr_preferences();
+
+drop procedure tmp_update_lnp_rwr_preferences;
+
+commit;
