@@ -1,3 +1,12 @@
+ngcp-db-schema (3.5.1.5+0~mr3.5.1.5) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [89ad15f] MT#19401 MT#6969 fix the allowed_ips_grp preferences shift
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 11 May 2016 13:00:14 +0200
+
 ngcp-db-schema (3.5.1.4+0~mr3.5.1.4) unstable; urgency=low
 
   [ Alexander Lutay ]
