@@ -1,0 +1,32 @@
+use billing;
+set autocommit=0;
+
+UPDATE email_templates SET body =
+'Customer # [% customer_id %] has been locked due to exceeding the configured
+[% IF interval == "day" -%]daily[% ELSIF interval == "month" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings.
+
+Affected subscribers:
+[% subscribers %]
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.'
+WHERE name = 'customer_fraud_lock_default_email';
+
+UPDATE email_templates SET body =
+'Customer # [% customer_id %] is currently exceeding the configured
+[% IF interval == "day" -%]daily[% ELSIF interval == "month" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings,
+but has not been locked due to configuration.
+
+Affected subscribers:
+[% subscribers %]
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.'
+WHERE name = 'customer_fraud_warning_default_email';
+
+commit;
+
