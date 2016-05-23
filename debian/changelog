@@ -1,3 +1,28 @@
+ngcp-db-schema (4.4.1.0+0~mr4.4.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [4c0616b] MT#19009 kamailio: upgrade to 4.4.0
+  * [811d638] MT#17333 LNP related preferences
+
+  [ Andrew Pogrebennyk ]
+  * [188fa2b] MT#19071 add ICE=force-relay option for use_rtpproxy pref.
+  * [2563391] MT#19575 allow adm_ncos on customer level
+  * [cd13ea6] MT#19565 add key uuid_idx on kamailio.subscriber
+  * [fb13ce6] MT#19401 MT#6969 fix the allowed_ips_grp preferences shift
+
+  [ Rene Krenn ]
+  * [2844d18] MT#17795 cdr fields for balance id, cash/freetime before/after, package id
+
+  [ Kirill Solomko ]
+  * [4d7cc69] MT#15227 use ngcp-sync_db to apply not_replicated statements on carrier proxy hosts
+  * [5570b37] MT#16491 drop index src_dst_stime_idx ON accounting.cdr
+  * [79c8350] MT#19595 fix missing usr/dom/peer lnp rewrite rule set preferences
+  * [555ea1c] MT#18411 fraud email templates add "interval" representation
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 May 2016 18:41:21 +0200
+
 ngcp-db-schema (4.4.0.0+0~mr4.4.0.0) unstable; urgency=medium
 
   [ Jozef Kenyeres ]
