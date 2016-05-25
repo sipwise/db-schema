@@ -1,0 +1,7 @@
+USE provisioning;
+SET autocommit=0;
+
+ALTER TABLE rtc_session
+  DROP COLUMN `rtc_network_tag`;
+
+COMMIT;
