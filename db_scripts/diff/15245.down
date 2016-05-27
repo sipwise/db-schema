@@ -1,0 +1,5 @@
+use kamailio;
+
+alter table kamailio.dialog
+	modify callee_contact varchar(128) not NULL,
+	modify caller_contact varchar(128) not NULL;
