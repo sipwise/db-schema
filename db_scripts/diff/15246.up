@@ -1,0 +1,5 @@
+use kamailio;
+
+alter table kamailio.dialog
+	modify from_tag varchar(128) not NULL,
+	modify to_tag varchar(128) not NULL;
