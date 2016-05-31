@@ -22,6 +22,30 @@
       "revId": "c56a537150fa8fe0332aa7e015b9979886eec75b",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fab9d9a7_19dd1743",
+        "filename": "db_scripts/diff/15246.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-05-31T15:09:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fab9d9a7_ed508160",
+      "range": {
+        "startLine": 5,
+        "startChar": 45,
+        "endLine": 5,
+        "endChar": 60
+      },
+      "revId": "c56a537150fa8fe0332aa7e015b9979886eec75b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
