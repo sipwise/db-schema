@@ -1,0 +1,5 @@
+USE billing;
+
+ALTER TABLE lnp_providers 
+  ADD COLUMN authoritative TINYINT(1) NOT NULL DEFAULT 0,
+  ADD COLUMN skip_rewrite  TINYINT(1) NOT NULL DEFAULT 0;
