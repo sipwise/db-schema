@@ -1,5 +1,26 @@
+<<<<<<< HEAD
 USE billing;
 
 ALTER TABLE lnp_providers 
   ADD COLUMN authoritative TINYINT(1) NOT NULL DEFAULT 0,
   ADD COLUMN skip_rewrite  TINYINT(1) NOT NULL DEFAULT 0;
+=======
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'lawful_interception', 'Lawful Interception', 1, 1,
+     1, 0, 0, 0, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'Enables lawful lnterception for the subscriber.');
+
+COMMIT;
+>>>>>>> 8f4c3cf... MT#20219 - add lawful_interception voip_usr_preference
