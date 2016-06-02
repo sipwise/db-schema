@@ -1,3 +1,13 @@
+ngcp-db-schema (3.8.6.4+0~mr3.8.6.4) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [d6491c5] MT#20151 kamailio: increase [from|to]_tag field size on dialog
+  * [bb7f953] MT#18235 kamailio: increase calle[e|r]_contact field size
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 02 Jun 2016 13:47:57 +0200
+
 ngcp-db-schema (3.8.6.3+0~mr3.8.6.3) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
