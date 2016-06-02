@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins <jenkins@sipwise.com>
+Code-Review+2: Víctor Seva <vseva@sipwise.com>
+Submitted-by: Víctor Seva <vseva@sipwise.com>
+Submitted-at: Thu, 02 Jun 2016 13:45:39 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/6462
+Project: db-schema
+Branch: refs/heads/mr3.8.6
