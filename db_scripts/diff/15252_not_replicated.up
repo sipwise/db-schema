@@ -1,0 +1,8 @@
+SET sql_log_bin=0;
+USE accounting;
+
+DROP INDEX `rstatus` ON cdr;
+CREATE INDEX `rstatus_stime_idx` ON cdr (`rating_status`,`start_time`);
+
+#DROP INDEX `estatus` ON cdr;
+#CREATE INDEX `estatus_stime_idx` ON cdr (`export_status`,`start_time`);
