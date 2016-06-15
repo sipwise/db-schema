@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabed58f_71253aaa",
+        "filename": "db_scripts/diff/15253.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-15T12:04:03Z",
+      "side": 1,
+      "message": "cdr_string \"sounds\" a little common due  to the \"string\" abbreviation, while it is ok however any other ideas how to name it ? :)",
+      "range": {
+        "startLine": 2,
+        "startChar": 24,
+        "endLine": 2,
+        "endChar": 34
+      },
+      "revId": "bebc3cf0444718c100d3375313230557270ad235",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dabed58f_e64aceab",
+        "filename": "db_scripts/diff/15253.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-15T12:04:03Z",
+      "side": 1,
+      "message": "can be dropped imho",
+      "range": {
+        "startLine": 11,
+        "startChar": 38,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "bebc3cf0444718c100d3375313230557270ad235",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
