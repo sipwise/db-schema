@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+USE accounting;
+
+ALTER TABLE prepaid_costs DROP COLUMN initial_balance;
+ALTER TABLE prepaid_costs DROP COLUMN initial_free_time;

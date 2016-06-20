@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+USE accounting;
+
+ALTER TABLE prepaid_costs ADD COLUMN initial_balance double NOT NULL after cost;
+ALTER TABLE prepaid_costs ADD COLUMN initial_free_time int(10) unsigned NOT NULL after free_time_used;
