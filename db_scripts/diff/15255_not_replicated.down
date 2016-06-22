@@ -1,0 +1,3 @@
+SET sql_log_bin=0;
+USE billing;
+ALTER TABLE voip_subscribers DROP COLUMN external_id_hash;

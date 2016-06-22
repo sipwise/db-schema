@@ -1,0 +1,28 @@
+SET sql_log_bin=0;
+USE billing;
+# external_id hash format:
+#   <external_id><length(external_id)><reseller_id><length(reseller_id)>
+# size: 255 + ceil(log(255))=3 + 11 + ceil(log(11))=2 = 255 + 16 = 271
+# 255 is maximum for utf8 text columns to be indexed
+# so hashing is required, md5 digest hex: 32 chars
+ALTER TABLE voip_subscribers ADD COLUMN external_id_hash VARCHAR(32) DEFAULT NULL;
+
+ALTER TABLE voip_subscribers ADD UNIQUE externalidhash_idx (external_id_hash);
+
+SET autocommit=0;
+
+UPDATE IGNORE
+  voip_subscribers AS vs
+  JOIN contracts AS contract ON vs.contract_id = contract.id
+  JOIN contacts AS contact ON contract.contact_id = contact.id
+SET
+  vs.external_id_hash = MD5(CONCAT(vs.external_id,
+    LENGTH(vs.external_id),
+    IF(contact.reseller_id IS NULL,'',contact.reseller_id),
+    IF(contact.reseller_id IS NULL,'0',contact.reseller_id)))
+WHERE
+  NOT vs.external_id IS NULL
+  AND vs.status != 'terminated';
+  #AND NOT contact.reseller_id IS NULL;
+
+COMMIT;
