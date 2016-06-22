@@ -1,0 +1,29 @@
+use kamailio;
+
+alter table acc
+	modify from_tag varchar(64) NOT NULL DEFAULT '',
+	modify to_tag varchar(64) NOT NULL DEFAULT '';
+
+alter table acc_backup
+	modify from_tag varchar(64) NOT NULL DEFAULT '',
+	modify to_tag varchar(64) NOT NULL DEFAULT '';
+
+alter table acc_trash
+	modify from_tag varchar(64) NOT NULL DEFAULT '',
+	modify to_tag varchar(64) NOT NULL DEFAULT '';
+
+alter table active_watchers
+	modify from_tag varchar(64) NOT NULL,
+	modify to_tag varchar(64) NOT NULL;
+
+alter table pua
+	modify from_tag varchar(64) NOT NULL,
+	modify to_tag varchar(64) NOT NULL;
+
+alter table rls_watchers
+	modify from_tag varchar(64) NOT NULL,
+	modify to_tag varchar(64) NOT NULL;
+
+alter table sca_subscriptions
+	modify from_tag varchar(64) NOT NULL,
+	modify to_tag varchar(64) NOT NULL;
