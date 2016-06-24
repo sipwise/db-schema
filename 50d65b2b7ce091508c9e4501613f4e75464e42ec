@@ -1,0 +1,7 @@
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Verified+1: Jenkins Jenkins <jenkins@sipwise.com>
+Submitted-by: Alexander Lutay <alutay@sipwise.com>
+Submitted-at: Fri, 24 Jun 2016 10:48:53 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/6805
+Project: db-schema
+Branch: refs/heads/mr4.4.1
