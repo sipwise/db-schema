@@ -1,3 +1,12 @@
+ngcp-db-schema (4.4.1.2+0~mr4.4.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [50d65b2] MT#20747 fix/rename 15241.* script to 15241_not_replicated
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Jun 2016 10:51:41 +0200
+
 ngcp-db-schema (4.4.1.1+0~mr4.4.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
