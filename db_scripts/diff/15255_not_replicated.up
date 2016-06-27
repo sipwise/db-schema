@@ -1,0 +1,86 @@
+SET sql_log_bin=0;
+
+CREATE DATABASE `rtcengine`;
+GRANT ALL PRIVILEGES ON `rtcengine`.* TO 'rtcengine'@'localhost';
+
+CREATE TABLE `users` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` enum('admin','user') NOT NULL DEFAULT 'user',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `connections` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `connector` varchar(255) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `accessToken` varchar(255) NOT NULL,
+  `connected` tinyint(1) DEFAULT '0',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`connector`,`identifier`,`accessToken`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `apps` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `domain` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain` (`domain`),
+  UNIQUE KEY `apps_domain_unique` (`domain`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `apps_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `networks` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `tag` varchar(255) NOT NULL,
+  `connector` enum('webrtc','sip-connector','xmpp-connector','conference') NOT NULL,
+  `config` text,
+  `capabilities` text,
+  `allowedTargets` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`owner`,`tag`),
+  CONSTRAINT `networks_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `sessions` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `appId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `token` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `activated` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `appId` (`appId`),
+  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`appId`) REFERENCES `apps` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `accounts` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sessionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `networkId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `connectionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `config` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`sessionId`,`networkId`,`connectionId`),
+  KEY `networkId` (`networkId`),
+  KEY `connectionId` (`connectionId`),
+  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`sessionId`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_2` FOREIGN KEY (`networkId`) REFERENCES `networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_3` FOREIGN KEY (`connectionId`) REFERENCES `connections` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
