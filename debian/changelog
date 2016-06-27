@@ -1,3 +1,12 @@
+ngcp-db-schema (4.4.1.3+0~mr4.4.1.3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [698caa8] MT#20737 kamailio: increase [from|to]_tag field size everywhere
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Jun 2016 16:59:09 +0200
+
 ngcp-db-schema (4.4.1.2+0~mr4.4.1.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
