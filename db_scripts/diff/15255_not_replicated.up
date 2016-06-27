@@ -1,0 +1,150 @@
+SET sql_log_bin=0;
+
+# Create Database and grant rights
+# ------------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS `rtcengine`;
+GRANT ALL PRIVILEGES ON `rtcengine`.* TO 'rtcengine'@'localhost';
+
+USE `rtcengine`;
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table accounts
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `accounts`;
+
+CREATE TABLE `accounts` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sessionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `networkId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `connectionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `config` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`sessionId`,`networkId`,`connectionId`),
+  KEY `networkId` (`networkId`),
+  KEY `connectionId` (`connectionId`),
+  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`sessionId`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_2` FOREIGN KEY (`networkId`) REFERENCES `networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_3` FOREIGN KEY (`connectionId`) REFERENCES `connections` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table apps
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `apps`;
+
+CREATE TABLE `apps` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `domain` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain` (`domain`),
+  UNIQUE KEY `apps_domain_unique` (`domain`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `apps_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table connections
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `connections`;
+
+CREATE TABLE `connections` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `connector` varchar(255) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `accessToken` varchar(255) NOT NULL,
+  `connected` tinyint(1) DEFAULT '0',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`connector`,`identifier`,`accessToken`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table networks
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `networks`;
+
+CREATE TABLE `networks` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `tag` varchar(255) NOT NULL,
+  `connector` enum('webrtc','sip-connector','xmpp-connector','conference') NOT NULL,
+  `config` text,
+  `capabilities` text,
+  `allowedTargets` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`owner`,`tag`),
+  CONSTRAINT `networks_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table sessions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `sessions`;
+
+CREATE TABLE `sessions` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `appId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `token` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `activated` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `appId` (`appId`),
+  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`appId`) REFERENCES `apps` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` enum('admin','user') NOT NULL DEFAULT 'user',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
