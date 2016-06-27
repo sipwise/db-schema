@@ -1,0 +1,3 @@
+REVOKE ALL PRIVILEGES FROM rtcengine@localhost;
+
+DROP DATABASE IF NOT EXISTS rtcengine;
