@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_1ef5f282",
+        "filename": "db_scripts/diff/15255_not_replicated.down",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-29T08:14:00Z",
+      "side": 1,
+      "message": "remove \"IF NOT EXISTS\".",
+      "range": {
+        "startLine": 4,
+        "startChar": 14,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "6807166b6f51b6dd4545b2b8e1fd3aa35dcab940",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_3efeb66c",
+        "filename": "db_scripts/diff/15255_not_replicated.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-29T08:14:00Z",
+      "side": 1,
+      "message": "please remove \"IF NOT EXISTS\" - we assume incremental consistency that the db does not exist upon creation, otherwise the script must fail and the db is checked manually.",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "6807166b6f51b6dd4545b2b8e1fd3aa35dcab940",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_fef7be8a",
+        "filename": "db_scripts/diff/15255_not_replicated.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-29T08:14:00Z",
+      "side": 1,
+      "message": "we do not need mysqldump \"sets\" for that.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "6807166b6f51b6dd4545b2b8e1fd3aa35dcab940",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_9e09e297",
+        "filename": "db_scripts/diff/15255_not_replicated.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-29T08:14:00Z",
+      "side": 1,
+      "message": "please remove drop tables. \nif a table already exists for some \"unknown\" reason then the script must fail and the table must be checked manually (maybe a customer when everything was already backported to him, otherwise it will silently destroy any possibly valuable info).",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "6807166b6f51b6dd4545b2b8e1fd3aa35dcab940",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bab3e1c7_5e036a73",
+        "filename": "db_scripts/diff/15255_not_replicated.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-06-29T08:14:00Z",
+      "side": 1,
+      "message": "remove this please.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 63
+      },
+      "revId": "6807166b6f51b6dd4545b2b8e1fd3aa35dcab940",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
