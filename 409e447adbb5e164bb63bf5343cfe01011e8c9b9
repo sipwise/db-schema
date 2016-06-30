@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab3e1c7_595f0473",
+        "filename": "db_scripts/diff/15254_not_replicated.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-06-30T08:55:34Z",
+      "side": 1,
+      "message": "AFAIK, it will not happens like you commented, so comments are only confusing here.",
+      "range": {
+        "startLine": 4,
+        "startChar": 72,
+        "endLine": 4,
+        "endChar": 86
+      },
+      "revId": "409e447adbb5e164bb63bf5343cfe01011e8c9b9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
