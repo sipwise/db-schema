@@ -1,3 +1,22 @@
+ngcp-db-schema (4.3.2.1+0~mr4.3.2.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [21e6e78] MT#19565 add key uuid_idx on kamailio.subscriber
+  * [1627e3b] MT#19401 MT#6969 fix the allowed_ips_grp preferences shift
+
+  [ Kirill Solomko ]
+  * [5b4c21f] MT#19595 fix missing usr/dom/peer lnp rewrite rule set preferences
+  * [681cfa5] MT#18411 fraud email templates add "interval" representation
+
+  [ Victor Seva ]
+  * [0076ce7] MT#18235 kamailio: increase calle[e|r]_contact field size
+  * [9002f34] MT#20151 kamailio: increase [from|to]_tag field size on dialog
+  * [f91a4c8] MT#20737 kamailio: increase [from|to]_tag field size everywhere
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Jul 2016 13:02:15 +0200
+
 ngcp-db-schema (4.3.2.0+0~mr4.3.2.0) unstable; urgency=medium
 
   * New release.
