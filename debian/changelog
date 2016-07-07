@@ -1,3 +1,18 @@
+ngcp-db-schema (3.8.8.0+0~mr3.8.8.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [1cfbc41] MT#19565 add key uuid_idx on kamailio.subscriber
+  * [872fab4] MT#19401 MT#6969 fix the allowed_ips_grp preferences shift
+
+  [ Victor Seva ]
+  * [a2ab5b9] MT#18235 kamailio: increase calle[e|r]_contact field size
+  * [a36666d] MT#20151 kamailio: increase [from|to]_tag field size on dialog
+  * [df4317e] MT#20737 kamailio: increase [from|to]_tag field size everywhere
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 07 Jul 2016 13:59:24 +0200
+
 ngcp-db-schema (3.8.7.0+0~mr3.8.7.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
