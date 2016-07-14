@@ -1,0 +1,7 @@
+USE provisioning;
+set autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = "codecs_filter";
+
+commit;
+

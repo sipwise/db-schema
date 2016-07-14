@@ -1,0 +1,16 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences (id, voip_preference_groups_id, attribute, label, type, max_occur,
+usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal,
+expose_to_customer, data_type, read_only, description) VALUES
+  (NULL, @vpgid, 'codecs_list', 'Codecs list', 0, 1, 1, 0, 1, 1, 0, now(), 0, 1,
+  'string', 0, 'List of codecs to whitelist or blacklist. This setting affects both audio and video
+  codecs. Telephone-event has to be also explicitely included in the list. Valid codecs names are
+  G722, PCMU, PCMA, speex, GSM, G723, DVI4, L16, QCELP, CN, MPA, G728, DVI4, G729, AMR, opus,
+  telephone-event, CelB, JPEG, H261, H263, H263-1998, MPV, MP2T, nv, vp8, vp9 and h264.'
+  );
+
+commit;
