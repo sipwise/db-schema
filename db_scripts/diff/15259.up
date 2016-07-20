@@ -1,0 +1,4 @@
+USE provisioning
+
+SELECT id INTO @rej_id FROM voip_sound_groups WHERE name = 'early_rejects';
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('reject_vsc', @rej_id);

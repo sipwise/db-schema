@@ -1,0 +1,19 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Access Restrictions';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description
+    )
+VALUES
+  (@vpg_id, 'reject_vsc', "Reject Vertical Service Codes sent by subscriber", 1, 1,
+   1, 0, 1, 0, 0,
+   NOW(), 0, 0, 'boolean', 0,
+   'If enabled, any vertical service codes, e.g. *99*1234, are rejected by the system to disable the possibility of provisioning features via phones .'
+  );
+
+commit;
