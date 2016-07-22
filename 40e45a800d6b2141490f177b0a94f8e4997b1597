@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_a68ce680",
+        "filename": "db_scripts/diff/15260.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-22T10:53:08Z",
+      "side": 1,
+      "message": "sure there is default null should be accepted or rather pick a default value from the enum tuple ?",
+      "range": {
+        "startLine": 5,
+        "startChar": 138,
+        "endLine": 5,
+        "endChar": 151
+      },
+      "revId": "40e45a800d6b2141490f177b0a94f8e4997b1597",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
