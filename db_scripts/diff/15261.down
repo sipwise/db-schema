@@ -1,0 +1,6 @@
+USE provisioning;
+set autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = 'release_code_unknown_callee';
+
+commit;
