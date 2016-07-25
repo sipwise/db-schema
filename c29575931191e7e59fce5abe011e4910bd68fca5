@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aade967_0d095231",
+        "filename": "db_scripts/diff/15263.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-25T13:55:04Z",
+      "side": 1,
+      "message": "just to make sure, this column is meant to be NULL by default and will not appear in \"where\" clauses.",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "c29575931191e7e59fce5abe011e4910bd68fca5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
