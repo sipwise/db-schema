@@ -1,0 +1,4 @@
+use provisioning;
+
+drop table emergency_mappings;
+drop table emergency_containers;

@@ -1,0 +1,20 @@
+use provisioning;
+
+create table emergency_containers(
+	id int(11) unsigned not null auto_increment primary key,
+	reseller_id int(11) unsigned not null,
+	name varchar(255) not null default '',
+	key reseller_idx(reseller_id),
+	key name_idx(name),
+	unique key res_name_idx(reseller_id, name)
+);
+
+create table emergency_mappings(
+	id int(11) unsigned not null auto_increment primary key,
+	emergency_container_id int(11) unsigned not null,
+	code varchar(32) not null,
+	prefix varchar(32),
+	unique key ec_code_idx(emergency_container_id, code),
+	constraint container_fk foreign key container_idx(emergency_container_id) 
+		references emergency_containers(id) on delete cascade on update cascade
+);
