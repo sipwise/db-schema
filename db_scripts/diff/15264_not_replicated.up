@@ -1,0 +1,12 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+-- table: active_watchers
+ALTER TABLE active_watchers
+  MODIFY COLUMN user_agent VARCHAR(255) DEFAULT '' NOT NULL;
+
+COMMIT;
