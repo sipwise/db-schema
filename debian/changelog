@@ -1,3 +1,12 @@
+ngcp-db-schema (4.4.1.4+0~mr4.4.1.4) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [728e0ba] MT#21583 MT#19009 kamailio: fix upgrade to 4.4.0
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 26 Jul 2016 15:54:40 +0200
+
 ngcp-db-schema (4.4.1.3+0~mr4.4.1.3) unstable; urgency=medium
 
   [ Victor Seva ]
