@@ -1,0 +1,40 @@
+SET sql_log_bin=0;
+
+CREATE DATABASE `fileshare`;
+
+USE `fileshare`;
+
+CREATE TABLE `sessions` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `ttl` int(11) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `uploads` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `data` longblob,
+  `originalName` varchar(255) DEFAULT NULL,
+  `mimeType` varchar(255) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `ttl` int(11) DEFAULT NULL,
+  `state` varchar(255) DEFAULT 'NEW',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `sessionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessionId` (`sessionId`),
+  CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`sessionId`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `downloads` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `state` varchar(255) DEFAULT 'NEW',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `uploadId` char(36) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uploadId` (`uploadId`),
+  CONSTRAINT `downloads_ibfk_1` FOREIGN KEY (`uploadId`) REFERENCES `uploads` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
