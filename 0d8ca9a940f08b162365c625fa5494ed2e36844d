@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_6726e1bc",
+        "filename": "db_scripts/diff/15268.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2016-07-28T11:52:11Z",
+      "side": 1,
+      "message": "There is a common mis-understanding among the new customers what \"incoming means\". Some think that incoming is from the subscriber\u0027s point of view. Instead, it is from the platform\u0027s PoV. Perhaps wording can be improved here. Otherwise OK.",
+      "range": {
+        "startLine": 16,
+        "startChar": 168,
+        "endLine": 16,
+        "endChar": 185
+      },
+      "revId": "0d8ca9a940f08b162365c625fa5494ed2e36844d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
