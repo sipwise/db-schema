@@ -70,6 +70,29 @@
       "revId": "433bb63ed83bf6f2c858e9f02afdc3092a05cd85",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_f3129357",
+        "filename": "db_scripts/diff/15268_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-07-29T10:30:38Z",
+      "side": 1,
+      "message": "please do not user camel namings. original_name it should be. and so on for the similar column names.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "433bb63ed83bf6f2c858e9f02afdc3092a05cd85",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
