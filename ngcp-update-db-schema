@@ -255,7 +255,4 @@ cd /usr/share/ngcp-db-schema/db_scripts/diff/
 revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
                    echo /usr/share/ngcp-db-schema/db_scripts/diff/$file; done)
 
-echo "Synchronizing passwords with MySQL"
-ngcp-sync-constants >/dev/null
-
 ## END OF FILE #################################################################
