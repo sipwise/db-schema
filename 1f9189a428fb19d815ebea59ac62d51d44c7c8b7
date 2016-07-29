@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_183e6cb9",
+        "filename": "db_scripts/diff/15269.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-07-29T08:16:07Z",
+      "side": 1,
+      "message": "; ??",
+      "revId": "1f9189a428fb19d815ebea59ac62d51d44c7c8b7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_b84ab853",
+        "filename": "db_scripts/diff/15269.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-07-29T08:16:07Z",
+      "side": 1,
+      "message": "; ??",
+      "revId": "1f9189a428fb19d815ebea59ac62d51d44c7c8b7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
