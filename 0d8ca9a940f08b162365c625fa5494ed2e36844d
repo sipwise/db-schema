@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_7360e335",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-07-29T13:56:44Z",
+      "side": 0,
+      "message": "who is going to call update grants??",
+      "revId": "0d8ca9a940f08b162365c625fa5494ed2e36844d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
