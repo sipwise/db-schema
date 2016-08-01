@@ -1,3 +1,51 @@
+ngcp-db-schema (4.5.1.0+0~mr4.5.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [2791a0a] MT#18235 kamailio: increase calle[e|r]_contact field size
+  * [be887d2] MT#20151 kamailio: increase [from|to]_tag field size on dialog
+  * [672cbed] MT#20737 kamailio: increase [from|to]_tag field size everywhere
+  * [71cfe4e] MT#21583 MT#19009 kamailio: fix upgrade to 4.4.0
+
+  [ Andreas Granig ]
+  * [3592e82] MT#19457 Add lnp authoritative and skip_rewrite
+  * [c295759] MT#21543 Add new emergency mapping tables
+  * [b98de2b] MT#21543 Implement emergency mapping preference
+  * [8ce3fbe] MT#8275 Add reject_vsc usr/dom pref and sound
+  * [0d8ca9a] TT#1604 Add skip_upn_check_on_diversion prefs
+
+  [ Gerhard Jungwirth ]
+  * [4e8510f] MT#19795 rtc_sessions deprecate network tag
+
+  [ Kirill Solomko ]
+  * [e77657c] MT#20219 - add lawful_interception voip_usr_preference
+  * [ec4911a] MT#20747 fix/rename 15241.* script to 15241_not_replicated
+  * [9934622] MT#21675 remove ngcp-sync-constants from ngcp-update-db-schema script
+
+  [ Andrew Pogrebennyk ]
+  * [0aa3269] MT#20125 add usr/dom/peer boolean preference disable_prack_method
+  * [54ce8a0] MT#19939 add peer preference anonymize_from_user
+  * [b3b9f2c] MT#21529 support gppX parameters for the peer
+
+  [ Rene Krenn ]
+  * [bd3911b] MT#20023 MT#20027 lnp numbers unique contraint and restrict delete cascade
+  * [de607c0] MT#16901 replace accounting.cdr 'rstatus' index
+  * [1ebbfec] MT#20379 introduce dynamic cdr string data columns
+
+  [ Jozef Kenyeres ]
+  * [f115bcf] MT#20457 subscriber put on hold is notified with a=sendonly in reINVITE
+  * [f7af031] MT#5065 usr/dom/peer preference added to blacklist or whitelist codecs.
+
+  [ Irina Peshinskaya ]
+  * [eccba55] MT#21269 Add snom_redirect enum value to the prov tables
+
+  [ Dominik Kukacka ]
+  * [20bf5bb] MT#19901: add schema for rtcengine
+  * [2c97ca7] MT#20921: RTCengine fileshare mysql storage
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Aug 2016 16:21:44 +0200
+
 ngcp-db-schema (4.5.0.0+0~mr4.5.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
