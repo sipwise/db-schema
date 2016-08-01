@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_e2bab609",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2016-08-01T09:58:50Z",
+      "side": 1,
+      "message": "1. if you have a fixed length (like uuids) it is better to use char over varchar as you will be getting more performance out of it.\n\n2. we are exposing these ids to users, and i would like to hide the information how many files we have, and take the possibility away to guess the next id.",
+      "parentUuid": "5aaae553_62aa46d6",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_e23076ea",
         "filename": "db_scripts/diff/15269_not_replicated.up",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_6246c625",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2016-08-01T09:58:50Z",
+      "side": 1,
+      "message": "true, and it should be an enum",
+      "parentUuid": "5aaae553_e23076ea",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_824d0275",
         "filename": "db_scripts/diff/15269_not_replicated.up",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2016-08-01T09:20:13Z",
       "side": 1,
       "message": "should be \"NOT NULL\" ?",
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_024b522c",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000019
+      },
+      "writtenOn": "2016-08-01T09:58:50Z",
+      "side": 1,
+      "message": "true, and it should be an enum",
+      "parentUuid": "5aaae553_824d0275",
       "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
