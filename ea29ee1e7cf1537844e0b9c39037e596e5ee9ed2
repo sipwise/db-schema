@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5aaae553_c2545acc",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-01T10:03:49Z",
+      "side": 1,
+      "message": "ok clear, if you need uuids and better performance with char strings.",
+      "parentUuid": "5aaae553_e2bab609",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aaae553_e23076ea",
         "filename": "db_scripts/diff/15269_not_replicated.up",
         "patchSetId": 4
