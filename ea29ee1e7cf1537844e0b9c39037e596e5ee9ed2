@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaae553_62aa46d6",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-01T09:20:13Z",
+      "side": 1,
+      "message": "just to make sure, char(36) is what is expected here ? as there are 2 downsides\n1. char vs varchar is always static length and therefore, (3*36 \u003d 108 bytes per (3 because of UTF))\n2. sure there is no use for the default AUTO_INCREMENT behaviour ? as I take it \"id\" is your primary key and must be unique.\n\nFor primary keys I would use:\nid int(11) unsigned NOT NULL AUTO_INCREMENT\nFor other the referenced columns:\nid int(11) unsigned NOT NULL",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 15
+      },
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_e23076ea",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-01T09:20:13Z",
+      "side": 1,
+      "message": "should be \"NOT NULL\" ?",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 23
+      },
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5aaae553_824d0275",
+        "filename": "db_scripts/diff/15269_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-01T09:20:13Z",
+      "side": 1,
+      "message": "should be \"NOT NULL\" ?",
+      "revId": "ea29ee1e7cf1537844e0b9c39037e596e5ee9ed2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
