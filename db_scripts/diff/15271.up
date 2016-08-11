@@ -1,0 +1,8 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+UPDATE voip_preferences SET peer_pref = 0 where attribute='codecs_list';
+UPDATE voip_preferences SET peer_pref = 0 where attribute='codecs_filter';
+
+COMMIT;
