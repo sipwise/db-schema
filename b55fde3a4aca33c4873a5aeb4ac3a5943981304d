@@ -1,0 +1,7 @@
+Code-Review+2: Andrii Pogrebennyk <apogrebennyk@sipwise.com>
+Verified+1: Jenkins Jenkins
+Submitted-by: Jozef Kenyeres <jkenyeres@sipwise.com>
+Submitted-at: Tue, 16 Aug 2016 13:02:14 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/7654
+Project: db-schema
+Branch: refs/heads/master
