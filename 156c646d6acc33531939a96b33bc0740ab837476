@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa7f18b_07f3780b",
+        "filename": "db_scripts/diff/15270.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-16T13:18:29Z",
+      "side": 1,
+      "message": "please remove this",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "156c646d6acc33531939a96b33bc0740ab837476",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa7f18b_c7dc8077",
+        "filename": "db_scripts/diff/15270.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-16T13:18:29Z",
+      "side": 1,
+      "message": "please add \"drop procedure ...\" statement in the end, we do not need to permanently keep such temporary procedures.",
+      "revId": "156c646d6acc33531939a96b33bc0740ab837476",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
