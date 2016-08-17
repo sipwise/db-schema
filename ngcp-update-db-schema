@@ -191,7 +191,11 @@ apply_revs() {
   if $RUN_SYNC_DB && ($not_replicated_rev_applied || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
     if [ -x "$SYNC_DB" ] ; then
         PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
-        if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125; then
+        EXTRA_SYNC_DB_OPTS=""
+        if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
+            EXTRA_SYNC_DB_OPTS="--local-user=root --init-replication --set-local-grants"
+        fi
+        if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 "${EXTRA_SYNC_DB_OPTS}"; then
             echo "Syncing 'not_replicated' statements from the central node."
         else
             echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
