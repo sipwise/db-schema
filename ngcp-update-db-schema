@@ -15,6 +15,7 @@ usage() {
 FORCE_ACTIVE_NODE=false
 RUN_SYNC_DB=false
 SYNC_DB="/usr/sbin/ngcp-sync-db"
+NOT_REPLICATED_REV_APPLIED=false
 
 while getopts "fh" opt; do
     case "${opt}" in
@@ -147,7 +148,6 @@ apply_revs() {
   [ -n "$1" ] || return 1
 
   revs="$1"
-  not_replicated_rev_applied=false
 
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
@@ -180,27 +180,12 @@ apply_revs() {
     if [ -r "$revision_file" ] ; then
       apply_revision "$revision_file"
       if [[ $revision_file == *_not_replicated.up ]] ; then
-        not_replicated_rev_applied=true
+        NOT_REPLICATED_REV_APPLIED=true
       fi
     else
       echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
     fi
   done
-
-  # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
-  if $RUN_SYNC_DB && ($not_replicated_rev_applied || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
-    if [ -x "$SYNC_DB" ] ; then
-        PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
-        if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125; then
-            echo "Syncing 'not_replicated' statements from the central node."
-        else
-            echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
-            exit 1
-        fi
-    else
-        echo "Warning: Skipping sync of 'not_replicated' statements from the central node as ${SYNC_DB} is missing on the current node." >&2
-    fi
-  fi
 }
 
 
@@ -254,5 +239,24 @@ revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" fi
 cd /usr/share/ngcp-db-schema/db_scripts/diff/
 revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
                    echo /usr/share/ngcp-db-schema/db_scripts/diff/$file; done)
+
+# for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
+if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
+  if [ -x "$SYNC_DB" ] ; then
+      PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
+      EXTRA_SYNC_DB_OPTS=""
+      if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
+          EXTRA_SYNC_DB_OPTS="--local-user=root --init-replication --set-local-grants"
+      fi
+      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS}; then
+          echo "Syncing 'not_replicated' statements from the central node."
+      else
+          echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
+          exit 1
+      fi
+  else
+      echo "Warning: Skipping sync of 'not_replicated' statements from the central node as ${SYNC_DB} is missing on the current node." >&2
+  fi
+fi
 
 ## END OF FILE #################################################################
