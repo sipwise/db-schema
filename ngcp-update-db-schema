@@ -188,7 +188,7 @@ apply_revs() {
   done
 
   # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
-  if $RUN_SYNC_DB && $not_replicated_rev_applied ; then
+  if $RUN_SYNC_DB && ($not_replicated_rev_applied || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
     if [ -x "$SYNC_DB" ] ; then
         PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
         if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125; then
