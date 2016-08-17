@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa7f18b_6d17ada4",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-08-17T17:21:12Z",
+      "side": 1,
+      "message": "cannot use these options in the installer as a standalone command as we have a list of databases to replicate \"PRX_SYNC_DBS\" and I do not want to spread the list over to different places and rather have it in one place for consistency.",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 88
+      },
+      "revId": "ee8b9cb79e98b17ee9bcd02ed1bb442086b94ee1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
