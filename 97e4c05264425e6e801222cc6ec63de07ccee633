@@ -22,6 +22,30 @@
       "revId": "97e4c05264425e6e801222cc6ec63de07ccee633",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aa7f18b_d36c3e39",
+        "filename": "db_scripts/diff/15272.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2016-08-18T14:50:27Z",
+      "side": 1,
+      "message": "ok, I thought, just to be safe, I\u0027ll remove it",
+      "parentUuid": "3aa7f18b_f3c61a49",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "97e4c05264425e6e801222cc6ec63de07ccee633",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
