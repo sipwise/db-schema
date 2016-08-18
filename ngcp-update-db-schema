@@ -230,7 +230,7 @@ revision_wrapper() {
 
   apply_revs "$revlist"
 }
-
+#test
 # make sure we get sorted 10XXX after 9XXX
 cd /usr/share/ngcp-db-schema/db_scripts/base/
 revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
