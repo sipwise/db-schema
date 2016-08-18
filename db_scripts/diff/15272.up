@@ -1,0 +1,13 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+UPDATE voip_preferences
+    SET description = 'Defines a default caller LNP prefix which is written into CDRs if no LNP entry is found for the caller number in the LNP database. This prefix is NOT used for routing purposes like rewrite rules, only for CDR tagging.'
+    WHERE attribute = 'default_lnp_prefix';
+
+UPDATE voip_preferences
+    SET label = 'Enable Caller LNP lookup'
+    WHERE attribute = 'caller_lnp_lookup';
+
+COMMIT;
