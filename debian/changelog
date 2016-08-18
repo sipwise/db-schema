@@ -1,3 +1,12 @@
+ngcp-db-schema (4.4.1.6+0~mr4.4.1.6) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [e3ff877] MT#21439 ngcp-sync-db improvements
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 18 Aug 2016 14:02:34 +0200
+
 ngcp-db-schema (4.4.1.5+0~mr4.4.1.5) unstable; urgency=medium
 
   [ Kirill Solomko ]
