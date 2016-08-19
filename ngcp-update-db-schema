@@ -88,7 +88,7 @@ if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e 'describe db_schema'  >/de
   exit 1
 fi
 
-if [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
+if [ -z "$SKIP_SYNC_DB" ] && [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
   if ! $FORCE_ACTIVE_NODE && [ ! -x "$SYNC_DB" ] ; then
     echo "Error: ${SYNC_DB} is required for carrier proxy (or lacking execute permissions)." >&2
     exit 1
