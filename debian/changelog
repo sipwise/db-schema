@@ -1,3 +1,15 @@
+ngcp-db-schema (4.4.1.7+0~mr4.4.1.7) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [15e5ce1] MT#21871 fixing the provisioning.voip_aig_sequence autoinc value
+
+  [ Kirill Solomko ]
+  * [9148482] MT#21439 implement SKIP_SYNC_DB variable
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 19 Aug 2016 13:28:09 +0200
+
 ngcp-db-schema (4.4.1.6+0~mr4.4.1.6) unstable; urgency=medium
 
   [ Kirill Solomko ]
