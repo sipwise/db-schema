@@ -1,3 +1,14 @@
+ngcp-db-schema (4.5.1.1+0~mr4.5.1.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [91eea89] MT#21439 ngcp-sync-db and AUTOMATED_INSTALL_MODE
+  * [14f10e3] MT#21439 ngcp-sync-db improvements
+  * [cc0c118] MT#21439 implement SKIP_SYNC_DB variable
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 22 Aug 2016 12:45:26 +0200
+
 ngcp-db-schema (4.5.1.0+0~mr4.5.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
