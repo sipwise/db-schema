@@ -1,0 +1,12 @@
+USE provisioning;
+
+SET autocommit=0;
+
+ALTER TABLE `provisioning`.`voip_cf_mappings`
+  DROP COLUMN `source_set_id`;
+
+DROP TABLE `voip_cf_sources`;
+
+DROP TABLE `voip_cf_source_sets`;
+
+COMMIT;

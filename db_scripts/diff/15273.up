@@ -1,0 +1,28 @@
+USE provisioning;
+
+SET autocommit=0;
+
+CREATE TABLE `voip_cf_source_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `vcss_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_cf_sources` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `source_set_id` int(11) unsigned NOT NULL,
+  `source` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sset_idx` (`source_set_id`),
+  KEY `source_idx` (`source`),
+  CONSTRAINT `v_cf_ssetid_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `provisioning`.`voip_cf_mappings`
+  ADD COLUMN `source_set_id` INT(11) UNSIGNED NULL DEFAULT NULL AFTER `time_set_id`;
+
+COMMIT;
