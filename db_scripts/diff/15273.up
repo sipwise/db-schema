@@ -1,0 +1,19 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+CREATE TABLE `voip_dev_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `devidattrid_idx` (`device_id`,`attribute_id`),
+  KEY `deviceid_idx` (`device_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_dev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_d_p_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6349 DEFAULT CHARSET=utf8 ;
+
+COMMIT;

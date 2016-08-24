@@ -1,0 +1,7 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+DROP TABLE `voip_dev_preferences`;
+
+COMMIT;
