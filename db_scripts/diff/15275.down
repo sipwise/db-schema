@@ -1,0 +1,6 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute='precall_cost_announcement';
+
+COMMIT;
