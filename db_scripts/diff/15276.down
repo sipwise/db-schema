@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`voip_cf_source_sets` 
+DROP INDEX `cf_sourcesets_name_unique`;

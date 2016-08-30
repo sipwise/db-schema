@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`voip_cf_source_sets` 
+ADD UNIQUE INDEX `cf_sourcesets_name_unique` (`name` ASC);
