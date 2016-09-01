@@ -1,3 +1,15 @@
+ngcp-db-schema (4.5.1.2+0~mr4.5.1.2) unstable; urgency=medium
+
+  [ Gerhard Jungwirth ]
+  * [57c4c17] MT#22085 MT#19637 improve preference descriptions
+
+  [ Andreas Granig ]
+  * [97f875f] TT#2757 Add emergency_geo_unavailable sound handle
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 01 Sep 2016 16:08:58 +0200
+
 ngcp-db-schema (4.5.1.1+0~mr4.5.1.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
