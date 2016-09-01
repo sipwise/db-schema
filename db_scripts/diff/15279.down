@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+DELETE from voip_preferences where attribute = 'recent_calls_by_upn';
+
+commit;
