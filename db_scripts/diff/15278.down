@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+DROP TABLE `voip_devprof_preferences`;
+
+alter table voip_preferences drop column `devprof_pref`;
+alter table voip_preferences_enum drop column `devprof_pref`;
+
+COMMIT;
