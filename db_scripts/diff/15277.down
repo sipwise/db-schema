@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+DELETE from voip_preferences where attribute = 'malicious_call_identification_use_upn';
+
+commit;
