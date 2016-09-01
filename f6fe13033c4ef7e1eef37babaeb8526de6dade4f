@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3aa7f18b_484ba3b0",
+        "filename": "db_scripts/diff/15278.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2016-09-01T15:24:45Z",
+      "side": 1,
+      "message": "unfortunately the name is too long and does not fit into voip_usr_preferences, we need to shorten to \"mcid_...\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 13,
+        "endChar": 51
+      },
+      "revId": "f6fe13033c4ef7e1eef37babaeb8526de6dade4f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
