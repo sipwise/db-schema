@@ -1,0 +1,22 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+CREATE TABLE `voip_devprof_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `devprofidattrid_idx` (`profile_id`,`attribute_id`),
+  KEY `devprofileid_idx` (`profile_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_devprof_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_p_p_deviceid_ref` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
+
+alter table voip_preferences add column `devprof_pref` tinyint(1) NOT NULL DEFAULT '0' after `dev_pref`;
+alter table voip_preferences_enum add column `devprof_pref` tinyint(1) NOT NULL DEFAULT '0' after `dev_pref`;
+
+COMMIT;
