@@ -1,0 +1,23 @@
+USE provisioning;
+
+CREATE TABLE `voip_peer_inbound_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `field` varchar(255) NOT NULL,
+  `pattern` varchar(1023) NOT NULL,
+  `reject_code` int(3) DEFAULT NULL,
+  `reject_reason` varchar(64) DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT '50',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `grpidx` (`group_id`),
+  CONSTRAINT `v_pig_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+ALTER TABLE voip_peer_groups ADD COLUMN has_inbound_rules TINYINT(1) NOT NULL DEFAULT 0;
+
+INSERT INTO voip_peer_inbound_rules 
+    (group_id, field, pattern, priority, enabled)
+    SELECT DISTINCT(id), 'ruri_domain', '.*', 50, 1 FROM voip_peer_groups;
+
+UPDATE voip_peer_groups SET has_inbound_rules = 1;

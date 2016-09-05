@@ -1,0 +1,4 @@
+USE provisioning;
+
+DROP TABLE voip_peer_inbound_rules;
+ALTER TABLE voip_peer_groups DROP COLUMN has_inbound_rules;
