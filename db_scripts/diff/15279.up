@@ -15,6 +15,6 @@ INSERT INTO voip_preferences (
     1, 0, 1, 0,
     NOW(), 0, 0,
     'boolean', 0,
-    'Use User-Provided-Number instead of Subscriber UUID when storing recent calls'
+    'Use User-Provided-Number instead of Subscriber UUID when storing recent calls');
 
 commit;
