@@ -1,0 +1,18 @@
+USE provisioning;
+
+INSERT INTO voip_preference_groups VALUES (NULL, 'IMS Application Server');
+SELECT last_insert_id() INTO @vpgid;
+
+INSERT INTO voip_preferences (
+    voip_preference_groups_id, attribute, label,
+    type, max_occur,
+    usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+    modify_timestamp, internal, expose_to_customer, data_type, read_only,
+    description
+) VALUES (
+    @vpgid, 'ims_as_context', 'IMS Subscriber/Domain',
+    1, 1,
+    1, 0, 1, 0, 0, 0,
+    now(), 0, 0, 'boolean', 0,
+    'Defines whether this subscriber or domain is handled in an IMS application server context, so no direct registrations and calls are possible, but are signalled via an IMS S-CSCF instead'
+);
