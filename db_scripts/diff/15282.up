@@ -1,0 +1,13 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @rej_id FROM voip_sound_groups WHERE name = 'early_rejects';
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('announce_before_cf', @rej_id);
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Applications';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'play_announce_before_cf', "Play announcement before routing to CFU/CFNA", 0, 1, 1, 0, 1, 0, 0, NOW(), 0, 0, 'boolean', 0, 'Playback announcement as early media before Call Forward Unconditional or Unavailable.');
+
+commit;
