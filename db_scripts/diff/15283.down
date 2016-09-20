@@ -1,0 +1,14 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+DROP TABLE `provisioning`.`upn_rewrite_sources`;
+DROP TABLE `provisioning`.`upn_rewrite_set`;
+
+DELETE FROM voip_preferences WHERE
+    attribute = 'upn_rewrite_id';
+
+DELETE FROM voip_preferences WHERE
+    attribute = 'upn_rewrite';
+
+COMMIT;

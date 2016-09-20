@@ -1,0 +1,49 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+
+CREATE TABLE `provisioning`.`upn_rewrite_set` (
+    `id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+    `subscriber_id` INT(11) unsigned NOT NULL,
+    `new_cli` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `provisioning`.`upn_rewrite_sources` (
+    `id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
+    `upn_rewrite_set_id` INT(11) unsigned NOT NULL,
+    `pattern` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_upn_rewrite_sources_1` FOREIGN KEY (`upn_rewrite_set_id`) REFERENCES `upn_rewrite_set` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences
+    (`voip_preference_groups_id`, `attribute`, `label`, `type`, `max_occur`,
+    `usr_pref`, `prof_pref`, `dom_pref`, `peer_pref`, `contract_pref`, `contract_location_pref`,
+    `dev_pref`, `devprof_pref`, `modify_timestamp`, `internal`, `expose_to_customer`, `data_type`,
+    `read_only`)
+    VALUES
+    (@pgid, 'upn_rewrite_id', 'Internal User CLI rewrite #', '1', '1',
+    '1', '0', '0', '0', '0', '0',
+    '0', '0', now(), '1', '0', 'int',
+    '0');
+
+INSERT INTO voip_preferences
+    (`voip_preference_groups_id`, `attribute`, `label`, `type`, `max_occur`,
+    `usr_pref`, `prof_pref`, `dom_pref`, `peer_pref`, `contract_pref`, `contract_location_pref`,
+    `dev_pref`, `devprof_pref`, `modify_timestamp`, `internal`, `expose_to_customer`, `data_type`,
+    `read_only`, `description`)
+    VALUES
+    (@pgid, 'upn_rewrite', 'User CLI rewrite', '0', '1',
+    '1', '0', '0', '0', '0', '0',
+    '0', '0', now(), '-1', '1', 'string',
+    '0', 'Defines a rewrite CLI and and pattern. If the a-number of a call matches one of the associated patterns, the User-Provided-Number is set to the configured CLI.');
+
+
+COMMIT;
