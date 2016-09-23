@@ -1,0 +1,7 @@
+SET AUTOCOMMIT=0;
+
+USE kamailio;
+
+CREATE INDEX ad_grp_idx ON address (grp);
+
+COMMIT;
