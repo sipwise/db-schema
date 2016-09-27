@@ -1,3 +1,14 @@
+ngcp-db-schema (4.4.1.8+0~mr4.4.1.8) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [986b222] MT#20023 MT#20027 lnp numbers unique contraint and restrict delete cascade
+  * [d625cbf] MT#21871 suppress stdout output in reset_voip_aig_autoincrement
+  * [90e41b1] MT#22787 index for kamailio.address.grp
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 27 Sep 2016 16:05:26 +0200
+
 ngcp-db-schema (4.4.1.7+0~mr4.4.1.7) unstable; urgency=medium
 
   [ Rene Krenn ]
