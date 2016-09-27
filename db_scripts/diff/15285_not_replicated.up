@@ -1,0 +1,13 @@
+SET sql_log_bin=0;
+USE billing;
+
+#undo 15251:
+ALTER TABLE lnp_numbers DROP FOREIGN KEY l_n_lnpproid_ref;
+DROP INDEX l_n_lnpproidnumber_idx ON lnp_numbers;
+CREATE INDEX l_n_lnpproid_ref ON lnp_numbers (lnp_provider_id);
+ALTER TABLE lnp_numbers ADD CONSTRAINT l_n_lnpproid_ref FOREIGN KEY (lnp_provider_id) REFERENCES lnp_providers (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+UPDATE lnp_numbers
+SET number=SUBSTRING_INDEX(SUBSTRING_INDEX(number,'--',2),'--',-1)
+WHERE number LIKE 'dupe--%--%';
+
