@@ -1,3 +1,42 @@
+ngcp-db-schema (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
+
+  [ Jozef Kenyeres ]
+  * [b55fde3] MT#5065 codecs_list and codecs_filter not used as peer preferences.
+  * [b830d52] TT#2456 Add subscriber preference precall_cost_announcement
+
+  [ Kirill Solomko ]
+  * [94832f2] MT#21439 ngcp-sync-db and AUTOMATED_INSTALL_MODE
+  * [bc5f5f6] MT#21439 ngcp-sync-db improvements
+  * [27cc85e] MT#21439 implement SKIP_SYNC_DB variable
+  * [d5c9d04] MT#21751 add recent_calls_by_upn voip preference
+
+  [ Rene Krenn ]
+  * [3426c2c] MT#21871 fixing the provisioning.voip_aig_sequence autoinc value
+  * [18535fa] Revert "MT#21871 fixing the provisioning.voip_aig_sequence autoinc value"
+  * [7971467] MT#21871 fixing the provisioning.voip_aig_sequence autoinc value
+  * [7b3d7ac] MT#21871 suppress stdout output in reset_voip_aig_autoincrement
+  * [90f6fdc] MT#22787 index for kamailio.address.grp
+
+  [ Gerhard Jungwirth ]
+  * [9e19702] MT#22085 MT#19637 improve preference descriptions
+  * [3413f47] TT#2366 new tables voip_cf_source* for anumber cfs
+  * [106203d] TT#2366 make voip_cf_source_sets.name unique
+  * [2db281a] TT#2395 a-number based cli selection
+
+  [ Irina Peshinskaya ]
+  * [65c420f] TT#2452 Add device preferences table
+  * [43e5405] MT#2452 Add pbx device profile preferences tables
+  * [f88853c] MT#21751 Fix typo in query
+
+  [ Andreas Granig ]
+  * [1cb9f98] TT#2757 Add emergency_geo_unavailable sound handle
+  * [983f730] TT#2766 Implement inbound peering rules.
+
+  [ Andrew Pogrebennyk ]
+  * [8083258] TT#2458 Add preference play_announce_before_cf and sound handle announce_before_cf
+
+ -- Alexander Lutay <alutay@sipwise.com>  Tue, 27 Sep 2016 15:43:56 +0200
+
 ngcp-db-schema (4.6.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
