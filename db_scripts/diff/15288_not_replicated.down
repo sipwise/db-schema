@@ -1,0 +1,19 @@
+SET sql_log_bin=0;
+USE billing;
+
+#redo 15251:
+UPDATE
+             lnp_numbers a
+  CROSS JOIN lnp_numbers b
+SET a.number = CONCAT('dupe--',a.number,'--',a.id)
+WHERE
+  a.id < b.id
+  and (a.number = b.number and a.lnp_provider_id = b.lnp_provider_id);
+
+ALTER TABLE lnp_numbers DROP FOREIGN KEY l_n_lnpproid_ref;
+DROP INDEX l_n_lnpproid_ref ON lnp_numbers;
+CREATE UNIQUE INDEX l_n_lnpproidnumber_idx ON lnp_numbers (lnp_provider_id,number);
+ALTER TABLE lnp_numbers ADD CONSTRAINT l_n_lnpproid_ref FOREIGN KEY (lnp_provider_id) REFERENCES lnp_providers (id) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+DROP INDEX l_n_start_idx ON lnp_numbers;
+
