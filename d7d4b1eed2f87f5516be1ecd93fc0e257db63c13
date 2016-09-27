@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Víctor Seva <vseva@sipwise.com>
+Submitted-by: Alexander Lutay <alutay@sipwise.com>
+Submitted-at: Tue, 27 Sep 2016 16:13:52 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/8451
+Project: db-schema
+Branch: refs/heads/master
