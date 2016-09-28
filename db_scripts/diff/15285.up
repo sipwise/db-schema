@@ -1,0 +1,3 @@
+use billing;
+
+alter table ncos_levels add column intra_pbx tinyint(1) not null default 0 after local_ac;

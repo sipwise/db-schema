@@ -1,0 +1,3 @@
+use billing;
+
+alter table ncos_levels drop column intra_pbx;
