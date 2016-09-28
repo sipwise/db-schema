@@ -1,3 +1,12 @@
+ngcp-db-schema (3.8.7.3+0~mr3.8.7.3) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [7a8df6b] MT#19939 add peer preference anonymize_from_user
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 28 Sep 2016 10:23:40 +0200
+
 ngcp-db-schema (3.8.7.2+0~mr3.8.7.2) unstable; urgency=medium
 
   [ Rene Krenn ]
