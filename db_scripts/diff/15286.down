@@ -1,0 +1,14 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+delete from voip_preferences where attribute = 'admin_name';
+delete from voip_preferences where attribute = 'admin_pass';
+delete from voip_preferences where attribute = 'ntp_server';
+delete from voip_preferences where attribute = 'ntp_sync';
+delete from voip_preferences where attribute = 'syslog_server';
+delete from voip_preferences where attribute = 'syslog_level';
+delete from voip_preferences where attribute = 'web_gui_dis';
+
+delete from voip_preference_groups where name = 'CPBX Device Administration';
+
+COMMIT;

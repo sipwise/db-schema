@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+delete from voip_preferences where attribute = 'FW_upg_dis';
+delete from voip_preferences where attribute = 'vdn_Panasonic_FW_ver';
+delete from voip_preferences where attribute = 'vdn_Panasonic_FW_autoupg_dis';
+
+delete from voip_preference_groups where name = 'CPBX Device Firmware Settings';
+
+COMMIT;
