@@ -1,3 +1,22 @@
+ngcp-db-schema (4.4.2.1+0~mr4.4.2.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [a414cfe] MT#20747 fix/rename 15241.* script to 15241_not_replicated
+  * [7573a3b] MT#21439 ngcp-sync-db and AUTOMATED_INSTALL_MODE
+  * [cf087f9] MT#21439 ngcp-sync-db improvements
+  * [63cffc4] MT#21439 implement SKIP_SYNC_DB variable
+
+  [ Victor Seva ]
+  * [a40bf1c] MT#20737 kamailio: increase [from|to]_tag field size everywhere
+  * [74223da] MT#21583 MT#19009 kamailio: fix upgrade to 4.4.0
+
+  [ Rene Krenn ]
+  * [4e58550] MT#22787 index for kamailio.address.grp
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 30 Sep 2016 13:07:42 +0200
+
 ngcp-db-schema (4.4.2.0+0~mr4.4.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
