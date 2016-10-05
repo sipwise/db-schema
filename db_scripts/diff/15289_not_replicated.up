@@ -1,0 +1,10 @@
+SET sql_log_bin=0;
+
+USE kamailio;
+
+ALTER TABLE sca_subscriptions
+  ADD COLUMN server_id INTEGER DEFAULT 0 NOT NULL,
+  DROP INDEX sca_expires_idx,
+  ADD INDEX sca_expires_idx (server_id, expires);
+
+UPDATE version SET table_version=2 WHERE table_name="sca_subscriptions";
