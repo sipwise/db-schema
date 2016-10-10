@@ -1,3 +1,28 @@
+ngcp-db-schema (4.5.2.1+0~mr4.5.2.1) unstable; urgency=medium
+
+  [ Gerhard Jungwirth ]
+  * [0d671c3] MT#22085 MT#19637 improve preference descriptions
+
+  [ Andreas Granig ]
+  * [726d433] TT#2757 Add emergency_geo_unavailable sound handle
+  * [4f26dda] TT#2757 Add emergency_geo_unavailable sound handle
+  * [bcf9730] TT#3991 Add ncos level flag for intra-pbx calls
+
+  [ Rene Krenn ]
+  * [25448c3] MT#22787 index for kamailio.address.grp
+  * [e5c36e1] MT#21871 fixing the provisioning.voip_aig_sequence autoinc value
+  * [e90862a] MT#21871 suppress stdout output in reset_voip_aig_autoincrement
+
+  [ Kirill Solomko ]
+  * [d2998df] MT#21751 add recent_calls_by_upn voip preference
+
+  [ Irina Peshinskaya ]
+  * [9863267] MT#21751 Fix typo in query
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Oct 2016 16:10:27 +0200
+
 ngcp-db-schema (4.5.2.0+0~mr4.5.2.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
