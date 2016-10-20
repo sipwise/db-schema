@@ -1,0 +1,17 @@
+USE provisioning;
+
+CREATE TABLE `sms_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `direction` enum('in','out') NOT NULL,
+  `caller` varchar(255) NOT NULL,
+  `callee` varchar(255) NOT NULL,
+  `text` text NOT NULL,
+  `reason` varchar(255) NOT NULL DEFAULT '',
+  `status` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `sms_journal_sub_dir_idx` (`subscriber_id`,`direction`),
+  KEY `sms_journal_time_idx` (`time`),
+  CONSTRAINT `smsj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
