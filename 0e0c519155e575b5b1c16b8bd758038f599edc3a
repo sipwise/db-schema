@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_504a1c84",
+        "filename": "db_scripts/diff/15290_not_replicated.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-10-21T13:14:32Z",
+      "side": 1,
+      "message": "please remove this, such comments they are of no value at all there as they are not used and never will be inside the up script, and will only confuse people who may \"grep\" something and fetch the fake sql and have false results.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "0e0c519155e575b5b1c16b8bd758038f599edc3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
