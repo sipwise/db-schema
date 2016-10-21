@@ -1,0 +1,6 @@
+SET sql_log_bin=0;
+
+use accounting;
+
+CREATE INDEX daid_stime ON cdr (destination_account_id,start_time);
+
