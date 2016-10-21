@@ -1,0 +1,31 @@
+SET sql_log_bin=0;
+
+use accounting;
+
+DROP PROCEDURE IF EXISTS drop_index_if_exists_proc;
+DELIMITER ;;
+CREATE PROCEDURE drop_index_if_exists_proc(IN idx_db varchar(64),
+                                           IN idx_table varchar(64),
+                                           IN idx_name varchar(64))
+BEGIN
+
+    DECLARE idx_exists int default 0;
+    SELECT count(INDEX_NAME) INTO idx_exists
+      FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = idx_db
+      AND TABLE_NAME = idx_table
+      AND INDEX_NAME = idx_name;
+
+    IF idx_exists > 0 THEN
+        SET @q = CONCAT('DROP INDEX `', idx_name, '` ON `', idx_db, '`.`', idx_table, '`');
+        PREPARE stmt FROM @q;
+        EXECUTE stmt;
+    END IF;
+
+END ;;
+DELIMITER ;
+
+CALL drop_index_if_exists_proc('accounting','cdr','daid_stime');
+#supposed to exist:
+#CALL drop_index_if_exists_proc('accounting','cdr','said_stime'); 
+DROP PROCEDURE drop_index_if_exists_proc;

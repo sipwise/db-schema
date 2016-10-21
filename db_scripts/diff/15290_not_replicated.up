@@ -1,0 +1,32 @@
+SET sql_log_bin=0;
+
+use accounting;
+
+DROP PROCEDURE IF EXISTS create_index_if_not_exists_proc;
+DELIMITER ;;
+CREATE PROCEDURE create_index_if_not_exists_proc(IN idx_db varchar(64),
+                                           IN idx_table varchar(64),
+                                           IN idx_name varchar(64),
+                                           IN idx_field_list varchar(200))
+BEGIN
+
+    DECLARE idx_exists int default 0;
+    SELECT count(INDEX_NAME) INTO idx_exists
+      FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = idx_db
+      AND TABLE_NAME = idx_table
+      AND INDEX_NAME = idx_name;
+
+    IF idx_exists = 0 THEN
+        SET @q = CONCAT('CREATE INDEX `', idx_name, '` ON `', idx_db, '`.`', idx_table, '` (',idx_field_list,')');
+        PREPARE stmt FROM @q;
+        EXECUTE stmt;
+    END IF;
+
+END ;;
+DELIMITER ;
+
+CALL create_index_if_not_exists_proc('accounting','cdr','daid_stime','destination_account_id,start_time');
+CALL create_index_if_not_exists_proc('accounting','cdr','said_stime','source_account_id,start_time');
+DROP PROCEDURE create_index_if_not_exists_proc;
+
