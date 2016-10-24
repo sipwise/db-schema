@@ -1,0 +1,10 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+UPDATE voip_preferences SET dom_pref = 0 WHERE attribute = "allowed_ips_grp" AND dom_pref = 1;
+UPDATE voip_preferences SET dom_pref = 0 WHERE attribute = "man_allowed_ips_grp" AND dom_pref = 1;
+UPDATE voip_preferences SET dom_pref = 0 WHERE attribute = "allowed_ips" AND dom_pref = 1;
+UPDATE voip_preferences SET dom_pref = 0 WHERE attribute = "man_allowed_ips" AND dom_pref = 1;
+UPDATE voip_preferences SET dom_pref = 0 WHERE attribute = "ignore_allowed_ips" AND dom_pref = 1;
+
+COMMIT;
