@@ -1,0 +1,5 @@
+USE billing;
+
+ALTER TABLE contacts
+  ADD COLUMN `status` enum('active','terminated') NOT NULL DEFAULT 'active',
+  ADD COLUMN `terminate_timestamp` timestamp NULL DEFAULT NULL;
