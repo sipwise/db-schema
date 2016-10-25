@@ -22,6 +22,30 @@
       "revId": "0073a7f9a1898fbc1461b496f7a9807624c1a247",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c51b2_0d4b56b1",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-25T10:39:33Z",
+      "side": 1,
+      "message": "this is dangerous approach... for the script which customers can use.\n\nI even to not want to print hint about \u0027-f\u0027 here , as user may create a problems here.\n\nWith the current changes we will just hint user that node is active... that all.\n\nSo, I do not want to ask yes/no here. Is it fine for you?",
+      "parentUuid": "3a4c51b2_cd696e27",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "0073a7f9a1898fbc1461b496f7a9807624c1a247",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
