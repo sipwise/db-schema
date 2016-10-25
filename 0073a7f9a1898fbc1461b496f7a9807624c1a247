@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a4c51b2_cd696e27",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-10-25T10:32:00Z",
+      "side": 1,
+      "message": "with the bulk-processor scripts i made an explicit promt (\"type \u0027yes\u0027 to proceed:..\"), which is prevented by force option..",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "0073a7f9a1898fbc1461b496f7a9807624c1a247",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
