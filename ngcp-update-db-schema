@@ -102,13 +102,13 @@ running_on_active_node() {
   else
     if /usr/sbin/ngcp-check_active -q ; then
       if $FORCE_ACTIVE_NODE; then
-        verbose "Force update on active node as requested."
+        echo "Force update on active node as requested."
       else
-        verbose "This seems to be the active node, nothing to do."
+        echo "This seems to be the active node, nothing to do."
       fi
       return 0
     else
-      verbose "This seems to be the inactive node, applying revisions."
+      echo "This seems to be the inactive node, applying revisions."
       return 1
     fi
   fi
