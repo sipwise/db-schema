@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+DELETE from voip_preferences where attribute = 'party_call_control';
+
+commit;
