@@ -1,0 +1,10 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'record_call', "Record call", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Intercept and record media packets from or to this subscriber into a file.');
+
+commit;
