@@ -1,4 +1,4 @@
-SET sql_log_bin=0;
+SET AUTOCOMMIT=0;
 USE billing;
 
 ALTER TABLE contacts
