@@ -1,3 +1,15 @@
+ngcp-db-schema (4.5.2.3+0~mr4.5.2.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [9bf2aec] TT#4638 domain level allowed_ips
+
+  [ Kirill Solomko ]
+  * [7da0325] TT#5549 add voip_fax_journal caller_uuid, callee_uuid columns
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 11 Nov 2016 16:19:20 +0100
+
 ngcp-db-schema (4.5.2.2+0~mr4.5.2.2) unstable; urgency=medium
 
   [ Rene Krenn ]
