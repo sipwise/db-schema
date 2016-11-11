@@ -1,0 +1,4 @@
+use provisioning;
+
+ALTER TABLE voip_fax_journal DROP caller_uuid,
+                             DROP callee_uuid;
