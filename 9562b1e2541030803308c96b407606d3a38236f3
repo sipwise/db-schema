@@ -46,6 +46,30 @@
       "revId": "9562b1e2541030803308c96b407606d3a38236f3",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a494da4_dd5d9e4a",
+        "filename": "db_scripts/diff/15297.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-11-11T11:59:13Z",
+      "side": 1,
+      "message": "yeah thanks, on my test platform it is without null, and I played around with \u0027not null default \u0027\u0027\u0027 hence that mistype appeared there. sorry! :)",
+      "parentUuid": "1a494da4_5dc7ce12",
+      "range": {
+        "startLine": 3,
+        "startChar": 54,
+        "endLine": 3,
+        "endChar": 63
+      },
+      "revId": "9562b1e2541030803308c96b407606d3a38236f3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
