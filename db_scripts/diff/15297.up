@@ -1,0 +1,7 @@
+use provisioning;
+
+ALTER TABLE voip_fax_journal ADD caller_uuid char(36) NOT NULL,
+                             ADD callee_uuid char(36) NOT NULL,
+                             ADD index caller_uuid_idx (caller_uuid),
+                             ADD index callee_uuid_idx (callee_uuid);
+
