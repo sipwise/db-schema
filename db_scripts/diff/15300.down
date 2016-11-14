@@ -1,0 +1,4 @@
+USE provisioning;
+
+DELETE FROM voip_preferences_enum
+    WHERE value = 'force_interdomain';
