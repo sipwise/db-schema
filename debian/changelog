@@ -1,3 +1,38 @@
+ngcp-db-schema (5.1.0.0+0~mr5.1.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [8e03d7b] MT#22031 cosmetic up script changes for MariaDB compatibility
+  * [65ad84b] TT#5549 add voip_fax_journal caller_uuid, callee_uuid columns
+
+  [ Andreas Granig ]
+  * [ebd2019] TT#3991 Add ncos level flag for intra-pbx calls
+  * [bf43a16] TT#2376 Add preference for IMS AS routing
+
+  [ Jozef Kenyeres ]
+  * [144d001] TT#2453 Added device preferences
+
+  [ Victor Seva ]
+  * [13c6587] TT#3010 kamailio: sca version 2
+
+  [ Rene Krenn ]
+  * [f7a0e79] MT#20027 porting number history
+  * [a7bf30f] MT#20959 add cdr daid_stime indexe
+  * [d6c0223] TT#4638 domain level allowed_ips
+  * [41526d4] MT#20639 billing.contacts "status" column
+
+  [ Alexander Lutay ]
+  * [0073a7f] TT#5028 Improve user using expecied on ngcp-update-db-schema
+
+  [ Gerhard Jungwirth ]
+  * [a94fbb4] TT#2369 add table sms_journal
+
+  [ Richard Fuchs ]
+  * [9d04761] TT#5567 add record_call usr preference
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 17 Nov 2016 23:10:46 +0100
+
 ngcp-db-schema (5.0.0.0+0~mr5.0.0.0) unstable; urgency=medium
 
   [ Jozef Kenyeres ]
