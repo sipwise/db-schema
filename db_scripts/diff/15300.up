@@ -5,11 +5,11 @@ SELECT id INTO @vpid FROM voip_preferences
     WHERE attribute = 'force_outbound_calls_to_peer';
 
 INSERT INTO voip_preferences_enum 
-(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, default_val)
 VALUES (
     @vpid, 'If caller and callee belong to different domains',
     'force_interdomain',
-    1, 0, 1, 0, 1, 0, 0, 0, NULL
+    1, 0, 1, 0, 1, 0, NULL
 );
 
 COMMIT;
