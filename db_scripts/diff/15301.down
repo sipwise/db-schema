@@ -1,0 +1,5 @@
+USE provisioning;
+
+ALTER TABLE autoprov_firmwares ADD data longblob NOT NULL;
+
+DROP TABLE autoprov_firmwares_data;

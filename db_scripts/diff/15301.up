@@ -1,0 +1,14 @@
+USE provisioning;
+
+CREATE TABLE `autoprov_firmwares_data` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  fw_id int(11) unsigned NOT NULL,
+  `data` longblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `afd_fw_id_idx` (`fw_id`),
+  CONSTRAINT `fk_fw_idx` FOREIGN KEY (`fw_id`) REFERENCES `autoprov_firmwares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+INSERT INTO autoprov_firmwares_data (fw_id, data) SELECT id, data FROM autoprov_firmwares;
+
+ALTER TABLE autoprov_firmwares DROP data;
