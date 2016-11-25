@@ -1,0 +1,22 @@
+USE provisioning;
+
+alter table voip_cf_mappings change column type type enum ('cfu','cfb','cfna','cft','cfs') not null default 'cfu';
+
+select id into @vpgid from voip_preference_groups where name = 'Call Forwards';
+insert into voip_preferences (
+  voip_preference_groups_id, attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref,
+  internal, expose_to_customer, data_type, read_only,
+  description) values (
+  @vpgid, 'cfs', 'Internal Cal Forward SMS #', 1, 0,
+  1, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 'int', 1,
+  'The id pointing to the "Call Forward SMS" entry in the voip_cf_mappings table'
+);
+
+alter table sms_journal change column direction direction enum('in','out','forward') not null default 'in';
+
+USE accounting;
+
+-- add new options at the end to make alter table run instantly
+alter table cdr change column call_type call_type enum('call','cfu','cft','cfb','cfna','cfs','sms') not null default 'call';
