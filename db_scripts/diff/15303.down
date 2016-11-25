@@ -1,0 +1,11 @@
+USE provisioning;
+
+delete from voip_preferences where attribute = 'cfs';
+delete from voip_cf_mappings where type = 'cfs';
+alter table voip_cf_mappings change column type type enum ('cfu','cfb','cfna','cft') not null default 'cfu';
+
+alter table sms_journal change column direction direction enum('in','out') not null default 'in';
+
+USE accounting;
+
+alter table cdr change column call_type call_type enum('call','cfu','cft','cfb','cfna') not null default 'call';
