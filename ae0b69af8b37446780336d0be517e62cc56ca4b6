@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_e8dd1f16",
+        "filename": "db_scripts/diff/15302.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2016-11-25T14:39:03Z",
+      "side": 1,
+      "message": "typo, please fix it if you think it\u0027s worth it :)",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "ae0b69af8b37446780336d0be517e62cc56ca4b6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
