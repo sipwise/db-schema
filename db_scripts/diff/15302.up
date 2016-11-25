@@ -15,6 +15,6 @@ INSERT INTO voip_preferences (
     1, 0, 1, 0,
     NOW(), 0, 0,
     'boolean', 0,
-    'Enable Pary Call Control (PCC) Application to route calls to a remote API server first and continue the call only upon an accepted reply');
+    'Enable Party Call Control (PCC) Application to route calls to a remote API server first and continue the call only upon an accepted reply');
 
 commit;
