@@ -1,0 +1,11 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Internals';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'reason_text_for_failover', "Failover to next peer on 5xx with given Reason text", 0, 1, 0, 0, 0, 1, 0, NOW(), 0, 0, 'string', 0, 'Failover to the next peer if it sends 5xx response with Reason text parameter matching provided value (regex).');
+
+commit;
+
