@@ -1,0 +1,17 @@
+use provisioning
+
+insert into voip_sound_groups(name) values ('custom_announcements');
+  
+SELECT id INTO @grp_id FROM voip_sound_groups WHERE name='custom_announcements';
+
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_0', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_1', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_2', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_3', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_4', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_5', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_6', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_7', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_8', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('custom_announcement_9', @grp_id);
+ 

@@ -1,0 +1,16 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name in(
+    'custom_announcement_0',
+    'custom_announcement_1',
+    'custom_announcement_2',
+    'custom_announcement_3',
+    'custom_announcement_4',
+    'custom_announcement_5',
+    'custom_announcement_6',
+    'custom_announcement_7',
+    'custom_announcement_8',
+    'custom_announcement_9'
+);
+
+DELETE FROM voip_sound_groups WHERE name = 'custom_announcements';
