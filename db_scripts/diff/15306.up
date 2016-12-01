@@ -1,0 +1,16 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+SELECT id FROM voip_preference_groups WHERE name='Applications' INTO @vpg_id;
+
+INSERT INTO voip_preferences 
+  (voip_preference_groups_id, attribute, label, type, usr_pref, prof_pref, dom_pref,
+   peer_pref, contract_pref, internal, data_type, max_occur, description, modify_timestamp)
+VALUES
+  (@vpg_id, 'timezone', 'Timezone', 1, 1, 0, 0,
+   0, 1, 0, 'string', 1, 'The time used to transform timesstamps to.', '1970-01-01 00:00:00');
+
+COMMIT;
+SET AUTOCOMMIT=1;
+

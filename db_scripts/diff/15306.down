@@ -1,0 +1,8 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+DELETE FROM voip_preferences WHERE attribute='timezone';
+
+COMMIT;
+SET AUTOCOMMIT=1;
