@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE sms_journal CONVERT TO CHARACTER SET utf8mb4;
