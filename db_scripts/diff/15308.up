@@ -1,0 +1,12 @@
+USE prosody;
+SET autocommit=0;
+
+CREATE TABLE IF NOT EXISTS `sipwise_offline` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `stanza` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+COMMIT;
