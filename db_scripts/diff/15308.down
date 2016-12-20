@@ -1,0 +1,3 @@
+USE prosody;
+
+DROP TABLE `sipwise_offline`;
