@@ -1,3 +1,22 @@
+ngcp-db-schema (4.5.4.0+0~mr4.5.4.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [e1880a1] MT#20027 porting number history
+  * [62ae50a] TT#4638 domain level allowed_ips
+  * [9b4b058] MT#20959 add cdr daid_stime indexe
+  * [7cbca92] MT#20639 billing.contacts "status" column
+
+  [ Kirill Solomko ]
+  * [08dc7b7] TT#5549 add voip_fax_journal caller_uuid, callee_uuid columns
+
+  [ Andrew Pogrebennyk ]
+  * [fa39323] TT#6399 add option force_interdomain to force_outbound_calls_to_peer
+  * [c441c67] TT#6399 add option force_interdomain to force_outbound_calls_to_peer (mr4.5)
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 27 Dec 2016 11:12:22 +0100
+
 ngcp-db-schema (4.5.3.0+0~mr4.5.3.0) unstable; urgency=medium
 
   [ Gerhard Jungwirth ]
