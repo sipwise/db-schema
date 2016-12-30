@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba51214e_0e73f1b1",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-12-30T13:07:46Z",
+      "side": 1,
+      "message": "yes, it basically reflects changes in provisioning_peer_rules -\u003e kamailio.lcr_rule \n\nkamailio.lcr_rules is currently only managed by provisioning.voip_peer_rules, any other handles must work with provisioning.voip_peer_rules\n\nthe only difference is when a provisioning.voip_peer_rule row is set to enabled\u003d0 - the record within the same group_id and matching callee_prefix, caller_pattern, calee_patern is removed and recreated back when voip_peer_rule is set back to enabled\u003d1",
+      "parentUuid": "ba51214e_c8abb01b",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba51214e_6e3b8dd1",
         "filename": "db_scripts/diff/15309.up",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2016-12-30T12:57:59Z",
       "side": 1,
       "message": "what if group_id is also modified?",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_2e7075a4",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-12-30T13:07:46Z",
+      "side": 1,
+      "message": "group_id cannot be modified by the design as it is the parent peering group. and peering group can only be recreated.",
+      "parentUuid": "ba51214e_6e3b8dd1",
       "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "ba51214e_ce78d991",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-12-30T13:07:46Z",
+      "side": 1,
+      "message": "good idea but that also needs to be introduced then in provisioining.voip_peer_rules to have both of them covered, the problem is that may cause other potential issues so I would prefer to relate the change only to fix the existing issue as it is going to be backported into mr4.5, mr5.0\nand introduce unique keys in only in trunk as a separate improvement.",
+      "parentUuid": "ba51214e_ee4e7d6e",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba51214e_685a6451",
         "filename": "db_scripts/diff/15309.up",
         "patchSetId": 1
@@ -93,6 +153,24 @@
       "writtenOn": "2016-12-30T12:57:59Z",
       "side": 1,
       "message": "what is with the enabled 0-\u003e0 case?",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_4e3de9ba",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-12-30T13:07:46Z",
+      "side": 1,
+      "message": "was thinking of that but we do not have such cases and lcr_rule is purely managed from provisioning.voip_peer_rules.",
+      "parentUuid": "ba51214e_685a6451",
       "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
