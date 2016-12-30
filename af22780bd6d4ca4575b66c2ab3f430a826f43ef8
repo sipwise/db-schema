@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba51214e_c8abb01b",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-12-30T12:57:59Z",
+      "side": 1,
+      "message": "ok this trigger is about replicating changes to kamailio.lcr_rule and lcr_rule_target, depending on \"enabled\" flag transitions in provisioning.voip_peer_rules.",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_6e3b8dd1",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-12-30T12:57:59Z",
+      "side": 1,
+      "message": "what if group_id is also modified?",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_0e25b1aa",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-12-30T12:57:59Z",
+      "side": 1,
+      "message": "the natural key here.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_ee4e7d6e",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-12-30T12:57:59Z",
+      "side": 1,
+      "message": "maybe better to have a unique constraint for (callee_prefix, callee_pattern, caller_pattern, group_id) on lcr_rule?",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_685a6451",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2016-12-30T12:57:59Z",
+      "side": 1,
+      "message": "what is with the enabled 0-\u003e0 case?",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
