@@ -192,6 +192,24 @@
       "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba51214e_0ecf71b1",
+        "filename": "db_scripts/diff/15309.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2016-12-30T14:09:31Z",
+      "side": 1,
+      "message": "yes, such change will not make it into lcr_rule but as there is normally no row when it is disabled so when you enable it again the current row is inserted there",
+      "parentUuid": "ba51214e_eed15d58",
+      "revId": "af22780bd6d4ca4575b66c2ab3f430a826f43ef8",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
