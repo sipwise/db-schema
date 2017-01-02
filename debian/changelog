@@ -1,3 +1,12 @@
+ngcp-db-schema (4.5.3.2+0~mr4.5.3.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [87598ce] TT#7357 adjust provisioning.voip_prul_urepl_trig
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 02 Jan 2017 13:55:57 +0100
+
 ngcp-db-schema (4.5.3.1+0~mr4.5.3.1) unstable; urgency=medium
 
   [ Rene Krenn ]
