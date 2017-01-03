@@ -1,0 +1,147 @@
+SET autocommit=0; #not only DDL stmts
+
+USE accounting;
+
+#"attributes" table for storing id's related to an event:
+CREATE TABLE events_relation (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'primary_number_id',
+    'subscriber_profile_id',
+    'subscriber_profile_set_id',
+    'pilot_subscriber_id',
+    'pilot_primary_number_id',
+    'pilot_subscriber_profile_id',
+    'pilot_subscriber_profile_set_id'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY erc_type_idx (type) #event relation column
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO events_relation SET id=null, type='primary_number_id';
+INSERT INTO events_relation SET id=null, type='subscriber_profile_id';
+INSERT INTO events_relation SET id=null, type='subscriber_profile_set_id';
+INSERT INTO events_relation SET id=null, type='pilot_subscriber_id';
+INSERT INTO events_relation SET id=null, type='pilot_primary_number_id';
+INSERT INTO events_relation SET id=null, type='pilot_subscriber_profile_id';
+INSERT INTO events_relation SET id=null, type='pilot_subscriber_profile_set_id';
+
+#"values" table for storing id's related to an event:
+CREATE TABLE events_relation_data ( #implicit commit
+  event_id int(11) unsigned NOT NULL,
+  relation_id int(3) unsigned NOT NULL,
+  val int(10) unsigned NOT NULL,
+  event_timestamp decimal(13,3) NOT NULL, #proposed partitioning key
+  #according to dario, this change must be safe to backport to 3.8. 
+  #every unique key on the table must use every column in the table's partitioning expression:
+  PRIMARY KEY (event_id, relation_id, event_timestamp)
+  # Partitioned tables using the InnoDB storage engine do not support foreign keys.
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+#"attributes" table for storing strings related to an event:
+CREATE TABLE events_tag (
+  id int(3) unsigned NOT NULL AUTO_INCREMENT,
+  type ENUM(
+    'primary_number_cc',
+    'primary_number_ac',
+    'primary_number_sn',
+    'pilot_primary_number_cc',
+    'pilot_primary_number_ac',
+    'pilot_primary_number_sn',
+    'subscriber_profile_name',
+    'subscriber_profile_set_name',
+    'pilot_subscriber_profile_name',
+    'pilot_subscriber_profile_set_name'
+  ) NOT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY etc_type_idx (type) #event tag column
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO events_tag SET id=null, type='primary_number_cc';
+INSERT INTO events_tag SET id=null, type='primary_number_ac';
+INSERT INTO events_tag SET id=null, type='primary_number_sn';
+INSERT INTO events_tag SET id=null, type='pilot_primary_number_cc';
+INSERT INTO events_tag SET id=null, type='pilot_primary_number_ac';
+INSERT INTO events_tag SET id=null, type='pilot_primary_number_sn';
+INSERT INTO events_tag SET id=null, type='subscriber_profile_name';
+INSERT INTO events_tag SET id=null, type='subscriber_profile_set_name';
+INSERT INTO events_tag SET id=null, type='pilot_subscriber_profile_name';
+INSERT INTO events_tag SET id=null, type='pilot_subscriber_profile_set_name';
+
+#"values" table for storing strings related to an event:
+CREATE TABLE events_tag_data ( #implicit commit
+  event_id int(11) unsigned NOT NULL,
+  tag_id int(3) unsigned NOT NULL,
+  val TEXT NOT NULL,
+  event_timestamp decimal(13,3) NOT NULL, #proposed partitioning key
+  #according to dario, this change must be safe to backport to 3.8. 
+  #every unique key on the table must use every column in the table's partitioning expression:
+  PRIMARY KEY (event_id, tag_id, event_timestamp)
+  # Partitioned tables using the InnoDB storage engine do not support foreign keys.
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+COMMIT; #final commit
+
+#non-transactional:
+GRANT SELECT ON events_relation TO 'exporter'@'localhost';
+GRANT SELECT ON events_relation_data TO 'exporter'@'localhost';
+
+GRANT SELECT ON events_tag TO 'exporter'@'localhost';
+GRANT SELECT ON events_tag_data TO 'exporter'@'localhost';
+
+-- events cascade update
+DROP TRIGGER IF EXISTS events_cascade_update_trig;
+DELIMITER ;;
+CREATE TRIGGER events_cascade_update_trig AFTER UPDATE ON events
+  FOR EACH ROW BEGIN
+
+  UPDATE events_relation_data SET event_id = NEW.id WHERE event_id = OLD.id;
+  UPDATE events_tag_data SET event_id = NEW.id WHERE event_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
+-- events cascade delete
+DROP TRIGGER IF EXISTS events_cascade_delete_trig;
+DELIMITER ;;
+CREATE TRIGGER events_cascade_delete_trig AFTER DELETE ON events
+  FOR EACH ROW BEGIN
+
+  DELETE FROM events_relation_data WHERE event_id = OLD.id;
+  DELETE FROM events_tag_data WHERE event_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
+-- events_relation cascade delete restriction
+DROP TRIGGER IF EXISTS events_relation_rest_cascade_delete_trig;
+DELIMITER ;;
+CREATE TRIGGER events_relation_rest_cascade_delete_trig BEFORE DELETE ON events_relation
+  FOR EACH ROW BEGIN
+
+    SELECT count(event_id) INTO @rel_count FROM events_relation_data WHERE event_id = OLD.id LIMIT 1;
+
+    IF @rel_count > 0 THEN
+        SET @err_msg = 'Error deleting data from accounting.events_relation, related data exists in accounting.events_relation_data';
+        SIGNAL sqlstate '45000' SET message_text = @err_msg;
+    END IF;
+
+  END;;
+DELIMITER ;
+
+-- events_tag cascade delete restriction
+DROP TRIGGER IF EXISTS events_tag_rest_cascade_delete_trig;
+DELIMITER ;;
+CREATE TRIGGER events_tag_rest_cascade_delete_trig BEFORE DELETE ON events_tag
+  FOR EACH ROW BEGIN
+
+    SELECT count(event_id) INTO @tag_count FROM events_tag_data WHERE event_id = OLD.id LIMIT 1;
+
+    IF @tag_count > 0 THEN
+        SET @err_msg = 'Error deleting data from accounting.events_tag, related data exists in accounting.events_tag_data';
+        SIGNAL sqlstate '45000' SET message_text = @err_msg;
+    END IF;
+
+  END;;
+DELIMITER ;
+
