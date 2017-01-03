@@ -1,0 +1,22 @@
+#only DDL stmts with implicit commits
+
+USE accounting;
+
+DROP TRIGGER IF EXISTS events_cascade_update_trig;
+DROP TRIGGER IF EXISTS events_cascade_delete_trig;
+
+DROP TRIGGER IF EXISTS events_relation_rest_cascade_delete_trig;
+DROP TRIGGER IF EXISTS events_tag_rest_cascade_delete_trig;
+
+REVOKE SELECT ON events_relation FROM 'exporter'@'localhost';
+REVOKE SELECT ON events_relation_data FROM 'exporter'@'localhost';
+
+REVOKE SELECT ON events_tag FROM 'exporter'@'localhost';
+REVOKE SELECT ON events_tag_data FROM 'exporter'@'localhost';
+
+DROP TABLE events_relation_data;
+DROP TABLE events_relation;
+
+DROP TABLE events_tag_data;
+DROP TABLE events_tag;
+
