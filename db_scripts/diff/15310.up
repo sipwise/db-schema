@@ -1,0 +1,13 @@
+USE prosody;
+SET autocommit=0;
+
+CREATE TABLE IF NOT EXISTS `sipwise_mam` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `stanza` text NOT NULL,
+  `when` int(11) NOT NULL,
+  `with` varchar(255),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+COMMIT;
