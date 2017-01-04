@@ -1,0 +1,5 @@
+USE prosody;
+
+DROP FUNCTION UuidToBin;
+DROP FUNCTION UuidFromBin;
+DROP TABLE `sipwise_mam`;
