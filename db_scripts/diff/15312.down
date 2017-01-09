@@ -1,0 +1,5 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+DELETE FROM voip_preferences WHERE attribute = 'outbound_diversion_counter';
+COMMIT;
