@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a561d44_8b447d75",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "it looks like it is a \"dictionary\" table.\nwhy do we need enum here at all then?\nnext time when we will need new type \"zzz\" we will have to alter the table. Isn\u0027t it?",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 12
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_eb541923",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "it is useles and not necessary information here.\nP.S. backporting is NOT allowed here, moreover to mr3.8!",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_4b31c50a",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "the same as above.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2b361104",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "\"NOT NULL\" values without defaults causing and code error on the next table alter, e.g. in mr5.5 LTS -\u003e mr6.5 LTS upgrade.\nas the OLD code will try to insert values in new table format.\n\nIsn\u0027t it?",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_8b3bddea",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "drop this please.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 68
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_ab2181b6",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-01-09T12:44:50Z",
+      "side": 1,
+      "message": "what this gives you, BTW?",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
