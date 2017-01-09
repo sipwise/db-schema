@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9a561d44_ec9b8f70",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-01-09T15:41:32Z",
+      "side": 1,
+      "message": "3.8 means to be compatible with non-mariadb, which means for partitioning this table one day, we must not use foreign key constraints, which is stated here to justify the primary key defined below this line.",
+      "parentUuid": "9a561d44_b1c61048",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a561d44_4b31c50a",
         "filename": "db_scripts/diff/15311.up",
         "patchSetId": 4
@@ -154,6 +178,30 @@
       "side": 1,
       "message": "basically \"not null\" without a \"default value\" declaration create a protection for inserting empty data. it\u0027s up to Rene if he wants to allow empty data inserts there or expects the \"TEXT\" field to contain data explicitly.\n\nthere should not be table alters that may cause that, please provide with an example.",
       "parentUuid": "9a561d44_2b361104",
+      "range": {
+        "startLine": 75,
+        "startChar": 11,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "dd6da9e5f9424a404192a0ffe911b9fd8b07e981",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a561d44_2cd8e752",
+        "filename": "db_scripts/diff/15311.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-01-09T15:41:32Z",
+      "side": 1,
+      "message": "application logic must not insert null, but skip instead. eg. for the massive tables of cdr with identical structure, this ensures we save space.",
+      "parentUuid": "9a561d44_91fe6c6a",
       "range": {
         "startLine": 75,
         "startChar": 11,
