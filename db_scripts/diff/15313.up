@@ -1,0 +1,7 @@
+use provisioning;
+
+ALTER TABLE sms_journal
+    ADD COLUMN coding varchar(16) NOT NULL,
+    ADD COLUMN pcc_status enum('none','pending','complete','failed') NOT NULL DEFAULT 'none',
+    ADD COLUMN pcc_token varchar(64) NOT NULL DEFAULT '',
+    ADD KEY pcc_token_idx(id, pcc_token, pcc_status);

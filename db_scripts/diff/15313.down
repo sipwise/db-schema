@@ -1,0 +1,7 @@
+use provisioning;
+
+ALTER TABLE sms_journal
+    DROP COLUMN coding,
+    DROP COLUMN pcc_status,
+    DROP COLUMN pcc_token,
+    DROP KEY pcc_token_idx;
