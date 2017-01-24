@@ -1,0 +1,7 @@
+USE prosody;
+SET autocommit=0;
+
+ALTER TABLE `sipwise_mam` charset=utf8, MODIFY COLUMN `stanza` TEXT NOT NULL CHARACTER SET utf8;
+ALTER TABLE `sipwise_offline` charset=utf8, MODIFY COLUMN `stanza` TEXT NOT NULL CHARACTER SET utf8;
+
+COMMIT;
