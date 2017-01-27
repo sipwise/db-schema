@@ -1,0 +1,61 @@
+SET autocommit=0;
+
+USE accounting;
+
+-- fix events_relation cascade delete restriction
+DROP TRIGGER IF EXISTS events_relation_rest_cascade_delete_trig;
+DELIMITER ;;
+CREATE TRIGGER events_relation_rest_cascade_delete_trig BEFORE DELETE ON events_relation
+  FOR EACH ROW BEGIN
+
+    SELECT count(event_id) INTO @rel_count FROM events_relation_data WHERE relation_id = OLD.id LIMIT 1;
+
+    IF @rel_count > 0 THEN
+        SET @err_msg = 'Error deleting data from accounting.events_relation, related data exists in accounting.events_relation_data';
+        SIGNAL sqlstate '45000' SET message_text = @err_msg;
+    END IF;
+
+  END;;
+DELIMITER ;
+
+-- fix events_tag cascade delete restriction
+DROP TRIGGER IF EXISTS events_tag_rest_cascade_delete_trig;
+DELIMITER ;;
+CREATE TRIGGER events_tag_rest_cascade_delete_trig BEFORE DELETE ON events_tag
+  FOR EACH ROW BEGIN
+
+    SELECT count(event_id) INTO @tag_count FROM events_tag_data WHERE tag_id = OLD.id LIMIT 1;
+
+    IF @tag_count > 0 THEN
+        SET @err_msg = 'Error deleting data from accounting.events_tag, related data exists in accounting.events_tag_data';
+        SIGNAL sqlstate '45000' SET message_text = @err_msg;
+    END IF;
+
+  END;;
+DELIMITER ;
+
+COMMIT;
+
+ALTER TABLE events_tag MODIFY COLUMN type ENUM(
+    'primary_number_cc',
+    'primary_number_ac',
+    'primary_number_sn',
+    'pilot_primary_number_cc',
+    'pilot_primary_number_ac',
+    'pilot_primary_number_sn',
+    'subscriber_profile_name',
+    'subscriber_profile_set_name',
+    'pilot_subscriber_profile_name',
+    'pilot_subscriber_profile_set_name',
+    'first_non_primary_alias_username_before',
+    'first_non_primary_alias_username_after',
+    'pilot_first_non_primary_alias_username_before',
+    'pilot_first_non_primary_alias_username_after'
+) NOT NULL;
+
+INSERT INTO events_tag SET id=null, type='first_non_primary_alias_username_before';
+INSERT INTO events_tag SET id=null, type='first_non_primary_alias_username_after';
+INSERT INTO events_tag SET id=null, type='pilot_first_non_primary_alias_username_before';
+INSERT INTO events_tag SET id=null, type='pilot_first_non_primary_alias_username_after';
+
+COMMIT;
