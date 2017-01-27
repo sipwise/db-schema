@@ -1,0 +1,23 @@
+SET autocommit=0;
+
+USE accounting;
+
+DELETE FROM events_tag WHERE type='first_non_primary_alias_username_before';
+DELETE FROM events_tag WHERE type='first_non_primary_alias_username_after';
+DELETE FROM events_tag WHERE type='pilot_first_non_primary_alias_username_before';
+DELETE FROM events_tag WHERE type='pilot_first_non_primary_alias_username_after';
+
+COMMIT;
+
+ALTER TABLE events_tag MODIFY COLUMN type ENUM(
+    'primary_number_cc',
+    'primary_number_ac',
+    'primary_number_sn',
+    'pilot_primary_number_cc',
+    'pilot_primary_number_ac',
+    'pilot_primary_number_sn',
+    'subscriber_profile_name',
+    'subscriber_profile_set_name',
+    'pilot_subscriber_profile_name',
+    'pilot_subscriber_profile_set_name'
+) NOT NULL;
