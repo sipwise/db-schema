@@ -1,0 +1,9 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_devices 
+change column bootstrap_method `bootstrap_method` enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream') DEFAULT 'http';
+
+alter table autoprov_sync_parameters change column `bootstrap_method` bootstrap_method enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream') not null default 'http'; 
+
+commit;
