@@ -1,0 +1,7 @@
+USE billing;
+
+ALTER TABLE contacts DROP timezone;
+
+DROP VIEW v_subscriber_timezone;
+DROP VIEW v_contract_timezone;
+DROP VIEW v_reseller_timezone;
