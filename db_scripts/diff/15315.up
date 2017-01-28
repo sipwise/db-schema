@@ -1,0 +1,30 @@
+USE billing;
+
+ALTER TABLE contacts ADD timezone VARCHAR(255) DEFAULT NULL;
+
+CREATE OR REPLACE VIEW v_subscriber_timezone AS
+  SELECT sc.id as contact_id, s.id as subscriber_id, s.uuid,
+         COALESCE(sc.timezone, cc.timezone, rc.timezone) as timezone
+ FROM voip_subscribers s
+LEFT OUTER JOIN contacts sc ON sc.id = s.contact_id
+JOIN contracts c ON c.id = s.contract_id
+JOIN contacts cc ON cc.id = c.contact_id
+JOIN resellers r ON r.id = cc.reseller_id
+JOIN contracts i ON i.id = r.contract_id
+JOIN contacts rc ON rc.id = i.contact_id;
+
+CREATE OR REPLACE VIEW v_contract_timezone AS
+  SELECT cc.id as contact_id, c.id as contract_id,
+         COALESCE(cc.timezone, rc.timezone) as timezone
+ FROM contracts c
+JOIN contacts cc ON cc.id = c.contact_id
+JOIN resellers r ON r.id = cc.reseller_id
+JOIN contracts i ON i.id = r.contract_id
+JOIN contacts rc ON rc.id = i.contact_id;
+
+CREATE OR REPLACE VIEW v_reseller_timezone AS
+  SELECT rc.id as contact_id, r.id as reseller_id,
+         rc.timezone
+FROM resellers r
+JOIN contracts i ON i.id = r.contract_id
+JOIN contacts rc ON rc.id = i.contact_id;
