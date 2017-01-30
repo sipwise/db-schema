@@ -1,3 +1,15 @@
+ngcp-db-schema (3.8.10.0+0~mr3.8.10.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3babb2d] MT#11225 - add billing_profiles.fraud_use_reseller_rates
+
+  [ Rene Krenn ]
+  * [aa8f9e1] MT#20959 add cdr daid_stime indexe
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Jan 2017 15:29:26 +0100
+
 ngcp-db-schema (3.8.9.0+0~mr3.8.9.0) unstable; urgency=medium
 
   [ Rene Krenn ]
