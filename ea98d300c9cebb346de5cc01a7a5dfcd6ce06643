@@ -1,0 +1,7 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-by: Irina Peshinskaya <ipeshinskaya@sipwise.com>
+Submitted-at: Mon, 30 Jan 2017 10:28:46 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/10914
+Project: db-schema
+Branch: refs/heads/master
