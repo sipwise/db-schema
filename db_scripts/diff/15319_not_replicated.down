@@ -1,0 +1,4 @@
+SET sql_log_bin=0;
+USE accounting;
+
+DROP INDEX suri_in_idx ON cdr;
