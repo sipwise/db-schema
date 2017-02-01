@@ -1,0 +1,3 @@
+USE accounting;
+
+DROP INDEX scli_idx ON cdr;
