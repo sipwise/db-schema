@@ -1,3 +1,42 @@
+ngcp-db-schema (5.2.0.0+0~mr5.2.0.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [4f65746] TT#6399 add option force_interdomain to force_outbound_calls_to_peer
+  * [08887d5] TT#6832 add peer preference reason_text_for_failover
+
+  [ Kirill Solomko ]
+  * [273b0a0] TT#5004 add autoprov_firmwares_data table
+  * [ae0b69a] TT#2651 add voip_preference "party_call_control"
+  * [44fc382] TT#2651 add voip_preference "party_call_control" - desc spelling fix
+  * [af22780] TT#7357 adjust provisioning.voip_prul_urepl_trig
+  * [2b105bb] TT#5826 introduce contact.timezone column and relevant views
+
+  [ Andreas Granig ]
+  * [922f8b5] TT#2371 Add sms forward options
+  * [1910577] TT#6422 Introduce outbound diversion counter
+  * [196ae4a] TT#2371 Add coding and pcc options to sms journal
+
+  [ Gerhard Jungwirth ]
+  * [07787b7] TT#6831 make sms_journal utf8mb4 aware
+
+  [ Irina Peshinskaya ]
+  * [18f5009] TT#5954 Add custom announcements
+  * [ea98d30] TT#9212 Add redirect_grandstream enum
+
+  [ Victor Seva ]
+  * [d21141b] TT#7560 prosody: create sipwise_offline table
+  * [ba265f9] TT#8297 prosody: add sipwise_mam table to store mam stanzas
+  * [1f35c7f] TT#9314 prosody: we need utf8mb4 charset for emojis
+
+  [ Rene Krenn ]
+  * [dd6da9e] TT#6735 TT#7030 TT#5850 accountin.events entity-attribute-value models
+  * [47e6bc9] TT#9714 susbcriber first non-prim alias for edr records
+  * [2c74798] TT#6735 TT#5850 refactor "profile" events to track number changes
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 03 Feb 2017 00:30:40 +0100
+
 ngcp-db-schema (5.1.0.0+0~mr5.1.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
