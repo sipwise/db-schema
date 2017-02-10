@@ -34,6 +34,24 @@
       "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_3dcc9a35",
+        "filename": "db_scripts/diff/15322.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-02-10T08:23:58Z",
+      "side": 1,
+      "message": "without errors yes, but there is still will be inconsistency with the db schema\n\nyou are welcome :)",
+      "parentUuid": "da01753e_fd4a12ab",
+      "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
