@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+delete from autoprov_sync_parameters where bootstrap_method = 'redirect_grandstream' and parameter_name= 'cid'; 
+delete from autoprov_sync_parameters where bootstrap_method = 'redirect_grandstream' and parameter_name= 'key'; 
+
+commit;
