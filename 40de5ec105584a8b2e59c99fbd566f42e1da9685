@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da01753e_bd508a5f",
+        "filename": "db_scripts/diff/15322.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-02-10T08:19:48Z",
+      "side": 1,
+      "message": "alter table autoprov_sync_parameters \n\nmissing here ?",
+      "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
