@@ -70,6 +70,24 @@
       "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_7da46257",
+        "filename": "db_scripts/diff/15322.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-02-10T08:31:45Z",
+      "side": 1,
+      "message": "It\u0027s alright, just trying to keep the db consistent as possible, we anyways very rarely use .down script so 15317 is ok.",
+      "parentUuid": "da01753e_7dd622c7",
+      "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
