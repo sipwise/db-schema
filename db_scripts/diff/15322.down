@@ -1,0 +1,9 @@
+use provisioning;
+set autocommit=0;
+
+alter table autoprov_sync_parameters change column parameter_name parameter_name enum('sync_uri','sync_method','sync_params','security_handler','profile');
+
+delete from autoprov_sync_parameters where bootstrap_method = 'redirect_grandstream' and parameter_name= 'cid'; 
+delete from autoprov_sync_parameters where bootstrap_method = 'redirect_grandstream' and parameter_name= 'key'; 
+
+commit;
