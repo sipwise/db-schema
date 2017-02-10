@@ -52,6 +52,24 @@
       "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_7dd622c7",
+        "filename": "db_scripts/diff/15322.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2017-02-10T08:28:14Z",
+      "side": 1,
+      "message": "These are data type, not data itself. It is not accurate, but still is absolutely safe.\n\nSo here we will have question then ) - because I did the same in the past, e.g. 15317. I can do it with full revert from now, but should I fix (how?) older scripts?",
+      "parentUuid": "da01753e_3dcc9a35",
+      "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
