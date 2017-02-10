@@ -16,6 +16,24 @@
       "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da01753e_fd4a12ab",
+        "filename": "db_scripts/diff/15322.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2017-02-10T08:22:35Z",
+      "side": 1,
+      "message": "As far as alter in the up will go well anyway - I don\u0027t think it is necessary. If I get it right - down is necessary to  make possible to go backward and then forward again without errors.\n\nThank you a lot for the rapid review!",
+      "parentUuid": "da01753e_bd508a5f",
+      "revId": "40de5ec105584a8b2e59c99fbd566f42e1da9685",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
