@@ -1,0 +1,4 @@
+USE billing;
+set autocommit=0;
+alter table voip_intercept add CONSTRAINT `vi_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+commit;
