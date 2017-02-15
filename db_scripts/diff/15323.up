@@ -1,0 +1,4 @@
+USE billing;
+set autocommit=0;
+alter table voip_intercept drop foreign key `vi_resellerid_ref`;
+commit;
