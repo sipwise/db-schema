@@ -1,0 +1,33 @@
+use provisioning;
+set autocommit=0;
+
+CREATE TABLE `recording_calls` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call_id` varchar(250) NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end_time` datetime,
+  PRIMARY KEY (`id`),
+  KEY `call_id` (`call_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `recording_streams` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call` int(10) unsigned NOT NULL,
+  `local_filename` varchar(250) NOT NULL,
+  `full_filename` varchar(250) NOT NULL,
+  `file_format` varchar(10) NOT NULL,
+  `output_type` enum('mixed','single') NOT NULL,
+  `stream_id` int(10) unsigned NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `end_time` datetime,
+  `sample_rate` int(10) unsigned NOT NULL DEFAULT 0,
+  `channels` int(10) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `call` (`call`),
+  CONSTRAINT `fk_call_id` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+grant all on provisioning.recording_calls to 'rtpengine'@'localhost';
+grant all on provisioning.recording_streams to 'rtpengine'@'localhost';
+
+commit;

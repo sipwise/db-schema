@@ -1,0 +1,10 @@
+use provisioning;
+set autocommit=0;
+
+DROP TABLE `recording_calls`;
+DROP TABLE `recording_streams`;
+
+revoke all on provisioning.recording_calls from 'rtpengine'@'localhost';
+revoke all on provisioning.recording_streams from 'rtpengine'@'localhost';
+
+commit;
