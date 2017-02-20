@@ -1,3 +1,20 @@
+ngcp-db-schema (5.0.3.0+0~mr5.0.3.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [615923b] TT#7357 adjust provisioning.voip_prul_urepl_trig
+
+  [ Rene Krenn ]
+  * [e4f3a53] TT#6735 TT#7030 TT#5850 accountin.events entity-attribute-value models
+  * [72f8e08] TT#9714 susbcriber first non-prim alias for edr records
+  * [03b91bb] TT#6735 TT#5850 refactor "profile" events to track number changes
+
+  [ Andrew Pogrebennyk ]
+  * [417a1b3] TT#6399 add option force_interdomain to force_outbound_calls_to_peer
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Feb 2017 20:56:00 +0100
+
 ngcp-db-schema (5.0.2.0+0~mr5.0.2.0) unstable; urgency=medium
 
   * New release.
