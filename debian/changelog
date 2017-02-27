@@ -1,3 +1,18 @@
+ngcp-db-schema (4.5.4.1+0~mr4.5.4.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2ebd0cc] TT#7357 adjust provisioning.voip_prul_urepl_trig
+
+  [ Rene Krenn ]
+  * [2e0e78c] TT#6735 TT#7030 TT#5850 accountin.events entity-attribute-value models
+  * [c3f5611] TT#9714 susbcriber first non-prim alias for edr records
+  * [157b525] TT#6735 TT#5850 refactor "profile" events to track number changes
+  * [45266a9] TT#9850 drop foreign keys of billing.voip_intercept
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Feb 2017 21:24:50 +0100
+
 ngcp-db-schema (4.5.4.0+0~mr4.5.4.0) unstable; urgency=medium
 
   [ Rene Krenn ]
