@@ -1,0 +1,9 @@
+USE provisioning;
+set autocommit=0;
+
+delete from voip_sound_handles where name = 'aa_star_for';
+delete from voip_sound_handles where name = 'aa_star_option';
+delete from voip_sound_handles where name = 'aa_enter_extension';
+delete from voip_sound_handles where name = 'aa_invalid_extension';
+
+commit;
