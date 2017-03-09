@@ -1,0 +1,3 @@
+-- there is no down possibility here, as once active,
+-- we null out the old md5pass column with no way to
+-- return to the previous stage
