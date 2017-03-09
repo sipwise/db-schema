@@ -1,0 +1,6 @@
+USE billing;
+
+ALTER TABLE admins ADD COLUMN saltedpass CHAR(54) DEFAULT NULL AFTER md5pass;
+
+-- clear all stored client certs
+UPDATE admins SET ssl_client_certificate = NULL;
