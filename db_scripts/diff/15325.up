@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+insert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint)values('redirect_polycom','profile','');
+
+commit;
