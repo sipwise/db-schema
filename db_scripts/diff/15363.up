@@ -1,0 +1,7 @@
+USE provisioning;
+
+select id into @vsg from voip_sound_groups where name = 'pbx';
+insert into voip_sound_handles values(NULL, 'aa_star_for', @vsg);
+insert into voip_sound_handles values(NULL, 'aa_star_option', @vsg);
+insert into voip_sound_handles values(NULL, 'aa_enter_extension', @vsg);
+insert into voip_sound_handles values(NULL, 'aa_invalid_extension', @vsg);
