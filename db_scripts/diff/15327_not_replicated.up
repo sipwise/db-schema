@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+USE kamailio;
+
+drop index callid_idx on acc; 
+create index callid_method_idx on acc (callid,method); 
