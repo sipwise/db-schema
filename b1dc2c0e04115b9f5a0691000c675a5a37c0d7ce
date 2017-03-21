@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_6ab6578c",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-03-21T16:16:39Z",
+      "side": 1,
+      "message": "please do not use \"if not exists\" for create table, as it MUST fail if there is a table already rather than silently skipping it (a customer created a table with the same name for some reason .... ).",
+      "parentUuid": "9a245df4_ea4d27c6",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_aa532f6b",
         "filename": "db_scripts/diff/153231.up",
         "patchSetId": 1
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_4abb9372",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-03-21T16:16:39Z",
+      "side": 1,
+      "message": "it\u0027s fine as NOT NULL (defaults should be provided for \"NULL\" columns where \"NOT NULL\" is automatically inclusive for a mandatory value)",
+      "parentUuid": "9a245df4_caf8234c",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 29
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_0a651b45",
         "filename": "db_scripts/diff/153231.up",
         "patchSetId": 1
@@ -154,6 +202,30 @@
       "side": 1,
       "message": "Where do I find that?",
       "parentUuid": "9a245df4_0a651b45",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_aaafaf2a",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-03-21T16:16:39Z",
+      "side": 1,
+      "message": "we can remove it from here.\n/etc/ngcp-config/templates/etc/mysql/grants.yml \nis the place where we have all our grants. please update it there.",
+      "parentUuid": "9a245df4_2a957fe4",
       "range": {
         "startLine": 15,
         "startChar": 0,
