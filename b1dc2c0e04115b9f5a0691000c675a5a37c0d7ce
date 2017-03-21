@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a245df4_8a50eb5f",
+        "filename": "db_scripts/diff/153231.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-21T15:41:48Z",
+      "side": 1,
+      "message": "DROP TABLE IF EXIST?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 32
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_ea4d27c6",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-21T15:41:48Z",
+      "side": 1,
+      "message": "IF NOT EXISTS?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_aa532f6b",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-21T15:41:48Z",
+      "side": 1,
+      "message": "is it possible to provide defaults for the fields?\n\nIn this case we will be able to provide DB backward compatibility. When we have sp1 with old release and sp2 with new release and DB is already new and old sp1 is still active.\n\nIt is not a reason for THIS particular case, while the rule every field must have a default in case if old code doesn\u0027t provide it , IMHO very useful during the upgrade.\n\nWhat do you think?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 29
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_0a651b45",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-03-21T15:41:48Z",
+      "side": 1,
+      "message": "should we put this into \"ngcp-grant-privileges\" kirill created in mr4.5?\n\n\nP.S. AFAIK, it is not \"covered\" by COMMIT ;-)",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
