@@ -235,6 +235,30 @@
       "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_2a63bf1b",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-03-21T16:20:42Z",
+      "side": 1,
+      "message": "It\u0027s added there already:\nhttps://gerrit.mgm.sipwise.com/#/c/12147/3/mysql/grants.yml\nSo that makes explicit `grant` statements obsolete?",
+      "parentUuid": "9a245df4_aaafaf2a",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
