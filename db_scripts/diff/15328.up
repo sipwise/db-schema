@@ -1,0 +1,17 @@
+use provisioning;
+set autocommit=0;
+
+CREATE TABLE `recording_metakeys` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call` int(10) unsigned NOT NULL,
+  `key` char(255) NOT NULL,
+  `value` char(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prim_lookup` (`value`,`key`),
+  KEY `fk_call_idx` (`call`),
+  CONSTRAINT `fk_call_idx` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+grant all on provisioning.recording_metakeys to 'rtpengine'@'localhost';
+
+commit;
