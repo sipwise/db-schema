@@ -1,0 +1,8 @@
+use provisioning;
+set autocommit=0;
+
+DROP TABLE `recording_metakeys`;
+
+revoke all on provisioning.recording_metakeys from 'rtpengine'@'localhost';
+
+commit;
