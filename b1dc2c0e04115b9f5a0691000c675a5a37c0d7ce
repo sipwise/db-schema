@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_6ae8177d",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-03-21T15:50:39Z",
+      "side": 1,
+      "message": "Is there a point in that? Other similar statements (ALTER TABLE) don\u0027t include an \"only if not already done\" condition either.",
+      "parentUuid": "9a245df4_ea4d27c6",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 12
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_aa532f6b",
         "filename": "db_scripts/diff/153231.up",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "9a245df4_caf8234c",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-03-21T15:50:39Z",
+      "side": 1,
+      "message": "Not sure I understand the reasoning, since these values are mandatory and can not ever be missing. In fact, missing values would be an error. But doesn\u0027t matter to me either way. Keep in mind that the other related tables (recording_calls and recording_streams) already exist without default values.",
+      "parentUuid": "9a245df4_aa532f6b",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 29
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a245df4_0a651b45",
         "filename": "db_scripts/diff/153231.up",
         "patchSetId": 1
@@ -82,6 +130,30 @@
       "writtenOn": "2017-03-21T15:41:48Z",
       "side": 1,
       "message": "should we put this into \"ngcp-grant-privileges\" kirill created in mr4.5?\n\n\nP.S. AFAIK, it is not \"covered\" by COMMIT ;-)",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 72
+      },
+      "revId": "b1dc2c0e04115b9f5a0691000c675a5a37c0d7ce",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a245df4_2a957fe4",
+        "filename": "db_scripts/diff/153231.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-03-21T15:50:39Z",
+      "side": 1,
+      "message": "Where do I find that?",
+      "parentUuid": "9a245df4_0a651b45",
       "range": {
         "startLine": 15,
         "startChar": 0,
