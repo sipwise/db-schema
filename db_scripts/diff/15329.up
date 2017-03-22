@@ -1,0 +1,18 @@
+USE provisioning;
+
+ALTER TABLE recording_calls
+    ADD COLUMN start_timestamp decimal(13,3) default NULL,
+    ADD COLUMN end_timestamp decimal(13,3) default NULL,
+    ADD COLUMN status enum('recording', 'completed', 'confirmed') default 'recording';
+
+UPDATE recording_calls SET
+    start_timestamp = unix_timestamp(start_time),
+    end_timestamp = unix_timestamp(end_time);
+
+ALTER TABLE recording_streams
+    ADD COLUMN start_timestamp decimal(13,3) default NULL,
+    ADD COLUMN end_timestamp decimal(13,3) default NULL;
+
+UPDATE recording_streams SET
+    start_timestamp = unix_timestamp(start_time),
+    end_timestamp = unix_timestamp(end_time);

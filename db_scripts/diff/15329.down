@@ -1,0 +1,10 @@
+USE provisioning;
+
+ALTER TABLE recording_calls
+    DROP COLUMN start_timestamp,
+    DROP COLUMN end_timestamp,
+    DROP COLUMN status;
+
+ALTER TABLE recording_streams
+    DROP COLUMN start_timestamp,
+    DROP COLUMN end_timestamp;
