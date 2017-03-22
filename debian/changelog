@@ -1,3 +1,28 @@
+ngcp-db-schema (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [c2836fd] MT#21817 add preference max_call_duration
+  * [b9c5a36] TT#10450 Add peer preference skip_callee_lnp_lookup
+
+  [ Irina Peshinskaya ]
+  * [95e72d9] TT#9212 Add cid and key grandstream autoprov parameters
+  * [9f3590c] TT#7515 Add polycom profile sync parameter
+
+  [ Rene Krenn ]
+  * [e0efa1e] TT#9850 drop foreign keys of billing.voip_intercept
+  * [5fce716] TT#12664 extend kamailio acc call_id index
+
+  [ Richard Fuchs ]
+  * [7d2981c] TT#10156 add rtpengine call recording journal tables
+  * [41f847e] TT#13005 add table to store call recording metadata
+
+  [ Andreas Granig ]
+  * [b75fc38] TT#12601 New column to store salted bcrypt hash
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 22 Mar 2017 10:49:06 +0100
+
 ngcp-db-schema (5.2.0.0+0~mr5.2.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
