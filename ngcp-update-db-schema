@@ -7,7 +7,7 @@ verbose() {
   fi
 }
 
-usage() { 
+usage() {
   echo -e "Usage: $0 [OPTION]..." 1>&2
   echo -e "\t-f: Force update, even if running on active node" 1>&2
 }
@@ -49,7 +49,7 @@ if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
 fi
 
 # check connection with sipwise user
-if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
+if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
   echo 'Error: cant connect to local MySQL with sipwise user' >&2
   exit 1
 fi
@@ -58,7 +58,7 @@ fi
 if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
   echo "Running in automated installation mode, ignoring check for empty db_schema."
 else
-  if [ "$(mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp; select * from db_schema;' 2>/dev/null)" = "" ] ; then
+  if [ "$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'select * from ngcp.db_schema;' 2>/dev/null)" = "" ] ; then
     echo "================================================================="
     echo "Warning: the db_schema table of the ngcp database is empty."
     echo "Are you sure you want to proceed with applying db-schema changes?"
@@ -74,16 +74,16 @@ else
   fi
 fi
 
-if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
-  mysql -usipwise -p${SIPWISE_DB_PASSWORD} < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
+  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
 
-if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} -e 'use ngcp;' 2>/dev/null ; then
+if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
   echo 'Error: ngcp database does not exist.' >&2
   exit 1
 fi
 
-if ! mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e 'describe db_schema'  >/dev/null; then
+if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e 'describe db_schema'  >/dev/null; then
   echo 'Error: db_schema table does not exit.' >&2
   exit 1
 fi
@@ -124,18 +124,18 @@ apply_revision() {
   [ -n "$1" ] || return 1
 
   rev="$1"
-  revname="$(basename $rev)"
+  revname="$(basename "$rev")"
 
   printf "Applying revision script %s: " "$rev"
-  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} < "$rev" ; then
-    echo done
+  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < "$rev" ; then
+    echo "done"
   else
     echo "failed. :(" >&2
     echo "Please resolve the problem and run ngcp-update-db-schema again." >&2
     exit 1
   fi
 
-  if mysql -usipwise -p${SIPWISE_DB_PASSWORD} ngcp -e "insert into db_schema values (0, '${revname}', \""${nodename}"\", CURRENT_TIMESTAMP);" ; then
+  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
     verbose "Marked revision $rev as applied."
   else
     echo "Error while executing DB commands using revision $rev for node $nodename" >&2
@@ -163,15 +163,15 @@ apply_revs() {
 
   for missing_revision in \
     $( {
-        ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
-        ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
+        ngcp-check-rev-applied --schema db_schema --revision "$revs"                         | awk '/^No match for revision/ {print $5}' ;
+        ngcp-check-rev-applied --schema db_schema --revision "$node_revs" --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
        } | sort -z -n -u ) ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
-        if ngcp-check-rev-applied --schema db_schema --revision $missing_revision --node "$nodename" | grep -q 'already executed' ; then
+        if ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
           continue
         fi
         ;;
@@ -194,16 +194,16 @@ revision_wrapper() {
 
   local revlist
 
-  for rev in $* ; do
+  for rev in "$@" ; do
 
     if ! [ -r "$rev" ] ; then
       echo "Error: $rev can not be read." >&2
       exit 1
     fi
 
-    cd $(dirname $rev) || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
+    cd "$(dirname "$rev")" || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
 
-    revname="$(basename $rev)"
+    revname="$(basename "$rev")"
 
     case "$revname" in
       # the scripts that should be executed on *all* hosts, no matter whether
@@ -211,17 +211,17 @@ revision_wrapper() {
       # NOTE: the actual logic is inside the apply_revs to avoid *_not_replicated.up
       # scripts being executed independent from the other ones
       *_not_replicated.up)
-        revlist="$revlist $(basename $rev)"
+        revlist="$revlist $(basename "$rev")"
         ;;
       *)
         if $ACTIVE_NODE ; then
 	  if $FORCE_ACTIVE_NODE; then
-            revlist="$revlist $(basename $rev)"
+            revlist="$revlist $(basename "$rev")"
 	  else
             verbose "Replication script ${revname} noted, nothing to do on active node"
 	  fi
         else
-          revlist="$revlist $(basename $rev)"
+          revlist="$revlist $(basename "$rev")"
         fi
         ;;
     esac
@@ -233,12 +233,12 @@ revision_wrapper() {
 
 # make sure we get sorted 10XXX after 9XXX
 cd /usr/share/ngcp-db-schema/db_scripts/base/
-revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo /usr/share/ngcp-db-schema/db_scripts/base/$file; done)
+revision_wrapper "$(printf '%s\0' ./*.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo "/usr/share/ngcp-db-schema/db_scripts/base/$file"; done)"
 
 cd /usr/share/ngcp-db-schema/db_scripts/diff/
-revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo /usr/share/ngcp-db-schema/db_scripts/diff/$file; done)
+revision_wrapper "$(printf '%s\0' ./*.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo "/usr/share/ngcp-db-schema/db_scripts/diff/$file"; done)"
 
 # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
 if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
@@ -248,6 +248,7 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
           EXTRA_SYNC_DB_OPTS="--local-user=root --init-replication --set-local-grants"
       fi
+      # shellcheck disable=SC2086
       if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS}; then
           echo "Syncing 'not_replicated' statements from the central node."
       else

@@ -8,7 +8,7 @@ case "$1" in
         # /usr/share/ngcp-db-schema/db_scripts/diff/9868.up
         # ngcp 2.5 repos provides ngcp-db-schema := 0.1.3
         # ngcp 2.6 repos provides ngcp-db-schema >= 2.6.3
-        if [ -n "$2" ] && dpkg --compare-versions $2 ge 2.6.0 && dpkg --compare-versions $2 le 2.6.4 ; then
+        if [ -n "$2" ] && dpkg --compare-versions "$2" ge 2.6.0 && dpkg --compare-versions "$2" le 2.6.4 ; then
             echo  "Executing ngcp-update-db-schema to address 2.6 db rev script bug."
             ngcp-update-db-schema
 
