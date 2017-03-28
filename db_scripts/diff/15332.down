@@ -1,0 +1,6 @@
+USE provisioning;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'SIP Response Codes';
+DELETE FROM voip_preferences WHERE voip_preference_groups_id = @vpg_id;
+DELETE FROM voip_preference_groups WHERE id = @vpg_id;
+
