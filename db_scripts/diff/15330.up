@@ -1,0 +1,33 @@
+SET autocommit=0;
+
+USE accounting;
+
+ALTER TABLE events_tag MODIFY COLUMN type ENUM(
+    'primary_number_cc',
+    'primary_number_ac',
+    'primary_number_sn',
+    'pilot_primary_number_cc',
+    'pilot_primary_number_ac',
+    'pilot_primary_number_sn',
+    'subscriber_profile_name',
+    'subscriber_profile_set_name',
+    'pilot_subscriber_profile_name',
+    'pilot_subscriber_profile_set_name',
+    'first_non_primary_alias_username_before',
+    'first_non_primary_alias_username_after',
+    'pilot_first_non_primary_alias_username_before',
+    'pilot_first_non_primary_alias_username_after',
+    'non_primary_alias_username',
+    'primary_alias_username_before',
+    'primary_alias_username_after',
+    'pilot_primary_alias_username_before',
+    'pilot_primary_alias_username_after'
+) NOT NULL;
+
+INSERT INTO events_tag SET id=null, type='primary_alias_username_before';
+INSERT INTO events_tag SET id=null, type='primary_alias_username_after';
+INSERT INTO events_tag SET id=null, type='pilot_primary_alias_username_before';
+INSERT INTO events_tag SET id=null, type='pilot_primary_alias_username_after';
+
+COMMIT;
+
