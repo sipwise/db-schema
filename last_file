@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LAST=$(\
+    find db_scripts/ -name "*.up" |\
+    awk -vFS=/ -vOFS=/ '{ print $NF }' |\
+    sort -n | tail -1 | cut -f1 -d'.'\
+);
+find . -type f -name "$LAST.up"
