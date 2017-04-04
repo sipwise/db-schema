@@ -1,3 +1,12 @@
+ngcp-db-schema (5.2.1.2+0~mr5.2.1.2) unstable; urgency=medium
+
+  [ Gerhard Jungwirth ]
+  * [eb40b88] TT#11432 make index on cf_source_sets more loose
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 04 Apr 2017 18:38:23 +0200
+
 ngcp-db-schema (5.2.1.1+0~mr5.2.1.1) unstable; urgency=medium
 
   * New release.
