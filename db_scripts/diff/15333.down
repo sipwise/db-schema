@@ -1,0 +1,87 @@
+USE kamailio;
+
+UPDATE version SET table_version = 3 WHERE table_name = 'dispatcher';
+
+USE provisioning;
+
+ALTER TABLE voip_peer_hosts DROP COLUMN probe;
+
+DROP TRIGGER IF EXISTS voip_phost_crepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  IF NEW.enabled THEN
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id <=> NEW.group_id;
+
+    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_phost_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+
+    UPDATE kamailio.lcr_gw
+       SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id
+     WHERE lcr_id = 1
+       AND flags <=> NEW.id;
+
+    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+       SET rt.weight = NEW.weight
+     WHERE gw.id <=> rt.gw_id
+       AND gw.lcr_id = 1
+       AND gw.group_id <=> NEW.group_id
+       AND gw.flags <=> NEW.id;
+
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id <=> NEW.group_id;
+
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+
+    DELETE FROM kamailio.lcr_gw
+          WHERE lcr_id = 1
+            AND flags <=> NEW.id;
+
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_phost_drepl_trig;
+DELIMITER ;;
+CREATE TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_gw
+    WHERE flags <=> OLD.id;
+
+  DELETE FROM kamailio.peer_preferences
+    WHERE uuid = OLD.id;
+
+END ;;
+DELIMITER ;
