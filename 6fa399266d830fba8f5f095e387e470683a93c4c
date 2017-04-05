@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_fc9b2670",
+        "filename": "db_scripts/diff/15333.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-04-05T13:47:58Z",
+      "side": 1,
+      "message": "missing \u0027;\u0027\n\nApplying revision script /usr/share/ngcp-db-schema/db_scripts/diff/15333.up: ERROR 1064 (42000) at line 3: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near \u0027USE provisioning\u0027 at line 3\nfailed. :(",
+      "revId": "6fa399266d830fba8f5f095e387e470683a93c4c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
