@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_d2af312a",
+        "filename": "db_scripts/diff/15333.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2017-04-10T11:35:40Z",
+      "side": 1,
+      "message": "missing ;",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 68
+      },
+      "revId": "c18e17381252699c4e6301ed22b2335dea1a2dea",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
