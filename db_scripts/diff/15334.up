@@ -1,0 +1,34 @@
+use provisioning;
+
+set autocommit=0;
+
+select id into @vpgid from voip_preference_groups where name = 'Access Restrictions';
+
+insert into voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+  modify_timestamp, internal, expose_to_customer, data_type, read_only,
+  description)
+  values (@vpgid, 'ua_filter_list', 'SIP User-Agent Filter List', 0, 0,
+  1, 1, 1, 0, 0,
+  now(), 0, 0, 'string', 0,
+  'Contains wildcard list of allowed or denied SIP User-Agents matched against the User-Agent header.');
+
+insert into voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+  modify_timestamp, internal, expose_to_customer, data_type, read_only,
+  description)
+  values (@vpgid, 'ua_filter_mode', 'Filter Mode for SIP User-Agent Filter List', 1, 1,
+  1, 1, 1, 0, 0,
+  now(), 0, 0, 'boolean', 0,
+  'Specifies the operational mode of the SIP User-Agent Filter List. If unset or set to a false value, it is a blacklist (accept all requests except from user-agents listed in the filter list), with a true value it is a whitelist (reject all requests except from user-agents listed in the filter list).');
+
+insert into voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+  modify_timestamp, internal, expose_to_customer, data_type, read_only,
+  description)
+  values (@vpgid, 'ua_reject_missing', 'Reject requests w/o User-Agent header', 1, 1,
+  1, 1, 1, 0, 0,
+  now(), 0, 0, 'boolean', 0,
+  'Rejects any request if no User-Agent header is given. Usually goes together with the SIP User-Agent Filter List and Mode preferences.');
+
+commit;
