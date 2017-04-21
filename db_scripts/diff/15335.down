@@ -1,0 +1,6 @@
+use provisioning;
+
+DROP TABLE voip_fax_data;
+
+DROP INDEX v_fj_sid_idx ON voip_fax_journal;
+
