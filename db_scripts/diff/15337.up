@@ -1,0 +1,5 @@
+USE provisioning;
+
+ALTER TABLE voip_fax_preferences
+    ADD t38 tinyint(1) NOT NULL DEFAULT '1',
+    ADD ecm tinyint(1) NOT NULL DEFAULT '1';
