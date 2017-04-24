@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1969be_bb9eca54",
+        "filename": "db_scripts/diff/15335.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-04-24T10:39:26Z",
+      "side": 1,
+      "message": "for the sake of comprehensive info, may also store the filename here? i mean if that file came from a mail attachment",
+      "revId": "bd4567782562ab065be239e7c4479d67049a4128",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
