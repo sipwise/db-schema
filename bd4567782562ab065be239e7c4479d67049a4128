@@ -16,6 +16,24 @@
       "revId": "bd4567782562ab065be239e7c4479d67049a4128",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a1969be_dbd106cf",
+        "filename": "db_scripts/diff/15335.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-04-24T11:45:49Z",
+      "side": 1,
+      "message": "this table belongs to (extends basically) voip_fax_journal where we already have the \"filename\" column.",
+      "parentUuid": "7a1969be_bb9eca54",
+      "revId": "bd4567782562ab065be239e7c4479d67049a4128",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
