@@ -1,3 +1,15 @@
+ngcp-db-schema (5.1.2.1+0~mr5.1.2.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [59516fe] TT#9850 drop foreign keys of billing.voip_intercept
+
+  [ Gerhard Jungwirth ]
+  * [f164f7b] TT#11432 make index on cf_source_sets more loose
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 25 Apr 2017 14:16:43 +0200
+
 ngcp-db-schema (5.1.2.0+0~mr5.1.2.0) unstable; urgency=medium
 
   * New release.
