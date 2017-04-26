@@ -1,0 +1,15 @@
+USE provisioning;
+set autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute='nat_sipping';
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='NAT and Media Flow Control';
+
+INSERT INTO voip_preferences
+(voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description)
+VALUES
+(@vpg_id, 'no_nat_sipping', 'Disable NAT SIP pings', 1, 1, 1, 1, 1, 0, NOW(), 0, 'boolean', 0, 'Don\'t do NAT ping for domain/user. Use with caution: this only makes sense on the access network which does not need pings (e.g. CDMA)');
+
+commit;
+

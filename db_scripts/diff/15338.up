@@ -1,0 +1,51 @@
+USE provisioning;
+set autocommit = 0;
+
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='NAT and Media Flow Control';
+
+UPDATE voip_preferences SET attribute='no_nat_sipping_tm'
+WHERE
+attribute='no_nat_sipping';
+SELECT id FROM voip_preferences WHERE attribute='no_nat_sipping_tm'  INTO @tmp_pref_id;
+
+INSERT INTO voip_preferences
+(voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, dom_pref, peer_pref, modify_timestamp, internal, data_type, read_only, description)
+VALUES
+(@vpg_id, 'nat_sipping', 'NAT pinger', 0, 1, 1, 1, 0, NOW(), 0, 'enum', 0, 'Controls whether to enable/disable NAT pings for a given domain/user');
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 1, 0, 0, 1),
+(@pref_id, 'Yes', 'yes', 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Yes', 'yes', 1, 0, 1, 0, 0, 0),
+(@pref_id, 'No', 'no', 1, 1, 1, 0, 0, 0);
+
+
+-- finally copy over the vars to the new preference
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value)
+  SELECT p.subscriber_id, @pref_id, "no" FROM voip_usr_preferences p
+  WHERE p.attribute_id=@tmp_pref_id AND p.value=1;
+
+-- make update insert of insert because default values are already there for new preference
+UPDATE voip_dom_preferences a, voip_dom_preferences b SET a.value="no"
+WHERE a.attribute_id = @pref_id
+AND a.domain_id = b.domain_id
+AND b.attribute_id = @tmp_pref_id
+AND b.value = 1;
+
+-- make update insert of insert because default values are already there for new preference
+UPDATE voip_peer_preferences a, voip_peer_preferences b SET a.value="no"
+WHERE a.attribute_id = @pref_id
+AND a.peer_host_id = b.peer_host_id
+AND b.attribute_id = @tmp_pref_id
+AND b.value = 1;
+
+-- delete temporary data
+DELETE FROM voip_preferences where id=@tmp_pref_id;
+
+commit;
+
