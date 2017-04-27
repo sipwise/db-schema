@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+USE accounting;
+
+ALTER TABLE cdr DROP COLUMN source_user_out, DROP COLUMN destination_user_out;
+

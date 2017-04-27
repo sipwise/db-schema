@@ -1,0 +1,6 @@
+SET sql_log_bin=0;
+USE accounting;
+
+ALTER TABLE cdr ADD COLUMN source_user_out varchar(255) NOT NULL DEFAULT '' AFTER source_lnp_prefix, ADD COLUMN destination_user_out varchar(255) NOT NULL DEFAULT '' AFTER destination_lnp_prefix;
+
+
