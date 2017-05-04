@@ -1,0 +1,55 @@
+use accounting;
+
+DROP INDEX cashbalancedata_stime ON cdr_cash_balance_data;
+DROP INDEX timebalancedata_stime ON cdr_time_balance_data;
+DROP INDEX cdrrelationdata_stime ON cdr_relation_data;
+DROP INDEX cdrtagdata_stime ON cdr_tag_data;
+
+DROP INDEX event_ts ON events;
+DROP INDEX eventrelationdata_ts ON events_relation_data;
+DROP INDEX eventrelationdata_ts ON events_tag_data;
+
+DELIMITER ;;
+CREATE TRIGGER cdr_cascade_update_trig AFTER UPDATE ON cdr
+  FOR EACH ROW BEGIN
+
+  UPDATE cdr_relation_data SET cdr_id = NEW.id WHERE cdr_id = OLD.id;
+  UPDATE cdr_cash_balance_data SET cdr_id = NEW.id WHERE cdr_id = OLD.id;
+  UPDATE cdr_time_balance_data SET cdr_id = NEW.id WHERE cdr_id = OLD.id;
+  UPDATE cdr_tag_data SET cdr_id = NEW.id WHERE cdr_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER cdr_cascade_delete_trig AFTER DELETE ON cdr
+  FOR EACH ROW BEGIN
+
+  DELETE FROM cdr_relation_data WHERE cdr_id = OLD.id;
+  DELETE FROM cdr_cash_balance_data WHERE cdr_id = OLD.id;
+  DELETE FROM cdr_time_balance_data WHERE cdr_id = OLD.id;
+  DELETE FROM cdr_tag_data WHERE cdr_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER events_cascade_update_trig AFTER UPDATE ON events
+  FOR EACH ROW BEGIN
+
+  UPDATE events_relation_data SET event_id = NEW.id WHERE event_id = OLD.id;
+  UPDATE events_tag_data SET event_id = NEW.id WHERE event_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER events_cascade_delete_trig AFTER DELETE ON events
+  FOR EACH ROW BEGIN
+
+  DELETE FROM events_relation_data WHERE event_id = OLD.id;
+  DELETE FROM events_tag_data WHERE event_id = OLD.id;
+
+  END;;
+DELIMITER ;
+
