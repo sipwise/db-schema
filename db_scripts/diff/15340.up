@@ -1,0 +1,19 @@
+use accounting;
+
+CREATE INDEX cashbalancedata_stime ON cdr_cash_balance_data (cdr_start_time);
+CREATE INDEX timebalancedata_stime ON cdr_time_balance_data (cdr_start_time);
+CREATE INDEX cdrrelationdata_stime ON cdr_relation_data (cdr_start_time);
+CREATE INDEX cdrtagdata_stime ON cdr_tag_data (cdr_start_time);
+
+CREATE INDEX event_ts ON events (timestamp);
+CREATE INDEX eventrelationdata_ts ON events_relation_data (event_timestamp);
+CREATE INDEX eventrelationdata_ts ON events_tag_data (event_timestamp);
+
+#drop trigger
+
+#cdr_cascade_update_trig
+#cdr_cascade_delete_trig
+
+#events_cascade_update_trig
+#events_cascade_delete_trig
+
