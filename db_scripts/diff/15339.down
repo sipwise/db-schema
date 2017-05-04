@@ -1,0 +1,7 @@
+use accounting;
+
+DROP INDEX cashbalancedata_stime ON cdr_cash_balance_data;
+DROP INDEX timebalancedata_stime ON cdr_time_balance_data;
+DROP INDEX cdrrelationdata_stime ON cdr_relation_data;
+DROP INDEX cdrtagdata_stime ON cdr_tag_data;
+
