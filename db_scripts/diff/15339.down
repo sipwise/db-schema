@@ -1,0 +1,6 @@
+use accounting;
+
+DROP INDEX cashbalancedata_stime;
+DROP INDEX timebalancedata_stime;
+DROP INDEX relationdata_stime;
+

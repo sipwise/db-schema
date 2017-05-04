@@ -1,0 +1,6 @@
+use accounting;
+
+CREATE INDEX cashbalancedata_stime ON cdr_cash_balance_data (cdr_start_time);
+CREATE INDEX timebalancedata_stime ON cdr_time_balance_data (cdr_start_time);
+CREATE INDEX relationdata_stime ON cdr_relation_data (cdr_start_time);
+
