@@ -1,3 +1,35 @@
+ngcp-db-schema (5.4.0.0+0~mr5.4.0.0) unstable; urgency=medium
+
+  [ Andreas Granig ]
+  * [215e8b7] TT#13277 Add unix timestamp and status for recs
+  * [310ff07] TT#1640 Implement dynamic release codes for peers
+  * [dc96fe6] TT#8704 Implement peer probing.
+  * [80006e8] TT#14800 Add User-Agent Filter preferences.
+
+  [ Rene Krenn ]
+  * [99ac96b] TT#13754 edr tags for primary aliases
+  * [c6b5054] TT#8162 add source/destination_user_out columns to cdr
+  * [a9543c8] TT#15652 stime indexes for accounting.*_data tables
+
+  [ Gerhard Jungwirth ]
+  * [fa6253e] TT#11432 make index on cf_source_sets more loose
+
+  [ Kirill Solomko ]
+  * [aad4cea] TT#7818 add accounting.cdr (source_cli) index
+  * [1c827e5] TT#12661 add provisioning.voip_fax_data table
+  * [b2f65df] TT#12593 add voip_fax_preferences t38 ecm
+
+  [ Alexander Lutay ]
+  * [4c92546] TT#13412 Fix shellcheck warnings for db-schema.git
+  * [31d2701] TT#15855 Fix shellcheck warnings for repo to mark it as clean
+
+  [ Andrew Pogrebennyk ]
+  * [f9e3da0] TT#14854 migrate no_nat_sipping boolean to nat_sipping enum pref
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 May 2017 21:32:58 +0200
+
 ngcp-db-schema (5.3.0.0+0~mr5.3.0.0) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
