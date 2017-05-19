@@ -22,6 +22,30 @@
       "revId": "01b7494b1f3096476941f663eba3d235ed64d9f7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_89911d55",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-05-19T14:12:37Z",
+      "side": 1,
+      "message": "the regular acc-cleanup.conf is fine and contains said jobs by default. but for customers like netcologne/melita with dedicated acc-cleanup.conf templates, it must not be forgotten.",
+      "parentUuid": "1a106d94_a9e69914",
+      "range": {
+        "startLine": 14,
+        "startChar": 23,
+        "endLine": 14,
+        "endChar": 66
+      },
+      "revId": "01b7494b1f3096476941f663eba3d235ed64d9f7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
