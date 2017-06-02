@@ -1,0 +1,66 @@
+USE provisioning;
+
+ALTER TABLE `provisioning`.`voip_peer_rules` 
+ADD COLUMN `stopper` TINYINT(1) NOT NULL DEFAULT '0' AFTER `enabled`;
+
+
+DROP TRIGGER IF EXISTS provisioning.voip_prul_crepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  IF NEW.enabled = 1 THEN
+    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
+      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+             FROM kamailio.lcr_gw gw
+             INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip = gw.ip_addr
+                                                        AND gw.lcr_id = 1
+                                                        AND vph.group_id = gw.group_id
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+            WHERE vph.group_id <=> NEW.group_id;
+  END IF;
+
+  END */;;
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS provisioning.voip_prul_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_prul_urepl_trig AFTER UPDATE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+    UPDATE kamailio.lcr_rule
+       SET prefix = NEW.callee_prefix, request_uri = NEW.callee_pattern,
+       from_uri = NEW.caller_pattern, stopper = NEW.stopper
+     WHERE prefix <=> OLD.callee_prefix
+       AND request_uri <=> OLD.callee_pattern
+       AND from_uri <=> OLD.caller_pattern
+       AND group_id <=> OLD.group_id
+       AND stopper <=> OLD.stopper;
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
+      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+             FROM kamailio.lcr_gw gw
+             INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip = gw.ip_addr
+                                                        AND gw.lcr_id = 1
+                                                        AND vph.group_id = gw.group_id
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+            WHERE vph.group_id <=> NEW.group_id;
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+    DELETE FROM kamailio.lcr_rule
+          WHERE prefix <=> OLD.callee_prefix
+            AND request_uri <=> OLD.callee_pattern
+            AND from_uri <=> OLD.caller_pattern
+            AND group_id <=> OLD.group_id
+            AND stopper <=> OLD.stopper
+            LIMIT 1;
+  END IF;
+
+  END */;;
+DELIMITER ;
