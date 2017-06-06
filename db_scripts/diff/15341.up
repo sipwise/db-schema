@@ -1,0 +1,4 @@
+use kamailio;
+
+DROP INDEX IF EXISTS pinger_idx ON location;
+CREATE INDEX pinger_idx ON location (`partition`, `keepalive`, `server_id`);

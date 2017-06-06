@@ -1,0 +1,3 @@
+use kamailio;
+
+DROP INDEX IF EXISTS pinger_idx ON location;
