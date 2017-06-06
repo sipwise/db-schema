@@ -1,0 +1,5 @@
+use kamailio;
+
+ALTER TABLE location
+    DROP INDEX IF EXISTS pinger_idx,
+    ADD INDEX pinger_idx (`partition`, `keepalive`, `server_id`);
