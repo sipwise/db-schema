@@ -1,0 +1,3 @@
+use kamailio;
+
+alter table mobile_push_registrations drop column `apns_type`;
