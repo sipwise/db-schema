@@ -1,0 +1,5 @@
+use kamailio;
+
+alter table mobile_push_registrations add column `apns_type` varchar(255) not null default '' after device_id,
+                                      drop key `subscriber_id`,
+                                      add key `subscriber_id` (`subscriber_id`, `apns_type`);
