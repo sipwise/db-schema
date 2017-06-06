@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dacfb570_870e4a33",
+        "filename": "db_scripts/diff/15341.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-06-06T10:56:37Z",
+      "side": 1,
+      "message": "would also add that time column here, otherwise mysql still needs to scan. its not a problem, if there are other existing indexes for that particular column.",
+      "revId": "c4fd71505647008cadc6f12cf60e54fd57db3a1c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
