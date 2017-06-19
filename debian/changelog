@@ -1,3 +1,12 @@
+ngcp-db-schema (4.5.5.1+0~mr4.5.5.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [01b7494] TT#15652 stime indexes for accounting.*_data tables
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Jun 2017 19:02:10 +0200
+
 ngcp-db-schema (4.5.5.0+0~mr4.5.5.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
