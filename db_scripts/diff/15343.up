@@ -1,0 +1,2 @@
+ALTER TABLE `provisioning`.`voip_reminder` 
+ADD COLUMN `active` TINYINT(1) NOT NULL DEFAULT '1' AFTER `recur`;
