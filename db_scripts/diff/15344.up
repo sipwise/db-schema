@@ -1,0 +1,16 @@
+use billing;
+
+create table `call_list_suppressions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+
+  `domain` varchar(255) NOT NULL DEFAULT '',
+  `pattern` varchar(255) NOT NULL DEFAULT '.',
+  `label` varchar(255) NOT NULL DEFAULT 'obfuscated',
+
+  `direction` enum('outgoing','incoming') NOT NULL DEFAULT 'outgoing',
+  `mode` enum('disabled','filter','obfuscate') NOT NULL DEFAULT 'disabled',
+
+  PRIMARY KEY (`id`),
+  KEY `cls_direction_mode_domain_idx` (`direction`,`mode`,`domain`),
+  UNIQUE KEY `cls_domain_direction_pattern_idx` (`domain`,`direction`,`pattern`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
