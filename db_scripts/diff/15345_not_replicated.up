@@ -1,0 +1,42 @@
+SET sql_log_bin=0;
+
+USE `rtcengine`;
+
+CREATE TABLE `conferences` (
+  `id` char(36) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `mediaResourceId` varchar(255) DEFAULT NULL,
+  `mediaType` enum('audio','audio_video') NOT NULL DEFAULT 'audio_video',
+  `maxParticipants` int(11) NOT NULL,
+  `freeSlots` int(11) NOT NULL,
+  `fileShareSession` varchar(255) DEFAULT NULL,
+  `startDate` datetime DEFAULT NULL,
+  `endDate` datetime DEFAULT NULL,
+  `pin` varchar(255) NOT NULL,
+  `modPin` varchar(255) NOT NULL,
+  `state` enum('new','starting','running','ending','ended','failed') NOT NULL DEFAULT 'new',
+  `lastKeepAlive` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `conferences_name_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `participants` (
+  `id` char(36) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `pin` varchar(255) NOT NULL,
+  `client` varchar(255) NOT NULL,
+  `account` varchar(255) NOT NULL,
+  `displayName` varchar(255) DEFAULT NULL,
+  `mediaResourceId` varchar(255) DEFAULT NULL,
+  `screenSharingId` varchar(255) DEFAULT NULL,
+  `mediaType` enum('audio','video','audio_video') NOT NULL DEFAULT 'audio_video',
+  `state` enum('new','joining','joined','leaving') NOT NULL DEFAULT 'new',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `conferenceId` char(36) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `conferenceId` (`conferenceId`),
+  CONSTRAINT `participants_ibfk_1` FOREIGN KEY (`conferenceId`) REFERENCES `conferences` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

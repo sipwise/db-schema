@@ -1,0 +1,6 @@
+SET sql_log_bin=0;
+
+USE `rtcengine`;
+
+DROP TABLE `participants`;
+DROP TABLE `conferences`;
