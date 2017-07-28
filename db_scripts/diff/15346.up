@@ -1,0 +1,28 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+#fix malformed records:
+update voip_usr_preferences set value = "1" where v.attribute_id = @pid and value = "foreign";
+update voip_usr_preferences set value = "2" where v.attribute_id = @pid and value = "outgoing";
+update voip_usr_preferences set value = "3" where v.attribute_id = @pid and value = "incoming and outgoing";
+update voip_usr_preferences set value = "4" where v.attribute_id = @pid and value = "global";
+update voip_usr_preferences set value = "5" where v.attribute_id = @pid and value = "ported";
+
+#create enum value:
+insert into voip_preferences_enum set (preference_id,label,value,usr_pref,prof_pref,dom_pref,peer_pref,contract_pref,contract_location_pref,dev_pref,devprof_pref,default_val) values (@pid,"foreign","1",1,0,0,0,0,0,0,0,0);
+
+insert into voip_preferences_enum set (preference_id,label,value,usr_pref,prof_pref,dom_pref,peer_pref,contract_pref,contract_location_pref,dev_pref,devprof_pref,default_val) values (@pid,"outgoing","2",1,0,0,0,0,0,0,0,0);
+
+insert into voip_preferences_enum set (preference_id,label,value,usr_pref,prof_pref,dom_pref,peer_pref,contract_pref,contract_location_pref,dev_pref,devprof_pref,default_val) values (@pid,"incoming and outgoing","3",1,0,0,0,0,0,0,0,0);
+
+insert into voip_preferences_enum set (preference_id,label,value,usr_pref,prof_pref,dom_pref,peer_pref,contract_pref,contract_location_pref,dev_pref,devprof_pref,default_val) values (@pid,"global","4",1,0,0,0,0,0,0,0,0);
+
+insert into voip_preferences_enum set (preference_id,label,value,usr_pref,prof_pref,dom_pref,peer_pref,contract_pref,contract_location_pref,dev_pref,devprof_pref,default_val) values (@pid,"ported","5",1,0,0,0,0,0,0,0,0);
+
+#update pref:
+update voip_preferences set data_type = "enum", description="For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. A lock value of \"none\" will not be returned to the caller. Read-only setting." where id = @pid;
+
+commit;
