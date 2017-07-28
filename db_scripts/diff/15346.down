@@ -1,0 +1,11 @@
+use provisioning;
+
+begin;
+
+#wip
+
+update voip_preferences set description="See \"lock_voip_account_subscriber\" for a list of possible values. A lock value of \"none\" will not be returned to the caller. Read-only setting." where attribute = "lock";
+
+commit;
+
+
