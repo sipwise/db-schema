@@ -1,0 +1,37 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+#create enum value:
+insert into voip_preferences_enum set preference_id = @pid, label = "none", value = "0",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+insert into voip_preferences_enum set preference_id = @pid, label = "foreign", value = "1",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+insert into voip_preferences_enum set preference_id = @pid, label = "outgoing", value = "2",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+insert into voip_preferences_enum set preference_id = @pid, label = "incoming and outgoing", value = "3",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+insert into voip_preferences_enum set preference_id = @pid, label = "global", value = "4",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+insert into voip_preferences_enum set preference_id = @pid, label = "ported", value = "5",
+usr_pref = 1, prof_pref = 0, dom_pref = 0, peer_pref = 0, contract_pref = 0,
+contract_location_pref = 0, dev_pref = 0, devprof_pref = 0, default_val = 0;
+
+#update pref:
+update voip_preferences set data_type = "enum",
+description=CONCAT("For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. ",
+"A lock value of \"none\" will not be returned to the caller. Read-only setting.") where id = @pid;
+
+commit;
