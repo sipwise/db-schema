@@ -1,0 +1,11 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+update voip_preferences set data_type = "string", description="See \"lock_voip_account_subscriber\" for a list of possible values. A lock value of \"none\" will not be returned to the caller. Read-only setting." where id = @pid;
+
+delete from voip_preferences_enum where preference_id = @pid;
+
+commit;
