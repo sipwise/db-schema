@@ -22,6 +22,52 @@
       "revId": "5c46c7666261aa87654ad36095e6155d49579c31",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_b112a856",
+        "filename": "db_scripts/diff/15347.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-01T20:11:53Z",
+      "side": 1,
+      "message": "would be also nice to have these lines wrapped.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "5c46c7666261aa87654ad36095e6155d49579c31",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5adbc538_d10f342d",
+        "filename": "db_scripts/diff/15347.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-01T20:11:53Z",
+      "side": 1,
+      "message": "same here, nice to have it wrapped",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "5c46c7666261aa87654ad36095e6155d49579c31",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
