@@ -1,0 +1,9 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+delete * from provisioning.voip_preferences where id=@pid and (value is null or length(value) = 0);
+
+commit;
