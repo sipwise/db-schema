@@ -1,0 +1,10 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+INSERT INTO voip_preferences_enum
+    (preference_id, label, value, default_val) VALUES (@pid, 'none', 0, 0);
+
+commit;

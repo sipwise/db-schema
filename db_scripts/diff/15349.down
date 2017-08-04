@@ -1,0 +1,13 @@
+use provisioning;
+set autocommit=0;
+
+set @pid = 0;
+select id into @pid from voip_preferences where attribute = "lock";
+
+DELETE FROM voip_preferences_enum
+ WHERE preference_id = @pid
+   AND label = 'none'
+   AND value = 0
+   AND default_val = 0;
+
+commit;
