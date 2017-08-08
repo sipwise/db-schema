@@ -1,0 +1,11 @@
+use accounting;
+
+ALTER TABLE cdr drop index id_stime_idx, add primary key (id);
+ALTER TABLE cdr_cash_balance_data drop index cdr_id_idx,
+    add primary key (cdr_id, provider_id, direction_id, cash_balance_id, cdr_start_time);
+ALTER TABLE cdr_time_balance_data drop index cdr_id_idx,
+    add primary key (cdr_id, provider_id, direction_id, time_balance_id, cdr_start_time);
+ALTER TABLE cdr_relation_data drop index cdr_id_idx,
+    add primary key (cdr_id, provider_id, direction_id, relation_id, cdr_start_time);
+ALTER TABLE cdr_tag_data drop index cdr_id_idx,
+    add primary key (cdr_id, provider_id, direction_id, tag_id, cdr_start_time);
