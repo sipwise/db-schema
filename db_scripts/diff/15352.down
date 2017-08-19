@@ -1,0 +1,7 @@
+use provisioning;
+
+set autocommit=0;
+
+delete from voip_preferences where attribute = 'manager_secretary';
+
+commit;
