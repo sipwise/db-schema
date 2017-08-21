@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_7a11d9ab",
+        "filename": "db_scripts/diff/15352.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-21T08:40:30Z",
+      "side": 1,
+      "message": "please change it to: where attribute \u003d \u0027manager_secretary\u0027\nsame logic but misleading to read and questioning why \"in\" is used.",
+      "range": {
+        "startLine": 5,
+        "startChar": 45,
+        "endLine": 5,
+        "endChar": 49
+      },
+      "revId": "2b223ccfdd666e0d49b445df446db59a12d043ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
