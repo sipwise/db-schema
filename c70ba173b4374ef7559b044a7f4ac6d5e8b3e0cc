@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab399f4_0fe4153a",
+        "filename": "db_scripts/diff/15353.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-08-30T11:29:21Z",
+      "side": 1,
+      "message": "just wrap up the lines please so it is easy to read, 15347.up is a good example where using the key\u003dval approach in long inserts helps with reading it.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 12,
+        "endChar": 203
+      },
+      "revId": "c70ba173b4374ef7559b044a7f4ac6d5e8b3e0cc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
