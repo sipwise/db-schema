@@ -1,0 +1,14 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Cloud PBX';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'csta_controller', "CSTA Controller", 0, 1, 1, 0, 0, 0, 0, NOW(), 0, 1, 'boolean', 0, 'Allow this subscriber to initiate CTI sessions to other subscribers within the same customer using uaCSTA via SIP.');
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'csta_client', "CSTA Controller", 0, 1, 1, 0, 0, 0, 0, NOW(), 0, 1, 'boolean', 0, 'Allow this subscriber to be controlled by a CTI subscriber within the same customer using uaCSTA via SIP.');
+
+commit;
