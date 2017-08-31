@@ -1,0 +1,10 @@
+use kamailio;
+SET sql_log_bin=0;
+
+alter table acc_backup
+	modify from_tag varchar(64) NOT NULL DEFAULT '',
+	modify to_tag varchar(64) NOT NULL DEFAULT '';
+
+alter table acc_trash
+	modify from_tag varchar(64) NOT NULL DEFAULT '',
+	modify to_tag varchar(64) NOT NULL DEFAULT '';
