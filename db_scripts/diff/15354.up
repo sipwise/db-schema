@@ -1,0 +1,48 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Number Manipulations';
+
+SELECT id FROM voip_preferences WHERE attribute='skip_upn_check_on_diversion' INTO @old_pref_id;
+UPDATE voip_preferences SET attribute='skip_upn_check_on_diversion_old' WHERE id=@old_pref_id;
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@vpg_id, 'skip_upn_check_on_diversion', 'Skip UPN check if received Diversion/History-Info header', 0, 1,
+     1, 0, 1, 0, 0, 0,
+     now(), 0, 0, 'enum', 0,
+     'If set, the UPN of the calling party is not checked against the allowed CLIs provisioned for the subscriber if a Diversion or History-Info header that meets the selected criteria has been sent by the calling subscriber. The recommended mode here, for example when connecting external PBX to NGCP, is "If user in received Diversion or History-Info header is in caller\'s alias list", as this validates the forwarding number in received Diversion/History-Info header against subscriber\'s aliases and is a safer choice than enabling UPN check bypass when any header is present. If any mode other than "Never" is selected, the forwarding number in the History-Info header is checked and the History-Info is rewritten if it doesn\'t match any alias numbers.');
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Never', 'no', 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Never', 'no', 1, 0, 0, 0, 0, 0),
+(@pref_id, 'If received Diversion or History-Info header', 'yes', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'If user in received Diversion or History-Info header is in caller\'s alias list', 'check_aliases', 1, 1, 0, 0, 0, 0);
+
+
+-- finally copy over the vars to the new preference
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value)
+  SELECT p.subscriber_id, @pref_id, "yes" FROM voip_usr_preferences p
+  WHERE p.attribute_id=@old_pref_id AND p.value=1;
+
+-- make update instead of insert because default values are already there for new preference
+UPDATE voip_dom_preferences a, voip_dom_preferences b SET a.value="yes"
+WHERE a.attribute_id = @pref_id
+AND a.domain_id = b.domain_id
+AND b.attribute_id = @old_pref_id
+AND b.value = 1;
+
+-- delete temporary data
+DELETE FROM voip_preferences where id=@old_pref_id;
+
+commit;

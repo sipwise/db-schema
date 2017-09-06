@@ -1,0 +1,21 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='skip_upn_check_on_diversion';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+DELETE FROM voip_preferences WHERE id=@pref_id;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@pgid, 'skip_upn_check_on_diversion', 'Skip UPN check on Diversion', 1, 1,
+     1, 0, 1, 0, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'If set, the UPN of the calling party is not checked against the allowed CLIs provisioned for this subscriber if a Diversion or History-Info header is provided in an incoming call. This can be used to allow diversion on the subscriber device and transporting the originally calling party number on the second leg. Use with caution as it might allow for number spoofing.');
+
+COMMIT;
