@@ -1,0 +1,5 @@
+USE provisioning;
+
+DROP USER export@localhost;
+
+FLUSH PRIVILEGES;
