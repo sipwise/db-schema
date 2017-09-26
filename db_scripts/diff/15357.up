@@ -1,0 +1,14 @@
+USE stats;
+
+CREATE TABLE cdr_info (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  type enum('source_provider','source_account','destination_provider','destination_account') NOT NULL,
+  contract_id varchar(255) NOT NULL DEFAULT '0',
+  total int(11) unsigned NOT NULL DEFAULT 0,
+  rated int(11) unsigned NOT NULL DEFAULT 0,
+  cost decimal(14,6) DEFAULT 0,
+  period datetime NOT NULL,
+  last_rated_cdr_id int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY cdr_info_type_period_contract_idx (type,period,contract_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
