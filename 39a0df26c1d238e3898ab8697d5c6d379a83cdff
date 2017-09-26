@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_9f4a1b26",
+        "filename": "db_scripts/diff/15357.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-09-26T07:30:50Z",
+      "side": 1,
+      "message": "not sure we need to split it that much (may result in millions of rows as of that, if period is 1 day and there are alot of contracts), maybe worth removing contract_id",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "39a0df26c1d238e3898ab8697d5c6d379a83cdff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_7f462725",
+        "filename": "db_scripts/diff/15357.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-09-26T07:30:50Z",
+      "side": 1,
+      "message": "imho just last_rated_id (the table already has \"cdr\" in its name)",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "39a0df26c1d238e3898ab8697d5c6d379a83cdff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
