@@ -1,0 +1,17 @@
+USE stats;
+
+CREATE TABLE cdr_info (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  product_class enum('sippeering','pstnpeering','reseller','sipaccount','pbxaccount') NOT NULL,
+  contract_id int(11) NOT NULL,
+  in_total int(11) unsigned NOT NULL DEFAULT 0,
+  in_rated int(11) unsigned NOT NULL DEFAULT 0,
+  in_cost decimal(14,6) DEFAULT 0,
+  out_total int(11) unsigned NOT NULL DEFAULT 0,
+  out_rated int(11) unsigned NOT NULL DEFAULT 0,
+  out_cost decimal(14,6) DEFAULT 0,
+  period datetime NOT NULL,
+  last_rated_id int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY cdr_info_product_class_period_contract_idx (product_class,period,contract_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
