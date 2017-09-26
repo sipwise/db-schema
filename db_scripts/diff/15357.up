@@ -1,0 +1,28 @@
+USE stats;
+
+CREATE TABLE cdr_info (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+
+  peer_in_total int(11) unsigned NOT NULL DEFAULT 0,
+  peer_in_rated int(11) unsigned NOT NULL DEFAULT 0,
+  peer_out_total int(11) unsigned NOT NULL DEFAULT 0,
+  peer_out_rated int(11) unsigned NOT NULL DEFAULT 0,
+  peer_cost decimal(14,6) DEFAULT 0,
+
+  reseller_in_total int(11) unsigned NOT NULL DEFAULT 0,
+  reseller_in_rated int(11) unsigned NOT NULL DEFAULT 0,
+  reseller_out_total int(11) unsigned NOT NULL DEFAULT 0,
+  reseller_out_rated int(11) unsigned NOT NULL DEFAULT 0,
+  reseller_cost decimal(14,6) DEFAULT 0,
+
+  customer_in_total int(11) unsigned NOT NULL DEFAULT 0,
+  customer_in_rated int(11) unsigned NOT NULL DEFAULT 0,
+  customer_out_total int(11) unsigned NOT NULL DEFAULT 0,
+  customer_out_rated int(11) unsigned NOT NULL DEFAULT 0,
+  customer_cost decimal(14,6) DEFAULT 0,
+
+  period datetime NOT NULL,
+  last_rated_id int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (id),
+  UNIQUE KEY cdr_info_period_idx (period)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
