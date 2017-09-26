@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dab895d6_7f5d47e9",
+        "filename": "db_scripts/diff/15357.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-09-26T07:39:19Z",
+      "side": 1,
+      "message": "agree, but seems thy asked for it -\u003e \".. (customer or peer, period, call direction). \"\n\nfor peer/resellers, contract_id will be needed anyway, so types \"source_account\" or \"destination_account\" should be dropped instead",
+      "parentUuid": "dab895d6_9f4a1b26",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "39a0df26c1d238e3898ab8697d5c6d379a83cdff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dab895d6_7f462725",
         "filename": "db_scripts/diff/15357.up",
         "patchSetId": 1
