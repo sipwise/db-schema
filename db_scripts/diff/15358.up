@@ -1,0 +1,3 @@
+use billing;
+
+alter table lnp_numbers add column type enum('fixed','mobile') default null;
