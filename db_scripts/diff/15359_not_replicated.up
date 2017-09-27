@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+use accounting;
+
+alter table cdr add column source_lnp_type enum('','fixed','mobile') not null default '' after source_lnp_prefix,
+  add column destination_lnp_type enum('','fixed','mobile') not null default '' after destination_lnp_prefix;
