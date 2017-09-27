@@ -1,0 +1,3 @@
+use accounting;
+
+alter table cdr add column lnp_type enum('fixed','mobile') default null;
