@@ -1,0 +1,11 @@
+use provisioning;
+SET autocommit=0;
+
+SET @pid = 0;
+SELECT id INTO @pid FROM voip_preferences WHERE attribute = "outbound_diversion";
+
+INSERT INTO voip_preferences_enum
+    (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+    VALUES (@pid, 'Network-Provided Number', 'npn', 1, 1, 1, 1, 0, 0, 0);
+
+COMMIT;
