@@ -1,0 +1,21 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Applications';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'external_callrecording_header', 'Header for External Call Recording', 0, 1, 0, 0, 1, 0, 0, NOW(), 0, 0, 'string', 0, 'If set, add the provided SIP header to requests and replies sent to the load-balancer. Example format: P-Call-Recording: 1, without trailing CRLF');
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'callrecording_type', 'Call Recording Type', 0, 1, 0, 0, 1, 0, 0, NOW(), 0, 0, 'enum', 0, 'Use integrated call recording functionality or notify external call recording server by providing SIP header specified in \'external_callrecording_header\'');
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@pref_id, 'Internal', 'internal', 0, 1, 0, 0, 0, 1),
+(@pref_id, 'External', 'external', 0, 1, 0, 0, 0, 0);
+
+commit;
