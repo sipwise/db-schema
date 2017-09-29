@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_0e1df7bd",
+        "filename": "db_scripts/diff/15359_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2017-09-29T10:33:45Z",
+      "side": 1,
+      "message": "what is the time of execution of this command on the systems with several M rows in CDR?\nI\u0027m just wondering, because probably mysql needs insert emmpty string into each data row, since we have non-NULL default.\nIf we had default NULL it could be faster couldn\u0027t it?",
+      "range": {
+        "startLine": 4,
+        "startChar": 78,
+        "endLine": 4,
+        "endChar": 88
+      },
+      "revId": "bf2530e4c1b147c2f99b248c5eeefeb925a75302",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
