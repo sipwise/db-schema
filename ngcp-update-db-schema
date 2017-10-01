@@ -166,7 +166,7 @@ apply_revs() {
     $( {
         ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
         ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
-       } | sort -z -n -u ) ; do
+       } | sort -n -u ) ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
