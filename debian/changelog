@@ -1,3 +1,37 @@
+ngcp-db-schema (6.0.0.0+0~mr6.0.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [71fcbce] TT#19459 add provisioning.voip_cf_source_sets.mode column
+  * [0aa6c5a] TT#19855 add voip_preference lock enum value 0
+  * [667df2f] TT#3668 prepare accounting.cdr tables for partitioning
+  * [fbf6310] TT#18850 add secretary_numbers preference
+  * [1d7714c] TT#21263 add kamailio.acc_backup and acc_trash as not_replicated
+  * [5cb4aa0] TT#19348 remove user export@localhost
+  * [122891a] TT#22502 ngcp-update-db-schema fix sort and -z option
+
+  [ Rene Krenn ]
+  * [1283b64] TT#18765 change 'lock' preference to enum type
+  * [4586af5] TT#19855 'none' pref enum value must be null
+  * [27a4110] TT#22469 add lnp "type" columns
+
+  [ Irina Peshinskaya ]
+  * [c482b30] TT#20302 Add manager_secretary subscriber preference
+
+  [ Andrew Pogrebennyk ]
+  * [91b04b8] TT#21650 migrate the skip_upn_check_on_diversion preference to enum list
+  * [410202c] TT#22437 add 'npn' option to outbound_diversion enum preference
+  * [a5d7fcf] TT#22900 add preferences for external call recording
+
+  [ Jozef Kenyeres ]
+  * [cb722b8] TT#21340 Add preference zero_connection for MoH
+
+  [ Andreas Granig ]
+  * [86b2864] TT#21181 Add uaCSTA preferences
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 02 Oct 2017 23:37:31 +0200
+
 ngcp-db-schema (5.5.0.0+0~mr5.5.0.0) unstable; urgency=medium
 
   [ Gerhard Jungwirth ]
