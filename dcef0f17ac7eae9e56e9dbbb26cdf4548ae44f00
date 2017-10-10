@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_5048645b",
+        "filename": "db_scripts/diff/15364_not_replicated.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-10T14:02:02Z",
+      "side": 1,
+      "message": "I think this change must be replicated as otherwise if you run it on the inactive node it will break replication, while running it replicated should not affect kamailio as it does not check column types internally (but I will check that last part).",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "dcef0f17ac7eae9e56e9dbbb26cdf4548ae44f00",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_90ee7c21",
+        "filename": "db_scripts/diff/15364_not_replicated.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-10T14:02:02Z",
+      "side": 1,
+      "message": "no need to create temp columns, just use\n\nALTER TABLE location \n  MODIFY expires DECIMAL(13,0) DEFAULT 2000000000\n  MODIFY last_modified DECIMAL(13,0) UNSIGNED DEFAULT 1;\n\nadditional notes:\n\n1. I do not see why we should use bigint there and therefore waste disk space. decial or int(11) unsigned, is more than enough to store an 11 digits integer.\n2. With such change kamailio may fail inserting data as \"update location set expires \u003d NOW() or \u0027update location set expires \u003d \u00272017-01-01 00:00:00\u0027 also fails as it will require explicit conversion into unixtime by using TO_UNIXTIME()\n3. We might want to use TIMESTAMP type there that should deal with DST well + supports NOW(), CURRENT_TIMESTAMP(), etc. and MariaDB takes care itself to store it internally as epoch but represents it correctly.\n\nLet me dig into it first and I will update you with how we deal with that.",
+      "range": {
+        "startLine": 4,
+        "startChar": 21,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "dcef0f17ac7eae9e56e9dbbb26cdf4548ae44f00",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
