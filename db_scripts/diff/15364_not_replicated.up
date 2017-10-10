@@ -1,0 +1,11 @@
+SET sql_log_bin=0;
+use kamailio;
+
+ALTER TABLE location CHANGE expires expires_old datetime;
+ALTER TABLE location CHANGE last_modified last_modified_old datetime;
+ALTER TABLE location ADD expires BIGINT DEFAULT 2000000000;
+ALTER TABLE location ADD last_modified BIGINT DEFAULT 1;
+UPDATE location SET expires=UNIX_TIMESTAMP(expires_old);
+UPDATE location SET last_modified=UNIX_TIMESTAMP(last_modified_old);
+ALTER TABLE location DROP expires_old;
+ALTER TABLE location DROP last_modified_old;

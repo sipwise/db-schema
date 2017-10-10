@@ -1,0 +1,11 @@
+SET sql_log_bin=0;
+use kamailio;
+
+ALTER TABLE location CHANGE expires expires_old datetime;
+ALTER TABLE location CHANGE last_modified last_modified_old datetime;
+ALTER TABLE location ADD expires datetime DEFAULT '2030-05-28 21:32:15';
+ALTER TABLE location ADD last_modified datetime DEFAULT '1900-01-01 00:00:01';
+UPDATE location SET expires=FROM_UNIXTIME(expires_old);
+UPDATE location SET last_modified=FROM_UNIXTIME(last_modified_old);
+ALTER TABLE location DROP expires_old;
+ALTER TABLE location DROP last_modified_old;
