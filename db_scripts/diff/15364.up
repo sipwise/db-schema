@@ -1,0 +1,3 @@
+use billing;
+
+alter table lnp_numbers change column type type varchar(255) default null;

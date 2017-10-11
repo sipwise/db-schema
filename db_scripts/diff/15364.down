@@ -1,0 +1,7 @@
+use billing;
+
+#SET autocommit = 0;
+#update lnp_numbers set type = null where type not in ('fixed','mobile');
+#commit;
+
+alter table lnp_numbers change column type type enum('fixed','mobile') default null;

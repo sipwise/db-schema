@@ -1,0 +1,5 @@
+SET sql_log_bin=0;
+use accounting;
+
+alter table cdr change column source_lnp_type source_lnp_type varchar(255) default null,
+  change column destination_lnp_type destination_lnp_type varchar(255) default null;

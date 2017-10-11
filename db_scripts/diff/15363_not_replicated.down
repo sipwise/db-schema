@@ -1,0 +1,10 @@
+SET sql_log_bin=0;
+use accounting;
+
+#SET autocommit = 0;
+#update cdr set source_lnp_type = null where source_lnp_type not in ('fixed','mobile');
+#update cdr set destination_lnp_type = null where destination_lnp_type not in ('fixed','mobile');
+#commit;
+
+alter table cdr change column source_lnp_type source_lnp_type enum('fixed','mobile') default null,
+  change column destination_lnp_type destination_lnp_type enum('fixed','mobile') default null;
