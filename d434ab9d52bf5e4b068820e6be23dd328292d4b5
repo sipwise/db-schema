@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_c13ae435",
+        "filename": "db_scripts/diff/15366_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2017-10-12T13:22:54Z",
+      "side": 1,
+      "message": "That\u0027s missing the column name, isn\u0027t it?",
+      "revId": "d434ab9d52bf5e4b068820e6be23dd328292d4b5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
