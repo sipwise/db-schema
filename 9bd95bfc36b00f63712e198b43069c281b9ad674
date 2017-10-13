@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_90d3d737",
+        "filename": "db_scripts/diff/15367.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-13T11:17:11Z",
+      "side": 1,
+      "message": "set autocommit\u003d0",
+      "revId": "9bd95bfc36b00f63712e198b43069c281b9ad674",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_b0d8db54",
+        "filename": "db_scripts/diff/15367.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-13T11:17:11Z",
+      "side": 1,
+      "message": "commit;",
+      "revId": "9bd95bfc36b00f63712e198b43069c281b9ad674",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
