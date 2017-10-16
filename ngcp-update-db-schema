@@ -152,7 +152,7 @@ apply_revs() {
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
   for rev in $revs ; do
-    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$rev")"
+    revision_file="$(find /usr/share/ngcp-db-schema/db_scripts -name "$rev")"
 
     case "$revision_file" in
       *_not_replicated.up)
@@ -167,9 +167,9 @@ apply_revs() {
         ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
         ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
        } | sort -n -u ) ; do
-    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
+    revision_file="$(find /usr/share/ngcp-db-schema/db_scripts -name "$missing_revision")"
 
-    # execute the rev script iff there's no entry for the *current* host yet
+    # execute the rev script if there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
         if ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
@@ -216,11 +216,11 @@ revision_wrapper() {
         ;;
       *)
         if $ACTIVE_NODE ; then
-	  if $FORCE_ACTIVE_NODE; then
+          if $FORCE_ACTIVE_NODE; then
             revlist="$revlist $(basename "$rev")"
-	  else
+          else
             verbose "Replication script ${revname} noted, nothing to do on active node"
-	  fi
+          fi
         else
           revlist="$revlist $(basename "$rev")"
         fi
