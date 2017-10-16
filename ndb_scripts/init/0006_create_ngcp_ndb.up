@@ -1,0 +1,17 @@
+USE mysql;
+DROP DATABASE IF EXISTS ngcp;
+
+CREATE DATABASE IF NOT EXISTS ngcp CHARACTER SET 'utf8';
+
+USE ngcp;
+
+-- create schema tables
+
+CREATE TABLE `db_schema` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `revision` int(11) unsigned NOT NULL,
+  `node` varchar(64) NOT NULL,
+  `applied_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rev_idx` (`revision`,`node`)
+) ENGINE=ndb;
