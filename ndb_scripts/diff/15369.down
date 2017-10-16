@@ -1,0 +1,4 @@
+USE kamailio;
+
+DROP TABLE version;
+DROP TABLE location;
