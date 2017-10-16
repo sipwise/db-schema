@@ -1,0 +1,154 @@
+#!/bin/bash
+
+# iff executed under VERBOSE=yes provide more information
+verbose() {
+  if [[ "$VERBOSE" == "yes" ]] ; then
+    echo "$*"
+  fi
+}
+
+nodename=$(/usr/sbin/ngcp-nodename 2>/dev/null || echo "unknown")
+if [ "${nodename}" = "unknown" ] ; then
+  echo "Error: nodename could not be identified." >&2
+  exit 1
+fi
+
+. /etc/mysql/sipwise.cnf
+. /etc/default/ngcp-roles
+. /etc/default/ngcp-db
+
+NDB_PORT="$CLUSTER_DBPORT"
+NDB_HOST="$CLUSTER_DBHOST"
+
+if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
+  echo 'Error: SIPWISE_DB_PASSWORD is unset (using /etc/mysql/sipwise.cnf).' >&2
+  exit 1
+fi
+
+if [ -z "${NDB_PORT}" ]; then
+  verbose 'Not a proxy or db, nothing to do...';
+  exit
+fi
+
+if ! $NGCP_NDB; then
+    echo "Error: NDB not enabled" >&2
+    exit 1
+fi
+
+/etc/init.d/mysql start 3 || true
+
+sqlargs=(-usipwise -p"${SIPWISE_DB_PASSWORD}" -h"${NDB_HOST}" -P"${NDB_PORT}")
+
+# support automated installation
+if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
+  echo "Running in automated installation mode, ignoring check for empty db_schema."
+else
+  if [ "$(mysql "${sqlargs[@]}" -e 'select * from ngcp.db_schema;' 2>/dev/null)" = "" ] ; then
+    echo "================================================================="
+    echo "Warning: the db_schema table of the ngcp database is empty."
+    echo "Are you sure you want to proceed with applying db-schema changes?"
+    echo "This will DROP and then re-initialize your existing database."
+    printf "Please type 'agree' to really continue: "
+
+    unset AGREE
+    read AGREE
+    if [ "$AGREE" != "agree" ]; then
+      echo "Exiting as requested." >&2
+      exit 1
+    fi
+  fi
+fi
+
+if ! mysql "${sqlargs[@]}" -e 'use ngcp;' 2>/dev/null ; then
+  mysql "${sqlargs[@]}" < /usr/share/ngcp-db-schema/db_scripts/init/0006_create_ngcp_ndb.up
+fi
+if ! mysql "${sqlargs[@]}" -e 'use ngcp;' 2>/dev/null ; then
+  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+  echo 'Error: NDB ngcp database does not exit.' >&2
+fi
+if ! mysql "${sqlargs[@]}" ngcp -e 'describe db_schema'  >/dev/null; then
+  echo 'Error: NDB db_schema table does not exit.' >&2
+  exit 1
+fi
+
+apply_revision() {
+  [ -n "$1" ] || return 1
+
+  rev="$1"
+  revname="$(basename "$rev")"
+  args=""
+
+  printf "Applying revision script %s: " "$rev"
+  if mysql "${sqlargs[@]}" < "$rev" ; then
+    echo "done"
+  else
+    echo "failed. :(" >&2
+    echo "Please resolve the problem and run ngcp-update-db-schema again." >&2
+    exit 1
+  fi
+
+  if mysql "${sqlargs[@]}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
+    verbose "Marked revision $rev as applied."
+  else
+    echo "Error while executing DB commands using revision $rev for node $nodename" >&2
+    exit 1
+  fi
+}
+
+# execute the rev script iff there's no entry for *any* host yet
+apply_revs() {
+  [ -n "$1" ] || return 1
+
+  local revs="$1"
+  local node_revs
+  local ndb_revs
+
+  # shellcheck disable=SC2086
+  for missing_revision in \
+    $( {
+        ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
+       } | sort -n -u ) ; do
+    revision_file="$(find /usr/share/ngcp-db-schema/ndb_scripts -name "$missing_revision")"
+
+    if [ -r "$revision_file" ] ; then
+      apply_revision "$revision_file"
+    else
+      echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
+    fi
+  done
+}
+
+
+revision_wrapper() {
+  [ -n "$1" ] || return 1
+
+  local revlist
+
+  for rev in "$@" ; do
+
+    if ! [ -r "$rev" ] ; then
+      echo "Error: $rev can not be read." >&2
+      exit 1
+    fi
+
+    cd "$(dirname "$rev")" || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
+
+    revname="$(basename "$rev")"
+
+  done
+
+  apply_revs "$revlist"
+}
+
+# make sure we get sorted 10XXX after 9XXX
+cd /usr/share/ngcp-db-schema/ndb_scripts/base/
+# shellcheck disable=SC2035 disable=SC2046
+revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo "/usr/share/ngcp-db-schema/ndb_scripts/base/$file"; done)
+
+cd /usr/share/ngcp-db-schema/ndb_scripts/diff/
+# shellcheck disable=SC2035 disable=SC2046
+revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
+                   echo "/usr/share/ngcp-db-schema/ndb_scripts/diff/$file"; done)
+
+## END OF FILE #################################################################
