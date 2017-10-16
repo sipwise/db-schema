@@ -1,2 +1,4 @@
-db_scripts                  usr/share/ngcp-db-schema/
-ngcp-update-db-schema       usr/sbin/
+db_scripts                          usr/share/ngcp-db-schema/
+ndb_scripts                         usr/share/ngcp-db-schema/
+ngcp-update-db-schema               usr/sbin/
+ngcp-update-ndbcluster-schema       usr/sbin/
