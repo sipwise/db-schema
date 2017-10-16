@@ -10,17 +10,25 @@ verbose() {
 usage() {
   echo -e "Usage: $0 [OPTION]..." 1>&2
   echo -e "\t-f: Force update, even if running on active node" 1>&2
+  echo -e "\t-n: Only process NDB scripts" 1>&2
 }
 
 FORCE_ACTIVE_NODE=false
+NDB_ONLY=false
 RUN_SYNC_DB=false
 SYNC_DB="/usr/sbin/ngcp-sync-db"
 NOT_REPLICATED_REV_APPLIED=false
 
-while getopts "fh" opt; do
+# TODO: fetch from (ngcp-roles?) config!
+NDB_PORT="3304"
+
+while getopts "fnh" opt; do
     case "${opt}" in
         f)
             FORCE_ACTIVE_NODE=true
+            ;;
+        n)
+            NDB_ONLY=true
             ;;
         h)
             usage; exit 0;
@@ -38,9 +46,7 @@ if [ "${nodename}" = "unknown" ] ; then
   exit 1
 fi
 
-/etc/init.d/mysql start || true
 . /etc/mysql/sipwise.cnf
-
 . /etc/default/ngcp-roles
 
 if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
@@ -48,10 +54,22 @@ if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
   exit 1
 fi
 
-# check connection with sipwise user
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
-  echo 'Error: cant connect to local MySQL with sipwise user' >&2
-  exit 1
+if $NDB_ONLY && ! $NGCP_NDB; then
+    echo "Error: NDB not enabled" >&2
+    exit 1
+fi
+
+if ! $NDB_ONLY; then
+    /etc/init.d/mysql start || true
+
+    # check connection with sipwise user
+    if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
+      echo 'Error: cant connect to local MySQL with sipwise user' >&2
+      exit 1
+    fi
+fi
+if $NGCP_NDB; then
+    /etc/init.d/mysql start 3 || true
 fi
 
 # support automated installation
@@ -74,26 +92,42 @@ else
   fi
 fi
 
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
-  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
-fi
-
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
-  echo 'Error: ngcp database does not exist.' >&2
-  exit 1
-fi
-
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e 'describe db_schema'  >/dev/null; then
-  echo 'Error: db_schema table does not exit.' >&2
-  exit 1
-fi
-
-if [ -z "$SKIP_SYNC_DB" ] && [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
-  if ! $FORCE_ACTIVE_NODE && [ ! -x "$SYNC_DB" ] ; then
-    echo "Error: ${SYNC_DB} is required for carrier proxy (or lacking execute permissions)." >&2
+if ! $NDB_ONLY; then
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
+    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+  fi
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
+    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+    echo 'Error: ngcp database does not exit.' >&2
+  fi
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e 'describe db_schema'  >/dev/null; then
+    echo 'Error: db_schema table does not exit.' >&2
     exit 1
   fi
-  RUN_SYNC_DB=true
+fi
+if $NGCP_NDB; then
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -P"${NDB_PORT}" -e 'use ngcp;' 2>/dev/null ; then
+    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0006_create_ngcp_ndb.up
+  fi
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -P"${NDB_PORT}" -e 'use ngcp;' 2>/dev/null ; then
+    mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+    echo 'Error: NDB ngcp database does not exit.' >&2
+  fi
+  if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -P"${NDB_PORT}" ngcp -e 'describe db_schema'  >/dev/null; then
+    echo 'Error: NDB db_schema table does not exit.' >&2
+    exit 1
+  fi
+fi
+
+
+if ! $NDB_ONLY; then
+  if [ -z "$SKIP_SYNC_DB" ] && [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
+    if ! $FORCE_ACTIVE_NODE && [ ! -x "$SYNC_DB" ] ; then
+      echo "Error: ${SYNC_DB} is required for carrier proxy (or lacking execute permissions)." >&2
+      exit 1
+    fi
+    RUN_SYNC_DB=true
+  fi
 fi
 
 running_on_active_node() {
@@ -114,10 +148,12 @@ running_on_active_node() {
   fi
 }
 
-if running_on_active_node ; then
-  ACTIVE_NODE=true
-else
-  ACTIVE_NODE=false
+if ! $NDB_ONLY; then
+  if running_on_active_node ; then
+    ACTIVE_NODE=true
+  else
+    ACTIVE_NODE=false
+  fi
 fi
 
 apply_revision() {
@@ -125,9 +161,17 @@ apply_revision() {
 
   rev="$1"
   revname="$(basename "$rev")"
+  args=""
+
+  case "$revname" in
+    *_ndb.up)
+      args="-P${NDB_PORT}"
+      ;;
+  esac
+  
 
   printf "Applying revision script %s: " "$rev"
-  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < "$rev" ; then
+  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" "$args" < "$rev" ; then
     echo "done"
   else
     echo "failed. :(" >&2
@@ -135,7 +179,7 @@ apply_revision() {
     exit 1
   fi
 
-  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
+  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" "$args" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
     verbose "Marked revision $rev as applied."
   else
     echo "Error while executing DB commands using revision $rev for node $nodename" >&2
@@ -147,7 +191,9 @@ apply_revision() {
 apply_revs() {
   [ -n "$1" ] || return 1
 
-  revs="$1"
+  local revs="$1"
+  local node_revs
+  local ndb_revs
 
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
@@ -158,6 +204,9 @@ apply_revs() {
       *_not_replicated.up)
         node_revs="$node_revs $rev"
         ;;
+      *_ndb.up)
+        ndb_revs="$ndb_revs $rev"
+        ;;
     esac
   done
 
@@ -166,13 +215,27 @@ apply_revs() {
     $( {
         ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
         ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
+        $NGCP_NDB && ngcp-check-rev-applied --schema db_schema --revision $ndb_revs --dbport "$NDB_PORT" | awk '/^No match for revision/ {print $5}' ;
        } | sort -n -u ) ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
-        if ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
+        if $NDB_ONLY || ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
+          continue
+        fi
+        ;;
+      *_ndb.up)
+        if ! $NDB_NDB; then
+          continue
+        fi
+        if ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --dbport "$NDB_PORT" | grep -q 'already executed' ; then
+          continue
+        fi
+        ;;
+      *)
+        if $NDB_ONLY; then
           continue
         fi
         ;;
@@ -194,6 +257,7 @@ revision_wrapper() {
   [ -n "$1" ] || return 1
 
   local revlist
+  local ndbrevlist
 
   for rev in "$@" ; do
 
@@ -212,17 +276,32 @@ revision_wrapper() {
       # NOTE: the actual logic is inside the apply_revs to avoid *_not_replicated.up
       # scripts being executed independent from the other ones
       *_not_replicated.up)
-        revlist="$revlist $(basename "$rev")"
-        ;;
-      *)
-        if $ACTIVE_NODE ; then
-	  if $FORCE_ACTIVE_NODE; then
-            revlist="$revlist $(basename "$rev")"
-	  else
-            verbose "Replication script ${revname} noted, nothing to do on active node"
-	  fi
+        if $NDB_ONLY; then
+          continue;
         else
           revlist="$revlist $(basename "$rev")"
+        fi
+        ;;
+      *_ndb.up)
+        if ! $NGCP_NDB; then
+          continue;
+        else
+          ndbrevlist="$ndbrevlist $(basename "$rev")"
+        fi
+        ;;
+      *)
+        if $NDB_ONLY; then
+          continue;
+        else
+          if $ACTIVE_NODE ; then
+            if $FORCE_ACTIVE_NODE; then
+              revlist="$revlist $(basename "$rev")"
+            else
+              verbose "Replication script ${revname} noted, nothing to do on active node"
+            fi
+          else
+            revlist="$revlist $(basename "$rev")"
+          fi
         fi
         ;;
     esac
@@ -230,6 +309,7 @@ revision_wrapper() {
   done
 
   apply_revs "$revlist"
+  apply_revs "$ndbrevlist"
 }
 
 # make sure we get sorted 10XXX after 9XXX
@@ -244,7 +324,7 @@ revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" fi
                    echo "/usr/share/ngcp-db-schema/db_scripts/diff/$file"; done)
 
 # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
-if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
+if ! $NDB_ONLY && $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
   if [ -x "$SYNC_DB" ] ; then
       PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
       EXTRA_SYNC_DB_OPTS=""
