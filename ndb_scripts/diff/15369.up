@@ -1,0 +1,43 @@
+USE kamailio;
+
+CREATE TABLE `version` (
+  `table_name` varchar(32) NOT NULL,
+  `table_version` int(10) unsigned NOT NULL DEFAULT '0',
+  UNIQUE KEY `table_name_idx` (`table_name`)
+) ENGINE=ndb DEFAULT CHARSET=utf8;
+
+LOCK TABLES `version` WRITE;
+/*!40000 ALTER TABLE `version` DISABLE KEYS */;
+INSERT INTO `version` VALUES ('acc',5),('acc_cdrs',2),('active_watchers',12),('address',6),('aliases',6),('dbaliases',1),('dialog',7),('dialog_vars',1),('dialplan',2),('dispatcher',4),('domain',2),('domain_attrs',1),('htable',2),('lcr_gw',3),('lcr_rule',2),('lcr_rule_target',1),('location',8),('location_attrs',1),('mohqcalls',1),('mohqueues',1),('presentity',4),('pua',7),('rls_presentity',1),('rls_watchers',3),('rtpproxy',1),('sca_subscriptions',2),('silo',8),('speed_dial',2),('subscriber',6),('trusted',6),('usr_preferences',2),('watchers',3),('xcap',4);
+/*!40000 ALTER TABLE `version` ENABLE KEYS */;
+UNLOCK TABLES;
+
+CREATE TABLE `location` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) NOT NULL DEFAULT '',
+  `domain` varchar(64) DEFAULT NULL,
+  `contact` varchar(255) NOT NULL DEFAULT '',
+  `received` varchar(128) DEFAULT NULL,
+  `path` varchar(512) DEFAULT NULL,
+  `expires` datetime NOT NULL DEFAULT '2030-05-28 21:32:15',
+  `q` float(10,2) NOT NULL DEFAULT '1.00',
+  `callid` varchar(255) NOT NULL DEFAULT 'Default-Call-ID',
+  `cseq` int(11) NOT NULL DEFAULT '13',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  `flags` int(11) NOT NULL DEFAULT '0',
+  `cflags` int(11) NOT NULL DEFAULT '0',
+  `user_agent` varchar(255) NOT NULL DEFAULT '',
+  `socket` varchar(64) DEFAULT NULL,
+  `methods` int(11) DEFAULT NULL,
+  `ruid` varchar(64) NOT NULL DEFAULT '',
+  `reg_id` int(11) NOT NULL DEFAULT '0',
+  `instance` varchar(255) DEFAULT NULL,
+  `server_id` int(11) NOT NULL DEFAULT '0',
+  `connection_id` int(11) NOT NULL DEFAULT '0',
+  `keepalive` int(11) NOT NULL DEFAULT '0',
+  `partition` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ruid_idx` (`ruid`),
+  KEY `account_contact_idx` (`username`,`domain`,`contact`),
+  KEY `expires_idx` (`expires`)
+) ENGINE=ndb DEFAULT CHARSET=utf8;
