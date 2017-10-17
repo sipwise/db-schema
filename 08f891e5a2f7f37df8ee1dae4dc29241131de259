@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_c620359e",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-17T07:37:13Z",
+      "side": 1,
+      "message": "duplicate",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 110
+      },
+      "revId": "08f891e5a2f7f37df8ee1dae4dc29241131de259",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_063a2dcd",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-17T07:37:13Z",
+      "side": 1,
+      "message": "what is the purpose of the \"ndb_only\" up script that creates exactly the same ngcp.db_schema table ? or probably it\u0027s just a draft.",
+      "range": {
+        "startLine": 110,
+        "startChar": 91,
+        "endLine": 110,
+        "endChar": 114
+      },
+      "revId": "08f891e5a2f7f37df8ee1dae4dc29241131de259",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_e62539ac",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-10-17T07:37:13Z",
+      "side": 1,
+      "message": "thinking of something like this:\n\n* if ndb should contain exactly the same version of the db as the main one then version it in \"ngcp-db-schema/db_scripts\", as it is now.\n  \n   pros: \n     - single db schema versioning\n     \n   cons:\n      - common .up scripts must be compatible to both MariaDB and NDB, (that can be avoided though by splitting them into \"ndb_only\" and \"db_only\" but that is somewhat cumbersome)\n\n* if ndb should contain only specific databases/tables then we can create \"ngcp-db-schema/ndb_scripts/...\" and have it fully separated, that implies that we need to  copy/create all the relevant changes from the \"db_schema\" in this case. \n\n  pros: \n    - considering that we have 2 different servers (MariaDB vs Mysql NDB) - *.up scripts can contain \"server specific\" code independently\n    - takes effort to port existing databases/tables from the db_schema/*.up scripts\n\n  cons: requires devs to know which .up scripts are about to be added also to \"ndb_schema\"\n    - requires double testing for changes compatibility",
+      "range": {
+        "startLine": 109,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 4
+      },
+      "revId": "08f891e5a2f7f37df8ee1dae4dc29241131de259",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
