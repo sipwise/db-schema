@@ -1,0 +1,1 @@
+revoke select on prosody.sipwise_mam to soap@localhost;
