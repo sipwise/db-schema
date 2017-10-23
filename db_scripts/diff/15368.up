@@ -1,0 +1,4 @@
+USE accounting;
+
+ALTER TABLE prepaid_costs ADD source_user_id CHAR(36) NOT NULL AFTER call_id,
+                          ADD destination_user_id CHAR(36) NOT NULL AFTER source_user_id;

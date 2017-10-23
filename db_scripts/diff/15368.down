@@ -1,0 +1,3 @@
+USE accounting;
+
+ALTER TABLE prepaid_costs DROP source_user_id, DROP destination_user_id;
