@@ -1,0 +1,6 @@
+USE provisioning;
+SET sql_log_bin=0;
+
+DROP USER export@localhost;
+
+FLUSH PRIVILEGES;
