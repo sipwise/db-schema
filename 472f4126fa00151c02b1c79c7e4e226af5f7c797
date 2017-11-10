@@ -46,6 +46,30 @@
       "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_2877ead5",
+        "filename": "db_scripts/diff/15370_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-10T13:56:53Z",
+      "side": 1,
+      "message": "MariaDB [(none)]\u003e create user stest;\nQuery OK, 0 rows affected (0.03 sec)\n\nMariaDB [(none)]\u003e drop user stest;\nQuery OK, 0 rows affected (0.01 sec)\n\nMariaDB [(none)]\u003e drop user stest;\nERROR 1396 (HY000): Operation DROP USER failed for \u0027stest\u0027@\u0027%\u0027\n\nMariaDB [(none)]\u003e drop user if exists stest ;\nQuery OK, 0 rows affected, 1 warning (0.00 sec)",
+      "parentUuid": "dab895d6_a863fa18",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
