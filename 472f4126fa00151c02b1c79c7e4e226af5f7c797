@@ -70,6 +70,30 @@
       "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_c8366e03",
+        "filename": "db_scripts/diff/15370_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-10T15:01:31Z",
+      "side": 1,
+      "message": "You are right, I have checking MySQL 5.5 considered we should support mr4.5-\u003emr5.5.1 upgrades, but up statements are executed in new DB anyway, so we can use IF EXISTS here. Tnx!",
+      "parentUuid": "dab895d6_2877ead5",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
