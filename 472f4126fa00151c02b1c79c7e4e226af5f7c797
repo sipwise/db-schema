@@ -22,6 +22,30 @@
       "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dab895d6_a863fa18",
+        "filename": "db_scripts/diff/15370_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-10T13:55:33Z",
+      "side": 1,
+      "message": "DROP USER IF EXISTS can be used\n\nplease however bear in mind that the \"IF EXISTS\" clause was introduced only in MariaDB 10.1.3 (from our mr5.x and onwards)",
+      "parentUuid": "dab895d6_edfee46a",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 27
+      },
+      "revId": "472f4126fa00151c02b1c79c7e4e226af5f7c797",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
