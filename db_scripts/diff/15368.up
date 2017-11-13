@@ -1,0 +1,11 @@
+USE accounting;
+CREATE TABLE cdr_mos_data (
+  cdr_id int(10) unsigned NOT NULL,
+  mos_average DECIMAL(4,1) DEFAULT NULL,
+  mos_average_packetloss DECIMAL(4,1) DEFAULT NULL,
+  mos_average_jitter DECIMAL(4,1) DEFAULT NULL,
+  mos_average_roundtrip DECIMAL(4,1) DEFAULT NULL,
+  cdr_start_time decimal(13,3) NOT NULL,
+  PRIMARY KEY (cdr_id, cdr_start_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
