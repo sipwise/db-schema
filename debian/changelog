@@ -1,3 +1,13 @@
+ngcp-db-schema (5.4.2.1+0~mr5.4.2.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [9ee414f] TT#21263 add kamailio.acc_backup and acc_trash as not_replicated
+  * [b1b8913] TT#19348 remove user export@localhost
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 Nov 2017 15:06:19 +0100
+
 ngcp-db-schema (5.4.2.0+0~mr5.4.2.0) unstable; urgency=medium
 
   * New release.
