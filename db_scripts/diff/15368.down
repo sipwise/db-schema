@@ -1,0 +1,10 @@
+SET autocommit=0; #not only DDL stmts
+USE accounting;
+
+DELETE FROM cdr_tag WHERE type IN (
+  'mos_parameters'
+);
+
+ALTER TABLE cdr_tag MODIFY COLUMN type enum(
+  'calling_party_category'
+) NOT NULL;
