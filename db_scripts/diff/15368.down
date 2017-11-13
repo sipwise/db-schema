@@ -1,0 +1,2 @@
+USE accounting;
+DROP TABLE cdr_mos_data;
