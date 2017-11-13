@@ -1,0 +1,11 @@
+SET autocommit=0; #not only DDL stmts
+USE accounting;
+ALTER TABLE cdr_tag MODIFY COLUMN type enum(
+  'calling_party_category',
+  'mos_parameters'
+) NOT NULL;
+
+INSERT INTO cdr_tag SET id=null, type='mos_parameters';
+
+COMMIT;
+
