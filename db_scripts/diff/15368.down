@@ -1,0 +1,4 @@
+USE accounting;
+ALTER TABLE cdr_tag MODIFY COLUMN type enum(
+  'calling_party_category'
+) NOT NULL;
