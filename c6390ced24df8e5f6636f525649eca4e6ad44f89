@@ -16,6 +16,24 @@
       "revId": "c6390ced24df8e5f6636f525649eca4e6ad44f89",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_6744dc74",
+        "filename": "db_scripts/diff/15368.down",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-11-16T15:19:45Z",
+      "side": 1,
+      "message": "alter commits everything before and also itself (cannot be rolled back)",
+      "parentUuid": "baada198_8772d0e3",
+      "revId": "c6390ced24df8e5f6636f525649eca4e6ad44f89",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
