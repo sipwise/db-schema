@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_522b1482",
+        "filename": "db_scripts/diff/15368.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-16T16:33:44Z",
+      "side": 1,
+      "message": "typo (and below)",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 19
+      },
+      "revId": "4f90901620ae88cafbfc9a9c6b051bb1eeef3499",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
