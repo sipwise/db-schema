@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_e7762c06",
+        "filename": "db_scripts/diff/15368.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-17T15:58:53Z",
+      "side": 1,
+      "message": "please remove that as this will break replication when there is an old ROW based query is being replicated and the table is in the new format.",
+      "range": {
+        "startLine": 3,
+        "startChar": 63,
+        "endLine": 3,
+        "endChar": 76
+      },
+      "revId": "e01f7cca7b8bc3fbcad367f1f1119fb26b5e1f17",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baada198_077400fc",
+        "filename": "db_scripts/diff/15368.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-17T15:58:53Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 4,
+        "startChar": 68,
+        "endLine": 4,
+        "endChar": 88
+      },
+      "revId": "e01f7cca7b8bc3fbcad367f1f1119fb26b5e1f17",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
