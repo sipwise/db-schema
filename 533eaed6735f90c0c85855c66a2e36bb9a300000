@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_92bbec71",
+        "filename": "db_scripts/diff/15368.up",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-11-17T13:11:49Z",
+      "side": 1,
+      "message": "must be as: KEY cdr_id_idx (cdr_id, cdr_start_time)",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "533eaed6735f90c0c85855c66a2e36bb9a300000",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
