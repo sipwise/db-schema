@@ -1,4 +1,5 @@
 USE provisioning;
+SET autocommit=0;
 
 CREATE TABLE `autoprov_firmwares_data` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -9,6 +10,48 @@ CREATE TABLE `autoprov_firmwares_data` (
   CONSTRAINT `fk_fw_idx` FOREIGN KEY (`fw_id`) REFERENCES `autoprov_firmwares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-INSERT INTO autoprov_firmwares_data (fw_id, data) SELECT id, data FROM autoprov_firmwares;
+DELIMITER ;;
+CREATE PROCEDURE split_autoprov_firmware_data()
+BEGIN
+
+    DECLARE n_fw_id, chunk_size, offset int;
+    DECLARE chunk longblob;
+    DECLARE done int DEFAULT FALSE;
+
+    DECLARE x CURSOR FOR SELECT id FROM autoprov_firmwares ORDER BY id ASC;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    SET chunk_size = 10485760;
+    SET offset = 1;
+
+    OPEN x;
+    x_main: LOOP
+        FETCH x INTO n_fw_id;
+        IF done THEN
+            LEAVE x_main;
+        END IF;
+        SET offset = 1;
+        x_chunk: LOOP
+            SELECT substr(data, offset, chunk_size) INTO chunk
+              FROM autoprov_firmwares
+             WHERE id = n_fw_id;
+            IF LENGTH(chunk) > 0 THEN
+                INSERT INTO autoprov_firmwares_data (fw_id, data)
+                    VALUES (n_fw_id, chunk);
+                SET offset = offset+chunk_size;
+            ELSE
+                LEAVE x_chunk;
+            END IF;
+        END LOOP;
+    END LOOP;
+    CLOSE x;
+
+END;;
+DELIMITER ;
+
+CALL split_autoprov_firmware_data;
+DROP PROCEDURE split_autoprov_firmware_data;
 
 ALTER TABLE autoprov_firmwares DROP data;
+
+COMMIT;
