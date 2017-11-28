@@ -1,0 +1,6 @@
+USE provisioning;
+
+ALTER TABLE kamailio.voicemail_spool ADD call_id varchar(255), ADD index callid_idx (call_id);
+
+ALTER TABLE provisioning.voip_fax_journal ADD call_id varchar(255), ADD index callid_idx (call_id);
+
