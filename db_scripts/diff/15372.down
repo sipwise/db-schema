@@ -1,0 +1,5 @@
+USE provisioning;
+
+ALTER TABLE kamailio.voicemail_spool DROP call_id;
+
+ALTER TABLE provisioning.voip_fax_journal DROP call_id;
