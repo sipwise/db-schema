@@ -1,0 +1,3 @@
+use billing;
+
+ALTER TABLE products drop index class_idx;
