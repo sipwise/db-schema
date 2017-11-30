@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baada198_f35d004a",
+        "filename": "db_scripts/diff/15372.down",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-11-30T13:09:37Z",
+      "side": 1,
+      "message": "ok, index is dropped implicitly",
+      "revId": "85f0c590ebc58d191cbf4bc75fb385e744ed60c1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
