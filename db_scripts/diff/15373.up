@@ -1,0 +1,9 @@
+USE billing;
+
+CREATE TABLE ngcp.timezone
+(
+    id enum('1') not null primary key,
+    name varchar(255) not null,
+    created_at timestamp default current_timestamp,
+    modified_at timestamp default current_timestamp on update current_timestamp
+);
