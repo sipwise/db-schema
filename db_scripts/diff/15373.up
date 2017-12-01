@@ -1,0 +1,10 @@
+USE billing;
+
+CREATE TABLE ngcp.config
+(
+    name varchar(255) not null,
+    value varchar(255) not null,
+    created_at timestamp default current_timestamp,
+    modified_at timestamp default current_timestamp on update current_timestamp,
+    unique key name_u_idx (name)
+);
