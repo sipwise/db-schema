@@ -1,3 +1,19 @@
+ngcp-db-schema (5.5.2.1+0~mr5.5.2.1) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [19a9e81] TT#24408 Deleting DB user 'export' again for PRO/Carrier systems installed in mr5.[0-3]
+
+  [ Rene Krenn ]
+  * [fc1acdb] TT#23277 change lnp type from enum to string
+  * [fe0746c] TT#22469 fix typo in 15359.down
+
+  [ Gerhard Jungwirth ]
+  * [65a2dc0] TT#25312 make conference_pin editable for subscribers
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Dec 2017 11:38:02 +0100
+
 ngcp-db-schema (5.5.2.0+0~mr5.5.2.0) unstable; urgency=medium
 
   [ Andreas Granig ]
