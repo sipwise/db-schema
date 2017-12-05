@@ -1,3 +1,32 @@
+ngcp-db-schema (6.1.0.0+0~mr6.1.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [9869885] TT#19715 stats.cdr_info table
+  * [3217af7] TT#23277 change lnp type from enum to string
+  * [87ebaa2] TT#22469 fix typo in 15359.down
+  * [546f716] TT#23271 add uuid columns for accounting.prepaid_cost
+  * [20b2934] TT#24129 add mos param enums for cdr_tag
+
+  [ Andreas Granig ]
+  * [820b017] TT#8704 Fix spaces in peer name
+  * [d84ef78] TT#18736 Add auto-attendant ext-dialing prompts.
+
+  [ Guillem Jover ]
+  * [766aec3] TT#22072 Update packaging
+
+  [ Alexander Lutay ]
+  * [33cea1a] TT#24408 Deleting DB user 'export' again for PRO/Carrier systems installed in mr5.[0-3]
+
+  [ Gerhard Jungwirth ]
+  * [7e2490f] TT#25312 make conference_pin editable for subscribers
+
+  [ Kirill Solomko ]
+  * [7b74344] TT#25452 add faxserver and voicemail call_id column
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 06 Dec 2017 00:01:33 +0100
+
 ngcp-db-schema (6.0.0.0+0~mr6.0.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
