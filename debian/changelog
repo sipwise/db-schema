@@ -1,3 +1,12 @@
+ngcp-db-schema (3.8.13.0+0~mr3.8.13.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [dceb151] TT#19348 remove user export@localhost
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 05 Dec 2017 15:49:40 +0100
+
 ngcp-db-schema (3.8.12.0+0~mr3.8.12.0) unstable; urgency=medium
 
   * New release.
