@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab29df4_8072bce3",
+        "filename": "db_scripts/diff/15373.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2017-12-11T11:08:54Z",
+      "side": 1,
+      "message": "btw. is there a plan/need to register some stored proc or some other approach to translate the timezone names (afaik derived from perl Datetime::Timezone olsondb names) into timezone names (or offset syntax) compatible with CONVERT_TZ?",
+      "revId": "f248da4d2686425064ed9d372e35e94583e541c5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
