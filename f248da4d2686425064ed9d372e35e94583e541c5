@@ -16,6 +16,24 @@
       "revId": "f248da4d2686425064ed9d372e35e94583e541c5",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_eb1c396d",
+        "filename": "db_scripts/diff/15373.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-12-12T10:13:51Z",
+      "side": 1,
+      "message": "yes, \nmysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root mysql\n\nit\u0027s in plans to use automatically, most likely as a part of ngcpcfg commit helper",
+      "parentUuid": "9ab29df4_8072bce3",
+      "revId": "f248da4d2686425064ed9d372e35e94583e541c5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
