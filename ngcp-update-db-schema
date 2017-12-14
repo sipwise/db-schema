@@ -246,7 +246,7 @@ revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" fi
 # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
 if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
   if [ -x "$SYNC_DB" ] ; then
-      PRX_SYNC_DBS="billing carrier kamailio provisioning prosody mysql"
+      PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody mysql"
       EXTRA_SYNC_DB_OPTS=""
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
           EXTRA_SYNC_DB_OPTS="--local-user=root --init-replication --set-local-grants"
