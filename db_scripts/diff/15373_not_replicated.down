@@ -1,3 +1,4 @@
+set sql_log_bin=0;
 USE billing;
 
 DROP TABLE ngcp.timezone;
