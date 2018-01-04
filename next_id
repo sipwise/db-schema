@@ -5,4 +5,5 @@ LAST=$(\
     awk -vFS=/ -vOFS=/ '{ print $NF }' |\
     sort -n | tail -1 | cut -f1 -d'.' \
 );
+LAST=${LAST//_not_replicated}
 echo $(( LAST + 1))
