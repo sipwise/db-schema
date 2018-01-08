@@ -1,0 +1,9 @@
+use provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='skip_upn_check_on_diversion' INTO @skip_upn_pref_id;
+
+INSERT into voip_preferences_enum
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@skip_upn_pref_id, 'If received Diversion header', 'diversion', 1, 0, 1, 0, 0, 0),
+(@skip_upn_pref_id, 'If received History-Info header', 'historyinfo', 1, 0, 1, 0, 0, 0);

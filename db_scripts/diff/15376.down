@@ -1,0 +1,6 @@
+use provisioning;
+
+SELECT id FROM voip_preferences WHERE attribute='skip_upn_check_on_diversion' INTO @skip_upn_pref_id;
+
+DELETE FROM voip_preferences_enum WHERE preference_id=@skip_upn_pref_id AND label='If received Diversion header';
+DELETE FROM voip_preferences_enum WHERE preference_id=@skip_upn_pref_id AND label='If received History-Info header';
