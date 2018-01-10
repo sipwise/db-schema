@@ -1,3 +1,12 @@
+ngcp-db-schema (5.5.2.2+0~mr5.5.2.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ba6b5c2] TT#21874 autoprov_firmwares rework to support chunked data move
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 10 Jan 2018 17:35:58 +0100
+
 ngcp-db-schema (5.5.2.1+0~mr5.5.2.1) unstable; urgency=medium
 
   [ Alexander Lutay ]
