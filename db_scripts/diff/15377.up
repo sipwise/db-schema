@@ -1,0 +1,3 @@
+USE kamailio;
+
+ALTER TABLE location ADD KEY part_kal_idx (`partition`, `keepalive`);
