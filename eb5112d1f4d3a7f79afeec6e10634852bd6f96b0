@@ -46,6 +46,30 @@
       "revId": "eb5112d1f4d3a7f79afeec6e10634852bd6f96b0",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_cdf14997",
+        "filename": "db_scripts/diff/15378_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-01-18T11:20:15Z",
+      "side": 1,
+      "message": "seem adding default 1 is not needed?",
+      "parentUuid": "5a890539_adcddd5f",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "eb5112d1f4d3a7f79afeec6e10634852bd6f96b0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
