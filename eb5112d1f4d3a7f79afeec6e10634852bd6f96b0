@@ -70,6 +70,30 @@
       "revId": "eb5112d1f4d3a7f79afeec6e10634852bd6f96b0",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a890539_4d355945",
+        "filename": "db_scripts/diff/15378_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-01-18T11:23:57Z",
+      "side": 1,
+      "message": "nope.\nalso note a trick that I do populate the table in the INSERT below. that is required for correct replication as otherwise 2nd node will do first insert as INSERT INTO and it is replicated and produced a replication error. When there is data and the statement is not replicated then on both nodes all statements will produce \"UPDATE .... \" binary rows (from either INSERT INTO ... ON DUPLICATE UPDATE ... or UPDATE ...)",
+      "parentUuid": "5a890539_cdf14997",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "eb5112d1f4d3a7f79afeec6e10634852bd6f96b0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
