@@ -1,0 +1,4 @@
+use provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'header_rule_set';
+
