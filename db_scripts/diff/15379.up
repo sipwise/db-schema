@@ -1,0 +1,82 @@
+set autocommit=0;
+USE provisioning;
+
+CREATE TABLE `voip_header_rule_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL DEFAULT '1',
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `res_name_idx` (`reseller_id`,`name`),
+  CONSTRAINT `vhrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `voip_header_rules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT '100',
+  `direction` enum('inbound','outbound') NOT NULL DEFAULT 'inbound',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
+  KEY `direction_idx` (`direction`),
+  KEY `priority_idx` (`priority`),
+  CONSTRAINT `v_hr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_header_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `voip_header_rule_conditions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(11) unsigned NOT NULL,
+  `header` varchar(255) NOT NULL,
+  `expression` enum('is','contains','matches','regexp') NOT NULL,
+  `expression_negation` tinyint(1) NOT NULL DEFAULT '0',
+  `value_type` enum('input','preference','avp') NOT NULL,
+  `value_group_id` int(11) unsigned DEFAULT NULL,
+  `rwr_set_id` int(11) unsigned DEFAULT NULL,
+  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `rule_id_idx` (`rule_id`),
+  KEY `rwr_set_id_idx` (`rwr_set_id`),
+  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
+  KEY `vgroup_id_idx` (`value_group_id`),
+  CONSTRAINT `v_hrc_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_hrc_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+CREATE TABLE `voip_header_rule_condition_value_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `condition_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `condition_id_idx` (`condition_id`),
+  CONSTRAINT `v_hrc_id_ref` FOREIGN KEY (`condition_id`) REFERENCES `voip_header_rule_conditions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `voip_header_rule_condition_values` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `group_id_idx` (`group_id`),
+  CONSTRAINT `v_hrc_vgroup_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_header_rule_condition_value_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE `voip_header_rule_actions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(11) unsigned NOT NULL,
+  `header` varchar(255) NOT NULL,
+  `value_type` enum('set','add','remove','header','preference','avp') NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  `rwr_set_id` int(11) unsigned DEFAULT NULL,
+  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT '100',
+  PRIMARY KEY (`id`),
+  KEY `rule_id_idx` (`rule_id`),
+  KEY `rwr_set_id_idx` (`rwr_set_id`),
+  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
+  KEY `priority_idx` (`priority`),
+  CONSTRAINT `v_hra_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_hra_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+COMMIT;
