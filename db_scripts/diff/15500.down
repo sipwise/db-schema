@@ -1,0 +1,12 @@
+set autocommit=0;
+USE provisioning;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+DROP TABLE `voip_header_rule_sets`;
+DROP TABLE `voip_header_rules`;
+DROP TABLE `voip_header_rule_conditions`;
+DROP TABLE `voip_header_rule_condition_values`;
+DROP TABLE `voip_header_rule_actions`;
+
+COMMIT;
