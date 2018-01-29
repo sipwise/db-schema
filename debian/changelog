@@ -1,3 +1,27 @@
+ngcp-db-schema (6.1.1.0+0~mr6.1.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [19a8b4d] TT#25451 add ngcp.timezone table
+  * [7bf4624] TT#25451 use ngcp.timezone in v_timezone views
+  * [92cb091] TT#25451 include ngcp db into r/o replication
+  * [0cb5170] TT#3668 use accounting.cdr tables for composite primary keys
+  * [094509c] TT#28469 make ngcp.timezone related changes as not_replicated
+  * [dacd644] TT#21874 autoprov_firmwares rework to support chunked data move
+  * [eb5112d] TT#30501 add ngcp.tzinfo_version
+
+  [ Alexander Lutay ]
+  * [dcb75e7] TT#29623 Remove _not_replicated from the DB statement ID
+
+  [ Marco Capetta ]
+  * [02c8e21] TT#28902 Extend skip_upn_check_on_diversion preferences
+
+  [ Andreas Granig ]
+  * [8465930] TT#30555 Add natping key to location table
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 29 Jan 2018 21:52:12 +0100
+
 ngcp-db-schema (6.1.0.0+0~mr6.1.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
