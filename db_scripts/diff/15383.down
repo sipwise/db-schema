@@ -1,0 +1,18 @@
+use provisioning;
+DELETE FROM voip_preferences WHERE attribute IN (
+'ptime',
+'transcode_PCMU',
+'transcode_PCMA',
+'transcode_G722',
+'transcode_G723',
+'transcode_G729',
+'transcode_GSM',
+'transcode_AMR',
+'transcode_AMR_WB',
+'transcode_opus_mono',
+'transcode_opus_stereo',
+'transcode_speex_8',
+'transcode_speex_16',
+'transcode_speex_32',
+'opus_mono_bitrate',
+'opus_stereo_bitrate');
