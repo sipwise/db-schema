@@ -1,0 +1,7 @@
+SET sql_log_bin=0;
+USE accounting;
+ALTER TABLE cdr_mos_data
+  MODIFY COLUMN mos_average DECIMAL(4,1) DEFAULT NULL,
+  MODIFY COLUMN mos_average_packetloss DECIMAL(4,1) DEFAULT NULL,
+  MODIFY COLUMN mos_average_jitter DECIMAL(4,1) DEFAULT NULL,
+  MODIFY COLUMN mos_average_roundtrip DECIMAL(4,1) DEFAULT NULL;
