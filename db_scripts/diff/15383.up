@@ -1,0 +1,61 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+
+insert into voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref,
+  prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer,
+  data_type, read_only, description)
+  values (@vpg_id, 'ptime', 'RTP packet interval', 0, 1, 1, 1, 1, 1, 0,
+  now(), 0, 0, 'enum', 0, 'Alter the interval (in milliseconds) between RTP packets for media repacketization');
+select last_insert_id() into @vpid;
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'use domain default', NULL, 1, 0, 0, 0, 0, 1);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, 'unchanged/default', 'default', 0, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '5 ms', '5', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '10 ms', '10', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '20 ms', '20', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '30 ms', '30', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '40 ms', '40', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '50 ms', '50', 1, 1, 1, 1, 0, 0);
+
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, default_val) values
+  (@vpid, '60 ms', '60', 1, 1, 1, 1, 0, 0);
+
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'transcode_PCMU', "Transcode to G.711 µ-Law", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.711 µ-Law (PCMU, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_PCMA', "Transcode to G.711 a-Law", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.711 a-Law (PCMA, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G722', "Transcode to G.722", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.722 (16 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G723', "Transcode to G.723.1", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.723.1 (8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G729', "Transcode to G.729", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.729 (8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_AMR', "Transcode to AMR", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec AMR (narrowband, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_AMR_WB', "Transcode to AMR-WB", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec AMR-WB (wideband, 16 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_opus', "Transcode to Opus", 0, 1, 1, 1, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec Opus (48 kHz stereo) to this subscriber.');
+
+commit;
