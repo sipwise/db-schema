@@ -1,0 +1,17 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'transcode_PCMU', "Transcode to G.711 µ-Law", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.711 µ-Law (PCMU, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_PCMA', "Transcode to G.711 a-Law", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.711 a-Law (PCMA, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G722', "Transcode to G.722", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.722 (16 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G723', "Transcode to G.723.1", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.723.1 (8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_G729', "Transcode to G.729", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec G.729 (8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_AMR', "Transcode to AMR", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec AMR (narrowband, 8 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_AMR_WB', "Transcode to AMR-WB", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec AMR-WB (wideband, 16 kHz) to this subscriber.'),
+  (@vpg_id, 'transcode_opus', "Transcode to Opus", 0, 1, 1, 0, 1, 1, 0, NOW(), 0, 0, 'boolean', 0, 'Always offer the audio codec Opus (48 kHz stereo) to this subscriber.');
+
+commit;
