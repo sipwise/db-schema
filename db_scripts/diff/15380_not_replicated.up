@@ -1,0 +1,14 @@
+set sql_log_bin=0;
+USE billing;
+
+CREATE OR REPLACE VIEW v_contract_timezone AS
+  SELECT cc.id as contact_id, c.id as contract_id,
+         COALESCE(cc.timezone, rc.timezone, t.name) as name
+ FROM contracts c
+JOIN contacts cc ON cc.id = c.contact_id
+LEFT JOIN resellers r ON r.id = cc.reseller_id
+LEFT JOIN contracts i ON i.id = r.contract_id
+LEFT JOIN contacts rc ON rc.id = i.contact_id
+JOIN ngcp.timezone t;
+
+
