@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a930d6b_c353d16a",
+        "filename": "db_scripts/diff/15383.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2018-02-08T12:50:11Z",
+      "side": 1,
+      "message": "this is a peer preference too so maybe better to rephrase or write \"subscriber/peer\"",
+      "range": {
+        "startLine": 57,
+        "startChar": 164,
+        "endLine": 57,
+        "endChar": 180
+      },
+      "revId": "8ed1178e50e906d782124814a17fa2f06e9be194",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
