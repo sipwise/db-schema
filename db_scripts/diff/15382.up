@@ -1,0 +1,45 @@
+use provisioning;
+
+DROP TRIGGER IF EXISTS enum_set_default;
+
+DELIMITER ;;
+
+CREATE TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+
+    DECLARE do_insert tinyint(3) unsigned;
+
+    SELECT IF(NEW.default_val = 1 AND NEW.value IS NOT NULL
+        AND (a.attribute NOT IN ("lock") # list of fromer int prefs, that do not store "0"
+        OR NEW.value != "0"),1,0) INTO do_insert FROM voip_preferences a WHERE a.id = NEW.preference_id;
+
+    IF (NEW.dom_pref=1 AND do_insert=1) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_domains e
+            LEFT JOIN voip_dom_preferences v ON v.attribute_id = NEW.preference_id AND v.domain_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.peer_pref=1 AND do_insert=1) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts e
+            LEFT JOIN voip_peer_preferences v ON v.attribute_id = NEW.preference_id AND v.peer_host_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.usr_pref=1 AND do_insert=1) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_subscribers e
+            LEFT JOIN voip_usr_preferences v ON v.attribute_id = NEW.preference_id AND v.subscriber_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.prof_pref=1 AND do_insert=1) THEN
+        INSERT into voip_prof_preferences (profile_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_subscriber_profiles e
+            LEFT JOIN voip_prof_preferences v ON v.attribute_id = NEW.preference_id AND v.profile_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+END ;;
+DELIMITER ;
