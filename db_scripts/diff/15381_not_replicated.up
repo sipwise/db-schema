@@ -1,0 +1,5 @@
+set sql_log_bin=0;
+use provisioning;
+
+delete v from voip_usr_preferences v join voip_preferences a on v.attribute_id = a.id
+  where a.attribute="lock" and (v.value is null or v.value="0" or length(trim(v.value)) = 0);
