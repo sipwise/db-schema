@@ -1,0 +1,30 @@
+use provisioning;
+
+DROP TRIGGER IF EXISTS enum_set_default;
+
+DELIMITER ;;
+
+CREATE TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    IF (NEW.dom_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_domains;
+    END IF;
+    IF (NEW.peer_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts;
+    END IF;
+    IF (NEW.usr_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscribers;
+    END IF;
+    IF (NEW.prof_pref=1 AND NEW.default_val = 1 AND NEW.value IS NOT NULL) THEN
+        INSERT into voip_prof_preferences (profile_id, attribute_id, value)
+            SELECT id, NEW.preference_id, NEW.value
+            FROM voip_subscriber_profiles;
+    END IF;
+END ;;
+DELIMITER ;
