@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa81d914_1e053dc2",
+        "filename": "db_scripts/diff/15383.up",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-02-13T15:17:14Z",
+      "side": 1,
+      "message": "does it show 2 items in the dropdowns?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "f2e31cc65a332bd124845a32f68414e610a68caf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
