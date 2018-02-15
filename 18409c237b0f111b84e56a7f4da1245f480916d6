@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da86d52c_a9223dff",
+        "filename": "db_scripts/diff/15384.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-02-15T13:40:36Z",
+      "side": 1,
+      "message": "ok, extra-safety",
+      "range": {
+        "startLine": 36,
+        "startChar": 44,
+        "endLine": 36,
+        "endChar": 50
+      },
+      "revId": "18409c237b0f111b84e56a7f4da1245f480916d6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
