@@ -1,0 +1,36 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+--table: dialplan
+ALTER TABLE dialplan
+  CHANGE COLUMN repl_exp repl_exp VARCHAR(256) NOT NULL;
+
+--table: sca_subscriptions
+ALTER TABLE sca_subscriptions
+  ADD COLUMN server_id INT(11) NOT NULL DEFAULT '0',
+  DROP INDEX sca_expires_idx,
+  ADD INDEX sca_expires_idx (server_id,expires);
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('sca_subscriptions','2');
+
+--table: subscriber
+ALTER TABLE subscriber
+  CHANGE COLUMN rpid rpid VARCHAR(128) DEFAULT NULL,
+  CHANGE COLUMN email_address email_address VARCHAR(128) DEFAULT NULL,
+  CHANGE COLUMN password password VARCHAR(64) NOT NULL DEFAULT '',
+  CHANGE COLUMN ha1 ha1 VARCHAR(128) NOT NULL DEFAULT '',
+  CHANGE COLUMN ha1b ha1b VARCHAR(128) NOT NULL DEFAULT '';
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('subscriber','7');
+
+--table: uacreg
+ALTER TABLE uacreg
+  CHANGE COLUMN auth_proxy auth_proxy VARCHAR(128) NOT NULL DEFAULT '',
+  CHANGE COLUMN l_domain l_domain VARCHAR(64) NOT NULL DEFAULT '',
+  CHANGE COLUMN r_domain r_domain VARCHAR(64) NOT NULL DEFAULT '',
+  ADD COLUMN auth_ha1 VARCHAR(128) NOT NULL DEFAULT '';
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('uacreg','3');
+
+COMMIT;
