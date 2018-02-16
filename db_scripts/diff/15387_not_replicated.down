@@ -1,0 +1,21 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+--table: dialplan
+ALTER TABLE dialplan
+  MODIFY COLUMN repl_exp VARCHAR(255) NOT NULL;
+
+--table: subscriber
+ALTER TABLE subscriber
+  MODIFY COLUMN rpid VARCHAR(64) DEFAULT NULL,
+  MODIFY COLUMN email_address VARCHAR(64) DEFAULT NULL,
+  MODIFY COLUMN password VARCHAR(40) NOT NULL DEFAULT '',
+  MODIFY COLUMN ha1 VARCHAR(64) NOT NULL DEFAULT '',
+  MODIFY COLUMN ha1b VARCHAR(64) NOT NULL DEFAULT '';
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('subscriber','6');
+
+COMMIT;
