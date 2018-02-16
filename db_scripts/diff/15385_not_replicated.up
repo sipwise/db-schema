@@ -1,0 +1,37 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+--table: lcr_rule
+ALTER TABLE lcr_rule
+  ADD COLUMN mt_tvalue VARCHAR(128) DEFAULT NULL AFTER request_uri;
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('lcr_rule','3');
+
+--table: location
+ALTER TABLE location
+  MODIFY contact VARCHAR(512) NOT NULL DEFAULT '';
+REPLACE INTO version (`table_name`, `table_version`) VALUES ('location','9');
+
+--table: active_watchers
+ALTER TABLE active_watchers
+  CHANGE COLUMN reason reason VARCHAR(64) DEFAULT NULL;
+
+--table: domain_attrs
+ALTER TABLE domain_attrs
+  DROP INDEX domain_attrs_idx,
+  ADD INDEX domain_attrs_idx (did,name);
+
+--table: topos_d
+ALTER TABLE topos_d
+  ADD INDEX a_uuid_idx (a_uuid),
+  ADD INDEX b_uuid_idx (b_uuid);
+
+--table: topos_t
+ALTER TABLE topos_t
+  ADD INDEX x_vbranch_idx (x_vbranch),
+  ADD INDEX a_uuid_idx (a_uuid);
+
+COMMIT;
