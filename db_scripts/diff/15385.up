@@ -1,0 +1,8 @@
+use billing;
+
+ALTER TABLE `contract_balances`
+  ADD COLUMN `initial_cash_balance` double DEFAULT NULL,
+  ADD COLUMN `initial_free_time_balance` int(11) DEFAULT NULL;
+
+ALTER TABLE topup_log CHANGE COLUMN `type` `type` ENUM('cash','voucher','set_balance') NOT NULL;
+
