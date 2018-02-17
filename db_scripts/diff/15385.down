@@ -1,0 +1,7 @@
+use billing;
+
+ALTER TABLE `contract_balances`
+  DROP COLUMN `initial_cash_balance`,
+  DROP COLUMN `initial_free_time_balance`;
+
+ALTER TABLE topup_log CHANGE COLUMN `type` `type` ENUM('cash','voucher') NOT NULL;
