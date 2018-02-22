@@ -1,0 +1,26 @@
+USE billing;
+SET autocommit=0;
+
+CREATE TABLE `contracts_billing_profile_network` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `billing_profile_id` int(11) unsigned NOT NULL,
+  `billing_network_id` int(11) unsigned,
+  `start_date` DATETIME,
+  `end_date` DATETIME,
+  `base` tinyint(3) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cbpn_natural_idx` (`contract_id`, `billing_profile_id`, `billing_network_id`, `start_date`, `end_date`, `base`),
+  CONSTRAINT `cbpn_cid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT `cbpn_pid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `cbpn_nid_ref` FOREIGN KEY (`billing_network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE,
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `contracts_billing_profile_network_schedule` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_network_id` int(11) unsigned NOT NULL,
+  `effective_start_time` decimal(13,3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cbpns_pnid_est_idx` (`profile_network_id`,`effective_start_time`),
+  CONSTRAINT `cbpns_cbpnid_ref` FOREIGN KEY (`profile_network_id`) REFERENCES `contracts_billing_profile_network` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

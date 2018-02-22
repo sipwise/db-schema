@@ -1,0 +1,6 @@
+USE billing;
+SET autocommit=0;
+
+DROP TABLE contracts_billing_profile_network_schedule;
+DROP TABLE contracts_billing_profile_network;
+
