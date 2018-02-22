@@ -1,0 +1,41 @@
+use billing;
+set autocommit=0;
+
+CREATE TABLE contracts_billing_profile_schedule
+(
+   id int(11) unsigned NOT NULL AUTO_INCREMENT,
+   contract_id int(11) unsigned NOT NULL,
+   start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   end_date TIMESTAMP NOT NULL DEFAULT '2038-01-01 00:00:00',
+   effective_start_time decimal(13,0) NOT NULL DEFAULT '0',
+   PRIMARY KEY (id),
+   KEY contract_id_idx (contract_id),
+   KEY start_end_date_idx (start_date, end_date),
+   KEY effective_start_time_idx (effective_start_time),
+   CONSTRAINT `contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE contracts_billing_profile_network
+(
+   id int(11) unsigned NOT NULL AUTO_INCREMENT,
+   contract_id int(11) unsigned NOT NULL,
+   schedule_id int(11) unsigned NOT NULL,
+   billing_network_id int(11) unsigned,
+   billing_profile_id int(11) unsigned NOT NULL,
+   PRIMARY KEY (id),
+   KEY contract_id_idx (contract_id),
+   UNIQUE KEY schedule_network_idx (schedule_id, billing_network_id),
+   KEY billing_profile_idx (billing_profile_id),
+   CONSTRAINT `sid_ref` FOREIGN KEY (`schedule_id`) REFERENCES `contracts_billing_profile_schedule` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE contracts ADD product_id int(11) unsigned NULL;
+
+UPDATE contracts c, billing_mappings bm SET c.product_id = bm.product_id WHERE bm.contract_id = c.id;
+
+ALTER TABLE contracts
+            MODIFY product_id int(11) unsigned NOT NULL,
+            ADD KEY product_id_idx (product_id),
+            ADD CONSTRAINT `c_productid_ref` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
+
+COMMIT;

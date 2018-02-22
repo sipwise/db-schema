@@ -1,0 +1,8 @@
+use billing;
+set autocommit=0;
+
+DROP TABLE contracts_billing_profile_network;
+DROP TABLE contracts_billing_profile_schedule;
+ALTER TABLE contracts DROP FOREIGN KEY c_productid_ref, DROP product_id;
+
+COMMIT;
