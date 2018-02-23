@@ -134,6 +134,24 @@
       "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_e74aa2ab",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-02-23T16:10:18Z",
+      "side": 1,
+      "message": "I am confused :)\n\nschedule_id-billing_network_id-billing_profile_id\n\nUNIQUE KEY (schedule_id, billing_network_id)\n\n1-NULL-1\n1-NULL-2 \u003c- raises an error as there is violation of 1-NULL\n\nUNIQUE KEY (schedule_id, billing_network_id, billing_profile_id)\n\n1-NULL-1\n1-NULL-2 \u003c- accepted as there are no records with 1-NULL-2",
+      "parentUuid": "9a80dd14_8725660c",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
