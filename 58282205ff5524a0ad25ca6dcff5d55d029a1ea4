@@ -116,6 +116,24 @@
       "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_8725660c",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-02-23T15:31:41Z",
+      "side": 1,
+      "message": "\u003ewith (schedule_id, billing_network_id) - that produces an error - correct\n\n\nyes, thats the good intention, but it does not produce the error. the three-part index doesnt either, but at least throws the error when one defines same network twice.",
+      "parentUuid": "9a80dd14_87d006f9",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
