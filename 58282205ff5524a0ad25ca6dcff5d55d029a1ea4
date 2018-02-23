@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a80dd14_e7c0e22c",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-02-23T14:30:39Z",
+      "side": 1,
+      "message": "ok",
+      "parentUuid": "9a80dd14_4758cefa",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a80dd14_c754becc",
         "filename": "db_scripts/diff/15392.up",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9a80dd14_27e2fad5",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-02-23T14:30:39Z",
+      "side": 1,
+      "message": "good point!",
+      "parentUuid": "9a80dd14_c754becc",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a80dd14_87f806c6",
         "filename": "db_scripts/diff/15392.up",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2018-02-23T12:39:19Z",
       "side": 1,
       "message": "already good, but could imho be extended to even prevent malformed user entry:\n\n\n(schedule_id, billing_profile_id, billing_network_id)\n\n-would prevent to specify the same profile w/o network twice\n-would prevent to specify more than one profile with same network",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a80dd14_87d006f9",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-02-23T14:30:39Z",
+      "side": 1,
+      "message": "not good,\ne.g:\nschedule_id: 1 \nbilling_network_id: NULL\nbilling_profile_id: 1\n\nschedule_id: 1 \nbilling_network_id: NULL\nbilling_profile_id: 2\n\nwith (schedule_id, billing_network_id) - that produces an error - correct\nwith (schedule_id, billing_profile_id, billing_network_id) - that allows 2nd entry which is not correct as then you will not be able to differentiate which billing_profile to use from those 2 entries",
+      "parentUuid": "9a80dd14_87f806c6",
       "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
