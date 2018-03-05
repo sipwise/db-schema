@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_dbc73763",
+        "filename": "db_scripts/diff/15387_not_replicated.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-03-05T16:00:12Z",
+      "side": 1,
+      "message": "does exactly the same as \"set autocommit\u003d0\", can be removed.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 18
+      },
+      "revId": "f090f684a4672d862496ff3547d7f97d64ab63ba",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
