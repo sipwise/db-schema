@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a75e904_c0502261",
+        "filename": "db_scripts/diff/15388_not_replicated.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2018-03-05T09:55:56Z",
+      "side": 1,
+      "message": "maybe it would be better to use MODIFY for consistency reasons, but this is a minor thing",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "f1fe2c8f7344ff70ce35ccdc4e6eeeb9d33d0448",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
