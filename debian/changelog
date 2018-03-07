@@ -1,3 +1,12 @@
+ngcp-db-schema (6.1.1.2+0~mr6.1.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [5bb72f4] TT#31305 extend decimal MOS paramter value range
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Mar 2018 15:14:26 +0100
+
 ngcp-db-schema (6.1.1.1+0~mr6.1.1.1) unstable; urgency=medium
 
   * New release.
