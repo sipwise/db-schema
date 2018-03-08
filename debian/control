@@ -10,8 +10,8 @@ Build-Depends:
 Package: ngcp-db-schema
 Architecture: all
 Depends:
- ${misc:Depends},
  ngcp-system-tools-ce | ngcp-system-tools,
+ ${misc:Depends},
 Description: database schema for Sipwise's NGCP platform
  This package provides the database schema for Sipwise's NGCP
  platform.
