@@ -1,0 +1,6 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+ALTER TABLE autoprov_profiles ADD COLUMN `voip_accounts_amount` tinyint UNSIGNED NOT NULL default 0 AFTER model
+
+COMMIT;
