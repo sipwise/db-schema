@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6ff13c_3ed59943",
+        "filename": "db_scripts/diff/15389.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-03-12T17:07:38Z",
+      "side": 1,
+      "message": "move to the ngcp db and adjust grants.yml ?",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 11
+      },
+      "revId": "87d4015f265293ba44c1f704cc8b207c47d2f4d6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a6ff13c_1ed0dd52",
+        "filename": "db_scripts/diff/15389.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-03-12T17:07:38Z",
+      "side": 1,
+      "message": "dates_range_helper",
+      "range": {
+        "startLine": 3,
+        "startChar": 27,
+        "endLine": 3,
+        "endChar": 36
+      },
+      "revId": "87d4015f265293ba44c1f704cc8b207c47d2f4d6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
