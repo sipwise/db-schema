@@ -1,3 +1,15 @@
+ngcp-db-schema (6.0.3.0+0~mr6.0.3.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [183de71] TT#21874 autoprov_firmwares rework to support chunked data move
+
+  [ Rene Krenn ]
+  * [a481725] TT#31305 extend decimal MOS paramter value range
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 13 Mar 2018 14:02:45 +0100
+
 ngcp-db-schema (6.0.2.0+0~mr6.0.2.0) unstable; urgency=medium
 
   * New release.
