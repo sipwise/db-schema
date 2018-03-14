@@ -1,0 +1,8 @@
+USE billing;
+
+DROP TRIGGER phonebook_on_reseller_update;
+DROP TRIGGER phonebook_on_contract_update;
+DROP TRIGGER phonebook_on_subscriber_update;
+DROP TABLE reseller_phonebook;
+DROP TABLE contract_phonebook;
+DROP TABLE subscriber_phonebook;
