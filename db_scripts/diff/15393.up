@@ -1,0 +1,65 @@
+USE billing;
+
+CREATE TABLE reseller_phonebook
+(
+    id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    reseller_id INT(11) UNSIGNED NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    number VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    KEY reseller_id_idx (reseller_id),
+    CONSTRAINT pb_reseller_id_ref FOREIGN KEY (reseller_id) REFERENCES resellers (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE contract_phonebook
+(
+    id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    contract_id INT(11) UNSIGNED NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    number VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    KEY contract_id_idx (contract_id),
+    CONSTRAINT pb_contract_id_ref FOREIGN KEY (contract_id) REFERENCES contracts (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE subscriber_phonebook
+(
+    id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+    subscriber_id INT(11) UNSIGNED NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    number VARCHAR(255) NOT NULL,
+    shared TINYINT(1) NOT NULL DEFAULT '0',
+    PRIMARY KEY (id),
+    KEY subscriber_id_idx (subscriber_id),
+    CONSTRAINT pb_subscriber_id_ref FOREIGN KEY (subscriber_id) REFERENCES voip_subscribers (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DELIMITER //
+CREATE TRIGGER phonebook_on_reseller_update AFTER UPDATE ON resellers
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM phonebook WHERE reseller_id = old.id;
+    END IF;
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER phonebook_on_contract_update AFTER UPDATE ON contracts
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM phonebook WHERE contract_id = old.id;
+    END IF;
+END; //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER phonebook_on_subscriber_update AFTER UPDATE ON voip_subscribers
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM phonebook WHERE subscriber_id = old.id;
+    END IF;
+END; //
+DELIMITER ;
