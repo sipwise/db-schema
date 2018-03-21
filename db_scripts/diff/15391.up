@@ -1,0 +1,3 @@
+use billing;
+
+alter table profile_packages change column balance_interval_start_mode balance_interval_start_mode enum('create', 'create_tz', '1st', '1st_tz', 'topup', 'topup_interval') not null default '1st';
