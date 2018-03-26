@@ -45,7 +45,7 @@ CREATE TRIGGER phonebook_on_reseller_update AFTER UPDATE ON resellers
 FOR EACH ROW
 BEGIN
     IF new.status = 'terminated' THEN
-        DELETE FROM phonebook WHERE reseller_id = old.id;
+        DELETE FROM reseller_phonebook WHERE reseller_id = old.id;
     END IF;
 END; //
 DELIMITER ;
@@ -55,7 +55,7 @@ CREATE TRIGGER phonebook_on_contract_update AFTER UPDATE ON contracts
 FOR EACH ROW
 BEGIN
     IF new.status = 'terminated' THEN
-        DELETE FROM phonebook WHERE contract_id = old.id;
+        DELETE FROM contract_phonebook WHERE contract_id = old.id;
     END IF;
 END; //
 DELIMITER ;
@@ -65,7 +65,7 @@ CREATE TRIGGER phonebook_on_subscriber_update AFTER UPDATE ON voip_subscribers
 FOR EACH ROW
 BEGIN
     IF new.status = 'terminated' THEN
-        DELETE FROM phonebook WHERE subscriber_id = old.id;
+        DELETE FROM subscriber_phonebook WHERE subscriber_id = old.id;
     END IF;
 END; //
 DELIMITER ;
