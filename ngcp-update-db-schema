@@ -42,6 +42,7 @@ fi
 . /etc/mysql/sipwise.cnf
 
 . /etc/default/ngcp-roles
+. /etc/default/ngcp-db
 
 if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
   echo 'Error: SIPWISE_DB_PASSWORD is unset (using /etc/mysql/sipwise.cnf).' >&2
@@ -252,7 +253,7 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
           EXTRA_SYNC_DB_OPTS="--local-user=root --init-replication --set-local-grants"
       fi
       # shellcheck disable=SC2086
-      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS}; then
+      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS} --local-host=${LOCAL_DBHOST} --local-port=${LOCAL_DBPORT}; then
           echo "Syncing 'not_replicated' statements from the central node."
       else
           echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
