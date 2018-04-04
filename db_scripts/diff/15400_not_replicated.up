@@ -1,0 +1,23 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id FROM voip_preferences WHERE attribute='force_inbound_calls_to_peer' INTO @vp_attr_id;
+
+update voip_preferences set data_type = 'enum', type = 0 where id = @vp_attr_id;
+update voip_usr_preferences set value = 'force' where value = 1 and attribute_id =  @vp_attr_id;
+update voip_dom_preferences set value = 'force' where value = 1 and attribute_id =  @vp_attr_id;
+update kamailio.usr_preferences set type=0 where attribute='force_inbound_calls_to_peer';
+update kamailio.dom_preferences set type=0 where attribute='force_inbound_calls_to_peer';
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@vp_attr_id, 'use domain default', NULL, 1, 0, 1, 0, 0, 0, 1),
+(@vp_attr_id, 'Never', 'never', 0, 1, 0, 0, 0, 0, 1),
+(@vp_attr_id, 'Never', 'never', 1, 0, 1, 0, 0, 0, 0),
+(@vp_attr_id, 'Always', 'force', 1, 1, 1, 0, 0, 0, 0),
+(@vp_attr_id, 'If callee is offline', 'force_offline', 1, 1, 1, 0, 0, 0, 0),
+(@vp_attr_id, 'If callee is offline and number is primary', 'force_offline_primary', 1, 1, 1, 0, 0, 0, 0),
+(@vp_attr_id, 'If callee is offline and number is alias', 'force_offline_alias', 1, 1, 1, 0, 0, 0, 0);
+
+commit;
