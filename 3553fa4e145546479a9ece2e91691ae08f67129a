@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_860cae43",
+        "filename": "db_scripts/diff/15394.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-04-04T15:44:01Z",
+      "side": 1,
+      "message": "this might break the kamailio logic for ongoing preference requests.\n\nI would do that in a less complicated way:\n\n1. rename it to \"not_replicated\" as we do not want the values to reach the active node during the upgrade as it will most likely not have the code logic to work with that yet (more on the below)\n2. store the attribute_id in @vp_attr_id where attribute \u003d \u0027force_inbound_calls_to_peer\u0027\n3. Insert the new enum preferences\n4. \n update voip_preferences set data_type \u003d \u0027enum\u0027 where id \u003d @vp_attr_id\n update voip_usr_preferences set value \u003d \"force\" where value \u003d 1 and attribute_id \u003d  @vp_attr_id\n update voip_dom_preferences set value \u003d \"force\" where value \u003d 1 and attribute_id \u003d  @vp_attr_id\n\nthat way:\n\n- it\u0027s safe for possible ongoing callswait\", another way is to make it \"_not_replicated\"\n- faster as no temp tables are used (especially on huge datasets)\n- our triggers provisioning -\u003e kamailio should also be reliably fast to rename it.\n- during the upgrade of course it is prohibited to change preferences on the active node as the inactive node will have incorrect data then.\n- another option is to leave the script as \"replicated\" but then use \"lock table read\" for kamailio.*preferences and provisioning.preferences tables before the changes and after the changes use \"unlock tables\". but this way ongoing calls on the active node might be failing or going wrong routes.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 96
+      },
+      "revId": "3553fa4e145546479a9ece2e91691ae08f67129a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
