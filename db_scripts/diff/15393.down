@@ -1,0 +1,3 @@
+USE prosody;
+
+ALTER TABLE sipwise_mam DROP KEY `with_idx`;
