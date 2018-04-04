@@ -1,0 +1,3 @@
+USE prosody;
+
+ALTER TABLE sipwise_mam ADD KEY `user_with_idx` (`username`, `with`);
