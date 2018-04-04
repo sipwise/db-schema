@@ -1,0 +1,16 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='force_inbound_calls_to_peer';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id; 
+
+update voip_preferences set data_type = 'boolean', type = 1 where id = @pref_id;
+update kamailio.usr_preferences set type = 1 where attribute='force_inbound_calls_to_peer';
+update kamailio.dom_preferences set type = 1 where attribute='force_inbound_calls_to_peer';
+
+delete from voip_usr_preferences where value <> 'force' and attribute_id =  @pref_id;
+update voip_usr_preferences set value = 1 where value = 'force' and attribute_id =  @pref_id;
+delete from voip_dom_preferences where value <> 'force' and attribute_id =  @pref_id;
+update voip_dom_preferences set value = 1 where value = 'force' and attribute_id =  @pref_id;
+
+commit;
