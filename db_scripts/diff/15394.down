@@ -1,0 +1,22 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='force_inbound_calls_to_peer';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+DELETE FROM voip_preferences WHERE id=@pref_id;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@vpg_id, 'force_inbound_calls_to_peer', 'Force inbound calls to peer', 1, 1,
+     1, 1, 1, 0, 0, 0,
+     now(), 0, 0, 'boolean', 0,
+     'Force calls to this user to be treated as if the user was not local. This helps in migration scenarios.');
+
+COMMIT;
+

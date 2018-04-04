@@ -1,0 +1,49 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Internals';
+
+SELECT id FROM voip_preferences WHERE attribute='force_inbound_calls_to_peer' INTO @old_pref_id;
+UPDATE voip_preferences SET attribute='force_inbound_calls_to_peer_old' WHERE id = @old_pref_id;
+
+INSERT INTO voip_preferences
+    (voip_preference_groups_id, attribute, label, type, max_occur,
+     usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref,
+     modify_timestamp, internal, expose_to_customer, data_type, read_only,
+     description)
+    VALUES
+    (@vpg_id, 'force_inbound_calls_to_peer', 'Force inbound calls to peer', 0, 1,
+     1, 1, 1, 0, 0, 0,
+     now(), 0, 0, 'enum', 0,
+     'Force calls to this user to be treated as if the user was not local. This helps in migration scenarios.');
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Never', 'no', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Never', 'no', 1, 0, 1, 0, 0, 0, 0),
+(@pref_id, 'Always', 'force', 1, 1, 1, 0, 0, 0, 0),
+(@pref_id, 'If callee is offline', 'force_offline', 1, 1, 1, 0, 0, 0, 0);
+
+
+-- finally copy over the vars to the new preference
+INSERT INTO voip_usr_preferences(subscriber_id, attribute_id, value)
+  SELECT p.subscriber_id, @pref_id, "force" FROM voip_usr_preferences p
+  WHERE p.attribute_id=@old_pref_id AND p.value=1;
+
+-- make update instead of insert because default values are already there for new preference
+UPDATE voip_dom_preferences a, voip_dom_preferences b SET a.value="force"
+WHERE a.attribute_id = @pref_id
+AND a.domain_id = b.domain_id
+AND b.attribute_id = @old_pref_id
+AND b.value = 1;
+
+-- delete temporary data
+DELETE FROM voip_preferences where id=@old_pref_id;
+
+commit;
+
