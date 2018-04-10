@@ -38,7 +38,7 @@ if [ "${nodename}" = "unknown" ] ; then
   exit 1
 fi
 
-/etc/init.d/mysql start || true
+service mysql start || true
 . /etc/mysql/sipwise.cnf
 
 . /etc/default/ngcp-roles
