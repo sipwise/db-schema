@@ -1,0 +1,17 @@
+USE provisioning;
+
+INSERT INTO voip_preferences (
+  voip_preference_groups_id,
+  attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+  contract_location_pref, dev_pref, devprof_pref,
+  modify_timestamp, internal, expose_to_customer, data_type, read_only,
+  description
+) VALUES(
+  (SELECT id FROM voip_preference_groups WHERE name = 'Internals'),
+  'mobile_push_silent_list', 'List of muted chats', 0, 0,
+  1, 0, 0, 0, 0,
+  0, 0, 0,
+  now(), 0, 0, 'string', 0,
+  'Contains ids in the form of user@domain of chats or chatrooms for which only a silent notification is to be sent'
+);
