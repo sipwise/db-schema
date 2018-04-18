@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9aa53dc9_655be255",
+        "filename": "db_scripts/diff/15400.down",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-04-18T11:47:51Z",
+      "side": 1,
+      "message": "please rename it into 15400_not_replicated.down",
+      "revId": "387c7e1e97973029b3eaf3caa19fcc6e0d87bc9c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aa53dc9_a548ca88",
         "filename": "db_scripts/diff/15400_not_replicated.up",
         "patchSetId": 5
