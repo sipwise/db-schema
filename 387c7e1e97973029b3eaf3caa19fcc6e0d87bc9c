@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_a548ca88",
+        "filename": "db_scripts/diff/15400_not_replicated.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-04-18T11:46:36Z",
+      "side": 1,
+      "message": "this block should be inserted before the updates",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 102
+      },
+      "revId": "387c7e1e97973029b3eaf3caa19fcc6e0d87bc9c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
