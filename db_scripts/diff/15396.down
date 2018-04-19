@@ -1,0 +1,10 @@
+use provisioning;
+set autocommit=0;
+
+delete from voip_preferences_enum where preference_id =
+    (select id from voip_preferences where attribute = "smsc_peer");
+delete from voip_preferences where attribute = "smsc_peer";
+
+alter table sms_journal drop smsc_peer;
+
+commit;
