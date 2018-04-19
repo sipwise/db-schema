@@ -1,0 +1,42 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Internals"),
+attribute = "smsc_peer",
+label = "SMSC Peer",
+type = 0,
+max_occur = 1,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "enum",
+read_only = 0,
+description = "SMSC peer to use for outgoing sms messages";
+
+insert into voip_preferences_enum
+  set
+preference_id = (select last_insert_id()),
+label = "default",
+value = NULL,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+default_val = NULL;
+
+alter table sms_journal add smsc_peer varchar(128) not null default '';
+
+commit;
