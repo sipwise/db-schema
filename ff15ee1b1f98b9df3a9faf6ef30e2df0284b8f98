@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aa53dc9_ae5b072e",
+        "filename": "db_scripts/diff/15396.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-04-20T06:11:23Z",
+      "side": 1,
+      "message": "why enum, how is that supposed to work - ie. what will be added there; is it sort of smsc \"type\"?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "ff15ee1b1f98b9df3a9faf6ef30e2df0284b8f98",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
