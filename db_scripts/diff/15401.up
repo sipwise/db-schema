@@ -1,0 +1,14 @@
+USE provisioning;
+
+alter table `voip_preferences` add column customer_defined tinyint(1) unsigned NOT NULL DEFAULT '0';
+
+CREATE TABLE `voip_preference_relations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `voip_preference_id` int(11) unsigned NOT NULL,
+  `autoprov_device_id` int(11) unsigned,
+  PRIMARY KEY (`id`),
+  KEY `vpid_ref` (`voip_preference_id`),
+  CONSTRAINT `vpid_ref` FOREIGN KEY (`voip_preference_id`) REFERENCES `voip_preferences` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  KEY `adid_ref` (`autoprov_device_id`),
+  CONSTRAINT `adid_ref` FOREIGN KEY (`autoprov_device_id`) REFERENCES `autoprov_devices` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+);

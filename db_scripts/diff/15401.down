@@ -1,0 +1,4 @@
+USE provisioning;
+
+alter table `voip_preferences` drop column customer_defined;
+DROP TABLE voip_preference_relations;
