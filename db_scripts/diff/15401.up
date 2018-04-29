@@ -1,0 +1,29 @@
+USE provisioning;
+
+
+CREATE TABLE `voip_custom_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `voip_preference_groups_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(31) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `type` tinyint(3) NOT NULL DEFAULT '0',
+  `max_occur` tinyint(3) unsigned NOT NULL,
+  `usr_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `prof_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `dom_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `peer_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `contract_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `contract_location_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `dev_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `devprof_pref` tinyint(1) NOT NULL DEFAULT '0',
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `internal` tinyint(1) NOT NULL DEFAULT '0',
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT '0',
+  `data_type` enum('boolean','int','string','enum') DEFAULT NULL,
+  `read_only` tinyint(1) NOT NULL DEFAULT '0',
+  `description` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `attribute_idx` (`attribute`),
+  KEY `vcpgid_ref` (`voip_preference_groups_id`),
+  CONSTRAINT `vcpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
+);
