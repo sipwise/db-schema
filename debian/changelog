@@ -1,3 +1,18 @@
+ngcp-db-schema (6.2.2.0+0~mr6.2.2.0) unstable; urgency=medium
+
+  [ Andreas Granig ]
+  * [ea019fa] TT#35053 Add index to both username,with
+
+  [ Kirill Solomko ]
+  * [9da2677] TT#34902 master/slave repl use local host/port from default/ngcp-db
+
+  [ Guillem Jover ]
+  * [05ddbe1] TT#26264 Use service(8) instead of directly calling /etc/init.d/<service>
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 02 May 2018 12:54:29 +0200
+
 ngcp-db-schema (6.2.1.0+0~mr6.2.1.0) unstable; urgency=medium
 
   [ Rene Krenn ]
