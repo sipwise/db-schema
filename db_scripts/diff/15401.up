@@ -1,0 +1,42 @@
+USE provisioning;
+
+alter table `voip_preferences` add column `dynamic` tinyint(1) unsigned NOT NULL DEFAULT '0';
+alter table `voip_preferences` add column `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT '0' AFTER `devprof_pref`;
+alter table `voip_preferences_enum` add column `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT '0' AFTER `devprof_pref`;
+
+CREATE TABLE `voip_preference_relations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `voip_preference_id` int(11) unsigned NOT NULL,
+  `autoprov_device_id` int(11) unsigned,
+  PRIMARY KEY (`id`),
+  -- not unique, because autoprov_device_id can be null
+  KEY `voip_preference_rel_devices` (`voip_preference_id`,`autoprov_device_id`),
+  KEY `vpid_ref` (`voip_preference_id`),
+  CONSTRAINT `vpid_ref` FOREIGN KEY (`voip_preference_id`) REFERENCES `voip_preferences` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  KEY `adid_ref` (`autoprov_device_id`),
+  CONSTRAINT `adid_ref` FOREIGN KEY (`autoprov_device_id`) REFERENCES `autoprov_devices` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE `voip_fielddev_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `fielddevidattrid_idx` (`device_id`,`attribute_id`),
+  KEY `fielddeviceid_idx` (`device_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_fdev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_fd_p_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TRIGGER provisioning.voip_pref_icheck_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_icheck_trig BEFORE INSERT ON voip_preferences
+FOR EACH ROW BEGIN
+    IF (NEW.attribute like '\_\_%' AND !NEW.dynamic) THEN
+        ISIGNAL sqlstate '45001' set message_text = "Only voip_preferences records with 'dynamic' sign on can use prefix '__' in attribute!";
+    END IF;
+END */;;
+DELIMITER ;
