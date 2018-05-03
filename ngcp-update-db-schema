@@ -101,7 +101,7 @@ running_on_active_node() {
   if [ "$nodename" = "spce" ] ; then
     return 1
   else
-    if /usr/sbin/ngcp-check_active -q ; then
+    if /usr/sbin/ngcp-check-active -q ; then
       if $FORCE_ACTIVE_NODE; then
         echo "Force update on active node as requested."
       else
