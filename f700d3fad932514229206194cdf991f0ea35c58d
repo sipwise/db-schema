@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab14d0d_db9f33b3",
+        "filename": "db_scripts/diff/15401.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2018-05-08T09:54:44Z",
+      "side": 1,
+      "message": "forwarder",
+      "range": {
+        "startLine": 15,
+        "startChar": 127,
+        "endLine": 15,
+        "endChar": 135
+      },
+      "revId": "f700d3fad932514229206194cdf991f0ea35c58d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
