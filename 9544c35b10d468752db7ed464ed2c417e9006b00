@@ -46,6 +46,30 @@
       "revId": "9544c35b10d468752db7ed464ed2c417e9006b00",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ab14d0d_3b76173f",
+        "filename": "db_scripts/diff/15401.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2018-05-08T11:45:38Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t get idea of the:\n\"this block does not make sense as it is expected to have dynamic\u003d1, and __ prefix\"\n\nThis block is intended to check exactly situation when someone (for example from other code part, not that I currently create now) something with dynamic \u003d 1 and without __ prefix. \n\nIn your condition this is second part.\n(NEW.attribute not like \u0027\\_\\_%\u0027 AND NEW.dynamic \u003d\u003d 1)\n\nDon\u0027t you think that we need this checking? \nReally I prefer 2 different messages for different situations based on prefix first, and then on dynamic value. As for me it is more clear.\n\nBut this is cosmetic, anyway.",
+      "parentUuid": "1ab14d0d_dbd4d348",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "9544c35b10d468752db7ed464ed2c417e9006b00",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
