@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ab14d0d_3bdbb71d",
+        "filename": "db_scripts/diff/15401.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-08T12:05:41Z",
+      "side": 1,
+      "message": "in both of the cases the text message is almost identical, so imho it should be either different or only one per both of the cases.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "b1b8da74f7030b7553d5836b9f43e0734dd9f7a3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
