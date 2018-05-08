@@ -22,6 +22,30 @@
       "revId": "9544c35b10d468752db7ed464ed2c417e9006b00",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ab14d0d_3bbe1700",
+        "filename": "db_scripts/diff/15401.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-08T10:30:24Z",
+      "side": 1,
+      "message": "P.S. \n\nSIGNAL sqlstate \u002745001\u0027 set message_text \u003d \"voip_preferences attributes are allowed either \u0027__\u0027 prefixed + dynamic\u003d1 or without the \u0027__\u0027 prefix and dynamic\u003d0\";\nEND IF",
+      "parentUuid": "1ab14d0d_dbd4d348",
+      "range": {
+        "startLine": 43,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 9
+      },
+      "revId": "9544c35b10d468752db7ed464ed2c417e9006b00",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
