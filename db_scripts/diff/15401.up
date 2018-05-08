@@ -1,0 +1,16 @@
+USE provisioning;
+INSERT INTO voip_preferences (
+  voip_preference_groups_id,
+  attribute, label, type, max_occur,
+  usr_pref, prof_pref, dom_pref, peer_pref, contract_pref,
+  contract_location_pref, dev_pref, devprof_pref,
+  modify_timestamp, internal, expose_to_customer, data_type, read_only,
+  description
+) VALUES (
+  (SELECT id FROM voip_preference_groups WHERE NAME = 'Internals'),
+  'lcr_peer_cf', 'Peer selection based on forwarder number', 1, 1,
+  1, 1, 1, 0, 0,
+  0, 0, 0,
+  now(), 0, 0, 'boolean', 0,
+  'If set and a CF to an outbound number is configured on the subscriber, the selection of the outbound peer is done using the forwader as caller number.'
+);
