@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1ab14d0d_be25755d",
+        "filename": "db_scripts/diff/15401.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-09T11:18:22Z",
+      "side": 1,
+      "message": "autoprov_device_id",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "b1b8da74f7030b7553d5836b9f43e0734dd9f7a3",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab14d0d_3bdbb71d",
         "filename": "db_scripts/diff/15401.up",
         "patchSetId": 5
