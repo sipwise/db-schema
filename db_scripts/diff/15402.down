@@ -1,0 +1,9 @@
+USE provisioning;
+
+alter table `voip_preferences` drop column `dynamic`;
+alter table `voip_preferences` drop column `fielddev_pref`;
+alter table `voip_preferences_enum` drop column `fielddev_pref`;
+DROP TABLE voip_preference_relations;
+DROP TABLE voip_fielddev_preferences;
+DROP TRIGGER provisioning.voip_pref_icheck_trig;
+DROP TRIGGER provisioning.voip_pref_ucheck_trig;
