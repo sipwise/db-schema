@@ -1,3 +1,15 @@
+ngcp-db-schema (6.1.2.1+0~mr6.1.2.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [bd53b68] TT#31305 extend decimal MOS paramter value range
+  * [6b72c8f] TT#31179 clean duplicate "lock" pref values
+  * [f1ec95a] TT#32910 TT#33037 initial cash_balance, free_time_balance
+  * [0412e2c] TT#35662 move product_id to billing.contracts
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 May 2018 23:00:59 +0200
+
 ngcp-db-schema (6.1.2.0+0~mr6.1.2.0) unstable; urgency=medium
 
   * New release.
