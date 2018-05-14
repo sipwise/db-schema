@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "fabf19d9_5acb1573",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-14T12:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a80dd14_e7c0e22c",
+      "range": {
+        "startLine": 10,
+        "startChar": 47,
+        "endLine": 10,
+        "endChar": 58
+      },
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a80dd14_c754becc",
         "filename": "db_scripts/diff/15392.up",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "good point!",
       "parentUuid": "9a80dd14_c754becc",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_3ac86174",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-14T12:18:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a80dd14_27e2fad5",
       "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
@@ -149,6 +191,24 @@
       "side": 1,
       "message": "I am confused :)\n\nschedule_id-billing_network_id-billing_profile_id\n\nUNIQUE KEY (schedule_id, billing_network_id)\n\n1-NULL-1\n1-NULL-2 \u003c- raises an error as there is violation of 1-NULL\n\nUNIQUE KEY (schedule_id, billing_network_id, billing_profile_id)\n\n1-NULL-1\n1-NULL-2 \u003c- accepted as there are no records with 1-NULL-2",
       "parentUuid": "9a80dd14_8725660c",
+      "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fabf19d9_1ac59d5a",
+        "filename": "db_scripts/diff/15392.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-05-14T12:18:39Z",
+      "side": 1,
+      "message": "NULL columns are indeed excluded from unique key checks, therefore \nwith unique key (schedule_id, billing_network_id)\n1, NULL, 1 - OK\n1, NULL, 2 - OK (error is expected here)\n\nThe only solution it seems is to have billing_network_id as int(11) unsigned default \u00270\u0027\n\nso then\n\n1, 0, 1 - OK\n1, 0, 2 - ERROR (expected)",
+      "parentUuid": "9a80dd14_87d006f9",
       "revId": "58282205ff5524a0ad25ca6dcff5d55d029a1ea4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
