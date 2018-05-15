@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fabf19d9_9aa3ed4f",
+        "filename": "db_scripts/diff/15403.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-05-15T08:09:22Z",
+      "side": 1,
+      "message": "this can actually even be a unique key",
+      "revId": "f8ec0af5cbb42d4daa3566385ea593050c155aac",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
