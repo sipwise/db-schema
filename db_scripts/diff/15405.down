@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+delete from voip_preferences where attribute = "clip_no_screening";
+delete from voip_preferences where attribute = "pai_clir";
+
+commit;

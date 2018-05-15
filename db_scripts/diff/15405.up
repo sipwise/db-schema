@@ -1,0 +1,46 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Number Manipulations"),
+attribute = "clip_no_screening",
+label = "CLIP no screening",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "boolean",
+read_only = 0,
+description = "CLIP no screening, when enabled the UPN in From is not checked by allowed_clis'
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Number Manipulations"),
+attribute = "pai_clir",
+label = "P-Asserted-Identity CLIR",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "boolean",
+read_only = 0,
+description = "P-Asserted-Identity is anonymized if enabled"
+
+commit;
