@@ -1,5 +1,0 @@
-SET sql_log_bin=0;
-use accounting;
-
-alter table prepaid_costs add column source_user_id char(36) NOT NULL,
-  add column destination_user_id char(36) NOT NULL;
