@@ -1,3 +1,0 @@
-use billing;
-
-alter table contracts drop column product_id;
