@@ -1,3 +1,12 @@
+ngcp-db-schema (6.2.1.2+0~mr6.2.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [d0488ab] TT#35662 move product_id to billing.contracts
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 May 2018 16:01:47 +0200
+
 ngcp-db-schema (6.2.1.1+0~mr6.2.1.1) unstable; urgency=medium
 
   [ Andreas Granig ]
