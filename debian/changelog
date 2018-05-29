@@ -1,3 +1,33 @@
+ngcp-db-schema (6.4.0.0+0~mr6.4.0.0) unstable; urgency=medium
+
+  [ Andreas Granig ]
+  * [69836f3] TT#35053 Add index to both username,with
+
+  [ Kirill Solomko ]
+  * [fd5f5ef] TT#34902 master/slave repl use local host/port from default/ngcp-db
+  * [88520e5] TT#35508 add sms_journal.cli field
+  * [05ddc85] TT#35507 add smsc_peer domain preference, sms_journal smc_peer
+
+  [ Guillem Jover ]
+  * [bc3fca8] TT#26264 Use service(8) instead of directly calling /etc/init.d/<service>
+  * [1260b73] TT#36351 Use modern ngcp-check-active
+
+  [ Andrew Pogrebennyk ]
+  * [243e15c] TT#34456 convert force_inbound_calls_to_peer preference to enum
+
+  [ Rene Krenn ]
+  * [06abcc0] TT#35662 move product_id to billing.contracts
+
+  [ Marco Capetta ]
+  * [4930188] TT#32926 Add lcr_peer_cf in usr and dom voip preferences
+
+  [ Irina Peshinskaya ]
+  * [f5063d0] TT#36055 Add custom pbx device preferences tables
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 29 May 2018 10:02:35 +0200
+
 ngcp-db-schema (6.3.0.0+0~mr6.3.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
