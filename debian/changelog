@@ -1,3 +1,24 @@
+ngcp-db-schema (5.5.5.1+0~mr5.5.5.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [1201e0b] TT#31179 clean duplicate "lock" pref values
+  * [737fae1] TT#23271 add uuid columns for accounting.prepaid_cost
+  * [7808e50] TT#32910 TT#33037 initial cash_balance, free_time_balance
+  * [57d3243] TT#35662 move product_id to billing.contracts
+  * [1bfed9c] Revert "TT#35662 move product_id to billing.contracts"
+  * [d8d2c35] TT#32109 make v_contract_timezones also work for system contracts
+
+  [ Kirill Solomko ]
+  * [eb97073] TT#30501 add ngcp.tzinfo_version
+  * [d75c8de] TT#3668 use accounting.cdr tables for composite primary keys
+  * [728fbbd] TT#25451 include ngcp db into r/o replication
+  * [cf6fc48] TT#25451 add ngcp.timezone table
+  * [578720e] TT#25451 use ngcp.timezone in v_timezone views
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 04 Jun 2018 16:14:48 +0200
+
 ngcp-db-schema (5.5.5.0+0~mr5.5.5.0) unstable; urgency=medium
 
   * New release.
