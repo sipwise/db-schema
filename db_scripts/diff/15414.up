@@ -1,0 +1,205 @@
+use billing;
+
+delimiter ;;
+
+create or replace procedure set_profile_network(
+  in _contract_id int(11) unsigned,
+  in _start int(13) unsigned,
+  in _profile_id int(11) unsigned,
+  in _network_id int(11) unsigned
+)
+begin
+
+  call billing.append_billing_mappings(_contract_id,null,concat(from_unixtime(_start),",,",_profile_id,",",
+    if(_network_id is null,"",_network_id),",;"));
+
+end;;
+
+create or replace procedure set_profile_networks_from_package(
+  in _contract_id int(11) unsigned,
+  in _start int(13) unsigned,
+  in _package_id int(11) unsigned,
+  in _package_profile_set varchar(32)
+)
+begin
+
+  #set group_concat_max_len = 2048;
+
+  call billing.append_billing_mappings(_contract_id,null,(select group_concat(concat(from_unixtime(_start),",,",profile_id,",",
+    if(network_id is null,"",network_id),",") order by id separator ";") from billing.package_profile_sets
+    where package_id = _package_id and discriminator = _package_profile_set));
+
+end;;
+
+#select group_concat(concat("2018-01-01 00:00:00",",,",profile_id,",",if(network_id is null,"",network_id),",") separator ";") from billing.package_profile_sets where package_id = 30 and discriminator = "initial";
+
+create or replace function get_billing_profile(
+  _contract_id int(11),
+  _epoch decimal(13,3)
+) returns int(11)
+reads sql data
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch and cbpn.base = 1);
+
+  if _effective_start_date is null then
+    set _cbpn_id = (select min(id) from billing.contracts_billing_profile_network cbpn
+      where cbpn.contract_id = _contract_id and cbpn.base = 1);
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date and cbpn.base = 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end;;
+
+create or replace function get_billing_profile_ipv4(
+  _contract_id int(11),
+  _epoch decimal(13,3),
+  _ipv4 varchar(15)
+) returns int(11)
+reads sql data
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+    left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch
+    and ((bnb._ipv4_net_from <= inet6_aton(_ipv4) and bnb._ipv4_net_to >= inet6_aton(_ipv4)) or cbpn.billing_network_id is null));
+
+  if _effective_start_date is null then
+    return null;
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+      left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date
+      and ((bnb._ipv4_net_from <= inet6_aton(_ipv4) and bnb._ipv4_net_to >= inet6_aton(_ipv4)) or cbpn.billing_network_id is null)
+      order by cbpn.billing_network_id desc limit 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end;;
+
+create or replace function get_billing_profile_ipv6(
+  _contract_id int(11),
+  _epoch decimal(13,3),
+  _ipv6 varchar(46)
+) returns int(11)
+reads sql data
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+    left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch
+    and ((bnb._ipv6_net_from <= inet6_aton(_ipv6) and bnb._ipv6_net_to >= inet6_aton(_ipv6)) or cbpn.billing_network_id is null));
+
+  if _effective_start_date is null then
+    return null;
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+      left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date
+      and ((bnb._ipv6_net_from <= inet6_aton(_ipv6) and bnb._ipv6_net_to >= inet6_aton(_ipv6)) or cbpn.billing_network_id is null)
+      order by cbpn.billing_network_id desc limit 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end;;
+
+delimiter ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace view _v_actual_effective_start_times as select
+  cbps.contract_id as contract_id,
+  max(cbps.effective_start_time) as effective_start_time
+from billing.contracts_billing_profile_schedule cbps
+join billing.contracts_billing_profile_network_schedule cbpns on cbpns.profile_network_id = cbpn.id
+where cbpns.effective_start_time <= unix_timestamp(now()) and cbpn.last = 1
+group by cbpn.contract_id;
+
+create or replace view v_actual_billing_profiles as select 
+  est.contract_id as contract_id,
+  cbpn.billing_profile_id as billing_profile_id
+from billing._v_actual_effective_start_times est
+join billing.contracts_billing_profile_network_schedule cbpns on cbpn.contract_id = est.contract_id and cbpns.effective_start_time = est.effective_start_time
+join billing.contracts_billing_profile_network cbpn on cbpns.profile_schedule_id = cbpn.id and cbpn.last = 1;
+
+
+
