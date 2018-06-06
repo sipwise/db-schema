@@ -1,0 +1,96 @@
+use billing;
+delimiter ;;
+
+create or replace procedure transform_billing_mappings() begin
+
+  declare _contracts_done, _events_done, _mappings_done, _is_end boolean default false;
+  declare _contract_id, _bm_id, _default_bm_id, _profile_id, _network_id int(11) unsigned;
+  declare _t, _start_date, _end_date datetime;
+  declare _effective_start_time decimal(13,3);
+  declare _bm_ids, _old_bm_ids varchar(65535);
+
+  declare contracts_cur cursor for select contract_id
+    from billing_mappings bm group by contract_id;
+  declare continue handler for not found set _contracts_done = true;
+
+  set _old_bm_ids = "";
+
+  open contracts_cur;
+  contracts_loop: loop
+    fetch contracts_cur into _contract_id;
+    if _contracts_done then
+      leave contracts_loop;
+    end if;
+    delete from billing.contracts_billing_profile_network where contract_id = _contract_id;
+    nested1: begin
+
+      declare events_cur cursor for select t,is_end from (
+        (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+          from billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
+        union all
+        (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from billing_mappings where contract_id = _contract_id)
+      ) as events group by t, is_end order by t, is_end;
+      declare continue handler for not found set _events_done = true;
+
+      set _events_done = false;
+      open events_cur;
+      events_loop: loop
+        fetch events_cur into _t, _is_end;
+        if _events_done then
+          leave events_loop;
+        end if;
+
+        nested2: begin
+
+          declare mappings_cur cursor for select bm1.id, bm1.start_date, bm1.end_date, bm1.billing_profile_id, bm1.network_id from
+              billing_mappings bm1 where bm1.contract_id = _contract_id and bm1.start_date <=> (select bm2.start_date
+              from billing_mappings bm2 where
+              bm2.contract_id = _contract_id
+              and (bm2.start_date <= _t or bm2.start_date is null)
+              and (if(_is_end,bm2.end_date > _t,bm2.end_date >= _t) or bm2.end_date is null)
+              order by bm2.start_date desc limit 1) order by bm1.id asc;
+          declare continue handler for not found set _mappings_done = true;
+
+          set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 0.001,_t)));
+          set _bm_ids = "";
+          set _mappings_done = false;
+          open mappings_cur;
+          mappings_loop1: loop
+            fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+            if _mappings_done then
+              leave mappings_loop1;
+            end if;
+            set _bm_ids = (select concat(_bm_ids,"-",_bm_id));
+            set _default_bm_id = _bm_id;
+          end loop mappings_loop1;
+          close mappings_cur;
+
+          if _old_bm_ids != _bm_ids then
+            set _mappings_done = false;
+            open mappings_cur;
+            mappings_loop2: loop
+              fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+              if _mappings_done then
+                leave mappings_loop2;
+              end if;
+
+              call insert_billing_profile_network_schedule(_contract_id,if(_bm_id = _default_bm_id,1,0),_start_date,_end_date,
+                _effective_start_time,_profile_id,_network_id);
+
+            end loop mappings_loop2;
+            close mappings_cur;
+          end if;
+          set _old_bm_ids = _bm_ids;
+        end nested2;
+      end loop events_loop;
+      close events_cur;
+    end nested1;
+  end loop contracts_loop;
+  close contracts_cur;
+end;;
+delimiter ;
+
+start transaction;
+call transform_billing_mappings();
+commit;
+drop procedure transform_billing_mappings;
