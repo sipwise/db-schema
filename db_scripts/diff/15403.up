@@ -1,0 +1,33 @@
+use billing;
+
+drop table if exists contracts_billing_profile_network_schedule;
+drop table if exists contracts_billing_profile_schedule;
+drop table if exists contracts_billing_profile_network;
+drop table if exists contracts_billing_profile_network_schedule;
+drop table if exists contracts_billing_profile_network;
+
+create table contracts_billing_profile_network (
+  id int(11) unsigned not null auto_increment,
+  contract_id int(11) unsigned not null,
+  billing_profile_id int(11) unsigned not null,
+  billing_network_id int(11) unsigned default null,
+  start_date datetime,
+  end_date datetime,
+  base tinyint(3) not null default 0,
+  primary key (id),
+  unique key cbpn_natural_idx (contract_id, billing_profile_id, billing_network_id, start_date, end_date, base),
+  constraint cbpn_cid_ref foreign key (contract_id) references contracts (id) on update cascade on delete cascade,
+  constraint cbpn_pid_ref foreign key (billing_profile_id) references billing_profiles (id) on update cascade,
+  constraint cbpn_nid_ref foreign key (billing_network_id) references billing_networks (id) on update cascade
+) engine=InnoDB default charset=utf8;
+
+create table contracts_billing_profile_network_schedule (
+  id int(11) unsigned not null auto_increment,
+  profile_network_id int(11) unsigned not null,
+  effective_start_time decimal(13,3) not null,
+  primary key (id),
+  key cbpns_pnid_est_idx (profile_network_id,effective_start_time),
+  constraint cbpns_cbpnid_ref foreign key (profile_network_id) references contracts_billing_profile_network (id) on update cascade on delete cascade
+) engine=InnoDB default charset=utf8;
+
+
