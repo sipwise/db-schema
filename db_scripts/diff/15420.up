@@ -1,0 +1,36 @@
+use billing;
+
+create or replace view _v_actual_effective_start_time as select
+  cbpn.contract_id as contract_id,
+  max(cbpns.effective_start_time) as effective_start_time
+from billing.contracts_billing_profile_network_schedule cbpns
+join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+where cbpns.effective_start_time <= unix_timestamp(now()) and cbpn.base = 1
+group by cbpn.contract_id;
+
+create or replace view v_actual_billing_profiles as select 
+  est.contract_id as contract_id,
+  cbpn.billing_profile_id as billing_profile_id
+from billing.contracts_billing_profile_network_schedule cbpns
+join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+where cbpn.base = 1;
+
+create or replace view v_contracts_billing_profile_network_schedules as select
+  cbpns.id,
+  contract_id,
+  start_date,
+  end_date,
+  billing_profile_id as billing_profile_id,
+  billing_network_id as network_id,
+  effective_start_time,
+  from_unixtime(effective_start_time) as effective_start_date,
+  bp.name as billing_profile_name,
+  bp.handle as billing_profile_handle,
+  bn.name as billing_network_name
+from
+     billing.contracts_billing_profile_network cbpn
+join billing.contracts_billing_profile_network_schedule cbpns on cbpns.profile_network_id = cbpn.id
+join billing.billing_profiles bp on bp.id = cbpn.billing_profile_id
+left join billing.billing_networks bn on bn.id = cbpn.billing_network_id;
+
