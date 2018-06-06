@@ -1,0 +1,207 @@
+use billing;
+delimiter ;;
+
+create or replace procedure insert_billing_profile_network_schedule(
+  _contract_id int(11) unsigned,
+  _last tinyint(3),
+  _start_date datetime,
+  _end_date datetime,
+  _effective_start_date decimal(13,3),
+  _profile_id int(11) unsigned,
+  _network_id int(11) unsigned
+) begin
+
+  declare _profile_network_id int(11) unsigned;
+
+  set _profile_network_id = (select id from billing.contracts_billing_profile_network where contract_id = _contract_id and billing_profile_id = _profile_id
+    and billing_network_id <=> _network_id and start_date <=> _start_date and end_date <=> _end_date and base = _last);
+  
+  if _profile_network_id is null then
+    insert into billing.contracts_billing_profile_network values(null,_contract_id,_profile_id,_network_id,_start_date,_end_date,_last);
+    set _profile_network_id = last_insert_id();
+  end if;
+  insert into billing.contracts_billing_profile_network_schedule values(null,_profile_network_id,_effective_start_date);
+
+end;;
+
+create or replace procedure append_billing_mappings(
+  in _contract_id int(11) unsigned,
+  in _now datetime,
+  in _future_mappings varchar(65535)
+)
+main: begin
+
+  declare _new boolean default false;
+  declare _line varchar(128);
+  declare _start_date_str,_end_date_str varchar(19);
+  declare _profile_id_str,_network_id_str varchar(11);
+  declare _last_str,_col_sep,_row_sep varchar(1);
+
+  declare _row_sep_length int;
+  declare _contract_id_locked,_max_id,_id int(11) unsigned;
+
+  if _contract_id is null then
+        signal sqlstate "45001" set message_text = "contract_id required";
+  else
+        set _contract_id_locked = (select id from billing.contracts where id = _contract_id for update);
+  end if;
+
+  #if _future_mappings is null or length(_future_mappings) = 0 then
+  #  leave main;
+  #end if;
+
+  drop temporary table if exists tmp_billing_mappings; 
+  create temporary table tmp_billing_mappings engine = memory select cbpn.id,cbpn.contract_id,cbpn.start_date,cbpn.end_date,cbpn.billing_profile_id,
+    cbpn.billing_network_id as network_id,cbpn.base from
+    billing.contracts_billing_profile_network_schedule cbpns join billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    where cbpn.contract_id = _contract_id and floor(cbpns.effective_start_time) = cbpns.effective_start_time and (_now is null or
+    (cbpn.start_date <= _now or cbpn.start_date is null)) order by cbpns.effective_start_time asc, cbpn.base asc, cbpns.profile_network_id asc;
+
+  set _max_id = (select max(id) from tmp_billing_mappings);
+  set _new = if(_max_id is null,true,false);
+  set _id = if(_max_id is null,0,_max_id);
+  
+  set _col_sep = ",";
+  set _row_sep = ";";
+  set _row_sep_length = length(_row_sep);
+
+  parse_loop: loop
+    if _future_mappings is null or length(_future_mappings) = 0 then
+      leave parse_loop;
+    end if;
+
+    set _line = substring_index(_future_mappings,_row_sep,1);
+    
+    set _start_date_str = substring_index(substring_index(_line,_col_sep,1),_col_sep,-1);
+    set _end_date_str = substring_index(substring_index(_line,_col_sep,2),_col_sep,-1);
+    set _profile_id_str = substring_index(substring_index(_line,_col_sep,3),_col_sep,-1);
+    set _network_id_str = substring_index(substring_index(_line,_col_sep,4),_col_sep,-1);
+    set _last_str = substring_index(substring_index(_line,_col_sep,5),_col_sep,-1);
+
+    #select _line,_start_date_str,_end_date_str,_profile_id_str,_network_id_str,_last_str;
+
+    if length(_start_date_str) > 0 and dayname(_start_date_str) is null then
+      signal sqlstate "45001" set message_text = "invalid start date";
+    end if;
+    if length(_end_date_str) > 0 and dayname(_end_date_str) is null then
+      signal sqlstate "45001" set message_text = "invalid end date";
+    end if;
+    if length(_end_date_str) > 0 and length(_start_date_str) = 0 then
+      signal sqlstate "45001" set message_text = "mappings with end date but no start date are not allowed";
+    end if;
+
+    set _id = _id + 1;
+    insert into tmp_billing_mappings values(_id,_contract_id, if(length(_start_date_str) > 0,_start_date_str,null), if(length(_end_date_str) > 0,
+      _end_date_str,null), if(length(_profile_id_str) > 0,_profile_id_str,null), if(length(_network_id_str) > 0,_network_id_str,null),
+      if(length(_last_str) > 0,if(_last_str > 0,1,0),1));
+
+    set _future_mappings = insert(_future_mappings,1,length(_line) + _row_sep_length,"");
+  end loop parse_loop;
+
+  if _new and (select count(*) from tmp_billing_mappings where start_date is null and end_date is null and network_id is null) != 1 then
+    signal sqlstate "45001" set message_text = "there must be exactly one initial mapping with open start date, open end date and no network";
+  end if;
+
+  if not _new and (select count(*) from tmp_billing_mappings where start_date is null and end_date is null and id > _max_id) > 0 then
+    signal sqlstate "45001" set message_text = "adding mappings with open start date and open end date is not allowed";
+  end if;
+
+  #select * from tmp_billing_mappings;
+
+  drop temporary table if exists tmp_billing_mappings_clone; 
+  create temporary table tmp_billing_mappings_clone engine = memory select * from tmp_billing_mappings;
+
+  create index tbm_id_idx on tmp_billing_mappings (id);
+  create index tbm_cid_s_e_idx on tmp_billing_mappings (contract_id,start_date,end_date);
+  create index tbmc_id_idx on tmp_billing_mappings (id);
+  create index tbmc_cid_s_e_idx on tmp_billing_mappings (contract_id,start_date,end_date);
+
+  if not _new then
+    delete from billing.contracts_billing_profile_network where contract_id = _contract_id;
+  end if;
+
+  nested1: begin
+
+    declare _events_done, _mappings_done, _is_end boolean default false;
+    declare _t datetime;
+
+    declare _old_bm_ids varchar(65535);
+    declare events_cur cursor for select t,is_end from (
+      (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+        from tmp_billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
+      union all
+      (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from tmp_billing_mappings_clone where contract_id = _contract_id)
+    ) as events group by t, is_end order by t, is_end;
+    declare continue handler for not found set _events_done = true;
+
+    set _old_bm_ids = "";
+    set _events_done = false;
+    open events_cur;
+    events_loop: loop
+      fetch events_cur into _t, _is_end;
+      if _events_done then
+        leave events_loop;
+      end if;
+
+      nested2: begin
+
+        declare _bm_id, _default_bm_id, _profile_id, _network_id int(11) unsigned;
+        declare _start_date, _end_date datetime;
+        declare _effective_start_time decimal(13,3);
+        declare _bm_ids varchar(65535);
+        declare mappings_cur cursor for select bm1.id, bm1.start_date, bm1.end_date, bm1.billing_profile_id, bm1.network_id from
+            tmp_billing_mappings bm1 where bm1.contract_id = _contract_id and bm1.start_date <=> (select bm2.start_date
+            from tmp_billing_mappings_clone bm2 where
+            bm2.contract_id = _contract_id
+            and (bm2.start_date <= _t or bm2.start_date is null)
+            and (if(_is_end,bm2.end_date > _t,bm2.end_date >= _t) or bm2.end_date is null)
+            order by bm2.start_date desc limit 1) order by bm1.base asc, bm1.id asc;
+        declare continue handler for not found set _mappings_done = true;
+
+        set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 0.001,_t)));
+        set _bm_ids = "";
+        set _mappings_done = false;
+        open mappings_cur;
+        mappings_loop1: loop
+          fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+          if _mappings_done then
+            leave mappings_loop1;
+          end if;
+          set _bm_ids = (select concat(_bm_ids,"-",_bm_id));
+          set _default_bm_id = _bm_id;
+        end loop mappings_loop1;
+        close mappings_cur;
+
+        if _old_bm_ids != _bm_ids then
+          set _mappings_done = false;
+          open mappings_cur;
+          mappings_loop2: loop
+            fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+            if _mappings_done then
+              leave mappings_loop2;
+            end if;
+
+            call billing.insert_billing_profile_network_schedule(_contract_id,if(_bm_id = _default_bm_id,1,0),_start_date,_end_date,
+              _effective_start_time,_profile_id,_network_id);
+
+          end loop mappings_loop2;
+          close mappings_cur;
+        end if;
+        set _old_bm_ids = _bm_ids;
+      end nested2;
+    end loop events_loop;
+    close events_cur;
+  end nested1;
+
+  #select * from tmp_transformed where contract_id = _contract_id;
+
+  drop temporary table tmp_billing_mappings;
+  drop temporary table tmp_billing_mappings_clone; 
+
+end;;
+delimiter ;
+
+#call append_billing_mappings(1,now(),"2018-07-01 00:00:01,2018-07-01 01:00:02,1,,9;2018-07-01 00:00:03,2018-07-01 01:00:04,1,,8;");
+#call append_billing_mappings(1,now(),"xx,2018-07-01 01:00:02,1,,9");
+#call append_billing_mappings(1,now(),",,1,,;");
+
