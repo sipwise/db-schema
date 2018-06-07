@@ -1,0 +1,30 @@
+USE provisioning;
+
+SET autocommit=0;
+
+CREATE TABLE `voip_cf_bnumber_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cf_bnumbersets_sid_name_unique` (`subscriber_id`,`name`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `vcbs_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+CREATE TABLE `voip_cf_bnumbers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `bnumber_set_id` int(11) unsigned NOT NULL,
+  `bnumber` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bset_idx` (`bnumber_set_id`),
+  KEY `bnumber_idx` (`bnumber`),
+  CONSTRAINT `v_cf_bsetid_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+ALTER TABLE `provisioning`.`voip_cf_mappings`
+  ADD COLUMN `bnumber_set_id` INT(11) UNSIGNED NULL DEFAULT NULL AFTER `source_set_id`;
+
+COMMIT;
