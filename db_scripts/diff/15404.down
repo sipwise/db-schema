@@ -1,0 +1,7 @@
+USE provisioning;
+SELECT id FROM voip_preferences WHERE attribute='advice_of_charge' INTO @aoc_attr_id;
+
+DELETE FROM voip_preferences_enum where preference_id = @aoc_attr_id;
+DELETE FROM voip_preferences where id = @aoc_attr_id;
+
+ALTER TABLE billing.billing_profiles DROP COLUMN `advice_of_charge`;
