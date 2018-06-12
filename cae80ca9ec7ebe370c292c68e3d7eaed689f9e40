@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_de6dd4cd",
+        "filename": "db_scripts/diff/15403.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-06-12T15:27:02Z",
+      "side": 1,
+      "message": "this is redundant because of the above",
+      "revId": "cae80ca9ec7ebe370c292c68e3d7eaed689f9e40",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_7e65a0df",
+        "filename": "db_scripts/diff/15403.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-06-12T15:27:02Z",
+      "side": 1,
+      "message": "better just leave that away",
+      "range": {
+        "startLine": 28,
+        "startChar": 65,
+        "endLine": 28,
+        "endChar": 86
+      },
+      "revId": "cae80ca9ec7ebe370c292c68e3d7eaed689f9e40",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
