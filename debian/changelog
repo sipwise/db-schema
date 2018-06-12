@@ -1,3 +1,12 @@
+ngcp-db-schema (6.0.2.2+0~mr6.0.2.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [f2a463a] TT#25451 add ngcp.timezone table
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Jun 2018 19:00:21 +0200
+
 ngcp-db-schema (6.0.2.1+0~mr6.0.2.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
