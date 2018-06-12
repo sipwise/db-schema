@@ -1,3 +1,12 @@
+ngcp-db-schema (6.2.1.3+0~mr6.2.1.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [2596884] TT#38157 fix create ngcp.timezone if not exists
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Jun 2018 21:43:23 +0200
+
 ngcp-db-schema (6.2.1.2+0~mr6.2.1.2) unstable; urgency=medium
 
   [ Rene Krenn ]
