@@ -1,6 +1,6 @@
 USE billing;
 
-CREATE TABLE ngcp.timezone
+CREATE TABLE IF NOT EXISTS ngcp.timezone
 (
     id enum('1') not null primary key,
     name varchar(255) not null,
