@@ -1,3 +1,12 @@
+ngcp-db-schema (5.5.5.3+0~mr5.5.5.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [dc683d3] TT#38157 ensure not_repl create views have ngcp.timezone
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 14 Jun 2018 15:48:03 +0200
+
 ngcp-db-schema (5.5.5.2+0~mr5.5.5.2) unstable; urgency=medium
 
   [ Rene Krenn ]
