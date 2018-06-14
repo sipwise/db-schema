@@ -1,0 +1,15 @@
+set sql_log_bin=0;
+set autocommit=0;
+USE billing;
+
+CREATE TABLE ngcp.timezone
+(
+    id enum('1') not null primary key,
+    name varchar(255) not null,
+    created_at timestamp default current_timestamp,
+    modified_at timestamp default current_timestamp on update current_timestamp
+);
+
+INSERT IGNORE INTO ngcp.timezone (name) VALUES ('localtime');
+
+COMMIT;
