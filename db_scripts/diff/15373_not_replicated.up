@@ -2,7 +2,7 @@ set sql_log_bin=0;
 set autocommit=0;
 USE billing;
 
-CREATE TABLE IF NOT EXISTS ngcp.timezone
+CREATE TABLE ngcp.timezone
 (
     id enum('1') not null primary key,
     name varchar(255) not null,
