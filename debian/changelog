@@ -1,3 +1,13 @@
+ngcp-db-schema (6.0.2.3+0~mr6.0.2.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [29c054d] TT#25451 use ngcp.timezone in v_timezone views
+  * [65e0a56] TT#28469 make ngcp.timezone related changes as not_replicated
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 18 Jun 2018 17:17:17 +0200
+
 ngcp-db-schema (6.0.2.2+0~mr6.0.2.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
