@@ -1,3 +1,13 @@
+ngcp-db-schema (6.2.1.5+0~mr6.2.1.5) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2367494] Revert "TT#38157 fix to insert IGNORE into ngcp.timezone"
+  * [ea32a44] Revert "TT#38157 fix create ngcp.timezone if not exists"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 18 Jun 2018 17:18:02 +0200
+
 ngcp-db-schema (6.2.1.4+0~mr6.2.1.4) unstable; urgency=medium
 
   [ Rene Krenn ]
