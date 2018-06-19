@@ -22,6 +22,29 @@
       "revId": "9b82fdd984f8ac00bf3c3c32e527b968b3cd83a6",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_4317a5ed",
+        "filename": "db_scripts/diff/15404.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-06-19T11:06:05Z",
+      "side": 1,
+      "message": "`prepaid` tinyint(1) NOT NULL DEFAULT \u00270\u0027,",
+      "range": {
+        "startLine": 27,
+        "startChar": 67,
+        "endLine": 27,
+        "endChar": 71
+      },
+      "revId": "9b82fdd984f8ac00bf3c3c32e527b968b3cd83a6",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
