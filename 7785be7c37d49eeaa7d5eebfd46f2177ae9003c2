@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_06f3fa0b",
+        "filename": "db_scripts/diff/15404.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-06-20T11:13:01Z",
+      "side": 1,
+      "message": "set autocommit\u003d0\n\nsql ....\nsql ...\n\ncommit",
+      "revId": "7785be7c37d49eeaa7d5eebfd46f2177ae9003c2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
