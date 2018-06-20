@@ -34,6 +34,24 @@
       "revId": "7785be7c37d49eeaa7d5eebfd46f2177ae9003c2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_0920ab9a",
+        "filename": "db_scripts/diff/15404.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-06-20T14:44:16Z",
+      "side": 1,
+      "message": "should be also in the down script as well",
+      "parentUuid": "5ad0253b_e90d6f38",
+      "revId": "7785be7c37d49eeaa7d5eebfd46f2177ae9003c2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
