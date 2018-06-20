@@ -16,6 +16,24 @@
       "revId": "7785be7c37d49eeaa7d5eebfd46f2177ae9003c2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_e90d6f38",
+        "filename": "db_scripts/diff/15404.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2018-06-20T14:33:19Z",
+      "side": 1,
+      "message": "Done. Is there some reason to don\u0027t do the same in the *.down script?",
+      "parentUuid": "5ad0253b_06f3fa0b",
+      "revId": "7785be7c37d49eeaa7d5eebfd46f2177ae9003c2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
