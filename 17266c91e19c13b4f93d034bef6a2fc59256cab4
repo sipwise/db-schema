@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5ad0253b_09f30b0c",
+        "filename": "db_scripts/diff/15403.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-06-22T10:23:26Z",
+      "side": 1,
+      "message": "should be imho adjusted as there will be duplicated for those 3 fields.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 89
+      },
+      "revId": "17266c91e19c13b4f93d034bef6a2fc59256cab4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_8caa8918",
         "filename": "db_scripts/diff/15403.up",
         "patchSetId": 7
@@ -13,6 +36,24 @@
       "writtenOn": "2018-06-22T10:20:09Z",
       "side": 1,
       "message": "while implementing this attempt, it turns out it breaks the contract delete cascade. i would either neet to put this key to the other table, or the other\u0027s table contract_id col here.",
+      "revId": "17266c91e19c13b4f93d034bef6a2fc59256cab4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_2c6815f5",
+        "filename": "db_scripts/diff/15403.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-06-22T10:23:26Z",
+      "side": 1,
+      "message": "the field cannot be easily moved away from the table as otherwise the relation to contract_billing_profile_network is broken.\nadding contract_id into the table is absolutely viable (and it actually was here before), it even still contains the constraint",
+      "parentUuid": "5ad0253b_8caa8918",
       "revId": "17266c91e19c13b4f93d034bef6a2fc59256cab4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
