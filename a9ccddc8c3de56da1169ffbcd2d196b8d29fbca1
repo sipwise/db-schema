@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_779ffa5f",
+        "filename": "db_scripts/diff/15406.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2018-06-22T15:52:21Z",
+      "side": 1,
+      "message": "this constraint has been added on purpose now. the rationale (for destination_sets and time_sets at least) has previously been: when I remove the set, and I forgot it was used on some mapping, the callforward basically is silently modified to be something else which was probably never intended.\n\ntherefore to be safe: better delete it.",
+      "revId": "a9ccddc8c3de56da1169ffbcd2d196b8d29fbca1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
