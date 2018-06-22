@@ -1,0 +1,11 @@
+USE provisioning;
+
+SET autocommit=0;
+
+ALTER TABLE `provisioning`.`voip_cf_source_sets`
+  ADD COLUMN `is_regex` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0';
+
+ALTER TABLE `provisioning`.`voip_cf_bnumber_sets`
+  ADD COLUMN `is_regex` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0';
+
+COMMIT;
