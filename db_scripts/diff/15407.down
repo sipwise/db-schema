@@ -1,0 +1,11 @@
+USE provisioning;
+
+SET autocommit=0;
+
+ALTER TABLE `provisioning`.`voip_cf_source_sets`
+  DROP COLUMN `is_regex`;
+
+ALTER TABLE `provisioning`.`voip_cf_bnumber_sets`
+  DROP COLUMN `is_regex`;
+
+COMMIT;
