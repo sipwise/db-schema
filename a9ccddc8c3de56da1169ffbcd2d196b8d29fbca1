@@ -16,6 +16,24 @@
       "revId": "a9ccddc8c3de56da1169ffbcd2d196b8d29fbca1",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_b72592c3",
+        "filename": "db_scripts/diff/15406.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2018-06-25T11:54:19Z",
+      "side": 1,
+      "message": "This is not in place for source table, so it should be added there as well.",
+      "parentUuid": "5ad0253b_779ffa5f",
+      "revId": "a9ccddc8c3de56da1169ffbcd2d196b8d29fbca1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
