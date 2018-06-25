@@ -1,0 +1,12 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='support_auto_answer';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+DELETE FROM voip_preferences WHERE id=@pref_id;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute='accept_auto_answer';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+DELETE FROM voip_preferences WHERE id=@pref_id;
+
+commit;
