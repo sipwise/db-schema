@@ -1,0 +1,9 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+UPDATE voip_preferences
+    SET description = 'List of audio and video codecs to whitelist or blacklist. Valid codecs names are G722, PCMU, PCMA, speex, GSM, G723, DVI4, L16, QCELP, CN, MPA, G728, DVI4, G729, AMR, AMR-WB, opus, telephone-event, CelB, JPEG, H261, H263, H263-1998, MPV, MP2T, nv, vp8, vp9 and h264.'
+    WHERE attribute = 'codecs_list';
+
+COMMIT;
