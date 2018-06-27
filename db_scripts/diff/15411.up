@@ -1,0 +1,10 @@
+USE accounting;
+SET autocommit=0;
+
+ALTER TABLE cdr_tag MODIFY type VARCHAR(255) NOT NULL;
+
+INSERT INTO cdr_tag (type) VALUES ('furnished_charging_info'),
+                                  ('header=P-Asserted-Identity'),
+                                  ('header=Diversion');
+
+COMMIT;

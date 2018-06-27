@@ -1,0 +1,8 @@
+USE accounting;
+set autocommit = 0;
+
+DELETE FROM cdr_tag WHERE type != 'calling_party_category';
+
+ALTER TABLE cdr_tag MODIFY type enum('calling_party_category') NOT NULL;
+
+COMMIT;
