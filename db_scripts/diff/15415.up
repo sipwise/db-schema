@@ -1,0 +1,55 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Internals"),
+attribute = "rerouting_mode",
+label = "Rerouting Mode",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "enum",
+read_only = 0,
+description = "Specifies the operational mode of the Rerouting Call Forward. If set to Whitelist (default) the CFR is executed only for reply codes included in the 'rerouting_codes' list, if set to Blacklist the CFR is executed except for reply codes included in the list.";
+
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 0, 1),
+(@pref_id, 'Whitelist', 'whitelist', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Whitelist', 'whitelist', 1, 0, 0, 0, 0, 0, 0),
+(@pref_id, 'Blacklist', 'blacklist', 1, 1, 0, 0, 0, 0, 0);
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Internals"),
+attribute = "rerouting_codes",
+label = "List of Rerouting Codes",
+type = 0,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "int",
+read_only = 0,
+description = "Contains a list of SIP codes that are matched with the one received in reply from the subscriber in case of call failure in order to execute the CFR.";
+
+commit;
