@@ -1,0 +1,30 @@
+USE provisioning;
+
+ALTER TABLE voip_cf_mappings MODIFY COLUMN type enum('cfu','cfb','cfna','cft','cfs','cfr') NOT NULL DEFAULT 'cfu';
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Call Forwards"),
+attribute = "cfr",
+label = "Internal Call Forward ReRouting #",
+type = 1,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 1,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 1,
+description = 'The id pointing to the "Call Forward Rerouting" entry in the voip_cf_mappings table';
+
+
+USE accounting;
+
+-- add new options at the end to make alter table run instantly
+ALTER TABLE cdr MODIFY COLUMN call_type enum('call','cfu','cft','cfb','cfna','cfs','sms','cfr') NOT NULL DEFAULT 'call';
