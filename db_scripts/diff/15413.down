@@ -1,0 +1,9 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'cfr';
+DELETE FROM voip_cf_mappings WHERE type = 'cfr';
+ALTER TABLE voip_cf_mappings MODIFY COLUMN type enum ('cfu','cfb','cfna','cft','cfs') NOT NULL DEFAULT 'cfu';
+
+USE accounting;
+
+ALTER TABLE cdr MODIFY COLUMN call_type enum('call','cfu','cft','cfb','cfna','cfs','sms') NOT NULL DEFAULT 'call';
