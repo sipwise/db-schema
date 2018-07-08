@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "5ad0253b_56dd1713",
+        "filename": "db_scripts/diff/19999.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-08T12:48:54Z",
+      "side": 1,
+      "message": "should be int 0",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 13
+      },
+      "revId": "248b249bc61c1abd4802087b09734b3cd731f6a4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad0253b_9bb99831",
         "filename": "db_scripts/diff/19999.up",
         "patchSetId": 2
