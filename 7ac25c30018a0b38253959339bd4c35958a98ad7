@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_914bb959",
+        "filename": "db_scripts/diff/15413.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-09T10:47:49Z",
+      "side": 1,
+      "message": "please change this to \"Rerouting\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 40
+      },
+      "revId": "7ac25c30018a0b38253959339bd4c35958a98ad7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
