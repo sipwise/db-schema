@@ -1,0 +1,6 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'clip_no_screening';
+DELETE FROM voip_preferences WHERE attribute = 'pai_clir';
+
+COMMIT;
