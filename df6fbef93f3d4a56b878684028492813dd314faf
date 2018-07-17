@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3acd31a7_f7255aae",
+        "filename": "db_scripts/diff/15417.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T15:11:03Z",
+      "side": 1,
+      "message": "add_contracts_billing_profile_network_schedule",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acd31a7_54ad2c30",
         "filename": "db_scripts/diff/15418.up",
         "patchSetId": 14
