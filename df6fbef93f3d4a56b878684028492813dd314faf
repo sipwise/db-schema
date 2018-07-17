@@ -34,6 +34,29 @@
       "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_747708d5",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T13:48:39Z",
+      "side": 1,
+      "message": "if this is the \"end-user\" procedure to add the mapping why there is no \"end_date\" ? also it is in unixtime where in the result we have it in datetime (\u003dcumbersome)",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
