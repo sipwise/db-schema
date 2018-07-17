@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_54ad2c30",
+        "filename": "db_scripts/diff/15418.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-17T13:34:52Z",
+      "side": 1,
+      "message": "i was considering palcing a table-level read lock for billing.billing mappings at this point.\n\nbut the point is, since this is replicated, there should not be contracts created or edited during the upgrade.\n\nthis step will presumably take around 10-15 min for 50k subs.",
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
