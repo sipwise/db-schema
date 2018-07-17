@@ -16,6 +16,24 @@
       "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_14a7b450",
+        "filename": "db_scripts/diff/15418.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T13:44:35Z",
+      "side": 1,
+      "message": "yes, a read/write lock makes sense here.",
+      "parentUuid": "3acd31a7_54ad2c30",
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
