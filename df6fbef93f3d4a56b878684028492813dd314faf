@@ -57,6 +57,30 @@
       "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_d41c9c79",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-17T14:20:11Z",
+      "side": 1,
+      "message": "this one is intended to set a contracts billing profile (it shouldnt even have a _start arg, but was added to allow setting the profile while creating the balance records). epoch because that\u0027s whats natively provided in swrate and rate-o-mat.\n\nthose methods here are the minimal set that are needed so far. additional overloads can be added when needed.",
+      "parentUuid": "3acd31a7_747708d5",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
