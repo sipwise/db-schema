@@ -129,6 +129,30 @@
       "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_b708022a",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T14:54:46Z",
+      "side": 1,
+      "message": "this is a little too complex for external use where normally devs should not know about that (the whole purpose of why we came up with stored procedures instead of just a coded implementation is to use that across different language independed components).",
+      "parentUuid": "3acd31a7_5409ac30",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
