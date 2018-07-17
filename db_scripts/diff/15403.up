@@ -13,7 +13,7 @@ CREATE TABLE `contracts_billing_profile_network` (
   UNIQUE KEY `cbpn_natural_idx` (`contract_id`, `billing_profile_id`, `billing_network_id`, `start_date`, `end_date`, `base`),
   CONSTRAINT `cbpn_cid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT `cbpn_pid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE,
-  CONSTRAINT `cbpn_nid_ref` FOREIGN KEY (`billing_network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `cbpn_nid_ref` FOREIGN KEY (`billing_network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `contracts_billing_profile_network_schedule` (
