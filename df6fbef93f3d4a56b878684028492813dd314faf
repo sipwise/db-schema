@@ -81,6 +81,30 @@
       "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_94162454",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T14:23:54Z",
+      "side": 1,
+      "message": "example:\nI have a contract and I want to schedule billing_profile\u003d7 and billing_network\u003d9 for it with start_date\u003d2018-08-01 and end_date\u003d2018-08-02\n\nhow to achieve that from my module ?",
+      "parentUuid": "3acd31a7_d41c9c79",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 47
+      },
+      "revId": "df6fbef93f3d4a56b878684028492813dd314faf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
