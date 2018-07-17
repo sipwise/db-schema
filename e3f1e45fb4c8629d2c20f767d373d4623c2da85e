@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_54ff6c34",
+        "filename": "db_scripts/diff/15417.up",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T13:07:22Z",
+      "side": 1,
+      "message": "perhaps: add_contracts_billing_profile_scheduel() ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "e3f1e45fb4c8629d2c20f767d373d4623c2da85e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_14f9f44d",
+        "filename": "db_scripts/diff/15417.up",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-17T13:07:22Z",
+      "side": 1,
+      "message": "what do we pass in this argument ?\n\nI mean if I am a developer and need to add a new schedule from some external module I would expect in arguments something like:\n\ncontract_id, billing_profile_id, billing_network_id (or NULL), start_date datetime, end_date datetime.",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "e3f1e45fb4c8629d2c20f767d373d4623c2da85e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
