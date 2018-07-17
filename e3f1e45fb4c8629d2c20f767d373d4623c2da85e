@@ -45,6 +45,30 @@
       "revId": "e3f1e45fb4c8629d2c20f767d373d4623c2da85e",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_54864cba",
+        "filename": "db_scripts/diff/15417.up",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-17T13:24:33Z",
+      "side": 1,
+      "message": "its exactly like that for the exposed \n\n\"billing.billing.set_profile_network\"\n\n\"billing.set_profile_networks_from_package\"\n\nprocs.",
+      "parentUuid": "3acd31a7_14f9f44d",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 36
+      },
+      "revId": "e3f1e45fb4c8629d2c20f767d373d4623c2da85e",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
