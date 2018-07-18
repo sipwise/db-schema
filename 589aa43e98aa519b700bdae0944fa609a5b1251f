@@ -179,6 +179,75 @@
     },
     {
       "key": {
+        "uuid": "3acd31a7_1abb5d10",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T14:41:20Z",
+      "side": 1,
+      "message": "get_billing_profile_by_contract_id",
+      "range": {
+        "startLine": 36,
+        "startChar": 27,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_fa3661b3",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T14:41:20Z",
+      "side": 1,
+      "message": "get_billing_profile_by_contract_id_ipv4",
+      "range": {
+        "startLine": 69,
+        "startChar": 27,
+        "endLine": 69,
+        "endChar": 51
+      },
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_da3ba59b",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T14:41:20Z",
+      "side": 1,
+      "message": "get_billing_profile_by_contract_id_ipv4\n\n+ the upcoming\n\nget_billing_profile_by_subscriber_id\nget_billing_profile_by_peer_host_id",
+      "range": {
+        "startLine": 109,
+        "startChar": 27,
+        "endLine": 109,
+        "endChar": 51
+      },
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acd31a7_ba08e929",
         "filename": "db_scripts/diff/15420.up",
         "patchSetId": 16
