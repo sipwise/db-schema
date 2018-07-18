@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_d74ede95",
+        "filename": "db_scripts/diff/15417.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "renamed.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_d735bef7",
+        "filename": "db_scripts/diff/15418.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "no table-level write lock fro billing.billing_mappings at this point.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_97486689",
+        "filename": "db_scripts/diff/15418.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "now only processes not yet transformed contracts, so it is safe to re-run it.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_973f46d6",
+        "filename": "db_scripts/diff/15418.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "dont drop it any more, so it can be re-run in case there really were contracts created or updated during the upgrade.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_d71c9e79",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "these are only procs needed and to be used by rate-o-mat, libswrate, kamailio/proxy.cfg and sems/AoC.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_ba08e929",
+        "filename": "db_scripts/diff/15420.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "db views used by ngcp-schema and for convenience.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_5a10b54e",
+        "filename": "db_scripts/diff/15420.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "private one, required since below one needs a nested sub-select.",
+      "range": {
+        "startLine": 3,
+        "startChar": 23,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_770caa42",
+        "filename": "db_scripts/diff/15420.up",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T13:35:48Z",
+      "side": 1,
+      "message": "added.",
+      "revId": "589aa43e98aa519b700bdae0944fa609a5b1251f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
