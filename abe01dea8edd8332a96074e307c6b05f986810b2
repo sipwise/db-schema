@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "3acd31a7_1ac59d5a",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-07-18T16:24:50Z",
+      "side": 1,
+      "message": "the ntwork-byte representation is needed, also in the ipv4 case https://mariadb.com/kb/en/library/inet6_aton/",
+      "parentUuid": "3acd31a7_9ae1ad01",
+      "range": {
+        "startLine": 82,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3acd31a7_7a20114a",
         "filename": "db_scripts/diff/15419.up",
         "patchSetId": 18
