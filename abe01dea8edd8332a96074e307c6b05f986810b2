@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acd31a7_da3045a1",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "missing \"billing\" (I posted it as create_contract_billing_profile_network_from_package()",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_9a2acd2b",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double \"by\", \n\nget_billing_profile_by_contract_id_ipv4 - is enough\n\nyou could also combine ipv4 and ipv6 functions thought and simply accept _ip varchar(46) and simply check in the procedure if the argument contains \":\" - then it\u0027s by a definition ipv6 otherwise ipv4.",
+      "range": {
+        "startLine": 52,
+        "startChar": 16,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_7ae7f112",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "inet_aton",
+      "range": {
+        "startLine": 82,
+        "startChar": 76,
+        "endLine": 82,
+        "endChar": 86
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_9ae1ad01",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "inet_aton",
+      "range": {
+        "startLine": 82,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_7a20114a",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double by",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 58
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_5a1d550e",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double by",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 143,
+        "endChar": 51
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_3a1a9918",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double by",
+      "range": {
+        "startLine": 156,
+        "startChar": 16,
+        "endLine": 156,
+        "endChar": 51
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_1a17ddee",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double by",
+      "range": {
+        "startLine": 181,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 59
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3acd31a7_fad2e133",
+        "filename": "db_scripts/diff/15419.up",
+        "patchSetId": 18
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-07-18T16:04:19Z",
+      "side": 1,
+      "message": "no need for double by",
+      "range": {
+        "startLine": 194,
+        "startChar": 16,
+        "endLine": 194,
+        "endChar": 59
+      },
+      "revId": "abe01dea8edd8332a96074e307c6b05f986810b2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
