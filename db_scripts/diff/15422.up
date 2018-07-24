@@ -1,0 +1,72 @@
+SET autocommit=0;
+USE provisioning;
+
+CREATE TABLE `voip_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) NOT NULL,
+  `contract_id` int(11),
+  `subscriber_id` int(11),
+  `name` varchar(90) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_time_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly'), -- COMMENT 'null means no recurrence',
+  `until` timestamp NULL,
+  `count` int(11),
+  `interval` int(11),
+  `bysecond` varchar(45),
+  `byminute` varchar(45),
+  `byhour` varchar(45),
+  `byday` varchar(45),
+  `bymonthday` varchar(45),
+  `byyearday` varchar(45),
+  `byweekno` varchar(45),
+  `bymonth` varchar(45),
+  `bysetpos` int(11),
+  `comment` text,
+  PRIMARY KEY (`id`),
+  KEY `fk_voip_periods_1_idx` (`time_set_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE VIEW `v_time_sets_ical` AS
+SELECT s.name,
+    concat (
+        "BEGIN:VCALENDAR\n",
+        "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n",
+        "VERSION:2.0\n\n",
+        GROUP_CONCAT(concat(
+            "BEGIN:VEVENT\n",
+            "UID:","sipwise",p.id,"@sipwise",s.id,"\n",
+            "SUMMARY:",s.name," event ",p.id,"\n",
+            "DTSTART:",DATE_FORMAT(p.start,'%Y%m%dT%H%i%s'),"\n",
+            "RRULE:",
+                "FREQ=",p.freq,
+                IFNULL(CONCAT(";COUNT=",     p.`count`),''),
+                IFNULL(CONCAT(";UNTIL=",     DATE_FORMAT(p.until,'%Y%m%dT%H%i%s')),''),
+                IFNULL(CONCAT(";INTERVAL=",  p.`interval`),''),
+                IFNULL(CONCAT(";BYSECOND=",  p.bysecond),''),
+                IFNULL(CONCAT(";BYMINUTE=",  p.byminute),''),
+                IFNULL(CONCAT(";BYHOUR=",    p.byhour),''),
+                IFNULL(CONCAT(";BYDAY=",     p.byday),''),
+                IFNULL(CONCAT(";BYMONTHDAY=",p.bymonthday),''),
+                IFNULL(CONCAT(";BYYEARDAY=", p.byyearday),''),
+                IFNULL(CONCAT(";BYWEEKNO=",  p.byweekno),''),
+                IFNULL(CONCAT(";BYMONTH=",   p.bymonth),''),
+                IFNULL(CONCAT(";BYSETPOS=",  p.bysetpos),''),
+                "\n",
+            IFNULL(CONCAT("DESCRIPTION:",p.`comment`,"\n"),''),
+            "END:VEVENT\n"
+        )SEPARATOR '\n'),
+        "END:VCALENDAR\n"
+    ) AS ical
+FROM provisioning.voip_time_sets s JOIN voip_time_periods p ON s.id = p.time_set_id
+GROUP BY s.id
+;
+
+COMMIT;
