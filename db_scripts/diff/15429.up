@@ -1,0 +1,78 @@
+SET autocommit=0;
+USE provisioning;
+
+CREATE TABLE `voip_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) NOT NULL,
+  `contract_id` int(11),
+  `subscriber_id` int(11) unsigned,
+  `name` varchar(90) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  KEY `v_ts_rid_idx` (`reseller_id`),
+  KEY `v_ts_cid_idx` (`contract_id`),
+  CONSTRAINT `v_ts_sid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_time_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `start` timestamp NOT NULL,
+  `end` timestamp NOT NULL,
+  `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly'), -- COMMENT 'null means no recurrence',
+  `until` timestamp NULL,
+  `count` int(11),
+  `interval` int(11),
+  `bysecond` varchar(45),
+  `byminute` varchar(45),
+  `byhour` varchar(45),
+  `byday` varchar(45),
+  `bymonthday` varchar(45),
+  `byyearday` varchar(45),
+  `byweekno` varchar(45),
+  `bymonth` varchar(45),
+  `bysetpos` int(11),
+  `comment` text,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `v_tp_tsid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE VIEW `v_time_sets_ical` AS
+SELECT s.id, s.name,
+    concat (
+        "BEGIN:VCALENDAR\n",
+        "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n",
+        "VERSION:2.0\n\n",
+        GROUP_CONCAT(concat(
+            "BEGIN:VEVENT\n",
+            "UID:","sipwise",p.id,"@sipwise",s.id,"\n",
+            "SUMMARY:",s.name," event ",p.id,"\n",
+            "DTSTART:",DATE_FORMAT(p.start,'%Y%m%dT%H%i%s'),"\n",
+            "RRULE:",
+                "FREQ=",p.freq,
+                IFNULL(CONCAT(";COUNT=",     p.`count`),''),
+                IFNULL(CONCAT(";UNTIL=",     DATE_FORMAT(p.until,'%Y%m%dT%H%i%s')),''),
+                IFNULL(CONCAT(";INTERVAL=",  p.`interval`),''),
+                IFNULL(CONCAT(";BYSECOND=",  p.bysecond),''),
+                IFNULL(CONCAT(";BYMINUTE=",  p.byminute),''),
+                IFNULL(CONCAT(";BYHOUR=",    p.byhour),''),
+                IFNULL(CONCAT(";BYDAY=",     p.byday),''),
+                IFNULL(CONCAT(";BYMONTHDAY=",p.bymonthday),''),
+                IFNULL(CONCAT(";BYYEARDAY=", p.byyearday),''),
+                IFNULL(CONCAT(";BYWEEKNO=",  p.byweekno),''),
+                IFNULL(CONCAT(";BYMONTH=",   p.bymonth),''),
+                IFNULL(CONCAT(";BYSETPOS=",  p.bysetpos),''),
+                "\n",
+            IFNULL(CONCAT("DESCRIPTION:",p.`comment`,"\n"),''),
+            "END:VEVENT\n"
+        )SEPARATOR '\n'),
+        "END:VCALENDAR\n"
+    ) AS ical
+FROM provisioning.voip_time_sets s JOIN voip_time_periods p ON s.id = p.time_set_id
+GROUP BY s.id;
+
+ALTER TABLE `provisioning`.`voip_peer_groups`
+  ADD COLUMN `time_set_id` INT(11) unsigned,
+  ADD CONSTRAINT `vpg_time_set_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON UPDATE CASCADE;
+
+COMMIT;
