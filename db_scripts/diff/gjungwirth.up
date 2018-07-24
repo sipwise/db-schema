@@ -1,0 +1,92 @@
+SET autocommit=0;
+USE provisioning;
+
+CREATE TABLE `voip_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(90) NOT NULL,
+  `reseller_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `voip_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly') DEFAULT NULL, -- COMMENT 'null means no recurrence',
+  `until` timestamp NULL DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  `interval` int(11) DEFAULT NULL,
+  `bysecond` varchar(45) DEFAULT NULL,
+  `byminute` varchar(45) DEFAULT NULL,
+  `byhour` varchar(45) DEFAULT NULL,
+  `byday` varchar(45) DEFAULT NULL,
+  `bymonthday` varchar(45) DEFAULT NULL,
+  `byyearday` varchar(45) DEFAULT NULL,
+  `byweekno` varchar(45) DEFAULT NULL,
+  `bymonth` varchar(45) DEFAULT NULL,
+  `bysetpos` int(11) DEFAULT NULL,
+  `comment` text,
+  PRIMARY KEY (`id`),
+  KEY `fk_voip_periods_1_idx` (`time_set_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE VIEW `v_time_sets_ical` AS
+SELECT s.name,
+    concat (
+        "BEGIN:VCALENDAR\n",
+        "PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n",
+        "VERSION:2.0\n\n",
+        GROUP_CONCAT(concat(
+            "BEGIN:VEVENT\n",
+            "UID:","sipwise",p.id,"@sipwise",s.id,"\n",
+            "SUMMARY:",s.name," event ",p.id,"\n",
+            "DTSTART:",DATE_FORMAT(p.start,'%Y%m%dT%H%i%s'),"\n",
+            "RRULE:",
+                "FREQ=",p.freq,
+                IFNULL(CONCAT(";COUNT=",     p.`count`),''),
+                IFNULL(CONCAT(";UNTIL=",     DATE_FORMAT(p.until,'%Y%m%dT%H%i%s')),''),
+                IFNULL(CONCAT(";INTERVAL=",  p.`interval`),''),
+                IFNULL(CONCAT(";BYSECOND=",  p.bysecond),''),
+                IFNULL(CONCAT(";BYMINUTE=",  p.byminute),''),
+                IFNULL(CONCAT(";BYHOUR=",    p.byhour),''),
+                IFNULL(CONCAT(";BYDAY=",     p.byday),''),
+                IFNULL(CONCAT(";BYMONTHDAY=",p.bymonthday),''),
+                IFNULL(CONCAT(";BYYEARDAY=", p.byyearday),''),
+                IFNULL(CONCAT(";BYWEEKNO=",  p.byweekno),''),
+                IFNULL(CONCAT(";BYMONTH=",   p.bymonth),''),
+                IFNULL(CONCAT(";BYSETPOS=",  p.bysetpos),''),
+                "\n",
+            IFNULL(CONCAT("DESCRIPTION:",p.`comment`,"\n"),''),
+            "END:VEVENT\n"
+        )SEPARATOR '\n'),
+        "END:VCALENDAR\n"
+    ) AS ical
+FROM provisioning.voip_time_sets s JOIN voip_periods p ON s.id = p.time_set_id
+GROUP BY s.id
+;
+
+-- some examples:
+
+-- INSERT INTO `voip_time_sets` (`id`,`name`,`reseller_id`)
+--     VALUES (1, 'testset1',1);
+
+-- INSERT INTO `voip_periods` (`id`,`time_set_id`,`start`,`end`,`freq`,`until`,`count`,`interval`,`bysecond`,`byminute`,`byhour`,`byday`,`bymonthday`,`byyearday`,`byweekno`,`bymonth`,`bysetpos`,`comment`)
+--     VALUES (1,1,'2018-07-23 09:00:00','2018-07-23 17:00:00','monthly',NULL,NULL,NULL,NULL,NULL,NULL,'MO,TU,WE,TH,FR',NULL,NULL,NULL,NULL,-1,'the last work day of the month');
+
+-- INSERT INTO `voip_periods` (`id`,`time_set_id`,`start`,`end`,`freq`,`until`,`count`,`interval`,`bysecond`,`byminute`,`byhour`,`byday`,`bymonthday`,`byyearday`,`byweekno`,`bymonth`,`bysetpos`,`comment`)
+--     VALUES (2,1,'2018-07-23 09:00:00','0000-00-00 00:00:00','daily',NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Daily for 10 occurrences');
+
+-- INSERT INTO `voip_periods` (`id`,`time_set_id`,`start`,`end`,`freq`,`until`,`count`,`interval`,`bysecond`,`byminute`,`byhour`,`byday`,`bymonthday`,`byyearday`,`byweekno`,`bymonth`,`bysetpos`,`comment`)
+--     VALUES (3,1,'2018-07-23 09:00:00','0000-00-00 00:00:00','daily',NULL,NULL,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Every other day - forever');
+
+-- INSERT INTO `voip_periods` (`id`,`time_set_id`,`start`,`end`,`freq`,`until`,`count`,`interval`,`bysecond`,`byminute`,`byhour`,`byday`,`bymonthday`,`byyearday`,`byweekno`,`bymonth`,`bysetpos`,`comment`)
+--     VALUES (4,1,'2018-07-23 09:00:00','0000-00-00 00:00:00','yearly','2021-07-23 09:00:00',NULL,NULL,NULL,NULL,NULL,'SU,MO,TU,WE,TH,FR,SA',NULL,NULL,NULL,'1',NULL,'Every day in January, for 3 years');
+
+-- INSERT INTO `voip_periods` (`id`,`time_set_id`,`start`,`end`,`freq`,`until`,`count`,`interval`,`bysecond`,`byminute`,`byhour`,`byday`,`bymonthday`,`byyearday`,`byweekno`,`bymonth`,`bysetpos`,`comment`)
+--     VALUES (5,1,'2018-07-23 09:00:00','0000-00-00 00:00:00','monthly',NULL,NULL,NULL,NULL,NULL,NULL,'FR','13',NULL,NULL,NULL,NULL,'Every Friday the 13th, forever');
+
+
+
+COMMIT;

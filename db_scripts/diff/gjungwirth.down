@@ -1,0 +1,10 @@
+SET autocommit=0;
+USE provisioning;
+
+DROP TABLE `provisioning`.`voip_periods`;
+
+DROP TABLE `provisioning`.`voip_time_sets`;
+
+DROP VIEW `provisioning`.`v_time_sets_ical`;
+
+COMMIT;
