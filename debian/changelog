@@ -1,3 +1,43 @@
+ngcp-db-schema (6.5.0.0+0~mr6.5.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [6beb404] TT#38157 reset v_*_timezone views, not replicated
+  * [79d2019] TT#38157 fix create ngcp.timezone if not exists
+  * [a6ce0fd] TT#38157 fix to insert IGNORE into ngcp.timezone
+  * [719fd27] TT#36660 new billing mappings tables, procedures, views
+
+  [ Kirill Solomko ]
+  * [a4e5ff3] Revert "TT#38157 fix to insert IGNORE into ngcp.timezone"
+  * [2982d6f] Revert "TT#38157 fix create ngcp.timezone if not exists"
+  * [a24b5fb] Revert "TT#38157 reset v_*_timezone views, not replicated"
+  * [fc78a91] TT#36815 add clip_no_screening, pai_clir usr preferences
+  * [43e2607] TT#39374 accounting.cdr_tag table changes
+  * [e40abb4] TT#40081 add pai_clir and clip_no_screening preferences
+  * [bd5b828] TT#28156 add contract_billing_profile_network tables
+
+  [ Irina Peshinskaya ]
+  * [b470319] TT#37458 Add AOC preference and billing profile aoc field
+
+  [ Andrew Pogrebennyk ]
+  * [2e458dd] TT#37689 add support_auto_answer and accept_auto_answer preferences
+
+  [ Jozef Kenyeres ]
+  * [b611236] TT#39301 AMR-WB codec included in codecs_list pref description
+
+  [ Gerhard Jungwirth ]
+  * [0b494f9] TT#37204 create db schema for bnumber call forwarding
+  * [fdca15c] TT#37206 regexp flags for callforwardings
+
+  [ Marco Capetta ]
+  * [e3edb3b] TT#39750 Add rerouting_mode and rerouting_codes voip preferences
+  * [93e82cf] TT#39750 Add CFR voip preferences and support for it in CDRs
+  * [1bb40f6] TT#40019 Revert "TT#40081 add pai_clir and clip_no_screening preferences"
+  * [c38c980] TT#40542 Fix typo in 15403.up script
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Jul 2018 13:33:13 +0200
+
 ngcp-db-schema (6.4.0.0+0~mr6.4.0.0) unstable; urgency=medium
 
   [ Andreas Granig ]
