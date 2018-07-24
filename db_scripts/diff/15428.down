@@ -1,0 +1,14 @@
+SET autocommit=0;
+USE provisioning;
+
+ALTER TABLE `provisioning`.`voip_peer_rules`
+  DROP FOREIGN KEY `vpr_time_set_ref`,
+  DROP COLUMN `time_set_id`;
+
+DROP TABLE `provisioning`.`voip_time_periods`;
+
+DROP TABLE `provisioning`.`voip_time_sets`;
+
+DROP VIEW `provisioning`.`v_time_sets_ical`;
+
+COMMIT;
