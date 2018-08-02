@@ -1,0 +1,11 @@
+USE billing;
+
+ALTER TABLE billing_profiles ADD COLUMN prepaid_library ENUM('libswrate', 'libinewrate') DEFAULT 'libswrate';
+UPDATE billing_profiles SET prepaid_library = 'libswrate' WHERE prepaid_library IS NULL;
+ALTER TABLE billing_profiles ADD COLUMN prepaid_library ENUM('libswrate', 'libinewrate') NOT NULL DEFAULT 'libswrate';
+
+UPDATE provisioning.voip_preferences SET description = "Deprecated, no longer used by the system."
+  WHERE attribute = 'prepaid';
+UPDATE provisioning.voip_preferences SET description = CONCAT(description," Deprecated, no longer used by the system.")
+  WHERE attribute = 'prepaid_library';
+
