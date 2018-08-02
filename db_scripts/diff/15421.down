@@ -1,0 +1,9 @@
+USE billing;
+
+ALTER TABLE billing_profiles DROP COLUMN prepaid_library;
+
+UPDATE provisioning.voip_preferences SET description = NULL
+  WHERE attribute = 'prepaid';
+UPDATE provisioning.voip_preferences SET description = "The prepaid billing interface for customer with prepaid billing profile."
+  WHERE attribute = 'prepaid_library';
+
