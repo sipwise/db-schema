@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aca2d91_883a83cc",
+        "filename": "db_scripts/diff/15421.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-03T08:52:40Z",
+      "side": 1,
+      "message": "curious about the update statement",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 88
+      },
+      "revId": "e3e2de003f8c01023c494eee117d4917d6468901",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
