@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae47921_f20448c7",
+        "filename": "db_scripts/diff/gjungwirth.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2018-08-09T10:04:30Z",
+      "side": 1,
+      "message": "should have no default imo, no?",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 82
+      },
+      "revId": "7f214fb95d44da1fa2c57b96d5ae348b8f292bb5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae47921_d20944df",
+        "filename": "db_scripts/diff/gjungwirth.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2018-08-09T10:04:30Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "7f214fb95d44da1fa2c57b96d5ae348b8f292bb5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
