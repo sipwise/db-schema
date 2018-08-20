@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae47921_2c738f4f",
+        "filename": "db_scripts/diff/15423.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-20T08:22:39Z",
+      "side": 1,
+      "message": "this",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "676ded265b83450bf3e82ddb785c106d37c455f2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae47921_0c8fab24",
+        "filename": "db_scripts/diff/15423.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-20T08:22:39Z",
+      "side": 1,
+      "message": "and this (were the additions compared to the old trigger, as it\u0027s hard to compare what has been changed in this case)",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "676ded265b83450bf3e82ddb785c106d37c455f2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
