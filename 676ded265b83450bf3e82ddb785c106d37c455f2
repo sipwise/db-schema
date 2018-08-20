@@ -45,6 +45,30 @@
       "revId": "676ded265b83450bf3e82ddb785c106d37c455f2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fae47921_0cb68bdc",
+        "filename": "db_scripts/diff/15423.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-20T08:45:42Z",
+      "side": 1,
+      "message": "ok, as i understand this is to support the use case of moving a peer rule from one peer group to another",
+      "parentUuid": "fae47921_0c8fab24",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "676ded265b83450bf3e82ddb785c106d37c455f2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
