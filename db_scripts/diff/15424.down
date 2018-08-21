@@ -1,0 +1,60 @@
+use billing;
+
+alter table billing_fees
+  drop index bf_srcdestdir_idx,
+  drop index bf_destsrcdir_idx,
+  drop column match_mode, 
+  add key profsrcdesdirtype_idx (billing_profile_id, source, destination, direction, type),
+  add constraint billing_fees_unique unique (billing_profile_id, source, destination, direction, type);
+
+alter table billing_fees_history
+  drop index bfh_srcdestdir_idx,
+  drop index bfh_destsrcdir_idx,
+  drop column match_mode, 
+  add key bfhsems_idx (billing_profile_id, bf_id, type, destination);
+
+drop trigger billing.bill_fees_crepl_trig;
+drop trigger billing.bill_fees_urepl_trig;
+
+delimiter ;;
+
+create trigger billing.bill_fees_crepl_trig after insert on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  insert into billing.billing_fees_history
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id, 
+     NEW.source, NEW.destination, NEW.direction,
+     NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+     NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+     NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.use_free_time);
+
+  end;
+;;
+
+create trigger billing.bill_fees_urepl_trig after update on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  update billing.billing_fees_history
+    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+      billing_zones_history_id = my_bzh_id, 
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction, 
+      type = NEW.type,
+      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+      use_free_time = NEW.use_free_time
+    where bf_id = OLD.id;
+
+  end;
+;;
+
+delimiter ;
