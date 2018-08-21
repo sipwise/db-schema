@@ -1,0 +1,138 @@
+use billing;
+
+delimiter ;;
+create or replace function get_billing_fee(
+  _billing_profile_id int(11),
+  _type enum('call','sms'),
+  _direction enum('in','out'),
+  _destination varchar(511),
+  _source varchar(511),
+  _match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination')
+) returns int(11)
+reads sql data
+begin
+
+  declare _destination_prefix,_source_prefix varchar(511);
+  declare _i, _j int(3) unsigned;
+  declare _fee_id int(11);
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "exact_destination")
+     and (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "exact_destination"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "exact_destination"
+        and direction = _direction
+        and bf_id is not null
+        and destination = _destination
+      limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "prefix")
+     and (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "prefix"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _j = length(_destination);
+
+    destination_loop: loop
+      if _j < 0 or _fee_id is not null then
+        leave destination_loop;
+      end if;
+      set _destination_prefix = substr(coalesce(_destination,""),1,_j);
+      if (select id from billing.billing_fee_history where
+              billing_profile_id = _billing_profile_id
+          and type = _type
+          and match_mode = "prefix"
+          and direction = _direction
+          and bf_id is not null
+          and destination = _destination_prefix
+        limit 1) is not null then
+
+        set _i = length(_source);
+
+        source_loop: loop
+          if _i < 0 or _fee_id is not null then
+            leave source_loop;
+          end if;
+          set _source_prefix = substr(coalesce(_source,""),1,_i);
+          set _fee_id = (select id from billing.billing_fee_history where
+                  billing_profile_id = _billing_profile_id
+              and type = _type
+              and match_mode = "prefix"
+              and direction = _direction
+              and bf_id is not null
+              and source = _source_prefix
+              and destination = _destination_prefix
+            limit 1);
+          set _i = _i - 1;
+        end loop source_loop;
+      end if;
+      set _j = _j - 1;
+    end loop destination_loop;
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_match")
+     and (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_match"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fee_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_match"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(regexp_substr(_destination,destination)) desc,
+        length(regexp_substr(_source,source)) desc limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_pattern")
+     and (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_pattern"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fee_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_pattern"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(destination) desc,
+        length(source) desc limit 1);
+
+  end if;
+
+  return _fee_id;
+
+end;;
+
+delimiter ;
+
