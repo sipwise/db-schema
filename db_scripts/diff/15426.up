@@ -1,0 +1,103 @@
+use billing;
+
+delimiter ;;
+create function is_offpeak(
+  _billing_profile_id int(11),
+  _t decimal(13,3),
+  _contract_id int(11)
+) returns boolean
+reads sql data
+begin
+
+  declare _call_start, _call_end decimal(13,3);
+  declare _is_offpeak boolean;
+  set _call_start = _t;
+  set _call_end = _t;
+
+  set _is_offpeak = (select coalesce((select 1 from (
+    select
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.start),
+          convert_tz(concat(date_enum.d," ",pw.start),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as start,
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.end),
+          convert_tz(concat(date_enum.d," ",pw.end),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as end
+    from
+         ngcp.date_range_helper as date_enum
+    join billing.billing_peaktime_weekdays pw on pw.weekday=weekday(date_enum.d)
+    where
+        pw.billing_profile_id = _billing_profile_id
+    and date_enum.d >= date(from_unixtime(_call_start))
+    and date_enum.d <= date(from_unixtime(_call_end))
+  ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  if _is_offpeak != 1 then
+
+    set _is_offpeak = (select coalesce((select 1 from (
+      select
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.start,
+            convert_tz(ps.start,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as start,
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.end,
+            convert_tz(ps.end,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as end
+      from
+           billing.billing_peaktime_special as ps
+      where
+          ps.billing_profile_id = _billing_profile_id
+      and (ps.start <= from_unixtime(_call_end) and ps.end >= from_unixtime(_call_start))
+    ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  end if;
+
+  return _is_offpeak;
+
+end;;
+
+delimiter ;
+
+#usage for AoC:
+#select
+#  bp.currency,
+#  if(pt.is_offpeak,bfh.offpeak_init_rate,bfh.onpeak_init_rate) as `setup`,
+#  if(pt.is_offpeak,bfh.offpeak_init_interval,bfh.onpeak_init_interval) as `free?`,
+#  if(pt.is_offpeak,bfh.offpeak_follow_rate,bfh.onpeak_follow_rate) as `amount`,
+#  if(pt.is_offpeak,bfh.offpeak_follow_interval,bfh.onpeak_follow_interval) as `interval`,
+#from
+#     billing.billing_fees_history bfh
+#join billing.billing_profiles bp on bp.id = bfh.billing_profile_id
+#join (select is_offpeak(?,?,null) as is_offpeak) pt
+#where
+#  bfh.id = billing.get_billing_fee_id(?,"call","out",?,?,null);
+#
+#bind params:
+#1. billing_profile_id
+#2. now (epoch)
+#3. billing_profile_id
+#4. source
+#5. destination
+# if contract_id is available, it could be added to apply the contract tz for off/onpeak - like in rate-o-mat/swrate.
