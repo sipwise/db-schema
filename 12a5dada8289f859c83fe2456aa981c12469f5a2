@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_b08238c7",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-24T08:20:31Z",
+      "side": 1,
+      "message": "what we could do though is putting it into another view",
+      "revId": "12a5dada8289f859c83fe2456aa981c12469f5a2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
