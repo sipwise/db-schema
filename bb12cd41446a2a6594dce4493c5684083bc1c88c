@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_503c2c2f",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T07:21:07Z",
+      "side": 1,
+      "message": "useful overall but must be renamed as \"is_offpeak\" is too ambiguous.\nhowever for kamailio-proxy it would be much more convenient to simply have\n\n\"select fee_data from get_billing_fee_data(...)\"\n\nfee_data\u003d0:600:25:600:1\n\notherwise, I would need to increase string buffer as a kamailio parameter for anything longer than 1024 chars ...",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "bb12cd41446a2a6594dce4493c5684083bc1c88c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_3049a8d1",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T07:21:07Z",
+      "side": 1,
+      "message": "kamailio proxy only works with NOW(), so I assume always from billing_fees",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "bb12cd41446a2a6594dce4493c5684083bc1c88c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
