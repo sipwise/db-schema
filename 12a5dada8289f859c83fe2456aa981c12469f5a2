@@ -102,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "baee8101_f0c68015",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T09:21:55Z",
+      "side": 1,
+      "message": "right we need contact_id to fetch/transform TZs, my bad overlooked it.",
+      "parentUuid": "baee8101_7054d053",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "12a5dada8289f859c83fe2456aa981c12469f5a2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baee8101_706df031",
         "filename": "db_scripts/diff/15426.up",
         "patchSetId": 8
