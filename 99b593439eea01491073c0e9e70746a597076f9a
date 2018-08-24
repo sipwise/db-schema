@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_f0ed608f",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T10:06:48Z",
+      "side": 1,
+      "message": "1. I would set it as private as it is definitely have uses in external modules, such as libswrate\n2. lets name it more accurate as we might have other \"fees\" rather than billing, how knows, the world is crazy enough already :) check_billing_fee_offpeak()",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "99b593439eea01491073c0e9e70746a597076f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
