@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "baee8101_b0d0f8ca",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T09:24:25Z",
+      "side": 1,
+      "message": "yes but in this case we are talking about 3+ views, do not think that is beneficial, also because in this case we only need a boolean value back and the procedure fits it well.",
+      "parentUuid": "baee8101_905e1475",
+      "revId": "12a5dada8289f859c83fe2456aa981c12469f5a2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baee8101_107464fb",
         "filename": "db_scripts/diff/15426.up",
         "patchSetId": 8
