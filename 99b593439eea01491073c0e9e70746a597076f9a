@@ -22,6 +22,30 @@
       "revId": "99b593439eea01491073c0e9e70746a597076f9a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_b0e7d8ab",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 9
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T10:07:16Z",
+      "side": 1,
+      "message": "* 1. I would not set it as private, typo :)",
+      "parentUuid": "baee8101_f0ed608f",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 31
+      },
+      "revId": "99b593439eea01491073c0e9e70746a597076f9a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
