@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "baee8101_70261018",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-24T08:08:12Z",
+      "side": 1,
+      "message": "can you provide an alternative name then. i found \"offpeak\" and \"onpeak\" is not used for something else, throughout the platform. anyway this is to be a helper only, will preceed it with a _\n\nrate-o-mat and swrate use this query in an optimized way - they do not execute it on every tick, but only once and look it up from the list in code then. this should not be topical now, but _call_start and_call end are already considered inside.",
+      "parentUuid": "baee8101_d016dca6",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "bb12cd41446a2a6594dce4493c5684083bc1c88c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baee8101_3049a8d1",
         "filename": "db_scripts/diff/15426.up",
         "patchSetId": 6
