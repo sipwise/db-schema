@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "baee8101_905e1475",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-24T08:46:29Z",
+      "side": 1,
+      "message": "yes, but could be circumvented with nested view, as last time.",
+      "parentUuid": "baee8101_d0649c4a",
+      "revId": "12a5dada8289f859c83fe2456aa981c12469f5a2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baee8101_107464fb",
         "filename": "db_scripts/diff/15426.up",
         "patchSetId": 8
@@ -48,6 +66,30 @@
       "writtenOn": "2018-08-24T08:33:48Z",
       "side": 1,
       "message": "we do not need contract_id here as it is not relevant.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 22
+      },
+      "revId": "12a5dada8289f859c83fe2456aa981c12469f5a2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_7054d053",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-24T08:46:29Z",
+      "side": 1,
+      "message": "you simply pass null then. be aware that peaktiminze are not timezone-ified then.",
+      "parentUuid": "baee8101_107464fb",
       "range": {
         "startLine": 86,
         "startChar": 2,
