@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "baee8101_d016dca6",
+        "filename": "db_scripts/diff/15426.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-08-24T07:24:40Z",
+      "side": 1,
+      "message": "p.s. even not only for kamailio proxy would that be useful but also for generic fee data selection, including just mysql console usage by ops and us for debugging.",
+      "parentUuid": "baee8101_503c2c2f",
+      "range": {
+        "startLine": 4,
+        "startChar": 16,
+        "endLine": 4,
+        "endChar": 26
+      },
+      "revId": "bb12cd41446a2a6594dce4493c5684083bc1c88c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baee8101_3049a8d1",
         "filename": "db_scripts/diff/15426.up",
         "patchSetId": 6
