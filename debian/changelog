@@ -1,3 +1,18 @@
+ngcp-db-schema (6.3.3.0+0~mr6.3.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [5425ed3] TT#38157 fix create ngcp.timezone if not exists
+  * [bdee907] TT#38157 fix to insert IGNORE into ngcp.timezone
+
+  [ Kirill Solomko ]
+  * [4220265] Revert "TT#38157 fix to insert IGNORE into ngcp.timezone"
+  * [5c28cb1] Revert "TT#38157 fix create ngcp.timezone if not exists"
+  * [ecc1a0e] TT#41618 update lcr on peer rule group change
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 16:08:49 +0200
+
 ngcp-db-schema (6.3.2.0+0~mr6.3.2.0) unstable; urgency=medium
 
   * New release.
