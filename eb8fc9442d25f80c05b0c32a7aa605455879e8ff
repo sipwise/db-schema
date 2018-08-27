@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baee8101_93a3be4f",
+        "filename": "db_scripts/diff/15424.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-27T12:25:03Z",
+      "side": 1,
+      "message": "foreign key constraint for contract_id, subscriber_id",
+      "revId": "eb8fc9442d25f80c05b0c32a7aa605455879e8ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_73897aca",
+        "filename": "db_scripts/diff/15424.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-27T12:25:03Z",
+      "side": 1,
+      "message": "fk for time_set_id (btw. also important to have the speed with joins)",
+      "revId": "eb8fc9442d25f80c05b0c32a7aa605455879e8ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baee8101_538676ba",
+        "filename": "db_scripts/diff/15424.up",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-08-27T12:25:03Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "eb8fc9442d25f80c05b0c32a7aa605455879e8ff",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
