@@ -1,3 +1,21 @@
+ngcp-db-schema (5.5.6.1+0~mr5.5.6.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [81bdd9e] Revert "TT#25451 use ngcp.timezone in v_timezone views"
+  * [0d54778] TT#38157 reset v_*_timezone views, not replicated
+  * [8fa0844] TT#38157 ensure not_repl create views have ngcp.timezone
+
+  [ Kirill Solomko ]
+  * [0f61620] Revert "TT#38157 ensure not_repl create views have ngcp.timezone"
+  * [a5ca886] Revert "TT#38157 reset v_*_timezone views, not replicated"
+  * [d9ceb44] TT#25451 use ngcp.timezone in v_timezone views
+  * [56e5a87] TT#28469 make ngcp.timezone related changes as not_replicated
+  * [39bcba5] TT#41618 update lcr on peer rule group change
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Aug 2018 19:25:19 +0200
+
 ngcp-db-schema (5.5.6.0+0~mr5.5.6.0) unstable; urgency=medium
 
   [ Rene Krenn ]
