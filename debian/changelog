@@ -1,3 +1,12 @@
+ngcp-db-schema (6.3.2.2+0~mr6.3.2.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [c711ea1] TT#43502 Add up script to fix typo introduced in 15400_not_replicated.up
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 30 Aug 2018 10:48:04 +0200
+
 ngcp-db-schema (6.3.2.1+0~mr6.3.2.1) unstable; urgency=medium
 
   [ Rene Krenn ]
