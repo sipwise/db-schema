@@ -4,20 +4,20 @@ alter table billing_fees_history
   drop index bfhsems_idx,
   add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
   add key bfh_srcdestdir_idx (billing_profile_id, type, match_mode, direction, bf_id, source, destination),
-  add key bfh_destsrcdir_idx (billing_profile_id, type, match_mode, destination, bf_id, source, direction);
+  add key bfh_destsrcdir_idx (billing_profile_id, type, match_mode, direction, bf_id, destination, source);
 
 alter table billing_fees
   drop index billing_fees_unique,
   drop index profsrcdesdirtype_idx,
   add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
   add unique key bf_srcdestdir_idx (billing_profile_id, type, match_mode, direction, source, destination),
-  add key bf_destsrcdir_idx (billing_profile_id, type, match_mode, destination, source, direction);
+  add key bf_destsrcdir_idx (billing_profile_id, type, match_mode, direction, destination, source);
 
 alter table billing_fees_raw
   drop index profsrcdesdirtype_idx,
   add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
   add unique key bfr_srcdestdir_idx (billing_profile_id, type, match_mode, direction, source, destination),
-  add key bfr_destsrcdir_idx (billing_profile_id, type, match_mode, destination, source, direction);
+  add key bfr_destsrcdir_idx (billing_profile_id, type, match_mode, direction, destination, source);
 
 drop trigger billing.bill_fees_crepl_trig;
 drop trigger billing.bill_fees_urepl_trig;
