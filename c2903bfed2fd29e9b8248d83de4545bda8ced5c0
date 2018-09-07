@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_b8ce98b2",
+        "filename": "db_scripts/diff/15428.up",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2018-09-07T15:33:34Z",
+      "side": 1,
+      "message": "on delete is not specified so an error is thrown if someone tries to still delete when a foreign key field is present",
+      "range": {
+        "startLine": 76,
+        "startChar": 99,
+        "endLine": 76,
+        "endChar": 116
+      },
+      "revId": "c2903bfed2fd29e9b8248d83de4545bda8ced5c0",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
