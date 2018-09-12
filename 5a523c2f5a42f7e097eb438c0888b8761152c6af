@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_31ef63b2",
+        "filename": "db_scripts/diff/15427_not_replicated.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2018-09-12T03:02:31Z",
+      "side": 1,
+      "message": "be aware that mixed replicated/not replicated .up\u0027s exists manipulating the tables involved here.",
+      "revId": "5a523c2f5a42f7e097eb438c0888b8761152c6af",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
