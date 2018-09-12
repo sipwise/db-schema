@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_4c5fee0e",
+        "filename": "db_scripts/diff/15428.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2018-09-12T10:27:19Z",
+      "side": 1,
+      "message": "READ UNCOMMITTED is dangerous, do we truly need it over READ COMMITTED ?\nup to you here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 63,
+        "endLine": 93,
+        "endChar": 79
+      },
+      "revId": "09d270fb319b7ee349a2b225ec677667b73aae5f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_314be3b2",
         "filename": "db_scripts/diff/15428.up",
         "patchSetId": 2
