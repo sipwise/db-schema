@@ -3,8 +3,8 @@ USE provisioning;
 
 CREATE TABLE `voip_time_sets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) NOT NULL,
-  `contract_id` int(11),
+  `reseller_id` int(11) unsigned NOT NULL,
+  `contract_id` int(11) unsigned,
   `subscriber_id` int(11) unsigned,
   `name` varchar(90) NOT NULL,
   PRIMARY KEY (`id`),
