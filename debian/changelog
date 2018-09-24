@@ -1,3 +1,27 @@
+ngcp-db-schema (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [0a4421e] TT#42261 add prepaid_library col to billing_profiles
+  * [700d098] TT#41552 TT#41556 billing fees "match mode"
+  * [b623afc] TT#44095 prevent deadlocks when creating contracts simultaneously
+
+  [ Andreas Granig ]
+  * [5cf414c] TT#42767 Add tag column to firmware table
+
+  [ Kirill Solomko ]
+  * [676ded2] TT#41618 update lcr on peer rule group change
+
+  [ Marco Capetta ]
+  * [5a523c2] TT#43502 Add up script to fix typo introduced in 15400_not_replicated.up
+
+  [ Gerhard Jungwirth ]
+  * [c3ad355] TT#41627 voip_time_sets in iCal format
+  * [926c23b] TT#41627 iCal tables make all ids unsigned
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Sep 2018 18:52:13 +0200
+
 ngcp-db-schema (6.5.0.0+0~mr6.5.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
