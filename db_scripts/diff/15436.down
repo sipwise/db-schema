@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE recording_streams
+    DROP COLUMN tag_label;

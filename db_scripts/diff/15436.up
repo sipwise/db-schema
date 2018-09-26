@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE recording_streams
+    ADD COLUMN tag_label VARCHAR(255) NOT NULL DEFAULT "";
