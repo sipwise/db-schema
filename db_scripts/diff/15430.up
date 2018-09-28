@@ -1,0 +1,78 @@
+SET autocommit=0;
+USE billing;
+
+ALTER TABLE email_templates ADD attachment_name VARCHAR(255) NOT NULL DEFAULT "";
+
+INSERT INTO email_templates SET
+name = 'fax_receive_ok_default_email',
+from_email = 'Sipwise NGCP FaxServer <voipfax@ngcp.sipwise.local>',
+subject = 'Incoming fax from [% caller %]',
+attachment_name = 'Fax_from_[% caller %]_at_[% date_file %]',
+body =
+'        New fax received:
+
+        Status: [% status %]
+        From:   [% caller %]
+        To:     [% callee %]
+        Pages:  [% pages %]
+        Date:   [% date %]
+
+--
+Please do not reply to this auto-generated E-Mail.';
+
+INSERT INTO email_templates SET
+name = 'fax_send_copy_default_email',
+from_email = '[% mail_from %]',
+subject = 'Copy of an outgoing fax to [% callee %]',
+attachment_name = 'Fax_from_[% caller %]_at_[% date_file %]',
+body =
+'        Copy of the sent fax:
+
+        From:  [% caller %]
+        To:    [% callee %]
+        Pages: [% pages %]
+
+--
+Please do not reply to this auto-generated E-Mail.';
+
+INSERT INTO email_templates SET
+name = 'fax_notify_ok_default_email',
+from_email = '[% mail_from %]',
+subject = 'Fax transmission to [% callee %] is successful',
+body =
+'        Fax from [% caller %] to [% callee %] has been successfully sent.
+
+        Pages:   [% pages %]
+        Quality: [% quality %]
+
+--
+Please do not reply to this auto-generated E-Mail.';
+
+INSERT INTO email_templates SET
+name = 'fax_notify_error_default_email',
+from_email = '[% mail_from %]',
+subject = 'Fax transmission to [% callee %] has failed',
+body =
+'        Fax from [% caller %] to [% callee %] has failed.
+
+        Status:     [% status %]
+        Attempts:   [% attempts %]
+        Sent pages: [% sent_pages %] of [% pages %]
+        Reason:     [% reason %]
+
+--
+Please do not reply to this auto-generated E-Mail.';
+
+INSERT INTO email_templates SET
+name = 'fax_notify_secret_update_default_email',
+from_email = '[% mail_from %]',
+subject = 'Preferences update notification',
+body =
+'        Secret key for subscriber [% subscriber %] has been updated.
+
+        New secret key: [% secret_key %]
+
+--
+Please do not reply to this auto-generated E-Mail.';
+
+COMMIT;
