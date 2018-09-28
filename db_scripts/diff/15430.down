@@ -1,0 +1,13 @@
+SET autocommit=0;
+USE billing;
+
+DELETE FROM email_templates WHERE name = 'fax_receive_ok_default_email';
+DELETE FROM email_templates WHERE name = 'fax_receive_error_default_email';
+DELETE FROM email_templates WHERE name = 'fax_send_copy_default_email';
+DELETE FROM email_templates WHERE name = 'fax_notify_ok_default_email';
+DELETE FROM email_templates WHERE name = 'fax_notify_error_default_email';
+DELETE FROM email_templates WHERE name = 'fax_notify_secret_update_default_email';
+
+ALTER TABLE email_templates DROP attachment_name;
+
+COMMIT;
