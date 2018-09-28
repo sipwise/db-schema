@@ -1,0 +1,25 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Access Restrictions"),
+attribute = "count_callforward_as_one",
+label = "Do not increase outoging counter on CF",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If enabled, Call Forwarding does not count as an outgoing call towards concurrent_max limit of subscriber that is doing the forward";
+
+commit;

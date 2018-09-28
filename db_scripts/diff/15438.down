@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+delete from voip_preferences where attribute = "count_callforward_as_one";
+
+commit;
