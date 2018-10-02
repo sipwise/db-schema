@@ -1,0 +1,6 @@
+use accounting;
+set sql_log_bin=0;
+
+alter table accounting.cdr drop key ecrstatus,
+  add index estatus (export_status);
+
