@@ -1,0 +1,8 @@
+SET autocommit=0;
+USE billing;
+
+UPDATE email_templates set from_email = '[% mail_from %]'
+ WHERE name = 'fax_receive_ok_default_email'
+   AND reseller_id IS NULL;
+
+COMMIT;
