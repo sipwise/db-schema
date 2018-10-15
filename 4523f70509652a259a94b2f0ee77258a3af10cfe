@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad8896b_95f8437e",
+        "filename": "db_scripts/diff/15288_not_replicated.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-10-15T11:00:19Z",
+      "side": 0,
+      "message": "will this continue to work without l_n_lnpproid_ref ?",
+      "range": {
+        "startLine": 8,
+        "startChar": 39,
+        "endLine": 8,
+        "endChar": 55
+      },
+      "revId": "4523f70509652a259a94b2f0ee77258a3af10cfe",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
