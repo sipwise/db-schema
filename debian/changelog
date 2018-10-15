@@ -1,3 +1,16 @@
+ngcp-db-schema (6.5.2.0+0~mr6.5.2.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [af96a3e] TT#33108 add faxserver email templates
+  * [8f386be] TT#33108 fix faxserver template email_from
+
+  [ Rene Krenn ]
+  * [9cbe3fc] TT#44968 extend cdr.export_status index
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Oct 2018 21:14:51 +0200
+
 ngcp-db-schema (6.5.1.0+0~mr6.5.1.0) unstable; urgency=medium
 
   [ Rene Krenn ]
