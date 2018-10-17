@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = "upn_block_clir";
+DELETE FROM voip_preferences WHERE attribute = "upn_block_mode";
+DELETE FROM voip_preferences WHERE attribute = "upn_block_list";
+
+commit;
