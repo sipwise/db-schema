@@ -1,3 +1,16 @@
+ngcp-db-schema (6.4.3.0+0~mr6.4.3.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [a1f3558] TT#41618 update lcr on peer rule group change
+
+  [ Rene Krenn ]
+  * [4a72c38] TT#44095 prevent deadlocks when creating contracts simultaneously
+  * [60eaa26] TT#45718 skip creating lnp_numbers constraint index explicitly
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Oct 2018 14:13:40 +0200
+
 ngcp-db-schema (6.4.2.0+0~mr6.4.2.0) unstable; urgency=medium
 
   * New release.
