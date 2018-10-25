@@ -1,0 +1,139 @@
+use billing;
+
+delimiter ;;
+drop function get_billing_profile_by_contract_id;;
+create function get_billing_profile_by_contract_id(
+  _contract_id int(11),
+  _epoch decimal(13,3)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch and cbpn.base = 1);
+
+  if _effective_start_date is null then
+    set _cbpn_id = (select min(id) from billing.contracts_billing_profile_network cbpn
+      where cbpn.contract_id = _contract_id and cbpn.base = 1);
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date and cbpn.base = 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end;;
+
+drop function get_billing_profile_by_contract_id_network;;
+create function get_billing_profile_by_contract_id_network(
+  _contract_id int(11),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+  declare _network_bytes varbinary(16);
+  declare _is_valid_ip,_is_ipv6 boolean default false;
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+  set _network_bytes = inet6_aton(_ip);
+  set _is_valid_ip = if(_network_bytes is null or hex(_network_bytes) = "00000000",0,1);
+  set _is_ipv6 = if(locate(".",_ip) = 0,1,0);
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+    left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch
+    and ((_is_valid_ip and if(_is_ipv6,bnb._ipv6_net_from <= _network_bytes and bnb._ipv6_net_to >= _network_bytes,
+    bnb._ipv4_net_from <= _network_bytes and bnb._ipv4_net_to >= _network_bytes)) or cbpn.billing_network_id is null));
+
+  if _effective_start_date is null then
+    return null;
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+      left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date
+      and ((_is_valid_ip and if(_is_ipv6,bnb._ipv6_net_from <= _network_bytes and bnb._ipv6_net_to >= _network_bytes,
+      bnb._ipv4_net_from <= _network_bytes and bnb._ipv4_net_to >= _network_bytes)) or cbpn.billing_network_id is null)
+      order by cbpn.billing_network_id desc limit 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end;;
+
+drop function get_billing_profile_by_uuid;;
+create function get_billing_profile_by_uuid(
+  _uuid varchar(36),
+  _epoch decimal(13,3)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  return billing.get_billing_profile_by_contract_id((select account_id from provisioning.voip_subscribers where uuid = _uuid),_epoch);
+
+end;;
+
+drop function get_billing_profile_by_uuid_network;;
+create function get_billing_profile_by_uuid_network(
+  _uuid varchar(36),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  return billing.get_billing_profile_by_contract_id_network((select account_id from provisioning.voip_subscribers where uuid = _uuid),
+    _epoch,_ip);
+
+end;;
+
+drop function get_billing_profile_by_peer_host_id;;
+create function get_billing_profile_by_peer_host_id(
+  _peer_host_id int(11),
+  _epoch decimal(13,3)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  return billing.get_billing_profile_by_contract_id((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
+    provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch);
+
+end;;
+
+drop function get_billing_profile_by_peer_host_id_network;;
+create function get_billing_profile_by_peer_host_id_network(
+  _peer_host_id int(11),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  return billing.get_billing_profile_by_contract_id_network((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
+    provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch,_ip);
+
+end;;
+
+delimiter ;
