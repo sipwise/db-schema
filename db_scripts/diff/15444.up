@@ -1,0 +1,244 @@
+use billing;
+
+delimiter ;;
+drop function get_billing_fee_id;;
+create function get_billing_fee_id(
+  _billing_profile_id int(11),
+  _type enum('call','sms'),
+  _direction enum('in','out'),
+  _source varchar(511),
+  _destination varchar(511),
+  _match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination')
+) returns int(11)
+deterministic reads sql data
+begin
+
+  declare _destination_prefix,_source_prefix varchar(511);
+  declare _i, _j int(3) unsigned;
+  declare _fee_id int(11);
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "exact_destination")
+     and (select id from billing.billing_fees_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "exact_destination"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fee_history where
+          billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "exact_destination"
+        and direction = _direction
+        and bf_id is not null
+        and destination = _destination
+      limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "prefix")
+     and (select id from billing.billing_fees_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "prefix"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _j = length(_destination);
+
+    destination_loop: loop
+      if _j < 0 or _fee_id is not null then
+        leave destination_loop;
+      end if;
+      set _destination_prefix = substr(coalesce(_destination,""),1,_j);
+      if (select id from billing.billing_fees_history where
+              billing_profile_id = _billing_profile_id
+          and type = _type
+          and match_mode = "prefix"
+          and direction = _direction
+          and bf_id is not null
+          and destination = _destination_prefix
+        limit 1) is not null then
+
+        set _i = length(_source);
+
+        source_loop: loop
+          if _i < 0 or _fee_id is not null then
+            leave source_loop;
+          end if;
+          set _source_prefix = substr(coalesce(_source,""),1,_i);
+          set _fee_id = (select id from billing.billing_fees_history where
+                  billing_profile_id = _billing_profile_id
+              and type = _type
+              and match_mode = "prefix"
+              and direction = _direction
+              and bf_id is not null
+              and source = _source_prefix
+              and destination = _destination_prefix
+            limit 1);
+          set _i = _i - 1;
+        end loop source_loop;
+      end if;
+      set _j = _j - 1;
+    end loop destination_loop;
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_match")
+     and (select id from billing.billing_fees_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_match"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fees_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_match"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(regexp_substr(_destination,destination)) desc,
+        length(regexp_substr(_source,source)) desc limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_pattern")
+     and (select id from billing.billing_fees_history where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_pattern"
+      and direction = _direction
+      and bf_id is not null
+    limit 1) is not null then
+
+    set _fee_id = (select id from billing.billing_fees_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_pattern"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(destination) desc,
+        length(source) desc limit 1);
+
+  end if;
+
+  return _fee_id;
+
+end;;
+
+drop function check_billing_fee_offpeak;;
+create function check_billing_fee_offpeak(
+  _billing_profile_id int(11),
+  _t decimal(13,3),
+  _contract_id int(11)
+) returns boolean
+deterministic reads sql data
+begin
+
+  declare _call_start, _call_end decimal(13,3);
+  declare _is_offpeak boolean;
+  set _call_start = _t;
+  set _call_end = _t;
+
+  set _is_offpeak = (select coalesce((select 1 from (
+    select
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.start),
+          convert_tz(concat(date_enum.d," ",pw.start),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as start,
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.end),
+          convert_tz(concat(date_enum.d," ",pw.end),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as end
+    from
+         ngcp.date_range_helper as date_enum
+    join billing.billing_peaktime_weekdays pw on pw.weekday=weekday(date_enum.d)
+    where
+        pw.billing_profile_id = _billing_profile_id
+    and date_enum.d >= date(from_unixtime(_call_start))
+    and date_enum.d <= date(from_unixtime(_call_end))
+  ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  if _is_offpeak != 1 then
+
+    set _is_offpeak = (select coalesce((select 1 from (
+      select
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.start,
+            convert_tz(ps.start,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as start,
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.end,
+            convert_tz(ps.end,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as end
+      from
+           billing.billing_peaktime_special as ps
+      where
+          ps.billing_profile_id = _billing_profile_id
+      and (ps.start <= from_unixtime(_call_end) and ps.end >= from_unixtime(_call_start))
+    ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  end if;
+
+  return _is_offpeak;
+
+end;;
+
+drop function get_billing_fee;;
+create function get_billing_fee(
+  _billing_profile_id int(11),
+  _t decimal(13,3),
+  _source varchar(511),
+  _destination varchar(511),
+  _contract_id int(11)
+) returns varchar(100)
+deterministic reads sql data
+begin
+
+  declare _fee_string varchar(100);
+
+  set _fee_string = (select concat(
+      if(pt.is_offpeak,bfh.offpeak_init_rate,bfh.onpeak_init_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_init_interval,bfh.onpeak_init_interval),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_rate,bfh.onpeak_follow_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_interval,bfh.onpeak_follow_interval)
+    ) from
+           billing.billing_fees_history bfh
+      join (select billing.check_billing_fee_offpeak(_billing_profile_id,_t,_contract_id) as is_offpeak) pt
+    where
+      bfh.id = billing.get_billing_fee_id(_billing_profile_id,"call","out",_source,_destination,null));
+
+  return _fee_string;
+
+end;;
+
+delimiter ;
