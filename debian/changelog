@@ -1,3 +1,12 @@
+ngcp-db-schema (6.4.1.4+0~mr6.4.1.4) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [de9b639] TT#46404 change billing mappings UDFs to "deterministic"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 26 Oct 2018 14:59:40 +0200
+
 ngcp-db-schema (6.4.1.3+0~mr6.4.1.3) unstable; urgency=medium
 
   [ Rene Krenn ]
