@@ -1,3 +1,28 @@
+ngcp-db-schema (7.1.0.0+0~mr7.1.0.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [4bb1178] TT#41900 save monologue label into recording DB
+
+  [ Kirill Solomko ]
+  * [c944dd6] TT#33108 add faxserver email templates
+  * [4523f70] TT#33108 fix faxserver template email_from
+  * [422af52] TT#33275 use --init-replication by default for ngcp-sync-db
+
+  [ Andrew Pogrebennyk ]
+  * [47ffad5] TT#20856 add preference count_callforward_as_one
+  * [f634aae] TT#14601 add new preferences upn_block_list|mode|clir
+  * [dbfdb92] TT#37690 add preference always_transcode from TT36301
+
+  [ Rene Krenn ]
+  * [3b78bd1] TT#44968 extend cdr.export_status index
+  * [687a444] TT#45718 skip creating lnp_numbers constraint index explicitly
+  * [392868c] TT#46404 change billing mappings UDFs to "deterministic"
+  * [f724d97] TT#46405 change fee matching UDFs to "deterministic"
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 Nov 2018 22:33:25 +0100
+
 ngcp-db-schema (7.0.0.0+0~mr7.0.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
