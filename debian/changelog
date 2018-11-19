@@ -1,3 +1,15 @@
+ngcp-db-schema (5.5.7.1+0~mr5.5.7.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [5b5a6d2] TT#45718 skip creating lnp_numbers constraint index explicitly
+
+  [ Andreas Granig ]
+  * [69389eb] TT#8704 Fix spaces in peer name
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Nov 2018 17:55:43 +0100
+
 ngcp-db-schema (5.5.7.0+0~mr5.5.7.0) unstable; urgency=medium
 
   [ Rene Krenn ]
