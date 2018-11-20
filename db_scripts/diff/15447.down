@@ -1,0 +1,6 @@
+USE provisioning;
+set autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = "force_outb_call_uses_peer_hdrs";
+
+commit;
