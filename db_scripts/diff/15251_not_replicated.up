@@ -9,7 +9,7 @@ WHERE
   a.id < b.id
   and (a.number = b.number and a.lnp_provider_id = b.lnp_provider_id);
 
-LOCK TABLES lnp_numbers WRITE;
+LOCK TABLES lnp_numbers WRITE, lnp_providers WRITE;
 
 ALTER TABLE lnp_numbers DROP FOREIGN KEY `l_n_lnpproid_ref`;
 CREATE UNIQUE INDEX l_n_lnpproidnumber_idx ON lnp_numbers (lnp_provider_id,number);
