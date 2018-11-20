@@ -1,0 +1,9 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Rene Krenn <rkrenn@sipwise.com>
+Code-Review+1: Manuel Montecelo <mmontecelo@sipwise.com>
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Submitted-by: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-at: Tue, 20 Nov 2018 11:50:06 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/24848
+Project: db-schema
+Branch: refs/heads/master
