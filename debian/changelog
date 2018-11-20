@@ -1,3 +1,18 @@
+ngcp-db-schema (6.5.2.1+0~mr6.5.2.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [0ae31ac] TT#45718 skip creating lnp_numbers constraint index explicitly
+  * [93b3610] TT#46404 change billing mappings UDFs to "deterministic"
+  * [80a8403] TT#46405 change fee matching UDFs to "deterministic"
+
+  [ Kirill Solomko ]
+  * [cc7f0d2] TT#33275 use --init-replication by default for ngcp-sync-db
+  * [40024db] TT#47713 fix table locks in 15251_not_replicated.up
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Nov 2018 13:22:09 +0100
+
 ngcp-db-schema (6.5.2.0+0~mr6.5.2.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
