@@ -1,0 +1,25 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Number Manipulations"),
+attribute = "force_outb_call_uses_peer_hdrs",
+label = "Use peer-specific outbound headers when call is forced to peer",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If enabled, set the outbound headers as per peer outbound_* preferences when the call is forced to the peer by force_outbound_calls_to_peer setting. Otherwise, the outbound headers are controlled by the user/domain settings of the subscriber which forces the call to peer (by default).";
+
+commit;
