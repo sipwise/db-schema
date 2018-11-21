@@ -1,0 +1,53 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @rej_id FROM voip_sound_groups WHERE name = 'early_rejects';
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('announce_before_call_setup', @rej_id);
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('announce_before_recording', @rej_id);
+
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Applications';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "play_announce_before_call_setup",
+label = "Play announcement before call setup",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "Playback announcement as early media before send the call to callee.";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "play_announce_before_recording",
+label = "Play announcement before recording",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "Playback announcement as early media before start call recording.";
+
+commit;
