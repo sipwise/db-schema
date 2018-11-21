@@ -1,0 +1,7 @@
+Code-Review+2: Kirill Solomko <ksolomko@sipwise.com>
+Verified+1: Jenkins Jenkins
+Submitted-by: Alexander Lutay <alutay@sipwise.com>
+Submitted-at: Wed, 21 Nov 2018 11:25:08 +0100
+Reviewed-on: http://gerrit.mgm.sipwise.com/24869
+Project: db-schema
+Branch: refs/heads/mr6.4.2
