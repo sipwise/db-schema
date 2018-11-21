@@ -1,0 +1,7 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name = 'announce_before_call_setup';
+DELETE FROM voip_sound_handles WHERE name = 'announce_before_recording';
+
+DELETE FROM voip_preferences WHERE attribute = 'play_announcement_before_call_setup';
+DELETE FROM voip_preferences WHERE attribute = 'play_announcement_before_recording';
