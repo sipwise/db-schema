@@ -1,3 +1,12 @@
+ngcp-db-schema (6.3.1.6+0~mr6.3.1.6) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [b890b26] TT#47713 fix table locks in 15251_not_replicated.up
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 22 Nov 2018 11:12:03 +0100
+
 ngcp-db-schema (6.3.1.5+0~mr6.3.1.5) unstable; urgency=medium
 
   [ Marco Capetta ]
