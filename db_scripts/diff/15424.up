@@ -2,20 +2,22 @@ use billing;
 
 alter table billing_fees_history
   drop index bfhsems_idx,
-  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
+  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern',
   add key bfh_srcdestdir_idx (billing_profile_id, type, match_mode, direction, bf_id, source, destination),
   add key bfh_destsrcdir_idx (billing_profile_id, type, match_mode, destination, bf_id, source, direction);
 
 alter table billing_fees
   drop index billing_fees_unique,
   drop index profsrcdesdirtype_idx,
-  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
+  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern',
   add unique key bf_srcdestdir_idx (billing_profile_id, type, match_mode, direction, source, destination),
   add key bf_destsrcdir_idx (billing_profile_id, type, match_mode, destination, source, direction);
 
+truncate billing_fees_raw;
+
 alter table billing_fees_raw
   drop index profsrcdesdirtype_idx,
-  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern', 
+  add column match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination') not null default 'regex_longest_pattern',
   add unique key bfr_srcdestdir_idx (billing_profile_id, type, match_mode, direction, source, destination),
   add key bfr_destsrcdir_idx (billing_profile_id, type, match_mode, destination, source, direction);
 
@@ -36,7 +38,7 @@ create trigger billing.bill_fees_crepl_trig after insert on billing_fees
   select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
 
   insert into billing.billing_fees_history
-    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id, 
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
      NEW.source, NEW.destination, NEW.direction,
      NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
      NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
@@ -54,8 +56,8 @@ create trigger billing.bill_fees_urepl_trig after update on billing_fees
 
   update billing.billing_fees_history
     set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
-      billing_zones_history_id = my_bzh_id, 
-      source = NEW.source, destination = NEW.destination, direction = NEW.direction, 
+      billing_zones_history_id = my_bzh_id,
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
       type = NEW.type,
       onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
       onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
@@ -72,29 +74,29 @@ begin
 
   declare columns varchar(1023);
   declare statement varchar(1023);
-    
+
   set @profile_id = in_profile_id;
-    
+
   select group_concat(column_name) into columns from information_schema.columns where table_schema = database() and table_name = "billing_fees_raw" and column_name not in ("id");
-    
+
   set @statement = concat("insert into billing.billing_fees(id,",columns,")
  select min_id,",columns,"
- from billing.billing_fees_raw bnu 
+ from billing.billing_fees_raw bnu
  inner join (
-    select min(i_nu.id) min_id 
-    from billing.billing_fees_raw i_nu 
-    left join billing.billing_fees i_u 
-        on i_nu.billing_profile_id=i_u.billing_profile_id 
+    select min(i_nu.id) min_id
+    from billing.billing_fees_raw i_nu
+    left join billing.billing_fees i_u
+        on i_nu.billing_profile_id=i_u.billing_profile_id
         and i_nu.type=i_u.type
-        and i_nu.match_mode=i_u.match_mode  
-        and i_nu.direction=i_u.direction 
-        and i_nu.source=i_u.source 
-        and i_nu.destination=i_u.destination 
+        and i_nu.match_mode=i_u.match_mode
+        and i_nu.direction=i_u.direction
+        and i_nu.source=i_u.source
+        and i_nu.destination=i_u.destination
     where i_u.id is null ",
     if( @profile_id is not null, " and i_nu.billing_profile_id = ? ", " and 1 = ? "),
     " group by i_nu.billing_profile_id,i_nu.type,i_nu.match_mode,i_nu.direction,i_nu.source,i_nu.destination
  ) u on bnu.id=u.min_id");
-    
+
   if @profile_id is null then
     set @profile_id = 1;
   end if;
@@ -106,4 +108,3 @@ end;
 ;;
 
 delimiter ;
-
