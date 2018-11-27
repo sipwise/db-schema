@@ -1,0 +1,4 @@
+use billing;
+
+alter table billing_fees_raw drop index bfr_srcdestdir_idx;
+alter table billing_fees_raw add key bfr_srcdestdir_idx (billing_profile_id, type, match_mode, direction, source, destination);
