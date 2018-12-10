@@ -1,3 +1,15 @@
+ngcp-db-schema (7.0.1.1+0~mr7.0.1.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [25968b0] TT#47713 fix table locks in 15251_not_replicated.up
+
+  [ Rene Krenn ]
+  * [7787c3c] TT#47970 truncate billing_fees_raw in 15424.up
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Dec 2018 22:05:40 +0100
+
 ngcp-db-schema (7.0.1.0+0~mr7.0.1.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
