@@ -1,0 +1,5 @@
+USE provisioning;
+
+SELECT id INTO @vpid FROM voip_preferences WHERE attribute = 'alert_info_type';
+DELETE FROM voip_preferences_enum WHERE preference_id = @vpid;
+DELETE FROM voip_preferences WHERE attribute IN ('alert_info_type', 'alert_info_url');

@@ -1,0 +1,33 @@
+USE provisioning;
+
+SELECT id INTO @vgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences VALUES (
+    NULL, @vgid, 'alert_info_type', 'Alert-Info Type',
+    0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+    now(), 0, 0, 'enum', 0,
+    'Whether to send a specific Alert-Info to the called party to control the ring tone', 0
+);
+SELECT LAST_INSERT_ID() INTO @vpid;
+INSERT INTO voip_preferences_enum VALUES (
+    NULL, @vpid, 'default', NULL,
+    1, 0, 1, 0, 0, 0, 0, 0, 0,
+    1
+);
+INSERT INTO voip_preferences_enum VALUES (
+    NULL, @vpid, 'internal_external', 'internal_external',
+    1, 0, 1, 0, 0, 0, 0, 0, 0,
+    0
+);
+INSERT INTO voip_preferences_enum VALUES (
+    NULL, @vpid, 'url', 'url',
+    1, 0, 1, 0, 0, 0, 0, 0, 0,
+    0
+);
+
+INSERT INTO voip_preferences VALUES (
+    NULL, @vgid, 'alert_info_url', 'Alert-Info URL',
+    0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0,
+    now(), 0, 0, 'string', 0,
+    'If the Alert-Info Type is set to "url", then specify a URL to a ring tone file (e.g. a WAV file) here', 0
+);
