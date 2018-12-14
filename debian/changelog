@@ -1,3 +1,12 @@
+ngcp-db-schema (7.0.1.2+0~mr7.0.1.2) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [1268c87] TT#49100 Fix issue with trigger where peering host name was not always quoted
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 14 Dec 2018 14:58:50 +0100
+
 ngcp-db-schema (7.0.1.1+0~mr7.0.1.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
