@@ -1,0 +1,5 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name = 'announce_to_callee';
+
+DELETE FROM voip_preferences WHERE attribute = 'play_announcement_to_callee';
