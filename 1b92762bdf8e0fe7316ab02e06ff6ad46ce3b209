@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_84d59844",
+        "filename": "db_scripts/diff/15453.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2018-12-19T20:14:07Z",
+      "side": 1,
+      "message": "Do we need also alter table autoprov_sync_parameters change column `bootstrap_method` bootstrap_method enum(\u0027http\u0027,\u0027redirect_panasonic\u0027,\u0027redirect_yealink\u0027,\u0027redirect_polycom\u0027,\u0027redirect_snom\u0027,\u0027redirect_grandstream\u0027,\u0027redirect_sipwise\u0027,\u0027profile_sipwise\u0027) not null default \u0027http\u0027;\n\nand maybe we need add some parameters, like:\ninsert into autoprov_sync_parameters(bootstrap_method,parameter_name,parameter_constraint)values(\u0027redirect_sipwise\u0027,\u0027profile\u0027,\u0027\u0027); \n\n?\n\nBut we don\u0027t need to insert usual credentials.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "1b92762bdf8e0fe7316ab02e06ff6ad46ce3b209",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
