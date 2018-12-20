@@ -46,6 +46,30 @@
       "revId": "1b92762bdf8e0fe7316ab02e06ff6ad46ce3b209",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_c4c5e05b",
+        "filename": "db_scripts/diff/15453.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2018-12-20T09:49:13Z",
+      "side": 1,
+      "message": "Hello Andreas,\n\nIf feature doesn\u0027t require additional parameters except credentials, table \"autoprov_sync_parameters\" can stay untouched.\n\nFor illustration, here is current content of the table:\n\n| http                 | sync_uri         |\n| http                 | sync_method      |\n| http                 | sync_params      |\n| http                 | security_handler |\n| redirect_polycom     | profile          |\n| redirect_grandstream | cid              |\n| redirect_grandstream | key              |",
+      "parentUuid": "1adf8d57_442b3031",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "1b92762bdf8e0fe7316ab02e06ff6ad46ce3b209",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
