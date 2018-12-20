@@ -22,6 +22,30 @@
       "revId": "1b92762bdf8e0fe7316ab02e06ff6ad46ce3b209",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_442b3031",
+        "filename": "db_scripts/diff/15453.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2018-12-20T07:59:57Z",
+      "side": 1,
+      "message": "Irina, I don\u0027t know what this table does, but I added at least the options to the bootstrap methods at least for consistency reasons. Why do I need to insert something into this table, and what is it used for?\n\nThe credentials are added in the ngcp-insert-cloudpbx-devices script, so this should be fine, no?",
+      "parentUuid": "1adf8d57_84d59844",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 16
+      },
+      "revId": "1b92762bdf8e0fe7316ab02e06ff6ad46ce3b209",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
