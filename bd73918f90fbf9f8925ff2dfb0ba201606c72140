@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1adf8d57_e2e4470e",
+        "filename": "db_scripts/diff/15500.up",
+        "patchSetId": 44
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-01-07T16:33:48Z",
+      "side": 1,
+      "message": "\"OR\" is possible due to the flexibility of the conditions and/or the engine :) And the LGI guys already been using it in both ways :)",
+      "parentUuid": "1adf8d57_82d0e354",
+      "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1adf8d57_a2bbdf0d",
         "filename": "db_scripts/diff/15500.up",
         "patchSetId": 44
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1adf8d57_c2f14bcf",
+        "filename": "db_scripts/diff/15500.up",
+        "patchSetId": 44
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-01-07T16:33:48Z",
+      "side": 1,
+      "message": "rewrite_rule id",
+      "parentUuid": "1adf8d57_a2bbdf0d",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 9
+      },
+      "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1adf8d57_42cafba2",
         "filename": "db_scripts/diff/15500.up",
         "patchSetId": 44
@@ -53,6 +95,24 @@
       "writtenOn": "2019-01-07T15:14:07Z",
       "side": 1,
       "message": "why not using condition_id here directly? so voip_header_rule_condition_value_groups`would not be needed",
+      "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_a2ee3fea",
+        "filename": "db_scripts/diff/15500.up",
+        "patchSetId": 44
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-01-07T16:33:48Z",
+      "side": 1,
+      "message": "do not remember why I decided to go that way, but indeed now to me it sounds reasonable and better to use condition_id and remove the proxy group table. will do thanks!",
+      "parentUuid": "1adf8d57_42cafba2",
       "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
