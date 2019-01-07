@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1adf8d57_82d0e354",
+        "filename": "db_scripts/diff/15500.up",
+        "patchSetId": 44
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-01-07T15:14:07Z",
+      "side": 1,
+      "message": "ok there is a negation flag, and presumably the rules must all evaluate to true (\"AND\").\n\nafaics without an OR it wont\u0027 be possible to formulate certain expressions. this results in the same issue we ran into with cdr-exporter filter conditions.\n\nparenthesis operators would be nice if the rulesets gets big. but not mandatory, since the user can resolve expressions with parentheses to expressions without parentheses on paper.",
+      "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1adf8d57_42cafba2",
+        "filename": "db_scripts/diff/15500.up",
+        "patchSetId": 44
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-01-07T15:14:07Z",
+      "side": 1,
+      "message": "why not using condition_id here directly? so voip_header_rule_condition_value_groups`would not be needed",
+      "revId": "bd73918f90fbf9f8925ff2dfb0ba201606c72140",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
