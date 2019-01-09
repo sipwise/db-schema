@@ -1,3 +1,34 @@
+ngcp-db-schema (7.1.1.0+0~mr7.1.1.0) unstable; urgency=medium
+
+  [ Roman Romanchenko ]
+  * [2585731] TT#41606 [C4 Routing] Follow-up C4 calendar based routing - provide fixed SQL view
+
+  [ Kirill Solomko ]
+  * [2234f05] TT#47713 fix table locks in 15251_not_replicated.up
+  * [dbe6ae1] TT#30386 add voip_header_rules schema and preference
+
+  [ Andrew Pogrebennyk ]
+  * [098c6d6] TT#45483 add new preference force_outb_call_uses_peer_hdrs
+  * [0add785] TT#47920 add preference location_from_subscriber
+  * [97a791a] TT#49100 Fix issue with trigger where peering host name was not always quoted
+
+  [ Rene Krenn ]
+  * [d5c306d] TT#47970 truncate billing_fees_raw in 15424.up
+  * [c070cb8] TT#45715 accounting.cdr_export_status tables
+
+  [ Marco Capetta ]
+  * [c5e30ef] TT#46862 Add announcement before call preference and sounds
+
+  [ Andreas Granig ]
+  * [add1a99] TT#49063 Control Alert-Info header for distinctive ring
+
+  [ Richard Fuchs ]
+  * [f541f37] TT#49045 add prefs to leave media direction attrs unchanged
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 09 Jan 2019 21:55:25 +0100
+
 ngcp-db-schema (7.1.0.0+0~mr7.1.0.0) unstable; urgency=medium
 
   [ Richard Fuchs ]
