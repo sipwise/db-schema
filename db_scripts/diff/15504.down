@@ -1,0 +1,14 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET
+  peer_pref=0
+WHERE attribute = 'sound_set';
+
+
+DELETE FROM voip_preferences WHERE attribute in (
+  'announcement_for_error_codes_enable',
+  'announcement_for_error_codes_list'
+);
+
+commit;
