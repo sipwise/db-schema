@@ -1,3 +1,16 @@
+ngcp-db-schema (6.5.4.0+0~mr6.5.4.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [f5482cc] TT#47970 truncate billing_fees_raw in 15424.up
+  * [8cca06f] TT#45715 accounting.cdr_export_status tables
+
+  [ Andrew Pogrebennyk ]
+  * [9835853] TT#49100 Fix issue with trigger where peering host name was not always quoted
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 Jan 2019 14:15:24 +0100
+
 ngcp-db-schema (6.5.3.0+0~mr6.5.3.0) unstable; urgency=medium
 
   [ Rene Krenn ]
