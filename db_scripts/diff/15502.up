@@ -1,0 +1,31 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET
+  peer_pref=1
+WHERE attribute = 'sound_set';
+
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "play_peer_sound_for_out_calls",
+label = "Play peer announcement for failure on outbound call",
+type = 0,
+max_occur = 1,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If this option is set, the peer announcements will be played on behalf peering server failure in case of outbound calls. In these cases it is important that the remote provider doesn't play an announcement, otherwise the final result will be to have 2 announcements.";
+
+commit;
