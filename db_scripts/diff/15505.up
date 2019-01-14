@@ -1,0 +1,53 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET
+  peer_pref=1
+WHERE attribute = 'sound_set';
+
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "announce_error_codes_enable",
+label = "Play an announcement for failure on outbound call",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If this option is set, the announcements defined in 'announce_error_codes_list' preference will be played on behalf callee failure in case of outbound calls. In case of activation it is important that the remote endpoint doesn't play an announcement, otherwise the final result will be to have 2 announcements.";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "announce_error_codes_list",
+label = "List of error codes and respective announcements",
+type = 0,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "string",
+read_only = 0,
+description = "Contains a list of the announcements that will be played to the caller in case the respective error code is returned back from the callee. Each entry of the list has to be a string composed in the following way: <error_code>;<announcement_name>, where error_code is the SIP return code and the announcment_name is name of the announcement taken from the sound_set list. For example, to play callee_unknown message in case of 404 returned from the callee: 404;callee_unknown";
+
+commit;
