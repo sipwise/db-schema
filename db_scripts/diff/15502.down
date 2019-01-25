@@ -1,0 +1,4 @@
+use accounting;
+
+update cdr_export_status set type = "ama_simple" where type = "ama_ccs";
+alter table cdr_export_status_data modify column export_status enum('unexported','ok','failed') not null default 'unexported';
