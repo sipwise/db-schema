@@ -1,3 +1,13 @@
+ngcp-db-schema (6.5.2.3+0~mr6.5.2.3) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [ea7285a] TT#45715 accounting.cdr_export_status tables
+  * [05f7911] TT#51110 "skipped" extended cdr export status
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Jan 2019 14:06:10 +0100
+
 ngcp-db-schema (6.5.2.2+0~mr6.5.2.2) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
