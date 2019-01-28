@@ -1,0 +1,57 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET
+  label = "Codecs filter by name"
+WHERE attribute = 'codecs_filter';
+
+UPDATE voip_preferences SET
+  label = "Codecs list of names"
+WHERE attribute = 'codecs_list';
+
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "codecs_id_filter",
+label = "Codecs filter by ID",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "boolean",
+read_only = 0,
+description = "Switch between blacklisting (bl) or whitelisting (wl) of codec IDs listed in codecs_id_list (1 for wl, 0 bl).";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "codecs_id_list",
+label = "Codecs list of IDs",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "string",
+read_only = 0,
+description = "Comma separated list of audio and video codecs IDs to whitelist or blacklist.";
+
+commit;

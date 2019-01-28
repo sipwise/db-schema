@@ -1,0 +1,15 @@
+USE provisioning;
+set autocommit = 0;
+
+UPDATE voip_preferences SET
+  label = "Codecs filter"
+WHERE attribute = 'codecs_filter';
+
+UPDATE voip_preferences SET
+  label = "Codecs list"
+WHERE attribute = 'codecs_list';
+
+DELETE FROM voip_preferences WHERE attribute = "codecs_id_filter";
+DELETE FROM voip_preferences WHERE attribute = "codecs_id_list";
+
+commit;
