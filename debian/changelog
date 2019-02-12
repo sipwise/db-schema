@@ -1,3 +1,15 @@
+ngcp-db-schema (5.5.9.0+0~mr5.5.9.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [eecf250] TT#47713 fix table locks in 15251_not_replicated.up
+
+  [ Andrew Pogrebennyk ]
+  * [ffcf2e1] TT#49100 Fix issue with trigger where peering host name was not always quoted
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Feb 2019 18:25:34 +0100
+
 ngcp-db-schema (5.5.8.0+0~mr5.5.8.0) unstable; urgency=medium
 
   [ Rene Krenn ]
