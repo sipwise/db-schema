@@ -1,3 +1,14 @@
+ngcp-db-schema (6.5.3.3+0~mr6.5.3.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d4f61c8] TT#49713 recreate ngcp.date_range_helper
+  * [f14741b] Revert "TT#49713 recreate ngcp.date_range_helper"
+  * [12ec70c] TT#49713 recreate ngcp.date_range_helper
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 18 Feb 2019 16:47:48 +0100
+
 ngcp-db-schema (6.5.3.2+0~mr6.5.3.2) unstable; urgency=medium
 
   [ Rene Krenn ]
