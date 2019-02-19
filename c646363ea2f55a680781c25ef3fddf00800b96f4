@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_c50cb744",
+        "filename": "db_scripts/diff/15508_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-02-19T14:56:59Z",
+      "side": 1,
+      "message": "changed to unsigned.\nfixed for both rate-o-mat and swrate in one place.",
+      "revId": "c646363ea2f55a680781c25ef3fddf00800b96f4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
