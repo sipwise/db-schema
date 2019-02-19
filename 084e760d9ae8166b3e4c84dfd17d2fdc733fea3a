@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_054c0e41",
+        "filename": "db_scripts/diff/15508.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-02-19T16:47:48Z",
+      "side": 1,
+      "message": "I think we should move this part on top and add the column there, then we add the \"provisioning\" db part, so the triggers when recreated are valid. otherwise (as the script is replicated) if one of the updated triggers is triggered before the \"kamailio\" table is altered - it will lead to errors.",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "084e760d9ae8166b3e4c84dfd17d2fdc733fea3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
