@@ -1,0 +1,50 @@
+USE provisioning;
+
+ALTER TABLE voip_dbaliases
+  DROP COLUMN is_devid;
+
+DROP TRIGGER voip_dba_crepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_crepl_trig AFTER INSERT ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+    FROM voip_subscribers a, voip_domains b
+    WHERE a.id <=> NEW.subscriber_id
+    AND b.id <=> a.domain_id;
+
+  INSERT INTO kamailio.dbaliases (alias_username, alias_domain, username, domain, is_primary)
+    VALUES(NEW.username, dbalias_domain, target_username, target_domain, NEW.is_primary);
+  END */;;
+DELIMITER ;
+
+DROP TRIGGER voip_dba_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_urepl_trig AFTER UPDATE ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE old_dbalias_domain varchar(127);
+  DECLARE new_dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO old_dbalias_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+    FROM voip_subscribers a, voip_domains b
+    WHERE a.id <=> NEW.subscriber_id
+    AND b.id <=> a.domain_id;
+
+  UPDATE kamailio.dbaliases SET alias_username = NEW.username, alias_domain = new_dbalias_domain,
+    username = target_username, domain = target_domain, is_primary = NEW.is_primary
+    WHERE alias_username <=> OLD.username
+    AND alias_domain <=> old_dbalias_domain
+	AND is_primary <=> OLD.is_primary;
+  END */;;
+DELIMITER ;
+
+USE kamailio;
+ALTER TABLE dbaliases DROP COLUMN is_devid;
