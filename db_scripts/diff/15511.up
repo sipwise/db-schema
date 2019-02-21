@@ -1,0 +1,23 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Internals';
+
+INSERT INTO voip_preferences (voip_preference_groups_id, attribute, label, type, max_occur, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, modify_timestamp, internal, expose_to_customer, data_type, read_only, description)
+VALUES
+  (@vpg_id, 'location_from_subscriber_mode', "Mode to handle SIP URI for looking up registration", 1, 1, 1, 0, 0, 0, 0, NOW(), 0, 0, 'enum', 0, 'The mode how to handle SIP URI of another subscriber (typically a SIP trunk) for looking up registration. In "add" mode, the registrations of the SIP URI specified in location_from_subscriber preference will be added in addtion to the registrations of the current subscriber. In "replace" mode, the registrations of the current subscriber will be ignored and be replaced by the registrations of the SIP URI specified in the preference');
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+INSERT INTO voip_preferences_enum
+    (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+    VALUES
+    (@pref_id, 'Replace', NULL, 1, 0, 0, 1),
+    (@pref_id, 'Add', 'add', 1, 0, 0, 0);
+
+
+UPDATE voip_preferences SET
+    description = 'SIP URI of another subscriber (typically a SIP trunk) for looking up registration. If non-empty, the calls will be routed to registered location of specified user. Depending on the location_from_subscriber_mode preference, registration of current user will be ignored for incoming calls ("replace" mode) or registrations of both current user and specified URI will be combined ("add" mode). This feature can be combined with e164_to_ruri preference for SIP trunking, thus allowing to reach subscriber/extension behind the SIP trunk. A valid value must begin with sip:'
+    WHERE attribute = 'location_from_subscriber';
+
+commit;
+
