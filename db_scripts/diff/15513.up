@@ -48,6 +48,6 @@ internal = 0,
 expose_to_customer = 0,
 data_type = "string",
 read_only = 0,
-description = "Contains a list of the announcements that will be played to the caller in case the respective error code is returned back from the callee. Each entry of the list has to be a string composed in the following way: <error_code>;<announcement_name>, where error_code is the SIP return code and the announcement_name is name of the announcement taken from the sound_set list. "*", "?" and "x-y" with "x" and "y" representing numbers from 0 to 9 may be used as wildcards like in shell patterns. For example, to play callee_unknown message in case of 404 returned from the callee: 404;callee_unknown";
+description = "Contains a list of the announcements that will be played to the caller in case the respective error code is returned back from the callee. Each entry of the list has to be a string composed in the following way: <error_code>;<announcement_name>, where error_code is the SIP return code and the announcement_name is name of the announcement taken from the sound_set list. '*', '?' and 'x-y' with 'x' and 'y' representing numbers from 0 to 9 may be used as wildcards like in shell patterns. For example, to play callee_unknown message in case of 404 returned from the callee: 404;callee_unknown";
 
 commit;
