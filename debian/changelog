@@ -1,3 +1,32 @@
+ngcp-db-schema (7.3.0.0+0~mr7.3.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [8e5d543] TT#51110 "skipped" extended cdr export status
+  * [b74b174] TT#53369 fix unsigned var in get_billing_fee_id proc
+
+  [ Marco Capetta ]
+  * [d625f0b] TT#50955 Kamailio filter SDP codecs by ID
+  * [da6cb1f] TT#49259 Add new sounds set for peering server
+  * [6b01431] TT#49259 Fix mysql query of 15513.up script
+
+  [ Kirill Solomko ]
+  * [3bb4436] TT#51910 add voip_header_rules cf_inbound, cf_inbound direction
+  * [9c242ed] TT#49713 recreate ngcp.date_range_helper
+
+  [ Andreas Granig ]
+  * [bc0caa2] TT#49037 Add Sipwise EDS redirect options
+  * [324a9b4] TT#52961 Add DNS_SRV_enable device preference
+  * [0e73c29] TT#51168 Add is_devid to alias for multi-device
+  * [40423f3] TT#51168 Add devid_alias column to dbaliases
+  * [6dd2a05] TT#51168 Add location_from_subscriber_mode to prefs
+
+  [ Irina Peshinskaya ]
+  * [83bbb3d] TT#49688 Generate ical format for events separately
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Feb 2019 22:51:43 +0100
+
 ngcp-db-schema (7.2.0.0+0~mr7.2.0.0) unstable; urgency=medium
 
   [ Roman Romanchenko ]
