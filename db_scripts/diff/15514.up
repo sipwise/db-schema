@@ -1,0 +1,9 @@
+USE provisioning;
+SET autocommit=0;
+
+ALTER TABLE voip_header_rule_sets
+    ADD `subscriber_id` int(11) unsigned AFTER reseller_id,
+    ADD UNIQUE KEY vhrs_subscriber_idx (subscriber_id),
+    ADD CONSTRAINT `vhrs_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `provisioning`.`voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+commit;
