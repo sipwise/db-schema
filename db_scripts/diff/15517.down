@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit=0;
+
+ALTER TABLE voip_header_rule_sets
+    DROP FOREIGN KEY vhrs_subscriber_ref,
+    DROP subscriber_id;
+
+commit;
