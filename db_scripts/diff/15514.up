@@ -1,0 +1,4 @@
+USE kamailio;
+
+ALTER TABLE dbaliases
+    ADD KEY devid_alias_dom_idx(devid_alias, alias_domain);

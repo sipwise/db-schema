@@ -1,0 +1,5 @@
+USE kamailio;
+
+ALTER TABLE dbaliases
+    DROP KEY devid_alias_dom_idx;
+
