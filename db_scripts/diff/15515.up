@@ -1,0 +1,51 @@
+use provisioning;
+
+alter table voip_preferences add column reseller_pref tinyint(1) not null default '0' after dynamic;
+alter table voip_preferences_enum add column reseller_pref tinyint(1) default null after default_val;
+
+create table reseller_preferences (
+  id int(11) unsigned not null auto_increment,
+  reseller_id int(11) unsigned not null,
+  attribute_id int(11) unsigned not null,
+  value varchar(128) not null,
+  modify_timestamp timestamp not null default current_timestamp on update current_timestamp,
+  primary key (id),
+  key residattrid_idx (reseller_id,attribute_id),
+  key attributeid_idx (attribute_id),
+  constraint r_p_attributeid_ref foreign key (attribute_id) references voip_preferences (id) on delete cascade on update cascade
+) engine=InnoDB;
+
+begin;
+
+insert into voip_preference_groups set
+  name = "CDR/EDR Export Settings";
+select last_insert_id() into @vpg_id;
+
+insert into voip_preferences set
+  voip_preference_groups_id = @vpg_id,
+  attribute = "cdr_export_field_separator",
+  label = "Field delimiter",
+  description = "Field delimiter symbol used in .cdr files.",
+  reseller_pref = 1,
+  data_type = "string",
+  max_occur = 1;
+
+insert into voip_preferences set
+  voip_preference_groups_id = @vpg_id,
+  attribute = "cdr_export_sclidui_rwrs",
+  label = "Rewrite Rule Set for Source/Destination fields",
+  description = "Rewrite rule set to apply caller outbound rule to \"SOURCE_CLI\", callee outbound rule to \"DESTINATION_USER_IN\" CDR export fields.",
+  reseller_pref = 1,
+  internal = -1,
+  data_type = "int",
+  max_occur = 1;
+
+insert into voip_preferences set
+  voip_preference_groups_id = @vpg_id,
+  attribute = "cdr_export_sclidui_rwrs_id",
+  label = "Internal Rewrite Rule Set # for Source/Destination fields",
+  reseller_pref = 1,
+  data_type = "int",
+  max_occur = 1;
+
+commit;
