@@ -1,0 +1,16 @@
+use provisioning;
+
+drop table voip_reseller_preferences;
+
+begin;
+
+delete from voip_preferences where attribute = "cdr_export_field_separator";
+delete from voip_preferences where attribute = "cdr_export_sclidui_rwrs";
+delete from voip_preferences where attribute = "cdr_export_sclidui_rwrs_id";
+
+delete from voip_preference_groups where name = "CDR/EDR Export Settings";
+
+commit;
+
+alter table voip_preferences drop column reseller_pref;
+alter table voip_preferences_enum drop column reseller_pref;
