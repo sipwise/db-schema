@@ -22,6 +22,30 @@
       "revId": "d113285cde0a44afa850c35a83a105450a1b067f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_8d7285ac",
+        "filename": "db_scripts/diff/15515.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-02-28T11:06:08Z",
+      "side": 1,
+      "message": "ack, will do when wrapping all up",
+      "parentUuid": "9a0c5dc1_2a06df20",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "d113285cde0a44afa850c35a83a105450a1b067f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
