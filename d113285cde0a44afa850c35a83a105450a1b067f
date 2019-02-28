@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0c5dc1_2a06df20",
+        "filename": "db_scripts/diff/15515.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-02-28T10:11:26Z",
+      "side": 1,
+      "message": "maybe it should be also named similar to the other ones that we have, \"voip_reseller_preferences\"",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "d113285cde0a44afa850c35a83a105450a1b067f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
