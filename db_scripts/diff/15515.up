@@ -1,0 +1,4 @@
+USE provisioning;
+
+UPDATE voip_preferences
+    SET type = 0 WHERE attribute = 'location_from_subscriber_mode';
