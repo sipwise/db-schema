@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0c5dc1_c90e28e5",
+        "filename": "db_scripts/diff/15516.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-03-06T19:21:15Z",
+      "side": 1,
+      "message": "What\u0027s the meaning of these fields exactly? `cdr_id` is the auto-increment `id` column from `cdr`, while `call_id` is not actually the call ID (i.e. not the same as `cdr`.`call_id` but rather the new field from the src_leg? And `cdr_start_time` is the same as `cdr`.`start_time`?",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 42
+      },
+      "revId": "3c7871677f7e3e16240d88593b4106d707997022",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
