@@ -1,0 +1,31 @@
+USE accounting;
+
+drop trigger if exists cdr_cascade_update_trig;
+delimiter ;;
+create trigger cdr_cascade_update_trig after update on accounting.cdr
+  for each row begin
+
+  update accounting.cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_cascade_delete_trig after delete on accounting.cdr
+  for each row begin
+
+  delete from accounting.cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.cdr_export_status_data where cdr_id = OLD.id;
+  
+  end;;
+delimiter ;
+
+DROP TABLE cdr_group;
