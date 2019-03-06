@@ -22,6 +22,30 @@
       "revId": "3c7871677f7e3e16240d88593b4106d707997022",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_099560e3",
+        "filename": "db_scripts/diff/15516.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-03-06T22:27:29Z",
+      "side": 1,
+      "message": "cdr_id - is the related cdr_id from accounting.cdr\ncall_id - is a call_id of another cdr, the new \"correlation\" field that is provided in the acc, so both the current and the other cdrs can be joined by it\ncdr_start_time - the same as cdr.start_time, it however needs to be present for partitioning because of RANGE(FLOOR(cdr_start_time))",
+      "parentUuid": "9a0c5dc1_c90e28e5",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 42
+      },
+      "revId": "3c7871677f7e3e16240d88593b4106d707997022",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
