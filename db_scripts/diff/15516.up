@@ -1,0 +1,41 @@
+USE accounting;
+
+CREATE TABLE `cdr_group` (
+  `cdr_id` int(10) unsigned NOT NULL,
+  `call_id` VARCHAR(255) NOT NULL,
+  `cdr_start_time` decimal(13,3) NOT NULL,
+  PRIMARY KEY (`cdr_id`,`call_id`,`cdr_start_time`),
+  KEY `cdrgroup_callid_idx` (`call_id`),
+  KEY `cdrgroup_stime_idx` (`cdr_start_time`)
+) ENGINE=InnoDB CHARSET=utf8;
+
+drop trigger if exists cdr_cascade_update_trig;
+delimiter ;;
+create trigger cdr_cascade_update_trig after update on accounting.cdr
+  for each row begin
+
+  update accounting.cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_cascade_delete_trig after delete on accounting.cdr
+  for each row begin
+
+  delete from accounting.cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.cdr_export_status_data where cdr_id = OLD.id;
+  delete from accounting.cdr_group where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
