@@ -1,0 +1,3 @@
+USE accounting;
+
+DROP TABLE cdr_group;
