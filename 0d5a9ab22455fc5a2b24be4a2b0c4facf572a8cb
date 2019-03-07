@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0c5dc1_c4a96fe1",
+        "filename": "db_scripts/diff/15517.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-03-07T10:03:11Z",
+      "side": 1,
+      "message": "no-op",
+      "revId": "0d5a9ab22455fc5a2b24be4a2b0c4facf572a8cb",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
