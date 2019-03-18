@@ -1,0 +1,55 @@
+SET autocommit=0;
+USE provisioning;
+
+DROP VIEW IF EXISTS `provisioning`.`v_time_periods_ical`;
+CREATE VIEW `provisioning`.`v_time_periods_ical` AS
+SELECT p.`id`, p.`time_set_id`, p.`start`, p.`end`, p.`comment`,
+concat(
+    "DTSTART:",DATE_FORMAT(p.start,'%Y%m%dT%H%i%s'),"\n",
+    IFNULL(CONCAT("RRULE:",
+        "FREQ=",p.freq,
+        IFNULL(CONCAT(";COUNT=",     p.`count`),''),
+        IFNULL(CONCAT(";UNTIL=",     DATE_FORMAT(p.until,'%Y%m%dT%H%i%s')),''),
+        IFNULL(CONCAT(";INTERVAL=",  p.`interval`),''),
+        IFNULL(CONCAT(";BYSECOND=",  p.bysecond),''),
+        IFNULL(CONCAT(";BYMINUTE=",  p.byminute),''),
+        IFNULL(CONCAT(";BYHOUR=",    p.byhour),''),
+        IFNULL(CONCAT(";BYDAY=",     p.byday),''),
+        IFNULL(CONCAT(";BYMONTHDAY=",p.bymonthday),''),
+        IFNULL(CONCAT(";BYYEARDAY=", p.byyearday),''),
+        IFNULL(CONCAT(";BYWEEKNO=",  p.byweekno),''),
+        IFNULL(CONCAT(";BYMONTH=",   p.bymonth),''),
+        IFNULL(CONCAT(";BYSETPOS=",  p.bysetpos),''),
+        IFNULL(CONCAT(";WKST=",      p.wkst),'')
+    ),'')
+) AS rrule_ical,
+concat(
+    "BEGIN:VEVENT\n",
+    "UID:","sipwise",p.id,"@sipwise",s.id,"\n",
+    "SUMMARY:",s.name," event ",p.id,"\n",
+    "DTSTART:",DATE_FORMAT(p.start,'%Y%m%dT%H%i%s'),"\n",
+    IF(year(p.end) !="0000",CONCAT("DTEND:",DATE_FORMAT(p.end,'%Y%m%dT%H%i%s'),"\n"),""),
+    IFNULL(CONCAT("DURATION:",p.`duration`,"\n"),''),
+    IFNULL(CONCAT("RRULE:",
+        "FREQ=",p.freq,
+        IFNULL(CONCAT(";COUNT=",     p.`count`),''),
+        IFNULL(CONCAT(";UNTIL=",     DATE_FORMAT(p.until,'%Y%m%dT%H%i%s')),''),
+        IFNULL(CONCAT(";INTERVAL=",  p.`interval`),''),
+        IFNULL(CONCAT(";BYSECOND=",  p.bysecond),''),
+        IFNULL(CONCAT(";BYMINUTE=",  p.byminute),''),
+        IFNULL(CONCAT(";BYHOUR=",    p.byhour),''),
+        IFNULL(CONCAT(";BYDAY=",     p.byday),''),
+        IFNULL(CONCAT(";BYMONTHDAY=",p.bymonthday),''),
+        IFNULL(CONCAT(";BYYEARDAY=", p.byyearday),''),
+        IFNULL(CONCAT(";BYWEEKNO=",  p.byweekno),''),
+        IFNULL(CONCAT(";BYMONTH=",   p.bymonth),''),
+        IFNULL(CONCAT(";BYSETPOS=",  p.bysetpos),''),
+        IFNULL(CONCAT(";WKST=",      p.wkst),''),
+        "\n"
+	),''),
+    IFNULL(CONCAT("DESCRIPTION:",p.`comment`,"\n"),''),
+    "END:VEVENT\n") AS event_ical
+FROM provisioning.voip_time_sets s JOIN voip_time_periods p ON s.id = p.time_set_id;
+
+COMMIT;
+
