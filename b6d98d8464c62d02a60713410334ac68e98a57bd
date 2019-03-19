@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a0c5dc1_f80d2638",
+        "filename": "db_scripts/diff/15520.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-03-19T10:51:56Z",
+      "side": 1,
+      "message": "-             INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip \u003d gw.ip_addr\n+             INNER JOIN provisioning.voip_peer_hosts vph ON vph.name \u003d gw.gw_name",
+      "range": {
+        "startLine": 15,
+        "startChar": 60,
+        "endLine": 15,
+        "endChar": 81
+      },
+      "revId": "b6d98d8464c62d02a60713410334ac68e98a57bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_d813825b",
+        "filename": "db_scripts/diff/15520.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-03-19T10:51:56Z",
+      "side": 1,
+      "message": "-            INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip \u003d gw.ip_addr\n+            INNER JOIN provisioning.voip_peer_hosts vph ON vph.name \u003d gw.gw_name",
+      "range": {
+        "startLine": 47,
+        "startChar": 59,
+        "endLine": 47,
+        "endChar": 80
+      },
+      "revId": "b6d98d8464c62d02a60713410334ac68e98a57bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a0c5dc1_b810ce4f",
+        "filename": "db_scripts/diff/15520.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-03-19T10:51:56Z",
+      "side": 1,
+      "message": "-         INNER JOIN provisioning.voip_peer_hosts vph ON vph.ip \u003d gw.ip_addr\n+         INNER JOIN provisioning.voip_peer_hosts vph ON vph.name \u003d gw.gw_name",
+      "range": {
+        "startLine": 60,
+        "startChar": 56,
+        "endLine": 60,
+        "endChar": 77
+      },
+      "revId": "b6d98d8464c62d02a60713410334ac68e98a57bd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
