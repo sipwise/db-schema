@@ -1,3 +1,12 @@
+ngcp-db-schema (5.5.7.4+0~mr5.5.7.4) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3d557ba] TT#54914 fix provisoniong.voip_peer_rules triggers ip_addr join
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 21 Mar 2019 15:34:45 +0100
+
 ngcp-db-schema (5.5.7.3+0~mr5.5.7.3) unstable; urgency=medium
 
   [ Andrew Pogrebennyk ]
