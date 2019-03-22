@@ -1,3 +1,12 @@
+ngcp-db-schema (7.2.1.2+0~mr7.2.1.2) unstable; urgency=medium
+
+  [ Irina Peshinskaya ]
+  * [4360e48] TT#55503 Fix one-time event representation
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 22 Mar 2019 12:06:43 +0100
+
 ngcp-db-schema (7.2.1.1+0~mr7.2.1.1) unstable; urgency=medium
 
   [ Andreas Granig ]
