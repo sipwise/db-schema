@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE voip_sound_handles DROP COLUMN expose_to_customer;

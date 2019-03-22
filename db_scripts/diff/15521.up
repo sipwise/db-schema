@@ -1,0 +1,10 @@
+USE provisioning;
+
+ALTER TABLE voip_sound_handles
+    ADD COLUMN expose_to_customer TINYINT(1) DEFAULT 0;
+
+UPDATE voip_sound_handles
+    SET expose_to_customer=1 WHERE group_id IN (
+        SELECT id FROM voip_sound_groups WHERE name IN
+            ('pbx', 'music_on_hold', 'digits')
+    );
