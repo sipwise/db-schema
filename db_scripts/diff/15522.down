@@ -1,0 +1,5 @@
+use provisioning;
+
+delete from voip_preferences where attribute = "allowed_ips_header";
+
+commit;
