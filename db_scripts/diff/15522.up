@@ -1,0 +1,27 @@
+use provisioning;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Access Restrictions';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = 'allowed_ips_header',
+label = 'IP header to use for "allowed_ips" check',
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = 'string',
+read_only = 0,
+description = 'Use IP address for "allowed_ips" check from a header name provided in this preference',
+
+commit;
+
