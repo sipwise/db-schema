@@ -1,3 +1,17 @@
+ngcp-db-schema (6.5.5.0+0~mr6.5.5.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [9d0f240] TT#51110 "skipped" extended cdr export status
+  * [36d32fb] TT#53369 fix unsigned var in get_billing_fee_id proc
+
+  [ Kirill Solomko ]
+  * [1ab7a55] TT#49713 recreate ngcp.date_range_helper
+  * [d2596b9] TT#54914 fix provisoniong.voip_peer_rules triggers ip_addr join
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 02 Apr 2019 00:35:52 +0200
+
 ngcp-db-schema (6.5.4.0+0~mr6.5.4.0) unstable; urgency=medium
 
   [ Rene Krenn ]
