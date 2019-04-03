@@ -1,0 +1,10 @@
+SET sql_log_bin=0;
+
+USE kamailio;
+
+ALTER TABLE acc
+  ADD COLUMN branch_id varchar(3) DEFAULT NULL;
+ALTER TABLE acc_backup
+  ADD COLUMN branch_id varchar(3) DEFAULT NULL;
+ALTER TABLE acc_trash
+  ADD COLUMN branch_id varchar(3) DEFAULT NULL;
