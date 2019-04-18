@@ -16,6 +16,24 @@
       "revId": "080accff815711c96bf3c4b4d5f6ad224a3c3cda",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5afe65bd_19bb7b10",
+        "filename": "db_scripts/diff/15524.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-04-18T14:43:14Z",
+      "side": 1,
+      "message": "the order is the same in ngcp-schema but it is slightly different in the Form attribute \"select\"",
+      "parentUuid": "5afe65bd_19e49b39",
+      "revId": "080accff815711c96bf3c4b4d5f6ad224a3c3cda",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
