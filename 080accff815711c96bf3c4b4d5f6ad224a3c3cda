@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afe65bd_19e49b39",
+        "filename": "db_scripts/diff/15524.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-04-18T14:35:37Z",
+      "side": 1,
+      "message": "the order differs from ngcp-schema",
+      "revId": "080accff815711c96bf3c4b4d5f6ad224a3c3cda",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
