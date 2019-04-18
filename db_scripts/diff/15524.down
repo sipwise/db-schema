@@ -1,0 +1,5 @@
+use provisioning;
+
+ALTER TABLE voip_header_rules MODIFY `direction` enum('inbound','outbound','local','peer','cf_inbound','cf_outbound') NOT NULL DEFAULT 'inbound';
+
+commit;
