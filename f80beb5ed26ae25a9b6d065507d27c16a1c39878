@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afe65bd_5f3c332f",
+        "filename": "db_scripts/diff/15525.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-04-23T11:52:16Z",
+      "side": 1,
+      "message": "I do not think we need such view in the db as it has some very specific use.\n\nSince it is going to be used only from ngcp-panel, the easier way it to create a view definition in the Result/email_templates.pm\n\nfrom Result/contract_fraud_events.pm\n\n__PACKAGE__-\u003eresult_source_instance-\u003eis_virtual(1);\n__PACKAGE__-\u003eresult_source_instance-\u003eview_definition(\u003c\u003cSQL);\nSELECT bpinfo.id, bpinfo.reseller_id, bpinfo.interval, bpinfo.type,\n       IF (bpinfo.fraud_use_reseller_rates \u003e 0, SUM(cdr.source_reseller_cost),\n                                                SUM(cdr.source_customer_cost)) as interval_cost,\n...",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f80beb5ed26ae25a9b6d065507d27c16a1c39878",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
