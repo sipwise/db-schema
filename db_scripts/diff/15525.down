@@ -1,0 +1,7 @@
+SET autocommit=0;
+use billing;
+
+DROP VIEW IF EXISTS `billing`.`v_email_templates_missed`;
+
+commit;
+

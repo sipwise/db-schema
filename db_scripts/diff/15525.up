@@ -1,0 +1,12 @@
+SET autocommit=0;
+use billing;
+
+DROP VIEW IF EXISTS `billing`.`v_email_templates_missed`;
+CREATE VIEW `billing`.`v_email_templates_missed` AS
+select r.id as reseller_id,r.name as reseller_name, etd.id as email_template_id, etd.name as email_template_name from resellers r 
+join email_templates etd on etd.reseller_id is null
+left join email_templates et on et.name=etd.name and et.reseller_id=r.id 
+where et.id is null order by r.id,etd.id;
+
+commit;
+
