@@ -22,6 +22,30 @@
       "revId": "f80beb5ed26ae25a9b6d065507d27c16a1c39878",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5afe65bd_9f106baa",
+        "filename": "db_scripts/diff/15525.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-04-23T11:55:42Z",
+      "side": 1,
+      "message": "agree.\nalso remember db-schema backporting is more sensible.",
+      "parentUuid": "5afe65bd_5f3c332f",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 41
+      },
+      "revId": "f80beb5ed26ae25a9b6d065507d27c16a1c39878",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
