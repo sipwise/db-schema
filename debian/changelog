@@ -1,3 +1,33 @@
+ngcp-db-schema (7.3.1.0+0~mr7.3.1.0) unstable; urgency=medium
+
+  [ Andreas Granig ]
+  * [e520b45] TT#53672 Add index for devid_alias
+  * [5052955] TT#51168 Use proper type for location_from_subscriber_mode
+  * [7416ae3] TT#55873 Only expose marked sound handles to customers
+
+  [ Kirill Solomko ]
+  * [0d5a9ab] TT#47010 add voip_header_rule_sets.subscriber_id
+  * [d708491] TT#54553 add accounting.cdr_group table
+  * [b6d98d8] TT#54914 fix provisoniong.voip_peer_rules triggers ip_addr join
+  * [c544094] TT#55151 add allowed_ips_header preference
+  * [080accf] TT#57701 add voip_header_rules direction "reply"
+
+  [ Rene Krenn ]
+  * [ea32582] TT#46955 reseller preferences
+
+  [ Alexander Lutay ]
+  * [e4cc9cb] TT#50979 Stops using deprecated --init-replication in ngcp-update-db-schema
+
+  [ Irina Peshinskaya ]
+  * [6667101] TT#55503 Fix one-time event representation
+
+  [ Marco Capetta ]
+  * [436c8ad] TT#56008 Add branch_id column to kamailio acc tables
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 25 Apr 2019 14:26:27 +0200
+
 ngcp-db-schema (7.3.0.0+0~mr7.3.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
