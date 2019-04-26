@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af86dd1_e330f209",
+        "filename": "db_scripts/diff/15525_not_replicated.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-04-26T11:23:04Z",
+      "side": 1,
+      "message": "typo - was missing",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "21d15925002cfe9b4a6698e48b976de642646bf5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
