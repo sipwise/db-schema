@@ -1,3 +1,12 @@
+ngcp-db-schema (7.3.2.0+0~mr7.3.2.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [a582d1b] TT#46862 Add announcement to called party call preference and sound
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 May 2019 10:53:48 +0200
+
 ngcp-db-schema (7.3.1.0+0~mr7.3.1.0) unstable; urgency=medium
 
   [ Andreas Granig ]
