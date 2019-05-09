@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a41bdd9_028d0c31",
+        "filename": "db_scripts/diff/15546.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-05-09T09:31:56Z",
+      "side": 1,
+      "message": "maybe adjust the preference name to something that contains \"dtmf\" for better understanding what it does, like \"transcode_inband_dtmf_events\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 32
+      },
+      "revId": "d14887181cc38245f06522c3606d8bc7b64bbc55",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a41bdd9_c2864413",
+        "filename": "db_scripts/diff/15546.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-05-09T09:31:56Z",
+      "side": 1,
+      "message": "Maybe use \"Transcode\" here instead of \"Translate\", so it is inline with the other names/labels.",
+      "range": {
+        "startLine": 23,
+        "startChar": 15,
+        "endLine": 23,
+        "endChar": 24
+      },
+      "revId": "d14887181cc38245f06522c3606d8bc7b64bbc55",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
