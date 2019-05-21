@@ -1,0 +1,44 @@
+use provisioning;
+drop trigger if exists voip_pref_urepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  IF OLD.attribute != NEW.attribute THEN
+    UPDATE kamailio.usr_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.dom_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.contract_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.prof_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+  END IF; 
+
+  END */;;
+DELIMITER ;
+
+drop trigger if exists voip_pref_drepl_trig;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_contract_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_fielddev_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dev_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_devprof_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_reseller_preferences WHERE attribute_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
