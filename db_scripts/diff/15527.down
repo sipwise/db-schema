@@ -4,6 +4,6 @@ USE provisioning
 
 SELECT id FROM voip_preferences where attribute='language' INTO @pref_id;
 
-DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id AND value='ro';
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id AND value='fr';
 
 commit;
