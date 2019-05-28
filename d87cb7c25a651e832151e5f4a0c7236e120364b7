@@ -16,6 +16,24 @@
       "revId": "d87cb7c25a651e832151e5f4a0c7236e120364b7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a46c9f1_3be5d0a7",
+        "filename": "db_scripts/diff/15547.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2019-05-28T08:21:10Z",
+      "side": 1,
+      "message": "Hello Rene,\n\nUser may want to terminate second bp with the same name, and recreate it again. Many times.\n\nPlease, look at this:\nhttps://paste.mgm.sipwise.com/show/5334/\n\nMaybe it worth to create task to add terminate_timestamp to all other entities that aren\u0027t deleted on termination.\n\nBest regards,\nIrina",
+      "parentUuid": "7a46c9f1_7bdb58ee",
+      "revId": "d87cb7c25a651e832151e5f4a0c7236e120364b7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
