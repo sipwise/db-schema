@@ -1,0 +1,11 @@
+SET autocommit=0;
+
+USE provisioning
+
+DROP INDEX IF EXISTS resnam_idx ON `billing`.`billing_profiles`;
+CREATE UNIQUE INDEX IF NOT EXISTS resnam_idx ON `billing`.`billing_profiles`(`reseller_id`,`name`);
+
+DROP INDEX IF EXISTS reshand_idx ON `billing`.`billing_profiles`;
+CREATE UNIQUE INDEX IF NOT EXISTS reshand_idx ON `billing`.`billing_profiles`(`reseller_id`, `handle`);
+
+commit;
