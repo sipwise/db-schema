@@ -34,6 +34,24 @@
       "revId": "d87cb7c25a651e832151e5f4a0c7236e120364b7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a46c9f1_dbecec91",
+        "filename": "db_scripts/diff/15547.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-05-28T08:31:03Z",
+      "side": 1,
+      "message": "good point!",
+      "parentUuid": "7a46c9f1_3be5d0a7",
+      "revId": "d87cb7c25a651e832151e5f4a0c7236e120364b7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
