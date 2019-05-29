@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a46c9f1_f9e1b0ff",
+        "filename": "db_scripts/diff/15548.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-05-29T07:38:16Z",
+      "side": 1,
+      "message": "modify terminate_timestamp timestamp not null default \u00270000-00-00 00:00:00\u0027;\n(this way you do not need to repeat the column name 2 times)",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 63
+      },
+      "revId": "dbf2accf2315d5968fff34d05f3c9c4b61a7e4c5",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
