@@ -1,0 +1,9 @@
+SET autocommit=0;
+
+USE billing;
+
+alter table billing.billing_profiles modify terminate_timestamp timestamp null default null;
+
+update billing.billing_profiles set terminate_timestamp = null where terminate_timestamp = '0000-00-00 00:00:00';
+
+commit;
