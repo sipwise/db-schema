@@ -1,3 +1,13 @@
+ngcp-db-schema (5.5.9.2+0~mr5.5.9.2) unstable; urgency=medium
+
+  [ Irina Peshinskaya ]
+  * [b23a6cd] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [ea028ae] TT#57959 Fix NULL field in the unique index
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sat, 01 Jun 2019 00:30:55 +0200
+
 ngcp-db-schema (5.5.9.1+0~mr5.5.9.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
