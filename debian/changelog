@@ -1,3 +1,25 @@
+ngcp-db-schema (7.2.3.0+0~mr7.2.3.0) unstable; urgency=medium
+
+  [ Irina Peshinskaya ]
+  * [adbd079] TT#55503 Fix one-time event representation
+  * [c9d5783] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [e682f93] TT#57959 Fix NULL field in the unique index
+
+  [ Kirill Solomko ]
+  * [5454d9d] TT#54914 fix provisoniong.voip_peer_rules triggers ip_addr join
+  * [66e7979] TT#57701 add voip_header_rules direction "reply"
+  * [4926e87] TT#55151 add allowed_ips_header preference
+
+  [ Marco Capetta ]
+  * [a7ff48e] TT#56008 Add branch_id column to kamailio acc tables
+
+  [ Rene Krenn ]
+  * [27d7dfe] TT#58101 fix "exact" fee match mode
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 Jun 2019 15:02:52 +0200
+
 ngcp-db-schema (7.2.2.0+0~mr7.2.2.0) unstable; urgency=medium
 
   [ Andreas Granig ]
