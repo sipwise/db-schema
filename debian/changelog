@@ -1,3 +1,28 @@
+ngcp-db-schema (7.5.0.0+0~mr7.5.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [7b10ac3] TT#46862 Add announcement to called party call preference and sound
+  * [d2b096b] TT#46162 add French language to the enum preference
+
+  [ Rene Krenn ]
+  * [b14ef47] TT#58101 fix "exact" fee match mode
+  * [b5e3096] TT#53523 fix provisioning.voip_pref triggers
+
+  [ Andreas Granig ]
+  * [529de8b] TT#50951 Add colp_cf preference
+
+  [ Richard Fuchs ]
+  * [be0657e] TT#58659 add DTMF transcoding option
+
+  [ Irina Peshinskaya ]
+  * [5f6fc2a] TT#46162 Fix down script for French language preference
+  * [d87cb7c] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [dc68e3a] TT#57959 Fix NULL field in the unique index
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 17 Jun 2019 14:34:42 +0200
+
 ngcp-db-schema (7.4.0.0+0~mr7.4.0.0) unstable; urgency=medium
 
   [ Andreas Granig ]
