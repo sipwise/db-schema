@@ -1,0 +1,10 @@
+set autocommit=0;
+
+use billing;
+
+# Setting all the current entries with pattern .* for backward compatibility
+alter table ncos_lnp_list add column pattern varchar(255) not null default '.*';
+
+alter table ncos_lnp_list modify column pattern varchar(255) not null;
+
+commit;
