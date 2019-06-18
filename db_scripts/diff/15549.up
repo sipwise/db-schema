@@ -1,0 +1,7 @@
+set autocommit=0;
+
+use billing;
+
+alter table ncos_lnp_list add column pattern varchar(255) not null default '.*';
+
+commit;
