@@ -1,3 +1,19 @@
+ngcp-db-schema (6.5.5.1+0~mr6.5.5.1) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [a353433] TT#56008 Add branch_id column to kamailio acc tables
+
+  [ Rene Krenn ]
+  * [7e41f4b] TT#58101 fix "exact" fee match mode
+
+  [ Irina Peshinskaya ]
+  * [735bada] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [c1dfb62] TT#57959 Fix NULL field in the unique index
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 27 Jun 2019 15:49:52 +0200
+
 ngcp-db-schema (6.5.5.0+0~mr6.5.5.0) unstable; urgency=medium
 
   [ Rene Krenn ]
