@@ -1,0 +1,33 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+USE kamailio;
+
+-- table: presentity table
+ALTER TABLE presentity
+  MODIFY COLUMN etag VARCHAR(64) NOT NULL;
+ALTER TABLE presentity
+  DROP COLUMN ruid;
+DROP INDEX ruid_idx ON presentity;
+UPDATE version
+  SET table_version=4 WHERE TABLE_NAME='presentity';
+
+-- table: location_attrs - optional update
+ALTER TABLE location_attrs
+  MODIFY COLUMN avalue VARCHAR(255) NOT NULL DEFAULT '';
+
+-- table: pua - optional update
+ALTER TABLE pua
+  MODIFY COLUMN etag VARCHAR(64) NOT NULL;
+
+-- table: subscriber - optional update
+ALTER TABLE subscriber
+  ADD COLUMN rpid VARCHAR(128);
+ALTER TABLE subscriber
+  ADD COLUMN email_address VARCHAR(128);
+
+-- table: xcap - optional update
+ALTER TABLE xcap
+  MODIFY COLUMN etag VARCHAR(64) NOT NULL;
+
+COMMIT;
