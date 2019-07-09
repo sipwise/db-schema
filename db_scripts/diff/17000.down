@@ -1,0 +1,12 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'cfo';
+DELETE FROM voip_cf_mappings WHERE type = 'cfo';
+ALTER TABLE voip_cf_mappings MODIFY COLUMN type enum ('cfu','cfb','cfna','cft','cfs','cfr') NOT NULL DEFAULT 'cfu';
+
+update voip_preferences set label = 'Internal Call Forward Rerouting #' where attribute = "cfr";
+update voip_preferences set description = 'The id pointing to the "Call Forward Rerouting" entry in the voip_cf_mappings table' where attribute = "cfr";
+
+USE accounting;
+
+ALTER TABLE cdr MODIFY COLUMN call_type enum('call','cfu','cft','cfb','cfna','cfs','sms','cfr') NOT NULL DEFAULT 'call';
