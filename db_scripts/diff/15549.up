@@ -1,0 +1,75 @@
+use accounting;
+
+create table fraud_period_costs (
+
+  contract_id int(11) unsigned not null,
+  period varchar(10) not null,                                    #store YYYY-MM-DD or YYYY-MM period strings:
+  billing_profile_id int(11) unsigned not null,
+  source_customer_cost decimal(14,6) not null default 0.000000,
+  source_customer_call_count int(11) unsigned not null default 1, #support fraud check based on a call count limit:
+  source_reseller_cost decimal(14,6) not null default 0.000000,
+  source_reseller_call_count int(11) unsigned not null default 1,
+  limit_exceeded int(3) unsigned not null,
+  status enum('new','locked','notified') not null default 'new',
+  status_timestamp datetime default null,
+  first_cdr_start_time decimal(13,3) not null,                    #required for acc-cleanup/partitioning:
+
+  primary key (contract_id, period, first_cdr_start_time),
+  key (period, limit_exceeded, status),                           #fast /api/customerfraudevents
+  key fraudperiodcosts_fstime (first_cdr_start_time)              #fast acc-cleanup
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# query for /api/customerfraudevents:
+
+# select
+#   contract_id,
+#   billing_profile_id
+# from fraud_period_costs
+# where 
+#   period = date-format(now(), '%Y-%m-01'),
+#   and limit_exceeded = 1;
+
+
+
+# notifications to send:
+
+# select
+#   contract_id,
+#   billing_profile_id
+# from fraud_period_costs
+# where 
+#   period = date-format(now(), '%Y-%m-01'),
+#   and limit_exceeded = 1
+#   and status = 'new';
+
+
+
+# query to insert update fraud_period_costs:
+
+# insert into fraud_period_costs (
+#    contract_id,
+#    period,
+#    billing_profile_id,
+#    source_customer_cost,
+#    source_reseller_cost,
+#    limit_exceeded,
+#    first_cdr_start_time
+# ) values(
+#    ?,
+#    date-format(now(), '%Y-%m-01'),
+#    ?,
+#    ?,
+#    ?,
+#    ?,
+#    ?
+# ) on duplicate key update
+#    billing_profile_id = ?,
+#    source_customer_cost = source_customer_cost + ?,
+#    source_customer_call_count = source_customer_call_count + 1,
+#    source_reseller_cost = source_reseller_cost + ?,
+#    source_reseller_call_count = source_reseller_call_count + 1;
+#    limit_exceeded = ?;
+
