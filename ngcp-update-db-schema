@@ -248,12 +248,13 @@ revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" fi
 if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
   if [ -x "$SYNC_DB" ] ; then
       PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody mysql"
+      PRX_IGNORE_TABLES="kamailio.voicemail_spool"
       EXTRA_SYNC_DB_OPTS=""
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
           EXTRA_SYNC_DB_OPTS="--local-user=root --set-local-grants"
       fi
       # shellcheck disable=SC2086
-      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS} --local-host=${LOCAL_DBHOST} --local-port=${LOCAL_DBPORT}; then
+      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ignore-tables "${PRX_IGNORE_TABLES}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS} --local-host=${LOCAL_DBHOST} --local-port=${LOCAL_DBPORT}; then
           echo "Syncing 'not_replicated' statements from the central node."
       else
           echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
