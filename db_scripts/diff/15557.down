@@ -1,0 +1,15 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute = 'cfo';
+DELETE FROM voip_cf_mappings WHERE type = 'cfo';
+ALTER TABLE voip_cf_mappings MODIFY COLUMN type enum ('cfu','cfb','cfna','cft','cfs','cfr') NOT NULL DEFAULT 'cfu';
+
+update voip_preferences set label = 'Internal Call Forward Rerouting #' where attribute = "cfr";
+update voip_preferences set description = 'The id pointing to the "Call Forward Rerouting" entry in the voip_cf_mappings table' where attribute = "cfr";
+update voip_preferences set label = 'Rerouting Mode' where attribute = "rerouting_mode";
+update voip_preferences set description = "Specifies the operational mode of the Rerouting Call Forward. If set to Whitelist (default) the CFR is executed only for reply codes included in the 'rerouting_codes' list, if set to Blacklist the CFR is executed except for reply codes included in the list." where attribute = "rerouting_mode";
+update voip_preferences set label = 'List of Rerouting Codes' where attribute = "rerouting_codes";
+
+USE accounting;
+
+ALTER TABLE cdr MODIFY COLUMN call_type enum('call','cfu','cft','cfb','cfna','cfs','sms','cfr') NOT NULL DEFAULT 'call';
