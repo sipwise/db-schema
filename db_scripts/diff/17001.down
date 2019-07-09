@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+DELETE FROM voip_preferences WHERE attribute = "concurrent_max_in_total";
+
+commit;
