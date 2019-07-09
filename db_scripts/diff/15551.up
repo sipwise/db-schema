@@ -1,0 +1,24 @@
+use accounting;
+
+create table cdr_period_costs (
+
+  contract_id int(11) unsigned not null,
+  period enum('month','day') not null default,
+  period_date date not null,
+  direction enum('out','in') not null default 'out',
+  customer_cost decimal(14,6) not null default 0.000000,
+  reseller_cost decimal(14,6) not null default 0.000000,
+  cdr_count int(11) unsigned not null default 0,
+  fraud_limit_exceeded tinyint(1) unsigned default null,
+  fraud_limit_type enum('contract','billing_profile') default null,
+  notify_status enum('new','notified') not null default 'new',
+  notified_at timestamp default null,
+  first_cdr_start_time decimal(13,3) not null,
+  last_cdr_start_time decimal(13,3) not null,
+
+  primary key (contract_id, period, period_date, direction),
+  key cdrperiodcosts_pdfls (period, period_date, direction, fraud_limit_exceeded, status),
+  key cdrperiodcosts_fstime (first_cdr_start_time)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
