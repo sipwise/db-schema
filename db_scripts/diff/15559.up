@@ -1,0 +1,69 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpgid FROM voip_preference_groups WHERE name = "Access Restrictions";
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = @vpgid,
+attribute = "concurrent_max_in_total",
+label = "Total max number of inbound concurrent calls",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Maximum total number of incoming concurrent calls going to subscribers.";
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = @vpgid,
+attribute = "concurrent_max_in_per_account",
+label = "Maximum number of inbound concurrent calls for Customer",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Maximum number of incoming concurrent on-net and off-net calls to subscribers within the same Customer account, excluding calls from the application server and intra-PBX calls.";
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = @vpgid,
+attribute = "concurrent_max_in",
+label = "Maximum number of inbound concurrent calls",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Maximum number of incoming concurrent on-net and off-net calls going to a subscriber or coming from a peer, excluding subscriber's intra-PBX calls.";
+
+commit;
