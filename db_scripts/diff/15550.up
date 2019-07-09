@@ -1,0 +1,152 @@
+use accounting;
+
+create table cdr_period_costs (
+
+  contract_id int(11) unsigned not null,
+  period varchar(10) not null,
+  direction enum('out','in') not null default 'out',
+  billing_profile_id int(11) unsigned not null,
+  customer_cost decimal(14,6) not null default 0.000000,
+  reseller_cost decimal(14,6) not null default 0.000000,
+  call_count int(11) unsigned not null default 1,
+  limit_exceeded int(3) unsigned default null,
+  limit_type enum('account_limit','profile_limit') default null,
+  status enum('new','notified') not null default 'new',
+  status_timestamp datetime default null,
+  first_cdr_start_time decimal(13,3) not null,
+
+  primary key (contract_id, period, direction),
+  key (period, direction, limit_exceeded, status),
+  key cdrperiodcosts_fstime (first_cdr_start_time)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+delimiter ;;
+create or replace procedure add_period_costs(
+  in _contract_id int(11) unsigned,
+  in _cdr_start_time decimal(13,3),
+  in _duration decimal(13,3),
+  in _direction enum('out','in'),
+  in _billing_profile_id int(11) unsigned,
+  in _customer_cost decimal(14,6),
+  in _reseller_cost decimal(14,6)
+)
+begin
+
+  #better not unsigned, to support negative sums:
+  declare _fraud_interval_limit, _fraud_daily_limit,
+          _bp_fraud_interval_limit, _bp_fraud_daily_limit,
+          _cfp_fraud_interval_limit, _cfp_fraud_daily_limit int(11);
+  declare _lock,
+    _fraud_interval_lock, _bp_fraud_interval_lock, _cfp_fraud_interval_lock,
+    _fraud_daily_lock, _bp_fraud_daily_lock, _cfp_fraud_daily_lock
+    tinyint(3) unsigned;
+  declare _fraud_use_reseller_rates tinyint(3) unsigned;
+  declare _limit_type enum('account_limit','profile_limit');
+  declare _day_period varchar(10);
+  declare _month_period varchar(7);
+
+  set _day_period = (select date_format(from_unixtime(ceil(_cdr_start_time + _duration)), '%Y-%m-%d'));
+  set _month_period = (select date_format(from_unixtime(ceil(_cdr_start_time + _duration)), '%Y-%m'));
+
+  select bp.fraud_interval_limit, bp.fraud_daily_limit, bp.fraud_interval_lock, bp.fraud_daily_lock, bp.fraud_use_reseller_rates
+    into _bp_fraud_interval_limit, _bp_fraud_daily_limit, _bp_fraud_interval_lock, _bp_fraud_daily_lock, _fraud_use_reseller_rates
+    from billing.billing_profiles as bp where bp.id = _billing_profile_id;
+
+  select cfp.fraud_interval_limit, cfp.fraud_daily_limit, cfp.fraud_interval_lock, cfp.fraud_daily_lock
+    into _cfp_fraud_interval_limit, _cfp_fraud_daily_limit, _cfp_fraud_interval_lock, _cfp_fraud_daily_lock
+    from billing.contract_fraud_preferences as cfp where cfp.contract_id = _contract_id;
+
+  if _cfp_fraud_interval_limit > 0 then
+    set _fraud_interval_limit = _cfp_fraud_interval_limit;
+    set _fraud_interval_lock = _cfp_fraud_interval_lock;
+    set _fraud_daily_lock = _cfp_fraud_daily_lock;
+    set _limit_type = 'account_limit';
+  elseif _bp_fraud_interval_limit > 0 then
+    set _fraud_interval_limit = _bp_fraud_interval_limit;
+    set _fraud_interval_lock = _bp_fraud_interval_lock;
+    set _fraud_daily_lock = _bp_fraud_daily_lock;
+    set _limit_type = 'profile_limit';
+  end if;
+
+  insert into cdr_period_costs (
+    contract_id,
+    period,
+    direction,
+    billing_profile_id,
+    customer_cost,
+    reseller_cost,
+    limit_exceeded,
+    limit_type,
+    first_cdr_start_time
+  ) values(
+    _contract_id,
+    _month_period,
+    _direction,
+    _billing_profile_id,
+    _customer_cost,
+    _reseller_cost,
+    if(_fraud_use_reseller_rates > 0,
+      if(_reseller_cost >= _fraud_interval_limit,1,0),
+      if(_customer_cost >= _fraud_interval_limit,1,0)),
+    _limit_type,
+    _cdr_start_time
+  ) on duplicate key update
+    billing_profile_id = _billing_profile_id,
+    customer_cost = customer_cost + _customer_cost,
+    reseller_cost = reseller_cost + _reseller_cost,
+    call_count = call_count + 1,
+    limit_exceeded = if(_fraud_use_reseller_rates > 0,
+      if(reseller_cost + _reseller_cost >= _fraud_interval_limit,1,0),
+      if(customer_cost + _customer_cost >= _fraud_interval_limit,1,0)),
+    limit_type = _limit_type;
+
+  insert into cdr_period_costs (
+    contract_id,
+    period,
+    direction,
+    billing_profile_id,
+    customer_cost,
+    reseller_cost,
+    limit_exceeded,
+    limit_type,
+    first_cdr_start_time
+  ) values(
+    _contract_id,
+    _day_period,
+    _direction,
+    _billing_profile_id,
+    _customer_cost,
+    _reseller_cost,
+    if(_fraud_use_reseller_rates > 0,
+      if(_reseller_cost >= _fraud_daily_limit,1,0),
+      if(_customer_cost >= _fraud_daily_limit,1,0)),
+    _limit_type,
+    _cdr_start_time
+  ) on duplicate key update
+    billing_profile_id = _billing_profile_id,
+    customer_cost = customer_cost + _customer_cost,
+    reseller_cost = reseller_cost + _reseller_cost,
+    call_count = call_count + 1,
+    limit_exceeded = if(_fraud_use_reseller_rates > 0,
+      if(reseller_cost + _reseller_cost >= _fraud_daily_limit,1,0),
+      if(customer_cost + _customer_cost >= _fraud_daily_limit,1,0)),
+    limit_type = _limit_type;
+
+  if (select cpc.limit_exceeded from accounting.cdr_period_costs as cpc where
+    cpc.contract_id = _contract_id
+    and cpc.period = _month_period
+    and cpc.direction = _direction) > 0 then
+    set _lock = _fraud_interval_lock;
+  elseif (select cpc.limit_exceeded from accounting.cdr_period_costs as cpc where
+      cpc.contract_id = _contract_id
+      and cpc.period = _day_period
+      and cpc.direction = _direction) > 0 then
+    set _lock = _fraud_daily_lock;
+  end if;
+
+  select _lock;
+
+end;;
+delimiter ;
+
