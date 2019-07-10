@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_5d4bd959",
+        "filename": "db_scripts/diff/15549.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-10T04:22:50Z",
+      "side": 1,
+      "message": "this table is not only for fraud, it is accumulated cdr costs, so it is better to name it simpler as: cdr_costs or cdr_contract_costs",
+      "range": {
+        "startLine": 3,
+        "startChar": 13,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "43c6c005953d91a82a1d6a79c2d64cadaae85425",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
