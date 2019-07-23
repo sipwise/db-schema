@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_9452a3dc",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "change to \n\nperiod enum(\u0027month\u0027,\u0027day\u0027)\nperiod_date date not null,",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_345e37ea",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "hard to keep in sync, better remove",
+      "range": {
+        "startLine": 8,
+        "startChar": 2,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_5463abb1",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "cdr_count",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 12
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_3405d7c1",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "fraut_limit_exceeded",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_145d33e9",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "tinyint(1)",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 23
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_b472477b",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "contract_limit",
+      "range": {
+        "startLine": 13,
+        "startChar": 19,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_d46fbb90",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "billing_profile_limit",
+      "range": {
+        "startLine": 13,
+        "startChar": 35,
+        "endLine": 13,
+        "endChar": 48
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_540acbd3",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "fraud_limit_type",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_d4f6dbd6",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "notify_status",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_342cf749",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "timestamp",
+      "range": {
+        "startLine": 15,
+        "startChar": 19,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_74034fb9",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "notified_at",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_142bf331",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-07-23T10:40:07Z",
+      "side": 1,
+      "message": "add\nlast_cdr_start_time decimal(13,3) not null,",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "854d448fc7ccab251b21f49fc76c6017e0955585",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
