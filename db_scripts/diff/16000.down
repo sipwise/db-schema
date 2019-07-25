@@ -1,0 +1,6 @@
+USE accounting;
+set autocommit = 0;
+
+DELETE FROM cdr_tag WHERE type = 'header=User-to-User';
+
+COMMIT;
