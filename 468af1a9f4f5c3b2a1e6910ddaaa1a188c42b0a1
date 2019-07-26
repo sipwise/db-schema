@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc62764d_53cb69a6",
+        "filename": "db_scripts/diff/15550.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-07-26T13:17:58Z",
+      "side": 1,
+      "message": "ok, but care needs to be taken with this with dbix-class (-\u003ediscard_changes())",
+      "revId": "468af1a9f4f5c3b2a1e6910ddaaa1a188c42b0a1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
