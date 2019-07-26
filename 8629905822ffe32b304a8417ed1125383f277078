@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "405e8017_f9c88038",
+        "filename": "db_scripts/diff/15551.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-07-26T14:15:15Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 47
+      },
+      "revId": "8629905822ffe32b304a8417ed1125383f277078",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c3832c0_ce2d122a",
+        "filename": "db_scripts/diff/15551.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-07-26T14:15:15Z",
+      "side": 1,
+      "message": "1",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "8629905822ffe32b304a8417ed1125383f277078",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b74da3_06f63116",
+        "filename": "db_scripts/diff/15551.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-07-26T14:15:15Z",
+      "side": 1,
+      "message": "drop",
+      "range": {
+        "startLine": 13,
+        "startChar": 33,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "8629905822ffe32b304a8417ed1125383f277078",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
