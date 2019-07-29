@@ -1,3 +1,16 @@
+ngcp-db-schema (7.3.3.0+0~mr7.3.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [984c028] TT#58101 fix "exact" fee match mode
+
+  [ Irina Peshinskaya ]
+  * [70e5317] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [31b796a] TT#57959 Fix NULL field in the unique index
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 29 Jul 2019 18:11:45 +0200
+
 ngcp-db-schema (7.3.2.0+0~mr7.3.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
