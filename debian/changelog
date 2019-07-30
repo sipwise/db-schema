@@ -1,3 +1,16 @@
+ngcp-db-schema (5.5.11.0+0~mr5.5.11.0) unstable; urgency=medium
+
+  [ Irina Peshinskaya ]
+  * [dc24f42] TT#57959 Add terminate_timestamp to unique bp indexes
+  * [1207ac9] TT#57959 Fix NULL field in the unique index
+
+  [ Kirill Solomko ]
+  * [94830b2] TT#62221 ignore kamailio.voicemail_spool in ngcp-sync-db
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 30 Jul 2019 18:35:44 +0200
+
 ngcp-db-schema (5.5.10.0+0~mr5.5.10.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
