@@ -1,0 +1,15 @@
+SET autocommit=0;
+
+USE billing;
+
+CREATE TABLE `ncos_lnp_pattern_list` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ncos_lnp_list_id` int(11) unsigned NOT NULL,
+  `pattern` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `listpat_idx` (`ncos_lnp_list_id`,`pattern`),
+  CONSTRAINT `c_p_l_ncoslnplist_ref` FOREIGN KEY (`ncos_lnp_list_id`) REFERENCES `ncos_lnp_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+COMMIT;
