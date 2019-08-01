@@ -1,0 +1,7 @@
+SET autocommit=0;
+
+USE billing;
+
+DROP TABLE IF EXISTS `ncos_lnp_pattern_list`;
+
+COMMIT;
