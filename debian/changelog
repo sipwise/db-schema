@@ -1,3 +1,27 @@
+ngcp-db-schema (8.0.0.0+0~mr8.0.0.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [d5aa218] TT#61954 Update copyright years
+  * [b86cd45] TT#61954 Set debhelper compat level in Build-Depends instead of debian/compat
+
+  [ Kirill Solomko ]
+  * [377381d] TT#62221 ignore kamailio.voicemail_spool in ngcp-sync-db
+
+  [ Marco Capetta ]
+  * [13e8c2a] TT#56950 Upgrade to kamalio 5.2.3
+  * [bc25525] TT#58502 Add header=User-to-User type in cdr-tag table
+
+  [ Rene Krenn ]
+  * [3ffc905] TT#62216 TT#62907 cdr_period_costs table
+  * [9f328f1] TT#62216 TT#62907 add id's to cdr_period_costs table
+
+  [ Flaviu Mates ]
+  * [6b7772a] TT#64011 - Script for creating LNP Carrier patterns table
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Aug 2019 20:53:00 +0200
+
 ngcp-db-schema (7.5.0.0+0~mr7.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
