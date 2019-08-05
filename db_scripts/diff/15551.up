@@ -1,7 +1,7 @@
 use accounting;
 
 create table cdr_period_costs (
-
+  id int(10) unsigned not null auto_increment,
   contract_id int(11) unsigned not null,
   period enum('month','day') not null,
   period_date date not null,
@@ -14,9 +14,12 @@ create table cdr_period_costs (
   notify_status enum('new','notified') not null default 'new',
   notified_at datetime default null,
   first_cdr_start_time decimal(13,3) not null,
+  first_cdr_id int(10) unsigned,
   last_cdr_start_time decimal(13,3) not null,
+  last_cdr_id int(10) unsigned,
 
-  primary key (contract_id, period, period_date, direction),
+  primary key (id),
+  unique key (contract_id, period, period_date, direction),
   key cdrperiodcosts_pdfls (period, period_date, direction, fraud_limit_exceeded, notify_status),
   key cdrperiodcosts_fstime (first_cdr_start_time)
 
