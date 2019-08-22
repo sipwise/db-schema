@@ -1,0 +1,5 @@
+USE provisioning;
+
+ALTER TABLE autoprov_devices
+    ADD COLUMN front_thumbnail MEDIUMBLOB DEFAULT NULL AFTER front_image_type,
+    ADD COLUMN front_thumbnail_type VARCHAR(32) DEFAULT NULL AFTER front_thumbnail;

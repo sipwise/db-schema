@@ -1,0 +1,5 @@
+USE provisioning;
+
+ALTER TABLE autoprov_devices
+    DROP COLUMN front_thumbnail,
+    DROP COLUMN front_thumbnail_type;
