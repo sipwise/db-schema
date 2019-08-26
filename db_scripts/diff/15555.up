@@ -1,0 +1,316 @@
+USE accounting;
+
+CREATE TABLE int_cdr LIKE cdr;
+CREATE TABLE int_cdr_relation_data LIKE cdr_relation_data;
+CREATE TABLE int_cdr_cash_balance_data LIKE cdr_cash_balance_data;
+CREATE TABLE int_cdr_time_balance_data LIKE cdr_time_balance_data;
+CREATE TABLE int_cdr_tag_data LIKE cdr_tag_data;
+CREATE TABLE int_cdr_export_status_data LIKE cdr_export_status_data;
+CREATE TABLE int_cdr_group LIKE cdr_group;
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS drop_partitioning_if_exists;
+CREATE PROCEDURE drop_partitioning_if_exists()
+BEGIN
+
+    DECLARE part_exists int default 0;
+    DECLARE part_table varchar(64) default '';
+    DECLARE done int DEFAULT 0;
+    DECLARE x CURSOR FOR
+        SELECT count(*) as cnt, table_name
+          FROM information_schema.partitions
+         WHERE table_name in
+            ('int_cdr',
+             'int_cdr_relation_data',
+             'int_cdr_cash_balance_data',
+             'int_cdr_time_balance_data',
+             'int_cdr_tag_data',
+             'int_cdr_export_status_data',
+             'int_cdr_group')
+           AND partition_ordinal_position IS NOT NULL
+         GROUP BY 2;
+    DECLARE continue handler FOR NOT FOUND SET done = true;
+
+    OPEN x;
+    part_fix: LOOP
+        FETCH x INTO part_exists, part_table;
+        IF done THEN
+            LEAVE part_fix;
+        END IF;
+        IF part_exists > 0 THEN
+            SET @q = CONCAT('ALTER TABLE `', part_table, '` REMOVE PARTITIONING');
+            PREPARE stmt FROM @q;
+            EXECUTE stmt;
+        END IF;
+    END LOOP;
+    CLOSE x;
+
+END ;;
+DELIMITER ;
+
+CALL drop_partitioning_if_exists();
+DROP PROCEDURE drop_partitioning_if_exists;
+
+ALTER TABLE int_cdr
+  ADD COLUMN acc_ref VARCHAR(255) NOT NULL,
+  ADD UNIQUE KEY acc_ref_uidx (acc_ref);
+
+drop trigger if exists int_cdr_cascade_update_trig;
+delimiter ;;
+create trigger int_cdr_cascade_update_trig after update on accounting.int_cdr
+  for each row begin
+
+  update accounting.int_cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
+drop trigger if exists int_cdr_cascade_delete_trig;
+delimiter ;;
+create trigger int_cdr_cascade_delete_trig after delete on accounting.int_cdr
+  for each row begin
+
+  delete from accounting.int_cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_export_status_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_group where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_relation_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_relation_rest_cascade_delete_trig before delete on accounting.cdr_relation
+  for each row begin
+
+    select count(1) into @rel_count from (select count(1) from accounting.cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
+    if @rel_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @rel_count from (select count(1) from accounting.int_cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
+    if @rel_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_cash_balance_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_cash_balance_rest_cascade_delete_trig before delete on accounting.cdr_cash_balance
+  for each row begin
+
+    select count(1) into @cb_count from (select count(1) from accounting.cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
+    if @cb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @cb_count from (select count(1) from accounting.int_cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
+    if @cb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_time_balance_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_time_balance_rest_cascade_delete_trig before delete on accounting.cdr_time_balance
+  for each row begin
+
+    select count(1) into @tb_count from (select count(1) from accounting.cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
+    if @tb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @tb_count from (select count(1) from accounting.int_cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
+    if @tb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_tag_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_tag_rest_cascade_delete_trig before delete on accounting.cdr_tag
+  for each row begin
+
+    select count(1) into @ct_count from (select count(1) from accounting.cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @ct_count from (select count(1) from accounting.int_cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_export_status_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_export_status_rest_cascade_delete_trig before delete on accounting.cdr_export_status
+  for each row begin
+
+    select count(1) into @es_count from (select count(1) from accounting.cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.cdr_export_status_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @es_count from (select count(1) from accounting.int_cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.int_cdr_export_status_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_provider_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_provider_rest_cascade_delete_trig before delete on accounting.cdr_provider
+  for each row begin
+
+    select count(1) into @rel_prov_count
+        from (select count(1) from accounting.cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
+    if @rel_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @cash_balance_prov_count
+        from (select count(1) from accounting.cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @cash_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @time_balance_prov_count
+        from (select count(1) from accounting.cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @time_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @tag_prov_count
+        from (select count(1) from accounting.cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
+    if @tag_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+
+
+    select count(1) into @rel_prov_count
+        from (select count(1) from accounting.int_cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
+    if @rel_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @cash_balance_prov_count
+        from (select count(1) from accounting.int_cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @cash_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @time_balance_prov_count
+        from (select count(1) from accounting.int_cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @time_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @tag_prov_count
+        from (select count(1) from accounting.int_cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
+    if @tag_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end;;
+delimiter ;
+
+drop trigger if exists cdr_direction_rest_cascade_delete_trig;
+delimiter ;;
+create trigger cdr_direction_rest_cascade_delete_trig before delete on accounting.cdr_direction
+  for each row begin
+
+    select count(1) into @rel_dir_count
+        from (select count(1) from accounting.cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
+    if @rel_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @cash_balance_dir_count
+        from (select count(1) from accounting.cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @cash_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @time_balance_dir_count
+        from (select count(1) from accounting.cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @time_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @tag_dir_count
+        from (select count(1) from accounting.cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
+    if @tag_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+
+    select count(1) into @rel_dir_count
+        from (select count(1) from accounting.int_cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
+    if @rel_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @cash_balance_dir_count
+        from (select count(1) from accounting.int_cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @cash_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @time_balance_dir_count
+        from (select count(1) from accounting.int_cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @time_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select count(1) into @tag_dir_count
+        from (select count(1) from accounting.int_cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
+    if @tag_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+  end;;
+delimiter ;
