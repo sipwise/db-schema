@@ -1,0 +1,84 @@
+USE accounting;
+
+CREATE TABLE int_cdr LIKE cdr;
+CREATE TABLE int_cdr_relation_data LIKE cdr_relation_data;
+CREATE TABLE int_cdr_cash_balance_data LIKE cdr_cash_balance_data;
+CREATE TABLE int_time_balance_data LIKE cdr_time_balance_data;
+CREATE TABLE int_cdr_tag_data LIKE cdr_tag_data;
+CREATE TABLE int_cdr_export_status_data LIKE cdr_export_status_data;
+CREATE TABLE int_cdr_group LIKE cdr_group;
+
+DELIMITER ;;
+DROP PROCEDURE IF EXISTS drop_partitioning_if_exists;
+CREATE PROCEDURE drop_partitioning_if_exists()
+BEGIN
+
+    DECLARE part_exists int default 0;
+    DECLARE part_table varchar(64) default '';
+    DECLARE done int DEFAULT 0;
+    DECLARE x CURSOR FOR
+        SELECT count(*) as cnt, table_name
+          FROM information_schema.partitions
+         WHERE table_name in
+            ('int_cdr',
+             'int_cdr_relation_data',
+             'int_cdr_cash_balance_data',
+             'int_time_balance_data',
+             'int_cdr_tag_data',
+             'int_cdr_export_status_data',
+             'int_cdr_group')
+           AND partition_ordinal_position IS NOT NULL
+         GROUP BY 2;
+    DECLARE continue handler FOR NOT FOUND SET done = true;
+
+    OPEN x;
+    part_fix: LOOP
+        FETCH x INTO part_exists, part_table;
+        IF done THEN
+            LEAVE part_fix;
+        END IF;
+        IF part_exists > 0 THEN
+            SET @q = CONCAT('ALTER TABLE `', part_table, '` REMOVE PARTITIONING');
+            PREPARE stmt FROM @q;
+            EXECUTE stmt;
+        END IF;
+    END LOOP;
+    CLOSE x;
+
+END ;;
+DELIMITER ;
+
+CALL drop_partitioning_if_exists();
+DROP PROCEDURE drop_partitioning_if_exists;
+
+ALTER TABLE int_cdr DROP KEY kcid, ADD UNIQUE KEY kcid (call_id);
+
+drop trigger if exists int_cdr_cascade_update_trig;
+delimiter ;;
+create trigger int_cdr_cascade_update_trig after update on accounting.int_cdr
+  for each row begin
+
+  update accounting.int_cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
+
+drop trigger if exists int_cdr_cascade_delete_trig;
+delimiter ;;
+create trigger int_cdr_cascade_delete_trig after delete on accounting.int_cdr
+  for each row begin
+
+  delete from accounting.int_cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_export_status_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_group where cdr_id = OLD.id;
+
+  end;;
+delimiter ;
