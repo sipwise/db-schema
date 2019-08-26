@@ -1,0 +1,13 @@
+USE accounting;
+
+drop trigger if exists int_cdr_cascade_update_trig;
+drop trigger if exists int_cdr_cascade_delete_trig;
+
+DROP TABLE int_cdr;
+DROP TABLE int_cdr_relation_data;
+DROP TABLE int_cdr_cash_balance_data;
+DROP TABLE int_cdr_time_balance_data;
+DROP TABLE int_cdr_tag_data;
+DROP TABLE int_cdr_export_status_data;
+DROP TABLE int_cdr_group;
+
