@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d85667a_4957640b",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-26T17:04:41Z",
+      "side": 1,
+      "message": "mos_data",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afdb246_21967924",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-26T17:04:41Z",
+      "side": 1,
+      "message": "(call_id,call_type)",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c91e74e_6c9691fc",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-26T17:04:41Z",
+      "side": 1,
+      "message": "should then also be added to those triggers like \"cdr_tag_rest_cascade_delete_trig\"",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
