@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c0a84336_82945e8c",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-27T09:41:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "20fbc703_2d7400a1",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0afdb246_21967924",
         "filename": "db_scripts/diff/15555.up",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c83de1f3_659c8ada",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-27T09:41:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "050baa6a_ecf464c1",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c91e74e_6c9691fc",
         "filename": "db_scripts/diff/15555.up",
         "patchSetId": 1
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "why ? cdr_* and int_cdr_* tables are exclusive, means a record cannot be in both and they will have different cdr_id increments.",
       "parentUuid": "2c91e74e_6c9691fc",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cd5659_a5d08e3b",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-08-27T09:41:30Z",
+      "side": 1,
+      "message": "it\u0027s other (minor) story, those are actually foreignkey emulation if someone deletes a cdr_tag. it currently rejects if the cdr_tag id is used by cdr_tag_data (see below).\n\ndrop trigger if exists cdr_tag_rest_cascade_delete_trig;\ndelimiter ;;\ncreate trigger cdr_tag_rest_cascade_delete_trig before delete on accounting.cdr_tag\n  for each row begin\n\n    select count(1) into @rel_count from (select count(1) from accounting.cdr_tag_data where tag_id \u003d OLD.id limit 1) as cnt;\n\n    if @rel_count \u003e 0 then\n        set @err_msg \u003d \u0027Error deleting data from accounting.cdr_tag, related data exists in accounting.cdr_tag_data\u0027;\n        signal sqlstate \u002745000\u0027 set message_text \u003d @err_msg;\n    end if;\n\n  end;;\ndelimiter ;\n\nthis should now also check cdr_tag_data_int.",
+      "parentUuid": "ee288c38_10ab5a07",
       "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
