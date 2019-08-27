@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20fbc703_2d7400a1",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-08-27T09:35:12Z",
+      "side": 1,
+      "message": "we do not need it so far as mos values are written only for completed calls.",
+      "parentUuid": "6d85667a_4957640b",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0afdb246_21967924",
         "filename": "db_scripts/diff/15555.up",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "050baa6a_ecf464c1",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-08-27T09:35:12Z",
+      "side": 1,
+      "message": "Was having the same concerns but I am afraid that will not be enough either. (e.g.: for a call with 2 CFU, 1 failed, 1 ok there will be 3 cdrs, 1 \"call\", 2 \"cfu\")\nmediator fetches all callids and then for each callid processes INVITE\u0027s as \n\n(select distinct sip_code, sip_reason, method, callid, time, time_hires, \" \\\n    \"src_leg, dst_leg, branch_id \" \\\n    \"from acc where method \u003d \u0027INVITE\u0027 and callid \u003d \u0027%s\u0027 order by time_hires asc) \" \\\n    \"union all \" \\\n\nSo the key is an open topic for now. Leaving it as is for now and we adjust based on how Richard is going to use it in the implementation.",
+      "parentUuid": "0afdb246_21967924",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c91e74e_6c9691fc",
         "filename": "db_scripts/diff/15555.up",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2019-08-26T17:04:41Z",
       "side": 1,
       "message": "should then also be added to those triggers like \"cdr_tag_rest_cascade_delete_trig\"",
+      "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee288c38_10ab5a07",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-08-27T09:35:12Z",
+      "side": 1,
+      "message": "why ? cdr_* and int_cdr_* tables are exclusive, means a record cannot be in both and they will have different cdr_id increments.",
+      "parentUuid": "2c91e74e_6c9691fc",
       "revId": "66ddd1eb4138a8e3b6448d25af8bda81f9dea6d2",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
