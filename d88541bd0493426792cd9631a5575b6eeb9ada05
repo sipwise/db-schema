@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136278a5_8b833b0e",
+        "filename": "db_scripts/diff/15555.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-09-04T13:43:30Z",
+      "side": 1,
+      "message": "should this be `int_cdr_time_balance_data` for consistency?",
+      "range": {
+        "startLine": 6,
+        "startChar": 13,
+        "endLine": 6,
+        "endChar": 34
+      },
+      "revId": "d88541bd0493426792cd9631a5575b6eeb9ada05",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
