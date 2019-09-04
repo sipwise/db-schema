@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a6b5fa4_a1e3cb14",
+        "filename": "db_scripts/diff/17000.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000006
+      },
+      "writtenOn": "2019-09-04T15:32:29Z",
+      "side": 1,
+      "message": "If you are doing this I would also update the description of rerouting_codes preference:\nRerouting Call Forward -\u003e Call Forward on Response. Right now it says there:\n\"Specifies the operational mode of the Rerouting Call Forward. If set to Whitelist (default) the CFR is executed only for reply codes included in the \u0027rerouting_codes\u0027 list, if set to Blacklist the CFR is executed except for reply codes included in the list.\"",
+      "revId": "801ce58d29a297b28d09b93f5ea7590c5a5f3cb4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
