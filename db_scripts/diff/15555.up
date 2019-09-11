@@ -1,5 +1,7 @@
 USE accounting;
 
+ALTER TABLE cdr MODIFY call_status enum('ok','busy','noanswer','cancel','offline','timeout','other','incomplete') NOT NULL DEFAULT 'ok';
+
 CREATE TABLE int_cdr LIKE cdr;
 CREATE TABLE int_cdr_relation_data LIKE cdr_relation_data;
 CREATE TABLE int_cdr_cash_balance_data LIKE cdr_cash_balance_data;

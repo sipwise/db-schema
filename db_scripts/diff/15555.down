@@ -158,3 +158,5 @@ create trigger cdr_direction_rest_cascade_delete_trig before delete on accountin
 
   end;;
 delimiter ;
+
+ALTER TABLE cdr MODIFY call_status enum('ok','busy','noanswer','cancel','offline','timeout','other') NOT NULL DEFAULT 'ok';
