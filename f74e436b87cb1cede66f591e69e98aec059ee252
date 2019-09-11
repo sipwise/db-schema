@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b806f1_256698c7",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-09-11T13:30:48Z",
+      "side": 1,
+      "message": "it is empty for *.up:\n\nApplying revision script /usr/share/ngcp-db-schema/db_scripts/base/0010_create_bss.up: ERROR 1065 (42000): Query was empty",
+      "range": {
+        "startLine": 135,
+        "startChar": 11,
+        "endLine": 135,
+        "endChar": 43
+      },
+      "revId": "f74e436b87cb1cede66f591e69e98aec059ee252",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
