@@ -1,0 +1,4 @@
+USE accounting;
+
+ALTER TABLE cdr MODIFY call_status enum('ok','busy','noanswer','cancel','offline','timeout','other','failed') NOT NULL DEFAULT 'ok';
+ALTER TABLE int_cdr MODIFY call_status enum('ok','busy','noanswer','cancel','offline','timeout','other','failed') NOT NULL DEFAULT 'ok';
