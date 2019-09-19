@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE autoprov_field_device_lines
+    ADD COLUMN deviceid_dbaliases_id INT(11) UNSIGNED DEFAULT NULL;
