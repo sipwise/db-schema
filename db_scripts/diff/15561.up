@@ -1,0 +1,3 @@
+USE provisioning;
+
+update voip_preferences set contract_pref = 1 where attribute = "max_call_duration";
