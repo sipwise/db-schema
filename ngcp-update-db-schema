@@ -39,18 +39,22 @@ if [ "${nodename}" = "unknown" ] ; then
 fi
 
 service mysql start || true
-. /etc/mysql/sipwise.cnf
 
 . /etc/default/ngcp-roles
 . /etc/default/ngcp-db
 
-if [ -z "${SIPWISE_DB_PASSWORD}" ] ; then
-  echo 'Error: SIPWISE_DB_PASSWORD is unset (using /etc/mysql/sipwise.cnf).' >&2
+declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
+
+if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
+  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
   exit 1
 fi
 
+declare -a MYSQL_OPTS=()
+MYSQL_OPTS+=("--defaults-extra-file=${SIPWISE_EXTRA_CNF}")
+
 # check connection with sipwise user
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
+if ! mysql "${MYSQL_OPTS[@]}" -e 'SELECT 1;' 1>/dev/null 2>/dev/null ; then
   echo 'Error: cant connect to local MySQL with sipwise user' >&2
   exit 1
 fi
@@ -59,7 +63,7 @@ fi
 if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
   echo "Running in automated installation mode, ignoring check for empty db_schema."
 else
-  if [ "$(mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'select * from ngcp.db_schema;' 2>/dev/null)" = "" ] ; then
+  if [ "$(mysql "${MYSQL_OPTS[@]}" -e 'select * from ngcp.db_schema;' 2>/dev/null)" = "" ] ; then
     echo "================================================================="
     echo "Warning: the db_schema table of the ngcp database is empty."
     echo "Are you sure you want to proceed with applying db-schema changes?"
@@ -75,16 +79,16 @@ else
   fi
 fi
 
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
-  mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
+  mysql "${MYSQL_OPTS[@]}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
 fi
 
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" -e 'use ngcp;' 2>/dev/null ; then
+if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
   echo 'Error: ngcp database does not exist.' >&2
   exit 1
 fi
 
-if ! mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e 'describe db_schema'  >/dev/null; then
+if ! mysql "${MYSQL_OPTS[@]}" ngcp -e 'describe db_schema'  >/dev/null; then
   echo 'Error: db_schema table does not exit.' >&2
   exit 1
 fi
@@ -128,7 +132,7 @@ apply_revision() {
   revname="$(basename "$rev")"
 
   printf "Applying revision script %s: " "$rev"
-  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" < "$rev" ; then
+  if mysql "${MYSQL_OPTS[@]}" < "$rev" ; then
     echo "done"
   else
     echo "failed. :(" >&2
@@ -136,7 +140,7 @@ apply_revision() {
     exit 1
   fi
 
-  if mysql -usipwise -p"${SIPWISE_DB_PASSWORD}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
+  if mysql "${MYSQL_OPTS[@]}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
     verbose "Marked revision $rev as applied."
   else
     echo "Error while executing DB commands using revision $rev for node $nodename" >&2
