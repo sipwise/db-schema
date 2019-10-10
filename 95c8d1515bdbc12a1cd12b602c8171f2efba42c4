@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b17ea69_5247bfa3",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-10T15:20:52Z",
+      "side": 1,
+      "message": "ACK, good point.",
+      "parentUuid": "2d556d8c_04d20a17",
+      "range": {
+        "startLine": 58,
+        "startChar": 68,
+        "endLine": 58,
+        "endChar": 96
+      },
+      "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509b905d_39da7883",
         "filename": "ngcp-update-db-schema",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2019-10-10T13:39:10Z",
       "side": 1,
       "message": "BTW why the switch to use a tempfile? (personally I always find these more cumbersome, and error-prone to handle. What about traps to cleanup etc? :)",
+      "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "524a2f0e_068a347e",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-10T15:20:52Z",
+      "side": 1,
+      "message": "It didn\u0027t work otherwise... I will make the second try to check the reason there... something was with quotes AFAIK.",
+      "parentUuid": "509b905d_39da7883",
       "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
