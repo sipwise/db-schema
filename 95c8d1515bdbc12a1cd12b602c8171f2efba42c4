@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "223fb4c1_7d5da417",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-11T11:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b17ea69_5247bfa3",
+      "range": {
+        "startLine": 58,
+        "startChar": 68,
+        "endLine": 58,
+        "endChar": 96
+      },
+      "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509b905d_39da7883",
         "filename": "ngcp-update-db-schema",
         "patchSetId": 2
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "It didn\u0027t work otherwise... I will make the second try to check the reason there... something was with quotes AFAIK.",
       "parentUuid": "509b905d_39da7883",
+      "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "caed8944_db79f744",
+        "filename": "ngcp-update-db-schema",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-10-11T11:53:23Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "524a2f0e_068a347e",
       "revId": "95c8d1515bdbc12a1cd12b602c8171f2efba42c4",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
