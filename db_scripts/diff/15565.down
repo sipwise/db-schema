@@ -1,0 +1,11 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name in(
+    'recent_call_play_number',
+    'recent_call_confirmation',
+    'recent_call_anonymous',
+    'recent_call_empty',
+    'recent_call_deleted',
+);
+
+DELETE FROM voip_sound_groups WHERE name = 'recent_calls';
