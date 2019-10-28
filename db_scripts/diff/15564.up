@@ -1,0 +1,14 @@
+use provisioning
+set autocommit=0; 
+
+insert into voip_sound_groups(name) values ('recent_calls');
+  
+SELECT id INTO @grp_id FROM voip_sound_groups WHERE name='recent_calls';
+
+INSERT into voip_sound_handles (name,group_id) VALUES ('recent_call_play_number', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('recent_call_confirmation', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('recent_call_anonymous', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('recent_call_empty', @grp_id);
+INSERT into voip_sound_handles (name,group_id) VALUES ('recent_call_deleted', @grp_id);
+ 
+commit;
