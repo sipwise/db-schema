@@ -1,0 +1,25 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Internals"),
+attribute = "stop_forking_code_lists",
+label = "List of response codes for which the forking is stopped",
+type = 0,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "string",
+read_only = 0,
+description = "Contains a list of SIP codes that is matched with the response code received in reply from the subscriber's contacts in case of call failure. In case of match, the forking based on Q value is stopped and the code is transparently signaled back to the caller, whereas also an announcement can be played if configured in the existing sound set. Response codes 600, 603, 604, 606 are implicitly included in the list.";
+
+commit;
