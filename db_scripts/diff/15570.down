@@ -1,0 +1,12 @@
+USE provisioning
+
+SET autocommit=0;
+
+select id from voip_preferences where attribute='nat_sipping' into @vpid;
+update voip_preferences set label='NAT pinger' where id=@vpid;
+update voip_preferences set description='Controls whether to enable/disable NAT pings for a given domain/user' where id=@vpid;
+
+update voip_preferences_enum set label='Yes' where preference_id=@vpid and value='yes';
+delete from voip_preferences_enum where preference_id=@vpid and value='always';
+
+COMMIT;
