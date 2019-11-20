@@ -1,0 +1,14 @@
+USE provisioning
+
+SET autocommit=0;
+
+select id from voip_preferences where attribute='nat_sipping' into @vpid;
+update voip_preferences set label='Enable SIP OPTIONS ping' where id=@vpid;
+update voip_preferences set description='Controls whether to enable/disable NAT pings for a given domain/user. Requires re-registrations for the change in settings to take effect' where id=@vpid;
+
+update voip_preferences_enum set label='When behind NAT' where preference_id=@vpid and value='yes';
+insert into voip_preferences_enum (preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref,
+  contract_pref, contract_location_pref, default_val) values
+  (@vpid, 'Force ping', 'always', 1, 1, 1, 0, 0, 0, 0);
+
+COMMIT;
