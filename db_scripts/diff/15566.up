@@ -1,0 +1,18 @@
+ALTER TABLE `billing`.`billing_fees` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `onpeak_follow_interval`,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `onpeak_extra_rate`,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `offpeak_follow_interval`,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `offpeak_extra_rate`;
+
+ALTER TABLE `billing`.`billing_fees_history` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `onpeak_follow_interval`,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `onpeak_extra_rate`,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `offpeak_follow_interval`,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `offpeak_extra_rate`;
+
+ALTER TABLE `billing`.`billing_fees_raw` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `onpeak_follow_interval`,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `onpeak_extra_rate`,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0 AFTER `offpeak_follow_interval`,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL AFTER `offpeak_extra_rate`;
+

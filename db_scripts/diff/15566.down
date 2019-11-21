@@ -1,0 +1,18 @@
+ALTER TABLE `billing`.`billing_fees` 
+DROP COLUMN `offpeak_extra_second`,
+DROP COLUMN `offpeak_extra_rate`,
+DROP COLUMN `onpeak_extra_second`,
+DROP COLUMN `onpeak_extra_rate`;
+
+ALTER TABLE `billing`.`billing_fees_history` 
+DROP COLUMN `offpeak_extra_second`,
+DROP COLUMN `offpeak_extra_rate`,
+DROP COLUMN `onpeak_extra_second`,
+DROP COLUMN `onpeak_extra_rate`;
+
+ALTER TABLE `billing`.`billing_fees_raw` 
+DROP COLUMN `offpeak_extra_second`,
+DROP COLUMN `offpeak_extra_rate`,
+DROP COLUMN `onpeak_extra_second`,
+DROP COLUMN `onpeak_extra_rate`;
+
