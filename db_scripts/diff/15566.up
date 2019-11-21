@@ -1,0 +1,18 @@
+ALTER TABLE `billing`.`billing_fees` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL;
+
+ALTER TABLE `billing`.`billing_fees_history` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL;
+
+ALTER TABLE `billing`.`billing_fees_raw` 
+ADD COLUMN `onpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `onpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL,
+ADD COLUMN `offpeak_extra_rate` DOUBLE NOT NULL DEFAULT 0,
+ADD COLUMN `offpeak_extra_second` INT(5) UNSIGNED NULL DEFAULT NULL;
+
