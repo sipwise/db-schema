@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4738e98b_4c8b1845",
+        "filename": "db_scripts/diff/15566.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-11-21T14:29:25Z",
+      "side": 1,
+      "message": "no AFTER - new columns have to be added at the end to prevent replication issues",
+      "range": {
+        "startLine": 2,
+        "startChar": 57,
+        "endLine": 2,
+        "endChar": 87
+      },
+      "revId": "7ebf6fdedc769ec9dbd797d35a94e5412196461c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
