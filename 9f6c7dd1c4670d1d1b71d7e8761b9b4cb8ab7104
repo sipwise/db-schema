@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d25cd0a1_d98f976f",
+        "filename": "db_scripts/diff/15566.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-11-22T13:36:09Z",
+      "side": 1,
+      "message": "not needed",
+      "revId": "9f6c7dd1c4670d1d1b71d7e8761b9b4cb8ab7104",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
