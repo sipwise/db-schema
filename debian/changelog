@@ -1,3 +1,20 @@
+ngcp-db-schema (8.2.0.0+0~mr8.2.0.0) unstable; urgency=medium
+
+  [ Alexander Lutay ]
+  * [9606aa4] TT#68033 Migrate ngcp-update-db-schema from /etc/mysql/sipwise.cnf to /etc/mysql/sipwise_extra.cnf
+
+  [ Marco Capetta ]
+  * [6297995] TT#70328 Add 'contact_ringtimeout' subscriber's preference
+  * [a037d85] TT#69135 TT#69136 Add recent_calls announcements
+  * [9f6c7dd] TT#70327 Add 'stop_forking_code_lists' subscriber's preference
+
+  [ Flaviu Mates ]
+  * [345320a] TT#70856 - Scripts for new one-time fee columns
+
+  [ Sipwise Jenkins Builder ]
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Nov 2019 14:53:01 +0100
+
 ngcp-db-schema (8.1.0.0+0~mr8.1.0.0) unstable; urgency=medium
 
   [ Andreas Granig ]
