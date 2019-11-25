@@ -1,0 +1,28 @@
+USE provisioning;
+SET AUTOCOMMIT=0;
+SET sql_log_bin=0;
+
+SELECT id INTO @vp_attr_id FROM voip_preferences WHERE attribute='serial_forking_by_q_value';
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+  VALUES
+  (@vp_attr_id, 'use domain default', NULL, 1, 0, 0, 0, 1),
+  (@vp_attr_id, 'No', 'no', 0, 1, 0, 0, 1),
+  (@vp_attr_id, 'No', 'no', 1, 0, 0, 0, 0),
+  (@vp_attr_id, 'Standard', 'standard', 1, 1, 0, 0, 0),
+  (@vp_attr_id, 'Probability', 'probability', 1, 1, 0, 0, 0);
+
+UPDATE voip_preferences SET
+  data_type = 'enum',
+  type = 0,
+  description = "Select which type of forking based on q-value you want to perform. Select 'Standard' for the serial forking defined by q-value priority: the higher the q value number the more priority is given, same values mean parallel ringing. Select 'Probability' for a serial forking based on probability: higher q-value means higher probability to be contacted as first, contacts with q-value 0 have the lowest priority and they are tried after all the others."
+WHERE id = @vp_attr_id;
+
+UPDATE voip_usr_preferences SET value = 'standard' WHERE value = 1 and attribute_id =  @vp_attr_id;
+UPDATE voip_dom_preferences SET value = 'standard' WHERE value = 1 and attribute_id =  @vp_attr_id;
+
+UPDATE kamailio.usr_preferences SET type=0 WHERE attribute='serial_forking_by_q_value';
+UPDATE kamailio.dom_preferences SET type=0 WHERE attribute='serial_forking_by_q_value';
+
+COMMIT;
