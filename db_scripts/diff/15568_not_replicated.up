@@ -1,0 +1,25 @@
+USE provisioning;
+SET AUTOCOMMIT=0;
+SET sql_log_bin=0;
+
+SELECT id INTO @vp_attr_id FROM voip_preferences WHERE attribute='serial_forking_by_q_value';
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+  VALUES
+  (@vp_attr_id, 'use domain default'', NULL, 1, 0, 0, 0, 1),
+  (@vp_attr_id, 'No', 'standard', 0, 1, 0, 0, 1),
+  (@vp_attr_id, 'No', 'standard', 1, 0, 0, 0, 0),
+  (@vp_attr_id, 'Standard', 'standard', 1, 1, 0, 0, 0),
+  (@vp_attr_id, 'Probability', 'probability', 1, 1, 0, 0, 0);
+
+UPDATE voip_preferences SET
+  data_type = 'enum',
+  type = 0,
+  description = "Select which type of forking based on q-value you want to perform. Select 'Standard' for the serial forking defined  .... Select 'Probability' for a forking .... "
+WHERE id = @vp_attr_id;
+
+UPDATE voip_usr_preferences SET value = 'standard' WHERE value = 1 and attribute_id =  @vp_attr_id;
+UPDATE voip_dom_preferences SET value = 'standard' WHERE value = 1 and attribute_id =  @vp_attr_id;
+
+COMMIT;
