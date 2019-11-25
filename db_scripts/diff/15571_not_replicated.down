@@ -1,0 +1,19 @@
+USE provisioning;
+SET AUTOCOMMIT=0;
+SET sql_log_bin=0;
+
+SELECT id INTO @vp_attr_id FROM voip_preferences WHERE attribute='serial_forking_by_q_value';
+DELETE FROM voip_preferences_enum WHERE preference_id=@vp_attr_id;
+
+UPDATE voip_preferences SET
+  data_type = 'boolean',
+  type = 1,
+  description = "Check the box if you want to perform serial forking based on q-value instead of parallel forking for registered contacts"
+WHERE id = @vp_attr_id;
+
+UPDATE voip_usr_preferences SET value = 1 WHERE value = 'standard' and attribute_id =  @vp_attr_id;
+UPDATE voip_usr_preferences SET value = 1 WHERE value = 'probability' and attribute_id =  @vp_attr_id;
+UPDATE voip_dom_preferences SET value = 1 WHERE value = 'standard' and attribute_id =  @vp_attr_id;
+UPDATE voip_dom_preferences SET value = 1 WHERE value = 'probability' and attribute_id =  @vp_attr_id;
+
+COMMIT;
