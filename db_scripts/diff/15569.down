@@ -1,0 +1,9 @@
+USE accounting;
+SET autocommit=0;
+
+DELETE FROM cdr_relation WHERE type = 'prev_fragment_id';
+
+COMMIT;
+
+ALTER TABLE cdr_relation MODIFY type enum('profile_package_id','contract_balance_id') NOT NULL;
+

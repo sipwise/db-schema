@@ -1,0 +1,8 @@
+USE accounting;
+SET autocommit=0;
+
+ALTER TABLE cdr_relation MODIFY type enum('profile_package_id','contract_balance_id','prev_fragment_id') NOT NULL;
+
+INSERT INTO cdr_relation SET id = null, type = 'prev_fragment_id';
+
+COMMIT;
