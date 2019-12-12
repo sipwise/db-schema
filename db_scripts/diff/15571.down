@@ -1,0 +1,7 @@
+USE accounting;
+SET autocommit=0;
+
+DELETE FROM cdr_tag WHERE type = 'extra_rate';
+
+COMMIT;
+
