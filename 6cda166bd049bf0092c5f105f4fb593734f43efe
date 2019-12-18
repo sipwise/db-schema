@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70724824_3c3c7aa4",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-12-18T18:20:22Z",
+      "side": 1,
+      "message": "i would rather consider to involve the existing use_free_time column for that, for consistent style, ie.\n\noffpeak_use_free_time\nonpeak_use_free_time",
+      "revId": "6cda166bd049bf0092c5f105f4fb593734f43efe",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
