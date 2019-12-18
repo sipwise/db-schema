@@ -1,0 +1,83 @@
+USE billing;
+
+SET autocommit=0;
+
+ALTER TABLE billing_fees
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees DROP COLUMN use_free_time;
+ALTER TABLE billing_fees CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+ALTER TABLE billing_fees_history
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees_history a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees_history b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees_history DROP COLUMN use_free_time;
+ALTER TABLE billing_fees_history CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+ALTER TABLE billing_fees_raw
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees_raw a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees_raw b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees_raw DROP COLUMN use_free_time;
+ALTER TABLE billing_fees_raw CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+DELIMITER $$
+
+DROP TRIGGER IF EXISTS billing.bill_fees_crepl_trig;
+
+CREATE trigger billing.bill_fees_crepl_trig after insert on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  insert into billing.billing_fees_history
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
+     NEW.source, NEW.destination, NEW.direction,
+     NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+     NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+     NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.match_mode,
+     NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
+   NEW.use_free_time);
+
+  end;
+$$
+
+DROP TRIGGER IF EXISTS billing.bill_fees_urepl_trig;
+
+CREATE trigger billing.bill_fees_urepl_trig after update on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  update billing.billing_fees_history
+    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+      billing_zones_history_id = my_bzh_id,
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
+      type = NEW.type,
+      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+      match_mode = NEW.match_mode, onpeak_extra_rate = NEW.onpeak_extra_rate,
+      onpeak_extra_second = NEW.onpeak_extra_second, offpeak_extra_rate = NEW.offpeak_extra_rate,
+      offpeak_extra_second = NEW.offpeak_extra_second, use_free_time = NEW.use_free_time
+    where bf_id = OLD.id;
+
+  end;
+$$
+
+DELIMITER ;
+
+COMMIT;
