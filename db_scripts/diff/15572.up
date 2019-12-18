@@ -1,0 +1,32 @@
+USE billing;
+
+SET autocommit=0;
+
+ALTER TABLE billing_fees
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees DROP COLUMN use_free_time;
+ALTER TABLE billing_fees CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+ALTER TABLE billing_fees_history
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees_history a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees_history b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees_history DROP COLUMN use_free_time;
+ALTER TABLE billing_fees_history CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+ALTER TABLE billing_fees_raw
+ADD COLUMN use_free_time_temp ENUM('none', 'onpeak', 'offpeak', 'both') NOT NULL DEFAULT 'none';
+
+UPDATE billing_fees_raw a SET a.use_free_time_temp =
+(SELECT IF(use_free_time = 0, 'none', 'both') AS use_free_time_new FROM billing_fees_raw b WHERE b.id=a.id);
+
+ALTER TABLE billing_fees_raw DROP COLUMN use_free_time;
+ALTER TABLE billing_fees_raw CHANGE COLUMN use_free_time_temp use_free_time ENUM('none','onpeak','offpeak','both') NOT NULL DEFAULT 'none';
+
+COMMIT;
