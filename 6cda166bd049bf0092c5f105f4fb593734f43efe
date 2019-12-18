@@ -16,6 +16,24 @@
       "revId": "6cda166bd049bf0092c5f105f4fb593734f43efe",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bcee8d6_5c2dc4fc",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-18T19:40:04Z",
+      "side": 1,
+      "message": "agree with Rene here.\n\nthe correct approach is the following:\nnote: please also note that I added \u0027none\u0027 to enum that was missing there. it is also \u0027none\u0027 by default to preserve the existing logic.\nnote2: comments below are only for this comment and should not be added into the final scripts\n\nuse billing;\n# use transaction\nset autocommit\u003d0;\n\n\n-- create a temp table, do not use \"AFTER\" as may break replication.\nalter table billing_fees add column `use_free_time_trans` ENUM(\u0027none\u0027, \u0027onpeak\u0027, \u0027offpeak\u0027, \u0027both\u0027) not null default \u0027none\u0027;\n\n-- populate the new new table with existing values from the current table\nupdate billing_fees a set a.use_free_time_trans \u003d (select if(use_free_time \u003d 0, \u0027none\u0027, \u0027both\u0027) as use_free_time_new from billing_fees b where b.id \u003d a.id);\n\n-- drop old column use_free_time\nalter table billing_fees drop column use_free_time;\n\n-- rename new column to old column\nalter table billing_fees change column use_free_time_trans use_free_time ENUM(\u0027none\u0027, \u0027onpeak\u0027, \u0027offpeak\u0027, \u0027both\u0027) not null default \u0027none\u0027;\n\n\ncommit;\n\n\n-- for the down script you should be able to add the reverse operation by yourself, one thing to keep in mind there is to convert back \u0027both\u0027 -\u003e 1, and the other enums -\u003e 0 (that is to resolve possible conflict when someone already started using the \u0027onpeak\u0027/\u0027offpeak\u0027 enums and then there is need to convert it back (totally rare but still possible downgrade)",
+      "parentUuid": "70724824_3c3c7aa4",
+      "revId": "6cda166bd049bf0092c5f105f4fb593734f43efe",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
