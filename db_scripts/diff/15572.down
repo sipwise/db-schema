@@ -1,0 +1,64 @@
+use billing;
+
+drop trigger if exists billing.bill_fees_crepl_trig;
+drop trigger if exists billing.bill_fees_urepl_trig;
+
+update billing_fees_raw set onpeak_use_free_time = if(onpeak_use_free_time,1,if(offpeak_use_free_time,1,0));
+alter table billing_fees_raw drop column offpeak_use_free_time;
+
+update billing_fees_history set onpeak_use_free_time = if(onpeak_use_free_time,1,if(offpeak_use_free_time,1,0));
+alter table billing_fees_history drop column offpeak_use_free_time;
+
+update billing_fees set onpeak_use_free_time = if(onpeak_use_free_time,1,if(offpeak_use_free_time,1,0));
+alter table billing_fees drop column offpeak_use_free_time;
+
+alter table billing_fees_raw change onpeak_use_free_time use_free_time tinyint(1) not null default 0;
+alter table billing_fees_history change onpeak_use_free_time use_free_time tinyint(1) not null default 0;
+alter table billing_fees change onpeak_use_free_time use_free_time tinyint(1) not null default 0;
+
+delimiter ;;
+
+create trigger billing.bill_fees_crepl_trig after insert on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  insert into billing.billing_fees_history
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
+     NEW.source, NEW.destination, NEW.direction,
+     NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+     NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+     NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.use_free_time,
+     NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
+     NEW.match_mode);
+
+  end;
+;;
+
+create trigger billing.bill_fees_urepl_trig after update on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  update billing.billing_fees_history
+    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+      billing_zones_history_id = my_bzh_id,
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
+      type = NEW.type,
+      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+      onpeak_use_free_time = NEW.onpeak_use_free_time, offpeak_use_free_time = NEW.offpeak_use_free_time,
+      match_mode = NEW.match_mode
+    where bf_id = OLD.id;
+
+  end;
+;;
+
+delimiter ;;
+
