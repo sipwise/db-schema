@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c6c581a_03b77114",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-20T15:14:01Z",
+      "side": 1,
+      "message": "why there is no\nalter table billing_fees change use_free_time onpeak_use_free_time tinyint(1) not null default 0;\n?",
+      "revId": "25fd99a6e97a25793080dc4d39e6181da4190b51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
