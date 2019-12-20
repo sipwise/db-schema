@@ -33,6 +33,24 @@
       "revId": "b784ade7728bf859d644a6a17454467929205acd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bac22c5_3d872af1",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-12-20T13:33:04Z",
+      "side": 1,
+      "message": "yes, i\u0027m rewriting all of this now ...",
+      "parentUuid": "4540eaae_b1c7d54d",
+      "revId": "b784ade7728bf859d644a6a17454467929205acd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
