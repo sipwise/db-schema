@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbc332fd_fdb26909",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-12-20T13:24:05Z",
+      "side": 1,
+      "message": "Doesn\u0027t the \"drop trigger\" need to be outside of the $$ delimiter block?",
+      "revId": "b784ade7728bf859d644a6a17454467929205acd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4540eaae_b1c7d54d",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000008
+      },
+      "writtenOn": "2019-12-20T13:24:05Z",
+      "side": 1,
+      "message": "If the .up script changes the trigger, doesn\u0027t the .down script also need to change it?",
+      "revId": "b784ade7728bf859d644a6a17454467929205acd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
