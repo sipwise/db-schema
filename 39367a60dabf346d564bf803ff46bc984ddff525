@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d41e9893_9b641b44",
+        "filename": "db_scripts/diff/15572.down",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-20T10:04:24Z",
+      "side": 1,
+      "message": "this trigger will fail because the reverted use_free_time column will still be at the end....",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 2
+      },
+      "revId": "39367a60dabf346d564bf803ff46bc984ddff525",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
