@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e7afadcc_261ba4ac",
+        "filename": "db_scripts/diff/15572.down",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-20T15:34:46Z",
+      "side": 1,
+      "message": "Consider that it should perhaps be reverted back to use_free_time \u003d 1 only if both onpeak_use_free_time and offpeak_use_free_time \u003d 1.\nThat is to avoid scenarios where free time starts applying for not intended periods after possible downgrade, and this is case customers may not complain but the operator starts loosing money.",
+      "range": {
+        "startLine": 6,
+        "startChar": 51,
+        "endLine": 6,
+        "endChar": 108
+      },
+      "revId": "25fd99a6e97a25793080dc4d39e6181da4190b51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c8d3cc9_1e79c7d8",
+        "filename": "db_scripts/diff/15572.down",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-20T15:34:46Z",
+      "side": 1,
+      "message": "missing\nalter table billing_fees change onpeak_use_free_time use_free_time",
+      "range": {
+        "startLine": 6,
+        "startChar": 28,
+        "endLine": 6,
+        "endChar": 48
+      },
+      "revId": "25fd99a6e97a25793080dc4d39e6181da4190b51",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c6c581a_03b77114",
         "filename": "db_scripts/diff/15572.up",
         "patchSetId": 8
