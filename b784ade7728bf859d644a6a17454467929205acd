@@ -51,6 +51,24 @@
       "revId": "b784ade7728bf859d644a6a17454467929205acd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4027400_70327a3b",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2019-12-20T13:41:55Z",
+      "side": 1,
+      "message": "The .up script involves dropping the original \"use_free_time\" and creating a new one, hence the trigger need to be adjusted as the order matters there (only in the insert one)\n\nFor the .down script, after revert, the restored \"use_free_time\" column remains last, hence changing the triggers is not required.\n\nTo the question wether it needs to be restored to the same position \"AFTER\" in the revert, is a very good question and I would say, yes. so then it comes back to the exact previous state, so (for other cases) if there is code that depends on the order, it keeps working after revert/downgrade.",
+      "parentUuid": "4540eaae_b1c7d54d",
+      "revId": "b784ade7728bf859d644a6a17454467929205acd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
