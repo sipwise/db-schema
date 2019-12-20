@@ -69,6 +69,24 @@
       "revId": "b784ade7728bf859d644a6a17454467929205acd",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c61fa0_3f919d79",
+        "filename": "db_scripts/diff/15572.up",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000013
+      },
+      "writtenOn": "2019-12-20T13:45:32Z",
+      "side": 1,
+      "message": "yes, handled accordingly eg. in 15424.up",
+      "parentUuid": "b4027400_70327a3b",
+      "revId": "b784ade7728bf859d644a6a17454467929205acd",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
