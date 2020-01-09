@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfca7e10_7151f1fc",
+        "filename": "db_scripts/diff/15574.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-01-09T16:39:07Z",
+      "side": 1,
+      "message": "perhaps \"_user\" ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 28,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "165ac005d1a2e6d13d7533b0053c3d960a2bcafc",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
