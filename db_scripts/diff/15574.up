@@ -1,0 +1,37 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Number Manipulations';
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = @vpg_id,
+attribute = "emergency_upn",
+label = "Emergency User-Provided-Number Field",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "enum",
+read_only = 0,
+description = "Select if, in case of emergency calls, the subscriber's User-Provided-Number is ovewritten with the Network-Provided-Number (default) or not.";
+
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 0, 1),
+(@pref_id, 'Network-Provided-Number', 'npn', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Network-Provided-Number', 'npn', 1, 0, 0, 0, 0, 0, 0),
+(@pref_id, 'User-Provided-Number', 'upn', 1, 1, 0, 0, 0, 0, 0);
+
+commit;
