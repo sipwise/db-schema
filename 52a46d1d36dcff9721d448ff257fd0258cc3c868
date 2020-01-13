@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d08880_c36b0bae",
+        "filename": "db_scripts/diff/15575.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-01-13T14:26:13Z",
+      "side": 1,
+      "message": "I think this value should be put as default for subscribers, otherwise they don\u0027t have a default.",
+      "range": {
+        "startLine": 18,
+        "startChar": 57,
+        "endLine": 18,
+        "endChar": 58
+      },
+      "revId": "52a46d1d36dcff9721d448ff257fd0258cc3c868",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
