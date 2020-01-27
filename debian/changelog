@@ -1,3 +1,22 @@
+ngcp-db-schema (8.2.1.0+0~mr8.2.1.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [1968561] TT#71312 previous cdr fragment relation
+  * [771b93f] TT#70859 add extra_rate cdr tag
+
+  [ Andrew Pogrebennyk ]
+  * [11ba26e] TT#71029 nat_sipping support for SIP OPTIONS ping independent of NAT status of subscriber
+  * [26bf6ec] TT#73803 add preference outbound_pai_display
+
+  [ Marco Capetta ]
+  * [38c8dca] TT#70329 Change serial_forking_by_q_value in enum
+  * [526933e] TT#73553 Add new 'emergency_from_user' sub/dom preference
+
+  [ Flaviu Mates ]
+  * [2d06a95] TT#72900 use_free_time columns
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Jan 2020 12:19:37 +0100
+
 ngcp-db-schema (8.2.0.0+0~mr8.2.0.0) unstable; urgency=medium
 
   [ Alexander Lutay ]
