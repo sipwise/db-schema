@@ -1,0 +1,9 @@
+USE provisioning;
+
+ALTER TABLE voip_fielddev_preferences drop constraint `v_fd_p_fielddeviceid_ref`;
+
+ALTER TABLE voip_fielddev_preferences
+    ADD CONSTRAINT `v_fd_p_deviceid_ref`
+        FOREIGN KEY (`device_id`)
+        REFERENCES `autoprov_devices` (`id`)
+        ON DELETE CASCADE ON UPDATE CASCADE
