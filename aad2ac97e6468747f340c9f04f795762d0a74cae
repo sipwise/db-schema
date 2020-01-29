@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a78f6c51_2c422265",
+        "filename": "db_scripts/diff/15577.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-01-29T16:22:11Z",
+      "side": 1,
+      "message": "missing \";\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 42,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "aad2ac97e6468747f340c9f04f795762d0a74cae",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
