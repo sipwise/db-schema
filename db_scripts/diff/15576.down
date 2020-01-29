@@ -1,0 +1,22 @@
+USE prosody;
+set autocommit = 0;
+
+ALTER TABLE `prosody` CHANGE `host` `host` BLOB;
+ALTER TABLE `prosody` CHANGE `host` `host` text CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+ALTER TABLE `prosody` CHANGE `user` `user` BLOB;
+ALTER TABLE `prosody` CHANGE `user` `user` text CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+ALTER TABLE `prosody` CHANGE `store` `store` BLOB;
+ALTER TABLE `prosody` CHANGE `store` `store` text CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+ALTER TABLE `prosody` CHANGE `type` `type` BLOB;
+ALTER TABLE `prosody` CHANGE `type` `type` text CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+ALTER TABLE `prosody` CHANGE `key` `key` BLOB;
+ALTER TABLE `prosody` CHANGE `key` `key` text CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+ALTER TABLE `prosody` CHANGE `value` `value` BLOB;
+ALTER TABLE `prosody` CHANGE `value` `value` mediumtext CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
+
+commit;
