@@ -1,3 +1,13 @@
+ngcp-db-schema (8.2.2.0+0~mr8.2.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [ede2e90] TT#66583 prosody changes from 0.9 to 0.11
+
+  [ Kirill Solomko ]
+  * [7cf2d33] TT#75023 fix voip_fielddev_preferences foreign key
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Feb 2020 08:44:33 +0100
+
 ngcp-db-schema (8.2.1.0+0~mr8.2.1.0) unstable; urgency=medium
 
   [ Rene Krenn ]
