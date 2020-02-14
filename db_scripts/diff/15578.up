@@ -1,0 +1,13 @@
+USE provisioning;
+set autocommit=0;
+
+SELECT id INTO @pref_id FROM voip_preferences WHERE attribute = 'call_deflection';
+
+UPDATE voip_preferences SET description = 'Call Deflection allows a called endpoint to redirect the unanswered call to another destination during the call setup phase by sending 302 redirect message in ringing phase. Disabling the preference will make the platform ignore the redirect message. Setting Enabled and Immediate the redirection will be immediately followed cancelling the other active brances.' where id = @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, default_val)
+VALUES
+(@pref_id, 'Enabled and Immediate', 'immediate', 1, 0, 1, 0, 0, 0);
+
+commit;
