@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9340a26e_29ae15f4",
+        "filename": "db_scripts/diff/15579.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-02-25T15:56:46Z",
+      "side": 1,
+      "message": "either indent it, so it looks like it belongs to the line above or make it 1 line.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 22
+      },
+      "revId": "a5dd94f9efa8259551183cdc53d692b7b564b241",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
