@@ -1,0 +1,1 @@
+ALTER TABLE `provisioning`.`voip_cf_mappings` DROP COLUMN `enabled`;
