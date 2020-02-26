@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "395deb82_d1ee726c",
+        "filename": "db_scripts/diff/15579.up",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-02-26T14:50:56Z",
+      "side": 1,
+      "message": "same here too please, 1 line is better.",
+      "range": {
+        "startLine": 1,
+        "startChar": 45,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "80daf83819fbf4fd383743b22fa78f6d266b9087",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
