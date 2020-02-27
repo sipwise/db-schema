@@ -1,0 +1,38 @@
+SET sql_log_bin=0;
+use billing;
+
+delimiter ;;
+
+create function get_lnp_number_id(
+  _destination varchar(511),
+  _epoch decimal(13,3)
+) returns int(11)
+deterministic reads sql data
+begin
+
+  declare _destination_prefix varchar(511);
+  declare _i int(3);
+  declare _number_id int(11);
+
+  set _i = length(_destination);
+
+  destination_loop: loop
+    if _i < 0 or _number_id is not null then
+      leave destination_loop;
+    end if;
+    set _destination_prefix = substr(coalesce(_destination,""),1,_i);
+    set _number_id = (select id from billing.lnp_numbers 
+        use index (number_idx)
+        where number = _destination_prefix
+	and (start <= from_unixtime(_epoch) or start is null) 
+	and (end > from_unixtime(_epoch) or end is null) 
+      limit 1);
+    set _i = _i - 1;
+  end loop destination_loop;
+
+  return _number_id;
+
+end;;
+
+delimiter ;
+
