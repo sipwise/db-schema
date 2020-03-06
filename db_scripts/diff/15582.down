@@ -1,0 +1,8 @@
+USE accounting;
+set autocommit = 0;
+
+DELETE FROM cdr_tag WHERE type IN ('concurrent_calls_count',
+                                   'concurrent_calls_count_customer',
+                                   'concurrent_calls_quota');
+
+COMMIT;
