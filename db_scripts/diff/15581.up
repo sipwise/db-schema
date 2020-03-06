@@ -1,0 +1,25 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Internals"),
+attribute = "concurrent_calls_quota",
+label = "A user defined quota for concurrent calls, does not block calls",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Contains a user defined quota for concurrent calls, the preference does not have an impact on ongoing calls and used mostly for reporting reasons, when a soft limit for calls needs to defined, based on which the customer is reported or charged for making too many calls.";
+
+commit;
