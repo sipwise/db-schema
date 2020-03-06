@@ -1,0 +1,8 @@
+USE accounting;
+SET autocommit=0;
+
+INSERT INTO cdr_tag (type) VALUES ('concurrent_calls_count'),
+                                  ('concurrent_calls_count_customer'),
+                                  ('concurrent_calls_quota');
+
+COMMIT;
