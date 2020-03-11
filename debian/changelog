@@ -1,3 +1,10 @@
+ngcp-db-schema (6.5.8.1+0~mr6.5.8.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [ba227fc] TT#76457 lnp_number lookup
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 11 Mar 2020 09:12:34 +0100
+
 ngcp-db-schema (6.5.8.0+0~mr6.5.8.0) unstable; urgency=medium
 
   * New release.
