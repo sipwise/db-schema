@@ -1,3 +1,23 @@
+ngcp-db-schema (8.3.1.0+0~mr8.3.1.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [0563255] TT#66583 prosody changes from 0.9 to 0.11
+
+  [ Kirill Solomko ]
+  * [86553db] TT#75023 fix voip_fielddev_preferences foreign key
+
+  [ Marco Capetta ]
+  * [8a3132e] TT#76150 Add 'Enabled and Immediate' in 'call_deflection' preference
+
+  [ Flaviu Mates ]
+  * [e074f74] TT#75751 - Scripts for callforwards 'enabled' column
+  * [1947aa6] TT#76783 - Change bootstrap_method enum for ALE RPS device provisioning
+
+  [ Rene Krenn ]
+  * [60cf062] TT#76457 lnp_number lookup
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 16 Mar 2020 11:12:11 +0100
+
 ngcp-db-schema (8.3.0.0+0~mr8.3.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
