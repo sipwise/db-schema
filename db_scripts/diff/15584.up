@@ -1,0 +1,34 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpid FROM voip_preferences
+    WHERE attribute = 'outbound_from_user';
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+VALUES (
+    @vpid, 'intra-PBX extension OR UPN',
+    'pbx_extension',
+    1, 0, 1, 1, 0, 0, 0, 0, NULL
+);
+
+SELECT id INTO @vpid FROM voip_preferences
+    WHERE attribute = 'outbound_from_display';
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+VALUES (
+    @vpid, 'PBX extension OR UPN',
+    'pbx_extension',
+    1, 0, 1, 1, 0, 0, 0, 0, NULL
+);
+
+INSERT INTO voip_preferences_enum 
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+VALUES (
+    @vpid, 'PBX extension OR Network-Provided Display-Name',
+    'pbx_extension/np_display',
+    1, 0, 1, 1, 0, 0, 0, 0, NULL
+);
+
+COMMIT;
