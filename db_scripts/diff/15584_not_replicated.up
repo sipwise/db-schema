@@ -1,0 +1,6 @@
+SET sql_log_bin=0;
+USE `fileshare`;
+
+CREATE INDEX `sessions_created_at` ON `sessions` (`created_at`);
+CREATE INDEX `uploads_created_at` ON `uploads` (`created_at`);
+CREATE INDEX `downloads_created_at` ON `downloads` (`created_at`);
