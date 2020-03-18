@@ -1,0 +1,35 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Access Restrictions"),
+attribute = "calllist_clir_scope",
+label = "Option for defining when CLIR should be used",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "enum",
+read_only = 0,
+description = "Contains options for defining the scope in which CLIR is applied: External(default; hide caller in clir enabled calls, except calls within the same customer) or All(hide caller in clir enabled calls)";
+
+SELECT last_insert_id() INTO @pref_id;
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 0, 0, 0, 0, 1, 0, 1),
+(@pref_id, 'use customer/domain default', NULL, 1, 0, 0, 0, 0, 0, 1),
+(@pref_id, 'External', 'external', 1, 0, 0, 0, 1, 0, 0),
+(@pref_id, 'External', 'external', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'All', 'all', 1, 1, 0, 0, 0, 1, 0);
+
+commit;
