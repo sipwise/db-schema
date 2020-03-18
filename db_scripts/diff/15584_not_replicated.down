@@ -1,0 +1,5 @@
+USE `fileshare`;
+
+DROP INDEX `sessions_created_at` ON `sessions`;
+DROP INDEX `uploads_created_at` ON `uploads`;
+DROP INDEX `downloads_created_at` ON `downloads`;
