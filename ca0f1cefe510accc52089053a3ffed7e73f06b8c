@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e901d92_f32a1df2",
+        "filename": "db_scripts/diff/15584.up",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-03-19T14:07:31Z",
+      "side": 1,
+      "message": "in the calllists",
+      "range": {
+        "startLine": 23,
+        "startChar": 79,
+        "endLine": 23,
+        "endChar": 80
+      },
+      "revId": "ca0f1cefe510accc52089053a3ffed7e73f06b8c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
