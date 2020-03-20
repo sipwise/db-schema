@@ -1,0 +1,5 @@
+
+use provisioning;
+DELETE FROM voip_preferences WHERE attribute IN (
+'T38_decode',
+'T38_force');
