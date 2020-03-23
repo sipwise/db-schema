@@ -1,0 +1,3 @@
+USE kamailio
+
+INSERT INTO `dispatcher` VALUES (NULL,'7','sip:127.0.0.1:5088','0','0','','b2b servers');
