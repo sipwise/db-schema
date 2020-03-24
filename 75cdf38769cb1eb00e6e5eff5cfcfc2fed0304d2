@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25453569_2737a367",
+        "filename": "db_scripts/diff/15585.up",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000021
+      },
+      "writtenOn": "2020-03-24T08:05:52Z",
+      "side": 1,
+      "message": "type has to be set to 0, otherwise kamailio and lua starts complaining that the value is not defined.\nFrom the doc:\ntype: 0 - string, 1 - integer/boolean",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "75cdf38769cb1eb00e6e5eff5cfcfc2fed0304d2",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
