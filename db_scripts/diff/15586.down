@@ -1,0 +1,10 @@
+USE billing;
+
+UPDATE admins
+  SET
+    saltedpass = NULL,
+    md5pass    = MD5('administrator')
+  WHERE
+    login          = 'administrator'
+    AND md5pass    IS NULL
+    AND saltedpass IS NOT NULL;
