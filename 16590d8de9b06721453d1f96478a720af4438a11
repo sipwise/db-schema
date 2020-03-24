@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8b21e00_d234888b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-03-24T11:59:26Z",
+      "side": 1,
+      "message": "Maybe \"set bcrypt()\" and not \"change\", as commit message might be confusing :-)\nOr maybe \"Move default \u0027administrator\u0027 from md5() to brcypt()\" ?",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "16590d8de9b06721453d1f96478a720af4438a11",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
