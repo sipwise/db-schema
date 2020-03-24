@@ -6,7 +6,7 @@ insert into voip_preferences
 voip_preference_groups_id = (select id from voip_preference_groups where name="Access Restrictions"),
 attribute = "calllist_clir_scope",
 label = "Option for defining when CLIR should be used",
-type = 1,
+type = 0,
 max_occur = 1,
 usr_pref = 1,
 prof_pref = 0,
