@@ -1,0 +1,10 @@
+SET sql_log_bin=0;
+USE `fileshare`;
+
+ALTER TABLE `sessions` ADD COLUMN `expires_at` DATETIME DEFAULT NULL;
+ALTER TABLE `uploads` ADD COLUMN `expires_at` DATETIME DEFAULT NULL;
+ALTER TABLE `downloads` ADD COLUMN `expires_at` DATETIME DEFAULT NULL;
+
+CREATE INDEX `sessions_expires_at` ON `sessions` (`expires_at`);
+CREATE INDEX `uploads_expires_at` ON `uploads` (`expires_at`);
+CREATE INDEX `downloads_expires_at` ON `downloads` (`expires_at`);
