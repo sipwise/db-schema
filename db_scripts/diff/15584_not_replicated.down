@@ -1,0 +1,10 @@
+SET sql_log_bin=0;
+USE `fileshare`;
+
+DROP INDEX `sessions_expires_at` ON `sessions`;
+DROP INDEX `uploads_expires_at` ON `uploads`;
+DROP INDEX `downloads_expires_at` ON `downloads`;
+
+ALTER TABLE `sessions` DROP COLUMN `expires_at`;
+ALTER TABLE `uploads` DROP COLUMN `expires_at`;
+ALTER TABLE `downloads` DROP COLUMN `expires_at`;
