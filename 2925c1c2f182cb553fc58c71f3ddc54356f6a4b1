@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "624cdfef_314c858a",
+        "filename": "db_scripts/diff/15586.down",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-03-25T21:15:29Z",
+      "side": 1,
+      "message": "thanks to Alex, here should be \"WHERE saltepass \u003d \u0027AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i\u0027\n\nso to consider scenarios when after an upgrade a customer changes the password and then decides to downgrade (very rare but possible).",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "2925c1c2f182cb553fc58c71f3ddc54356f6a4b1",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
