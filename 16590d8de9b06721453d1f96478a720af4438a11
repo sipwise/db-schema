@@ -45,6 +45,30 @@
       "revId": "16590d8de9b06721453d1f96478a720af4438a11",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aeed208_bc70886a",
+        "filename": "db_scripts/diff/15586.down",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2020-03-25T20:49:22Z",
+      "side": 1,
+      "message": "Agree. Do we have better option? Kirill?",
+      "parentUuid": "2949c825_d892ffb5",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 31
+      },
+      "revId": "16590d8de9b06721453d1f96478a720af4438a11",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
     }
   ]
 }
