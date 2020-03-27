@@ -1,0 +1,51 @@
+set sql_log_bin=0;
+set autocommit=0;
+
+START TRANSACTION;
+
+USE kamailio;
+
+-- active_watchers table
+ALTER TABLE active_watchers CHANGE COLUMN contact contact VARCHAR(255) NOT NULL;
+ALTER TABLE active_watchers CHANGE COLUMN presentity_uri presentity_uri VARCHAR(255) NOT NULL;
+ALTER TABLE active_watchers CHANGE COLUMN local_contact local_contact VARCHAR(255) NOT NULL;
+
+-- aliases table
+ALTER TABLE aliases CHANGE COLUMN received received VARCHAR(255) DEFAULT NULL;
+
+-- dialog table
+ALTER TABLE dialog CHANGE COLUMN req_uri req_uri VARCHAR(255) NOT NULL;
+ALTER TABLE dialog CHANGE COLUMN from_uri from_uri VARCHAR(255) NOT NULL;
+ALTER TABLE dialog CHANGE COLUMN to_uri to_uri VARCHAR(255) NOT NULL;
+
+-- presentity table
+ALTER TABLE presentity CHANGE COLUMN sender sender VARCHAR(255) NOT NULL;
+
+-- pua table
+ALTER TABLE pua CHANGE COLUMN remote_contact remote_contact VARCHAR(255) NOT NULL;
+ALTER TABLE pua CHANGE COLUMN watcher_uri watcher_uri VARCHAR(255) NOT NULL;
+ALTER TABLE pua CHANGE COLUMN contact contact VARCHAR(255) NOT NULL;
+ALTER TABLE pua CHANGE COLUMN pres_uri pres_uri VARCHAR(255) NOT NULL;
+
+-- rls_presentity table
+ALTER TABLE rls_presentity CHANGE COLUMN resource_uri resource_uri VARCHAR(255) NOT NULL;
+
+-- rls_watchers table
+ALTER TABLE rls_watchers CHANGE COLUMN presentity_uri presentity_uri VARCHAR(255) NOT NULL;
+ALTER TABLE rls_watchers CHANGE COLUMN local_contact local_contact VARCHAR(255) NOT NULL;
+ALTER TABLE rls_watchers CHANGE COLUMN contact contact VARCHAR(255) NOT NULL;
+
+-- silo table
+ALTER TABLE silo CHANGE COLUMN dst_addr dst_addr VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE silo CHANGE COLUMN src_addr src_addr VARCHAR(255) NOT NULL DEFAULT '';
+
+-- speed_dial table
+ALTER TABLE speed_dial CHANGE COLUMN new_uri new_uri VARCHAR(255) NOT NULL DEFAULT '';
+
+-- usr_preferences table
+ALTER TABLE usr_preferences CHANGE COLUMN username username VARCHAR(255) NOT NULL DEFAULT '0';
+
+-- watchers table
+ALTER TABLE watchers CHANGE COLUMN presentity_uri presentity_uri VARCHAR(255) NOT NULL;
+
+COMMIT;
