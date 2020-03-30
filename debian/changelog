@@ -1,3 +1,13 @@
+ngcp-db-schema (8.3.1.1+0~mr8.3.1.1) unstable; urgency=medium
+
+  [ Andrew Pogrebennyk ]
+  * [02d0d15] TT#77800 introduce new options in outbound_from_user/outbound_from_display
+
+  [ Hans-Peter Herzog ]
+  * [cc83d3d] TT#76784 Improve slow expiration check queries
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 30 Mar 2020 11:15:51 +0200
+
 ngcp-db-schema (8.3.1.0+0~mr8.3.1.0) unstable; urgency=medium
 
   [ Victor Seva ]
