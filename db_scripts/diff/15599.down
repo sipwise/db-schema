@@ -1,0 +1,9 @@
+use provisioning;
+DELETE FROM voip_preferences WHERE attribute IN (
+'T38_no_ECM',
+'T38_no_V17',
+'T38_no_V27ter',
+'T38_no_V29',
+'T38_no_V34',
+'T38_no_IAF',
+'T38_FEC');
