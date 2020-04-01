@@ -1,0 +1,68 @@
+USE provisioning;
+SET AUTOCOMMIT=0;
+SET sql_log_bin=0;
+
+SELECT id INTO @vp_clir_id FROM voip_preferences WHERE attribute='block_in_clir';
+SELECT id INTO @vp_mode_id FROM voip_preferences WHERE attribute='block_in_mode';
+
+SELECT id INTO @vp_adm_clir_id FROM voip_preferences WHERE attribute='adm_block_in_mode';
+SELECT id INTO @vp_adm_mode_id FROM voip_preferences WHERE attribute='adm_block_in_clir';
+
+# Change block_in_clir in voip_usr_preferences table
+INSERT INTO provisioning.voip_usr_preferences (subscriber_id,attribute_id,value)
+SELECT to_sanitize.subscriber_id,@vp_clir_id,1 FROM (SELECT 
+  DISTINCT(v1.subscriber_id) AS subscriber_id
+FROM provisioning.voip_usr_preferences v1
+LEFT JOIN (SELECT
+  distinct(s2.id) AS subscriber_id
+FROM provisioning.voip_subscribers s2
+LEFT JOIN provisioning.voip_usr_preferences v2 ON s2.id=v2.subscriber_id AND v2.attribute_id = @vp_clir_id 
+where v2.id is NULL) AS no_bic ON v1.subscriber_id=no_bic.subscriber_id
+where v1.attribute_id = @vp_mode_id
+AND v1.value = 1
+AND no_bic.subscriber_id IS NOT NULL) AS to_sanitize;
+
+# Change adm_block_in_clir in voip_usr_preferences table
+INSERT INTO provisioning.voip_usr_preferences (subscriber_id,attribute_id,value)
+SELECT to_sanitize.subscriber_id,@vp_adm_clir_id,1 FROM (SELECT 
+  DISTINCT(v1.subscriber_id) AS subscriber_id
+FROM provisioning.voip_usr_preferences v1
+LEFT JOIN (SELECT
+  distinct(s2.id) AS subscriber_id
+FROM provisioning.voip_subscribers s2
+LEFT JOIN provisioning.voip_usr_preferences v2 ON s2.id=v2.subscriber_id AND v2.attribute_id = @vp_adm_clir_id 
+where v2.id is NULL) AS no_bic ON v1.subscriber_id=no_bic.subscriber_id
+where v1.attribute_id = @vp_adm_mode_id
+AND v1.value = 1
+AND no_bic.subscriber_id IS NOT NULL) AS to_sanitize;
+
+
+# Change block_in_clir in voip_contract_preferences table
+INSERT INTO provisioning.voip_contract_preferences (contract_id,attribute_id,value)
+SELECT to_sanitize.contract_id,@vp_clir_id,1 FROM (SELECT 
+  DISTINCT(v1.contract_id) AS contract_id
+FROM provisioning.voip_contract_preferences v1
+LEFT JOIN (SELECT
+  distinct(s2.id) AS contract_id
+FROM provisioning.voip_subscribers s2
+LEFT JOIN provisioning.voip_contract_preferences v2 ON s2.id=v2.contract_id AND v2.attribute_id = @vp_clir_id 
+where v2.id is NULL) AS no_bic ON v1.contract_id=no_bic.contract_id
+where v1.attribute_id = @vp_mode_id
+AND v1.value = 1
+AND no_bic.contract_id IS NOT NULL) AS to_sanitize;
+
+# Change adm_block_in_clir in voip_contract_preferences table
+INSERT INTO provisioning.voip_contract_preferences (contract_id,attribute_id,value)
+SELECT to_sanitize.contract_id,@vp_adm_clir_id,1 FROM (SELECT 
+  DISTINCT(v1.contract_id) AS contract_id
+FROM provisioning.voip_contract_preferences v1
+LEFT JOIN (SELECT
+  distinct(s2.id) AS contract_id
+FROM provisioning.voip_subscribers s2
+LEFT JOIN provisioning.voip_contract_preferences v2 ON s2.id=v2.contract_id AND v2.attribute_id = @vp_adm_clir_id 
+where v2.id is NULL) AS no_bic ON v1.contract_id=no_bic.contract_id
+where v1.attribute_id = @vp_adm_mode_id
+AND v1.value = 1
+AND no_bic.contract_id IS NOT NULL) AS to_sanitize;
+
+COMMIT;
