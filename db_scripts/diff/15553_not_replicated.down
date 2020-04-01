@@ -1,0 +1,4 @@
+SET sql_log_bin=0;
+
+# NO real down script exist...
+# Once the prefereces are changed we don't know anymore how to convert them back to the previous status
