@@ -253,6 +253,20 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
           EXTRA_SYNC_DB_OPTS="--local-user=root --set-local-grants"
       fi
+
+      # determine the preferred db node a or b if the default db01 is the constants
+      MASTER_NODE_PREF=""
+      if [ "$CENTRAL_DBHOST" == "db01" ] ; then
+        NODE_SIDE="a"
+        if [[ "$nodename" == *b ]] ; then
+          NODE_SIDE="b"
+        fi
+        MASTER_NODE_PREF="db01${NODE_SIDE}"
+      fi
+      if [ -n "$MASTER_NODE_PREF" ] ; then
+        EXTRA_SYNC_DB_OPTS="$EXTRA_SYNC_DB_OPTS --master-host $MASTER_NODE_PREF"
+      fi
+
       # shellcheck disable=SC2086
       if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ignore-tables "${PRX_IGNORE_TABLES}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS} --local-host=${LOCAL_DBHOST} --local-port=${LOCAL_DBPORT}; then
           echo "Syncing 'not_replicated' statements from the central node."
