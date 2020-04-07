@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8a36b0_d81693d7",
+        "filename": "db_scripts/diff/15600.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-07T12:04:47Z",
+      "side": 1,
+      "message": "this null can be removed",
+      "range": {
+        "startLine": 2,
+        "startChar": 54,
+        "endLine": 2,
+        "endChar": 58
+      },
+      "revId": "8025e510caa2f436ea9f1fbb37fa073a5a31ccdf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "103d766e_13f3182c",
+        "filename": "db_scripts/diff/15600.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2020-04-07T12:04:47Z",
+      "side": 1,
+      "message": "should surely be char, as the length of the stored value is fixed in our case and the extra \"length definition\" byte wont be stored as in case with varchar.",
+      "range": {
+        "startLine": 2,
+        "startChar": 42,
+        "endLine": 2,
+        "endChar": 49
+      },
+      "revId": "8025e510caa2f436ea9f1fbb37fa073a5a31ccdf",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
