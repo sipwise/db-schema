@@ -1,3 +1,10 @@
+ngcp-db-schema (8.1.2.2+0~mr8.1.2.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2b06aa7] TT#78950 improve ngcp-update-db 3308 sync
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 23 Apr 2020 11:47:46 +0200
+
 ngcp-db-schema (8.1.2.1+0~mr8.1.2.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
