@@ -1,0 +1,2 @@
+use provisioning;
+DELETE FROM voip_preferences WHERE attribute = 'OSRTP_offer';
