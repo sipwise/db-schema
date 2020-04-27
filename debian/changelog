@@ -1,3 +1,13 @@
+ngcp-db-schema (8.2.2.1+0~mr8.2.2.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [04bad58] TT#76457 lnp_number lookup
+
+  [ Hans-Peter Herzog ]
+  * [a6d7823] TT#76784 Improve slow expiration check queries
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2020 21:25:37 +0200
+
 ngcp-db-schema (8.2.2.0+0~mr8.2.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
