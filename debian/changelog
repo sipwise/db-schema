@@ -1,3 +1,16 @@
+ngcp-db-schema (7.5.5.0+0~mr7.5.5.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [174ce01] TT#76457 lnp_number lookup
+
+  [ Marco Capetta ]
+  * [5580ed3] TT#78440 Update block_on_clir after its behavior changed
+
+  [ Kirill Solomko ]
+  * [3d94109] TT#78950 improve ngcp-update-db 3308 sync
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 27 Apr 2020 18:37:57 +0200
+
 ngcp-db-schema (7.5.4.0+0~mr7.5.4.0) unstable; urgency=medium
 
   * New release.
