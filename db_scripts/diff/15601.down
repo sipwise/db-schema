@@ -1,0 +1,3 @@
+ALTER TABLE `billing`.`admins`
+DROP COLUMN `email`,
+DROP COLUMN `can_reset_password`;
