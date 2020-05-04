@@ -1,0 +1,4 @@
+use billing;
+
+drop table provisioning_templates;
+

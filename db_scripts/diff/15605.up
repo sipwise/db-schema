@@ -1,0 +1,16 @@
+use billing;
+
+create table provisioning_templates (
+  id int(11) unsigned not null auto_increment,
+  reseller_id int(11) unsigned default null,
+  name varchar(255) not null,
+  description varchar(255) not null,
+  lang enum('perl','js') not null default 'js',
+  yaml text not null,
+  modify_timestamp timestamp not null default current_timestamp() on update current_timestamp(),
+  create_timestamp timestamp not null default '0000-00-00 00:00:00',
+  primary key (id),
+  unique key resnam_idx (reseller_id, name),
+  constraint p_t_resellerid_ref foreign key (reseller_id) references resellers (id) on delete cascade on update cascade
+) engine=InnoDB default charset=utf8;
+
