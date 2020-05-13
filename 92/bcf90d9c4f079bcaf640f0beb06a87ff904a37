@@ -1,0 +1,9 @@
+Verified+1: Jenkins Jenkins
+Code-Review+1: Marco Capetta <mcapetta@sipwise.com>
+Code-Review-1: Oleksandr Lutai <alutay@sipwise.com>
+Code-Review+2: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-by: Kirill Solomko <ksolomko@sipwise.com>
+Submitted-at: Wed, 13 May 2020 13:01:11 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/c/db-schema/+/39760
+Project: db-schema
+Branch: refs/heads/mr7.5.4
