@@ -1,3 +1,10 @@
+ngcp-db-schema (8.2.2.2+0~mr8.2.2.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [933d970] TT#80652 Add dummy up script to preserve the id
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 13 May 2020 16:27:55 +0200
+
 ngcp-db-schema (8.2.2.1+0~mr8.2.2.1) unstable; urgency=medium
 
   [ Rene Krenn ]
