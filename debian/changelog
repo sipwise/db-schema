@@ -1,3 +1,10 @@
+ngcp-db-schema (7.5.4.2+0~mr7.5.4.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [92bcf90] TT#80652 change revision number 15553 to 15545
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 13 May 2020 13:02:56 +0200
+
 ngcp-db-schema (7.5.4.1+0~mr7.5.4.1) unstable; urgency=medium
 
   [ Rene Krenn ]
