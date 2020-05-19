@@ -1,3 +1,41 @@
+ngcp-db-schema (8.4.1.0+0~mr8.4.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [28c0efc] TT#76672 add concurrent_calls_quota preference
+  * [6f0fc70] TT#76673 add cdr_tag_data types
+  * [1cfafba] TT#78950 improve ngcp-update-db 3308 sync
+
+  [ Andrew Pogrebennyk ]
+  * [034dadd] TT#77800 introduce new options in outbound_from_user/outbound_from_display
+
+  [ Flaviu Mates ]
+  * [75cdf38] TT#74752 - Add new calllist_clir_scope preference
+  * [23470d2] TT#74752 - Change callist_clir_scope preference type
+  * [757fa9a] TT#78557 - Change webpassword length to accept encrypted string
+
+  [ Richard Fuchs ]
+  * [78d4f10] TT#78302 add T.38 transcoding options
+  * [415c8fa] TT#78501 add additional T.38 options
+  * [74001f5] TT#78001 add preference for OSRTP
+
+  [ Hans-Peter Herzog ]
+  * [53d311b] TT#76784 Improve slow expiration check queries
+
+  [ Mykola Malkov ]
+  * [b18e735] TT#76658 Move default administrator pass from MD5 to bcrypt
+
+  [ Victor Seva ]
+  * [9a8dc1f] TT#78500 kamailio: upgrade to 5.3.3
+  * [252dc3f] TT#79952 remove not_replicated from Kamailio upgrade changes
+
+  [ Rene Krenn ]
+  * [16bd718] TT#80151 billing.provisioning_templates table
+
+  [ Marco Capetta ]
+  * [8dab7cc] TT#80652 Add dummy up script to preserve the id
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 19 May 2020 11:06:49 +0200
+
 ngcp-db-schema (8.4.0.0+0~mr8.4.0.0) unstable; urgency=medium
 
   [ Victor Seva ]
