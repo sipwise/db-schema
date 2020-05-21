@@ -1,0 +1,8 @@
+use billing;
+set autocommit=0;
+
+DELETE from email_templates
+ WHERE reseller_id IS NULL
+   AND name = 'admin_passreset_default_email';
+
+commit;
