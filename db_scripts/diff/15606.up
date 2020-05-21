@@ -1,0 +1,17 @@
+use billing;
+set autocommit=0;
+
+INSERT INTO email_templates (reseller_id, name, from_email, subject, body)
+VALUES
+(NULL, 'admin_passreset_default_email', 'default@sipwise.com',
+'Password reset email',
+'Dear Customer,
+
+Please go to [% url %] to set your password and log into your self-care interface.
+
+Your faithful Sipwise system
+
+-- 
+This is an automatically generated message. Do not reply.');
+
+commit;
