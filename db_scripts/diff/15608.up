@@ -1,0 +1,6 @@
+ALTER TABLE `billing`.`admins`
+ADD COLUMN `is_system` TINYINT(1) NOT NULL DEFAULT 0;
+
+SET @admin_id := (SELECT `id` FROM `billing`.`admins` WHERE `id` = 1);
+UPDATE `billing`.`admins`
+SET `is_system`=1 WHERE EXISTS(SELECT `id` FROM `billing`.`admins` WHERE `id` = 1) AND `id` = 1;
