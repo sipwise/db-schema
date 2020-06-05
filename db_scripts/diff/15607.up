@@ -1,0 +1,6 @@
+USE accounting;
+SET autocommit=0;
+
+INSERT INTO cdr_tag SET id = null, type = 'balance_delta';
+
+COMMIT;
