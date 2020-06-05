@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f177325_66450508",
+        "filename": "db_scripts/diff/15608.up",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000051
+      },
+      "writtenOn": "2020-06-05T15:14:06Z",
+      "side": 1,
+      "message": "What is a better way to make sure the default administrator gets \u0027is_system\u0027 \u003d 1?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 96
+      },
+      "revId": "0450970f1956033808fe96fddffdff5f2559ad43",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
