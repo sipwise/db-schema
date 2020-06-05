@@ -1,0 +1,6 @@
+ALTER TABLE `billing`.`admins`
+ADD COLUMN `is_system` TINYINT(1) NOT NULL DEFAULT 0;
+
+UPDATE `billing`.`admins`
+SET `is_system` = 1, `lawful_intercept` = 0
+WHERE  `id` = 1;
