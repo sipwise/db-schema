@@ -1,0 +1,2 @@
+ALTER TABLE `billing`.`admins`
+DROP COLUMN `is_system`;
