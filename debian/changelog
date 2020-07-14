@@ -1,3 +1,17 @@
+ngcp-db-schema (8.5.1.0+0~mr8.5.1.0) unstable; urgency=medium
+
+  [ Flaviu Mates ]
+  * [7cb5c88] TT#76108 - Create admin password reset email template
+  * [1a87dc9] TT#76109 - Introduce email column from admins
+  * [ca5ad72] TT#76111 - Add 'is_system' column to billing.admins
+  * [ac3fdeb] TT#84805 - Delete upn_rewrite preference
+
+  [ Rene Krenn ]
+  * [898beba] TT#82317 save contract balance delta for re-rating
+  * [ab5cfdd] TT#82605 TT#84326 refactor for more perf with fee precedence checks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Jul 2020 11:51:19 +0200
+
 ngcp-db-schema (8.5.0.0+0~mr8.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
