@@ -1,0 +1,21 @@
+USE provisioning;
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = (SELECT id FROM voip_preference_groups WHERE name = 'Internals'),
+  attribute = "peer_group_tag",
+  label = "Peering Group Tag",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 0,
+  dom_pref = 0,
+  peer_pref = 0,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "string",
+  read_only = 0,
+  description = "The 'caller_pattern' of a peering group has to match this tag to be considered for outgoing calls.";
