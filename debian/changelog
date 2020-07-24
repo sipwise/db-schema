@@ -1,3 +1,10 @@
+ngcp-db-schema (8.5.2.0+0~mr8.5.2.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [72cca0c] TT#80407 add Arabic, Hebrew and Dutch languages to the enum preference
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Jul 2020 13:47:56 +0200
+
 ngcp-db-schema (8.5.1.0+0~mr8.5.1.0) unstable; urgency=medium
 
   [ Flaviu Mates ]
