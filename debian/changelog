@@ -1,3 +1,11 @@
+ngcp-db-schema (8.4.2.1+0~mr8.4.2.1) unstable; urgency=medium
+
+  [ Flaviu Mates ]
+  * [4f965a8] TT#76109 - Introduce email column from admins
+  * [7ae823f] TT#76108 - Create admin password reset email template
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 25 Aug 2020 16:48:18 +0200
+
 ngcp-db-schema (8.4.2.0+0~mr8.4.2.0) unstable; urgency=medium
 
   * New release.
