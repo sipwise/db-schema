@@ -1,3 +1,16 @@
+ngcp-db-schema (9.0.1.0+0~mr9.0.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [5bdb400] TT#80407 add Arabic, Hebrew and Dutch languages to the enum preference
+
+  [ Rene Krenn ]
+  * [27dd266] TT#87455 add 'peer_group_tag' preference
+
+  [ Guillem Jover ]
+  * [7e3e37e] TT#87554 Remove nagios voip subscriber with hardcoded password
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 31 Aug 2020 21:53:03 +0200
+
 ngcp-db-schema (9.0.0.0+0~mr9.0.0.0) unstable; urgency=medium
 
   * New release.
