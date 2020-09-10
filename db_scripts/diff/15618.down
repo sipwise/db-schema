@@ -1,0 +1,17 @@
+use provisioning;
+
+DELETE FROM voip_preferences WHERE attribute IN (
+  "AMR_bitrate",
+  "AMR_octet_align",
+  "AMR_mode_set",
+  "AMR_mode_change_period",
+  "AMR_mode_change_neighbor",
+  "AMR_CMR_interval",
+  "AMR_mode_change_interval",
+  "AMR_WB_bitrate",
+  "AMR_WB_octet_align",
+  "AMR_WB_mode_set",
+  "AMR_WB_mode_change_period",
+  "AMR_WB_mode_change_neighbor",
+  "AMR_WB_CMR_interval",
+  "AMR_WB_mode_change_interval");

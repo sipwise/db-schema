@@ -1,0 +1,352 @@
+USE provisioning;
+SET autocommit=0;
+
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION WITH CONSISTENT SNAPSHOT;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Media Codec Transcoding Options';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_bitrate",
+  label = "AMR: initial bitrate",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Initial encoder bitrate (mode) to use when offering to transcode to AMR. The bitrate is further constrained by the mode-set and can change dynamically via a CMR.";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'default (auto)', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '4.75 kbit/s (mode 0)', '4750', 1, 1, 1, 0, 1, 0),
+(@pref_id, '5.15 kbit/s (mode 1)', '5150', 1, 1, 1, 0, 1, 0),
+(@pref_id, '5.9 kbit/s (mode 2)', '5900', 1, 1, 1, 0, 1, 0),
+(@pref_id, '6.7 kbit/s (mode 3)', '6700', 1, 1, 1, 0, 1, 0),
+(@pref_id, '7.4 kbit/s (mode 4)', '7400', 1, 1, 1, 0, 1, 0),
+(@pref_id, '7.95 kbit/s (mode 5)', '7950', 1, 1, 1, 0, 1, 0),
+(@pref_id, '10.2 kbit/s (mode 6)', '10200', 1, 1, 1, 0, 1, 0),
+(@pref_id, '12.2 kbit/s (mode 7)', '12200', 1, 1, 1, 0, 1, 0);
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_octet_align",
+  label = "AMR: octet-aligned mode",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Use octet-aligned mode instead of bandwidth-efficient mode when offering to transcode to AMR.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_mode_set",
+  label = "AMR: mode-set",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "string",
+  read_only = 0,
+  description = "Restrict the AMR encoders (both local and remote) to the given list of AMR bitrates (modes). Must be a comma-separated list of integer modes without spaces, e.g. '2,3,4,5'.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_mode_change_period",
+  label = "AMR: mode change period",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Restrict the AMR encoders (both local and remote) to change modes only every other packet (period 2) instead of any packet (period 1, default).";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, '1', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '2', '2', 1, 1, 1, 0, 1, 0);
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_mode_change_neighbor",
+  label = "AMR: mode change neighbor",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Restrict the AMR encoders (both local and remote) to change mode only to neighbouring modes instead of any random mode.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_CMR_interval",
+  label = "AMR: CMR interval",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "int",
+  read_only = 0,
+  description = "Interval in milliseconds at which to send a Codec Mode Request (CMR) for a higher bitrate to the remote encoder if it isn't already sending at the highest allowed bitrate. Default is not to send any CMR.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_mode_change_interval",
+  label = "AMR: mode change interval",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "int",
+  read_only = 0,
+  description = "Interval in milliseconds at which to perform an unsolicited change to a higher bitrate if the local encoder isn't already sending at the highest allowed bitrate. Default is not to perform unsolicited mode changes.";
+
+
+
+
+
+
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_bitrate",
+  label = "AMR-WB: initial bitrate",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Initial encoder bitrate (mode) to use when offering to transcode to AMR-WB. The bitrate is further constrained by the mode-set and can change dynamically via a CMR.";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'default (auto)', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '6.6 kbit/s (mode 0)', '6600', 1, 1, 1, 0, 1, 0),
+(@pref_id, '8.85 kbit/s (mode 1)', '8850', 1, 1, 1, 0, 1, 0),
+(@pref_id, '12.65 kbit/s (mode 2)', '12650', 1, 1, 1, 0, 1, 0),
+(@pref_id, '14.25 kbit/s (mode 3)', '14250', 1, 1, 1, 0, 1, 0),
+(@pref_id, '15.85 kbit/s (mode 4)', '15850', 1, 1, 1, 0, 1, 0),
+(@pref_id, '18.25 kbit/s (mode 5)', '18250', 1, 1, 1, 0, 1, 0),
+(@pref_id, '19.85 kbit/s (mode 6)', '19850', 1, 1, 1, 0, 1, 0),
+(@pref_id, '23.05 kbit/s (mode 7)', '23050', 1, 1, 1, 0, 1, 0),
+(@pref_id, '23.85 kbit/s (mode 8)', '23850', 1, 1, 1, 0, 1, 0);
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_octet_align",
+  label = "AMR-WB: octet-aligned mode",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Use octet-aligned mode instead of bandwidth-efficient mode when offering to transcode to AMR-WB.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_mode_set",
+  label = "AMR-WB: mode-set",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "string",
+  read_only = 0,
+  description = "Restrict the AMR-WB encoders (both local and remote) to the given list of AMR-WB bitrates (modes). Must be a comma-separated list of integer modes without spaces, e.g. '2,3,4,5'.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_mode_change_period",
+  label = "AMR-WB: mode change period",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Restrict the AMR-WB encoders (both local and remote) to change modes only every other packet (period 2) instead of any packet (period 1, default).";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, '1', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '2', '2', 1, 1, 1, 0, 1, 0);
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_mode_change_neighbor",
+  label = "AMR-WB: mode change neighbor",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Restrict the AMR-WB encoders (both local and remote) to change mode only to neighbouring modes instead of any random mode.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_CMR_interval",
+  label = "AMR-WB: CMR interval",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "int",
+  read_only = 0,
+  description = "Interval in milliseconds at which to send a Codec Mode Request (CMR) for a higher bitrate to the remote encoder if it isn't already sending at the highest allowed bitrate. Default is not to send any CMR.";
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_mode_change_interval",
+  label = "AMR-WB: mode change interval",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "int",
+  read_only = 0,
+  description = "Interval in milliseconds at which to perform an unsolicited change to a higher bitrate if the local encoder isn't already sending at the highest allowed bitrate. Default is not to perform unsolicited mode changes.";
+
+
+COMMIT;
