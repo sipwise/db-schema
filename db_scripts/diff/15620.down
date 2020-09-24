@@ -1,0 +1,12 @@
+USE provisioning;
+SET autocommit=0;
+
+
+SELECT id INTO @vpid FROM voip_preferences
+    WHERE attribute = 'outbound_pai_user';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id=@vpid and value = 'pbx_extension';
+
+
+COMMIT;
