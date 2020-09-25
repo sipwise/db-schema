@@ -1,3 +1,11 @@
+ngcp-db-schema (9.0.1.2+0~mr9.0.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [aa9c23f] TT#93552 Introduce new 'pbx_extension' option in outbound_to_user
+  * [aa372fa] TT#93552 Introduce new 'pbx_extension' option in outbound_pai_user
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Sep 2020 17:41:19 +0200
+
 ngcp-db-schema (9.0.1.1+0~mr9.0.1.1) unstable; urgency=medium
 
   * New release.
