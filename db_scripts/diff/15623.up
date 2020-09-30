@@ -1,0 +1,74 @@
+USE provisioning;
+SET autocommit=0;
+
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+START TRANSACTION WITH CONSISTENT SNAPSHOT;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Media Codec Transcoding Options';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_mode_change_capability",
+  label = "AMR: mode change capability",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Advertise to the peer that the AMR encoder is able to perform mode changes in a restricted interval (2), or that the encoder is not capable of doing that (1), or don't advertise that capability at all (omit).";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'omit', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '1', '1', 1, 1, 1, 0, 1, 0),
+(@pref_id, '2', '2', 1, 1, 1, 0, 1, 0);
+
+
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "AMR_WB_mode_change_capability",
+  label = "AMR-WB: mode change capability",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Advertise to the peer that the AMR-WB encoder is able to perform mode changes in a restricted interval (2), or that the encoder is not capable of doing that (1), or don't advertise that capability at all (omit).";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'omit', '', 1, 1, 1, 0, 1, 0),
+(@pref_id, '1', '1', 1, 1, 1, 0, 1, 0),
+(@pref_id, '2', '2', 1, 1, 1, 0, 1, 0);
+
+
+
+
+COMMIT;

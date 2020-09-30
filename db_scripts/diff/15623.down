@@ -1,0 +1,5 @@
+use provisioning;
+
+DELETE FROM voip_preferences WHERE attribute IN (
+  "AMR_mode_change_capability",
+  "AMR_WB_mode_change_capability");
