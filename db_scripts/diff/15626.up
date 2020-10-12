@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE `provisioning`.`autoprov_devices` SET bootstrap_method = 'redirect_ale' WHERE bootstrap_method IN ('redirect_sipwise', 'profile_sipwise');
+ALTER TABLE `provisioning`.`autoprov_devices` CHANGE COLUMN `bootstrap_method` `bootstrap_method` ENUM('http', 'redirect_panasonic', 'redirect_yealink', 'redirect_polycom', 'redirect_snom', 'redirect_grandstream', 'redirect_ale') NULL DEFAULT 'http' ;
+ALTER TABLE `provisioning`.`autoprov_sync_parameters` CHANGE COLUMN `bootstrap_method` `bootstrap_method` ENUM('http', 'redirect_panasonic', 'redirect_yealink', 'redirect_polycom', 'redirect_snom', 'redirect_grandstream') NULL DEFAULT 'http' ;
+
+COMMIT;
