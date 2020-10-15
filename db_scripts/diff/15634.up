@@ -1,0 +1,42 @@
+USE provisioning;
+SET autocommit=0;
+
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "DTLS_fingerprint",
+  label = "DTLS fingerprint hashing function",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "enum",
+  read_only = 0,
+  description = "Use the specified hashing function to communicate the DTLS certificate's fingerprint to the peer.";
+
+SELECT LAST_INSERT_ID() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'SHA-1', 'sha-1', 1, 1, 1, 0, 1, 0),
+(@pref_id, 'SHA-224', 'sha-224', 1, 1, 1, 0, 1, 0),
+(@pref_id, 'SHA-256', 'sha-256', 1, 1, 1, 0, 1, 0),
+(@pref_id, 'SHA-384', 'sha-384', 1, 1, 1, 0, 1, 0),
+(@pref_id, 'SHA-512', 'sha-512', 1, 1, 1, 0, 1, 0);
+
+
+
+
+COMMIT;
