@@ -1,0 +1,6 @@
+USE kamailio;
+SET autocommit=0;
+
+DROP VIEW v_subscriber_devices;
+
+COMMIT;
