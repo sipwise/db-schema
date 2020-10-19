@@ -1,3 +1,10 @@
+ngcp-db-schema (8.5.3.0+0~mr8.5.3.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [3342c9d] TT#87455 add 'peer_group_tag' preference
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 19 Oct 2020 14:27:22 +0200
+
 ngcp-db-schema (8.5.2.0+0~mr8.5.2.0) unstable; urgency=medium
 
   [ Marco Capetta ]
