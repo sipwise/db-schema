@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "lookup_all_registrations",
+  label = "Route incoming subscriber calls to all registered devices belonging to the subscriber",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 0,
+  dom_pref = 1,
+  peer_pref = 0,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "By default incoming calls to subscriber's primary number and standard aliases are routed only to devices registered by subscriber's username. Enabling this option allows to route the calls also to endpoints registered as devices (those who use subscriber's alias to register).";
+
+COMMIT;
