@@ -1,0 +1,6 @@
+use provisioning;
+SET autocommit=0;
+
+DELETE FROM voip_preferences_enum WHERE label = "Use remote client's ICE preference" and value = 'ice_client_preference';
+
+COMMIT;

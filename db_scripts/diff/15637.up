@@ -1,0 +1,13 @@
+USE provisioning;
+SET autocommit=0;
+
+
+SELECT preference_id INTO @pref_id FROM voip_preferences_enum WHERE label = 'Always with plain SDP' and value = 'ice_strip_candidates' LIMIT 1;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, "Use remote client's ICE preference", 'ice_client_preference', 1, 1, 1, 0, 1, 0);
+
+
+COMMIT;
