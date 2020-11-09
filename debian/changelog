@@ -1,3 +1,31 @@
+ngcp-db-schema (9.1.1.0+0~mr9.1.1.0) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * [2c5c92a] TT#91650 Add a .mailmap file to correct author information
+
+  [ Flaviu Mates ]
+  * [63815c9] TT#91000 - Add 'none' to devices bootstrab methods enum
+  * [0afb8b4] TT#91507 - Add 'profile' and 'product_family' parameters for SNOM autoprov
+  * [34273a8] TT#92800 Remove 'redirect_sipwise' and 'profile_sipwise'
+
+  [ Richard Fuchs ]
+  * [74cb98d] TT#92701 add new AMR options to preferences
+  * [7873792] TT#92701 add AMR mode-change-capability prefs
+  * [87531e2] TT#92250 add single-codec option
+  * [d0bf1df] TT#97302 add new flag to select DTLS fingerprint algo
+  * [d33a266] TT#94201 add new ICE option ice_client_preference
+
+  [ Marco Capetta ]
+  * [7a02fe6] TT#93552 Introduce new 'pbx_extension' option in outbound_to_user
+  * [535f702] TT#93552 Introduce new 'pbx_extension' option in outbound_pai_user
+  * [965c188] TT#94906 Update description of 'stop_forking_code_lists' preference
+
+  [ Kirill Solomko ]
+  * [fe3e51e] TT#97750 add kamailio.v_subscriber_devices
+  * [c32fb6e] TT#97750 add lookup_all_registrations preference
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Nov 2020 16:23:26 +0100
+
 ngcp-db-schema (9.1.0.0+0~mr9.1.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
