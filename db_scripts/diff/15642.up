@@ -1,0 +1,33 @@
+USE provisioning;
+SET autocommit=1;
+
+CREATE TABLE `voip_subscriber_location_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `caller_pattern` varchar(255) DEFAULT NULL,
+  `callee_pattern` varchar(255) DEFAULT NULL,
+  `mode` ENUM ('add', 'replace','offline') NOT NULL DEFAULT 'replace',
+  `to_username` varchar(255) DEFAULT NULL,
+  `external_id` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `subscriber_id_idx` (`subscriber_id`),
+  KEY `external_id_idx` (`external_id`),
+  CONSTRAINT `v_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+INSERT INTO voip_subscriber_location_mappings (subscriber_id, location, mode, to_username)
+SELECT u.subscriber_id, u.value, COALESCE(u2.value, 'replace') as mode, a.username as to_username
+  FROM voip_preferences p
+  JOIN voip_preferences p2
+  JOIN voip_usr_preferences u ON u.attribute_id = p.id
+  LEFT OUTER JOIN voip_usr_preferences u2 ON u2.attribute_id = p2.id
+  LEFT OUTER JOIN voip_dbaliases a ON a.subscriber_id = u.subscriber_id AND a.devid_alias IS NOT NULL
+ WHERE p.attribute = 'location_from_subscriber'
+   AND p2.attribute = 'location_from_subscriber_mode'
+   AND u.subscriber_id = u2.subscriber_id;
+
+DELETE e FROM voip_preferences_enum e JOIN voip_preferences p ON p.id = e.preference_id WHERE p.attribute = 'location_from_subscriber_mode';
+DELETE FROM voip_preferences WHERE attribute = 'location_from_subscriber';
+DELETE FROM voip_preferences WHERE attribute = 'location_from_subscriber_mode';
