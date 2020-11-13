@@ -1,0 +1,8 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id INTO @pref_id_min FROM voip_preferences WHERE attribute='ext_range_min';
+SELECT id INTO @pref_id_max FROM voip_preferences WHERE attribute='ext_range_max';
+DELETE FROM voip_preferences WHERE id IN (@pref_id_min, @pref_id_max);
+
+commit;

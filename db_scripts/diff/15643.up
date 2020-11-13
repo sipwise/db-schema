@@ -1,0 +1,46 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Cloud PBX"),
+attribute = "ext_range_min",
+label = "Minimum value for subscriber extension number",
+type = 1,
+max_occur = 1,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Specifies the minimum value that can be assigned as extension to a subscriber. If left empty, only the maximum value will be considered. If both are empty, there is no extension range limit.";
+
+insert into voip_preferences
+  set
+voip_preference_groups_id = (select id from voip_preference_groups where name="Cloud PBX"),
+attribute = "ext_range_max",
+label = "Maximum value for subscriber extension number",
+type = 1,
+max_occur = 1,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 1,
+contract_location_pref = 1,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "int",
+read_only = 0,
+description = "Specifies the maximum value that can be assigned as extension to a subscriber. If left empty, only the minimum value will be considered. If both are empty, there is no extension range limit.";
+
+commit;
