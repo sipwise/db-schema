@@ -1,3 +1,10 @@
+ngcp-db-schema (9.1.1.2+0~mr9.1.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [de5a0a4] TT#101300 fix subscriber_location_mapping migration
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 23 Nov 2020 22:07:35 +0100
+
 ngcp-db-schema (9.1.1.1+0~mr9.1.1.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
