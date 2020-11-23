@@ -17,8 +17,8 @@ CREATE TABLE `voip_subscriber_location_mappings` (
   CONSTRAINT `v_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-INSERT INTO voip_subscriber_location_mappings (subscriber_id, location, mode, to_username)
-SELECT u.subscriber_id, u.value, COALESCE(u2.value, 'replace') as mode, a.username as to_username
+INSERT INTO voip_subscriber_location_mappings (subscriber_id, location, caller_pattern, callee_pattern, mode, to_username)
+SELECT u.subscriber_id, u.value, '.+', '.+', COALESCE(u2.value, 'replace') as mode, a.username as to_username
   FROM voip_preferences p
   JOIN voip_preferences p2
   JOIN voip_usr_preferences u ON u.attribute_id = p.id
