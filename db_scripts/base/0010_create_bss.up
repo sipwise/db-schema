@@ -14,7 +14,7 @@ USE billing;
 -- create reseller helper table
 CREATE TABLE `resellers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  `contract_id` int(11) UNSIGNED NOT NULL,
   `name` varchar(63) NOT NULL,
   `status` enum('active','locked','terminated') NOT NULL DEFAULT 'active',
   PRIMARY KEY  (`id`),
@@ -32,8 +32,8 @@ CREATE TABLE `domains` (
 
 CREATE TABLE `domain_resellers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `domain_id` int(11) UNSIGNED NOT NULL REFERENCES `domains` (`id`),
-  `reseller_id` int(11) UNSIGNED NOT NULL REFERENCES `resellers` (`id`),
+  `domain_id` int(11) UNSIGNED NOT NULL,
+  `reseller_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `domainid_idx` (`domain_id`),
   CONSTRAINT `dr_domainid_ref` FOREIGN KEY (`domain_id`)
@@ -48,7 +48,7 @@ CREATE TABLE `domain_resellers` (
 -- create admins table that contains root user as well as reseller admins
 CREATE TABLE `admins` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
   `login` varchar(31) NOT NULL,
   `md5pass` char(32),
   `is_master` boolean NOT NULL default FALSE,
@@ -69,7 +69,7 @@ CREATE TABLE `admins` (
 -- create billing tables
 CREATE TABLE `billing_profiles` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
   `handle` varchar(63) NOT NULL,
   `name` varchar(31) NOT NULL,
   `prepaid` bool NOT NULL DEFAULT TRUE,
@@ -92,7 +92,7 @@ CREATE TABLE `billing_profiles` (
 
 CREATE TABLE `billing_zones` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL REFERENCES `billing_profiles` (`id`),
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
   `zone` varchar(127) NOT NULL,  -- a zone name for internal use: admin interface, etc.
   `detail` varchar(127) NULL,  -- will be printed on invoices, etc.
   PRIMARY KEY  (`id`),
@@ -104,8 +104,8 @@ CREATE TABLE `billing_zones` (
 
 CREATE TABLE `billing_fees` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL REFERENCES `billing_profiles` (`id`),
-  `billing_zone_id` int(11) UNSIGNED NULL REFERENCES `billing_zones` (`id`),
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
+  `billing_zone_id` int(11) UNSIGNED NULL,
   `destination` varchar(255) NOT NULL,
   `type` enum('call', 'sms') NOT NULL DEFAULT 'call',
   `onpeak_init_rate` double NOT NULL DEFAULT 0,
@@ -131,7 +131,7 @@ CREATE TABLE `billing_fees` (
 
 CREATE TABLE `billing_peaktime_weekdays` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL REFERENCES `billing_profiles` (`id`),
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
   `weekday` tinyint(3) UNSIGNED NOT NULL,
   `start` time,
   `end` time,
@@ -144,7 +144,7 @@ CREATE TABLE `billing_peaktime_weekdays` (
 
 CREATE TABLE `billing_peaktime_special` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `billing_profile_id` int(11) UNSIGNED NOT NULL REFERENCES `billing_profiles` (`id`),
+  `billing_profile_id` int(11) UNSIGNED NOT NULL,
   `start` datetime,
   `end` datetime,
   PRIMARY KEY  (`id`),
@@ -164,7 +164,7 @@ CREATE TABLE `lnp_providers` (
 CREATE TABLE `lnp_numbers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `number` varchar(31) NOT NULL,
-  `lnp_provider_id` int(11) UNSIGNED NOT NULL REFERENCES `lnp_providers` (`id`),
+  `lnp_provider_id` int(11) UNSIGNED NOT NULL,
   `start` datetime NULL DEFAULT NULL,
   `end` datetime NULL DEFAULT NULL,
   PRIMARY KEY  (`id`),
@@ -176,7 +176,7 @@ CREATE TABLE `lnp_numbers` (
 -- create NCOS tables
 CREATE TABLE `ncos_levels` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED,
   `level` varchar(31) NOT NULL,
   `mode` enum('blacklist', 'whitelist') NOT NULL default 'blacklist',
   `local_ac` bool NOT NULL DEFAULT FALSE,
@@ -190,7 +190,7 @@ CREATE TABLE `ncos_levels` (
 
 CREATE TABLE `ncos_pattern_list` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `ncos_level_id` int(11) UNSIGNED NOT NULL REFERENCES `ncos_levels` (`id`),
+  `ncos_level_id` int(11) UNSIGNED NOT NULL,
   `pattern` varchar(255) NOT NULL,
   `description` text,
   PRIMARY KEY  (`id`),
@@ -202,8 +202,8 @@ CREATE TABLE `ncos_pattern_list` (
 
 CREATE TABLE `ncos_lnp_list` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `ncos_level_id` int(11) UNSIGNED NOT NULL REFERENCES `ncos_levels` (`id`),
-  `lnp_provider_id` int(11) UNSIGNED NOT NULL REFERENCES `lnp_providers` (`id`),
+  `ncos_level_id` int(11) UNSIGNED NOT NULL,
+  `lnp_provider_id` int(11) UNSIGNED NOT NULL,
   `description` text,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `levpro_idx` (`ncos_level_id`, `lnp_provider_id`),
@@ -239,13 +239,13 @@ CREATE TABLE `contacts` (
 -- create customer tables
 CREATE TABLE `customers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
   `shopuser` varchar(31) NULL,
   `shoppass` varchar(31) NULL,
   `business` bool NOT NULL DEFAULT FALSE,
-  `contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
-  `tech_contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
-  `comm_contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
+  `contact_id` int(11) UNSIGNED NULL,
+  `tech_contact_id` int(11) UNSIGNED NULL,
+  `comm_contact_id` int(11) UNSIGNED NULL,
   `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `create_timestamp` timestamp,
   PRIMARY KEY  (`id`),
@@ -270,7 +270,7 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `customer_registers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `customer_id` int(11) UNSIGNED NOT NULL REFERENCES `customers` (`id`),
+  `customer_id` int(11) UNSIGNED NOT NULL,
   `actor` varchar(15),
   `type` varchar(31) NOT NULL,
   `data` text,
@@ -283,14 +283,14 @@ CREATE TABLE `customer_registers` (
 
 CREATE TABLE `products` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
   `class` enum('sippeering', 'pstnpeering', 'reseller', 'voip', 'hardware', 'auxiliary') NOT NULL,
   `handle` varchar(63) NOT NULL,
   `name` varchar(127) NOT NULL,
   `on_sale` bool NOT NULL DEFAULT FALSE,
   `price` double,
   `weight` mediumint(9) UNSIGNED,
-  `billing_profile_id` int(11) UNSIGNED NULL REFERENCES `billing_profiles` (`id`),
+  `billing_profile_id` int(11) UNSIGNED NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `resnam_idx` (`reseller_id`, `name`),
   UNIQUE KEY `reshand_idx` (`reseller_id`, `handle`),
@@ -316,14 +316,14 @@ CREATE TABLE `invoices` (
 
 CREATE TABLE `orders` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED REFERENCES `resellers` (`id`),
-  `customer_id` int(11) UNSIGNED REFERENCES `customers` (`id`),
-  `delivery_contact_id` int(11) UNSIGNED REFERENCES `contacts` (`id`),
+  `reseller_id` int(11) UNSIGNED,
+  `customer_id` int(11) UNSIGNED,
+  `delivery_contact_id` int(11) UNSIGNED,
   `type` varchar(31),
   `state` enum('init','transact','failed','success') NOT NULL DEFAULT 'init',
   `value` int(11),
   `shipping_costs` int(11),
-  `invoice_id` int(11) UNSIGNED REFERENCES `invoices` (`id`),
+  `invoice_id` int(11) UNSIGNED,
   `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `create_timestamp` timestamp,
   `complete_timestamp` timestamp,
@@ -368,8 +368,8 @@ CREATE TABLE `payments` (
 -- create mapping table between orders and payments
 CREATE TABLE `order_payments` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `order_id` int(11) UNSIGNED NOT NULL REFERENCES `orders` (`id`),
-  `payment_id` int(11) UNSIGNED NOT NULL REFERENCES `payments` (`id`),
+  `order_id` int(11) UNSIGNED NOT NULL,
+  `payment_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `orderid_idx` (`order_id`),
   CONSTRAINT `op_orderid_ref` FOREIGN KEY (`order_id`)
@@ -384,10 +384,10 @@ CREATE TABLE `order_payments` (
 -- create contract tables
 CREATE TABLE `contracts` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `customer_id` int(11) UNSIGNED NULL REFERENCES `customers` (`id`),
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
-  `contact_id` int(11) UNSIGNED NULL REFERENCES `contacts` (`id`),
-  `order_id` int(11) UNSIGNED NULL REFERENCES `orders` (`id`),
+  `customer_id` int(11) UNSIGNED NULL,
+  `reseller_id` int(11) UNSIGNED NULL,
+  `contact_id` int(11) UNSIGNED NULL,
+  `order_id` int(11) UNSIGNED NULL,
   `status` enum('pending','active','locked','terminated') NOT NULL DEFAULT 'active',
   `modify_timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `create_timestamp` timestamp NOT NULL,
@@ -422,7 +422,7 @@ ALTER TABLE resellers
 
 CREATE TABLE `contract_registers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  `contract_id` int(11) UNSIGNED NOT NULL,
   `actor` varchar(15),
   `type` varchar(31) NOT NULL,
   `data` text,
@@ -435,10 +435,10 @@ CREATE TABLE `contract_registers` (
 
 CREATE TABLE `voip_subscribers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  `contract_id` int(11) UNSIGNED NOT NULL,
   `uuid` char(36) NOT NULL,
   `username` varchar(127) NOT NULL,
-  `domain_id` int(11) UNSIGNED NOT NULL REFERENCES `domains` (`id`),
+  `domain_id` int(11) UNSIGNED NOT NULL,
   `status` enum('active','locked','terminated') NOT NULL DEFAULT 'active',
   `primary_number_id` int(11) unsigned default NULL,
   PRIMARY KEY  (`id`),
@@ -461,8 +461,8 @@ CREATE TABLE `voip_numbers` (
   `cc` int(4) UNSIGNED NOT NULL,
   `ac` int(5) UNSIGNED NOT NULL,
   `sn` varchar(31) NOT NULL,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
-  `subscriber_id` int(11) UNSIGNED NULL REFERENCES `voip_subscribers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
+  `subscriber_id` int(11) UNSIGNED NULL,
   `status` enum('active','reserved','locked','deported') NOT NULL DEFAULT 'active',
   `ported` bool NOT NULL DEFAULT FALSE,
   `list_timestamp` timestamp,
@@ -493,8 +493,8 @@ CREATE TABLE `voip_number_blocks` (
 
 CREATE TABLE `voip_number_block_resellers` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `number_block_id` int(11) UNSIGNED NOT NULL REFERENCES `voip_number_blocks` (`id`),
-  `reseller_id` int(11) UNSIGNED NOT NULL REFERENCES `resellers` (`id`),
+  `number_block_id` int(11) UNSIGNED NOT NULL,
+  `reseller_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `numblockid_idx` (`number_block_id`),
   CONSTRAINT `vnbr_numblockid_ref` FOREIGN KEY (`number_block_id`)
@@ -517,14 +517,14 @@ ALTER TABLE voip_subscribers
 -- create account status table
 CREATE TABLE `contract_balances` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
+  `contract_id` int(11) UNSIGNED NOT NULL,
   `cash_balance` double,
   `cash_balance_interval` double NOT NULL DEFAULT 0,
   `free_time_balance` int(11),
   `free_time_balance_interval` int(11) NOT NULL DEFAULT 0,
   `start` datetime NOT NULL,
   `end` datetime NOT NULL,
-  `invoice_id` int(11) UNSIGNED REFERENCES `invoices` (`id`),
+  `invoice_id` int(11) UNSIGNED,
   PRIMARY KEY  (`id`),
   KEY `contractid_idx` (`contract_id`),
   CONSTRAINT `c_b_contractid_ref` FOREIGN KEY (`contract_id`)
@@ -539,7 +539,7 @@ CREATE TABLE `contract_balances` (
 -- create table that holds credits and debits
 CREATE TABLE `contract_credits` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `balance_id` int(11) UNSIGNED NOT NULL REFERENCES `contract_balances` (`id`),
+  `balance_id` int(11) UNSIGNED NOT NULL,
   `state` enum('init','transact','charged','failed','success') NOT NULL DEFAULT 'init',
   `amount` double,
   `reason` text,
@@ -555,8 +555,8 @@ CREATE TABLE `contract_credits` (
 -- create mapping table between orders and payments
 CREATE TABLE `credit_payments` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `credit_id` int(11) UNSIGNED NOT NULL REFERENCES `contract_credits` (`id`),
-  `payment_id` int(11) UNSIGNED NOT NULL REFERENCES `payments` (`id`),
+  `credit_id` int(11) UNSIGNED NOT NULL,
+  `payment_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `creditid_idx` (`credit_id`),
   CONSTRAINT `cp_creditid_ref` FOREIGN KEY (`credit_id`)
@@ -573,9 +573,9 @@ CREATE TABLE `billing_mappings` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
   `start_date` datetime,
   `end_date` datetime,
-  `billing_profile_id` int(11) UNSIGNED REFERENCES `billing_profiles` (`id`),
-  `contract_id` int(11) UNSIGNED NOT NULL REFERENCES `contracts` (`id`),
-  `product_id` int(11) UNSIGNED REFERENCES `products` (`id`),
+  `billing_profile_id` int(11) UNSIGNED,
+  `contract_id` int(11) UNSIGNED NOT NULL,
+  `product_id` int(11) UNSIGNED,
   PRIMARY KEY  (`id`),
   KEY `profileid_idx` (`billing_profile_id`),
   CONSTRAINT `b_m_bilprofid_ref` FOREIGN KEY (`billing_profile_id`)
@@ -594,7 +594,7 @@ CREATE TABLE `billing_mappings` (
 -- lawful intercept table
 CREATE TABLE `voip_intercept` (
   `id` int(11) UNSIGNED NOT NULL auto_increment,
-  `reseller_id` int(11) UNSIGNED NULL REFERENCES `resellers` (`id`),
+  `reseller_id` int(11) UNSIGNED NULL,
   `LIID` int(11) UNSIGNED,
   `number` varchar(63),
   `cc_required` bool NOT NULL DEFAULT FALSE,
