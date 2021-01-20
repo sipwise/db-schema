@@ -1,0 +1,4 @@
+use accounting;
+
+alter table cdr_period_costs modify column customer_cost decimal(14,6) NOT NULL DEFAULT 0.000000,
+  modify column reseller_cost decimal(14,6) NOT NULL DEFAULT 0.000000;
