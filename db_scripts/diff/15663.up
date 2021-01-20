@@ -1,0 +1,17 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id into @vpg_id FROM voip_preference_groups where name = 'Internals';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "emergency_provider_info",
+label = "Emergency Provider info",
+type = 2,
+max_occur = 1,
+dom_pref = 1,
+data_type = "blob",
+description = "XML with the ProviderInfo data that will be added as MIME object on an emergency call";
+
+COMMIT;
