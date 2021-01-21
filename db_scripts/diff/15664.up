@@ -1,0 +1,46 @@
+USE provisioning;
+SET autocommit=0;
+
+-- update emergency_location_object to blob
+UPDATE voip_preferences SET
+	description = "SDP MIME object related to location to be added on an emergency call",
+	type = 2,
+	data_type = "blob"
+	WHERE attribute = 'emergency_location_object';
+
+SELECT id into @at_id FROM voip_preferences
+	WHERE attribute = 'emergency_location_object';
+
+SELECT id into @vpg_id FROM voip_preference_groups
+	WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "emergency_location_format",
+label = "Emergency location format",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+data_type = "enum",
+description = "Defines the format of emergency_location_object";
+
+SELECT LAST_INSERT_ID() INTO @format_att_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@format_att_id, "Presence Information Data Format Location
+   Object", 'PIDF-LO', 1, 0, 0, 0, 1, 0),
+(@format_att_id, "cirpack", 'cirpack', 1, 0, 0, 0, 1, 1);
+
+-- migrate values to blob
+CREATE TEMPORARY TABLE tmp_voip_usr_preferences
+	SELECT id, "application/vnd.cirpack.isdn-ext", value FROM voip_usr_preferences
+	WHERE attribute_id = @at_id;
+INSERT INTO voip_usr_preferences_blob(preference_id, content_type, value)
+	SELECT * FROM tmp_voip_usr_preferences;
+
+COMMIT;
+
