@@ -1,0 +1,36 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET
+	description = 'Provide this field as pre-coded value to add it to the SDP as MIME object with content-type "application/vnd.cirpack.isdn-ext" and "content-disposition: signal;handling=required" according to the German NGN interconnect specification',
+	type = 0,
+	data_type = "string"
+	WHERE attribute = 'emergency_location_object';
+
+SELECT id into @at_id FROM voip_preferences where
+	attribute = "emergency_location_format" and
+	label = "Emergency location format";
+
+DELETE FROM voip_preferences_enum where
+	 preference_id = @at_id;
+
+DELETE FROM voip_preferences where
+	id = @at_id;
+
+-- migrate values to string
+SELECT id into @at_id FROM voip_preferences
+	WHERE attribute = 'emergency_location_object';
+
+-- migrate values to string
+CREATE TEMPORARY TABLE tmp_voip_usr_preferences_blob
+	SELECT id, preference_id, value FROM voip_usr_preferences_blob as _blob
+	WHERE id IN (SELECT value FROM voip_usr_preferences WHERE attribute_id = @at_id);
+
+DELETE FROM voip_usr_preferences_blob
+	WHERE id IN (SELECT id FROM tmp_voip_usr_preferences_blob);
+
+UPDATE voip_usr_preferences as _up, tmp_voip_usr_preferences_blob as _blob
+	SET _up.value = _blob.value
+	WHERE _up.id = _blob.preference_id and _up.attribute_id = @at_id;
+
+COMMIT;
