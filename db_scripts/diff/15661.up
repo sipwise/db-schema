@@ -1,0 +1,143 @@
+USE provisioning;
+
+CREATE TABLE voip_dom_preferences_blob (
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) UNSIGNED NOT NULL,
+    content_type      VARCHAR(128) NOT NULL DEFAULT 'application/data',
+    value             MEDIUMBLOB,
+    UNIQUE KEY (preference_id),
+    FOREIGN KEY fk_dom_blob_pref_id (preference_id) REFERENCES voip_dom_preferences (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB PAGE_COMPRESSED=1;
+
+CREATE TABLE voip_contract_preferences_blob (
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) UNSIGNED NOT NULL,
+    content_type      VARCHAR(128) NOT NULL DEFAULT 'application/data',
+    value             MEDIUMBLOB,
+    UNIQUE KEY (preference_id),
+    FOREIGN KEY fk_contract_blob_pref_id (preference_id) REFERENCES voip_contract_preferences (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB PAGE_COMPRESSED=1;
+
+CREATE TABLE voip_usr_preferences_blob (
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) UNSIGNED NOT NULL,
+    content_type      VARCHAR(128) NOT NULL DEFAULT 'application/data',
+    value             MEDIUMBLOB,
+    UNIQUE KEY (preference_id),
+    FOREIGN KEY fk_usr_blob_pref_id (preference_id) REFERENCES voip_usr_preferences (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB PAGE_COMPRESSED=1;
+
+CREATE TABLE voip_peer_preferences_blob (
+    id                INT PRIMARY KEY AUTO_INCREMENT,
+    preference_id     INT(11) UNSIGNED NOT NULL,
+    content_type      VARCHAR(128) NOT NULL DEFAULT 'application/data',
+    value             MEDIUMBLOB,
+    UNIQUE KEY (preference_id),
+    FOREIGN KEY fk_peer_blob_pref_id (preference_id) REFERENCES voip_peer_preferences (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB PAGE_COMPRESSED=1;
+
+ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string','enum','blob');
+
+DROP TRIGGER IF EXISTS voip_dom_preferences_blob_insert;
+DELIMITER $$
+CREATE TRIGGER voip_dom_prefences_blob_insert AFTER INSERT ON voip_dom_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_dom_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_dom_preferences_blob_delete;
+DELIMITER $$
+CREATE TRIGGER voip_dom_prefences_blob_delete AFTER DELETE ON voip_dom_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_dom_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_contract_preferences_blob_insert;
+DELIMITER $$
+CREATE TRIGGER voip_contract_prefences_blob_insert AFTER INSERT ON voip_contract_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_contract_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_contract_preferences_blob_delete;
+DELIMITER $$
+CREATE TRIGGER voip_contract_preferences_blob_delete AFTER DELETE ON voip_contract_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_contract_preferences
+       SET value = ''
+     WHERE preference_id = OLD.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_usr_preferences_blob_insert;
+DELIMITER $$
+CREATE TRIGGER voip_usr_preferences_blob_insert AFTER INSERT ON voip_usr_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_usr_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_usr_preferences_blob_delete;
+DELIMITER $$
+CREATE TRIGGER voip_usr_preferences_blob_delete AFTER DELETE ON voip_usr_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_usr_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_peer_preferences_blob_insert;
+DELIMITER $$
+CREATE TRIGGER voip_peer_preferences_blob_insert AFTER INSERT ON voip_peer_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_peer_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END
+$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS voip_peer_preferences_blob_delete;
+DELIMITER $$
+CREATE TRIGGER voip_peer_preferences_blob_delete AFTER DELETE ON voip_peer_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_peer_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END
+$$
+DELIMITER ;
