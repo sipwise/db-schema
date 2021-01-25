@@ -1,0 +1,18 @@
+USE provisioning;
+
+DROP TRIGGER IF EXISTS voip_dom_preferences_blob_insert;
+DROP TRIGGER IF EXISTS voip_dom_preferences_blob_delete;
+DROP TRIGGER IF EXISTS voip_contract_preferences_blob_insert;
+DROP TRIGGER IF EXISTS voip_contract_preferences_blob_delete;
+DROP TRIGGER IF EXISTS voip_usr_preferences_blob_insert;
+DROP TRIGGER IF EXISTS voip_usr_preferences_blob_delete;
+DROP TRIGGER IF EXISTS voip_peer_preferences_blob_insert;
+DROP TRIGGER IF EXISTS voip_peer_preferences_blob_delete;
+
+DROP TABLE voip_dom_preferences_blob;
+DROP TABLE voip_contract_preferences_blob;
+DROP TABLE voip_usr_preferences_blob;
+DROP TABLE voip_peer_preferences_blob;
+
+ALTER TABLE voip_preferences MODIFY COLUMN data_type enum('boolean','int','string','enum');
+
