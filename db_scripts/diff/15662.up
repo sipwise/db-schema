@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Number Manipulations';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "no_404_fallback",
+  label = "Do not fallback after a callee 404 response",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 0,
+  dom_pref = 1,
+  peer_pref = 0,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "If set, do not try to fallback if the callee UAc replies with a '404 Not found' message after receiving an extension included in the base number or a e164 number (if e164_to_ruri is set)";
+
+COMMIT;
