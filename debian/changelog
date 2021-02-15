@@ -1,3 +1,17 @@
+ngcp-db-schema (9.4.0.0+0~mr9.4.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [6d172cd] TT#108500 support larger cdr_period_costs amounts
+  * [df0b55c] TT#108500 move 15660 to /diff folder
+
+  [ Flaviu Mates ]
+  * [ba46ef5] TT#79504 Expose custom_announcements to customers
+
+  [ Alessio Garzi ]
+  * [363f478] TT#62051 New usr_preferences for no 404 fallback
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Feb 2021 17:51:32 +0100
+
 ngcp-db-schema (9.3.0.0+0~mr9.3.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
