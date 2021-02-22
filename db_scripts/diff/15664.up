@@ -22,7 +22,6 @@ label = "Emergency location format",
 type = 0,
 max_occur = 1,
 usr_pref = 1,
-prof_pref = 1,
 data_type = "enum",
 description = "Defines the format of emergency_location_object";
 
@@ -32,8 +31,8 @@ INSERT INTO voip_preferences_enum
 (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
 VALUES
 (@format_att_id, "Presence Information Data Format Location
-   Object", 'PIDF-LO', 1, 0, 0, 0, 1, 0),
-(@format_att_id, "cirpack", 'cirpack', 1, 0, 0, 0, 1, 1);
+   Object", 'PIDF-LO', 1, 0, 0, 0, 0, 0),
+(@format_att_id, "cirpack", 'cirpack', 1, 0, 0, 0, 0, 1);
 
 -- migrate values to blob
 CREATE TEMPORARY TABLE tmp_voip_usr_preferences
