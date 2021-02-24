@@ -1,0 +1,85 @@
+use billing;
+
+alter table billing_fees drop column aoc_pulse_amount_per_message;
+alter table billing_fees_history drop column aoc_pulse_amount_per_message;
+truncate billing_fees_raw;
+alter table billing_fees_raw drop column aoc_pulse_amount_per_message;
+
+drop trigger billing.bill_fees_crepl_trig;
+drop trigger billing.bill_fees_urepl_trig;
+
+delimiter ;;
+
+create trigger billing.bill_fees_crepl_trig after insert on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  insert into billing.billing_fees_history
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
+      NEW.source, NEW.destination, NEW.direction,
+      NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+      NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+      NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.onpeak_use_free_time,
+      NEW.match_mode, NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
+      NEW.offpeak_use_free_time);
+
+  end;
+;;
+
+create trigger billing.bill_fees_urepl_trig after update on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  update billing.billing_fees_history
+    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+      billing_zones_history_id = my_bzh_id,
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
+      type = NEW.type,
+      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+      onpeak_use_free_time = NEW.onpeak_use_free_time, offpeak_use_free_time = NEW.offpeak_use_free_time,
+      match_mode = NEW.match_mode,
+      onpeak_extra_rate = NEW.onpeak_extra_rate, onpeak_extra_second = NEW.onpeak_extra_second,
+      offpeak_extra_rate = NEW.offpeak_extra_rate, offpeak_extra_second = NEW.offpeak_extra_second
+    where bf_id = OLD.id;
+
+  end;
+;;
+
+drop function get_billing_fee;;
+create function get_billing_fee(
+  _billing_profile_id int(11),
+  _t decimal(13,3),
+  _source varchar(511),
+  _destination varchar(511),
+  _contract_id int(11)
+) returns varchar(100)
+deterministic reads sql data
+begin
+
+  declare _fee_string varchar(100);
+
+  set _fee_string = (select concat(
+      if(pt.is_offpeak,bfh.offpeak_init_rate,bfh.onpeak_init_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_init_interval,bfh.onpeak_init_interval),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_rate,bfh.onpeak_follow_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_interval,bfh.onpeak_follow_interval)
+    ) from
+           billing.billing_fees_history bfh
+      join (select billing.check_billing_fee_offpeak(_billing_profile_id,_t,_contract_id) as is_offpeak) pt
+    where
+      bfh.id = billing.get_billing_fee_id(_billing_profile_id,"call","out",_source,_destination,null));
+
+  return _fee_string;
+
+end;;
+
+delimiter ;
