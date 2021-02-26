@@ -1,0 +1,8 @@
+USE billing;
+SET autocommit = 0;
+
+ALTER TABLE billing.reseller_brandings 
+ADD COLUMN csc_color_primary VARCHAR(45) NULL DEFAULT NULL,
+ADD COLUMN csc_color_secondary VARCHAR(45) NULL DEFAULT NULL;
+
+COMMIT;
