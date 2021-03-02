@@ -1,3 +1,15 @@
+ngcp-db-schema (9.3.1.1+0~mr9.3.1.1) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [392733f] TT#109103 add voip blob preferences support
+
+  [ Victor Seva ]
+  * [617dcc1] TT#108066 add 'emergency_provider_info' as domain pref
+  * [c15bbec] TT#108065 emergency_location_format
+  * [569be89] TT#108065 remove prof_pref from emergency_location_* preferences
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 02 Mar 2021 12:06:14 +0100
+
 ngcp-db-schema (9.3.1.0+0~mr9.3.1.0) unstable; urgency=medium
 
   [ Rene Krenn ]
