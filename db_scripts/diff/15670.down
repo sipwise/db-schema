@@ -1,0 +1,3 @@
+use billing;
+
+alter table contacts drop index email_idx;

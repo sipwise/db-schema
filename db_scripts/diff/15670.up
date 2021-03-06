@@ -1,0 +1,3 @@
+use billing;
+
+alter table contacts add index email_idx (email);
