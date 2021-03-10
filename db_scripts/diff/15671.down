@@ -1,0 +1,15 @@
+USE provisioning;
+set autocommit = 0;
+
+SELECT id FROM provisioning.voip_preferences WHERE attribute = 'rtp_interface' AND label='RTP interface' INTO @tmp_pref_id;
+
+-- Change 'rtp_interface' label to 'default' and apply it to subscribers,profs,domains an peers
+UPDATE provisioning.voip_preferences_enum SET label='default',prof_pref=1,dom_pref=1,peer_pref=1,usr_pref=1 WHERE preference_id = @tmp_pref_id and label='use domain default';
+
+-- delete force ext value not do be the default for rtp_interface under usr_prefereces
+DELETE from provisioning.voip_preferences_enum where preference_id=@tmp_pref_id AND label='ext' AND value='ext' AND usr_pref=1 AND dom_pref=0 AND peer_pref=0 AND default_val=0;
+
+-- re enable ext for user preferences and disable defailt value for it
+UPDATE provisioning.voip_preferences_enum SET default_val=0,usr_pref=1 WHERE label='ext' AND preference_id = @tmp_pref_id;
+
+commit;
