@@ -1,3 +1,11 @@
+ngcp-db-schema (8.5.5.0+0~mr8.5.5.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [694d30d] TT#108500 support larger cdr_period_costs amounts
+  * [44971a8] TT#108500 move 15660 to /diff folder
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Apr 2021 14:27:58 +0200
+
 ngcp-db-schema (8.5.4.0+0~mr8.5.4.0) unstable; urgency=medium
 
   * New release.
