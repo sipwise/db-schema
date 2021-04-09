@@ -1,0 +1,5 @@
+use provisioning;
+
+ALTER TABLE voip_cf_mappings
+  DROP KEY `cfmap_sset_idx`,
+  DROP CONSTRAINT `vcm_sourceset_ref`;

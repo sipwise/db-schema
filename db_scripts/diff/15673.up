@@ -1,0 +1,5 @@
+use provisioning;
+
+ALTER TABLE voip_cf_mappings
+  ADD KEY `cfmap_sset_idx` (`source_set_id`),
+  ADD CONSTRAINT `vcm_sourceset_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
