@@ -1,0 +1,28 @@
+USE provisioning;
+SET autocommit=0;
+
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'NAT and Media Flow Control';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "rtp_debug",
+  label = "Enable RTP proxy debugging",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Enables full debug logging in the RTP proxy for all calls from or to this subscriber or peer.";
+
+
+COMMIT;
