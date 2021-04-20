@@ -1,3 +1,33 @@
+ngcp-db-schema (9.5.0.0+0~mr9.5.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [03f4dd7] TT#109103 add voip blob preferences support
+  * [c3fad34] TT#118950 add missing voip_cf_mapping index/constraint
+  * [4b73669] TT#118950 add view provisioning.v_subscriber_cfs
+
+  [ Victor Seva ]
+  * [0ad0181] TT#108066 add 'emergency_provider_info' as domain pref
+  * [de4495f] TT#108065 emergency_location_format
+  * [f15ecd0] TT#108065 remove prof_pref from emergency_location_* preferences
+
+  [ Richard Fuchs ]
+  * [33d0b22] TT#106253 add blob storage for recorded streams
+  * [1e4360a] TT#118902 add new preference for per-call RTP debugging
+
+  [ Rene Krenn ]
+  * [c798abf] TT#111303 billing: add "aoc_pulse_amount_per_message" field
+  * [a6bb583] TT#114450 add index for contacts.email
+
+  [ Alessio Garzi ]
+  * [b8107d2] TT#76227 rtp_interface is default ext
+  * [1e129a6] Revert "TT#76227 rtp_interface is default ext"
+  * [3104842] TT#117000 New cdr aggregated field source_last_hih
+
+  [ Flaviu Mates ]
+  * [42e16a4] TT#108162 Add csc_color_primary and csc_color_secondary 	  fields to reseller branding table
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 20 Apr 2021 11:56:17 +0200
+
 ngcp-db-schema (9.4.0.0+0~mr9.4.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
