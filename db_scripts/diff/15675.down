@@ -1,0 +1,10 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences
+SET
+  label = 'Transcode to G.711 µ-Law',
+  description = 'Always offer the audio codec G.711 µ-Law (PCMU, 8 kHz) to this subscriber or peer.'
+WHERE attribute = 'transcode_PCMU';
+
+COMMIT;
