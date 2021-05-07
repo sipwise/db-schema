@@ -1,0 +1,31 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @rej_id FROM voip_sound_groups WHERE name = 'early_media';
+INSERT INTO voip_sound_handles (name,group_id) VALUES ('ringback_tone', @rej_id);
+
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name='Applications';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "play_emulated_ringback_tone",
+label = "Play emulated ringback tone after pre-call announcements",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 1,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "Play an emulated ringback tone as early media after the pre-call announcements. The ringback tone is played while the final callee is ringing and only if a 180 Ringing message is received from the callee endpoint.";
+
+commit;

@@ -1,0 +1,5 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name = 'ringback_tone';
+
+DELETE FROM voip_preferences WHERE attribute = 'play_emulated_ringback_tone';
