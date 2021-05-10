@@ -38,7 +38,7 @@ if [ "${nodename}" = "unknown" ] ; then
   exit 1
 fi
 
-service mysql start || true
+service mariadb start || true
 
 . /etc/default/ngcp-roles
 . /etc/default/ngcp-db
