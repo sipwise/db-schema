@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @rej_id FROM voip_sound_groups WHERE name = 'early_rejects';
+UPDATE voip_sound_handles SET group_id = @rej_id WHERE name IN ('announce_before_call_setup', 'announce_before_cf', 'announce_before_recording', 'announce_to_callee');
+DELETE FROM voip_sound_groups WHERE name = 'early_media';
+
+commit;
