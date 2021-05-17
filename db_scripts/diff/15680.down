@@ -1,0 +1,14 @@
+USE kamailio;
+SET autocommit=0;
+
+DROP VIEW v_subscriber_devices;
+
+CREATE VIEW v_subscriber_devices as
+    SELECT s.username, s.domain, s.uuid, s.password, 0 as is_devid, NULL as devid_alias
+      FROM subscriber s
+    UNION DISTINCT
+    SELECT d.alias_username as username, d.alias_domain as domain, s.uuid, s.password, d.is_devid, d.devid_alias
+      FROM subscriber s
+      JOIN dbaliases d on d.username = s.username and d.domain = s.domain and is_devid = 1;
+
+COMMIT;
