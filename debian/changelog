@@ -1,3 +1,10 @@
+ngcp-db-schema (9.3.1.2+0~mr9.3.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [8e87f6e] TT#124751 ignore provisioning.autoprov_firmwares_data
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 08 Jun 2021 18:46:07 +0200
+
 ngcp-db-schema (9.3.1.1+0~mr9.3.1.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
