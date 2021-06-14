@@ -1,3 +1,29 @@
+ngcp-db-schema (9.5.1.0+0~mr9.5.1.0) unstable; urgency=medium
+
+  [ Victor Tsvetov ]
+  * [49435a3] TT#115002 Replace "μ-Law" with "u-Law" in transcode_PCMU
+
+  [ Alexander Lutay ]
+  * [cb5bedc] TT#118659 Switch service mysql->mariadb in ngcp-update-db-schema
+  * [a6dcea5] TT#122035 Allow ngcp-synd-db to sync passwords from db01 on Carrier
+
+  [ Marco Capetta ]
+  * [eabd994] TT#120551 Create new early_media soundset section
+  * [ef12f48] TT#120551 Add ringback_tone sound handle and play_ringback_tone preference
+  * [8c7b037] TT#105874 Update v_subscriber_devices view adding sub_username
+
+  [ Victor Seva ]
+  * [1293c69] TT#91051 STIR related voip_preferences
+  * [bc275c5] TT#91051 SHAKEN related voip_preferences
+
+  [ Otto Reischig ]
+  * [055bdb4] TT#119455 Announcement in case of timeout in AA
+
+  [ Kirill Solomko ]
+  * [ca06203] TT#124751 ignore provisioning.autoprov_firmwares_data
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 14 Jun 2021 16:34:42 +0200
+
 ngcp-db-schema (9.5.0.0+0~mr9.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
