@@ -1,3 +1,9 @@
+ngcp-db-schema (8.5.5.1+0~mr8.5.5.1) unstable; urgency=medium
+
+  * New release.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 08 Jul 2021 11:59:45 +0200
+
 ngcp-db-schema (8.5.5.0+0~mr8.5.5.0) unstable; urgency=medium
 
   [ Rene Krenn ]
