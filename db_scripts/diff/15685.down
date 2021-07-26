@@ -1,0 +1,5 @@
+USE provisioning;
+
+select id into @voipprefsid from voip_preferences where attribute ='extended_dialing_mode';
+
+delete from voip_preferences_enum where preference_id=@voipprefsid and value='extended_send_primary_plus_extension';

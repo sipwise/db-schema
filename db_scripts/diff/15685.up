@@ -1,0 +1,15 @@
+USE provisioning;
+SET autocommit=0;
+
+select id into @voipprefsid from voip_preferences where attribute ='extended_dialing_mode';
+
+INSERT INTO voip_preferences_enum SET
+    preference_id = @voipprefsid,
+    label = 'Extended matching, send primary number with extension',
+    value = 'extended_send_primary_plus_extension',
+    usr_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    prof_pref = 1;
+
+COMMIT;
