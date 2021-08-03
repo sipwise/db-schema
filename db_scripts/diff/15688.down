@@ -1,0 +1,3 @@
+use billing;
+
+alter table billing_profiles drop column ignore_domain;

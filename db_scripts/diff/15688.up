@@ -1,0 +1,3 @@
+use billing;
+
+alter table billing_profiles add column ignore_domain tinyint(1) not null default 0;
