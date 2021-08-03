@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit=0;
+
+DELETE FROM provisioning.voip_pbx_autoattendants WHERE choice = 'default';
+
+ALTER TABLE provisioning.voip_pbx_autoattendants MODIFY choice TINYINT(3) NOT NULL;
+
+COMMIT;
