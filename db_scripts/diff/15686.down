@@ -1,0 +1,3 @@
+USE provisioning;
+
+DELETE FROM voip_sound_handles WHERE name = 'aa_default';

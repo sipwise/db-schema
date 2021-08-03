@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @sgid FROM voip_sound_groups WHERE name = 'pbx';
+
+INSERT INTO voip_sound_handles (name, group_id, expose_to_customer) VALUES ('aa_default', @sgid, 1);
+
+COMMIT;
