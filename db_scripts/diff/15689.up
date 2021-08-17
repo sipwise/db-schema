@@ -1,0 +1,6 @@
+use kamailio;
+ALTER TABLE kamailio.sems_registrations
+  DROP PRIMARY KEY,
+  ADD COLUMN `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  ADD COLUMN `peer_host_id` int(10) UNSIGNED DEFAULT NULL,
+  MODIFY `subscriber_id` int(10) UNSIGNED DEFAULT NULL;

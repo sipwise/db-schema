@@ -1,0 +1,7 @@
+use kamailio;
+ALTER TABLE kamailio.sems_registrations
+  DROP PRIMARY KEY,
+  MODIFY `subscriber_id` int(11) NOT NULL,
+  ADD PRIMARY KEY (`subscriber_id`),
+  DROP COLUMN `id`,
+  DROP COLUMN `peer_host_id`;
