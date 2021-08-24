@@ -1,3 +1,20 @@
+ngcp-db-schema (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [598d868] TT#127151 fix empty billing profile returned when searching by host IP
+  * [bff5543] TT#82409 Introducing new 'peer_auth_hf_user' peer/subscriber preference
+  * [38b64c7] TT#134806 add ignore_domain column
+
+  [ Alessio Garzi ]
+  * [7348867] TT#126953 New usr preference crypto_base64_padding
+  * [2cc7ffe] TT#127851 New option extended_send_primary_plus_extension
+
+  [ Donat Zenichev ]
+  * [6d4e00e] TT#133301 introducing new Auto-Attendant option
+  * [04e28b6] TT#133301 Let 'voip_pbx_autoattendants.choice' be compatible with string literals
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 24 Aug 2021 16:49:20 +0200
+
 ngcp-db-schema (10.0.0.0+0~mr10.0.0.0) unstable; urgency=medium
 
   [ Victor Tsvetov ]
