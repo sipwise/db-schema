@@ -1,0 +1,5 @@
+ALTER TABLE kamailio.mobile_push_registrations
+  DROP PRIMARY KEY,
+  ADD id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  MODIFY reg_id VARBINARY(3072) NOT NULL,
+  ADD UNIQUE INDEX reg_token (reg_id);
