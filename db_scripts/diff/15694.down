@@ -1,0 +1,4 @@
+ALTER TABLE kamailio.mobile_push_registrations
+  DROP id,
+  DROP INDEX reg_token,
+  MODIFY reg_id VARBINARY(255) NOT NULL PRIMARY KEY;
