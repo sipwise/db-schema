@@ -1,0 +1,4 @@
+use kamailio;
+ALTER TABLE kamailio.sems_registrations
+  DROP FOREIGN KEY `sub_id_ref`,
+  DROP FOREIGN KEY `lcr_gw_ref`;

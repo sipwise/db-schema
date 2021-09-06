@@ -1,0 +1,9 @@
+use kamailio;
+
+SET autocommit=0;
+DELETE FROM `sems_registrations` WHERE `sems_registrations`.`subscriber_id` NOT IN (SELECT `id` FROM `subscriber`);
+COMMIT;
+
+ALTER TABLE `sems_registrations`
+  ADD CONSTRAINT `sub_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `subscriber` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lcr_gw_ref` FOREIGN KEY (`peer_host_id`) REFERENCES `lcr_gw` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
