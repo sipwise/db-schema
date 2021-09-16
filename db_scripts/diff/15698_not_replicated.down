@@ -1,0 +1,19 @@
+USE provisioning;
+SET autocommit=0;
+SET sql_log_bin=0;
+
+
+SELECT id FROM voip_preferences WHERE attribute='mobile_push_enable' INTO @pref_id;
+DELETE FROM voip_preferences_enum WHERE preference_id=@pref_id;
+
+UPDATE voip_preferences SET data_type = 'boolean', type = 1 WHERE id = @pref_id;
+
+UPDATE kamailio.usr_preferences SET type = 1 WHERE attribute='mobile_push_enable';
+UPDATE kamailio.dom_preferences SET type = 1 WHERE attribute='mobile_push_enable';
+
+DELETE from voip_usr_preferences WHERE value <> 'always' AND attribute_id =  @pref_id;
+UPDATE voip_usr_preferences SET value = 1 WHERE value = 'always' AND attribute_id =  @pref_id;
+DELETE from voip_dom_preferences WHERE value <> 'always' AND attribute_id =  @pref_id;
+UPDATE voip_dom_preferences SET value = 1 WHERE value = 'always' AND attribute_id =  @pref_id;
+
+COMMIT;

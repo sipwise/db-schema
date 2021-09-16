@@ -1,0 +1,27 @@
+USE provisioning;
+SET autocommit=0;
+SET sql_log_bin=0;
+
+SELECT id FROM voip_preferences WHERE attribute='mobile_push_enable' INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, prof_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Never send push', 'never', 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Never send push', 'never', 1, 0, 0, 0, 0, 0),
+(@pref_id, 'Always send push', 'always', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Send push only if no device registered', 'no_reg', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Always send push, skip registered devices', 'only_push', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Registered devices, then send push', 'reg_then_push', 1, 1, 0, 0, 0, 0),
+(@pref_id, 'Send push, then registered devices', 'push_then_reg', 1, 1, 0, 0, 0, 0);
+
+UPDATE voip_preferences SET data_type = 'enum', type = 0 WHERE id = @pref_id;
+
+UPDATE voip_usr_preferences SET value = 'always' WHERE value = 1 AND attribute_id = @pref_id;
+UPDATE voip_dom_preferences SET value = 'always' WHERE value = 1 AND attribute_id = @pref_id;
+
+UPDATE kamailio.usr_preferences SET type = 0 WHERE attribute='mobile_push_enable';
+UPDATE kamailio.dom_preferences SET type = 0 WHERE attribute='mobile_push_enable';
+
+COMMIT;
