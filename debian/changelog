@@ -1,3 +1,13 @@
+ngcp-db-schema (9.5.2.1+0~mr9.5.2.1) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [370dcac] TT#134806 add ignore_domain column
+
+  [ Richard Fuchs ]
+  * [cd2fa40] TT#139652 expand reg_id for kamailio.mobile_push_registrations
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 21 Sep 2021 16:24:46 +0200
+
 ngcp-db-schema (9.5.2.0+0~mr9.5.2.0) unstable; urgency=medium
 
   * New release.
