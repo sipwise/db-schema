@@ -1,0 +1,28 @@
+USE provisioning;
+SET autocommit=0;
+SET sql_log_bin=0;
+
+SELECT id FROM voip_preferences WHERE attribute='play_announce_before_recording' INTO @rec_pref_id;
+
+UPDATE voip_preferences set data_type='enum',type='0' WHERE id=@rec_pref_id AND
+ label='Play announcement before recording';
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, contract_pref, usr_pref, dom_pref, peer_pref, default_val)
+VALUES
+(@rec_pref_id, 'Use domain default / contract default', NULL, 0, 1, 0, 0, 1),
+(@rec_pref_id, 'Use domain default', NULL, 1, 0, 0, 0, 1),
+(@rec_pref_id, 'Always', 'always', 1, 1, 1, 0, 0),
+(@rec_pref_id, 'External calls only', 'external_calls_only', 1, 1, 1, 0, 0),
+(@rec_pref_id, 'Internal calls only', 'internal_calls_only', 1, 1, 1, 0, 0),
+(@rec_pref_id, 'Never', 'never', 1, 1, 1, 0, 1);
+
+UPDATE  kamailio.usr_preferences SET value='always' WHERE attribute='play_announce_before_recording' AND value='1';
+UPDATE  kamailio.dom_preferences SET value='always' WHERE attribute='play_announce_before_recording' AND value='1';
+UPDATE  kamailio.contract_preferences SET value='always' WHERE attribute='play_announce_before_recording' AND value='1';
+
+UPDATE voip_usr_preferences SET value='always' where attribute_id=@rec_pref_id AND value='1';
+UPDATE voip_dom_preferences SET value='always' where attribute_id=@rec_pref_id AND value='1';
+UPDATE voip_contract_preferences SET value='always' where attribute_id=@rec_pref_id AND value='1';
+
+commit;

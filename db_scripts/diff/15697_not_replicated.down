@@ -1,0 +1,27 @@
+USE provisioning;
+SET autocommit=0;
+SET sql_log_bin=0;
+
+SELECT id FROM voip_preferences WHERE attribute='play_announce_before_recording' INTO @rec_pref_id;
+
+UPDATE voip_preferences SET data_type='boolean',type='0' WHERE id=@rec_pref_id AND label='Play announcement before recording';
+
+DELETE FROM voip_preferences_enum WHERE preference_id=@rec_pref_id;
+
+UPDATE kamailio.usr_preferences SET value='1' WHERE attribute='play_announce_before_recording' AND value='always';
+UPDATE kamailio.dom_preferences SET value='1' WHERE attribute='play_announce_before_recording' AND value='always';
+UPDATE kamailio.contract_preferences SET value='1' WHERE attribute='play_announce_before_recording' AND value='always';
+
+DELETE FROM kamailio.usr_preferences WHERE attribute='play_announce_before_recording' AND value<>'1';
+DELETE FROM kamailio.dom_preferences WHERE attribute='play_announce_before_recording' AND value<>'1';
+DELETE FROM kamailio.contract_preferences WHERE attribute='play_announce_before_recording' AND value<>'1';
+
+UPDATE voip_usr_preferences SET value='1' where attribute_id=@rec_pref_id AND value='always';
+UPDATE voip_dom_preferences SET value='1' where attribute_id=@rec_pref_id AND value='always';
+UPDATE voip_contract_preferences SET value='1' where attribute_id=@rec_pref_id AND value='always';
+
+DELETE FROM voip_usr_preferences where attribute_id=@rec_pref_id AND value<>'1';
+DELETE FROM voip_dom_preferences where attribute_id=@rec_pref_id AND value<>'1';
+DELETE FROM voip_contract_preferences where attribute_id=@rec_pref_id AND value<>'1';
+
+commit;
