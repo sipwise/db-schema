@@ -1,3 +1,24 @@
+ngcp-db-schema (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [b8bac3a] TT#66577 Add new columns 'id' PK and 'peer_host_id' INT to the 'kamailio.sems_registrations'
+  * [9323802] TT#66577 Add foreign keys for 'sems_registrations'
+  * [66bb15b] TT#78116 Modify VIEW 'v_subscriber_devices' to have 'ha1' and 'ha1b' columns
+
+  [ Richard Fuchs ]
+  * [31527c2] TT#139652 expand reg_id for kamailio.mobile_push_registrations
+
+  [ Rene Krenn ]
+  * [56f44dc] TT#62271 fix "cfo" call_type for intermediate CDRs
+
+  [ Alessio Garzi ]
+  * [fc36237] TT#121150 play_announce_before_recording has now 4 options
+
+  [ Marco Capetta ]
+  * [97f09a8] TT#138002 Transform 'mobile_push_enable' preference to 'enum'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 05 Oct 2021 13:18:04 +0200
+
 ngcp-db-schema (10.1.0.0+0~mr10.1.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
