@@ -1,0 +1,13 @@
+USE billing;
+
+ALTER TABLE domains
+ADD `reseller_id` int(11) unsigned NOT NULL,
+ADD KEY `resellerid_idx` (`reseller_id`);
+
+UPDATE domains d
+INNER JOIN domain_resellers dr
+ON d.id = dr.domain_id
+SET d.reseller_id=dr.reseller_id;
+
+ALTER TABLE domains
+ADD CONSTRAINT `d_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;

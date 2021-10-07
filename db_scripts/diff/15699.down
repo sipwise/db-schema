@@ -1,0 +1,6 @@
+USE billing;
+
+ALTER TABLE domains
+DROP FOREIGN KEY `d_resellerid_ref`,
+DROP KEY `resellerid_idx`,
+DROP COLUMN reseller_id;
