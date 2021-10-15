@@ -1,0 +1,7 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET label='Block incoming anonymous calls from this user',description='If enabled, incoming anonyous calls from this user will be dropped' WHERE attribute='upn_block_clir';
+UPDATE voip_preferences SET description='The content to put into the From display-name for outbound calls from the platform to the subscriber' WHERE attribute='outbound_from_display';
+
+commit;
