@@ -1,0 +1,2 @@
+use provisioning;
+alter table voip_allowed_ip_groups modify column ipnet varchar(18) not null;
