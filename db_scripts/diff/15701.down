@@ -1,0 +1,11 @@
+USE billing;
+
+ALTER TABLE journals
+DROP FOREIGN KEY `j_resellerid_ref`,
+DROP KEY `resellerid_idx`,
+DROP KEY `userid_idx`,
+DROP KEY `txid_idx`,
+DROP COLUMN `reseller_id`,
+DROP COLUMN `user_id`,
+DROP COLUMN `tx_id`,
+DROP COLUMN `role`;

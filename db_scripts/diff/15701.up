@@ -1,0 +1,11 @@
+USE billing;
+
+ALTER TABLE journals
+ADD COLUMN `reseller_id` int(11) unsigned DEFAULT NULL,
+ADD KEY `resellerid_idx` (`reseller_id`),
+ADD COLUMN `user_id` int(11) unsigned DEFAULT NULL,
+ADD KEY `userid_idx` (`user_id`),
+ADD COLUMN `role` varchar(64) DEFAULT NULL,
+ADD COLUMN `tx_id` varchar(36) DEFAULT NULL,
+ADD UNIQUE KEY `txid_idx` (`tx_id`),
+ADD CONSTRAINT `j_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`);
