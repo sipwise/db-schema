@@ -1,0 +1,78 @@
+use billing;
+
+delimiter ;;
+drop function if exists get_billing_profile_contract_cnt;;
+create function get_billing_profile_contract_cnt(
+  _profile_id int,
+  _limit int
+) returns int(11)
+deterministic reads sql data
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+        join billing.contracts as c on est.contract_id = c.id
+        where
+        cbpn.billing_profile_id = _profile_id
+        and c.status != 'terminated'
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+    join billing.contracts as c on est.contract_id = c.id
+    where
+    cbpn.billing_profile_id = _profile_id
+    and c.status != 'terminated'
+  );
+
+end;;
+
+drop function if exists get_billing_network_contract_cnt;;
+create function get_billing_network_contract_cnt(
+  _network_id int,
+  _limit int
+) returns int(11)
+deterministic reads sql data
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+        join billing.contracts as c on est.contract_id = c.id
+        where
+        cbpn.billing_network_id = _network_id
+        and c.status != 'terminated'
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+    join billing.contracts as c on est.contract_id = c.id
+    where
+    cbpn.billing_network_id = _network_id
+    and c.status != 'terminated'
+  );
+
+end;;
+
+delimiter ;
