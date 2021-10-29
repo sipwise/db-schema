@@ -1,0 +1,4 @@
+use billing;
+
+drop function if exists get_billing_profile_contract_cnt;
+drop function if exists get_billing_network_contract_cnt;
