@@ -1,0 +1,13 @@
+USE billing;
+
+ALTER TABLE `admins`
+DROP FOREIGN KEY `a_roleid_ref`,
+DROP COLUMN `role_id`;
+
+ALTER TABLE `journals`
+DROP FOREIGN KEY `j_roleid_ref`,
+DROP COLUMN `role_id`,
+ADD COLUMN `role` varchar(64) DEFAULT NULL;
+
+DROP TABLE `acl_role_mappings`;
+DROP TABLE `acl_roles`;

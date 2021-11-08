@@ -1,0 +1,133 @@
+USE billing;
+
+CREATE TABLE `acl_roles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `role` varchar(64) NOT NULL,
+  `is_acl` boolean NOT NULL DEFAULT false,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role_idx` (`role`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `acl_role_mappings` (
+  `accessor_id` int(11) unsigned NOT NULL,
+  `has_access_to_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`accessor_id`, `has_access_to_id`),
+  KEY `accessorid_idx` (`accessor_id`),
+  KEY `hasaccesstoid_idx` (`has_access_to_id`),
+  CONSTRAINT `arm_accessorid_ref` FOREIGN KEY (`accessor_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `arm_hasaccessto_ref` FOREIGN KEY (`has_access_to_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+INSERT INTO `acl_roles` (`role`, `is_acl`) VALUES
+  ('system', false),
+  ('admin', false),
+  ('reseller', false),
+  ('ccareadmin', false),
+  ('ccare', false),
+  ('lintercept', false);
+
+INSERT INTO `acl_role_mappings` (`accessor_id`, `has_access_to_id`)
+    SELECT *
+    FROM (SELECT `id` as `accessor_id` FROM `acl_roles` WHERE `role` = 'system') as A
+    JOIN (SELECT `id` as `has_access_to_id` FROM `acl_roles` WHERE `role` IN ('system','admin','reseller','ccareadmin','ccare','lintercept')) as B
+    UNION ALL
+    SELECT *
+    FROM (SELECT `id` as `accessor_id` FROM `acl_roles` WHERE `role` = 'admin') as A
+    JOIN (SELECT `id` as `has_access_to_id` FROM `acl_roles` WHERE `role` IN ('admin','reseller','ccareadmin','ccare')) as B
+    UNION ALL
+    SELECT *
+    FROM (SELECT `id` as `accessor_id` FROM `acl_roles` WHERE `role` = 'reseller') as A
+    JOIN (SELECT `id` as `has_access_to_id` FROM `acl_roles` WHERE `role` IN ('reseller','ccareadmin','ccare')) as B
+    UNION ALL
+    SELECT *
+    FROM (SELECT `id` as `accessor_id` FROM `acl_roles` WHERE `role` = 'ccareadmin') as A
+    JOIN (SELECT `id` as `has_access_to_id` FROM `acl_roles` WHERE `role` IN ('ccareadmin','ccare')) as B
+    UNION ALL
+    SELECT *
+    FROM (SELECT `id` as `accessor_id` FROM `acl_roles` WHERE `role` = 'ccare') as A
+    JOIN (SELECT `id` as `has_access_to_id` FROM `acl_roles` WHERE `role` = 'ccare') as B;
+
+
+ALTER TABLE `admins`
+ADD COLUMN `role_id` int(11) unsigned,
+ADD KEY `roleid_idx` (`role_id`);
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'system'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE `dest`.`is_system`;
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'admin'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE
+    `dest`.`is_superuser` IS TRUE AND
+    `dest`.`is_ccare` IS FALSE AND
+    `dest`.`is_system` IS FALSE AND
+    `dest`.`lawful_intercept` IS FALSE;
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'ccareadmin'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE
+    `dest`.`is_superuser` IS TRUE AND
+    `dest`.`is_ccare` IS TRUE AND
+    `dest`.`lawful_intercept` IS FALSE AND
+    `dest`.`is_system` IS FALSE;
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'ccare'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE
+    `dest`.`is_superuser` IS FALSE AND
+    `dest`.`is_ccare` IS TRUE AND
+    `dest`.`lawful_intercept` IS FALSE AND
+    `dest`.`is_system` IS FALSE;
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'lintercept'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE `dest`.`lawful_intercept`;
+
+UPDATE `admins` AS `dest`,
+    (
+        SELECT *
+        FROM `acl_roles`
+        WHERE `role` = 'reseller'
+    ) AS `src`
+SET `dest`.`role_id` = `src`.`id`
+WHERE
+    `dest`.`is_superuser` IS FALSE AND
+    `dest`.`is_ccare` IS FALSE AND
+    `dest`.`lawful_intercept` IS FALSE AND
+    `dest`.`is_system` IS FALSE;
+
+ALTER TABLE `admins`
+MODIFY `role_id` int(11) unsigned NOT NULL,
+ADD CONSTRAINT `a_roleid_ref` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `journals`
+DROP COLUMN IF EXISTS`role`,
+ADD COLUMN `role_id` int(11) unsigned DEFAULT NULL,
+ADD KEY `roleid_idx` (`role_id`),
+ADD CONSTRAINT `j_roleid_ref` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
