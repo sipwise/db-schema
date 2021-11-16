@@ -1,0 +1,27 @@
+USE provisioning;
+
+DROP FUNCTION IF EXISTS ip_is_allowed;
+
+DROP TRIGGER IF EXISTS provisioning.aig_create_trig;
+DROP TRIGGER IF EXISTS provisioning.aig_update_trig;
+
+ALTER TABLE provisioning.voip_allowed_ip_groups
+MODIFY COLUMN ipnet varchar(43) NOT NULL,
+DROP INDEX IF EXISTS aig_groupid_ipv4_from_idx,
+DROP INDEX IF EXISTS aig_groupid_ipv4_to_idx,
+DROP INDEX IF EXISTS aig_groupid_ipv4_from_to_idx,
+DROP INDEX IF EXISTS aig_groupid_ipv6_from_idx,
+DROP INDEX IF EXISTS aig_groupid_ipv6_to_idx,
+DROP INDEX IF EXISTS aig_groupid_ipv6_from_to_idx,
+DROP COLUMN IF EXISTS _ipv4_net_from,
+DROP COLUMN IF EXISTS _ipv4_net_to,
+DROP COLUMN IF EXISTS _ipv6_net_from,
+DROP COLUMN IF EXISTS _ipv6_net_to;
+
+DROP FUNCTION IF EXISTS ip_is_ipv6;
+DROP FUNCTION IF EXISTS ip_is_cidr;
+DROP FUNCTION IF EXISTS hex_and;
+DROP FUNCTION IF EXISTS hex_add;
+DROP FUNCTION IF EXISTS bin_to_hex;
+DROP FUNCTION IF EXISTS ip_get_network_address;
+DROP FUNCTION IF EXISTS ip_get_broadcast_address;

@@ -1,0 +1,320 @@
+USE provisioning;
+
+ALTER TABLE provisioning.voip_allowed_ip_groups
+MODIFY COLUMN ipnet VARCHAR(46) NOT NULL,
+ADD COLUMN _ipv4_net_from VARBINARY(4) DEFAULT NULL,
+ADD COLUMN _ipv4_net_to VARBINARY(4) DEFAULT NULL,
+ADD COLUMN _ipv6_net_from VARBINARY(16) DEFAULT NULL,
+ADD COLUMN _ipv6_net_to VARBINARY(16) DEFAULT NULL;
+
+DELIMITER ;;
+
+DROP FUNCTION IF EXISTS ip_is_ipv6;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_is_ipv6 (
+  _ipnet VARCHAR(46)
+) RETURNS BOOLEAN
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE(".",_ipnet) = 0,1,0);
+
+END;;
+
+DROP FUNCTION IF EXISTS ip_is_cidr;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_is_cidr (
+  _ipnet VARCHAR(46)
+) RETURNS BOOLEAN
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE("/",_ipnet) = 0,0,1);
+
+END;;
+
+DROP FUNCTION IF EXISTS hex_and;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION hex_and (
+  _a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS VARCHAR(255)
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _result VARCHAR(255) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a,_i,1);
+    SET _b_digit = SUBSTR(_b,_i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(_result,HEX(COALESCE(conv(_a_digit,16,10),0) & COALESCE(CONV(_b_digit,16,10),0)));
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END;;
+
+#select hex_and("FFF0","AAAA");
+
+DROP FUNCTION IF EXISTS hex_add;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION hex_add (
+  _a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS VARCHAR(256)
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _carry, _result_digit INT DEFAULT 0;
+  DECLARE _result VARCHAR(256) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a, -1 * _i,1);
+    SET _b_digit = SUBSTR(_b, -1 * _i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 AND _carry = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result_digit = COALESCE(CONV(_a_digit,16,10),0) + COALESCE(CONV(_b_digit,16,10),0) + _carry;
+    SET _result = CONCAT(HEX(_result_digit & 15),_result);
+    IF _result_digit > 15 THEN
+      SET _carry = 1;
+    ELSE
+      SET _carry = 0;
+    END IF;
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END;;
+
+#select hex_add("FFFF","FFFF");
+
+DROP FUNCTION IF EXISTS bin_to_hex;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION bin_to_hex (
+  _bin VARCHAR(1023)
+) RETURNS VARCHAR(1023)
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _digits VARCHAR(4);
+  DECLARE _result VARCHAR(1023) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _digits = SUBSTR(_bin,-4 * _i,4);
+    IF LENGTH(_digits) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(COALESCE(CONV(_digits,2,16),"0"),_result);
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END;;
+
+#select bin_to_hex("00011110");
+
+DROP FUNCTION IF EXISTS ip_get_network_address;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_get_network_address (
+  _ipnet VARCHAR(46)
+) RETURNS VARBINARY(16)
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_bytes = UNHEX(
+      hex_and(
+        HEX(INET6_ATON(SUBSTR(_ipnet,1,locate("/",_ipnet) - 1))),
+        _mask_hex
+      )
+    );
+  ELSE
+    SET _network_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _network_bytes;
+
+END;;
+
+DROP FUNCTION IF EXISTS ip_get_broadcast_address;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_get_broadcast_address (
+  _ipnet VARCHAR(46)
+) RETURNS VARBINARY(16)
+DETERMINISTIC NO SQL
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_hex VARCHAR(32);
+  DECLARE _broadcast_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_hex = hex_and(
+      HEX(INET6_ATON(substr(_ipnet,1,LOCATE("/",_ipnet) - 1))),
+      _mask_hex
+    );
+    SET _broadcast_bytes = UNHEX(hex_add(
+      _network_hex,
+      bin_to_hex(CONCAT(REPEAT("0",_mask_len),REPEAT("1",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)))
+    ));
+  ELSE
+    SET _broadcast_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _broadcast_bytes;
+
+END;;
+
+#select inet6_ntoa(ip_get_network_address("192.168.0.1/24"));
+#select inet6_ntoa(ip_get_network_address("2001:db8:0:8d3:0:8a2e:70:7344/64"));
+#select inet6_ntoa(ip_get_broadcast_address("192.168.0.1/24"));
+#select inet6_ntoa(ip_get_broadcast_address("2001:db8:0:8d3:0:8a2e:70:7344/64"));
+
+DROP FUNCTION IF EXISTS ip_is_allowed;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_is_allowed(
+  _uuid VARCHAR(36),
+  _ip VARCHAR(46)
+) RETURNS BOOLEAN
+DETERMINISTIC READS SQL DATA
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _is_valid_ip, _is_ipv6 BOOLEAN DEFAULT 0;
+  DECLARE _aig_id, _aig_ids_done INT DEFAULT 0;
+  DECLARE _is_allowed BOOLEAN DEFAULT NULL;
+  
+  DECLARE usr_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_usr_preferences v
+    JOIN provisioning.voip_subscribers s on v.subscriber_id = s.id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE dom_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_dom_preferences v
+    JOIN provisioning.voip_subscribers s on v.domain_id = s.domain_id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET _aig_ids_done = _aig_ids_done + 1;
+
+  IF IF(EXISTS(SELECT 1 FROM provisioning.voip_subscribers WHERE uuid = _uuid),0,1) THEN
+    #reject invalid subscribers:
+    RETURN 0;
+  END IF;
+
+  SET _network_bytes = INET6_ATON(_ip);
+  SET _is_valid_ip = IF(_network_bytes IS NULL OR HEX(_network_bytes) = "00000000",0,1);
+  SET _is_ipv6 = IF(_is_valid_ip,ip_is_ipv6(_ip),0);
+
+  OPEN usr_aig_id_cursor;
+  aig_ids_loop: LOOP
+    IF _aig_ids_done = 0 THEN
+      FETCH usr_aig_id_cursor INTO _aig_id;
+    ELSEIF _aig_ids_done = 1 THEN
+      CLOSE usr_aig_id_cursor;
+      IF _is_allowed IS NOT NULL THEN
+        RETURN _is_allowed;
+      ELSE
+        SET _is_allowed = NULL;
+        OPEN dom_aig_id_cursor;
+        FETCH dom_aig_id_cursor INTO _aig_id;
+      END IF;
+    ELSE
+      CLOSE dom_aig_id_cursor;
+      IF _is_allowed IS NOT NULL THEN
+        RETURN _is_allowed;
+      ELSE
+        LEAVE aig_ids_loop;
+      END IF;
+    END IF;
+    IF _aig_id IS NOT NULL THEN
+      IF _is_allowed IS NULL THEN
+        SET _is_allowed = 0;
+      END IF;
+      IF _is_valid_ip THEN
+        IF _is_ipv6 THEN
+          SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+            FROM provisioning.voip_allowed_ip_groups aig
+            WHERE
+              aig.group_id = _aig_id 
+              AND aig._ipv6_net_from <= _network_bytes
+              AND aig._ipv6_net_to >= _network_bytes
+          LIMIT 1),0));
+        ELSE
+          SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+            FROM provisioning.voip_allowed_ip_groups aig
+            WHERE
+              aig.group_id = _aig_id 
+              AND aig._ipv4_net_from <= _network_bytes
+              AND aig._ipv4_net_to >= _network_bytes
+          LIMIT 1),0));
+        END IF;
+      ELSE
+        #reject invalid IP addresses only if an allowed_ip is configured:
+        RETURN 0;
+      END IF;
+    END IF;
+  END LOOP aig_ids_loop;
+  
+  #accept if there are no allowed_ips set:
+  RETURN 1;
+
+END;;
+
+DELIMITER ;
+
+CREATE OR REPLACE TRIGGER provisioning.aig_create_trig before insert on provisioning.voip_allowed_ip_groups
+FOR EACH ROW SET
+  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
+  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
+  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
+  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null);
+
+CREATE OR REPLACE TRIGGER provisioning.aig_update_trig before update on provisioning.voip_allowed_ip_groups
+FOR EACH ROW SET
+  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
+  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
+  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
+  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null);
+
+UPDATE provisioning.voip_allowed_ip_groups SET id = id;
+
+ALTER TABLE provisioning.voip_allowed_ip_groups
+ADD INDEX aig_groupid_ipv4_from_to_idx (group_id,_ipv4_net_from,_ipv4_net_to),
+ADD INDEX aig_groupid_ipv6_from_to_idx (group_id,_ipv6_net_from,_ipv6_net_to);
