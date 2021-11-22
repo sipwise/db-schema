@@ -1,0 +1,9 @@
+USE fileshare;
+
+ALTER TABLE `uploads`
+  ADD COLUMN `subscriber_id` INT UNSIGNED DEFAULT NULL,
+  ADD KEY `subscriber_id_idx` (`subscriber_id`),
+  ADD CONSTRAINT `u_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `billing`.`voip_subscribers` (`id`) ON UPDATE CASCADE ON DELETE CASCADE,
+  ADD COLUMN `reseller_id` INT UNSIGNED DEFAULT NULL,
+  ADD KEY `reseller_id_idx` (`reseller_id`),
+  ADD CONSTRAINT `u_reseller_id_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;

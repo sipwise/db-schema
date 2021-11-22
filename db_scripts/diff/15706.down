@@ -1,0 +1,7 @@
+USE fileshare;
+
+ALTER TABLE `uploads`
+  DROP FOREIGN KEY `u_subscriber_id_ref`,
+  DROP COLUMN `subscriber_id`,
+  DROP FOREIGN KEY `u_reseller_id_ref`,
+  DROP COLUMN `reseller_id`;
