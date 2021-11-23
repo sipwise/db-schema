@@ -1,3 +1,25 @@
+ngcp-db-schema (10.2.1.0+0~mr10.2.1.0) unstable; urgency=medium
+
+  [ Michael Berger ]
+  * [620885c] TT#144850 add reseller fk to billing domains
+  * [2c45756] TT#145801 extend billing.journals
+
+  [ Alessio Garzi ]
+  * [03d22cb] TT#140351 Better description for upn_block_clir and outbound_from_display
+
+  [ Rene Krenn ]
+  * [13f009f] TT#148100 support IPv6 CIDR notation for allowed ips
+  * [52b3341] TT#147151 UDFs for fast usage count of billing profile&network
+  * [1558792] TT#146800 support decimal VAT rates
+
+  [ Guillem Jover ]
+  * [79f52ab] TT#124273 Update packaging for bullseye
+
+  [ Kirill Solomko ]
+  * [ad76187] TT#151700 add fileshare.uploads subscriber_id,reseller_id
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Nov 2021 14:16:51 +0100
+
 ngcp-db-schema (10.2.0.0+0~mr10.2.0.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
