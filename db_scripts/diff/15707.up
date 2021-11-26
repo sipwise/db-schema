@@ -1,0 +1,5 @@
+USE billing;
+
+ALTER TABLE billing.journals
+  DROP KEY txid_idx,
+   ADD KEY txid_idx (tx_id);
