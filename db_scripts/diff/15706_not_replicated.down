@@ -1,4 +1,5 @@
 USE fileshare;
+SET sql_log_bin=0;
 
 ALTER TABLE `uploads`
   DROP FOREIGN KEY `u_subscriber_id_ref`,
