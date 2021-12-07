@@ -1,0 +1,12 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id FROM voip_preferences WHERE attribute='play_announce_before_recording' INTO @rec_pref_id;
+
+UPDATE voip_preferences_enum SET contract_pref=1, usr_pref=1, dom_pref=1, peer_pref=0, default_val=1 WHERE
+preference_id=@rec_pref_id AND label='Never' AND contract_pref = 0 AND  usr_pref = 0 AND dom_pref = 1 AND peer_pref = 0 AND default_val = 1;
+
+DELETE FROM voip_preferences_enum WHERE
+preference_id=@rec_pref_id AND label='Never' AND value = 'never' AND contract_pref = 1 AND usr_pref = 1 AND dom_pref = 0 AND peer_pref = 0 AND default_val = 0;
+
+COMMIT;
