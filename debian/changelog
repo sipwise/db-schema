@@ -1,3 +1,10 @@
+ngcp-db-schema (10.2.1.2+0~mr10.2.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [3e31e2f] TT#154000 play_announce_before_recording default value fix
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 14 Dec 2021 08:49:04 +0100
+
 ngcp-db-schema (10.2.1.1+0~mr10.2.1.1) unstable; urgency=medium
 
   [ Kirill Solomko ]
