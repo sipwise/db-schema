@@ -1,0 +1,10 @@
+USE provisioning;
+UPDATE voip_preferences SET type = 1 WHERE attribute = 'transcode_dtmf';
+UPDATE voip_preferences SET type = 1 WHERE attribute = 'transcode_cn';
+USE kamailio;
+UPDATE usr_preferences SET type = 1 WHERE attribute = 'transcode_dtmf';
+UPDATE usr_preferences SET type = 1 WHERE attribute = 'transcode_cn';
+UPDATE dom_preferences SET type = 1 WHERE attribute = 'transcode_dtmf';
+UPDATE dom_preferences SET type = 1 WHERE attribute = 'transcode_cn';
+UPDATE peer_preferences SET type = 1 WHERE attribute = 'transcode_dtmf';
+UPDATE peer_preferences SET type = 1 WHERE attribute = 'transcode_cn';
