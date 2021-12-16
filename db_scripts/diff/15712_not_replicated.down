@@ -1,0 +1,30 @@
+USE provisioning;
+SET autocommit=0;
+SET sql_log_bin=0;
+
+# Update 'voip_subscribers' table
+
+UPDATE voip_subscribers SET pbx_hunt_policy = NULL
+  WHERE pbx_hunt_policy = 'none';
+
+ALTER TABLE voip_subscribers
+  CHANGE COLUMN `pbx_hunt_policy` `pbx_hunt_policy`
+    enum('serial','parallel','random','circular') DEFAULT NULL;
+
+
+
+# Update 'voip_preferences' and 'voip_preferences_enum' tables
+
+SELECT id FROM voip_preferences WHERE attribute='cloud_pbx_hunt_policy' INTO @rec_pref_id;
+
+UPDATE voip_preferences_enum SET default_val=1 WHERE preference_id=@rec_pref_id AND label='serial';
+
+DELETE FROM voip_preferences_enum WHERE preference_id=@rec_pref_id AND label='none';
+
+UPDATE voip_usr_preferences
+INNER JOIN voip_subscribers ON voip_usr_preferences.subscriber_id=voip_subscribers.id
+SET voip_usr_preferences.value = 'serial'
+WHERE voip_usr_preferences.attribute_id=@rec_pref_id  AND voip_subscribers.is_pbx_group = 0;
+
+
+COMMIT;
