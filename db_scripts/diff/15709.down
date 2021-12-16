@@ -1,0 +1,4 @@
+USE provisioning;
+UPDATE voip_preferences SET type = 1 WHERE attribute = 'transcode_dtmf';
+UPDATE voip_preferences SET type = 1 WHERE attribute = 'transcode_cn';
+COMMIT;
