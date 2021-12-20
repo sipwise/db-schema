@@ -1,3 +1,10 @@
+ngcp-db-schema (9.5.2.2+0~mr9.5.2.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [e24207b] TT#58659 fix transcode_dtmf/cn pref type
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 20 Dec 2021 15:47:16 +0100
+
 ngcp-db-schema (9.5.2.1+0~mr9.5.2.1) unstable; urgency=medium
 
   [ Rene Krenn ]
