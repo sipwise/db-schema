@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE `voip_subscriber_location_mappings` CHANGE mode mode ENUM ('add','replace','offline','forward') NOT NULL DEFAULT 'replace';
