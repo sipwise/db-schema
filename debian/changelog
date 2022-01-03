@@ -1,3 +1,10 @@
+ngcp-db-schema (7.5.11.1+0~mr7.5.11.1) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [98221a9] TT#139652 expand reg_id for kamailio.mobile_push_registrations
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 03 Jan 2022 13:33:28 +0100
+
 ngcp-db-schema (7.5.11.0+0~mr7.5.11.0) unstable; urgency=medium
 
   * New release.
