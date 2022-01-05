@@ -1,0 +1,106 @@
+USE provisioning;
+
+DELIMITER ;;
+
+DROP FUNCTION IF EXISTS ip_is_allowed;;
+CREATE DEFINER='root'@'localhost'
+FUNCTION ip_is_allowed(
+  _uuid VARCHAR(36),
+  _ip VARCHAR(46)
+) RETURNS BOOLEAN
+DETERMINISTIC READS SQL DATA
+SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _is_valid_ip, _is_ipv6 BOOLEAN DEFAULT 0;
+  DECLARE _aig_id, _aig_ids_done INT DEFAULT 0;
+  DECLARE _is_allowed BOOLEAN DEFAULT NULL;
+  
+  DECLARE usr_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_usr_preferences v
+    JOIN provisioning.voip_subscribers s on v.subscriber_id = s.id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE dom_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_dom_preferences v
+    JOIN provisioning.voip_subscribers s on v.domain_id = s.domain_id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET _aig_ids_done = _aig_ids_done + 1;
+
+  IF IF(EXISTS(SELECT 1 FROM provisioning.voip_subscribers WHERE uuid = _uuid),0,1) THEN
+    #reject invalid subscribers:
+    RETURN 0;
+  END IF;
+
+  SET _network_bytes = INET6_ATON(_ip);
+  SET _is_valid_ip = IF(_network_bytes IS NULL OR HEX(_network_bytes) = "00000000",0,1);
+  SET _is_ipv6 = IF(_is_valid_ip,ip_is_ipv6(_ip),0);
+
+  OPEN usr_aig_id_cursor;
+  aig_ids_loop: LOOP
+    IF _aig_ids_done = 0 THEN
+      FETCH usr_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 1 THEN
+        CLOSE usr_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          SET _is_allowed = NULL;
+          OPEN dom_aig_id_cursor;
+        END IF;
+      END IF;
+    END IF;
+    IF _aig_ids_done = 1 THEN
+      FETCH dom_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 2 THEN
+        CLOSE dom_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          LEAVE aig_ids_loop;
+        END IF;
+      END IF;
+    END IF;
+    IF _is_allowed IS NULL THEN
+      SET _is_allowed = 0;
+    END IF;
+    IF _is_valid_ip THEN
+      IF _is_ipv6 THEN
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv6_net_from <= _network_bytes
+            AND aig._ipv6_net_to >= _network_bytes
+        LIMIT 1),0));
+      ELSE
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv4_net_from <= _network_bytes
+            AND aig._ipv4_net_to >= _network_bytes
+        LIMIT 1),0));
+      END IF;
+    ELSE
+      #reject invalid IP addresses only if an allowed_ip is configured:
+      RETURN 0;
+    END IF;
+  END LOOP aig_ids_loop;
+  
+  #accept if there are no allowed_ips set:
+  RETURN 1;
+
+END;;
+
+DELIMITER ;
