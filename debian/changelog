@@ -1,3 +1,14 @@
+ngcp-db-schema (8.5.7.2+0~mr8.5.7.2) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [5f9c56a] TT#58659 fix transcode_dtmf/cn pref type
+
+  [ Rene Krenn ]
+  * [3ce7b84] TT#148100 support fast allowed_ip lookup for IPv4 and IPv6
+  * [611f7ea] TT#148100 statemachine impl for is_allowed_ip() proc
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 13 Jan 2022 10:25:01 +0100
+
 ngcp-db-schema (8.5.7.1+0~mr8.5.7.1) unstable; urgency=medium
 
   * New release.
