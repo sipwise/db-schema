@@ -1,3 +1,11 @@
+ngcp-db-schema (8.5.6.2+0~mr8.5.6.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [b9a6e57] TT#148100 support fast allowed_ip lookup for IPv4 and IPv6
+  * [0341321] TT#148100 statemachine impl for is_allowed_ip() proc
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 13 Jan 2022 10:40:02 +0100
+
 ngcp-db-schema (8.5.6.1+0~mr8.5.6.1) unstable; urgency=medium
 
   [ Richard Fuchs ]
