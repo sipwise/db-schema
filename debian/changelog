@@ -1,3 +1,10 @@
+ngcp-db-schema (10.2.1.5+0~mr10.2.1.5) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [bc51a7b] TT#155650 Add 'none' as default value for 'cloud_pbx_hunt_policy' pref
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 13 Jan 2022 16:55:01 +0100
+
 ngcp-db-schema (10.2.1.4+0~mr10.2.1.4) unstable; urgency=medium
 
   [ Rene Krenn ]
