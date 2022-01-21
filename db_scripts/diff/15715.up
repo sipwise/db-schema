@@ -1,0 +1,25 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "allow_lm_forward_loop",
+    label = "Allow loop to same peering group for location mapping 'forward'" ,
+    type = 1,
+    max_occur = 1,
+    usr_pref = 0,
+    prof_pref = 0,
+    dom_pref = 0,
+    peer_pref = 1,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 0,
+    expose_to_customer = 0,
+    data_type = "boolean",
+    read_only = 0,
+    description = "By default calls that come from a peer group and are looped back to the same peer group due to a subscriber location mappings 'forward' entry are blocked to avoid loop creation. This preference allows to override the default behavior and permit the loop over the same peering group. It has to be used with caution and activated only if necessary.";
+
+COMMIT;
