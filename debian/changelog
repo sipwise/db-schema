@@ -1,3 +1,30 @@
+ngcp-db-schema (10.3.1.0+0~mr10.3.1.0) unstable; urgency=medium
+
+  [ Michael Berger ]
+  * [c150636] TT#149500 add role access schema
+
+  [ Kirill Solomko ]
+  * [4145e46] TT#145801 billing.journals remove unique key txid_idx
+  * [20fb43b] TT#151700 15706 convert to not_replicated
+
+  [ Alessio Garzi ]
+  * [babbef5] TT#154000 play_announce_before_recording default value fix
+  * [09d1a25] TT#157352 Add support for SDP filtering to peers
+  * [4c7eab3] TT#109104 Add new subscriber location mapping mode: forward
+  * [452cdcc] TT#109104 new peer preference 'allow_lm_forward_loop'
+
+  [ Richard Fuchs ]
+  * [531cc5c] TT#58659 fix transcode_dtmf/cn pref type
+
+  [ Rene Krenn ]
+  * [7c1453e] TT#148100 support fast allowed_ip lookup for IPv4 and IPv6
+  * [73a55b3] TT#148100 statemachine impl for is_allowed_ip() proc
+
+  [ Marco Capetta ]
+  * [c441e1a] TT#155650 Add 'none' as default value for 'cloud_pbx_hunt_policy' pref
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Jan 2022 16:54:27 +0100
+
 ngcp-db-schema (10.3.0.0+0~mr10.3.0.0) unstable; urgency=medium
 
   [ Michael Berger ]
