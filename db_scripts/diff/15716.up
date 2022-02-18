@@ -1,0 +1,36 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Cloud PBX';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "busy_hg_member_mode",
+    label = "Busy huntgroup member mode",
+    type = 0,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 0,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 0,
+    expose_to_customer = 0,
+    data_type = "enum",
+    read_only = 0,
+    description = "Defines whether a subscriber can accept a hunt group call when busy in another call or to exclude it from the hunt group targets based on either 'totaluser' or 'activeuser' call counters";
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 0, 0, 0, 0, 1),
+(@pref_id, 'ring', 'ring', 1, 0, 0, 0, 0, 0, 0),
+(@pref_id, 'ring', 'ring', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'skip based on totaluser', 'skip_totaluser', 1, 1, 0, 0, 0, 0, 0),
+(@pref_id, 'skip based on activeuser', 'skip_activeuser', 1, 1, 0, 0, 0, 0, 0);
+
+COMMIT;

@@ -1,0 +1,10 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @at_id FROM voip_preferences WHERE attribute = "busy_hg_member_mode";
+
+DELETE FROM voip_preferences_enum WHERE preference_id = @at_id;
+
+DELETE FROM voip_preferences WHERE id = @at_id;
+
+COMMIT;
