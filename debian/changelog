@@ -1,3 +1,16 @@
+ngcp-db-schema (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
+
+  [ Antoine Lingat ]
+  * [cc9e263] TT#157500 New preference busy_hg_member_mode
+
+  [ Rene Krenn ]
+  * [c956ea8] TT#157700 invoice template call directions
+
+  [ Marco Capetta ]
+  * [fad463b] TT#166550 Remove Russian from NGCP.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Mar 2022 23:58:23 +0200
+
 ngcp-db-schema (10.4.0.0+0~mr10.4.0.0) unstable; urgency=medium
 
   [ Michael Berger ]
