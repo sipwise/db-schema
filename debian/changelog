@@ -1,3 +1,10 @@
+ngcp-db-schema (9.5.3.4+0~mr9.5.3.4) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [ad75b90] TT#147151 UDFs for fast usage count of billing profile&network
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 28 Apr 2022 13:56:18 +0200
+
 ngcp-db-schema (9.5.3.3+0~mr9.5.3.3) unstable; urgency=medium
 
   [ Rene Krenn ]
