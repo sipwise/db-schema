@@ -1,0 +1,6 @@
+USE provisioning;
+
+UPDATE voip_preferences SET
+    label='Ignore Call Forward when Hunting',
+    description='Ignore the Call Forward from a Cloud PBX subscriber when it is called within a huntgroup'
+    WHERE attribute='ignore_cf_when_hunting';
