@@ -1,3 +1,13 @@
+ngcp-db-schema (10.5.1.0+0~mr10.5.1.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [f6dc62a] TT#176700 allow storing invoice PDFs gt 16MB
+
+  [ Oleksandr Duts ]
+  * [6623127] TT#174801 Add csc_calls subscriber preference
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Jun 2022 11:41:59 +0200
+
 ngcp-db-schema (10.5.0.0+0~mr10.5.0.0) unstable; urgency=medium
 
   [ Antoine Lingat ]
