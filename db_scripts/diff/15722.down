@@ -1,0 +1,12 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+SELECT id FROM voip_preferences where attribute='prepaid_library' INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, contract_pref, default_val)
+  VALUES
+  (@pref_id, 'libinewrate', 'libinewrate', 0, 1, 0, 1, 0);
+
+COMMIT;
