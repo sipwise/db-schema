@@ -1,0 +1,7 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning
+
+UPDATE voip_preferences SET label = 'CloudPBX Serial Hunt Timeout', description = 'The serial timeout for hunting in PBX hunt groups.' WHERE attribute = 'cloud_pbx_hunt_timeout';
+
+COMMIT;
