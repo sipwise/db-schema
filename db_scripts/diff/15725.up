@@ -1,0 +1,3 @@
+USE provisioning;
+
+CREATE INDEX active_time_idx ON voip_reminder (active, time);
