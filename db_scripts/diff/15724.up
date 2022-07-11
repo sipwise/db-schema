@@ -1,0 +1,3 @@
+USE kamailio;
+
+CREATE INDEX inserted_time_status_idx ON watchers (`inserted_time`, `status`);
