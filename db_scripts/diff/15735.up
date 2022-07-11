@@ -1,0 +1,170 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Media Codec Transcoding Options';
+
+
+insert into voip_preferences set
+  voip_preference_groups_id = @vpg_id,
+  attribute = 'opus_complexity',
+  label = 'Opus encoding complexity',
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  modify_timestamp = now(),
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = 'enum',
+  read_only = 0,
+  description = 'Encoding complexity (compression level) for Opus codec';
+
+select last_insert_id() into @vpid;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = 'use domain default',
+  value = NULL,
+  usr_pref = 1,
+  prof_pref = 0,
+  dom_pref = 0,
+  peer_pref = 0,
+  contract_pref = 0,
+  default_val = 1;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = 'default (10 = slowest)',
+  value = 'default',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '0 (fastest, worst quality)',
+  value = '0',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '1',
+  value = '1',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '2 (faster, worse quality)',
+  value = '2',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '3',
+  value = '3',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '4',
+  value = '4',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '5 (medium)',
+  value = '5',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '6',
+  value = '6',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '7',
+  value = '7',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '8 (slower, better quality)',
+  value = '8',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '9',
+  value = '9',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+insert into voip_preferences_enum set
+  preference_id = @vpid,
+  label = '10 (slowest, best quality)',
+  value = '10',
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  default_val = 0;
+
+commit;
