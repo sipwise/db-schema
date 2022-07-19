@@ -1,0 +1,3 @@
+USE accounting;
+
+CREATE INDEX collector_idx ON mark (collector);
