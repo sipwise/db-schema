@@ -1,3 +1,28 @@
+ngcp-db-schema (11.0.1.0+0~mr11.0.1.0) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [c00c330] TT#178950 better description of contract usr preference ignore_cf_when_hunting
+  * [c29bb09] TT#182702 Index "inserted_time"+"status" in watchers
+
+  [ Marco Capetta ]
+  * [c48aae5] TT#179901 Discontinue iNew dedicated features and code
+  * [8fccfc7] TT#179901 Discontinue iNew dedicated features and code (part 2)
+
+  [ Antoine Lingat ]
+  * [54bb403] TT#180900 Update label/desc of pref 'cloud_pbx_hunt_timeout'
+
+  [ Rene Krenn ]
+  * [41e5782] TT#182350 supporting index for reminder query
+  * [902b967] TT#185501 add accounting.mark.collector index
+
+  [ Richard Fuchs ]
+  * [220a340] TT#185100 add new opus complexity pref
+
+  [ Fabricio Santolin da Silva ]
+  * [a45efe4] TT#96652 Add suffix for emergency number.
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 22 Aug 2022 20:00:19 +0200
+
 ngcp-db-schema (11.0.0.0+0~mr11.0.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
