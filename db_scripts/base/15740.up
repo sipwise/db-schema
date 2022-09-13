@@ -1,0 +1,6 @@
+USE accounting;
+SET autocommit=0;
+
+INSERT INTO cdr_tag (type) VALUES ('hg_ext_response');
+
+COMMIT;
