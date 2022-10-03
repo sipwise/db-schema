@@ -1,6 +1,0 @@
-use kamailio;
-set autocommit=0;
-
-ALTER TABLE speed_dial DROP COLUMN group_id;
-
-COMMIT;
