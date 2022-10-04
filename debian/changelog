@@ -1,3 +1,25 @@
+ngcp-db-schema (11.1.1.0+0~mr11.1.1.0) unstable; urgency=medium
+
+  [ Daniel Grotti ]
+  * [5537943] TT#151207 Update voip_cf_destination to add 'fax=' prefix to fax2mail destinations
+
+  [ dzenichev ]
+  * [d3445b3] MT#55307 SQL DB: kamailio.acc table, additional indexing
+
+  [ Alessio Garzi ]
+  * [57d9bca] MT#33002 New cdr aggregated field hg_ext_response
+
+  [ Michael Prokop ]
+  * [af272e3] MT#33002 Move 15740.* scripts from base to diff folder
+
+  [ Fabricio Santolin da Silva ]
+  * [5f34f84] MT#33005 Add group to the table speed_dial
+
+  [ Víctor Seva ]
+  * [61a7986] Revert "MT#33005 Add group to the table speed_dial"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 04 Oct 2022 13:49:40 +0200
+
 ngcp-db-schema (11.1.0.0+0~mr11.1.0.0) unstable; urgency=medium
 
   [ Alessio Garzi ]
