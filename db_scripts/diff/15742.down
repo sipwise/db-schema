@@ -1,0 +1,10 @@
+USE provisioning;
+SET autocommit=0;
+
+DROP TRIGGER voip_contract_sd_crepl_trig;
+DROP TRIGGER voip_contract_sd_urepl_trig;
+DROP TRIGGER voip_contract_sd_drepl_trig;
+
+DROP TABLE `voip_contract_speed_dial`;
+
+COMMIT;

@@ -1,0 +1,63 @@
+USE provisioning;
+SET autocommit=0;
+
+CREATE TABLE `voip_contract_speed_dial` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `slot` varchar(64) NOT NULL,
+  `destination` varchar(192) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `contractid_slot_idx` (`contract_id`,`slot`),
+  CONSTRAINT `v_csd_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DELIMITER ;;
+CREATE TRIGGER voip_contract_sd_crepl_trig AFTER INSERT ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE sd_domain varchar(64);
+  DECLARE target_domain varchar(64);
+  DECLARE at_end_pos smallint;
+  SET target_domain = 'local.sd.customer.domain';
+  SET at_end_pos = LOCATE('@', NEW.destination);
+  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
+
+  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
+                                   new_uri, fname, lname, description)
+                          VALUES(NEW.contract_id, target_domain,
+                                 NEW.slot, sd_domain,
+                                 NEW.destination, '', '', '');
+  END ;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_contract_sd_urepl_trig AFTER UPDATE ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE sd_domain varchar(64);
+  DECLARE target_domain varchar(64);
+  DECLARE at_end_pos smallint;
+  SET target_domain = 'local.sd.customer.domain';
+  SET at_end_pos = LOCATE('@', NEW.destination);
+  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
+
+  UPDATE kamailio.speed_dial SET username = NEW.contract_id, domain = target_domain,
+                               sd_username = NEW.slot, sd_domain = sd_domain,
+                               new_uri = NEW.destination
+                           WHERE username <=> OLD.contract_id
+                           AND domain <=> target_domain
+                           AND sd_username <=> OLD.slot;
+  END ;;
+DELIMITER ;
+
+DELIMITER ;;
+CREATE TRIGGER voip_contract_sd_drepl_trig BEFORE DELETE ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE target_domain varchar(64);
+  SET target_domain = 'local.sd.customer.domain';
+
+  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.contract_id
+                                  AND domain <=> target_domain
+                                  AND sd_username <=> OLD.slot;
+  END ;;
+DELIMITER ;
+
+COMMIT;
