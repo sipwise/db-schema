@@ -1,0 +1,5 @@
+SET autocommit=0;
+
+DROP DATABASE IF EXISTS `rtcengine`;
+
+COMMIT;

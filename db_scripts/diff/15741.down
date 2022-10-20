@@ -1,0 +1,129 @@
+SET autocommit=0;
+
+CREATE DATABASE `rtcengine`;
+
+USE `rtcengine`;
+
+CREATE TABLE `users` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `type` enum('admin','user') NOT NULL DEFAULT 'user',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `connections` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `connector` varchar(255) NOT NULL,
+  `identifier` varchar(255) NOT NULL,
+  `accessToken` varchar(255) NOT NULL,
+  `connected` tinyint(1) DEFAULT '0',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`connector`,`identifier`,`accessToken`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `apps` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `domain` varchar(255) NOT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain` (`domain`),
+  UNIQUE KEY `apps_domain_unique` (`domain`),
+  KEY `owner` (`owner`),
+  CONSTRAINT `apps_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `networks` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `owner` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `tag` varchar(255) NOT NULL,
+  `connector` enum('webrtc','sip-connector','xmpp-connector','conference') NOT NULL,
+  `config` text,
+  `capabilities` text,
+  `allowedTargets` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tag` (`owner`,`tag`),
+  CONSTRAINT `networks_ibfk_1` FOREIGN KEY (`owner`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `sessions` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `appId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `token` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `activated` tinyint(1) NOT NULL DEFAULT '1',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `appId` (`appId`),
+  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`appId`) REFERENCES `apps` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `accounts` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `sessionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `networkId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `connectionId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `config` text,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `connection` (`sessionId`,`networkId`,`connectionId`),
+  KEY `networkId` (`networkId`),
+  KEY `connectionId` (`connectionId`),
+  CONSTRAINT `accounts_ibfk_1` FOREIGN KEY (`sessionId`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_2` FOREIGN KEY (`networkId`) REFERENCES `networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `accounts_ibfk_3` FOREIGN KEY (`connectionId`) REFERENCES `connections` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `conferences` (
+  `id` char(36) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `mediaResourceId` varchar(255) DEFAULT NULL,
+  `mediaType` enum('audio','audio_video') NOT NULL DEFAULT 'audio_video',
+  `maxParticipants` int(11) NOT NULL,
+  `freeSlots` int(11) NOT NULL,
+  `fileShareSession` varchar(255) DEFAULT NULL,
+  `startDate` datetime DEFAULT NULL,
+  `endDate` datetime DEFAULT NULL,
+  `pin` varchar(255) NOT NULL,
+  `modPin` varchar(255) NOT NULL,
+  `state` enum('new','starting','running','ending','ended','failed') NOT NULL DEFAULT 'new',
+  `lastKeepAlive` datetime DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `conferences_name_unique` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `participants` (
+  `id` char(36) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `pin` varchar(255) NOT NULL,
+  `client` varchar(255) NOT NULL,
+  `account` varchar(255) NOT NULL,
+  `displayName` varchar(255) DEFAULT NULL,
+  `mediaResourceId` varchar(255) DEFAULT NULL,
+  `screenSharingId` varchar(255) DEFAULT NULL,
+  `mediaType` enum('audio','video','audio_video') NOT NULL DEFAULT 'audio_video',
+  `state` enum('new','joining','joined','leaving') NOT NULL DEFAULT 'new',
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  `conferenceId` char(36) CHARACTER SET latin1 COLLATE latin1_bin DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `conferenceId` (`conferenceId`),
+  CONSTRAINT `participants_ibfk_1` FOREIGN KEY (`conferenceId`) REFERENCES `conferences` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+COMMIT;
