@@ -1,0 +1,27 @@
+use billing;
+set autocommit=0;
+
+CREATE TABLE `ncos_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `resname_idx` (`reseller_id`,`name`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `ncos_set_levels` (
+  `ncos_set_id` int(11) unsigned NOT NULL,
+  `ncos_level_id` int(11) unsigned NOT NULL,
+  KEY `nlm_ncos_set_id_idx` (`ncos_set_id`),
+  KEY `nlm_ncos_level_id_idx` (`ncos_level_id`),
+  CONSTRAINT `nlm_ncos_set_id_ref` FOREIGN KEY (`ncos_set_id`) REFERENCES `ncos_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `nlm_ncos_level_id_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+ALTER TABLE ncos_levels
+  ADD `time_set_id` int(11) unsigned,
+  ADD KEY `nl_time_set_id_idx` (`time_set_id`),
+  ADD CONSTRAINT `nl_time_set_id_ref` FOREIGN KEY (`time_set_id`) REFERENCES `provisioning`.`voip_time_sets` (`id`) ON UPDATE CASCADE;
+
+commit;

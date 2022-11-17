@@ -1,0 +1,11 @@
+use billing;
+set autocommit=0;
+
+ALTER TABLE ncos_levels
+  DROP CONSTRAINT `nl_time_set_id_ref`,
+  DROP `time_set_id`;
+
+DROP TABLE `ncos_set_levels`;
+DROP TABLE `ncos_sets`;
+
+commit;
