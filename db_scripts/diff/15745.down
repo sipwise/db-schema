@@ -1,0 +1,13 @@
+USE provisioning;
+SET autocommit=0;
+
+DELETE FROM voip_preferences WHERE attribute IN (
+    'ncos_set_id',
+    'ncos_set',
+    'adm_ncos_set_id',
+    'adm_ncos_set',
+    'adm_cf_ncos_set_id',
+    'adm_cf_ncos_set'
+);
+
+COMMIT;

@@ -1,0 +1,117 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Call Blockings';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "ncos_set_id",
+    label = "Internal NCOS Set #",
+    type = 1,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 1,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 1,
+    expose_to_customer = 0,
+    data_type = 'int',
+    read_only = 0;
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "ncos_set",
+    label = "NCOS Set",
+    type = 0,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 1,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = -1,
+    expose_to_customer = 1,
+    data_type = 'string',
+    read_only = 0,
+    description = 'Specifies the NCOS Set that applies to the user';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "adm_ncos_set_id",
+    label = "Internal Administrative NCOS Set #",
+    type = 1,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 1,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 1,
+    expose_to_customer = 0,
+    data_type = 'int',
+    read_only = 0;
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "adm_ncos_set",
+    label = "Administrative NCOS Set",
+    type = 0,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 1,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = -1,
+    expose_to_customer = 0,
+    data_type = 'string',
+    read_only = 0,
+    description = 'Same as "ncos_set", but may only be set by administrators and is applied prior to the user setting.';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "adm_cf_ncos_set_id",
+    label = "Internal Administrative NCOS Set for Call Forward#",
+    type = 1,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 1,
+    expose_to_customer = 0,
+    data_type = 'int',
+    read_only = 0;
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "adm_cf_ncos_set",
+    label = "Administrative NCOS Set for Call Forward",
+    type = 0,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = -1,
+    expose_to_customer = 0,
+    data_type = 'string',
+    read_only = 0,
+    description = 'Specifies the Administrative NCOS Set that applies for the Call Forward from the user.';
+
+COMMIT;
