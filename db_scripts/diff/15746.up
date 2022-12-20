@@ -1,0 +1,9 @@
+use provisioning;
+set autocommit=0;
+
+ALTER TABLE voip_preferences ADD COLUMN expose_to_subscriber tinyint(1) NOT NULL DEFAULT 0;
+
+UPDATE voip_preferences SET expose_to_subscriber = expose_to_customer WHERE expose_to_customer = 1;
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'cli';
+
+COMMIT;

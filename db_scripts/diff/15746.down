@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+ALTER TABLE voip_preferences DROP COLUMN expose_to_subscriber;
+
+COMMIT;
