@@ -1,3 +1,10 @@
+ngcp-db-schema (11.1.1.2+0~mr11.1.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d350dc2] MT#55711 add table provisioning.voip_contract_speed_dial
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 21 Dec 2022 14:05:03 +0100
+
 ngcp-db-schema (11.1.1.1+0~mr11.1.1.1) unstable; urgency=medium
 
   * New release.
