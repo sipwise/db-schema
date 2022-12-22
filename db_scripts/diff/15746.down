@@ -2,5 +2,6 @@ use provisioning;
 set autocommit=0;
 
 ALTER TABLE voip_preferences DROP COLUMN expose_to_subscriber;
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'cli';
 
 COMMIT;
