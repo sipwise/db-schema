@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+UPDATE voip_preferences SET internal = 0 WHERE attribute = 'ringtimeout';
+
+COMMIT;
