@@ -1,0 +1,12 @@
+use provisioning;
+set autocommit=0;
+
+ALTER TABLE autoprov_device_line_ranges ADD COLUMN `can_speeddial` tinyint(1) unsigned NOT NULL DEFAULT 0;
+ALTER TABLE autoprov_device_line_ranges ADD COLUMN `can_forward` tinyint(1) unsigned NOT NULL DEFAULT 0;
+ALTER TABLE autoprov_device_line_ranges ADD COLUMN `can_transfer` tinyint(1) unsigned NOT NULL DEFAULT 0;
+
+ALTER TABLE autoprov_field_device_lines MODIFY COLUMN `line_type` enum('private','shared','blf', 'speeddial', 'forward', 'transfer') DEFAULT 'private';
+
+ALTER TABLE autoprov_field_device_lines ADD COLUMN `target_number` varchar(100) DEFAULT NULL;
+
+COMMIT;
