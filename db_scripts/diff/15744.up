@@ -7,7 +7,8 @@ CREATE TABLE `ncos_sets` (
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `resname_idx` (`reseller_id`,`name`)
+  UNIQUE KEY `resname_idx` (`reseller_id`,`name`),
+  CONSTRAINT `n_c_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE `ncos_set_levels` (
