@@ -1,0 +1,124 @@
+use provisioning;
+set autocommit=0;
+
+# profile preferences
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_in_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_in_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_in_clir';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_out_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_out_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_in_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_in_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_in_clir';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_out_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_out_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'block_out_override_pin';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'adm_block_out_override_pin';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'allowed_ips_grp';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'man_allowed_ips_grp';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'allowed_ips';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'man_allowed_ips';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'ignore_allowed_ips';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'music_on_hold';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'clir_intrapbx';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'max_queue_length';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'queue_wrap_up_time';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'rtp_interface';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'ignore_cf_when_hunting';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'conference_max_participants';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'outbound_from_user_is_phone';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'outbound_to_user_is_phone';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'default_lnp_prefix';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'emergency_priorization';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'call_deflection';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'lnp_to_rn';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'lnp_add_npdi';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'lnp_for_local_sub';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'disable_prack_method';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'set_moh_sendonly';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'codecs_filter';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'emergency_mapping_container';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'emergency_mapping_container_id';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'reject_vsc';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'play_announce_before_cf';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'ims_as_context';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'record_call';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'max_call_duration';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'nat_sipping';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'skip_upn_check_on_diversion';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'set_moh_zeroconnection';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'advice_of_charge';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'clip_no_screening';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'pai_clir';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'support_auto_answer';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'accept_auto_answer';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'rerouting_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'rerouting_codes';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'count_callforward_as_one';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'upn_block_clir';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'upn_block_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'upn_block_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'play_announce_before_call_setup';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'play_announce_before_recording';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'alert_info_type';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'alert_info_url';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'original_sendrecv';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'header_rule_set';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'codecs_id_filter';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'codecs_id_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'announce_error_codes_enable';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'announce_error_codes_list';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'allowed_ips_header';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'play_announce_to_callee';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'colp_cf';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'concurrent_max_in_per_account';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'last_number_redial';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'contact_ringtimeout';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'stop_forking_code_lists';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'emergency_upn';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'calllist_clir_scope';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'lookup_all_registrations';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'no_404_fallback';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'play_emulated_ringback_tone';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'stir_check';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'sdp_crypto_base64_padding';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'busy_hg_member_mode';
+UPDATE voip_preferences SET prof_pref = 1 WHERE attribute = 'csc_calls';
+
+# domain preferences
+UPDATE voip_preferences SET dom_pref = 1 WHERE attribute = 'music_on_hold';
+UPDATE voip_preferences SET dom_pref = 1 WHERE attribute = 'clir_intrapbx';
+
+# subscriber preferences
+UPDATE voip_preferences SET usr_pref = 1 WHERE attribute = 'ignore_cf_when_hunting';
+
+# expose to customer
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'play_announce_before_cf';
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'play_announce_before_call_setup';
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'play_announce_before_recording';
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'play_announce_to_callee';
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'contact_ringtimeout';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'extended_dialing_mode';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'set_moh_sendonly';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'max_call_duration';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'set_moh_zeroconnection';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'clip_no_screening';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'pai_clir';
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'header_rule_set';
+
+# expose to subscriber
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'extended_dialing_mode';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'set_moh_sendonly';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'codecs_filter';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'codecs_list';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'max_call_duration';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'set_moh_zeroconnection';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'clip_no_screening';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'pai_clir';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'header_rule_set';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'codecs_id_filter';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'codecs_id_list';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'colp_cf';
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'csc_calls';
+
+COMMIT;
