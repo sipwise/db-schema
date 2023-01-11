@@ -1,0 +1,29 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='CPBX Device Administration';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "user_conf_priority",
+label = "User config priority over provisioning",
+type = 0,
+max_occur = 1,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 1,
+devprof_pref = 1,
+fielddev_pref = 1,
+internal = 0,
+expose_to_customer = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If set, the configuration done by the user directly on the phone have priority over the provisioning (attention: not all the phones support this option).";
+
+COMMIT;
