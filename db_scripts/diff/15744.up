@@ -12,10 +12,12 @@ CREATE TABLE `ncos_sets` (
 ) ENGINE=InnoDB;
 
 CREATE TABLE `ncos_set_levels` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ncos_set_id` int(11) unsigned NOT NULL,
   `ncos_level_id` int(11) unsigned NOT NULL,
-  KEY `nlm_ncos_set_id_idx` (`ncos_set_id`),
+  UNIQUE KEY `set_level_idx` (`ncos_set_id`, `ncos_level_id`),
   KEY `nlm_ncos_level_id_idx` (`ncos_level_id`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `nlm_ncos_set_id_ref` FOREIGN KEY (`ncos_set_id`) REFERENCES `ncos_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nlm_ncos_level_id_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
