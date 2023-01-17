@@ -1,3 +1,29 @@
+ngcp-db-schema (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [5ecd14b] MT#55714 Drop 'rtcengine' database
+  * [59c12b5] MT#56286 General fix voip_preferences availability
+  * [09a93ff] MT#55931 Add new speeddial, forward, transfer device buttons
+  * [3222977] MT#55932 Add new 'user_conf_priority' preference
+
+  [ Kirill Solomko ]
+  * [2ac2b6b] MT#55711 add table provisioning.voip_contract_speed_dial
+  * [e70ec0d] MT#55686 add ncos_sets, ncos_set_levels tables
+  * [540196b] MT#55686 add ncos_set preferences
+  * [c969b7a] MT#56234 add voip_preferences.expose_to_subscriber
+  * [81274d0] MT#56234 'cli' preferences update also affects expose_to_customer
+  * [8aa1b28] MT#56234 voip_preferences ringtimeout flag update
+  * [48e88e3] MT#55686 ncos_sets add missing constrants
+  * [de95770] MT#55686 ncos_set_levels table changes
+
+  [ Michael Prokop ]
+  * [a9c1cf4] MT#55881 diff/15301.up: rename offset variable to support MariaDB >=10.6
+  * [1631573] MT#55881 Provide split_autoprov_firmware_data procedure for upgrades.
+    Thanks to Kirill Solomko <ksolomko@sipwise.com>
+  * [32bdc69] Revert "MT#55881 Provide split_autoprov_firmware_data procedure for upgrades"
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 17 Jan 2023 17:41:51 +0100
+
 ngcp-db-schema (11.2.0.0+0~mr11.2.0.0) unstable; urgency=medium
 
   [ Daniel Grotti ]
