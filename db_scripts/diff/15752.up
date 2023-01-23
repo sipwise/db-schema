@@ -1,0 +1,29 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Number Manipulations';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "colp_pstn",
+label = "Show PSTN Destination to Caller",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+data_type = "boolean",
+read_only = 0,
+description = "When calling PSTN, show the destination number or user back to the calling party.";
+
+COMMIT;
