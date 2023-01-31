@@ -1,0 +1,31 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+-- Delete from voip_preferences_enum
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+SELECT id INTO @codecs_id FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+DELETE FROM voip_preferences_enum WHERE preference_id = @mode_id;
+DELETE FROM voip_preferences_enum WHERE preference_id = @codecs_id;
+
+-- Delete from voip_preferences
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_mode';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_rtp';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_config';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ss7_opc';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ss7_apc';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ss7_dpc';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_nfs_server';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_nfs_path';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_name';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_location';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_system_contact';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_snmp_community_name';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_ip_snmp_manager';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_use_optical_spans';
+DELETE FROM voip_preferences WHERE attribute = 'dialogic_is_isdn_userside';
+
+-- Delete from voip_preference_groups
+DELETE FROM voip_preference_groups WHERE name = 'Dialogic Settings';
+
+COMMIT;

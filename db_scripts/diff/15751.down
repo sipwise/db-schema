@@ -1,0 +1,64 @@
+SET AUTOCOMMIT=0;
+USE provisioning;
+
+-- Create new voip_preference_groups
+INSERT INTO `provisioning`.`voip_preference_groups` (`name`) VALUES ('Dialogic Settings');
+SELECT LAST_INSERT_ID() INTO @dialogic_id;
+
+-- Create new voip_preferences
+INSERT INTO voip_preferences
+  (voip_preference_groups_id, attribute, type, usr_pref, dom_pref, peer_pref, label,
+   internal, data_type, max_occur, description)
+VALUES
+  (@dialogic_id, 'dialogic_mode', 0, 0, 0, 1, 'Dialogic Mode',
+   0, 'enum', 1, 'Set dialogic mode, which is used to autoprovision configuration on a Dialogic IMG.'),
+  (@dialogic_id, 'dialogic_ip_rtp', 1, 0, 0, 1, 'Dialogic RTP IP',
+   0, 'string', 1, "IP that the Dialogic IMG will configure on it\'s second port for the RTP traffic. Must be different from the SIP IP."),
+  (@dialogic_id, 'dialogic_ip_config', 1, 0, 0, 1, 'Dialogic Configuration IP',
+   0, 'string', 1, "IP under which the Dialogic IMG\'s webinterface is accessible for confiuration."),
+  (@dialogic_id, 'dialogic_out_codecs', 0, 0, 0, 1, 'Dialogic Out Codecs',
+   0, 'enum', 1, 'The chosen Codecs will be used from the IMG to transcode to, in the given order of priority.'),
+  (@dialogic_id, 'dialogic_ss7_opc', 1, 0, 0, 1, 'SS7 OPC',
+   0, 'string', 1, 'SS7 Own Point Code.'),
+  (@dialogic_id, 'dialogic_ss7_apc', 1, 0, 0, 1, 'SS7 APC',
+   0, 'string', 1, 'SS7 Adjacent Point Code.'),
+  (@dialogic_id, 'dialogic_ss7_dpc', 1, 0, 0, 1, 'SS7 DPC',
+   0, 'string', 1, 'SS7 Destination Point Code.'),
+  (@dialogic_id, 'dialogic_nfs_server', 1, 0, 0, 1, 'NFS Server',
+   0, 'string', 1, 'An IP or hostname of an external NFS server which can be used to log data to.'),
+  (@dialogic_id, 'dialogic_nfs_path', 1, 0, 0, 1, 'NFS Path',
+   0, 'string', 1, 'A path describing the folder on the NFS server, where the logfiles will be stored.'),
+  (@dialogic_id, 'dialogic_snmp_system_name', 1, 0, 0, 1, 'SNMP System Name',
+   0, 'string', 1, 'The system name, appearing in the output when acting as an SNMP Agent.'),
+  (@dialogic_id, 'dialogic_snmp_system_location', 1, 0, 0, 1, 'SNMP System Location',
+   0, 'string', 1, 'The system location, appearing in the output when acting as an SNMP Agent.'),
+  (@dialogic_id, 'dialogic_snmp_system_contact', 1, 0, 0, 1, 'SNMP System Contact',
+   0, 'string', 1, 'The system contact, appearing in the output when acting as an SNMP Agent.'),
+  (@dialogic_id, 'dialogic_snmp_community_name', 1, 0, 0, 1, 'SNMP Community Name',
+   0, 'string', 1, 'The community name, used by the SNMP manager, to access this IMG as an Agent.'),
+  (@dialogic_id, 'dialogic_ip_snmp_manager', 1, 0, 0, 1, 'SNMP Manager IP',
+   0, 'string', 1, 'The IP address of the SNMP manager which is supposed to access this IMG. Only this IP will have access to the SNMP Agent.'),
+  (@dialogic_id, 'dialogic_use_optical_spans', 1, 0, 0, 1, 'Dialogic Optical Link',
+   0, 'boolean', 1, 'When set to true, use the optical link instead of the ISDN ports. This only has an effect in the SS7 or ISDN mode.'),
+  (@dialogic_id, 'dialogic_is_isdn_userside', 1, 0, 0, 1, 'ISDN Userside',
+   0, 'boolean', 1, 'When set to true, the ISDN ports are configured to be the Userside end of an ISDN network. This only has an effect in the ISDN mode.');
+
+-- Create new voip_preferences_enum
+SELECT id INTO @mode_id FROM voip_preferences WHERE attribute = 'dialogic_mode';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@mode_id, '(none)', 'none', 0, 0, 1, 1),
+  (@mode_id, 'SIP 2 SIP', 'sipsip', 0, 0, 1, 0),
+  (@mode_id, 'SIP/ISDN', 'sipisdn', 0, 0, 1, 0),
+  (@mode_id, 'SIP/SS7', 'sipss7', 0, 0, 1, 0);
+SELECT id INTO @codecs_id FROM voip_preferences WHERE attribute = 'dialogic_out_codecs';
+INSERT INTO voip_preferences_enum
+  (preference_id, label, value, usr_pref, dom_pref, peer_pref, default_val)
+  VALUES
+  (@codecs_id, 'G711 ulaw, G711 alaw, G729, AMR', 'G711 ulaw, G711 alaw, G729, AMR', 0, 0, 1, 1),
+  (@codecs_id, 'G711 ulaw, G711 alaw',            'G711 ulaw, G711 alaw', 0, 0, 1, 0),
+  (@codecs_id, 'AMR',                             'AMR', 0, 0, 1, 0);
+
+
+COMMIT;
