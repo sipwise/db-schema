@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Cloud PBX';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "enable_t38",
+    label = "Enable T38 Fax-over-IP",
+    type = 1,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 0,
+    dom_pref = 0,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 0,
+    expose_to_customer = 1,
+    expose_to_subscriber = 1,
+    data_type = 'boolean',
+    read_only = 0,
+    description = 'Enable T38 Fax-over-IP via auto-provisioning if the end device supports it.';
+
+COMMIT;
