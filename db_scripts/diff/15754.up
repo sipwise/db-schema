@@ -1,0 +1,10 @@
+USE provisioning;
+SET autocommit=0;
+
+DELETE FROM voip_preferences WHERE attribute = 'softphone_autoprov';
+
+DELETE FROM kamailio.usr_preferences WHERE attribute='softphone_autoprov';
+DELETE FROM kamailio.dom_preferences WHERE attribute='softphone_autoprov';
+DELETE FROM kamailio.prof_preferences WHERE attribute='softphone_autoprov';
+
+COMMIT;

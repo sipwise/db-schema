@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Access Restrictions';
+
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @pgid,
+    attribute = "softphone_autoprov",
+    label = "Desktop Softphone Autoprovisioning",
+    type = 1,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 1,
+    dom_pref = 1,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 0,
+    expose_to_customer = 1,
+    expose_to_subscriber = 1,
+    data_type = 'boolean',
+    read_only = 0,
+    description = 'Allow Desktop Softphone Autoprovisioning for this subscriber. If disabled, no configuration will be provided to the Desktop Softphone.';
+
+COMMIT;
