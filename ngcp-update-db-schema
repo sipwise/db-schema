@@ -38,8 +38,6 @@ if [ "${nodename}" = "unknown" ] ; then
   exit 1
 fi
 
-service mariadb start || true
-
 . /etc/default/ngcp-roles
 . /etc/default/ngcp-db
 
@@ -51,11 +49,17 @@ if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
 fi
 
 declare -a MYSQL_OPTS=()
-MYSQL_OPTS+=("--defaults-extra-file=${SIPWISE_EXTRA_CNF}")
+if [[ -n "${MYSQL_SOCKET:-}" ]]; then
+  MYSQL_OPTS+=("-u" "root")
+  MYSQL_OPTS+=("-S" "${MYSQL_SOCKET}")
+else
+  service mariadb start || true
+  MYSQL_OPTS+=("--defaults-extra-file=${SIPWISE_EXTRA_CNF}")
+fi
 
 # check connection with sipwise user
 if ! mysql "${MYSQL_OPTS[@]}" -e 'SELECT 1;' &>/dev/null ; then
-  echo "Error: can't connect to local MariaDB port 3306 using '${SIPWISE_EXTRA_CNF}'" >&2
+  echo "Error: can't connect to MariaDB using '${MYSQL_OPTS[*]}'" >&2
   exit 1
 fi
 
@@ -166,18 +170,23 @@ apply_revs() {
     esac
   done
 
+  declare -a check_rev_opts=("--schema=db_schema")
+  if [[ -n "${MYSQL_SOCKET:-}" ]]; then
+    check_rev_opts+=("--socket=${MYSQL_SOCKET}")
+  fi
+
   # shellcheck disable=SC2086
   for missing_revision in \
     $( {
-        ngcp-check-rev-applied --schema db_schema --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
-        ngcp-check-rev-applied --schema db_schema --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
+        ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
+        ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
        } | sort -n -u ) ; do
     revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
       *_not_replicated.up)
-        if ngcp-check-rev-applied --schema db_schema --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
+        if ngcp-check-rev-applied "${check_rev_opts[@]}" --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
           continue
         fi
         ;;
