@@ -1,2 +1,4 @@
+build_utils/ngcp-build-schema-files       usr/share/ngcp-db-schema/helper/
+build_utils/ngcp-dump-json.pl       usr/share/ngcp-db-schema/helper/
 db_scripts                  usr/share/ngcp-db-schema/
 ngcp-update-db-schema       usr/sbin/

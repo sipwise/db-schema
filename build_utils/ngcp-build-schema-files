@@ -1,0 +1,121 @@
+#!/bin/bash
+
+set -euEo pipefail
+
+ngcp_dump_json_cmd="/usr/share/ngcp-db-schema/helper/ngcp-dump-json.pl"
+if [[ ! -x "${ngcp_dump_json_cmd}" ]]; then
+  echo "Can't find executable ${ngcp_dump_json_cmd}" >&2
+  echo "Please install ngcp-db-schema package" >&2
+  exit 1
+fi
+
+mariadb_dir=$(mktemp -d /tmp/mariadb-build.XXXXXX)
+chown mysql:mysql "${mariadb_dir}"
+
+declare -a mysql_install_options
+mysql_install_options+=("--no-defaults")
+mysql_install_options+=("--verbose")
+mysql_install_options+=("--skip-test-db")
+mysql_install_options+=("--innodb_encrypt_tables=off")
+mysql_install_options+=("--innodb_encrypt_log=0")
+mysql_install_options+=("--encrypt_binlog=0")
+mysql_install_options+=("--datadir=${mariadb_dir}")
+mysql_install_options+=("--user=mysql")
+mysql_install_options+=("--skip-networking")
+mysql_install_options+=("--sql-mode=NO_ENGINE_SUBSTITUTION")
+mysql_install_options+=("--character-set-server=utf8")
+mysql_install_options+=("--collation-server=utf8_general_ci")
+
+mysql_install_db "${mysql_install_options[@]}"
+
+declare -a mysqld_options
+mysqld_options+=("--no-defaults")
+mysqld_options+=("--pid-file=${mariadb_dir}/mysqld.pid")
+mysqld_options+=("--datadir=${mariadb_dir}")
+mysqld_options+=("--user=mysql")
+mysqld_options+=("--socket=${mariadb_dir}/mysqld.sock")
+mysqld_options+=("--log-error=${mariadb_dir}/mysqld.log")
+mysqld_options+=("--skip-networking")
+mysqld_options+=("--sql-mode=NO_ENGINE_SUBSTITUTION")
+mysqld_options+=("--character-set-server=utf8")
+mysqld_options+=("--init-connect='SET NAMES utf8; SET collation_connection = utf8_unicode_ci; SET sql_mode = STRICT_TRANS_TABLES'")
+mysqld_options+=("--collation-server=utf8_general_ci")
+
+mariadbd "${mysqld_options[@]}" &>/dev/null &
+
+tries=0
+max_tries=10
+started=false
+while [[ "${tries}" -le "${max_tries}" ]]; do
+  if [[ -S "${mariadb_dir}/mysqld.sock" ]]; then
+    started=true
+    break
+  fi
+  tries=$((tries + 1))
+  sleep 1
+done
+
+if ! "${started}"; then
+  echo "Mysql server wasn't started" >&2
+  exit 1
+fi
+
+mysql -S "${mariadb_dir}/mysqld.sock" -e \
+  "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY 'sipwise' WITH GRANT OPTION;"
+
+echo "Running ngcp-update-db-schema..."
+MYSQL_SOCKET="${mariadb_dir}/mysqld.sock" AUTOMATED_INSTALL_MODE=1 \
+  SKIP_SYNC_DB=1 /usr/sbin/ngcp-update-db-schema -f
+echo "Done"
+
+declare -a schemes=()
+schemes+=("accounting")
+schemes+=("billing")
+schemes+=("carrier")
+schemes+=("fileshare")
+schemes+=("kamailio")
+schemes+=("ldap")
+schemes+=("ngcp")
+schemes+=("prosody")
+schemes+=("provisioning")
+schemes+=("sipstats")
+schemes+=("stats")
+schemes+=("syslog")
+
+for schema in "${schemes[@]}"; do
+  echo "Running ngcp-dump-json.pl for schema '${schema}'..."
+  "${ngcp_dump_json_cmd}" \
+    --socket="${mariadb_dir}/mysqld.sock" \
+    --schema="${schema}"
+  echo "Done"
+
+  echo "Running mysqldump for schema '${schema}'..."
+  echo "SET FOREIGN_KEY_CHECKS=0;" > "${schema}.sql"
+  echo "SET NAMES utf8;" >> "${schema}.sql"
+  echo "SET SESSION autocommit=0;" >> "${schema}.sql"
+  echo "SET SESSION unique_checks=0;" >> "${schema}.sql"
+  echo "CREATE DATABASE ${schema};" >> "${schema}.sql"
+  echo "USE ${schema};" >> "${schema}.sql"
+
+  # Replace all the dates in format YYYY-MM-DD HH:MM:SS with NOW() function
+  mysqldump "${schema}" --compact --skip-extended-insert \
+    -S "${mariadb_dir}/mysqld.sock" \
+    | sed -r "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
+    > "${schema}.sql"
+  echo "Done"
+done
+
+tries=0
+max_tries=10
+stopped=false
+mysql_pid=$(cat "${mariadb_dir}/mysqld.pid")
+if [[ -z "${mysql_pid}" ]]; then
+  echo "Can't get mysql pid from ${mariadb_dir}/mysqld.pid" >&2
+  exit 1
+fi
+
+echo "Stopping mysql instance in '${mariadb_dir}'..."
+kill -9 "${mysql_pid}"
+
+echo "Removing mysql instance in '${mariadb_dir}'..."
+rm -rf "${mariadb_dir}"
