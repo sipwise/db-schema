@@ -1,0 +1,9 @@
+USE provisioning;
+SET autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = 'csc_registered_devices';
+DELETE FROM voip_preferences WHERE attribute = 'csc_conversations';
+DELETE FROM voip_preferences WHERE attribute = 'csc_device_provisioning';
+DELETE FROM voip_preferences WHERE attribute = 'csc_hunt_groups';
+
+COMMIT;

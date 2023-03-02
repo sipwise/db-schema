@@ -1,0 +1,99 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Internals';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "csc_registered_devices",
+label = "CSC Registered Devices",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CSC Registered Devices' - An internal flag to be able to map Registered Devices visibility to subscriber profiles. Not directly used";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "csc_conversations",
+label = "CSC Conversations",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CSC Conversations' - An internal flag to be able to map Conversations visibility to subscriber profiles. Not directly used";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "csc_device_provisioning",
+label = "CSC Device Provisioning",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CSC Device Provisioning' - An internal flag to be able to map Device Provisioning visibility to subscriber profiles. Not directly used";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "csc_hunt_groups",
+label = "CSC Hunt Groups",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CSC Hunt Groups' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used";
+
+COMMIT;
