@@ -1,0 +1,24 @@
+use provisioning;
+set autocommit=0;
+
+insert into voip_preferences set
+  voip_preference_groups_id = (select id from voip_preference_groups where name="Media Codec Transcoding Options"),
+  attribute = "opus_legacy_mono",
+  label = "Legacy Opus mono format",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "boolean",
+  read_only = 0,
+  description = "Use legacy non-standard method to signal single-channel Opus. The default is the standards-compliant method of always advertising Opus as a two-channel format while hinting to mono usage as a format parameter.";
+
+commit;
