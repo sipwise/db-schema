@@ -1,0 +1,15 @@
+USE provisioning;
+SET autocommit=0;
+
+-- Set by default all the handles as NOT exposed to customer
+UPDATE voip_sound_handles SET expose_to_customer = 0;
+
+-- Set to 1 only the handles belonging to groups that have to be exposed
+SELECT id INTO @pbxgid FROM voip_sound_groups WHERE name = 'pbx';
+SELECT id INTO @mohgid FROM voip_sound_groups WHERE name = 'music_on_hold';
+SELECT id INTO @diggid FROM voip_sound_groups WHERE name = 'digits';
+SELECT id INTO @anngid FROM voip_sound_groups WHERE name = 'custom_announcements';
+
+UPDATE voip_sound_handles SET expose_to_customer = 1 WHERE group_id in (@pbxgid, @mohgid, @diggid, @anngid);
+
+COMMIT;

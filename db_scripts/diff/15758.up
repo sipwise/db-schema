@@ -1,0 +1,6 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_sound_handles SET expose_to_customer = 1;
+
+COMMIT;
