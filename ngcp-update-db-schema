@@ -16,6 +16,7 @@ FORCE_ACTIVE_NODE=false
 RUN_SYNC_DB=false
 SYNC_DB="/usr/sbin/ngcp-sync-db"
 NOT_REPLICATED_REV_APPLIED=false
+DB_BASE="${DB_BASE:-/usr/share/ngcp-db-schema}"
 
 while getopts "fh" opt; do
     case "${opt}" in
@@ -84,7 +85,7 @@ else
 fi
 
 if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
-  mysql "${MYSQL_OPTS[@]}" < /usr/share/ngcp-db-schema/db_scripts/init/0005_create_ngcp.up
+  mysql "${MYSQL_OPTS[@]}" < "${DB_BASE}/db_scripts/init/0005_create_ngcp.up"
 fi
 
 if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
@@ -161,7 +162,7 @@ apply_revs() {
   # generate list of rev scripts that are node specific, used inside
   # missing_revision's ngcp-check-rev-applied ... --node $nodename
   for rev in $revs ; do
-    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$rev")"
+    revision_file="$(find ${DB_BASE}/ -name "${rev}")"
 
     case "$revision_file" in
       *_not_replicated.up)
@@ -181,7 +182,7 @@ apply_revs() {
         ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
         ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
        } | sort -n -u ) ; do
-    revision_file="$(find /usr/share/ngcp-db-schema/ -name "$missing_revision")"
+    revision_file="$(find ${DB_BASE}/ -name "$missing_revision")"
 
     # execute the rev script iff there's no entry for the *current* host yet
     case "$revision_file" in
@@ -247,15 +248,15 @@ revision_wrapper() {
 }
 
 # make sure we get sorted 10XXX after 9XXX
-cd /usr/share/ngcp-db-schema/db_scripts/base/
+cd "${DB_BASE}/db_scripts/base/"
 # shellcheck disable=SC2035 disable=SC2046
 revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo "/usr/share/ngcp-db-schema/db_scripts/base/$file"; done)
+                   echo "${DB_BASE}/db_scripts/base/$file"; done)
 
-cd /usr/share/ngcp-db-schema/db_scripts/diff/
+cd "${DB_BASE}/db_scripts/diff/"
 # shellcheck disable=SC2035 disable=SC2046
 revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo "/usr/share/ngcp-db-schema/db_scripts/diff/$file"; done)
+                   echo "${DB_BASE}/db_scripts/diff/$file"; done)
 
 # for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
 if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
