@@ -1,0 +1,278 @@
+{
+   "columns" : {
+      "ldap_attr_mappings/add_proc" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "add_proc",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 8,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/add_proc"
+      },
+      "ldap_attr_mappings/delete_proc" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "delete_proc",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 9,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/delete_proc"
+      },
+      "ldap_attr_mappings/expect_return" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "expect_return",
+         "COLUMN_TYPE" : "tinyint(4)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 11,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/expect_return"
+      },
+      "ldap_attr_mappings/from_tbls" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "from_tbls",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 6,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/from_tbls"
+      },
+      "ldap_attr_mappings/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(10) unsigned",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/id"
+      },
+      "ldap_attr_mappings/join_where" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "join_where",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 7,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/join_where"
+      },
+      "ldap_attr_mappings/name" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "name",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/name"
+      },
+      "ldap_attr_mappings/oc_map_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "oc_map_id",
+         "COLUMN_TYPE" : "int(10) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/oc_map_id"
+      },
+      "ldap_attr_mappings/param_order" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "param_order",
+         "COLUMN_TYPE" : "tinyint(4)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 10,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/param_order"
+      },
+      "ldap_attr_mappings/sel_expr" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "sel_expr",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/sel_expr"
+      },
+      "ldap_attr_mappings/sel_expr_u" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "sel_expr_u",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/sel_expr_u"
+      },
+      "ldap_oc_mappings/create_proc" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "create_proc",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/create_proc"
+      },
+      "ldap_oc_mappings/delete_proc" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "delete_proc",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 6,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/delete_proc"
+      },
+      "ldap_oc_mappings/expect_return" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "expect_return",
+         "COLUMN_TYPE" : "tinyint(4)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 7,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/expect_return"
+      },
+      "ldap_oc_mappings/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(10) unsigned",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/id"
+      },
+      "ldap_oc_mappings/keycol" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "keycol",
+         "COLUMN_TYPE" : "varchar(64)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/keycol"
+      },
+      "ldap_oc_mappings/keytbl" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "keytbl",
+         "COLUMN_TYPE" : "varchar(64)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/keytbl"
+      },
+      "ldap_oc_mappings/name" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "name",
+         "COLUMN_TYPE" : "varchar(64)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/name"
+      }
+   },
+   "constraints" : {},
+   "indexes" : {
+      "ldap_attr_mappings/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings/PRIMARY/1"
+      },
+      "ldap_oc_mappings/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings/PRIMARY/1"
+      }
+   },
+   "routines" : {},
+   "tables" : {
+      "ldap_attr_mappings" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "ldap_attr_mappings",
+         "key_col" : "ldap_attr_mappings"
+      },
+      "ldap_oc_mappings" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "ldap_oc_mappings",
+         "key_col" : "ldap_oc_mappings"
+      }
+   },
+   "views" : {
+      "ldap_entries" : {
+         "VIEW_DEFINITION" : "select `billing`.`contracts`.`id` AS `id`,concat('o=',`billing`.`contracts`.`id`,',dc=hpbx,dc=sipwise,dc=com') AS `dn`,3 AS `oc_map_id`,0 AS `parent`,`billing`.`contracts`.`id` AS `keyval` from `billing`.`contracts` union select `users`.`id` + 100000 AS `org_id`,concat('uid=',`users`.`uuid`,',o=',`users`.`account_id`,',dc=hpbx,dc=sipwise,dc=com') AS `Name_exp_2`,1 AS `1`,`users`.`account_id` AS `account_id`,`users`.`id` AS `id` from `ldap`.`users`",
+         "key_col" : "ldap_entries"
+      },
+      "org" : {
+         "VIEW_DEFINITION" : "select `billing`.`contracts`.`id` AS `id`,`billing`.`contracts`.`id` AS `o`,'dc=hpbx,dc=sipwise,dc=com' AS `dc` from `billing`.`contracts`",
+         "key_col" : "org"
+      },
+      "users" : {
+         "VIEW_DEFINITION" : "select `pvs`.`id` AS `id`,`pvs`.`account_id` AS `account_id`,`pvs`.`uuid` AS `uuid`,`pvs`.`username` AS `username`,`pvs`.`password` AS `password`,`vup`.`value` AS `displayname`,`pvs`.`pbx_extension` AS `phone` from ((`provisioning`.`voip_subscribers` `pvs` left join `provisioning`.`voip_preferences` `vp` on(`vp`.`attribute` = 'display_name')) left join `provisioning`.`voip_usr_preferences` `vup` on(`vup`.`subscriber_id` = `pvs`.`id` and `vup`.`attribute_id` = `vp`.`id`))",
+         "key_col" : "users"
+      }
+   }
+}

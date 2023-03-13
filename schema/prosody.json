@@ -1,0 +1,343 @@
+{
+   "columns" : {
+      "prosody/host" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "host",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/host"
+      },
+      "prosody/key" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "key",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/key"
+      },
+      "prosody/store" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "store",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/store"
+      },
+      "prosody/type" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "type",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/type"
+      },
+      "prosody/user" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "user",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/user"
+      },
+      "prosody/value" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_bin",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "value",
+         "COLUMN_TYPE" : "mediumtext",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 6,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/value"
+      },
+      "sipwise_mam/epoch" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "epoch",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/epoch"
+      },
+      "sipwise_mam/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/id"
+      },
+      "sipwise_mam/key" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "key",
+         "COLUMN_TYPE" : "binary(16)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/key"
+      },
+      "sipwise_mam/stanza" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_unicode_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "stanza",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/stanza"
+      },
+      "sipwise_mam/username" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "username",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/username"
+      },
+      "sipwise_mam/with" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "with",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 6,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/with"
+      },
+      "sipwise_offline/domain" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "domain",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline/domain"
+      },
+      "sipwise_offline/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline/id"
+      },
+      "sipwise_offline/stanza" : {
+         "CHARACTER_SET_NAME" : "utf8mb4",
+         "COLLATION_NAME" : "utf8mb4_unicode_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "stanza",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline/stanza"
+      },
+      "sipwise_offline/username" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "username",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline/username"
+      }
+   },
+   "constraints" : {},
+   "indexes" : {
+      "prosody/prosody_index/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "host",
+         "INDEX_NAME" : "prosody_index",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : 20,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/prosody_index/1"
+      },
+      "prosody/prosody_index/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "user",
+         "INDEX_NAME" : "prosody_index",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : 20,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/prosody_index/2"
+      },
+      "prosody/prosody_index/3" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "store",
+         "INDEX_NAME" : "prosody_index",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 3,
+         "SUB_PART" : 20,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/prosody_index/3"
+      },
+      "prosody/prosody_index/4" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "key",
+         "INDEX_NAME" : "prosody_index",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 4,
+         "SUB_PART" : 20,
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody/prosody_index/4"
+      },
+      "sipwise_mam/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/PRIMARY/1"
+      },
+      "sipwise_mam/key/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "key",
+         "INDEX_NAME" : "key",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/key/1"
+      },
+      "sipwise_mam/username/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "username",
+         "INDEX_NAME" : "username",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/username/1"
+      },
+      "sipwise_mam/with_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "with",
+         "INDEX_NAME" : "with_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam/with_idx/1"
+      },
+      "sipwise_offline/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline/PRIMARY/1"
+      }
+   },
+   "routines" : {
+      "UuidFromBin" : {
+         "ROUTINE_DEFINITION" : "RETURN\n    LCASE(CONCAT_WS('-',\n        HEX(SUBSTR(_bin,  5, 4)),\n        HEX(SUBSTR(_bin,  3, 2)),\n        HEX(SUBSTR(_bin,  1, 2)),\n        HEX(SUBSTR(_bin,  9, 2)),\n        HEX(SUBSTR(_bin, 11))\n             ))",
+         "ROUTINE_TYPE" : "FUNCTION",
+         "key_col" : "UuidFromBin"
+      },
+      "UuidToBin" : {
+         "ROUTINE_DEFINITION" : "RETURN\n    UNHEX(CONCAT(\n        SUBSTR(_uuid, 15, 4),\n        SUBSTR(_uuid, 10, 4),\n        SUBSTR(_uuid,  1, 8),\n        SUBSTR(_uuid, 20, 4),\n        SUBSTR(_uuid, 25) ))",
+         "ROUTINE_TYPE" : "FUNCTION",
+         "key_col" : "UuidToBin"
+      }
+   },
+   "tables" : {
+      "prosody" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "prosody",
+         "key_col" : "prosody"
+      },
+      "sipwise_mam" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb4_general_ci",
+         "TABLE_NAME" : "sipwise_mam",
+         "key_col" : "sipwise_mam"
+      },
+      "sipwise_offline" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb4_general_ci",
+         "TABLE_NAME" : "sipwise_offline",
+         "key_col" : "sipwise_offline"
+      }
+   },
+   "views" : {}
+}

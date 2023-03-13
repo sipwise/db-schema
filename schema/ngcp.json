@@ -1,0 +1,267 @@
+{
+   "columns" : {
+      "date_range_helper/d" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "d",
+         "COLUMN_TYPE" : "date",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "date_range_helper",
+         "key_col" : "date_range_helper/d"
+      },
+      "db_schema/applied_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_NAME" : "applied_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "on update current_timestamp()",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/applied_at"
+      },
+      "db_schema/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/id"
+      },
+      "db_schema/node" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "node",
+         "COLUMN_TYPE" : "varchar(64)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/node"
+      },
+      "db_schema/revision" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "revision",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/revision"
+      },
+      "timezone/created_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_NAME" : "created_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/created_at"
+      },
+      "timezone/id" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "enum('1')",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/id"
+      },
+      "timezone/modified_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_NAME" : "modified_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "on update current_timestamp()",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/modified_at"
+      },
+      "timezone/name" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "name",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/name"
+      },
+      "tzinfo_version/created_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_NAME" : "created_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version/created_at"
+      },
+      "tzinfo_version/id" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "enum('1')",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version/id"
+      },
+      "tzinfo_version/modified_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_NAME" : "modified_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "on update current_timestamp()",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version/modified_at"
+      },
+      "tzinfo_version/version" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "version",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version/version"
+      }
+   },
+   "constraints" : {},
+   "indexes" : {
+      "date_range_helper/d/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "d",
+         "INDEX_NAME" : "d",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "date_range_helper",
+         "key_col" : "date_range_helper/d/1"
+      },
+      "db_schema/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/PRIMARY/1"
+      },
+      "db_schema/rev_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "revision",
+         "INDEX_NAME" : "rev_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/rev_idx/1"
+      },
+      "db_schema/rev_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "node",
+         "INDEX_NAME" : "rev_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/rev_idx/2"
+      },
+      "timezone/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/PRIMARY/1"
+      },
+      "tzinfo_version/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version/PRIMARY/1"
+      }
+   },
+   "routines" : {},
+   "tables" : {
+      "date_range_helper" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "date_range_helper",
+         "key_col" : "date_range_helper"
+      },
+      "db_schema" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema"
+      },
+      "timezone" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone"
+      },
+      "tzinfo_version" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "tzinfo_version",
+         "key_col" : "tzinfo_version"
+      }
+   },
+   "views" : {}
+}
