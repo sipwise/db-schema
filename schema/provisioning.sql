@@ -3495,7 +3495,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=391 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preferences` VALUES (1,3,'lock','Lock Level',0,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'enum',1,'For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. A lock value of \"none\" will not be returned to the caller. Read-only setting.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (2,2,'block_in_mode','Block Mode for inbound calls',1,1,1,1,0,0,1,0,0,0,0,NOW(),0,1,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).',0,0,1);
@@ -3846,6 +3846,7 @@ INSERT INTO `voip_preferences` VALUES (387,2,'adm_cf_ncos_set_id','Internal Admi
 INSERT INTO `voip_preferences` VALUES (388,2,'adm_cf_ncos_set','Administrative NCOS Set for Call Forward',0,1,1,1,1,0,0,0,0,0,0,NOW(),-1,0,'string',0,'Specifies the Administrative NCOS Set that applies for the Call Forward from the user.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (389,13,'user_conf_priority','User config priority over provisioning',0,1,0,0,0,0,0,0,1,1,1,NOW(),0,0,'boolean',0,'If set, the configuration done by the user directly on the phone have priority over the provisioning (attention: not all the phones support this option).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (390,4,'colp_pstn','Show PSTN Destination to Caller',0,1,1,1,1,0,0,0,0,0,0,NOW(),0,1,'boolean',0,'When calling PSTN, show the destination number or user back to the calling party.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (391,17,'opus_legacy_mono','Legacy Opus mono format',0,1,1,1,1,1,0,0,0,0,0,NOW(),0,0,'boolean',0,'Use legacy non-standard method to signal single-channel Opus. The default is the standards-compliant method of always advertising Opus as a two-channel format while hinting to mono usage as a format parameter.',0,0,0);
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -5506,7 +5507,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','b1716871735c9a8c5ca94626043e7ad4',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','30a4198244eede47b45dd53e346ee1c6',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
