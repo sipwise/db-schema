@@ -1,0 +1,18 @@
+USE provisioning;
+SET autocommit=0;
+
+UPDATE voip_preferences SET expose_to_customer = 0 where attribute = 'sound_set';
+
+DROP VIEW v_sound_set_files;
+
+ALTER TABLE voip_sound_files
+    DROP COLUMN use_parent,
+    DROP KEY handle_set_id_idx (handle_id, set_id),
+    ADD KEY handle_id_ref;
+
+ALTER TABLE voip_sound_sets
+    DROP FOREIGN KEY vss_parent_id_ref,
+    DROP COLUMN parent_id,
+    DROP COLUMN expose_to_customer;
+
+COMMIT;
