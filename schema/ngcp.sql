@@ -30014,7 +30014,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=826 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=828 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `db_schema` VALUES (1,10,'spce',NOW());
 INSERT INTO `db_schema` VALUES (2,20,'spce',NOW());
@@ -30841,6 +30841,8 @@ INSERT INTO `db_schema` VALUES (822,15753,'spce',NOW());
 INSERT INTO `db_schema` VALUES (823,15754,'spce',NOW());
 INSERT INTO `db_schema` VALUES (824,15755,'spce',NOW());
 INSERT INTO `db_schema` VALUES (825,15756,'spce',NOW());
+INSERT INTO `db_schema` VALUES (826,15757,'spce',NOW());
+INSERT INTO `db_schema` VALUES (827,15759,'spce',NOW());
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `timezone` (

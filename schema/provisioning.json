@@ -6048,6 +6048,18 @@
          "TABLE_NAME" : "voip_sound_files",
          "key_col" : "voip_sound_files/set_id"
       },
+      "voip_sound_files/use_parent" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "use_parent",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 8,
+         "TABLE_NAME" : "voip_sound_files",
+         "key_col" : "voip_sound_files/use_parent"
+      },
       "voip_sound_groups/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -6156,6 +6168,18 @@
          "TABLE_NAME" : "voip_sound_sets",
          "key_col" : "voip_sound_sets/description"
       },
+      "voip_sound_sets/expose_to_customer" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "expose_to_customer",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 8,
+         "TABLE_NAME" : "voip_sound_sets",
+         "key_col" : "voip_sound_sets/expose_to_customer"
+      },
       "voip_sound_sets/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -6179,6 +6203,18 @@
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "voip_sound_sets",
          "key_col" : "voip_sound_sets/name"
+      },
+      "voip_sound_sets/parent_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "parent_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 7,
+         "TABLE_NAME" : "voip_sound_sets",
+         "key_col" : "voip_sound_sets/parent_id"
       },
       "voip_sound_sets/reseller_id" : {
          "CHARACTER_SET_NAME" : null,
@@ -8415,6 +8451,16 @@
          "TABLE_NAME" : "voip_sound_handles",
          "UPDATE_RULE" : "CASCADE",
          "key_col" : "voip_sound_handles/v_s_h_group_ref/group_id/voip_sound_groups/id"
+      },
+      "voip_sound_sets/vss_parent_id_ref/parent_id/voip_sound_sets/id" : {
+         "COLUMN_NAME" : "parent_id",
+         "CONSTRAINT_NAME" : "vss_parent_id_ref",
+         "DELETE_RULE" : "SET NULL",
+         "REFERENCED_COLUMN_NAME" : "id",
+         "REFERENCED_TABLE_NAME" : "voip_sound_sets",
+         "TABLE_NAME" : "voip_sound_sets",
+         "UPDATE_RULE" : "SET NULL",
+         "key_col" : "voip_sound_sets/vss_parent_id_ref/parent_id/voip_sound_sets/id"
       },
       "voip_sound_sets/vss_reseller_ref/reseller_id/resellers/id" : {
          "COLUMN_NAME" : "reseller_id",
@@ -11970,17 +12016,29 @@
          "TABLE_NAME" : "voip_sound_files",
          "key_col" : "voip_sound_files/PRIMARY/1"
       },
-      "voip_sound_files/handle_id_ref/1" : {
+      "voip_sound_files/handle_set_id_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "handle_id",
-         "INDEX_NAME" : "handle_id_ref",
+         "INDEX_NAME" : "handle_set_id_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_sound_files",
-         "key_col" : "voip_sound_files/handle_id_ref/1"
+         "key_col" : "voip_sound_files/handle_set_id_idx/1"
+      },
+      "voip_sound_files/handle_set_id_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "set_id",
+         "INDEX_NAME" : "handle_set_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_files",
+         "key_col" : "voip_sound_files/handle_set_id_idx/2"
       },
       "voip_sound_files/set_id_ref/1" : {
          "COLLATION" : "A",
@@ -12053,6 +12111,30 @@
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_sound_sets",
          "key_col" : "voip_sound_sets/contract_id_idx/1"
+      },
+      "voip_sound_sets/expose_to_customer_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "expose_to_customer",
+         "INDEX_NAME" : "expose_to_customer_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_sets",
+         "key_col" : "voip_sound_sets/expose_to_customer_idx/1"
+      },
+      "voip_sound_sets/parent_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "parent_id",
+         "INDEX_NAME" : "parent_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_sets",
+         "key_col" : "voip_sound_sets/parent_id_idx/1"
       },
       "voip_sound_sets/vss_reseller_ref/1" : {
          "COLLATION" : "A",
@@ -13410,6 +13492,10 @@
       }
    },
    "views" : {
+      "v_sound_set_files" : {
+         "VIEW_DEFINITION" : "with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from `provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`) `v` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from `provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`) `t` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`))",
+         "key_col" : "v_sound_set_files"
+      },
       "v_subscriber_cfs" : {
          "VIEW_DEFINITION" : "select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute` from ((((((((`provisioning`.`voip_cf_destinations` `cfd` left join (`provisioning`.`voip_cf_destination_sets` `cfds` left join `provisioning`.`voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `provisioning`.`voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1",
          "key_col" : "v_subscriber_cfs"

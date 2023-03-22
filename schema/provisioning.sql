@@ -1610,6 +1610,23 @@ CREATE TABLE `upn_rewrite_sources` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_sound_set_files` AS SELECT
+ 1 AS `set_id`,
+  1 AS `reseller_id`,
+  1 AS `contract_id`,
+  1 AS `name`,
+  1 AS `description`,
+  1 AS `handle_id`,
+  1 AS `handle_name`,
+  1 AS `file_id`,
+  1 AS `filename`,
+  1 AS `loopplay`,
+  1 AS `parent_chain`,
+  1 AS `data_set_id`,
+  1 AS `data` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_subscriber_cfs` AS SELECT
  1 AS `id`,
   1 AS `uuid`,
@@ -3495,7 +3512,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=392 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=396 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preferences` VALUES (1,3,'lock','Lock Level',0,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'enum',1,'For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. A lock value of \"none\" will not be returned to the caller. Read-only setting.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (2,2,'block_in_mode','Block Mode for inbound calls',1,1,1,1,0,0,1,0,0,0,0,NOW(),0,1,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).',0,0,1);
@@ -3847,6 +3864,10 @@ INSERT INTO `voip_preferences` VALUES (388,2,'adm_cf_ncos_set','Administrative N
 INSERT INTO `voip_preferences` VALUES (389,13,'user_conf_priority','User config priority over provisioning',0,1,0,0,0,0,0,0,1,1,1,NOW(),0,0,'boolean',0,'If set, the configuration done by the user directly on the phone have priority over the provisioning (attention: not all the phones support this option).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (390,4,'colp_pstn','Show PSTN Destination to Caller',0,1,1,1,1,0,0,0,0,0,0,NOW(),0,1,'boolean',0,'When calling PSTN, show the destination number or user back to the calling party.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (391,17,'opus_legacy_mono','Legacy Opus mono format',0,1,1,1,1,1,0,0,0,0,0,NOW(),0,0,'boolean',0,'Use legacy non-standard method to signal single-channel Opus. The default is the standards-compliant method of always advertising Opus as a two-channel format while hinting to mono usage as a format parameter.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (392,8,'csc_registered_devices','CSC Registered Devices',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Registered Devices\' - An internal flag to be able to map Registered Devices visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (393,8,'csc_conversations','CSC Conversations',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Conversations\' - An internal flag to be able to map Conversations visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Device Provisioning',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Device Provisioning\' - An internal flag to be able to map Device Provisioning visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -5085,9 +5106,10 @@ CREATE TABLE `voip_sound_files` (
   `set_id` int(11) DEFAULT NULL,
   `loopplay` tinyint(1) DEFAULT 0,
   `codec` varchar(16) NOT NULL DEFAULT '',
+  `use_parent` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `set_id_ref` (`set_id`),
-  KEY `handle_id_ref` (`handle_id`),
+  KEY `handle_set_id_idx` (`handle_id`,`set_id`),
   CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -5285,9 +5307,14 @@ CREATE TABLE `voip_sound_sets` (
   `name` varchar(256) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `contract_default` tinyint(1) NOT NULL DEFAULT 0,
+  `parent_id` int(11) DEFAULT NULL,
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `vss_reseller_ref` (`reseller_id`),
   KEY `contract_id_idx` (`contract_id`),
+  KEY `parent_id_idx` (`parent_id`),
+  KEY `expose_to_customer_idx` (`expose_to_customer`),
+  CONSTRAINT `vss_parent_id_ref` FOREIGN KEY (`parent_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `vss_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5507,7 +5534,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','30a4198244eede47b45dd53e346ee1c6',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','d9d1fac4db28928bdcb0724a5fdd0681',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -5980,6 +6007,19 @@ CREATE TABLE `xmlqueue` (
   KEY `next_try` (`next_try`,`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50001 DROP VIEW IF EXISTS `v_sound_set_files`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_sound_set_files` AS with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `v` left join `voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `t` left join `voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!50001 DROP VIEW IF EXISTS `v_subscriber_cfs`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;

@@ -790,7 +790,7 @@ CREATE TABLE `subscriber` (
   KEY `uuid_idx` (`uuid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','30a4198244eede47b45dd53e346ee1c6','14aa5335b44845371f26c00c5ba9a19c','837440d2259fb14febbf1e9cc1478ed6','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','d9d1fac4db28928bdcb0724a5fdd0681','3c0f019344cd51cfca334248bde4022d','bf116accf9ad9cc7bd2d6f9414e80057','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trusted` (
