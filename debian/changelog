@@ -1,3 +1,36 @@
+ngcp-db-schema (11.4.0.0+0~mr11.4.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [68068d1] MT#56526 Discontinue dialogic setting/provisioning
+  * [1bd148e] MT#56740 Remove already deprecated preference 'softphone_autoprov'
+  * [b8b256e] MT#56739 Remove already deprecated preference 'enable_t38'
+  * [7573806] MT#55671 Remove preference 'peer_group_tag'
+  * [9df66dc] MT#56403 Add new internal preferences to show/hide CSC menus
+  * [00a754e] MT#56691 Expose to customer all the SoundSet announcements
+
+  [ Daniel Grotti ]
+  * [36c8511] MT#56458 Add new preference 'colp_pstn'
+
+  [ Mykola Malkov ]
+  * [17a527a] MT#56542 Add support of custom mysql instance
+  * [a5d4476] MT#56542 Add tools to prepare sql and json dumps
+  * [0dfb41e] MT#56542 Add sql and json schemes
+  * [567fbbd] MT#56542 Add support of custom location of db files
+  * [d461ed9] MT#56782 Add schemes to ngcp-db-schema package
+  * [0194268] MT#56782 Update schema files
+
+  [ Richard Fuchs ]
+  * [b84bd6e] MT#56782 add option for mono Opus format
+
+  [ Sipwise Jenkins Builder ]
+  * [565b87c] MT#56782 add option for mono Opus format, schemes update
+  * [bc54a6d] MT#56693 voip_sound_sets.parent_id and v_sound_set_files view, schemes update
+
+  [ Kirill Solomko ]
+  * [60978e5] MT#56693 voip_sound_sets.parent_id and v_sound_set_files view
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 24 Mar 2023 13:03:01 +0100
+
 ngcp-db-schema (11.3.0.0+0~mr11.3.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
