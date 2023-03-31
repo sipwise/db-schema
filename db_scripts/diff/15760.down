@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE recording_calls DROP KEY status;

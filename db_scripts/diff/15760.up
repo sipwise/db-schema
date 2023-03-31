@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE recording_calls ADD KEY status (status);
