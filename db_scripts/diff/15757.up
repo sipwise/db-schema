@@ -23,7 +23,7 @@ WITH RECURSIVE cte as (
            v.id AS data_set_id,
            JSON_ARRAY(v.id) AS parent_chain
       FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-            FROM voip_sound_sets s, voip_sound_handles h
+            FROM (voip_sound_sets s, voip_sound_handles h)
            ) AS v
       LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
      WHERE v.parent_id IS NULL
