@@ -1,4 +1,4 @@
 SET sql_log_bin=0;
 USE kamailio;
 
-CREATE INDEX method_callid_idx ON acc (method,callid);
+CREATE INDEX IF NOT EXISTS method_callid_idx ON acc (method,callid);
