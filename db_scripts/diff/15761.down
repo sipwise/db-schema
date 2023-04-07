@@ -1,0 +1,5 @@
+USE kamailio;
+
+ALTER TABLE acc
+    DROP KEY method_idx,
+    ADD KEY method_callid_idx (method, callid);
