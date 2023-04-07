@@ -1,3 +1,11 @@
+ngcp-db-schema (11.1.1.3+0~mr11.1.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [bc14509] MT#55307 fix not replicated dbscript name
+  * [f3ac2e0] MT#55307 fix kamailio.acc existing index creation
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 07 Apr 2023 15:09:15 +0200
+
 ngcp-db-schema (11.1.1.2+0~mr11.1.1.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
