@@ -6796,29 +6796,17 @@
          "TABLE_NAME" : "acc",
          "key_col" : "acc/callid_method_idx/2"
       },
-      "acc/method_callid_idx/1" : {
+      "acc/method_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "method",
-         "INDEX_NAME" : "method_callid_idx",
+         "INDEX_NAME" : "method_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "acc",
-         "key_col" : "acc/method_callid_idx/1"
-      },
-      "acc/method_callid_idx/2" : {
-         "COLLATION" : "A",
-         "COLUMN_NAME" : "callid",
-         "INDEX_NAME" : "method_callid_idx",
-         "INDEX_TYPE" : "BTREE",
-         "NON_UNIQUE" : 1,
-         "NULLABLE" : "",
-         "SEQ_IN_INDEX" : 2,
-         "SUB_PART" : null,
-         "TABLE_NAME" : "acc",
-         "key_col" : "acc/method_callid_idx/2"
+         "key_col" : "acc/method_idx/1"
       },
       "acc_backup/PRIMARY/1" : {
          "COLLATION" : "A",

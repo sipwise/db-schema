@@ -20,7 +20,7 @@ CREATE TABLE `acc` (
   `branch_id` varchar(3) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `callid_method_idx` (`callid`,`method`),
-  KEY `method_callid_idx` (`method`,`callid`)
+  KEY `method_idx` (`method`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -790,7 +790,7 @@ CREATE TABLE `subscriber` (
   KEY `uuid_idx` (`uuid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','109892255fd17e33ac74f088df4a334b','7b997d5e3faf5742b374a75a5b0b1b77','0c88c1f7cbf54f4a251a495323cffc54','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','147ec1d764e2e59fc791ab21ac340c79','14681074b9d8ceba71cc5be02ce8fccf','e3ce01cb6449f0a46129c6d748e5da8a','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trusted` (
