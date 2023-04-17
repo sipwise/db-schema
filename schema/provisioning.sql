@@ -5535,7 +5535,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','147ec1d764e2e59fc791ab21ac340c79',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','a8ab25042e5f2e940fe9b818697f9096',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
