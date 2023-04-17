@@ -34,7 +34,7 @@ WITH RECURSIVE cte as (
            JSON_ARRAY_INSERT(cte.parent_chain, '$[0]', v.id) AS parent_chain
       FROM (SELECT t.*, f.filename, f.use_parent
             FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                  FROM voip_sound_sets s, voip_sound_handles h
+                  FROM (voip_sound_sets s, voip_sound_handles h)
                  ) AS t
             LEFT JOIN voip_sound_files f ON f.handle_id = t.handle_id AND f.set_id = t.id
            ) AS v
