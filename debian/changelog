@@ -1,3 +1,10 @@
+ngcp-db-schema (11.3.1.2+0~mr11.3.1.2) unstable; urgency=medium
+
+  [ Mykola Malkov ]
+  * [4bd0e23] MT#57151 change init_connect connection_collation
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 18 Apr 2023 13:09:39 +0200
+
 ngcp-db-schema (11.3.1.1+0~mr11.3.1.1) unstable; urgency=medium
 
   * New release.
