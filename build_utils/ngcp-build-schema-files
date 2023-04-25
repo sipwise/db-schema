@@ -101,7 +101,7 @@ for schema in "${schemes[@]}"; do
   mysqldump "${schema}" --compact --skip-extended-insert \
     -S "${mariadb_dir}/mysqld.sock" \
     | sed -r "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
-    > "${schema}.sql"
+    >> "${schema}.sql"
   echo "Done"
 done
 
