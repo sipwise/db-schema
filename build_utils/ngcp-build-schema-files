@@ -102,6 +102,7 @@ for schema in "${schemes[@]}"; do
     -S "${mariadb_dir}/mysqld.sock" \
     | sed -r "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
     >> "${schema}.sql"
+  echo "COMMIT;" >> "${schema}.sql"
   echo "Done"
 done
 
