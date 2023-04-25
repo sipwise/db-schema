@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE accounting;
+USE accounting;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acc` (
@@ -1154,3 +1160,4 @@ CREATE TABLE `prepaid_costs` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+COMMIT;

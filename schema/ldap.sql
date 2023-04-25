@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE ldap;
+USE ldap;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ldap_attr_mappings` (
@@ -102,3 +108,4 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+COMMIT;

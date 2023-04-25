@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE fileshare;
+USE fileshare;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `downloads` (
@@ -51,3 +57,4 @@ CREATE TABLE `uploads` (
   CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+COMMIT;

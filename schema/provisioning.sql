@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE provisioning;
+USE provisioning;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `autoprov_configs` (
@@ -5535,7 +5541,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','a8ab25042e5f2e940fe9b818697f9096',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','2829a353a32c9bce543b9db38bf0fe39',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -6008,6 +6014,373 @@ CREATE TABLE `xmlqueue` (
   KEY `next_try` (`next_try`,`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `bin_to_hex`(_bin VARCHAR(1023)
+) RETURNS varchar(1023) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _digits VARCHAR(4);
+  DECLARE _result VARCHAR(1023) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _digits = SUBSTR(_bin,-4 * _i,4);
+    IF LENGTH(_digits) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(COALESCE(CONV(_digits,2,16),"0"),_result);
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `hex_add`(_a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS varchar(256) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _carry, _result_digit INT DEFAULT 0;
+  DECLARE _result VARCHAR(256) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a, -1 * _i,1);
+    SET _b_digit = SUBSTR(_b, -1 * _i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 AND _carry = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result_digit = COALESCE(CONV(_a_digit,16,10),0) + COALESCE(CONV(_b_digit,16,10),0) + _carry;
+    SET _result = CONCAT(HEX(_result_digit & 15),_result);
+    IF _result_digit > 15 THEN
+      SET _carry = 1;
+    ELSE
+      SET _carry = 0;
+    END IF;
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `hex_and`(_a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS varchar(255) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _result VARCHAR(255) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a,_i,1);
+    SET _b_digit = SUBSTR(_b,_i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(_result,HEX(COALESCE(conv(_a_digit,16,10),0) & COALESCE(CONV(_b_digit,16,10),0)));
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_broadcast_address`(_ipnet VARCHAR(46)
+) RETURNS varbinary(16)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_hex VARCHAR(32);
+  DECLARE _broadcast_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_hex = hex_and(
+      HEX(INET6_ATON(substr(_ipnet,1,LOCATE("/",_ipnet) - 1))),
+      _mask_hex
+    );
+    SET _broadcast_bytes = UNHEX(hex_add(
+      _network_hex,
+      bin_to_hex(CONCAT(REPEAT("0",_mask_len),REPEAT("1",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)))
+    ));
+  ELSE
+    SET _broadcast_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _broadcast_bytes;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_network_address`(_ipnet VARCHAR(46)
+) RETURNS varbinary(16)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_bytes = UNHEX(
+      hex_and(
+        HEX(INET6_ATON(SUBSTR(_ipnet,1,locate("/",_ipnet) - 1))),
+        _mask_hex
+      )
+    );
+  ELSE
+    SET _network_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _network_bytes;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_allowed`(_uuid VARCHAR(36),
+  _ip VARCHAR(46)
+) RETURNS tinyint(1)
+    READS SQL DATA
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _is_valid_ip, _is_ipv6 BOOLEAN DEFAULT 0;
+  DECLARE _aig_id, _aig_ids_done INT DEFAULT 0;
+  DECLARE _is_allowed BOOLEAN DEFAULT NULL;
+  
+  DECLARE usr_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_usr_preferences v
+    JOIN provisioning.voip_subscribers s on v.subscriber_id = s.id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE dom_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_dom_preferences v
+    JOIN provisioning.voip_subscribers s on v.domain_id = s.domain_id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET _aig_ids_done = _aig_ids_done + 1;
+
+  IF IF(EXISTS(SELECT 1 FROM provisioning.voip_subscribers WHERE uuid = _uuid),0,1) THEN
+    
+    RETURN 0;
+  END IF;
+
+  SET _network_bytes = INET6_ATON(_ip);
+  SET _is_valid_ip = IF(_network_bytes IS NULL OR HEX(_network_bytes) = "00000000",0,1);
+  SET _is_ipv6 = IF(_is_valid_ip,ip_is_ipv6(_ip),0);
+
+  OPEN usr_aig_id_cursor;
+  aig_ids_loop: LOOP
+    IF _aig_ids_done = 0 THEN
+      FETCH usr_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 1 THEN
+        CLOSE usr_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          SET _is_allowed = NULL;
+          OPEN dom_aig_id_cursor;
+        END IF;
+      END IF;
+    END IF;
+    IF _aig_ids_done = 1 THEN
+      FETCH dom_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 2 THEN
+        CLOSE dom_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          LEAVE aig_ids_loop;
+        END IF;
+      END IF;
+    END IF;
+    IF _is_allowed IS NULL THEN
+      SET _is_allowed = 0;
+    END IF;
+    IF _is_valid_ip THEN
+      IF _is_ipv6 THEN
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv6_net_from <= _network_bytes
+            AND aig._ipv6_net_to >= _network_bytes
+        LIMIT 1),0));
+      ELSE
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv4_net_from <= _network_bytes
+            AND aig._ipv4_net_to >= _network_bytes
+        LIMIT 1),0));
+      END IF;
+    ELSE
+      
+      RETURN 0;
+    END IF;
+  END LOOP aig_ids_loop;
+  
+  
+  RETURN 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_cidr`(_ipnet VARCHAR(46)
+) RETURNS tinyint(1)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE("/",_ipnet) = 0,0,1);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_ipv6`(_ipnet VARCHAR(46)
+) RETURNS tinyint(1)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE(".",_ipnet) = 0,1,0);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50001 DROP VIEW IF EXISTS `v_sound_set_files`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -6060,3 +6433,4 @@ CREATE TABLE `xmlqueue` (
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+COMMIT;

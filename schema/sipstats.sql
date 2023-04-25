@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE sipstats;
+USE sipstats;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mark` (
@@ -100,3 +106,4 @@ CREATE TABLE `statistics` (
  PARTITION BY RANGE (floor(`timestamp`))
 (PARTITION `p_old` VALUES LESS THAN (600) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
+COMMIT;

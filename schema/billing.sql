@@ -1,3 +1,9 @@
+SET FOREIGN_KEY_CHECKS=0;
+SET NAMES utf8;
+SET SESSION autocommit=0;
+SET SESSION unique_checks=0;
+CREATE DATABASE billing;
+USE billing;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `_v_actual_effective_start_time` AS SELECT
@@ -1429,6 +1435,1027 @@ CREATE TABLE `vouchers` (
   CONSTRAINT `vouchers_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `check_billing_fee_offpeak`(_billing_profile_id int(11),
+  _t decimal(13,3),
+  _contract_id int(11)
+) RETURNS tinyint(1)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _call_start, _call_end decimal(13,3);
+  declare _is_offpeak boolean;
+  set _call_start = _t;
+  set _call_end = _t;
+
+  set _is_offpeak = (select coalesce((select 1 from (
+    select
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.start),
+          convert_tz(concat(date_enum.d," ",pw.start),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as start,
+      unix_timestamp(
+        if(_contract_id is null,
+          concat(date_enum.d," ",pw.end),
+          convert_tz(concat(date_enum.d," ",pw.end),
+            @@session.time_zone,
+            (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+          )
+        )
+      ) as end
+    from
+         ngcp.date_range_helper as date_enum
+    join billing.billing_peaktime_weekdays pw on pw.weekday=weekday(date_enum.d)
+    where
+        pw.billing_profile_id = _billing_profile_id
+    and date_enum.d >= date(from_unixtime(_call_start))
+    and date_enum.d <= date(from_unixtime(_call_end))
+  ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  if _is_offpeak != 1 then
+
+    set _is_offpeak = (select coalesce((select 1 from (
+      select
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.start,
+            convert_tz(ps.start,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as start,
+        unix_timestamp(
+          if(_contract_id is null,
+            ps.end,
+            convert_tz(ps.end,
+              @@session.time_zone,
+              (select coalesce((select tz.name FROM billing.v_contract_timezone tz WHERE tz.contract_id = _contract_id LIMIT 1),@@session.time_zone))
+            )
+          )
+        ) as end
+      from
+           billing.billing_peaktime_special as ps
+      where
+          ps.billing_profile_id = _billing_profile_id
+      and (ps.start <= from_unixtime(_call_end) and ps.end >= from_unixtime(_call_start))
+    ) as offpeaks where offpeaks.start <= _t and offpeaks.end >= _t limit 1),0));
+
+  end if;
+
+  return _is_offpeak;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_fee`(_billing_profile_id int(11),
+  _t decimal(13,3),
+  _source varchar(511),
+  _destination varchar(511),
+  _contract_id int(11)
+) RETURNS varchar(100) CHARSET utf8 COLLATE utf8_general_ci
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _fee_string varchar(100);
+
+  set _fee_string = (select concat(
+      if(pt.is_offpeak,bfh.offpeak_init_rate,bfh.onpeak_init_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_init_interval,bfh.onpeak_init_interval),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_rate,bfh.onpeak_follow_rate),":",
+      if(pt.is_offpeak,bfh.offpeak_follow_interval,bfh.onpeak_follow_interval),":",
+      bfh.aoc_pulse_amount_per_message
+    ) from
+           billing.billing_fees_history bfh
+      join (select billing.check_billing_fee_offpeak(_billing_profile_id,_t,_contract_id) as is_offpeak) pt
+    where
+      bfh.id = billing.get_billing_fee_id(_billing_profile_id,"call","out",_source,_destination,null));
+
+  return _fee_string;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_fee_id`(_billing_profile_id int(11),
+  _type enum('call','sms'),
+  _direction enum('in','out'),
+  _source varchar(511),
+  _destination varchar(511),
+  _match_mode enum('regex_longest_pattern', 'regex_longest_match', 'prefix', 'exact_destination')
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _destination_prefix,_source_prefix varchar(511);
+  declare _i, _j int(3);
+  declare _fee_id int(11);
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "exact_destination")
+      and (select exists (select 1 from billing.billing_fees_history use index (bfh_srcdestdir_idx) where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "exact_destination"
+      and direction = _direction
+      and bf_id is not null)) then
+
+    set _fee_id = (select id from billing.billing_fees_history where
+          billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "exact_destination"
+        and direction = _direction
+        and bf_id is not null
+        and destination = _destination
+      limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "prefix")
+      and (select exists (select 1 from billing.billing_fees_history use index (bfh_srcdestdir_idx) where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "prefix"
+      and direction = _direction
+      and bf_id is not null)) then
+
+    set _j = length(_destination);
+
+    destination_loop: loop
+      if _j < 0 or _fee_id is not null then
+        leave destination_loop;
+      end if;
+      set _destination_prefix = substr(coalesce(_destination,""),1,_j);
+      if (select exists (select 1 from billing.billing_fees_history where
+              billing_profile_id = _billing_profile_id
+          and type = _type
+          and match_mode = "prefix"
+          and direction = _direction
+          and bf_id is not null
+          and destination = _destination_prefix)) then
+
+        set _i = length(_source);
+
+        source_loop: loop
+          if _i < 0 or _fee_id is not null then
+            leave source_loop;
+          end if;
+          set _source_prefix = substr(coalesce(_source,""),1,_i);
+          set _fee_id = (select id from billing.billing_fees_history where
+                  billing_profile_id = _billing_profile_id
+              and type = _type
+              and match_mode = "prefix"
+              and direction = _direction
+              and bf_id is not null
+              and source = _source_prefix
+              and destination = _destination_prefix
+            limit 1);
+          set _i = _i - 1;
+        end loop source_loop;
+      end if;
+      set _j = _j - 1;
+    end loop destination_loop;
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_match")
+     and (select exists (select 1 from billing.billing_fees_history use index (bfh_srcdestdir_idx) where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_match"
+      and direction = _direction
+      and bf_id is not null)) then
+
+    set _fee_id = (select id from billing.billing_fees_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_match"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(regexp_substr(_destination,destination)) desc,
+        length(regexp_substr(_source,source)) desc limit 1);
+
+  end if;
+
+  if _fee_id is null and (_match_mode is null or _match_mode = "regex_longest_pattern")
+      and (select exists (select 1 from billing.billing_fees_history use index (bfh_srcdestdir_idx) where
+          billing_profile_id = _billing_profile_id
+      and type = _type
+      and match_mode = "regex_longest_pattern"
+      and direction = _direction
+      and bf_id is not null)) then
+
+    set _fee_id = (select id from billing.billing_fees_history where
+            billing_profile_id = _billing_profile_id
+        and type = _type
+        and match_mode = "regex_longest_pattern"
+        and direction = _direction
+        and bf_id is not null
+        and _source regexp(source)
+        and _destination regexp(destination)
+      order by
+        length(destination) desc,
+        length(source) desc limit 1);
+
+  end if;
+
+  return _fee_id;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_network_contract_cnt`(_network_id int,
+  _limit int
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+        join billing.contracts as c on est.contract_id = c.id
+        where
+        cbpn.billing_network_id = _network_id
+        and c.status != 'terminated'
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+    join billing.contracts as c on est.contract_id = c.id
+    where
+    cbpn.billing_network_id = _network_id
+    and c.status != 'terminated'
+  );
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_contract_id`(_contract_id int(11),
+  _epoch decimal(13,3)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch and cbpn.base = 1);
+
+  if _effective_start_date is null then
+    set _cbpn_id = (select min(id) from billing.contracts_billing_profile_network cbpn
+      where cbpn.contract_id = _contract_id and cbpn.base = 1);
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date and cbpn.base = 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_contract_id_network`(_contract_id int(11),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _effective_start_date decimal(13,3);
+  declare _cbpn_id,_profile_id int(11);
+  declare _network_bytes varbinary(16);
+  declare _is_valid_ip,_is_ipv6 boolean default false;
+
+  if _contract_id is null or _epoch is null then
+    return null;
+  end if;
+  set _network_bytes = inet6_aton(_ip);
+  set _is_valid_ip = if(_network_bytes is null or hex(_network_bytes) = "00000000",0,1);
+  set _is_ipv6 = if(locate(".",_ip) = 0,1,0);
+
+  set _effective_start_date = (select max(cbpns.effective_start_time) from billing.contracts_billing_profile_network_schedule cbpns join
+    billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+    left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+    where cbpn.contract_id = _contract_id and cbpns.effective_start_time <= _epoch
+    and ((_is_valid_ip and if(_is_ipv6,bnb._ipv6_net_from <= _network_bytes and bnb._ipv6_net_to >= _network_bytes,
+    bnb._ipv4_net_from <= _network_bytes and bnb._ipv4_net_to >= _network_bytes)) or cbpn.billing_network_id is null));
+
+  if _effective_start_date is null then
+    set _cbpn_id = (billing.get_billing_profile_by_contract_id(_contract_id,_epoch));
+  else
+    set _cbpn_id = (select cbpn.id from billing.contracts_billing_profile_network_schedule cbpns join
+      billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+      left join billing.billing_networks bn on cbpn.billing_network_id = bn.id
+      left join billing.billing_network_blocks bnb on bn.id = bnb.network_id
+      where cbpn.contract_id = _contract_id and cbpns.effective_start_time = _effective_start_date
+      and ((_is_valid_ip and if(_is_ipv6,bnb._ipv6_net_from <= _network_bytes and bnb._ipv6_net_to >= _network_bytes,
+      bnb._ipv4_net_from <= _network_bytes and bnb._ipv4_net_to >= _network_bytes)) or cbpn.billing_network_id is null)
+      order by cbpn.billing_network_id desc limit 1);
+  end if;
+
+  set _profile_id = (select billing_profile_id from billing.contracts_billing_profile_network where id = _cbpn_id);
+
+  return _profile_id;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_peer_host_id`(_peer_host_id int(11),
+  _epoch decimal(13,3)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  return billing.get_billing_profile_by_contract_id((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
+    provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_peer_host_id_network`(_peer_host_id int(11),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  return billing.get_billing_profile_by_contract_id_network((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
+    provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch,_ip);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_uuid`(_uuid varchar(36),
+  _epoch decimal(13,3)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  return billing.get_billing_profile_by_contract_id((select account_id from provisioning.voip_subscribers where uuid = _uuid),_epoch);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_uuid_network`(_uuid varchar(36),
+  _epoch decimal(13,3),
+  _ip varchar(46)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  return billing.get_billing_profile_by_contract_id_network((select account_id from provisioning.voip_subscribers where uuid = _uuid),
+    _epoch,_ip);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_contract_cnt`(_profile_id int,
+  _limit int
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+        join billing.contracts as c on est.contract_id = c.id
+        where
+        cbpn.billing_profile_id = _profile_id
+        and c.status != 'terminated'
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
+    join billing.contracts as c on est.contract_id = c.id
+    where
+    cbpn.billing_profile_id = _profile_id
+    and c.status != 'terminated'
+  );
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_lnp_number_id`(_destination varchar(511),
+  _epoch decimal(13,3)
+) RETURNS int(11)
+    READS SQL DATA
+    DETERMINISTIC
+begin
+
+  declare _destination_prefix varchar(511);
+  declare _i int(3);
+  declare _number_id int(11);
+
+  set _i = length(_destination);
+
+  destination_loop: loop
+    if _i < 0 or _number_id is not null then
+      leave destination_loop;
+    end if;
+    set _destination_prefix = substr(coalesce(_destination,""),1,_i);
+    set _number_id = (select id from billing.lnp_numbers 
+        use index (number_idx)
+        where number = _destination_prefix
+	and (start <= from_unixtime(_epoch) or start is null) 
+	and (end > from_unixtime(_epoch) or end is null) 
+      limit 1);
+    set _i = _i - 1;
+  end loop destination_loop;
+
+  return _number_id;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_contract_billing_profile_network_schedule`(
+  _contract_id int(11) unsigned,
+  _last tinyint(3),
+  _start_date datetime,
+  _end_date datetime,
+  _effective_start_date decimal(13,3),
+  _profile_id int(11) unsigned,
+  _network_id int(11) unsigned
+)
+begin
+
+  declare _profile_network_id int(11) unsigned;
+
+  set _profile_network_id = (select id from billing.contracts_billing_profile_network where contract_id = _contract_id and billing_profile_id = _profile_id
+    and billing_network_id <=> _network_id and start_date <=> _start_date and end_date <=> _end_date and base = _last);
+
+  if _profile_network_id is null then
+    insert into billing.contracts_billing_profile_network values(null,_contract_id,_profile_id,_network_id,_start_date,_end_date,_last);
+    set _profile_network_id = last_insert_id();
+  end if;
+  insert into billing.contracts_billing_profile_network_schedule values(null,_profile_network_id,_effective_start_date);
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `create_contract_billing_profile_network_from_package`(
+  in _contract_id int(11) unsigned,
+  in _start int(13) unsigned,
+  in _package_id int(11) unsigned,
+  in _package_profile_set varchar(32)
+)
+begin
+
+  call billing.schedule_contract_billing_profile_network(_contract_id,null,(select group_concat(concat(from_unixtime(_start),",,",profile_id,",",
+    if(network_id is null,"",network_id),",") order by id separator ";") from billing.package_profile_sets
+    where package_id = _package_id and discriminator = _package_profile_set));
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_billing_fees`(in in_profile_id int)
+begin
+
+  declare columns varchar(1023);
+  declare statement varchar(1023);
+
+  set @profile_id = in_profile_id;
+
+  select group_concat(column_name) into columns from information_schema.columns where table_schema = database() and table_name = "billing_fees_raw" and column_name not in ("id");
+
+  set @statement = concat("insert into billing.billing_fees(id,",columns,")
+ select min_id,",columns,"
+ from billing.billing_fees_raw bnu
+ inner join (
+    select min(i_nu.id) min_id
+    from billing.billing_fees_raw i_nu
+    left join billing.billing_fees i_u
+        on i_nu.billing_profile_id=i_u.billing_profile_id
+        and i_nu.type=i_u.type
+        and i_nu.match_mode=i_u.match_mode
+        and i_nu.direction=i_u.direction
+        and i_nu.source=i_u.source
+        and i_nu.destination=i_u.destination
+    where i_u.id is null ",
+    if( @profile_id is not null, " and i_nu.billing_profile_id = ? ", " and 1 = ? "),
+    " group by i_nu.billing_profile_id,i_nu.type,i_nu.match_mode,i_nu.direction,i_nu.source,i_nu.destination
+ ) u on bnu.id=u.min_id");
+
+  if @profile_id is null then
+    set @profile_id = 1;
+  end if;
+
+  prepare stmt from @statement;
+  execute stmt using @profile_id;
+  deallocate prepare stmt;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `schedule_contract_billing_profile_network`(
+  in _contract_id int(11) unsigned,
+  in _now datetime,
+  in _future_mappings varchar(65535)
+)
+main: begin
+
+  declare _new boolean default false;
+  declare _line varchar(128);
+  declare _start_date_str,_end_date_str varchar(19);
+  declare _profile_id_str,_network_id_str varchar(11);
+  declare _last_str,_col_sep,_row_sep varchar(1);
+
+  declare _row_sep_length int;
+  declare _contract_id_locked,_max_id,_id int(11) unsigned;
+
+  if _future_mappings is null then
+    leave main;
+  end if;
+
+  if _contract_id is null then
+    signal sqlstate "45001" set message_text = "contract_id required";
+  else
+    
+    set _contract_id_locked = (select id from billing.contracts where id = 1 for update);
+    
+    set _contract_id_locked = (select id from billing.contracts where id = _contract_id for update);
+  end if;
+
+  drop temporary table if exists tmp_billing_mappings;
+  create temporary table tmp_billing_mappings
+    (index (id), index (contract_id,start_date,end_date)) engine = memory
+    select cbpn.id,cbpn.contract_id,cbpn.start_date,cbpn.end_date,cbpn.billing_profile_id,
+    cbpn.billing_network_id as network_id,cbpn.base from
+    billing.contracts_billing_profile_network_schedule cbpns join billing.contracts_billing_profile_network cbpn on cbpn.id = cbpns.profile_network_id
+    where cbpn.contract_id = _contract_id and floor(cbpns.effective_start_time) = cbpns.effective_start_time and (_now is null or
+    (cbpn.start_date <= _now or cbpn.start_date is null)) order by cbpns.effective_start_time asc, cbpn.base asc, cbpns.profile_network_id asc;
+
+  set _max_id = (select max(id) from tmp_billing_mappings);
+  set _new = if(_max_id is null,true,false);
+  set _id = if(_max_id is null,0,_max_id);
+
+  set _col_sep = ",";
+  set _row_sep = ";";
+  set _row_sep_length = length(_row_sep);
+
+  parse_loop: loop
+    if _future_mappings is null or length(_future_mappings) = 0 then
+      leave parse_loop;
+    end if;
+
+    set _line = substring_index(_future_mappings,_row_sep,1);
+
+    set _start_date_str = substring_index(substring_index(_line,_col_sep,1),_col_sep,-1);
+    set _end_date_str = substring_index(substring_index(_line,_col_sep,2),_col_sep,-1);
+    set _profile_id_str = substring_index(substring_index(_line,_col_sep,3),_col_sep,-1);
+    set _network_id_str = substring_index(substring_index(_line,_col_sep,4),_col_sep,-1);
+    set _last_str = substring_index(substring_index(_line,_col_sep,5),_col_sep,-1);
+
+    if length(_start_date_str) > 0 and dayname(_start_date_str) is null then
+      signal sqlstate "45001" set message_text = "invalid start date";
+    end if;
+    if length(_end_date_str) > 0 and dayname(_end_date_str) is null then
+      signal sqlstate "45001" set message_text = "invalid end date";
+    end if;
+    if length(_end_date_str) > 0 and length(_start_date_str) = 0 then
+      signal sqlstate "45001" set message_text = "mappings with end date but no start date are not allowed";
+    end if;
+
+    set _id = _id + 1;
+    insert into tmp_billing_mappings values(_id,_contract_id, if(length(_start_date_str) > 0,_start_date_str,null), if(length(_end_date_str) > 0,
+      _end_date_str,null), if(length(_profile_id_str) > 0,_profile_id_str,null), if(length(_network_id_str) > 0,_network_id_str,null),
+      if(length(_last_str) > 0,if(_last_str > 0,1,0),1));
+
+    set _future_mappings = insert(_future_mappings,1,length(_line) + _row_sep_length,"");
+  end loop parse_loop;
+
+  if _new and (select count(*) from tmp_billing_mappings where start_date is null and end_date is null and network_id is null) != 1 then
+    signal sqlstate "45001" set message_text = "there must be exactly one initial mapping with open start date, open end date and no network";
+  end if;
+
+  if not _new and (select count(*) from tmp_billing_mappings where start_date is null and end_date is null and id > _max_id) > 0 then
+    signal sqlstate "45001" set message_text = "adding mappings with open start date and open end date is not allowed";
+  end if;
+
+  drop temporary table if exists tmp_billing_mappings_clone;
+  create temporary table tmp_billing_mappings_clone
+    (index (id), index (contract_id,start_date,end_date)) engine = memory select * from tmp_billing_mappings;
+
+  if not _new then
+    delete from billing.contracts_billing_profile_network where contract_id = _contract_id;
+  end if;
+
+  nested1: begin
+
+    declare _events_done, _mappings_done, _is_end boolean default false;
+    declare _t datetime;
+
+    declare _old_bm_ids varchar(65535);
+    declare events_cur cursor for select t,is_end from (
+      (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+        from tmp_billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
+      union all
+      (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from tmp_billing_mappings_clone where contract_id = _contract_id)
+    ) as events group by t, is_end order by t, is_end;
+    declare continue handler for not found set _events_done = true;
+
+    set _old_bm_ids = "";
+    set _events_done = false;
+    open events_cur;
+    events_loop: loop
+      fetch events_cur into _t, _is_end;
+      if _events_done then
+        leave events_loop;
+      end if;
+
+      nested2: begin
+
+        declare _bm_id, _default_bm_id, _profile_id, _network_id int(11) unsigned;
+        declare _start_date, _end_date datetime;
+        declare _effective_start_time decimal(13,3);
+        declare _bm_ids varchar(65535);
+        declare mappings_cur cursor for select bm1.id, bm1.start_date, bm1.end_date, bm1.billing_profile_id, bm1.network_id from
+            tmp_billing_mappings bm1 where bm1.contract_id = _contract_id and bm1.start_date <=> (select bm2.start_date
+            from tmp_billing_mappings_clone bm2 where
+            bm2.contract_id = _contract_id
+            and (bm2.start_date <= _t or bm2.start_date is null)
+            and (if(_is_end,bm2.end_date > _t,bm2.end_date >= _t) or bm2.end_date is null)
+            order by bm2.start_date desc limit 1) order by bm1.base asc, bm1.id asc;
+        declare continue handler for not found set _mappings_done = true;
+
+        set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 0.001,_t)));
+        set _bm_ids = "";
+        set _mappings_done = false;
+        open mappings_cur;
+        mappings_loop1: loop
+          fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+          if _mappings_done then
+            leave mappings_loop1;
+          end if;
+          set _bm_ids = (select concat(_bm_ids,"-",_bm_id));
+          set _default_bm_id = _bm_id;
+        end loop mappings_loop1;
+        close mappings_cur;
+
+        if _old_bm_ids != _bm_ids then
+          set _mappings_done = false;
+          open mappings_cur;
+          mappings_loop2: loop
+            fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+            if _mappings_done then
+              leave mappings_loop2;
+            end if;
+
+            call billing.add_contract_billing_profile_network_schedule(_contract_id,if(_bm_id = _default_bm_id,1,0),_start_date,_end_date,
+              _effective_start_time,_profile_id,_network_id);
+
+          end loop mappings_loop2;
+          close mappings_cur;
+        end if;
+        set _old_bm_ids = _bm_ids;
+      end nested2;
+    end loop events_loop;
+    close events_cur;
+  end nested1;
+
+  drop temporary table tmp_billing_mappings;
+  drop temporary table tmp_billing_mappings_clone;
+
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `transform_billing_mappings`()
+begin
+
+  declare _contracts_done, _events_done, _mappings_done, _is_end boolean default false;
+  declare _contract_id, _bm_id, _default_bm_id, _profile_id, _network_id int(11) unsigned;
+  declare _t, _start_date, _end_date datetime;
+  declare _effective_start_time decimal(13,3);
+  declare _bm_ids, _old_bm_ids varchar(65535);
+
+  declare contracts_cur cursor for select bm.contract_id
+    from billing_mappings bm left join contracts_billing_profile_network cbpn on bm.contract_id = cbpn.contract_id
+    where cbpn.id is null group by bm.contract_id;
+  declare continue handler for not found set _contracts_done = true;
+
+  set _old_bm_ids = "";
+
+  open contracts_cur;
+  contracts_loop: loop
+    fetch contracts_cur into _contract_id;
+    if _contracts_done then
+      leave contracts_loop;
+    end if;
+    nested1: begin
+
+      declare events_cur cursor for select t,is_end from (
+        (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+          from billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
+        union all
+        (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from billing_mappings where contract_id = _contract_id)
+      ) as events group by t, is_end order by t, is_end;
+      declare continue handler for not found set _events_done = true;
+
+      set _events_done = false;
+      open events_cur;
+      events_loop: loop
+        fetch events_cur into _t, _is_end;
+        if _events_done then
+          leave events_loop;
+        end if;
+
+        nested2: begin
+
+          declare mappings_cur cursor for select bm1.id, bm1.start_date, bm1.end_date, bm1.billing_profile_id, bm1.network_id from
+              billing_mappings bm1 where bm1.contract_id = _contract_id and bm1.start_date <=> (select bm2.start_date
+              from billing_mappings bm2 where
+              bm2.contract_id = _contract_id
+              and (bm2.start_date <= _t or bm2.start_date is null)
+              and (if(_is_end,bm2.end_date > _t,bm2.end_date >= _t) or bm2.end_date is null)
+              order by bm2.start_date desc limit 1) order by bm1.id asc;
+          declare continue handler for not found set _mappings_done = true;
+
+          set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 0.001,_t)));
+          set _bm_ids = "";
+          set _mappings_done = false;
+          open mappings_cur;
+          mappings_loop1: loop
+            fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+            if _mappings_done then
+              leave mappings_loop1;
+            end if;
+            set _bm_ids = (select concat(_bm_ids,"-",_bm_id));
+            set _default_bm_id = _bm_id;
+          end loop mappings_loop1;
+          close mappings_cur;
+
+          if _old_bm_ids != _bm_ids then
+            set _mappings_done = false;
+            open mappings_cur;
+            mappings_loop2: loop
+              fetch mappings_cur into _bm_id, _start_date, _end_date, _profile_id, _network_id;
+              if _mappings_done then
+                leave mappings_loop2;
+              end if;
+
+              call add_contract_billing_profile_network_schedule(_contract_id,if(_bm_id = _default_bm_id,1,0),_start_date,_end_date,
+                _effective_start_time,_profile_id,_network_id);
+
+            end loop mappings_loop2;
+            close mappings_cur;
+          end if;
+          set _old_bm_ids = _bm_ids;
+        end nested2;
+      end loop events_loop;
+      close events_cur;
+    end nested1;
+  end loop contracts_loop;
+  close contracts_cur;
+end ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50001 DROP VIEW IF EXISTS `_v_actual_effective_start_time`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -1507,3 +2534,4 @@ CREATE TABLE `vouchers` (
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+COMMIT;
