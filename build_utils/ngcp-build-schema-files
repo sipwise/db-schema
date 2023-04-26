@@ -98,7 +98,8 @@ for schema in "${schemes[@]}"; do
   echo "USE ${schema};" >> "${schema}.sql"
 
   # Replace all the dates in format YYYY-MM-DD HH:MM:SS with NOW() function
-  mysqldump "${schema}" --compact --skip-extended-insert \
+  mysqldump "${schema}" --triggers --routines --compact \
+    --skip-extended-insert \
     -S "${mariadb_dir}/mysqld.sock" \
     | sed -r "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
     >> "${schema}.sql"
