@@ -135,7 +135,7 @@ my $dbh = DBI->connect("DBI:mysql:;mysql_socket=$argv->{socket}",
 my $coder = JSON::XS->new->utf8->pretty->allow_nonref;
 $coder->canonical([]);
 
-my @objects = qw(tables columns indexes constraints views routines);
+my @objects = qw(tables columns indexes constraints triggers views routines);
 my $schema = {};
 foreach my $object (@objects) {
     my $rows = $dbh->selectall_hashref($queries->{$object}, 'key_col', undef, $argv->{schema});
