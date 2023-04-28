@@ -930,5 +930,6 @@
          "key_col" : "statistics"
       }
    },
+   "triggers" : {},
    "views" : {}
 }

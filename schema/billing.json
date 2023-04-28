@@ -11502,6 +11502,71 @@
          "key_col" : "vouchers"
       }
    },
+   "triggers" : {
+      "bill_fees_crepl_trig/billing_fees" : {
+         "ACTION_STATEMENT" : "begin\n  declare my_bzh_id int unsigned;\n\n  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;\n\n  insert into billing.billing_fees_history\n    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,\n      NEW.source, NEW.destination, NEW.direction,\n      NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,\n      NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,\n      NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.onpeak_use_free_time,\n      NEW.match_mode, NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,\n      NEW.offpeak_use_free_time, NEW.aoc_pulse_amount_per_message);\n\n  end",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "billing_fees",
+         "TRIGGER_NAME" : "bill_fees_crepl_trig",
+         "key_col" : "bill_fees_crepl_trig/billing_fees"
+      },
+      "bill_fees_urepl_trig/billing_fees" : {
+         "ACTION_STATEMENT" : "begin\n  declare my_bzh_id int unsigned;\n\n  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;\n\n  update billing.billing_fees_history\n    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,\n      billing_zones_history_id = my_bzh_id,\n      source = NEW.source, destination = NEW.destination, direction = NEW.direction,\n      type = NEW.type,\n      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,\n      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,\n      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,\n      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,\n      onpeak_use_free_time = NEW.onpeak_use_free_time, offpeak_use_free_time = NEW.offpeak_use_free_time,\n      match_mode = NEW.match_mode,\n      onpeak_extra_rate = NEW.onpeak_extra_rate, onpeak_extra_second = NEW.onpeak_extra_second,\n      offpeak_extra_rate = NEW.offpeak_extra_rate, offpeak_extra_second = NEW.offpeak_extra_second, \n      aoc_pulse_amount_per_message = NEW.aoc_pulse_amount_per_message\n    where bf_id = OLD.id;\n\n  end",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "billing_fees",
+         "TRIGGER_NAME" : "bill_fees_urepl_trig",
+         "key_col" : "bill_fees_urepl_trig/billing_fees"
+      },
+      "bill_zones_crepl_trig/billing_zones" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  INSERT INTO billing_zones_history\n       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "billing_zones",
+         "TRIGGER_NAME" : "bill_zones_crepl_trig",
+         "key_col" : "bill_zones_crepl_trig/billing_zones"
+      },
+      "bill_zones_urepl_trig/billing_zones" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE billing_zones_history\n     SET bz_id = NEW.id, billing_profile_id = NEW.billing_profile_id,\n         zone = NEW.zone, detail = NEW.detail\n   WHERE bz_id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "billing_zones",
+         "TRIGGER_NAME" : "bill_zones_urepl_trig",
+         "key_col" : "bill_zones_urepl_trig/billing_zones"
+      },
+      "phonebook_on_contract_update/contracts" : {
+         "ACTION_STATEMENT" : "BEGIN\n    IF new.status = 'terminated' THEN\n        DELETE FROM contract_phonebook WHERE contract_id = old.id;\n    END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "contracts",
+         "TRIGGER_NAME" : "phonebook_on_contract_update",
+         "key_col" : "phonebook_on_contract_update/contracts"
+      },
+      "phonebook_on_reseller_update/resellers" : {
+         "ACTION_STATEMENT" : "BEGIN\n    IF new.status = 'terminated' THEN\n        DELETE FROM reseller_phonebook WHERE reseller_id = old.id;\n    END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "resellers",
+         "TRIGGER_NAME" : "phonebook_on_reseller_update",
+         "key_col" : "phonebook_on_reseller_update/resellers"
+      },
+      "phonebook_on_subscriber_update/voip_subscribers" : {
+         "ACTION_STATEMENT" : "BEGIN\n    IF new.status = 'terminated' THEN\n        DELETE FROM subscriber_phonebook WHERE subscriber_id = old.id;\n    END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "billing",
+         "EVENT_OBJECT_TABLE" : "voip_subscribers",
+         "TRIGGER_NAME" : "phonebook_on_subscriber_update",
+         "key_col" : "phonebook_on_subscriber_update/voip_subscribers"
+      }
+   },
    "views" : {
       "_v_actual_effective_start_time" : {
          "VIEW_DEFINITION" : "select `cbpn`.`contract_id` AS `contract_id`,max(`cbpns`.`effective_start_time`) AS `effective_start_time` from (`billing`.`contracts_billing_profile_network_schedule` `cbpns` join `billing`.`contracts_billing_profile_network` `cbpn` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) where `cbpns`.`effective_start_time` <= unix_timestamp(current_timestamp()) and `cbpn`.`base` = 1 group by `cbpn`.`contract_id`",

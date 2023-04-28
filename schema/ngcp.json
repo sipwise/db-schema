@@ -263,5 +263,6 @@
          "key_col" : "tzinfo_version"
       }
    },
+   "triggers" : {},
    "views" : {}
 }

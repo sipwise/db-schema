@@ -816,5 +816,6 @@
          "key_col" : "subscribers"
       }
    },
+   "triggers" : {},
    "views" : {}
 }

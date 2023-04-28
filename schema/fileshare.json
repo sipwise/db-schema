@@ -477,5 +477,6 @@
          "key_col" : "uploads"
       }
    },
+   "triggers" : {},
    "views" : {}
 }

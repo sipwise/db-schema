@@ -261,6 +261,7 @@
          "key_col" : "ldap_oc_mappings"
       }
    },
+   "triggers" : {},
    "views" : {
       "ldap_entries" : {
          "VIEW_DEFINITION" : "select `billing`.`contracts`.`id` AS `id`,concat('o=',`billing`.`contracts`.`id`,',dc=hpbx,dc=sipwise,dc=com') AS `dn`,3 AS `oc_map_id`,0 AS `parent`,`billing`.`contracts`.`id` AS `keyval` from `billing`.`contracts` union select `users`.`id` + 100000 AS `org_id`,concat('uid=',`users`.`uuid`,',o=',`users`.`account_id`,',dc=hpbx,dc=sipwise,dc=com') AS `Name_exp_2`,1 AS `1`,`users`.`account_id` AS `account_id`,`users`.`id` AS `id` from `ldap`.`users`",

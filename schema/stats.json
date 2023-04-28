@@ -345,5 +345,6 @@
          "key_col" : "cdr_info"
       }
    },
+   "triggers" : {},
    "views" : {}
 }

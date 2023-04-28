@@ -13503,6 +13503,602 @@
          "key_col" : "xmlqueue"
       }
    },
+   "triggers" : {
+      "aig_create_trig/voip_allowed_ip_groups" : {
+         "ACTION_STATEMENT" : "SET\n  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),\n  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),\n  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),\n  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null)",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_allowed_ip_groups",
+         "TRIGGER_NAME" : "aig_create_trig",
+         "key_col" : "aig_create_trig/voip_allowed_ip_groups"
+      },
+      "aig_update_trig/voip_allowed_ip_groups" : {
+         "ACTION_STATEMENT" : "SET\n  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),\n  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),\n  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),\n  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null)",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_allowed_ip_groups",
+         "TRIGGER_NAME" : "aig_update_trig",
+         "key_col" : "aig_update_trig/voip_allowed_ip_groups"
+      },
+      "enum_set_default/voip_preferences_enum" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    DECLARE do_insert tinyint(3) unsigned;\n\n    SELECT IF(NEW.default_val = 1 AND NEW.value IS NOT NULL\n        AND (a.attribute NOT IN (\"lock\") \n        OR NEW.value != \"0\"),1,0) INTO do_insert FROM voip_preferences a WHERE a.id = NEW.preference_id;\n\n    IF (NEW.dom_pref=1 AND do_insert=1) THEN\n        INSERT into voip_dom_preferences (domain_id, attribute_id, value)\n            SELECT e.id, NEW.preference_id, NEW.value\n            FROM voip_domains e\n            LEFT JOIN voip_dom_preferences v ON v.attribute_id = NEW.preference_id AND v.domain_id = e.id\n            WHERE v.id IS NULL;\n    END IF;\n    IF (NEW.peer_pref=1 AND do_insert=1) THEN\n        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)\n            SELECT e.id, NEW.preference_id, NEW.value\n            FROM voip_peer_hosts e\n            LEFT JOIN voip_peer_preferences v ON v.attribute_id = NEW.preference_id AND v.peer_host_id = e.id\n            WHERE v.id IS NULL;\n    END IF;\n    IF (NEW.usr_pref=1 AND do_insert=1) THEN\n        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)\n            SELECT e.id, NEW.preference_id, NEW.value\n            FROM voip_subscribers e\n            LEFT JOIN voip_usr_preferences v ON v.attribute_id = NEW.preference_id AND v.subscriber_id = e.id\n            WHERE v.id IS NULL;\n    END IF;\n    IF (NEW.prof_pref=1 AND do_insert=1) THEN\n        INSERT into voip_prof_preferences (profile_id, attribute_id, value)\n            SELECT e.id, NEW.preference_id, NEW.value\n            FROM voip_subscriber_profiles e\n            LEFT JOIN voip_prof_preferences v ON v.attribute_id = NEW.preference_id AND v.profile_id = e.id\n            WHERE v.id IS NULL;\n    END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences_enum",
+         "TRIGGER_NAME" : "enum_set_default",
+         "key_col" : "enum_set_default/voip_preferences_enum"
+      },
+      "enum_update/voip_preferences_enum" : {
+         "ACTION_STATEMENT" : "BEGIN\n    UPDATE voip_usr_preferences SET value=NEW.value\n    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;\n    UPDATE voip_dom_preferences SET value=NEW.value\n    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;\n    UPDATE voip_peer_preferences SET value=NEW.value\n    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;\n    UPDATE voip_prof_preferences SET value=NEW.value\n    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences_enum",
+         "TRIGGER_NAME" : "enum_update",
+         "key_col" : "enum_update/voip_preferences_enum"
+      },
+      "trusted_sources_delete/voip_trusted_sources" : {
+         "ACTION_STATEMENT" : "DELETE FROM kamailio.trusted \n    WHERE src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_trusted_sources",
+         "TRIGGER_NAME" : "trusted_sources_delete",
+         "key_col" : "trusted_sources_delete/voip_trusted_sources"
+      },
+      "trusted_sources_insert/voip_trusted_sources" : {
+         "ACTION_STATEMENT" : "INSERT INTO kamailio.trusted (src_ip, proto, from_pattern, tag)\n    VALUES (NEW.src_ip, NEW.protocol, NEW.from_pattern, NEW.uuid)",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_trusted_sources",
+         "TRIGGER_NAME" : "trusted_sources_insert",
+         "key_col" : "trusted_sources_insert/voip_trusted_sources"
+      },
+      "trusted_sources_update/voip_trusted_sources" : {
+         "ACTION_STATEMENT" : "UPDATE kamailio.trusted SET\n        src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid\n    WHERE\n        src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_trusted_sources",
+         "TRIGGER_NAME" : "trusted_sources_update",
+         "key_col" : "trusted_sources_update/voip_trusted_sources"
+      },
+      "voip_aig_crepl_trig/voip_allowed_ip_groups" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  INSERT INTO kamailio.address (id, grp, ip_addr, mask)\n                         VALUES(NEW.id, NEW.group_id,\n                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),\n                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32));\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_allowed_ip_groups",
+         "TRIGGER_NAME" : "voip_aig_crepl_trig",
+         "key_col" : "voip_aig_crepl_trig/voip_allowed_ip_groups"
+      },
+      "voip_aig_drepl_trig/voip_allowed_ip_groups" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.address WHERE id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_allowed_ip_groups",
+         "TRIGGER_NAME" : "voip_aig_drepl_trig",
+         "key_col" : "voip_aig_drepl_trig/voip_allowed_ip_groups"
+      },
+      "voip_aig_urepl_trig/voip_allowed_ip_groups" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE kamailio.address SET id = NEW.id, grp = NEW.group_id,\n                              ip_addr = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),\n                              mask = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32)\n                        WHERE id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_allowed_ip_groups",
+         "TRIGGER_NAME" : "voip_aig_urepl_trig",
+         "key_col" : "voip_aig_urepl_trig/voip_allowed_ip_groups"
+      },
+      "voip_contract_prefences_blob_insert/voip_contract_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_contract_preferences\n       SET value = NEW.id\n     WHERE id = NEW.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_preferences_blob",
+         "TRIGGER_NAME" : "voip_contract_prefences_blob_insert",
+         "key_col" : "voip_contract_prefences_blob_insert/voip_contract_preferences_blob"
+      },
+      "voip_contract_preferences_blob_delete/voip_contract_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_contract_preferences\n       SET value = ''\n     WHERE preference_id = OLD.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_preferences_blob",
+         "TRIGGER_NAME" : "voip_contract_preferences_blob_delete",
+         "key_col" : "voip_contract_preferences_blob_delete/voip_contract_preferences_blob"
+      },
+      "voip_contract_sd_crepl_trig/voip_contract_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE sd_domain varchar(64);\n  DECLARE target_domain varchar(64);\n  DECLARE at_end_pos smallint;\n  SET target_domain = 'local.sd.customer.domain';\n  SET at_end_pos = LOCATE('@', NEW.destination);\n  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);\n\n  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,\n                                   new_uri, fname, lname, description)\n                          VALUES(NEW.contract_id, target_domain,\n                                 NEW.slot, sd_domain,\n                                 NEW.destination, '', '', '');\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_speed_dial",
+         "TRIGGER_NAME" : "voip_contract_sd_crepl_trig",
+         "key_col" : "voip_contract_sd_crepl_trig/voip_contract_speed_dial"
+      },
+      "voip_contract_sd_drepl_trig/voip_contract_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE target_domain varchar(64);\n  SET target_domain = 'local.sd.customer.domain';\n\n  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.contract_id\n                                  AND domain <=> target_domain\n                                  AND sd_username <=> OLD.slot;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_speed_dial",
+         "TRIGGER_NAME" : "voip_contract_sd_drepl_trig",
+         "key_col" : "voip_contract_sd_drepl_trig/voip_contract_speed_dial"
+      },
+      "voip_contract_sd_urepl_trig/voip_contract_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE sd_domain varchar(64);\n  DECLARE target_domain varchar(64);\n  DECLARE at_end_pos smallint;\n  SET target_domain = 'local.sd.customer.domain';\n  SET at_end_pos = LOCATE('@', NEW.destination);\n  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);\n\n  UPDATE kamailio.speed_dial SET username = NEW.contract_id, domain = target_domain,\n                               sd_username = NEW.slot, sd_domain = sd_domain,\n                               new_uri = NEW.destination\n                           WHERE username <=> OLD.contract_id\n                           AND domain <=> target_domain\n                           AND sd_username <=> OLD.slot;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_speed_dial",
+         "TRIGGER_NAME" : "voip_contract_sd_urepl_trig",
+         "key_col" : "voip_contract_sd_urepl_trig/voip_contract_speed_dial"
+      },
+      "voip_contractpref_crepl_trig/voip_contract_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  INSERT INTO kamailio.contract_preferences\n              (id, uuid, location_id, attribute, type, value, last_modified)\n       SELECT NEW.id, NEW.contract_id, NEW.location_id, attribute, type, NEW.value, '0'\n         FROM provisioning.voip_preferences\n        WHERE id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_preferences",
+         "TRIGGER_NAME" : "voip_contractpref_crepl_trig",
+         "key_col" : "voip_contractpref_crepl_trig/voip_contract_preferences"
+      },
+      "voip_contractpref_drepl_trig/voip_contract_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.contract_preferences\n        WHERE id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_preferences",
+         "TRIGGER_NAME" : "voip_contractpref_drepl_trig",
+         "key_col" : "voip_contractpref_drepl_trig/voip_contract_preferences"
+      },
+      "voip_contractpref_urepl_trig/voip_contract_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE kamailio.contract_preferences pp, provisioning.voip_preferences vp\n     SET pp.id = NEW.id, pp.uuid = NEW.contract_id, pp.location_id = NEW.location_id,\n         pp.type = vp.type, pp.attribute = vp.attribute,\n         pp.value = NEW.value, pp.last_modified = '0'\n   WHERE pp.id <=> OLD.id\n     AND vp.id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_contract_preferences",
+         "TRIGGER_NAME" : "voip_contractpref_urepl_trig",
+         "key_col" : "voip_contractpref_urepl_trig/voip_contract_preferences"
+      },
+      "voip_dba_crepl_trig/voip_dbaliases" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE dbalias_domain varchar(127);\n  DECLARE target_username varchar(127);\n  DECLARE target_domain varchar(127);\n\n  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;\n  SELECT a.username, b.domain INTO target_username, target_domain\n    FROM voip_subscribers a, voip_domains b\n    WHERE a.id <=> NEW.subscriber_id\n    AND b.id <=> a.domain_id;\n\n  INSERT INTO kamailio.dbaliases (alias_username, alias_domain,\n    username, domain, is_primary, is_devid, devid_alias)\n    VALUES(NEW.username, dbalias_domain, target_username, target_domain, NEW.is_primary, NEW.is_devid, NEW.devid_alias);\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dbaliases",
+         "TRIGGER_NAME" : "voip_dba_crepl_trig",
+         "key_col" : "voip_dba_crepl_trig/voip_dbaliases"
+      },
+      "voip_dba_drepl_trig/voip_dbaliases" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE dbalias_domain varchar(127);\n\n  SELECT domain INTO dbalias_domain FROM voip_domains where id = OLD.domain_id;\n\n  DELETE FROM kamailio.dbaliases WHERE alias_username <=> OLD.username\n                                  AND alias_domain <=> dbalias_domain;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dbaliases",
+         "TRIGGER_NAME" : "voip_dba_drepl_trig",
+         "key_col" : "voip_dba_drepl_trig/voip_dbaliases"
+      },
+      "voip_dba_urepl_trig/voip_dbaliases" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_dbalias_domain varchar(127);\n  DECLARE new_dbalias_domain varchar(127);\n  DECLARE target_username varchar(127);\n  DECLARE target_domain varchar(127);\n\n  SELECT domain INTO old_dbalias_domain FROM voip_domains where id = OLD.domain_id;\n  SELECT domain INTO new_dbalias_domain FROM voip_domains where id = NEW.domain_id;\n  SELECT a.username, b.domain INTO target_username, target_domain\n    FROM voip_subscribers a, voip_domains b\n    WHERE a.id <=> NEW.subscriber_id\n    AND b.id <=> a.domain_id;\n\n  UPDATE kamailio.dbaliases SET alias_username = NEW.username, alias_domain = new_dbalias_domain,\n    username = target_username, domain = target_domain, is_primary = NEW.is_primary,\n    is_devid = NEW.is_devid, devid_alias = NEW.devid_alias\n    WHERE alias_username <=> OLD.username\n    AND alias_domain <=> old_dbalias_domain\n\tAND is_primary <=> OLD.is_primary\n\tAND is_devid <=> OLD.is_devid\n\tAND devid_alias <=> OLD.devid_alias;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dbaliases",
+         "TRIGGER_NAME" : "voip_dba_urepl_trig",
+         "key_col" : "voip_dba_urepl_trig/voip_dbaliases"
+      },
+      "voip_dom_crepl_trig/voip_domains" : {
+         "ACTION_STATEMENT" : "BEGIN\n    \n    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);\n   \n    \n    INSERT INTO voip_dom_preferences (domain_id, attribute_id, value)\n    SELECT NEW.id, p.id, pe.value\n    FROM voip_preferences p, voip_preferences_enum pe\n    WHERE p.id <=> preference_id AND p.dom_pref=1 AND pe.dom_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_domains",
+         "TRIGGER_NAME" : "voip_dom_crepl_trig",
+         "key_col" : "voip_dom_crepl_trig/voip_domains"
+      },
+      "voip_dom_drepl_trig/voip_domains" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.domain WHERE domain <=> OLD.domain;\n\n  \n  \n  DELETE FROM kamailio.dom_preferences WHERE domain <=> OLD.domain;\n  \n  DELETE FROM provisioning.voip_subscribers WHERE domain_id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_domains",
+         "TRIGGER_NAME" : "voip_dom_drepl_trig",
+         "key_col" : "voip_dom_drepl_trig/voip_domains"
+      },
+      "voip_dom_prefences_blob_delete/voip_dom_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_dom_preferences\n       SET value = ''\n     WHERE id = OLD.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dom_preferences_blob",
+         "TRIGGER_NAME" : "voip_dom_prefences_blob_delete",
+         "key_col" : "voip_dom_prefences_blob_delete/voip_dom_preferences_blob"
+      },
+      "voip_dom_prefences_blob_insert/voip_dom_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_dom_preferences\n       SET value = NEW.id\n     WHERE id = NEW.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dom_preferences_blob",
+         "TRIGGER_NAME" : "voip_dom_prefences_blob_insert",
+         "key_col" : "voip_dom_prefences_blob_insert/voip_dom_preferences_blob"
+      },
+      "voip_dompref_crepl_trig/voip_dom_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE domain_name varchar(127);\n  DECLARE attribute_name varchar(31);\n  DECLARE attribute_type tinyint(3);\n\n  SELECT domain INTO domain_name\n                FROM voip_domains\n               WHERE id <=> NEW.domain_id;\n  SELECT attribute, type INTO attribute_name, attribute_type\n                         FROM voip_preferences\n                        WHERE id <=> NEW.attribute_id;\n\n  INSERT INTO kamailio.dom_preferences (domain, attribute, type, value)\n                                 VALUES(domain_name, attribute_name, attribute_type, NEW.value);\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dom_preferences",
+         "TRIGGER_NAME" : "voip_dompref_crepl_trig",
+         "key_col" : "voip_dompref_crepl_trig/voip_dom_preferences"
+      },
+      "voip_dompref_drepl_trig/voip_dom_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE domain_name varchar(127);\n  DECLARE attribute_name varchar(31);\n\n  SELECT domain INTO domain_name\n                FROM voip_domains\n               WHERE id <=> OLD.domain_id;\n  SELECT attribute INTO attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n\n  DELETE FROM kamailio.dom_preferences WHERE domain <=> domain_name\n                                         AND attribute <=> attribute_name\n                                         AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dom_preferences",
+         "TRIGGER_NAME" : "voip_dompref_drepl_trig",
+         "key_col" : "voip_dompref_drepl_trig/voip_dom_preferences"
+      },
+      "voip_dompref_urepl_trig/voip_dom_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_domain_name varchar(127);\n  DECLARE new_domain_name varchar(127);\n  DECLARE old_attribute_name varchar(31);\n  DECLARE new_attribute_name varchar(31);\n\n  SELECT domain INTO old_domain_name\n                FROM voip_domains\n               WHERE id <=> OLD.domain_id;\n  SELECT domain INTO new_domain_name\n                FROM voip_domains\n               WHERE id <=> NEW.domain_id;\n  SELECT attribute INTO old_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n  SELECT attribute INTO new_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> NEW.attribute_id;\n\n  UPDATE kamailio.dom_preferences SET domain = new_domain_name,\n                                      attribute = new_attribute_name,\n                                      value = NEW.value\n                                WHERE domain <=> old_domain_name\n                                  AND attribute <=> old_attribute_name\n                                  AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_dom_preferences",
+         "TRIGGER_NAME" : "voip_dompref_urepl_trig",
+         "key_col" : "voip_dompref_urepl_trig/voip_dom_preferences"
+      },
+      "voip_peer_preferences_blob_delete/voip_peer_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_peer_preferences\n       SET value = ''\n     WHERE id = OLD.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_preferences_blob",
+         "TRIGGER_NAME" : "voip_peer_preferences_blob_delete",
+         "key_col" : "voip_peer_preferences_blob_delete/voip_peer_preferences_blob"
+      },
+      "voip_peer_preferences_blob_insert/voip_peer_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_peer_preferences\n       SET value = NEW.id\n     WHERE id = NEW.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_preferences_blob",
+         "TRIGGER_NAME" : "voip_peer_preferences_blob_insert",
+         "key_col" : "voip_peer_preferences_blob_insert/voip_peer_preferences_blob"
+      },
+      "voip_peerpref_crepl_trig/voip_peer_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  INSERT INTO kamailio.peer_preferences\n              (id, uuid, attribute, type, value, last_modified)\n       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, '0'\n         FROM provisioning.voip_preferences\n        WHERE id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_preferences",
+         "TRIGGER_NAME" : "voip_peerpref_crepl_trig",
+         "key_col" : "voip_peerpref_crepl_trig/voip_peer_preferences"
+      },
+      "voip_peerpref_drepl_trig/voip_peer_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.peer_preferences\n        WHERE id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_preferences",
+         "TRIGGER_NAME" : "voip_peerpref_drepl_trig",
+         "key_col" : "voip_peerpref_drepl_trig/voip_peer_preferences"
+      },
+      "voip_peerpref_urepl_trig/voip_peer_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp\n     SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,\n         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'\n   WHERE pp.id <=> OLD.id\n     AND vp.id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_preferences",
+         "TRIGGER_NAME" : "voip_peerpref_urepl_trig",
+         "key_col" : "voip_peerpref_urepl_trig/voip_peer_preferences"
+      },
+      "voip_pgrp_drepl_trig/voip_peer_groups" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.lcr_rule WHERE group_id <=> OLD.id;\n  DELETE FROM kamailio.lcr_gw WHERE group_id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_groups",
+         "TRIGGER_NAME" : "voip_pgrp_drepl_trig",
+         "key_col" : "voip_pgrp_drepl_trig/voip_peer_groups"
+      },
+      "voip_pgrp_urepl_trig/voip_peer_groups" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw\n     SET rt.priority = NEW.priority\n   WHERE gw.id <=> rt.gw_id\n     AND gw.lcr_id = 1\n     AND gw.group_id <=> NEW.id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_groups",
+         "TRIGGER_NAME" : "voip_pgrp_urepl_trig",
+         "key_col" : "voip_pgrp_urepl_trig/voip_peer_groups"
+      },
+      "voip_phost_crepl_trig/voip_peer_hosts" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE m_proto CHAR(4);\n  IF NEW.transport = 2 THEN\n    SET m_proto := 'TCP';\n  ELSEIF NEW.transport = 3 THEN\n    SET m_proto := 'TLS';\n  ELSE\n    SET m_proto := 'UDP';\n  END IF;\n\n  IF NEW.enabled THEN\n    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)\n      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);\n\n    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)\n           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight\n             FROM kamailio.lcr_rule rule\n             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id\n            WHERE vpg.id <=> NEW.group_id;\n\n    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)\n    SELECT NEW.id, p.id, pe.value\n    FROM voip_preferences p, voip_preferences_enum pe\n    WHERE p.id <=> preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;\n\n    IF NEW.probe = 1 THEN\n      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)\n        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername=\"', NEW.name, '\";peergid=', NEW.group_id, ';'), 'Peer Probe');\n    END IF;\n\n  END IF;\n\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_hosts",
+         "TRIGGER_NAME" : "voip_phost_crepl_trig",
+         "key_col" : "voip_phost_crepl_trig/voip_peer_hosts"
+      },
+      "voip_phost_drepl_trig/voip_peer_hosts" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.lcr_gw\n    WHERE flags <=> OLD.id;\n\n  DELETE FROM kamailio.peer_preferences\n    WHERE uuid = OLD.id;\n\n  IF OLD.enabled = 1 AND OLD.probe = 1 THEN\n    DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');\n  END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_hosts",
+         "TRIGGER_NAME" : "voip_phost_drepl_trig",
+         "key_col" : "voip_phost_drepl_trig/voip_peer_hosts"
+      },
+      "voip_phost_urepl_trig/voip_peer_hosts" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE m_proto CHAR(4);\n  DECLARE m_probechange INTEGER;\n\n  IF NEW.transport = 2 THEN\n    SET m_proto := 'TCP';\n  ELSEIF NEW.transport = 3 THEN\n    SET m_proto := 'TLS';\n  ELSE\n    SET m_proto := 'UDP';\n  END IF;\n\n  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN\n\n    UPDATE kamailio.lcr_gw\n       SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id\n     WHERE lcr_id = 1\n       AND flags <=> NEW.id;\n\n    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw\n       SET rt.weight = NEW.weight\n     WHERE gw.id <=> rt.gw_id\n       AND gw.lcr_id = 1\n       AND gw.group_id <=> NEW.group_id\n       AND gw.flags <=> NEW.id;\n\n    IF OLD.probe = 1 AND (OLD.ip != NEW.ip OR OLD.port != NEW.port OR OLD.transport != NEW.transport OR OLD.name != NEW.name OR OLD.group_id != NEW.group_id) THEN\n      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');\n      SET m_probechange := 1;\n    ELSEIF OLD.probe = 1 and NEW.probe = 0 THEN\n      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');\n    END IF;\n    IF NEW.probe = 1 AND (m_probechange = 1 OR OLD.probe = 0) THEN\n      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)\n        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername=\"', NEW.name, '\";peergid=', NEW.group_id, ';'), 'Peer Probe');\n    END IF;\n\n  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN\n\n    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)\n      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);\n\n    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)\n           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight\n             FROM kamailio.lcr_rule rule\n             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id\n            WHERE vpg.id <=> NEW.group_id;\n\n    IF NEW.probe = 1 THEN\n      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)\n        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername=\"', NEW.name, '\";peergid=', NEW.group_id, ';'), 'Peer Probe');\n    END IF;\n\n  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN\n\n    DELETE FROM kamailio.lcr_gw\n          WHERE lcr_id = 1\n            AND flags <=> NEW.id;\n\n    IF OLD.probe = 1 THEN\n      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', NEW.id, ';%');\n    END IF;\n\n  END IF;\n\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_hosts",
+         "TRIGGER_NAME" : "voip_phost_urepl_trig",
+         "key_col" : "voip_phost_urepl_trig/voip_peer_hosts"
+      },
+      "voip_pref_drepl_trig/voip_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_contract_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_fielddev_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_dev_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_devprof_preferences WHERE attribute_id <=> OLD.id;\n  DELETE FROM voip_reseller_preferences WHERE attribute_id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences",
+         "TRIGGER_NAME" : "voip_pref_drepl_trig",
+         "key_col" : "voip_pref_drepl_trig/voip_preferences"
+      },
+      "voip_pref_icheck_trig/voip_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n    IF ( ((NEW.attribute like '\\_\\_%') and !NEW.dynamic)\n        or ((NEW.attribute not like '\\_\\_%') and NEW.dynamic)\n    ) THEN\n        SIGNAL sqlstate '45001' set message_text = \"voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0\";\n    END IF;\nEND",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences",
+         "TRIGGER_NAME" : "voip_pref_icheck_trig",
+         "key_col" : "voip_pref_icheck_trig/voip_preferences"
+      },
+      "voip_pref_ucheck_trig/voip_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n    IF ( ((NEW.attribute like '\\_\\_%') and !NEW.dynamic)\n        or ((NEW.attribute not like '\\_\\_%') and NEW.dynamic)\n    ) THEN\n        SIGNAL sqlstate '45001' set message_text = \"voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0\";\n    END IF;\nEND",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences",
+         "TRIGGER_NAME" : "voip_pref_ucheck_trig",
+         "key_col" : "voip_pref_ucheck_trig/voip_preferences"
+      },
+      "voip_pref_urepl_trig/voip_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  IF OLD.attribute != NEW.attribute THEN\n    UPDATE kamailio.usr_preferences\n       SET attribute = NEW.attribute\n     WHERE attribute <=> OLD.attribute;\n    UPDATE kamailio.dom_preferences\n       SET attribute = NEW.attribute\n     WHERE attribute <=> OLD.attribute;\n    UPDATE kamailio.peer_preferences\n       SET attribute = NEW.attribute\n     WHERE attribute <=> OLD.attribute;\n    UPDATE kamailio.contract_preferences\n       SET attribute = NEW.attribute\n     WHERE attribute <=> OLD.attribute;\n    UPDATE kamailio.prof_preferences\n       SET attribute = NEW.attribute\n     WHERE attribute <=> OLD.attribute;\n  END IF; \n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_preferences",
+         "TRIGGER_NAME" : "voip_pref_urepl_trig",
+         "key_col" : "voip_pref_urepl_trig/voip_preferences"
+      },
+      "voip_prof_crepl_trig/voip_subscriber_profiles" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    INSERT INTO voip_prof_preferences (profile_id, attribute_id, value)\n    SELECT NEW.id, p.id, pe.value\n    FROM voip_preferences p, voip_preferences_enum pe\n    WHERE p.id <=> preference_id AND p.prof_pref=1 AND pe.prof_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_subscriber_profiles",
+         "TRIGGER_NAME" : "voip_prof_crepl_trig",
+         "key_col" : "voip_prof_crepl_trig/voip_subscriber_profiles"
+      },
+      "voip_profpref_crepl_trig/voip_prof_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE attribute_name varchar(31);\n  DECLARE attribute_type tinyint(3);\n\n  SELECT attribute, type INTO attribute_name, attribute_type\n                         FROM voip_preferences\n                        WHERE id <=> NEW.attribute_id;\n\n  INSERT INTO kamailio.prof_preferences (uuid, attribute, type, value)\n                                 VALUES(NEW.profile_id, attribute_name, attribute_type, NEW.value);\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_prof_preferences",
+         "TRIGGER_NAME" : "voip_profpref_crepl_trig",
+         "key_col" : "voip_profpref_crepl_trig/voip_prof_preferences"
+      },
+      "voip_profpref_drepl_trig/voip_prof_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE attribute_name varchar(31);\n\n  SELECT attribute INTO attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n\n  DELETE FROM kamailio.prof_preferences WHERE uuid <=> OLD.profile_id\n                                         AND attribute <=> attribute_name\n                                         AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_prof_preferences",
+         "TRIGGER_NAME" : "voip_profpref_drepl_trig",
+         "key_col" : "voip_profpref_drepl_trig/voip_prof_preferences"
+      },
+      "voip_profpref_urepl_trig/voip_prof_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_attribute_name varchar(31);\n  DECLARE new_attribute_name varchar(31);\n\n  SELECT attribute INTO old_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n  SELECT attribute INTO new_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> NEW.attribute_id;\n\n  UPDATE kamailio.prof_preferences SET uuid = NEW.profile_id,\n                                      attribute = new_attribute_name,\n                                      value = NEW.value\n                                WHERE uuid <=> OLD.profile_id\n                                  AND attribute <=> old_attribute_name\n                                  AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_prof_preferences",
+         "TRIGGER_NAME" : "voip_profpref_urepl_trig",
+         "key_col" : "voip_profpref_urepl_trig/voip_prof_preferences"
+      },
+      "voip_prul_crepl_trig/voip_peer_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  IF NEW.enabled = 1 THEN\n    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)\n      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);\n\n    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)\n           SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight\n             FROM kamailio.lcr_gw gw\n             INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name\n                                                        AND gw.lcr_id = 1\n                                                        AND vph.group_id = gw.group_id\n             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id\n            WHERE vph.group_id <=> NEW.group_id;\n  END IF;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_rules",
+         "TRIGGER_NAME" : "voip_prul_crepl_trig",
+         "key_col" : "voip_prul_crepl_trig/voip_peer_rules"
+      },
+      "voip_prul_drepl_trig/voip_peer_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.lcr_rule\n        WHERE prefix <=> OLD.callee_prefix\n          AND request_uri <=> OLD.callee_pattern\n          AND from_uri <=> OLD.caller_pattern\n          AND group_id <=> OLD.group_id;\n\n  \n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_rules",
+         "TRIGGER_NAME" : "voip_prul_drepl_trig",
+         "key_col" : "voip_prul_drepl_trig/voip_peer_rules"
+      },
+      "voip_prul_urepl_trig/voip_peer_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN\n    UPDATE kamailio.lcr_rule\n       SET prefix = NEW.callee_prefix,\n           request_uri = NEW.callee_pattern,\n           from_uri = NEW.caller_pattern,\n           stopper = NEW.stopper,\n           group_id = NEW.group_id\n     WHERE prefix <=> OLD.callee_prefix\n       AND request_uri <=> OLD.callee_pattern\n       AND from_uri <=> OLD.caller_pattern\n       AND group_id <=> OLD.group_id\n       AND stopper <=> OLD.stopper;\n    IF OLD.group_id != NEW.group_id THEN\n        DELETE FROM kamailio.lcr_rule_target WHERE rule_id = OLD.id;\n        INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)\n           SELECT gw.lcr_id, OLD.id, gw.id, vpg.priority, vph.weight\n             FROM kamailio.lcr_gw gw\n            INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name\n                                                        AND gw.lcr_id = 1\n                                                        AND vph.group_id = gw.group_id\n            INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id\n            WHERE vph.group_id <=> NEW.group_id;\n    END IF;\n  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN\n    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)\n      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);\n\n    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)\n        SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight\n          FROM kamailio.lcr_gw gw\n         INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name\n                                                    AND gw.lcr_id = 1\n                                                    AND vph.group_id = gw.group_id\n         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id\n         WHERE vph.group_id <=> NEW.group_id;\n  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN\n    DELETE FROM kamailio.lcr_rule\n          WHERE prefix <=> OLD.callee_prefix\n            AND request_uri <=> OLD.callee_pattern\n            AND from_uri <=> OLD.caller_pattern\n            AND group_id <=> OLD.group_id\n            AND stopper <=> OLD.stopper\n            LIMIT 1;\n  END IF;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_peer_rules",
+         "TRIGGER_NAME" : "voip_prul_urepl_trig",
+         "key_col" : "voip_prul_urepl_trig/voip_peer_rules"
+      },
+      "voip_rwrules_crepl_trig/voip_rewrite_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE new_set_id int(11) unsigned;\n\n  IF NEW.enabled = 1 THEN\n\n    IF NEW.direction = 'in' THEN\n      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'out' THEN\n      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'lnp' THEN\n      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    END IF;\n\n    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)\n        VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');\n  END IF;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rules",
+         "TRIGGER_NAME" : "voip_rwrules_crepl_trig",
+         "key_col" : "voip_rwrules_crepl_trig/voip_rewrite_rules"
+      },
+      "voip_rwrules_drepl_trig/voip_rewrite_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE old_set_id int(11) unsigned;\n\n  IF OLD.direction = 'in' THEN\n    SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)\n  \t  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n  ELSEIF OLD.direction = 'out' THEN\n    SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)\n\t  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n  ELSEIF OLD.direction = 'lnp' THEN\n    SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n\t  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n  END IF;\n\n  DELETE FROM kamailio.dialplan\n   WHERE dpid      <=> old_set_id\n     AND pr        <=> OLD.priority\n     AND match_exp <=> OLD.match_pattern\n     AND subst_exp <=> OLD.match_pattern\n     AND repl_exp  <=> OLD.replace_pattern;\n\nEND",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rules",
+         "TRIGGER_NAME" : "voip_rwrules_drepl_trig",
+         "key_col" : "voip_rwrules_drepl_trig/voip_rewrite_rules"
+      },
+      "voip_rwrules_urepl_trig/voip_rewrite_rules" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE old_set_id int(11) unsigned;\n  DECLARE new_set_id int(11) unsigned;\n\n  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN\n\n    IF OLD.direction = 'in' THEN\n      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    ELSEIF OLD.direction = 'out' THEN\n      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    ELSEIF OLD.direction = 'lnp' THEN\n      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    END IF;\n\n    IF NEW.direction = 'in' THEN\n      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'out' THEN\n      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'lnp' THEN\n      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    END IF;\n\n    UPDATE kamailio.dialplan\n       SET dpid      = new_set_id,\n           pr        = NEW.priority,\n           match_exp = NEW.match_pattern,\n           subst_exp = NEW.match_pattern,\n           repl_exp  = NEW.replace_pattern\n     WHERE dpid      <=> old_set_id\n       AND pr        <=> OLD.priority\n       AND match_exp <=> OLD.match_pattern\n       AND subst_exp <=> OLD.match_pattern\n       AND repl_exp  <=> OLD.replace_pattern;\n  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN\n\n    IF NEW.direction = 'in' THEN\n      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'out' THEN\n      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'lnp' THEN\n      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    END IF;\n\n    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)\n                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');\n  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN\n\n    IF OLD.direction = 'in' THEN\n      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    ELSEIF OLD.direction = 'out' THEN\n      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    ELSEIF OLD.direction = 'lnp' THEN\n      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;\n    END IF;\n\n    DELETE FROM kamailio.dialplan\n     WHERE dpid      <=> old_set_id\n       AND pr        <=> OLD.priority\n       AND match_exp <=> OLD.match_pattern\n       AND subst_exp <=> OLD.match_pattern\n       AND repl_exp  <=> OLD.replace_pattern;\n  END IF;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rules",
+         "TRIGGER_NAME" : "voip_rwrules_urepl_trig",
+         "key_col" : "voip_rwrules_urepl_trig/voip_rewrite_rules"
+      },
+      "voip_rwrulesets_crepl_trig/voip_rewrite_rule_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  IF NEW.caller_in_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n  IF NEW.callee_in_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n  IF NEW.caller_out_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n  IF NEW.callee_out_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n  IF NEW.caller_lnp_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.caller_lnp_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n  IF NEW.callee_lnp_dpid IS NULL THEN\n    INSERT INTO voip_rwrs_sequence VALUES();\n    SET NEW.callee_lnp_dpid = (SELECT LAST_INSERT_ID());\n  END IF;\n\n  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;\nEND",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rule_sets",
+         "TRIGGER_NAME" : "voip_rwrulesets_crepl_trig",
+         "key_col" : "voip_rwrulesets_crepl_trig/voip_rewrite_rule_sets"
+      },
+      "voip_rwrulesets_drepl_trig/voip_rewrite_rule_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_in_dpid;\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_in_dpid;\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_out_dpid;\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_out_dpid;\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_lnp_dpid;\n  DELETE a FROM voip_usr_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_lnp_dpid;\n\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_in_dpid;\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_in_dpid;\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_out_dpid;\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_out_dpid;\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_lnp_dpid;\n  DELETE a FROM voip_dom_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_lnp_dpid;\n\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_in_dpid;\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_in_dpid;\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_out_dpid;\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_out_dpid;\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_lnp_dpid;\n  DELETE a FROM voip_peer_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_lnp_dpid;\n\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_in_dpid;\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_in_dpid;\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_out_dpid;\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_out_dpid;\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.caller_lnp_dpid;\n  DELETE a FROM voip_prof_preferences a, voip_preferences b\n   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n     AND a.attribute_id <=> b.id\n     AND a.value <=> OLD.callee_lnp_dpid;\n\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_in_dpid;\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_in_dpid;\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_out_dpid;\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_out_dpid;\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_lnp_dpid;\n  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_lnp_dpid;\n\nEND",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rule_sets",
+         "TRIGGER_NAME" : "voip_rwrulesets_drepl_trig",
+         "key_col" : "voip_rwrulesets_drepl_trig/voip_rewrite_rule_sets"
+      },
+      "voip_rwrulesets_urepl_trig/voip_rewrite_rule_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid <=> OLD.caller_in_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.caller_in_dpid\n     WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_in_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.caller_in_dpid\n     WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_in_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.caller_in_dpid\n     WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_in_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.caller_in_dpid\n     WHERE b.attribute <=> 'rewrite_caller_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_in_dpid;\n  END IF;\n\n  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid <=> OLD.callee_in_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.callee_in_dpid\n     WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_in_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.callee_in_dpid\n     WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_in_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.callee_in_dpid\n     WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_in_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.callee_in_dpid\n     WHERE b.attribute <=> 'rewrite_callee_in_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_in_dpid;\n  END IF;\n\n  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid <=> OLD.caller_out_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.caller_out_dpid\n     WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_out_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.caller_out_dpid\n     WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_out_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.caller_out_dpid\n     WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_out_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.caller_out_dpid\n     WHERE b.attribute <=> 'rewrite_caller_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_out_dpid;\n  END IF;\n\n  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid <=> OLD.callee_out_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.callee_out_dpid\n     WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_out_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.callee_out_dpid\n     WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_out_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.callee_out_dpid\n     WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_out_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.callee_out_dpid\n     WHERE b.attribute <=> 'rewrite_callee_out_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_out_dpid;\n  END IF;\n\n  IF NEW.caller_lnp_dpid != OLD.caller_lnp_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.caller_lnp_dpid WHERE dpid <=> OLD.caller_lnp_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.caller_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_lnp_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.caller_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_lnp_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.caller_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_lnp_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.caller_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.caller_lnp_dpid;\n  END IF;\n\n  IF NEW.callee_lnp_dpid != OLD.callee_lnp_dpid THEN\n    UPDATE kamailio.dialplan SET dpid = NEW.callee_lnp_dpid WHERE dpid <=> OLD.callee_lnp_dpid;\n    UPDATE voip_usr_preferences a, voip_preferences b\n       SET a.value = NEW.callee_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_lnp_dpid;\n    UPDATE voip_dom_preferences a, voip_preferences b\n       SET a.value = NEW.callee_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_lnp_dpid;\n    UPDATE voip_peer_preferences a, voip_preferences b\n       SET a.value = NEW.callee_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_lnp_dpid;\n    UPDATE voip_prof_preferences a, voip_preferences b\n       SET a.value = NEW.callee_lnp_dpid\n     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'\n       AND a.attribute_id <=> b.id\n       AND a.value <=> OLD.callee_lnp_dpid;\n  END IF;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_rewrite_rule_sets",
+         "TRIGGER_NAME" : "voip_rwrulesets_urepl_trig",
+         "key_col" : "voip_rwrulesets_urepl_trig/voip_rewrite_rule_sets"
+      },
+      "voip_sd_crepl_trig/voip_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE target_username varchar(64);\n  DECLARE target_domain varchar(64);\n\n  SELECT a.username, b.domain INTO target_username, target_domain\n                              FROM voip_subscribers a, voip_domains b\n                              WHERE a.id <=> NEW.subscriber_id\n                              AND b.id <=> a.domain_id;\n\n  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,\n                                  new_uri, fname, lname, description)\n                          VALUES(target_username, target_domain,\n                                 NEW.slot, target_domain,\n                                 NEW.destination, '', '', '');\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_speed_dial",
+         "TRIGGER_NAME" : "voip_sd_crepl_trig",
+         "key_col" : "voip_sd_crepl_trig/voip_speed_dial"
+      },
+      "voip_sd_drepl_trig/voip_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_username varchar(127);\n  DECLARE old_domain varchar(127);\n\n  SELECT a.username, b.domain INTO old_username, old_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> OLD.subscriber_id\n                               AND b.id <=> a.domain_id;\n\n  DELETE FROM kamailio.speed_dial WHERE username <=> old_username\n                                  AND domain <=> old_domain\n                                  AND sd_username <=> OLD.slot;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_speed_dial",
+         "TRIGGER_NAME" : "voip_sd_drepl_trig",
+         "key_col" : "voip_sd_drepl_trig/voip_speed_dial"
+      },
+      "voip_sd_urepl_trig/voip_speed_dial" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_username varchar(127);\n  DECLARE old_domain varchar(127);\n  DECLARE new_username varchar(127);\n  DECLARE new_domain varchar(127);\n\n  SELECT a.username, b.domain INTO old_username, old_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> OLD.subscriber_id\n                               AND b.id <=> a.domain_id;\n  SELECT a.username, b.domain INTO new_username, new_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> NEW.subscriber_id\n                               AND b.id <=> a.domain_id;\n\n  UPDATE kamailio.speed_dial SET username = new_username, domain = new_domain,\n                               sd_username = NEW.slot, sd_domain = new_domain,\n                               new_uri = NEW.destination\n                           WHERE username <=> old_username\n                           AND domain <=> old_domain\n                           AND sd_username <=> OLD.slot;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_speed_dial",
+         "TRIGGER_NAME" : "voip_sd_urepl_trig",
+         "key_col" : "voip_sd_urepl_trig/voip_speed_dial"
+      },
+      "voip_sub_crepl_trig/voip_subscribers" : {
+         "ACTION_STATEMENT" : "BEGIN\n    \n    DECLARE subscriber_domain varchar(127);\n  \n    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;\n  \n    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)\n                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, '0',\n                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),\n                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));\n\n    \n    INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)\n    SELECT NEW.id, p.id, pe.value\n    FROM voip_preferences p, voip_preferences_enum pe\n    WHERE p.id <=> preference_id AND p.usr_pref=1 AND pe.usr_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_subscribers",
+         "TRIGGER_NAME" : "voip_sub_crepl_trig",
+         "key_col" : "voip_sub_crepl_trig/voip_subscribers"
+      },
+      "voip_sub_drepl_trig/voip_subscribers" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE subscriber_domain varchar(127);\n  DECLARE os_subscriber_id int(10) UNSIGNED;\n\n  SELECT domain INTO subscriber_domain FROM voip_domains where id = OLD.domain_id;\n  SELECT id INTO os_subscriber_id FROM kamailio.subscriber\n   WHERE username <=> OLD.username AND domain <=> subscriber_domain;\n\n  DELETE FROM kamailio.subscriber WHERE username <=> OLD.username\n                                   AND domain <=> subscriber_domain;\n\n  \n  \n  DELETE FROM kamailio.voicemail_users WHERE customer_id <=> OLD.uuid;\n\n  \n  \n  DELETE FROM kamailio.usr_preferences WHERE username <=> OLD.username\n                                        AND domain <=> subscriber_domain;\n  DELETE FROM kamailio.dbaliases WHERE username <=> OLD.username\n                                  AND domain <=> subscriber_domain;\n  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.username\n                                  AND domain <=> subscriber_domain;\n  DELETE FROM kamailio.fax_preferences WHERE subscriber_id <=> os_subscriber_id;\n  DELETE FROM kamailio.fax_destinations WHERE subscriber_id <=> os_subscriber_id;\n  DELETE FROM kamailio.trusted WHERE tag <=> OLD.uuid;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_subscribers",
+         "TRIGGER_NAME" : "voip_sub_drepl_trig",
+         "key_col" : "voip_sub_drepl_trig/voip_subscribers"
+      },
+      "voip_sub_urepl_trig/voip_subscribers" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_subscriber_domain varchar(127);\n  DECLARE new_subscriber_domain varchar(127);\n\n  SELECT domain INTO old_subscriber_domain FROM voip_domains where id = OLD.domain_id;\n  SELECT domain INTO new_subscriber_domain FROM voip_domains where id = NEW.domain_id;\n\n  UPDATE kamailio.subscriber SET username = NEW.username, domain = new_subscriber_domain,\n                                uuid = NEW.uuid, password = NEW.password,\n                                ha1 = MD5(CONCAT(NEW.username, ':', new_subscriber_domain, ':', NEW.password)),\n                                ha1b = MD5(CONCAT(NEW.username, '@', new_subscriber_domain, ':', new_subscriber_domain, ':', NEW.password))\n                          WHERE username <=> OLD.username\n                            AND domain <=> old_subscriber_domain;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_subscribers",
+         "TRIGGER_NAME" : "voip_sub_urepl_trig",
+         "key_col" : "voip_sub_urepl_trig/voip_subscribers"
+      },
+      "voip_usr_preferences_blob_delete/voip_usr_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_usr_preferences\n       SET value = ''\n     WHERE id = OLD.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_usr_preferences_blob",
+         "TRIGGER_NAME" : "voip_usr_preferences_blob_delete",
+         "key_col" : "voip_usr_preferences_blob_delete/voip_usr_preferences_blob"
+      },
+      "voip_usr_preferences_blob_insert/voip_usr_preferences_blob" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE voip_usr_preferences\n       SET value = NEW.id\n     WHERE id = NEW.preference_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_usr_preferences_blob",
+         "TRIGGER_NAME" : "voip_usr_preferences_blob_insert",
+         "key_col" : "voip_usr_preferences_blob_insert/voip_usr_preferences_blob"
+      },
+      "voip_usrpref_crepl_trig/voip_usr_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE subscriber_username varchar(127);\n  DECLARE subscriber_domain varchar(127);\n  DECLARE subscriber_uuid char(36);\n  DECLARE attribute_name varchar(31);\n  DECLARE attribute_type tinyint(3);\n\n  SELECT a.username, b.domain, a.uuid INTO subscriber_username, subscriber_domain, subscriber_uuid\n                                      FROM voip_subscribers a, voip_domains b\n                                     WHERE a.id <=> NEW.subscriber_id\n                                       AND a.domain_id <=> b.id;\n  SELECT attribute, type INTO attribute_name, attribute_type\n                         FROM voip_preferences\n                        WHERE id <=> NEW.attribute_id;\n\n  INSERT INTO kamailio.usr_preferences (uuid, username, domain, attribute, type, value)\n                                VALUES(subscriber_uuid, subscriber_username, subscriber_domain,\n                                       attribute_name, attribute_type, NEW.value);\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_usr_preferences",
+         "TRIGGER_NAME" : "voip_usrpref_crepl_trig",
+         "key_col" : "voip_usrpref_crepl_trig/voip_usr_preferences"
+      },
+      "voip_usrpref_drepl_trig/voip_usr_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE subscriber_username varchar(127);\n  DECLARE subscriber_domain varchar(127);\n  DECLARE attribute_name varchar(31);\n\n  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> OLD.subscriber_id\n                               AND a.domain_id <=> b.id;\n  SELECT attribute INTO attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n\n  DELETE FROM kamailio.usr_preferences WHERE username <=> subscriber_username\n                                        AND domain <=> subscriber_domain\n                                        AND attribute <=> attribute_name\n                                        AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_usr_preferences",
+         "TRIGGER_NAME" : "voip_usrpref_drepl_trig",
+         "key_col" : "voip_usrpref_drepl_trig/voip_usr_preferences"
+      },
+      "voip_usrpref_urepl_trig/voip_usr_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n  DECLARE old_subscriber_username varchar(127);\n  DECLARE new_subscriber_username varchar(127);\n  DECLARE old_subscriber_domain varchar(127);\n  DECLARE new_subscriber_domain varchar(127);\n  DECLARE old_attribute_name varchar(31);\n  DECLARE new_attribute_name varchar(31);\n\n  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> OLD.subscriber_id\n                               AND a.domain_id <=> b.id;\n  SELECT a.username, b.domain INTO new_subscriber_username, new_subscriber_domain\n                              FROM voip_subscribers a, voip_domains b\n                             WHERE a.id <=> NEW.subscriber_id\n                               AND a.domain_id <=> b.id;\n  SELECT attribute INTO old_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> OLD.attribute_id;\n  SELECT attribute INTO new_attribute_name\n                   FROM voip_preferences\n                  WHERE id <=> NEW.attribute_id;\n\n  UPDATE kamailio.usr_preferences SET username = new_subscriber_username, domain = new_subscriber_domain,\n                                     attribute = new_attribute_name, value = NEW.value\n                               WHERE username <=> old_subscriber_username\n                                 AND domain <=> old_subscriber_domain\n                                 AND attribute <=> old_attribute_name\n                                 AND value <=> OLD.value;\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_usr_preferences",
+         "TRIGGER_NAME" : "voip_usrpref_urepl_trig",
+         "key_col" : "voip_usrpref_urepl_trig/voip_usr_preferences"
+      }
+   },
    "views" : {
       "v_sound_set_files" : {
          "VIEW_DEFINITION" : "with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`)) `v` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`)) `t` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`))",

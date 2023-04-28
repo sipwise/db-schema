@@ -10082,6 +10082,7 @@
          "key_col" : "xcap"
       }
    },
+   "triggers" : {},
    "views" : {
       "v_subscriber_devices" : {
          "VIEW_DEFINITION" : "select `s`.`username` AS `username`,`s`.`username` AS `sub_username`,`s`.`domain` AS `domain`,`s`.`uuid` AS `uuid`,`s`.`password` AS `password`,`s`.`ha1` AS `ha1`,`s`.`ha1b` AS `ha1b`,0 AS `is_devid`,NULL AS `devid_alias` from `kamailio`.`subscriber` `s` union select `d`.`alias_username` AS `username`,`s`.`username` AS `sub_username`,`d`.`alias_domain` AS `domain`,`s`.`uuid` AS `uuid`,`s`.`password` AS `password`,`s`.`ha1` AS `ha1`,`s`.`ha1b` AS `ha1b`,`d`.`is_devid` AS `is_devid`,`d`.`devid_alias` AS `devid_alias` from (`kamailio`.`subscriber` `s` join `kamailio`.`dbaliases` `d` on(`d`.`username` = `s`.`username` and `d`.`domain` = `s`.`domain` and `d`.`is_devid` = 1))",

@@ -339,5 +339,6 @@
          "key_col" : "sipwise_offline"
       }
    },
+   "triggers" : {},
    "views" : {}
 }
