@@ -1,0 +1,10 @@
+use provisioning;
+set autocommit=0;
+
+# expose to customer
+UPDATE voip_preferences SET expose_to_customer = 0 WHERE attribute = 'record_call';
+
+# expose to subscriber
+UPDATE voip_preferences SET expose_to_subscriber = 0 WHERE attribute = 'record_call';
+
+COMMIT;
