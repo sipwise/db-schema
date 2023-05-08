@@ -1,0 +1,3 @@
+USE provisioning;
+
+DELETE FROM voip_preferences WHERE attribute in ('peer_auth_registrar_server');

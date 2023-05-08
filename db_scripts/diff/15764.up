@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @pgid FROM voip_preference_groups WHERE name = 'Remote Authentication';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @pgid,
+  attribute = "peer_auth_registrar_server",
+  label = "Specific value for the registrar server",
+  type = 0,
+  max_occur = 1,
+  usr_pref = 0,
+  prof_pref = 0,
+  dom_pref = 0,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = "string",
+  read_only = 0,
+  description = "Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER." ;
+
+commit;
