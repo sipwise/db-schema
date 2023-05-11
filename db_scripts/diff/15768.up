@@ -1,0 +1,41 @@
+SET AUTOCOMMIT=0;
+
+USE kamailio;
+CREATE TABLE reseller_preferences LIKE usr_preferences;
+
+USE provisioning;
+
+DELIMITER ;;
+
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_crepl_trig AFTER INSERT ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.reseller_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.reseller_id, attribute, type, NEW.value, '0'
+         FROM provisioning.voip_preferences
+        WHERE id <=> NEW.attribute_id;
+
+  END */;;
+
+  /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_urepl_trig AFTER UPDATE ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.reseller_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.reseller_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
+   WHERE pp.id <=> OLD.id
+     AND vp.id <=> NEW.attribute_id;
+
+  END */;;
+
+  /*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_drepl_trig BEFORE DELETE ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.reseller_preferences
+        WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+
+COMMIT;
