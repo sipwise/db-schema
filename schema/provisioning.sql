@@ -3519,7 +3519,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=396 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preferences` VALUES (1,3,'lock','Lock Level',0,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'enum',1,'For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. A lock value of \"none\" will not be returned to the caller. Read-only setting.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (2,2,'block_in_mode','Block Mode for inbound calls',1,1,1,1,0,0,1,0,0,0,0,NOW(),0,1,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).',0,0,1);
@@ -3691,7 +3691,7 @@ INSERT INTO `voip_preferences` VALUES (204,14,'FW_upg_dis','FW Upgrade disable',
 INSERT INTO `voip_preferences` VALUES (205,14,'vnd_Panasonic_FW_ver','FW version',0,1,0,0,0,0,0,0,1,1,1,NOW(),0,0,'string',0,'Expected firmware version.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (206,14,'vnd_Panasonic_FW_autoupg_dis','FW automatic upgrade disable',0,1,0,0,0,0,0,0,0,1,1,NOW(),0,0,'boolean',0,'Disable auto upgrade feature.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (207,15,'ims_as_context','IMS Subscriber/Domain',1,1,1,1,1,0,0,0,0,0,0,NOW(),0,0,'boolean',0,'Defines whether this subscriber or domain is handled in an IMS application server context, so no direct registrations and calls are possible, but are signalled via an IMS S-CSCF instead',0,0,0);
-INSERT INTO `voip_preferences` VALUES (208,5,'record_call','Record calls',0,1,1,1,1,1,0,0,0,0,0,NOW(),0,0,'boolean',0,'Intercept and record media packets from or to this subscriber into a file.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (208,5,'record_call','Record calls',0,1,1,1,1,1,0,0,0,0,0,NOW(),0,1,'boolean',0,'Intercept and record media packets from or to this subscriber into a file.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (210,1,'cfs','Internal Cal Forward SMS #',1,0,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',1,'The id pointing to the \"Call Forward SMS\" entry in the voip_cf_mappings table',0,0,0);
 INSERT INTO `voip_preferences` VALUES (211,8,'reason_text_for_failover','Failover to next peer on 5xx with given Reason text',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Failover to the next peer if it sends 5xx response with Reason text parameter matching provided value (regex).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (212,4,'outbound_diversion_counter','Force Diversion counter',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'If set, the value given here is forced as counter parameter in the outbound Diversion header.',0,0,0);
@@ -3875,6 +3875,7 @@ INSERT INTO `voip_preferences` VALUES (392,8,'csc_registered_devices','CSC Regis
 INSERT INTO `voip_preferences` VALUES (393,8,'csc_conversations','CSC Conversations',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Conversations\' - An internal flag to be able to map Conversations visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Device Provisioning',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Device Provisioning\' - An internal flag to be able to map Device Provisioning visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (396,6,'peer_auth_registrar_server','Specific value for the registrar server',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER.',0,0,0);
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -5541,7 +5542,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','7c752fc0f1f9e97a6f036a75da9aba05',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','bdc2e9857f935c8fe9a0c94131383cc0',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;

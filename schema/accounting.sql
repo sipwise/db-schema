@@ -635,7 +635,7 @@ CREATE TABLE `cdr_tag` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ctc_type_idx` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `cdr_tag` VALUES (10,'balance_delta');
 INSERT INTO `cdr_tag` VALUES (1,'calling_party_category');
@@ -649,6 +649,8 @@ INSERT INTO `cdr_tag` VALUES (11,'header=History-Info');
 INSERT INTO `cdr_tag` VALUES (3,'header=P-Asserted-Identity');
 INSERT INTO `cdr_tag` VALUES (5,'header=User-to-User');
 INSERT INTO `cdr_tag` VALUES (12,'hg_ext_response');
+INSERT INTO `cdr_tag` VALUES (14,'r_ua');
+INSERT INTO `cdr_tag` VALUES (13,'r_user');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
