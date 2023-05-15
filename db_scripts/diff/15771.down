@@ -1,0 +1,6 @@
+USE provisioning
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
+
+DELETE FROM `voip_preferences` 
+    WHERE voip_preference_groups_id=@vpid AND attribute IN ('reseller_id','concurrent_max_in_per_reseller','concurrent_max_per_reseller');

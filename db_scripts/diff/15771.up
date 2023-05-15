@@ -1,0 +1,20 @@
+SET AUTOCOMMIT=0;
+
+USE provisioning;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
+
+
+INSERT INTO voip_preferences
+SET
+voip_preference_groups_id = @vpg_id,
+attribute = "reseller_id",
+label = "Internal Reseller #'",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+modify_timestamp=now(),
+internal = 1,
+data_type = 'int';
+
+COMMIT;
