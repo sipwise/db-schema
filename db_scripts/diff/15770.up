@@ -1,0 +1,11 @@
+
+SET AUTOCOMMIT=0;
+USE kamailio;
+
+INSERT INTO usr_preferences (uuid,username,domain,attribute,type,value,last_modified)
+SELECT uuid,username,domain,'reseller_id',type,(
+    SELECT reseller_id FROM billing.contracts LEFT JOIN billing.contacts on billing.contacts.id=billing.contracts.contact_id
+        WHERE billing.contracts.id=value
+    ),now() FROM usr_preferences WHERE attribute='account_id';
+
+COMMIT;

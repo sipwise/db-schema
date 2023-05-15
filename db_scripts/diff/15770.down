@@ -1,0 +1,2 @@
+USE kamailio;
+DELETE FROM usr_preferences where attribute = 'reseller_id';
