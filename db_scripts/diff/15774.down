@@ -1,0 +1,14 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @hunt_id FROM voip_preferences WHERE attribute = 'cloud_pbx_hunt_cancel_mode';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id = @hunt_id;
+DELETE FROM voip_preferences
+    WHERE attribute = 'cloud_pbx_hunt_cancel_mode';
+
+ALTER TABLE voip_subscribers
+    DROP COLUMN pbx_hunt_cancel_mode;
+
+COMMIT;

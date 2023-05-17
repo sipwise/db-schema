@@ -1,0 +1,53 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vppbxid FROM voip_preference_groups WHERE name = 'Cloud PBX';
+INSERT INTO voip_preferences SET
+    voip_preference_groups_id = @vppbxid,
+    attribute = "cloud_pbx_hunt_cancel_mode",
+    label = "termination mode for early stage legs",
+    type = 0,
+    max_occur = 1,
+    usr_pref = 1,
+    prof_pref = 0,
+    dom_pref = 0,
+    peer_pref = 0,
+    contract_pref = 0,
+    contract_location_pref = 0,
+    modify_timestamp = now(),
+    internal = 1,
+    expose_to_customer = 1,
+    data_type = 'enum',
+    read_only = 0,
+    description = "This is a termination mode for call legs in the early dialog stage. Can be: bye or cancel.";
+
+SELECT id INTO @hunt_id FROM voip_preferences WHERE attribute = 'cloud_pbx_hunt_cancel_mode';
+INSERT INTO voip_preferences_enum SET
+    preference_id = @hunt_id,
+    label = 'bye',
+    value = 'bye',
+    usr_pref = 1,
+    prof_pref = 0,
+    dom_pref = 0,
+    peer_pref = 0,
+    contract_pref = 0,
+    default_val = 0,
+    reseller_pref = 0;
+INSERT INTO voip_preferences_enum SET
+    preference_id = @hunt_id,
+    label = 'cancel',
+    value = 'cancel',
+    usr_pref = 1,
+    prof_pref = 0,
+    dom_pref = 0,
+    peer_pref = 0,
+    contract_pref = 0,
+    default_val = 0,
+    reseller_pref = 0;
+
+ALTER TABLE voip_subscribers
+    ADD COLUMN pbx_hunt_cancel_mode enum('bye','cancel')
+    DEFAULT 'cancel'
+    AFTER pbx_hunt_timeout;
+
+COMMIT;
