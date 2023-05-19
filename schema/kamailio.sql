@@ -57,8 +57,8 @@ CREATE TABLE `acc_backup` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acc_cdrs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `start_time` datetime NOT NULL DEFAULT NOW(),
-  `end_time` datetime NOT NULL DEFAULT NOW(),
+  `start_time` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
+  `end_time` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
   `duration` float(10,3) NOT NULL DEFAULT 0.000,
   PRIMARY KEY (`id`),
   KEY `start_time_idx` (`start_time`)
@@ -149,11 +149,11 @@ CREATE TABLE `aliases` (
   `contact` varchar(255) NOT NULL DEFAULT '',
   `received` varchar(255) DEFAULT NULL,
   `path` varchar(128) DEFAULT NULL,
-  `expires` datetime NOT NULL DEFAULT NOW(),
+  `expires` datetime NOT NULL DEFAULT '2030-05-28 21:32:15',
   `q` float(10,2) NOT NULL DEFAULT 1.00,
   `callid` varchar(255) NOT NULL DEFAULT 'Default-Call-ID',
   `cseq` int(11) NOT NULL DEFAULT 1,
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   `flags` int(11) NOT NULL DEFAULT 0,
   `cflags` int(11) NOT NULL DEFAULT 0,
   `user_agent` varchar(255) NOT NULL DEFAULT '',
@@ -177,7 +177,7 @@ CREATE TABLE `contract_preferences` (
   `attribute` varchar(32) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -271,10 +271,6 @@ CREATE TABLE `dispatcher` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `dispatcher` VALUES (1,2,'sip:127.0.0.1:5070',0,0,'','Voicemail servers');
-INSERT INTO `dispatcher` VALUES (2,3,'sip:127.0.0.1:5080',0,0,'','Application servers');
-INSERT INTO `dispatcher` VALUES (3,4,'sip:127.0.0.1:5090',0,0,'','Fax2Mail servers');
-INSERT INTO `dispatcher` VALUES (4,5,'sip:127.0.0.1:5085',0,0,'','Cloud PBX servers');
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dom_preferences` (
@@ -285,51 +281,23 @@ CREATE TABLE `dom_preferences` (
   `attribute` varchar(32) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `dom_preferences` VALUES (1,'','0','voip.sipwise.local','sst_enable',0,'no',NOW());
-INSERT INTO `dom_preferences` VALUES (2,'','0','voip.sipwise.local','sst_refresh_method',0,'UPDATE_FALLBACK_INVITE',NOW());
-INSERT INTO `dom_preferences` VALUES (3,'','0','voip.sipwise.local','use_rtpproxy',0,'ice_strip_candidates',NOW());
-INSERT INTO `dom_preferences` VALUES (6,'','0','voip.sipwise.local','ua_header_mode',0,'strip',NOW());
-INSERT INTO `dom_preferences` VALUES (7,'','0','voip.sipwise.local','ipv46_for_rtpproxy',0,'auto',NOW());
-INSERT INTO `dom_preferences` VALUES (8,'','0','voip.sipwise.local','force_outbound_calls_to_peer',0,'never',NOW());
-INSERT INTO `dom_preferences` VALUES (9,'','0','voip.sipwise.local','allowed_clis_reject_policy',0,'override_by_usernpn',NOW());
-INSERT INTO `dom_preferences` VALUES (10,'','0','voip.sipwise.local','extended_dialing_mode',0,'extended_send_dialed',NOW());
-INSERT INTO `dom_preferences` VALUES (11,'','0','voip.sipwise.local','outbound_to_user',0,'callee',NOW());
-INSERT INTO `dom_preferences` VALUES (12,'','0','voip.sipwise.local','language',0,'en',NOW());
-INSERT INTO `dom_preferences` VALUES (13,'','0','voip.sipwise.local','transport_protocol',0,'transparent',NOW());
-INSERT INTO `dom_preferences` VALUES (14,'','0','voip.sipwise.local','transport_protocol',0,'transparent',NOW());
-INSERT INTO `dom_preferences` VALUES (15,'','0','voip.sipwise.local','prepaid_library',0,'libswrate',NOW());
-INSERT INTO `dom_preferences` VALUES (16,'','0','voip.sipwise.local','call_deflection',0,'enabled',NOW());
-INSERT INTO `dom_preferences` VALUES (17,'','0','voip.sipwise.local','nat_sipping',0,'yes',NOW());
-INSERT INTO `dom_preferences` VALUES (18,'','0','voip.sipwise.local','skip_upn_check_on_diversion',0,'no',NOW());
-INSERT INTO `dom_preferences` VALUES (19,'','0','voip.sipwise.local','callrecording_type',0,'internal',NOW());
-INSERT INTO `dom_preferences` VALUES (20,'','0','voip.sipwise.local','support_auto_answer',0,'no',NOW());
-INSERT INTO `dom_preferences` VALUES (21,'','0','voip.sipwise.local','accept_auto_answer',0,'yes',NOW());
-INSERT INTO `dom_preferences` VALUES (22,'','0','voip.sipwise.local','rerouting_mode',0,'whitelist',NOW());
-INSERT INTO `dom_preferences` VALUES (23,'','0','voip.sipwise.local','force_inbound_calls_to_peer',0,'never',NOW());
-INSERT INTO `dom_preferences` VALUES (24,'','0','voip.sipwise.local','serial_forking_by_q_value',0,'no',NOW());
-INSERT INTO `dom_preferences` VALUES (25,'','0','voip.sipwise.local','emergency_upn',0,'npn',NOW());
-INSERT INTO `dom_preferences` VALUES (26,'','0','voip.sipwise.local','calllist_clir_scope',0,'external',NOW());
-INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());
-INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never',NOW());
-INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring',NOW());
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `domain` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `domain` varchar(64) NOT NULL,
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   `did` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain_idx` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `domain` VALUES (1,'voip.sipwise.local',NOW(),NULL);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `domain_attrs` (
@@ -338,7 +306,7 @@ CREATE TABLE `domain_attrs` (
   `name` varchar(32) NOT NULL,
   `type` int(10) unsigned NOT NULL,
   `value` varchar(255) NOT NULL,
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `domain_attrs_idx` (`did`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -502,7 +470,7 @@ CREATE TABLE `location_attrs` (
   `aname` varchar(64) NOT NULL DEFAULT '',
   `atype` int(11) NOT NULL DEFAULT 0,
   `avalue` varchar(512) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `account_record_idx` (`username`,`DOMAIN`,`ruid`),
   KEY `last_modified_idx` (`last_modified`)
@@ -563,7 +531,7 @@ CREATE TABLE `peer_preferences` (
   `attribute` varchar(32) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -599,7 +567,7 @@ CREATE TABLE `prof_preferences` (
   `attribute` varchar(32) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`)
@@ -796,7 +764,6 @@ CREATE TABLE `subscriber` (
   KEY `uuid_idx` (`uuid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','bdc2e9857f935c8fe9a0c94131383cc0','99678944df72a4e9ba21801bb7805615','c83189e4343158268ff2083c6de402e7','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trusted` (
@@ -920,16 +887,13 @@ CREATE TABLE `usr_preferences` (
   `attribute` varchar(32) NOT NULL DEFAULT '',
   `type` int(11) NOT NULL DEFAULT 0,
   `value` varchar(128) NOT NULL DEFAULT '',
-  `last_modified` datetime NOT NULL DEFAULT NOW(),
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`),
   KEY `av_idx` (`attribute`,`value`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none',NOW());
-INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack',NOW());
-INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_subscriber_devices` AS SELECT
@@ -951,39 +915,6 @@ CREATE TABLE `version` (
   UNIQUE KEY `table_name_idx` (`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `version` VALUES ('acc',5);
-INSERT INTO `version` VALUES ('acc_cdrs',2);
-INSERT INTO `version` VALUES ('active_watchers',12);
-INSERT INTO `version` VALUES ('address',6);
-INSERT INTO `version` VALUES ('aliases',6);
-INSERT INTO `version` VALUES ('dbaliases',1);
-INSERT INTO `version` VALUES ('dialog',7);
-INSERT INTO `version` VALUES ('dialog_vars',1);
-INSERT INTO `version` VALUES ('dialplan',2);
-INSERT INTO `version` VALUES ('dispatcher',4);
-INSERT INTO `version` VALUES ('domain',2);
-INSERT INTO `version` VALUES ('domain_attrs',1);
-INSERT INTO `version` VALUES ('htable',2);
-INSERT INTO `version` VALUES ('lcr_gw',3);
-INSERT INTO `version` VALUES ('lcr_rule',3);
-INSERT INTO `version` VALUES ('lcr_rule_target',1);
-INSERT INTO `version` VALUES ('location',9);
-INSERT INTO `version` VALUES ('location_attrs',1);
-INSERT INTO `version` VALUES ('mohqcalls',1);
-INSERT INTO `version` VALUES ('mohqueues',1);
-INSERT INTO `version` VALUES ('presentity',5);
-INSERT INTO `version` VALUES ('pua',7);
-INSERT INTO `version` VALUES ('rls_presentity',1);
-INSERT INTO `version` VALUES ('rls_watchers',3);
-INSERT INTO `version` VALUES ('rtpproxy',1);
-INSERT INTO `version` VALUES ('sca_subscriptions',2);
-INSERT INTO `version` VALUES ('silo',8);
-INSERT INTO `version` VALUES ('speed_dial',2);
-INSERT INTO `version` VALUES ('subscriber',7);
-INSERT INTO `version` VALUES ('trusted',6);
-INSERT INTO `version` VALUES ('usr_preferences',2);
-INSERT INTO `version` VALUES ('watchers',3);
-INSERT INTO `version` VALUES ('xcap',4);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `voicemail_spool` (
@@ -1089,4 +1020,73 @@ CREATE TABLE `xcap` (
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+INSERT INTO `dispatcher` VALUES (1,2,'sip:127.0.0.1:5070',0,0,'','Voicemail servers');
+INSERT INTO `dispatcher` VALUES (2,3,'sip:127.0.0.1:5080',0,0,'','Application servers');
+INSERT INTO `dispatcher` VALUES (3,4,'sip:127.0.0.1:5090',0,0,'','Fax2Mail servers');
+INSERT INTO `dispatcher` VALUES (4,5,'sip:127.0.0.1:5085',0,0,'','Cloud PBX servers');
+INSERT INTO `dom_preferences` VALUES (1,'','0','voip.sipwise.local','sst_enable',0,'no',NOW());
+INSERT INTO `dom_preferences` VALUES (2,'','0','voip.sipwise.local','sst_refresh_method',0,'UPDATE_FALLBACK_INVITE',NOW());
+INSERT INTO `dom_preferences` VALUES (3,'','0','voip.sipwise.local','use_rtpproxy',0,'ice_strip_candidates',NOW());
+INSERT INTO `dom_preferences` VALUES (6,'','0','voip.sipwise.local','ua_header_mode',0,'strip',NOW());
+INSERT INTO `dom_preferences` VALUES (7,'','0','voip.sipwise.local','ipv46_for_rtpproxy',0,'auto',NOW());
+INSERT INTO `dom_preferences` VALUES (8,'','0','voip.sipwise.local','force_outbound_calls_to_peer',0,'never',NOW());
+INSERT INTO `dom_preferences` VALUES (9,'','0','voip.sipwise.local','allowed_clis_reject_policy',0,'override_by_usernpn',NOW());
+INSERT INTO `dom_preferences` VALUES (10,'','0','voip.sipwise.local','extended_dialing_mode',0,'extended_send_dialed',NOW());
+INSERT INTO `dom_preferences` VALUES (11,'','0','voip.sipwise.local','outbound_to_user',0,'callee',NOW());
+INSERT INTO `dom_preferences` VALUES (12,'','0','voip.sipwise.local','language',0,'en',NOW());
+INSERT INTO `dom_preferences` VALUES (13,'','0','voip.sipwise.local','transport_protocol',0,'transparent',NOW());
+INSERT INTO `dom_preferences` VALUES (14,'','0','voip.sipwise.local','transport_protocol',0,'transparent',NOW());
+INSERT INTO `dom_preferences` VALUES (15,'','0','voip.sipwise.local','prepaid_library',0,'libswrate',NOW());
+INSERT INTO `dom_preferences` VALUES (16,'','0','voip.sipwise.local','call_deflection',0,'enabled',NOW());
+INSERT INTO `dom_preferences` VALUES (17,'','0','voip.sipwise.local','nat_sipping',0,'yes',NOW());
+INSERT INTO `dom_preferences` VALUES (18,'','0','voip.sipwise.local','skip_upn_check_on_diversion',0,'no',NOW());
+INSERT INTO `dom_preferences` VALUES (19,'','0','voip.sipwise.local','callrecording_type',0,'internal',NOW());
+INSERT INTO `dom_preferences` VALUES (20,'','0','voip.sipwise.local','support_auto_answer',0,'no',NOW());
+INSERT INTO `dom_preferences` VALUES (21,'','0','voip.sipwise.local','accept_auto_answer',0,'yes',NOW());
+INSERT INTO `dom_preferences` VALUES (22,'','0','voip.sipwise.local','rerouting_mode',0,'whitelist',NOW());
+INSERT INTO `dom_preferences` VALUES (23,'','0','voip.sipwise.local','force_inbound_calls_to_peer',0,'never',NOW());
+INSERT INTO `dom_preferences` VALUES (24,'','0','voip.sipwise.local','serial_forking_by_q_value',0,'no',NOW());
+INSERT INTO `dom_preferences` VALUES (25,'','0','voip.sipwise.local','emergency_upn',0,'npn',NOW());
+INSERT INTO `dom_preferences` VALUES (26,'','0','voip.sipwise.local','calllist_clir_scope',0,'external',NOW());
+INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());
+INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never',NOW());
+INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring',NOW());
+INSERT INTO `domain` VALUES (1,'voip.sipwise.local',NOW(),NULL);
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','18820cd63551961a7f49472cb0168fc6','f7fce1531d000a503129fb74dd91370b','fba8942e2029dff3b927dea07e56921a','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
+INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none',NOW());
+INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack',NOW());
+INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());
+INSERT INTO `version` VALUES ('acc',5);
+INSERT INTO `version` VALUES ('acc_cdrs',2);
+INSERT INTO `version` VALUES ('active_watchers',12);
+INSERT INTO `version` VALUES ('address',6);
+INSERT INTO `version` VALUES ('aliases',6);
+INSERT INTO `version` VALUES ('dbaliases',1);
+INSERT INTO `version` VALUES ('dialog',7);
+INSERT INTO `version` VALUES ('dialog_vars',1);
+INSERT INTO `version` VALUES ('dialplan',2);
+INSERT INTO `version` VALUES ('dispatcher',4);
+INSERT INTO `version` VALUES ('domain',2);
+INSERT INTO `version` VALUES ('domain_attrs',1);
+INSERT INTO `version` VALUES ('htable',2);
+INSERT INTO `version` VALUES ('lcr_gw',3);
+INSERT INTO `version` VALUES ('lcr_rule',3);
+INSERT INTO `version` VALUES ('lcr_rule_target',1);
+INSERT INTO `version` VALUES ('location',9);
+INSERT INTO `version` VALUES ('location_attrs',1);
+INSERT INTO `version` VALUES ('mohqcalls',1);
+INSERT INTO `version` VALUES ('mohqueues',1);
+INSERT INTO `version` VALUES ('presentity',5);
+INSERT INTO `version` VALUES ('pua',7);
+INSERT INTO `version` VALUES ('rls_presentity',1);
+INSERT INTO `version` VALUES ('rls_watchers',3);
+INSERT INTO `version` VALUES ('rtpproxy',1);
+INSERT INTO `version` VALUES ('sca_subscriptions',2);
+INSERT INTO `version` VALUES ('silo',8);
+INSERT INTO `version` VALUES ('speed_dial',2);
+INSERT INTO `version` VALUES ('subscriber',7);
+INSERT INTO `version` VALUES ('trusted',6);
+INSERT INTO `version` VALUES ('usr_preferences',2);
+INSERT INTO `version` VALUES ('watchers',3);
+INSERT INTO `version` VALUES ('xcap',4);
 COMMIT;

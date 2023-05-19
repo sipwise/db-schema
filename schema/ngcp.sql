@@ -11,6 +11,37 @@ CREATE TABLE `date_range_helper` (
   KEY `d` (`d`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `db_schema` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `revision` int(11) unsigned NOT NULL,
+  `node` varchar(64) NOT NULL,
+  `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rev_idx` (`revision`,`node`)
+) ENGINE=InnoDB AUTO_INCREMENT=835 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `timezone` (
+  `id` enum('1') NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tzinfo_version` (
+  `id` enum('1') NOT NULL,
+  `version` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `date_range_helper` VALUES ('1970-01-01');
 INSERT INTO `date_range_helper` VALUES ('1970-01-02');
 INSERT INTO `date_range_helper` VALUES ('1970-01-03');
@@ -30011,17 +30042,6 @@ INSERT INTO `date_range_helper` VALUES ('2052-02-16');
 INSERT INTO `date_range_helper` VALUES ('2052-02-17');
 INSERT INTO `date_range_helper` VALUES ('2052-02-18');
 INSERT INTO `date_range_helper` VALUES ('2052-02-19');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `db_schema` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `revision` int(11) unsigned NOT NULL,
-  `node` varchar(64) NOT NULL,
-  `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=835 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `db_schema` VALUES (1,10,'spce',NOW());
 INSERT INTO `db_schema` VALUES (2,20,'spce',NOW());
 INSERT INTO `db_schema` VALUES (3,30,'spce',NOW());
@@ -30856,26 +30876,6 @@ INSERT INTO `db_schema` VALUES (831,15762,'spce',NOW());
 INSERT INTO `db_schema` VALUES (832,15763,'spce',NOW());
 INSERT INTO `db_schema` VALUES (833,15764,'spce',NOW());
 INSERT INTO `db_schema` VALUES (834,15765,'spce',NOW());
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `timezone` (
-  `id` enum('1') NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `timezone` VALUES ('1','localtime',NOW(),NOW());
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tzinfo_version` (
-  `id` enum('1') NOT NULL,
-  `version` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `tzinfo_version` VALUES ('1','0',NOW(),NOW());
 COMMIT;

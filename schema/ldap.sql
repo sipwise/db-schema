@@ -21,12 +21,6 @@ CREATE TABLE `ldap_attr_mappings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `ldap_attr_mappings` VALUES (1,1,'uidNumber','users.id',NULL,'users',NULL,NULL,NULL,3,0);
-INSERT INTO `ldap_attr_mappings` VALUES (2,1,'uid','users.uuid',NULL,'users',NULL,NULL,NULL,3,0);
-INSERT INTO `ldap_attr_mappings` VALUES (3,1,'userPassword','users.password',NULL,'users',NULL,NULL,NULL,3,0);
-INSERT INTO `ldap_attr_mappings` VALUES (4,1,'cn','users.username',NULL,'users',NULL,NULL,NULL,3,0);
-INSERT INTO `ldap_attr_mappings` VALUES (5,1,'telephoneNumber','users.phone',NULL,'users',NULL,NULL,NULL,3,0);
-INSERT INTO `ldap_attr_mappings` VALUES (6,1,'displayName','users.displayname',NULL,'users',NULL,NULL,NULL,3,0);
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `ldap_entries` AS SELECT
@@ -49,8 +43,6 @@ CREATE TABLE `ldap_oc_mappings` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `ldap_oc_mappings` VALUES (1,'inetOrgPerson','users','id',NULL,NULL,0);
-INSERT INTO `ldap_oc_mappings` VALUES (3,'organization','org','id',NULL,NULL,0);
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `org` AS SELECT
@@ -108,4 +100,12 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+INSERT INTO `ldap_attr_mappings` VALUES (1,1,'uidNumber','users.id',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_attr_mappings` VALUES (2,1,'uid','users.uuid',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_attr_mappings` VALUES (3,1,'userPassword','users.password',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_attr_mappings` VALUES (4,1,'cn','users.username',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_attr_mappings` VALUES (5,1,'telephoneNumber','users.phone',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_attr_mappings` VALUES (6,1,'displayName','users.displayname',NULL,'users',NULL,NULL,NULL,3,0);
+INSERT INTO `ldap_oc_mappings` VALUES (1,'inetOrgPerson','users','id',NULL,NULL,0);
+INSERT INTO `ldap_oc_mappings` VALUES (3,'organization','org','id',NULL,NULL,0);
 COMMIT;

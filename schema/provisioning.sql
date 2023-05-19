@@ -198,15 +198,6 @@ CREATE TABLE `autoprov_sync_parameters` (
   UNIQUE KEY `sync_parameter` (`bootstrap_method`,`parameter_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `autoprov_sync_parameters` VALUES (1,'http','sync_uri','');
-INSERT INTO `autoprov_sync_parameters` VALUES (2,'http','sync_params','');
-INSERT INTO `autoprov_sync_parameters` VALUES (3,'http','sync_method','/^(?:GET|POST)$/i');
-INSERT INTO `autoprov_sync_parameters` VALUES (4,'http','security_handler','');
-INSERT INTO `autoprov_sync_parameters` VALUES (5,'redirect_grandstream','cid','');
-INSERT INTO `autoprov_sync_parameters` VALUES (6,'redirect_grandstream','key','');
-INSERT INTO `autoprov_sync_parameters` VALUES (7,'redirect_polycom','profile','');
-INSERT INTO `autoprov_sync_parameters` VALUES (8,'redirect_snom','profile','');
-INSERT INTO `autoprov_sync_parameters` VALUES (9,'redirect_snom','product_family','');
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `emergency_containers` (
@@ -243,6 +234,4018 @@ CREATE TABLE `language_strings` (
   UNIQUE KEY `codelang_idx` (`code`,`language`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1252 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recording_calls` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call_id` varchar(250) NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `end_time` datetime DEFAULT NULL,
+  `start_timestamp` decimal(13,3) DEFAULT NULL,
+  `end_timestamp` decimal(13,3) DEFAULT NULL,
+  `status` enum('recording','completed','confirmed') DEFAULT 'recording',
+  PRIMARY KEY (`id`),
+  KEY `call_id` (`call_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recording_metakeys` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call` int(10) unsigned NOT NULL,
+  `key` char(255) NOT NULL,
+  `value` char(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prim_lookup` (`value`,`key`),
+  KEY `fk_call_idx` (`call`),
+  CONSTRAINT `fk_call_idx` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recording_streams` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `call` int(10) unsigned NOT NULL,
+  `local_filename` varchar(250) NOT NULL,
+  `full_filename` varchar(250) NOT NULL,
+  `file_format` varchar(10) NOT NULL,
+  `output_type` enum('mixed','single') NOT NULL,
+  `stream_id` int(10) unsigned NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `end_time` datetime DEFAULT NULL,
+  `sample_rate` int(10) unsigned NOT NULL DEFAULT 0,
+  `channels` int(10) unsigned NOT NULL DEFAULT 0,
+  `ssrc` int(10) unsigned NOT NULL,
+  `start_timestamp` decimal(13,3) DEFAULT NULL,
+  `end_timestamp` decimal(13,3) DEFAULT NULL,
+  `tag_label` varchar(255) NOT NULL DEFAULT '',
+  `stream` longblob NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `call` (`call`),
+  CONSTRAINT `fk_call_id` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rtc_session` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `rtc_session_id` varchar(36) NOT NULL,
+  `rtc_network_tag` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rtc_session_idx` (`rtc_session_id`),
+  KEY `subscriber_idx` (`subscriber_id`),
+  CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rtc_user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `rtc_user_id` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `reseller_idx` (`reseller_id`),
+  UNIQUE KEY `rtc_user_idx` (`rtc_user_id`),
+  CONSTRAINT `tl_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sms_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `direction` enum('in','out','forward') NOT NULL DEFAULT 'in',
+  `caller` varchar(255) NOT NULL,
+  `callee` varchar(255) NOT NULL,
+  `text` mediumtext NOT NULL,
+  `reason` varchar(255) NOT NULL DEFAULT '',
+  `status` varchar(255) NOT NULL DEFAULT '',
+  `coding` varchar(16) NOT NULL,
+  `pcc_status` enum('none','pending','complete','failed') NOT NULL DEFAULT 'none',
+  `pcc_token` varchar(64) NOT NULL DEFAULT '',
+  `cli` varchar(128) NOT NULL DEFAULT '',
+  `smsc_peer` varchar(128) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `sms_journal_sub_dir_idx` (`subscriber_id`,`direction`),
+  KEY `sms_journal_time_idx` (`time`),
+  KEY `pcc_token_idx` (`id`,`pcc_token`,`pcc_status`),
+  CONSTRAINT `smsj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `upn_rewrite_set` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `new_cli` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `upn_rewrite_sources` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `upn_rewrite_set_id` int(11) unsigned NOT NULL,
+  `pattern` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_upn_rewrite_sources_1` (`upn_rewrite_set_id`),
+  CONSTRAINT `fk_upn_rewrite_sources_1` FOREIGN KEY (`upn_rewrite_set_id`) REFERENCES `upn_rewrite_set` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_sound_set_files` AS SELECT
+ 1 AS `set_id`,
+  1 AS `reseller_id`,
+  1 AS `contract_id`,
+  1 AS `name`,
+  1 AS `description`,
+  1 AS `handle_id`,
+  1 AS `handle_name`,
+  1 AS `file_id`,
+  1 AS `filename`,
+  1 AS `loopplay`,
+  1 AS `parent_chain`,
+  1 AS `data_set_id`,
+  1 AS `data` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_subscriber_cfs` AS SELECT
+ 1 AS `id`,
+  1 AS `uuid`,
+  1 AS `cf_type`,
+  1 AS `subscriber_id`,
+  1 AS `source_name`,
+  1 AS `source_mode`,
+  1 AS `source_is_regex`,
+  1 AS `source`,
+  1 AS `destination_name`,
+  1 AS `destination`,
+  1 AS `priority`,
+  1 AS `timeout`,
+  1 AS `announcement_id`,
+  1 AS `bnumber_name`,
+  1 AS `bnumber_mode`,
+  1 AS `bnumber_is_regex`,
+  1 AS `bnumber`,
+  1 AS `time_name`,
+  1 AS `year`,
+  1 AS `month`,
+  1 AS `mday`,
+  1 AS `wday`,
+  1 AS `hour`,
+  1 AS `minute` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_time_periods_ical` AS SELECT
+ 1 AS `id`,
+  1 AS `time_set_id`,
+  1 AS `start`,
+  1 AS `end`,
+  1 AS `comment`,
+  1 AS `rrule_ical`,
+  1 AS `event_ical` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_time_sets_ical` AS SELECT
+ 1 AS `id`,
+  1 AS `name`,
+  1 AS `ical` */;
+SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_aig_sequence` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_allowed_ip_groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(10) unsigned NOT NULL,
+  `ipnet` varchar(46) NOT NULL,
+  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
+  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
+  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
+  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `groupnet_idx` (`group_id`,`ipnet`),
+  KEY `groupid_idx` (`group_id`),
+  KEY `ipnet_idx` (`ipnet`),
+  KEY `aig_groupid_ipv4_from_to_idx` (`group_id`,`_ipv4_net_from`,`_ipv4_net_to`),
+  KEY `aig_groupid_ipv6_from_to_idx` (`group_id`,`_ipv6_net_from`,`_ipv6_net_to`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER provisioning.aig_create_trig before insert on provisioning.voip_allowed_ip_groups
+FOR EACH ROW SET
+  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
+  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
+  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
+  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_crepl_trig AFTER INSERT ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.address (id, grp, ip_addr, mask)
+                         VALUES(NEW.id, NEW.group_id,
+                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
+                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32));
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER provisioning.aig_update_trig before update on provisioning.voip_allowed_ip_groups
+FOR EACH ROW SET
+  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
+  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
+  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
+  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_urepl_trig AFTER UPDATE ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.address SET id = NEW.id, grp = NEW.group_id,
+                              ip_addr = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
+                              mask = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32)
+                        WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_drepl_trig BEFORE DELETE ON voip_allowed_ip_groups
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.address WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cc_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `auth_key` varchar(255) NOT NULL,
+  `source_uuid` char(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uuid_idx` (`uuid`),
+  KEY `uuid_authkey_idx` (`uuid`,`auth_key`),
+  CONSTRAINT `vs_uuid_ref` FOREIGN KEY (`uuid`) REFERENCES `voip_subscribers` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_bnumber_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `mode` enum('whitelist','blacklist') NOT NULL DEFAULT 'whitelist',
+  `is_regex` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cf_bnumbersets_sid_name_unique` (`subscriber_id`,`name`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `vcbs_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_bnumbers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `bnumber_set_id` int(11) unsigned NOT NULL,
+  `bnumber` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bset_idx` (`bnumber_set_id`),
+  KEY `bnumber_idx` (`bnumber`),
+  CONSTRAINT `v_cf_bsetid_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_destination_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `v_s_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_destinations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `destination_set_id` int(11) unsigned NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  `priority` int(3) unsigned DEFAULT NULL,
+  `timeout` int(11) unsigned NOT NULL DEFAULT 300,
+  `announcement_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dset_idx` (`destination_set_id`),
+  KEY `destination_idx` (`destination`),
+  KEY `d_s_announceid_ref` (`announcement_id`),
+  CONSTRAINT `d_s_announceid_ref` FOREIGN KEY (`announcement_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `v_cf_dsetid_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `type` enum('cfu','cfb','cfna','cft','cfs','cfr','cfo') NOT NULL DEFAULT 'cfu',
+  `destination_set_id` int(11) unsigned DEFAULT NULL,
+  `time_set_id` int(11) unsigned DEFAULT NULL,
+  `source_set_id` int(11) unsigned DEFAULT NULL,
+  `bnumber_set_id` int(11) unsigned DEFAULT NULL,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `type_idx` (`type`),
+  KEY `cfmap_time_ref` (`time_set_id`),
+  KEY `cfmap_dest_ref` (`destination_set_id`),
+  KEY `vcm_bnumset_ref` (`bnumber_set_id`),
+  KEY `cfmap_sset_idx` (`source_set_id`),
+  CONSTRAINT `cfmap_dest_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `cfmap_time_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_cfmap_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vcm_bnumset_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vcm_sourceset_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `year` varchar(255) DEFAULT NULL,
+  `month` varchar(255) DEFAULT NULL,
+  `mday` varchar(255) DEFAULT NULL,
+  `wday` varchar(255) DEFAULT NULL,
+  `hour` varchar(255) DEFAULT NULL,
+  `minute` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tset_idx` (`time_set_id`),
+  CONSTRAINT `v_cf_tsetid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_source_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `mode` enum('whitelist','blacklist') NOT NULL DEFAULT 'whitelist',
+  `is_regex` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `cf_sourcesets_sid_name_unique` (`subscriber_id`,`name`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `vcss_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_sources` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `source_set_id` int(11) unsigned NOT NULL,
+  `source` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sset_idx` (`source_set_id`),
+  KEY `source_idx` (`source`),
+  CONSTRAINT `v_cf_ssetid_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_cf_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sub_idx` (`subscriber_id`),
+  KEY `name_idx` (`name`),
+  CONSTRAINT `v_cf_ts_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contacts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `firstname` varchar(127) DEFAULT NULL,
+  `lastname` varchar(127) DEFAULT NULL,
+  `company` varchar(127) DEFAULT NULL,
+  `phonenumber` varchar(31) DEFAULT NULL,
+  `homephonenumber` varchar(31) DEFAULT NULL,
+  `mobilenumber` varchar(31) DEFAULT NULL,
+  `faxnumber` varchar(31) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `homepage` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `subscriberid_idx` (`subscriber_id`),
+  CONSTRAINT `v_c_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_contacts_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contract_location_blocks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` int(11) unsigned NOT NULL,
+  `ip` varchar(39) NOT NULL,
+  `mask` tinyint(1) unsigned DEFAULT NULL,
+  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
+  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
+  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
+  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vclb_unique_location_block` (`location_id`,`ip`,`mask`),
+  KEY `vclb_ipv4_from_idx` (`_ipv4_net_from`),
+  KEY `vclb_ipv4_to_idx` (`_ipv4_net_to`),
+  KEY `vclb_ipv6_from_idx` (`_ipv6_net_from`),
+  KEY `vclb_ipv6_to_idx` (`_ipv6_net_to`),
+  KEY `vclb_location_ref` (`location_id`),
+  CONSTRAINT `vclb_location_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contract_locations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vcl_contract_name_idx` (`contract_id`,`name`),
+  CONSTRAINT `vcl_contract_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contract_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `location_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `conidattrid_idx` (`contract_id`,`attribute_id`),
+  KEY `contractid_idx` (`contract_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  KEY `v_c_p_locationid_ref` (`location_id`),
+  CONSTRAINT `v_c_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_c_p_locationid_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_crepl_trig AFTER INSERT ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.contract_preferences
+              (id, uuid, location_id, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.contract_id, NEW.location_id, attribute, type, NEW.value, '0'
+         FROM provisioning.voip_preferences
+        WHERE id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_urepl_trig AFTER UPDATE ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.contract_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.contract_id, pp.location_id = NEW.location_id,
+         pp.type = vp.type, pp.attribute = vp.attribute,
+         pp.value = NEW.value, pp.last_modified = '0'
+   WHERE pp.id <=> OLD.id
+     AND vp.id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_drepl_trig BEFORE DELETE ON voip_contract_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.contract_preferences
+        WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contract_preferences_blob` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) unsigned NOT NULL,
+  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
+  `value` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `preference_id` (`preference_id`),
+  CONSTRAINT `fk_contract_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_contract_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_prefences_blob_insert AFTER INSERT ON voip_contract_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_contract_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_preferences_blob_delete AFTER DELETE ON voip_contract_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_contract_preferences
+       SET value = ''
+     WHERE preference_id = OLD.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_contract_speed_dial` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `contract_id` int(11) unsigned NOT NULL,
+  `slot` varchar(64) NOT NULL,
+  `destination` varchar(192) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `contractid_slot_idx` (`contract_id`,`slot`),
+  CONSTRAINT `v_csd_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_crepl_trig AFTER INSERT ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE sd_domain varchar(64);
+  DECLARE target_domain varchar(64);
+  DECLARE at_end_pos smallint;
+  SET target_domain = 'local.sd.customer.domain';
+  SET at_end_pos = LOCATE('@', NEW.destination);
+  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
+
+  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
+                                   new_uri, fname, lname, description)
+                          VALUES(NEW.contract_id, target_domain,
+                                 NEW.slot, sd_domain,
+                                 NEW.destination, '', '', '');
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_urepl_trig AFTER UPDATE ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE sd_domain varchar(64);
+  DECLARE target_domain varchar(64);
+  DECLARE at_end_pos smallint;
+  SET target_domain = 'local.sd.customer.domain';
+  SET at_end_pos = LOCATE('@', NEW.destination);
+  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
+
+  UPDATE kamailio.speed_dial SET username = NEW.contract_id, domain = target_domain,
+                               sd_username = NEW.slot, sd_domain = sd_domain,
+                               new_uri = NEW.destination
+                           WHERE username <=> OLD.contract_id
+                           AND domain <=> target_domain
+                           AND sd_username <=> OLD.slot;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_drepl_trig BEFORE DELETE ON voip_contract_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE target_domain varchar(64);
+  SET target_domain = 'local.sd.customer.domain';
+
+  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.contract_id
+                                  AND domain <=> target_domain
+                                  AND sd_username <=> OLD.slot;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_dbaliases` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(127) NOT NULL,
+  `domain_id` int(11) unsigned NOT NULL,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `is_primary` tinyint(1) NOT NULL DEFAULT 0,
+  `is_devid` tinyint(1) NOT NULL DEFAULT 0,
+  `devid_alias` varchar(127) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_dom_idx` (`username`,`domain_id`),
+  KEY `domainid_idx` (`domain_id`),
+  KEY `subscriberid_idx` (`subscriber_id`),
+  CONSTRAINT `v_da_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_da_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_dbaliases_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
+  CONSTRAINT `voip_dbaliases_ibfk_2` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_crepl_trig AFTER INSERT ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+    FROM voip_subscribers a, voip_domains b
+    WHERE a.id <=> NEW.subscriber_id
+    AND b.id <=> a.domain_id;
+
+  INSERT INTO kamailio.dbaliases (alias_username, alias_domain,
+    username, domain, is_primary, is_devid, devid_alias)
+    VALUES(NEW.username, dbalias_domain, target_username, target_domain, NEW.is_primary, NEW.is_devid, NEW.devid_alias);
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_urepl_trig AFTER UPDATE ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE old_dbalias_domain varchar(127);
+  DECLARE new_dbalias_domain varchar(127);
+  DECLARE target_username varchar(127);
+  DECLARE target_domain varchar(127);
+
+  SELECT domain INTO old_dbalias_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_dbalias_domain FROM voip_domains where id = NEW.domain_id;
+  SELECT a.username, b.domain INTO target_username, target_domain
+    FROM voip_subscribers a, voip_domains b
+    WHERE a.id <=> NEW.subscriber_id
+    AND b.id <=> a.domain_id;
+
+  UPDATE kamailio.dbaliases SET alias_username = NEW.username, alias_domain = new_dbalias_domain,
+    username = target_username, domain = target_domain, is_primary = NEW.is_primary,
+    is_devid = NEW.is_devid, devid_alias = NEW.devid_alias
+    WHERE alias_username <=> OLD.username
+    AND alias_domain <=> old_dbalias_domain
+	AND is_primary <=> OLD.is_primary
+	AND is_devid <=> OLD.is_devid
+	AND devid_alias <=> OLD.devid_alias;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_drepl_trig BEFORE DELETE ON voip_dbaliases
+  FOR EACH ROW BEGIN
+  DECLARE dbalias_domain varchar(127);
+
+  SELECT domain INTO dbalias_domain FROM voip_domains where id = OLD.domain_id;
+
+  DELETE FROM kamailio.dbaliases WHERE alias_username <=> OLD.username
+                                  AND alias_domain <=> dbalias_domain;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_dev_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `devidattrid_idx` (`device_id`,`attribute_id`),
+  KEY `deviceid_idx` (`device_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_d_p_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_dev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_devprof_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `devprofidattrid_idx` (`profile_id`,`attribute_id`),
+  KEY `devprofileid_idx` (`profile_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_devprof_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_p_p_deviceid_ref` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_dom_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `domain_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `domidattrid_idx` (`domain_id`,`attribute_id`),
+  KEY `domainid_idx` (`domain_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_d_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_d_p_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_dom_preferences_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
+  CONSTRAINT `voip_dom_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_crepl_trig AFTER INSERT ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE domain_name varchar(127);
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT domain INTO domain_name
+                FROM voip_domains
+               WHERE id <=> NEW.domain_id;
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id <=> NEW.attribute_id;
+
+  INSERT INTO kamailio.dom_preferences (domain, attribute, type, value)
+                                 VALUES(domain_name, attribute_name, attribute_type, NEW.value);
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_urepl_trig AFTER UPDATE ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_domain_name varchar(127);
+  DECLARE new_domain_name varchar(127);
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT domain INTO old_domain_name
+                FROM voip_domains
+               WHERE id <=> OLD.domain_id;
+  SELECT domain INTO new_domain_name
+                FROM voip_domains
+               WHERE id <=> NEW.domain_id;
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> NEW.attribute_id;
+
+  UPDATE kamailio.dom_preferences SET domain = new_domain_name,
+                                      attribute = new_attribute_name,
+                                      value = NEW.value
+                                WHERE domain <=> old_domain_name
+                                  AND attribute <=> old_attribute_name
+                                  AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_drepl_trig BEFORE DELETE ON voip_dom_preferences
+  FOR EACH ROW BEGIN
+  DECLARE domain_name varchar(127);
+  DECLARE attribute_name varchar(31);
+
+  SELECT domain INTO domain_name
+                FROM voip_domains
+               WHERE id <=> OLD.domain_id;
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+
+  DELETE FROM kamailio.dom_preferences WHERE domain <=> domain_name
+                                         AND attribute <=> attribute_name
+                                         AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_dom_preferences_blob` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) unsigned NOT NULL,
+  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
+  `value` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `preference_id` (`preference_id`),
+  CONSTRAINT `fk_dom_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_dom_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_dom_prefences_blob_insert AFTER INSERT ON voip_dom_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_dom_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_dom_prefences_blob_delete AFTER DELETE ON voip_dom_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_dom_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_domains` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `domain` varchar(127) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `domain_idx` (`domain`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
+FOR EACH ROW BEGIN
+    
+    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
+   
+    
+    INSERT INTO voip_dom_preferences (domain_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.dom_pref=1 AND pe.dom_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.domain WHERE domain <=> OLD.domain;
+
+  
+  
+  DELETE FROM kamailio.dom_preferences WHERE domain <=> OLD.domain;
+  
+  DELETE FROM provisioning.voip_subscribers WHERE domain_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_fax_data` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `sid` varchar(255) NOT NULL,
+  `size` int(11) unsigned NOT NULL,
+  `checksum` char(32) NOT NULL,
+  `data` mediumblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `v_fd_sid_ref` (`sid`),
+  KEY `v_fd_subid_idx` (`subscriber_id`),
+  CONSTRAINT `v_fd_sid_ref` FOREIGN KEY (`sid`) REFERENCES `voip_fax_journal` (`sid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_fax_destinations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  `filetype` enum('PS','TIFF','PDF','PDF14') NOT NULL DEFAULT 'TIFF',
+  `cc` tinyint(1) NOT NULL DEFAULT 0,
+  `incoming` tinyint(1) NOT NULL DEFAULT 1,
+  `outgoing` tinyint(1) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subdest_idx` (`subscriber_id`,`destination`),
+  CONSTRAINT `v_f_d_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_fax_destinations_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_fax_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `time` decimal(13,3) NOT NULL,
+  `direction` enum('in','out','mtf') NOT NULL,
+  `duration` int(11) unsigned NOT NULL DEFAULT 0,
+  `caller` varchar(255) NOT NULL,
+  `callee` varchar(255) NOT NULL,
+  `pages` int(10) unsigned NOT NULL DEFAULT 0,
+  `reason` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `signal_rate` int(10) unsigned NOT NULL DEFAULT 0,
+  `quality` varchar(255) NOT NULL DEFAULT '',
+  `filename` varchar(255) NOT NULL DEFAULT '',
+  `sid` varchar(255) NOT NULL,
+  `caller_uuid` char(36) DEFAULT NULL,
+  `callee_uuid` char(36) DEFAULT NULL,
+  `call_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `voip_fj_sub_dir_idx` (`subscriber_id`,`direction`),
+  KEY `voip_fj_time_idx` (`time`),
+  KEY `caller_uuid_idx` (`caller_uuid`),
+  KEY `callee_uuid_idx` (`callee_uuid`),
+  KEY `v_fj_sid_idx` (`sid`),
+  KEY `callid_idx` (`call_id`),
+  CONSTRAINT `v_fj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_fax_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `password` varchar(64) DEFAULT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `send_status` tinyint(1) NOT NULL DEFAULT 1,
+  `send_copy` tinyint(1) NOT NULL DEFAULT 1,
+  `t38` tinyint(1) NOT NULL DEFAULT 1,
+  `ecm` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subscriberid_idx` (`subscriber_id`),
+  CONSTRAINT `v_f_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_fax_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_fielddev_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `fielddevidattrid_idx` (`device_id`,`attribute_id`),
+  KEY `fielddeviceid_idx` (`device_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_fd_p_fielddeviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_fdev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_header_rule_actions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(11) unsigned NOT NULL,
+  `header` varchar(255) NOT NULL,
+  `header_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
+  `action_type` enum('set','add','remove','rsub','header','preference') NOT NULL,
+  `value_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
+  `value` varchar(255) DEFAULT NULL,
+  `rwr_set_id` int(11) unsigned DEFAULT NULL,
+  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT 100,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `rule_id_idx` (`rule_id`),
+  KEY `rwr_set_id_idx` (`rwr_set_id`),
+  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
+  KEY `priority_idx` (`priority`),
+  KEY `enabled_idx` (`enabled`),
+  CONSTRAINT `v_hra_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_hra_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_header_rule_condition_values` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `condition_id` int(11) unsigned NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `condition_id_idx` (`condition_id`),
+  CONSTRAINT `v_hrcv_conditionid_ref` FOREIGN KEY (`condition_id`) REFERENCES `voip_header_rule_conditions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_header_rule_conditions` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `rule_id` int(11) unsigned NOT NULL,
+  `match_type` enum('header','preference','avp') NOT NULL DEFAULT 'header',
+  `match_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
+  `match_name` varchar(255) NOT NULL,
+  `expression` enum('is','contains','matches','regexp') NOT NULL,
+  `expression_negation` tinyint(1) NOT NULL DEFAULT 0,
+  `value_type` enum('input','preference','avp') NOT NULL,
+  `rwr_set_id` int(11) unsigned DEFAULT NULL,
+  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `rule_id_idx` (`rule_id`),
+  KEY `rwr_set_id_idx` (`rwr_set_id`),
+  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
+  KEY `enabled_idx` (`enabled`),
+  CONSTRAINT `v_hrc_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_hrc_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_header_rule_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `res_name_idx` (`reseller_id`,`name`),
+  UNIQUE KEY `vhrs_subscriber_idx` (`subscriber_id`),
+  CONSTRAINT `vhrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vhrs_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_header_rules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT 100,
+  `direction` enum('inbound','outbound','local','peer','cf_inbound','cf_outbound','reply') NOT NULL DEFAULT 'inbound',
+  `stopper` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
+  KEY `direction_idx` (`direction`),
+  KEY `priority_idx` (`priority`),
+  KEY `enabled_idx` (`enabled`),
+  CONSTRAINT `v_hr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_header_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_mail_to_fax_acl` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `from_email` varchar(255) DEFAULT NULL,
+  `received_from` varchar(255) DEFAULT NULL,
+  `destination` varchar(255) DEFAULT NULL,
+  `use_regex` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `mtf_acl_sub_idx` (`subscriber_id`),
+  KEY `voip_mtf_acl_fe_idx` (`from_email`),
+  CONSTRAINT `v_mtf_acl_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_mail_to_fax_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `secret_key` varchar(255) DEFAULT NULL,
+  `last_secret_key_modify` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `secret_key_renew` enum('never','daily','weekly','monthly') NOT NULL DEFAULT 'never',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mtf_p_sub_idx` (`subscriber_id`),
+  CONSTRAINT `v_mtf_p_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_mail_to_fax_secret_renew_notify` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mtf_srn_subdest_idx` (`subscriber_id`,`destination`),
+  CONSTRAINT `v_mtf_secret_renew_notify_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_pbx_autoattendants` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `uuid` char(36) NOT NULL,
+  `choice` varchar(16) NOT NULL,
+  `destination` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `uuid_choice_idx` (`uuid`,`choice`),
+  KEY `fk_aa_sub_idx` (`subscriber_id`),
+  CONSTRAINT `voip_pbx_autoattendant_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_pbx_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `group_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `subscriber_idx` (`subscriber_id`),
+  KEY `group_idx` (`group_id`),
+  CONSTRAINT `fk_v_sub_group` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(127) NOT NULL,
+  `priority` tinyint(3) NOT NULL DEFAULT 1,
+  `description` varchar(255) DEFAULT NULL,
+  `peering_contract_id` int(11) unsigned DEFAULT NULL,
+  `has_inbound_rules` tinyint(1) NOT NULL DEFAULT 0,
+  `time_set_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `vpg_time_set_ref` (`time_set_id`),
+  CONSTRAINT `vpg_time_set_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pgrp_urepl_trig AFTER UPDATE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+     SET rt.priority = NEW.priority
+   WHERE gw.id <=> rt.gw_id
+     AND gw.lcr_id = 1
+     AND gw.group_id <=> NEW.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pgrp_drepl_trig AFTER DELETE ON voip_peer_groups
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_rule WHERE group_id <=> OLD.id;
+  DELETE FROM kamailio.lcr_gw WHERE group_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_hosts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `name` varchar(64) NOT NULL DEFAULT '',
+  `ip` varchar(64) NOT NULL,
+  `host` varchar(64) DEFAULT NULL,
+  `port` int(5) NOT NULL DEFAULT 5060,
+  `transport` tinyint(3) unsigned DEFAULT NULL,
+  `weight` tinyint(3) NOT NULL DEFAULT 0,
+  `via_route` varchar(255) DEFAULT NULL,
+  `via_lb` tinyint(1) NOT NULL DEFAULT 0,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `probe` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `grpname` (`group_id`,`name`),
+  KEY `grpidx` (`group_id`),
+  CONSTRAINT `v_ps_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DECLARE m_proto CHAR(4);
+  IF NEW.transport = 2 THEN
+    SET m_proto := 'TCP';
+  ELSEIF NEW.transport = 3 THEN
+    SET m_proto := 'TLS';
+  ELSE
+    SET m_proto := 'UDP';
+  END IF;
+
+  IF NEW.enabled THEN
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id <=> NEW.group_id;
+
+    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+
+    IF NEW.probe = 1 THEN
+      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+    END IF;
+
+  END IF;
+
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DECLARE m_proto CHAR(4);
+  DECLARE m_probechange INTEGER;
+
+  IF NEW.transport = 2 THEN
+    SET m_proto := 'TCP';
+  ELSEIF NEW.transport = 3 THEN
+    SET m_proto := 'TLS';
+  ELSE
+    SET m_proto := 'UDP';
+  END IF;
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+
+    UPDATE kamailio.lcr_gw
+       SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id
+     WHERE lcr_id = 1
+       AND flags <=> NEW.id;
+
+    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+       SET rt.weight = NEW.weight
+     WHERE gw.id <=> rt.gw_id
+       AND gw.lcr_id = 1
+       AND gw.group_id <=> NEW.group_id
+       AND gw.flags <=> NEW.id;
+
+    IF OLD.probe = 1 AND (OLD.ip != NEW.ip OR OLD.port != NEW.port OR OLD.transport != NEW.transport OR OLD.name != NEW.name OR OLD.group_id != NEW.group_id) THEN
+      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
+      SET m_probechange := 1;
+    ELSEIF OLD.probe = 1 and NEW.probe = 0 THEN
+      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
+    END IF;
+    IF NEW.probe = 1 AND (m_probechange = 1 OR OLD.probe = 0) THEN
+      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+    END IF;
+
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+
+    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
+      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+             FROM kamailio.lcr_rule rule
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
+            WHERE vpg.id <=> NEW.group_id;
+
+    IF NEW.probe = 1 THEN
+      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+    END IF;
+
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+
+    DELETE FROM kamailio.lcr_gw
+          WHERE lcr_id = 1
+            AND flags <=> NEW.id;
+
+    IF OLD.probe = 1 THEN
+      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', NEW.id, ';%');
+    END IF;
+
+  END IF;
+
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_gw
+    WHERE flags <=> OLD.id;
+
+  DELETE FROM kamailio.peer_preferences
+    WHERE uuid = OLD.id;
+
+  IF OLD.enabled = 1 AND OLD.probe = 1 THEN
+    DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_inbound_rules` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `field` varchar(255) NOT NULL,
+  `pattern` varchar(1023) NOT NULL,
+  `reject_code` int(3) DEFAULT NULL,
+  `reject_reason` varchar(64) DEFAULT NULL,
+  `priority` int(11) unsigned NOT NULL DEFAULT 50,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `grpidx` (`group_id`),
+  CONSTRAINT `v_pig_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `peer_host_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `peerhostid_idx` (`peer_host_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_p_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_p_p_peerhostid_ref` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_peer_preferences_ibfk_1` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`),
+  CONSTRAINT `voip_peer_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_crepl_trig AFTER INSERT ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.peer_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, '0'
+         FROM provisioning.voip_preferences
+        WHERE id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_urepl_trig AFTER UPDATE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
+   WHERE pp.id <=> OLD.id
+     AND vp.id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_drepl_trig BEFORE DELETE ON voip_peer_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.peer_preferences
+        WHERE id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_preferences_blob` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) unsigned NOT NULL,
+  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
+  `value` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `preference_id` (`preference_id`),
+  CONSTRAINT `fk_peer_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_peer_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_peer_preferences_blob_insert AFTER INSERT ON voip_peer_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_peer_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_peer_preferences_blob_delete AFTER DELETE ON voip_peer_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_peer_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_peer_rules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `callee_prefix` varchar(64) NOT NULL DEFAULT '',
+  `callee_pattern` varchar(64) DEFAULT '',
+  `caller_pattern` varchar(64) DEFAULT NULL,
+  `description` varchar(255) NOT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  `stopper` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `grpidx` (`group_id`),
+  CONSTRAINT `v_pg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  IF NEW.enabled = 1 THEN
+    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
+      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+             FROM kamailio.lcr_gw gw
+             INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
+                                                        AND gw.lcr_id = 1
+                                                        AND vph.group_id = gw.group_id
+             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+            WHERE vph.group_id <=> NEW.group_id;
+  END IF;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prul_urepl_trig AFTER UPDATE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+    UPDATE kamailio.lcr_rule
+       SET prefix = NEW.callee_prefix,
+           request_uri = NEW.callee_pattern,
+           from_uri = NEW.caller_pattern,
+           stopper = NEW.stopper,
+           group_id = NEW.group_id
+     WHERE prefix <=> OLD.callee_prefix
+       AND request_uri <=> OLD.callee_pattern
+       AND from_uri <=> OLD.caller_pattern
+       AND group_id <=> OLD.group_id
+       AND stopper <=> OLD.stopper;
+    IF OLD.group_id != NEW.group_id THEN
+        DELETE FROM kamailio.lcr_rule_target WHERE rule_id = OLD.id;
+        INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+           SELECT gw.lcr_id, OLD.id, gw.id, vpg.priority, vph.weight
+             FROM kamailio.lcr_gw gw
+            INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
+                                                        AND gw.lcr_id = 1
+                                                        AND vph.group_id = gw.group_id
+            INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+            WHERE vph.group_id <=> NEW.group_id;
+    END IF;
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
+      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
+
+    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
+        SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
+          FROM kamailio.lcr_gw gw
+         INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
+                                                    AND gw.lcr_id = 1
+                                                    AND vph.group_id = gw.group_id
+         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
+         WHERE vph.group_id <=> NEW.group_id;
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+    DELETE FROM kamailio.lcr_rule
+          WHERE prefix <=> OLD.callee_prefix
+            AND request_uri <=> OLD.callee_pattern
+            AND from_uri <=> OLD.caller_pattern
+            AND group_id <=> OLD.group_id
+            AND stopper <=> OLD.stopper
+            LIMIT 1;
+  END IF;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_prul_drepl_trig AFTER DELETE ON voip_peer_rules
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.lcr_rule
+        WHERE prefix <=> OLD.callee_prefix
+          AND request_uri <=> OLD.callee_pattern
+          AND from_uri <=> OLD.caller_pattern
+          AND group_id <=> OLD.group_id;
+
+  
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_preference_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_preference_relations` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `voip_preference_id` int(11) unsigned NOT NULL,
+  `autoprov_device_id` int(11) unsigned DEFAULT NULL,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `voip_pref_rel_devices` (`voip_preference_id`,`autoprov_device_id`),
+  KEY `voip_pref_rel_reselle` (`voip_preference_id`,`reseller_id`),
+  KEY `vpid_ref` (`voip_preference_id`),
+  KEY `adid_ref` (`autoprov_device_id`),
+  KEY `rid_ref` (`reseller_id`),
+  CONSTRAINT `adid_ref` FOREIGN KEY (`autoprov_device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `rid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `vpid_ref` FOREIGN KEY (`voip_preference_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `voip_preference_groups_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(31) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `type` tinyint(3) NOT NULL DEFAULT 0,
+  `max_occur` tinyint(3) unsigned NOT NULL,
+  `usr_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `prof_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `dom_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `peer_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `contract_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `contract_location_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `dev_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `devprof_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `internal` tinyint(1) NOT NULL DEFAULT 0,
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
+  `data_type` enum('boolean','int','string','enum','blob') DEFAULT NULL,
+  `read_only` tinyint(1) NOT NULL DEFAULT 0,
+  `description` text DEFAULT NULL,
+  `dynamic` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `reseller_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `expose_to_subscriber` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `attribute_idx` (`attribute`),
+  KEY `vpgid_ref` (`voip_preference_groups_id`),
+  CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_icheck_trig BEFORE INSERT ON voip_preferences
+FOR EACH ROW BEGIN
+    IF ( ((NEW.attribute like '\_\_%') and !NEW.dynamic)
+        or ((NEW.attribute not like '\_\_%') and NEW.dynamic)
+    ) THEN
+        SIGNAL sqlstate '45001' set message_text = "voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0";
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_ucheck_trig BEFORE UPDATE ON voip_preferences
+FOR EACH ROW BEGIN
+    IF ( ((NEW.attribute like '\_\_%') and !NEW.dynamic)
+        or ((NEW.attribute not like '\_\_%') and NEW.dynamic)
+    ) THEN
+        SIGNAL sqlstate '45001' set message_text = "voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0";
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  IF OLD.attribute != NEW.attribute THEN
+    UPDATE kamailio.usr_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.dom_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.peer_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.contract_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+    UPDATE kamailio.prof_preferences
+       SET attribute = NEW.attribute
+     WHERE attribute <=> OLD.attribute;
+  END IF; 
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_contract_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_fielddev_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_dev_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_devprof_preferences WHERE attribute_id <=> OLD.id;
+  DELETE FROM voip_reseller_preferences WHERE attribute_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_preferences_enum` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) unsigned DEFAULT NULL,
+  `label` varchar(128) DEFAULT NULL,
+  `value` varchar(128) DEFAULT NULL,
+  `usr_pref` tinyint(1) DEFAULT 0,
+  `prof_pref` tinyint(1) DEFAULT 0,
+  `dom_pref` tinyint(1) DEFAULT 0,
+  `peer_pref` tinyint(1) DEFAULT 0,
+  `contract_pref` tinyint(1) DEFAULT NULL,
+  `contract_location_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `dev_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `devprof_pref` tinyint(1) NOT NULL DEFAULT 0,
+  `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  `default_val` tinyint(1) DEFAULT NULL,
+  `reseller_pref` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `preference_id` (`preference_id`),
+  CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
+FOR EACH ROW BEGIN
+
+    DECLARE do_insert tinyint(3) unsigned;
+
+    SELECT IF(NEW.default_val = 1 AND NEW.value IS NOT NULL
+        AND (a.attribute NOT IN ("lock") 
+        OR NEW.value != "0"),1,0) INTO do_insert FROM voip_preferences a WHERE a.id = NEW.preference_id;
+
+    IF (NEW.dom_pref=1 AND do_insert=1) THEN
+        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_domains e
+            LEFT JOIN voip_dom_preferences v ON v.attribute_id = NEW.preference_id AND v.domain_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.peer_pref=1 AND do_insert=1) THEN
+        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_peer_hosts e
+            LEFT JOIN voip_peer_preferences v ON v.attribute_id = NEW.preference_id AND v.peer_host_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.usr_pref=1 AND do_insert=1) THEN
+        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_subscribers e
+            LEFT JOIN voip_usr_preferences v ON v.attribute_id = NEW.preference_id AND v.subscriber_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+    IF (NEW.prof_pref=1 AND do_insert=1) THEN
+        INSERT into voip_prof_preferences (profile_id, attribute_id, value)
+            SELECT e.id, NEW.preference_id, NEW.value
+            FROM voip_subscriber_profiles e
+            LEFT JOIN voip_prof_preferences v ON v.attribute_id = NEW.preference_id AND v.profile_id = e.id
+            WHERE v.id IS NULL;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
+FOR EACH ROW BEGIN
+    UPDATE voip_usr_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_dom_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_peer_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+    UPDATE voip_prof_preferences SET value=NEW.value
+    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_prof_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `profidattrid_idx` (`profile_id`,`attribute_id`),
+  KEY `profid_idx` (`profile_id`),
+  KEY `attrid_idx` (`attribute_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_crepl_trig AFTER INSERT ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id <=> NEW.attribute_id;
+
+  INSERT INTO kamailio.prof_preferences (uuid, attribute, type, value)
+                                 VALUES(NEW.profile_id, attribute_name, attribute_type, NEW.value);
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_urepl_trig AFTER UPDATE ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> NEW.attribute_id;
+
+  UPDATE kamailio.prof_preferences SET uuid = NEW.profile_id,
+                                      attribute = new_attribute_name,
+                                      value = NEW.value
+                                WHERE uuid <=> OLD.profile_id
+                                  AND attribute <=> old_attribute_name
+                                  AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_drepl_trig BEFORE DELETE ON voip_prof_preferences
+  FOR EACH ROW BEGIN
+  DECLARE attribute_name varchar(31);
+
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+
+  DELETE FROM kamailio.prof_preferences WHERE uuid <=> OLD.profile_id
+                                         AND attribute <=> attribute_name
+                                         AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_reminder` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `time` time NOT NULL,
+  `recur` enum('never','weekdays','always') NOT NULL DEFAULT 'never',
+  `active` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subscriber_id` (`subscriber_id`),
+  KEY `active_time_idx` (`active`,`time`),
+  CONSTRAINT `v_rem_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_reseller_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  KEY `v_r_p_reseller_ref` (`reseller_id`),
+  CONSTRAINT `v_r_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_r_p_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_rewrite_rule_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `caller_in_dpid` int(11) unsigned DEFAULT NULL,
+  `callee_in_dpid` int(11) unsigned DEFAULT NULL,
+  `caller_out_dpid` int(11) unsigned DEFAULT NULL,
+  `callee_out_dpid` int(11) unsigned DEFAULT NULL,
+  `caller_lnp_dpid` int(11) unsigned DEFAULT NULL,
+  `callee_lnp_dpid` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_idx` (`name`),
+  KEY `vrwrs_reseller_ref` (`reseller_id`),
+  CONSTRAINT `vrwrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_crepl_trig BEFORE INSERT ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_in_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_out_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.caller_lnp_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.caller_lnp_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+  IF NEW.callee_lnp_dpid IS NULL THEN
+    INSERT INTO voip_rwrs_sequence VALUES();
+    SET NEW.callee_lnp_dpid = (SELECT LAST_INSERT_ID());
+  END IF;
+
+  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid <=> OLD.caller_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_in_dpid
+     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_in_dpid;
+  END IF;
+
+  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid <=> OLD.callee_in_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_in_dpid
+     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_in_dpid;
+  END IF;
+
+  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid <=> OLD.caller_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_out_dpid
+     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_out_dpid;
+  END IF;
+
+  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid <=> OLD.callee_out_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_out_dpid
+     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_out_dpid;
+  END IF;
+
+  IF NEW.caller_lnp_dpid != OLD.caller_lnp_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.caller_lnp_dpid WHERE dpid <=> OLD.caller_lnp_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.caller_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.caller_lnp_dpid;
+  END IF;
+
+  IF NEW.callee_lnp_dpid != OLD.callee_lnp_dpid THEN
+    UPDATE kamailio.dialplan SET dpid = NEW.callee_lnp_dpid WHERE dpid <=> OLD.callee_lnp_dpid;
+    UPDATE voip_usr_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_dom_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_peer_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+    UPDATE voip_prof_preferences a, voip_preferences b
+       SET a.value = NEW.callee_lnp_dpid
+     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+       AND a.attribute_id <=> b.id
+       AND a.value <=> OLD.callee_lnp_dpid;
+  END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
+  FOR EACH ROW BEGIN
+
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_usr_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_dom_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_peer_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_in_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_out_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_out_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.caller_lnp_dpid;
+  DELETE a FROM voip_prof_preferences a, voip_preferences b
+   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
+     AND a.attribute_id <=> b.id
+     AND a.value <=> OLD.callee_lnp_dpid;
+
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_in_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_out_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_lnp_dpid;
+  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_lnp_dpid;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_rewrite_rules` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `match_pattern` varchar(128) NOT NULL DEFAULT '',
+  `replace_pattern` varchar(255) NOT NULL,
+  `description` varchar(127) NOT NULL DEFAULT '',
+  `direction` enum('in','out','lnp') NOT NULL DEFAULT 'in',
+  `field` enum('caller','callee') NOT NULL DEFAULT 'caller',
+  `priority` int(11) unsigned NOT NULL DEFAULT 50,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `setidx` (`set_id`),
+  KEY `dirfieldidx` (`direction`,`field`),
+  CONSTRAINT `v_rwr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE new_set_id int(11) unsigned;
+
+  IF NEW.enabled = 1 THEN
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+        VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+  DECLARE new_set_id int(11) unsigned;
+
+  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
+
+    IF OLD.direction = 'in' THEN
+      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'out' THEN
+      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'lnp' THEN
+      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    END IF;
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    UPDATE kamailio.dialplan
+       SET dpid      = new_set_id,
+           pr        = NEW.priority,
+           match_exp = NEW.match_pattern,
+           subst_exp = NEW.match_pattern,
+           repl_exp  = NEW.replace_pattern
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
+
+    IF NEW.direction = 'in' THEN
+      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'out' THEN
+      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    ELSEIF NEW.direction = 'lnp' THEN
+      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
+    END IF;
+
+    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
+                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
+  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
+
+    IF OLD.direction = 'in' THEN
+      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'out' THEN
+      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    ELSEIF OLD.direction = 'lnp' THEN
+      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+    END IF;
+
+    DELETE FROM kamailio.dialplan
+     WHERE dpid      <=> old_set_id
+       AND pr        <=> OLD.priority
+       AND match_exp <=> OLD.match_pattern
+       AND subst_exp <=> OLD.match_pattern
+       AND repl_exp  <=> OLD.replace_pattern;
+  END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
+  FOR EACH ROW BEGIN
+
+  DECLARE old_set_id int(11) unsigned;
+
+  IF OLD.direction = 'in' THEN
+    SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
+  	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  ELSEIF OLD.direction = 'out' THEN
+    SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
+	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  ELSEIF OLD.direction = 'lnp' THEN
+    SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
+	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
+  END IF;
+
+  DELETE FROM kamailio.dialplan
+   WHERE dpid      <=> old_set_id
+     AND pr        <=> OLD.priority
+     AND match_exp <=> OLD.match_pattern
+     AND subst_exp <=> OLD.match_pattern
+     AND repl_exp  <=> OLD.replace_pattern;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_rwrs_sequence` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_files` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(256) DEFAULT NULL,
+  `data` longblob DEFAULT NULL,
+  `handle_id` int(11) DEFAULT NULL,
+  `set_id` int(11) DEFAULT NULL,
+  `loopplay` tinyint(1) DEFAULT 0,
+  `codec` varchar(16) NOT NULL DEFAULT '',
+  `use_parent` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `set_id_ref` (`set_id`),
+  KEY `handle_set_id_idx` (`handle_id`,`set_id`),
+  CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_groups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_handles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) DEFAULT NULL,
+  `group_id` int(11) unsigned NOT NULL,
+  `expose_to_customer` tinyint(1) DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `v_s_h_group_ref` (`group_id`),
+  CONSTRAINT `v_s_h_group_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_sound_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_sets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
+  `contract_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(256) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `contract_default` tinyint(1) NOT NULL DEFAULT 0,
+  `parent_id` int(11) DEFAULT NULL,
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `vss_reseller_ref` (`reseller_id`),
+  KEY `contract_id_idx` (`contract_id`),
+  KEY `parent_id_idx` (`parent_id`),
+  KEY `expose_to_customer_idx` (`expose_to_customer`),
+  CONSTRAINT `vss_parent_id_ref` FOREIGN KEY (`parent_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `vss_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_speed_dial` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `slot` varchar(64) NOT NULL,
+  `destination` varchar(192) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `subscriberid_slot_idx` (`subscriber_id`,`slot`),
+  CONSTRAINT `v_sd_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_crepl_trig AFTER INSERT ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE target_username varchar(64);
+  DECLARE target_domain varchar(64);
+
+  SELECT a.username, b.domain INTO target_username, target_domain
+                              FROM voip_subscribers a, voip_domains b
+                              WHERE a.id <=> NEW.subscriber_id
+                              AND b.id <=> a.domain_id;
+
+  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
+                                  new_uri, fname, lname, description)
+                          VALUES(target_username, target_domain,
+                                 NEW.slot, target_domain,
+                                 NEW.destination, '', '', '');
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_urepl_trig AFTER UPDATE ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE old_username varchar(127);
+  DECLARE old_domain varchar(127);
+  DECLARE new_username varchar(127);
+  DECLARE new_domain varchar(127);
+
+  SELECT a.username, b.domain INTO old_username, old_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> OLD.subscriber_id
+                               AND b.id <=> a.domain_id;
+  SELECT a.username, b.domain INTO new_username, new_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> NEW.subscriber_id
+                               AND b.id <=> a.domain_id;
+
+  UPDATE kamailio.speed_dial SET username = new_username, domain = new_domain,
+                               sd_username = NEW.slot, sd_domain = new_domain,
+                               new_uri = NEW.destination
+                           WHERE username <=> old_username
+                           AND domain <=> old_domain
+                           AND sd_username <=> OLD.slot;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_drepl_trig BEFORE DELETE ON voip_speed_dial
+  FOR EACH ROW BEGIN
+  DECLARE old_username varchar(127);
+  DECLARE old_domain varchar(127);
+
+  SELECT a.username, b.domain INTO old_username, old_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> OLD.subscriber_id
+                               AND b.id <=> a.domain_id;
+
+  DELETE FROM kamailio.speed_dial WHERE username <=> old_username
+                                  AND domain <=> old_domain
+                                  AND sd_username <=> OLD.slot;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_subscriber_location_mappings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `caller_pattern` varchar(255) DEFAULT NULL,
+  `callee_pattern` varchar(255) DEFAULT NULL,
+  `mode` enum('add','replace','offline','forward') NOT NULL DEFAULT 'replace',
+  `to_username` varchar(255) DEFAULT NULL,
+  `external_id` varchar(255) DEFAULT NULL,
+  `enabled` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY `subscriber_id_idx` (`subscriber_id`),
+  KEY `external_id_idx` (`external_id`),
+  CONSTRAINT `v_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_subscriber_profile_attributes` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `prof_attr_idx` (`profile_id`,`attribute_id`),
+  KEY `attribute_id` (`attribute_id`),
+  KEY `profile_idx` (`profile_id`),
+  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `voip_subscriber_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_subscriber_profile_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `vsp_resname_idx` (`reseller_id`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_subscriber_profiles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `set_default` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
+  CONSTRAINT `voip_subscriber_profile_sets_ibfk_1` FOREIGN KEY (`set_id`) REFERENCES `voip_subscriber_profile_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prof_crepl_trig AFTER INSERT ON voip_subscriber_profiles
+FOR EACH ROW BEGIN
+
+    INSERT INTO voip_prof_preferences (profile_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.prof_pref=1 AND pe.prof_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_subscribers` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(127) NOT NULL,
+  `domain_id` int(11) unsigned NOT NULL,
+  `uuid` char(36) NOT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0,
+  `account_id` int(11) unsigned DEFAULT NULL,
+  `webusername` varchar(127) DEFAULT NULL,
+  `webpassword` char(56) DEFAULT NULL,
+  `is_pbx_pilot` tinyint(1) NOT NULL DEFAULT 0,
+  `is_pbx_group` tinyint(1) NOT NULL DEFAULT 0,
+  `pbx_hunt_policy` enum('serial','parallel','random','circular','none') DEFAULT 'none',
+  `pbx_hunt_timeout` int(4) unsigned DEFAULT NULL,
+  `pbx_extension` varchar(255) DEFAULT NULL,
+  `profile_set_id` int(11) unsigned DEFAULT NULL,
+  `profile_id` int(11) unsigned DEFAULT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_dom_idx` (`username`,`domain_id`),
+  UNIQUE KEY `uuid_idx` (`uuid`),
+  UNIQUE KEY `webuser_dom_idx` (`webusername`,`domain_id`),
+  KEY `accountid_idx` (`account_id`),
+  KEY `domainid_idx` (`domain_id`),
+  CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
+FOR EACH ROW BEGIN
+    
+    DECLARE subscriber_domain varchar(127);
+  
+    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
+  
+    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
+                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, '0',
+                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
+                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
+
+    
+    INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)
+    SELECT NEW.id, p.id, pe.value
+    FROM voip_preferences p, voip_preferences_enum pe
+    WHERE p.id <=> preference_id AND p.usr_pref=1 AND pe.usr_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE new_subscriber_domain varchar(127);
+
+  SELECT domain INTO old_subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT domain INTO new_subscriber_domain FROM voip_domains where id = NEW.domain_id;
+
+  UPDATE kamailio.subscriber SET username = NEW.username, domain = new_subscriber_domain,
+                                uuid = NEW.uuid, password = NEW.password,
+                                ha1 = MD5(CONCAT(NEW.username, ':', new_subscriber_domain, ':', NEW.password)),
+                                ha1b = MD5(CONCAT(NEW.username, '@', new_subscriber_domain, ':', new_subscriber_domain, ':', NEW.password))
+                          WHERE username <=> OLD.username
+                            AND domain <=> old_subscriber_domain;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_drepl_trig BEFORE DELETE ON voip_subscribers
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_domain varchar(127);
+  DECLARE os_subscriber_id int(10) UNSIGNED;
+
+  SELECT domain INTO subscriber_domain FROM voip_domains where id = OLD.domain_id;
+  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
+   WHERE username <=> OLD.username AND domain <=> subscriber_domain;
+
+  DELETE FROM kamailio.subscriber WHERE username <=> OLD.username
+                                   AND domain <=> subscriber_domain;
+
+  
+  
+  DELETE FROM kamailio.voicemail_users WHERE customer_id <=> OLD.uuid;
+
+  
+  
+  DELETE FROM kamailio.usr_preferences WHERE username <=> OLD.username
+                                        AND domain <=> subscriber_domain;
+  DELETE FROM kamailio.dbaliases WHERE username <=> OLD.username
+                                  AND domain <=> subscriber_domain;
+  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.username
+                                  AND domain <=> subscriber_domain;
+  DELETE FROM kamailio.fax_preferences WHERE subscriber_id <=> os_subscriber_id;
+  DELETE FROM kamailio.fax_destinations WHERE subscriber_id <=> os_subscriber_id;
+  DELETE FROM kamailio.trusted WHERE tag <=> OLD.uuid;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_time_periods` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `time_set_id` int(11) unsigned NOT NULL,
+  `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly') DEFAULT NULL,
+  `until` timestamp NULL DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  `interval` int(11) DEFAULT NULL,
+  `bysecond` varchar(45) DEFAULT NULL,
+  `byminute` varchar(45) DEFAULT NULL,
+  `byhour` varchar(45) DEFAULT NULL,
+  `byday` varchar(45) DEFAULT NULL,
+  `bymonthday` varchar(45) DEFAULT NULL,
+  `byyearday` varchar(45) DEFAULT NULL,
+  `byweekno` varchar(45) DEFAULT NULL,
+  `bymonth` varchar(45) DEFAULT NULL,
+  `bysetpos` varchar(45) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
+  `duration` varchar(45) DEFAULT NULL,
+  `wkst` varchar(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `v_tp_tsid_ref` (`time_set_id`),
+  CONSTRAINT `v_tp_tsid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_time_sets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `reseller_id` int(11) unsigned NOT NULL,
+  `contract_id` int(11) unsigned DEFAULT NULL,
+  `subscriber_id` int(11) unsigned DEFAULT NULL,
+  `name` varchar(90) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  KEY `v_ts_rid_idx` (`reseller_id`),
+  KEY `v_ts_cid_idx` (`contract_id`),
+  KEY `v_ts_sid_ref` (`subscriber_id`),
+  CONSTRAINT `v_ts_sid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_trusted_sources` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(10) unsigned NOT NULL,
+  `src_ip` varchar(50) NOT NULL,
+  `protocol` varchar(4) NOT NULL,
+  `from_pattern` varchar(64) DEFAULT NULL,
+  `uuid` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `peer_idx` (`src_ip`),
+  KEY `subscriber_id_ref` (`subscriber_id`),
+  CONSTRAINT `subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER trusted_sources_insert AFTER INSERT ON voip_trusted_sources
+FOR EACH ROW
+    INSERT INTO kamailio.trusted (src_ip, proto, from_pattern, tag)
+    VALUES (NEW.src_ip, NEW.protocol, NEW.from_pattern, NEW.uuid) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trusted_sources_update BEFORE UPDATE ON voip_trusted_sources
+FOR EACH ROW
+    UPDATE kamailio.trusted SET
+        src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid
+    WHERE
+        src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trusted_sources_delete BEFORE DELETE ON voip_trusted_sources
+FOR EACH ROW
+    DELETE FROM kamailio.trusted 
+    WHERE src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_usr_preferences` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `attribute_id` int(11) unsigned NOT NULL,
+  `value` varchar(128) NOT NULL,
+  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `subidattrid_idx` (`subscriber_id`,`attribute_id`),
+  KEY `subscriberid_idx` (`subscriber_id`),
+  KEY `attributeid_idx` (`attribute_id`),
+  CONSTRAINT `v_u_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `v_u_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `voip_usr_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`),
+  CONSTRAINT `voip_usr_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_crepl_trig AFTER INSERT ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE subscriber_uuid char(36);
+  DECLARE attribute_name varchar(31);
+  DECLARE attribute_type tinyint(3);
+
+  SELECT a.username, b.domain, a.uuid INTO subscriber_username, subscriber_domain, subscriber_uuid
+                                      FROM voip_subscribers a, voip_domains b
+                                     WHERE a.id <=> NEW.subscriber_id
+                                       AND a.domain_id <=> b.id;
+  SELECT attribute, type INTO attribute_name, attribute_type
+                         FROM voip_preferences
+                        WHERE id <=> NEW.attribute_id;
+
+  INSERT INTO kamailio.usr_preferences (uuid, username, domain, attribute, type, value)
+                                VALUES(subscriber_uuid, subscriber_username, subscriber_domain,
+                                       attribute_name, attribute_type, NEW.value);
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_urepl_trig AFTER UPDATE ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE old_subscriber_username varchar(127);
+  DECLARE new_subscriber_username varchar(127);
+  DECLARE old_subscriber_domain varchar(127);
+  DECLARE new_subscriber_domain varchar(127);
+  DECLARE old_attribute_name varchar(31);
+  DECLARE new_attribute_name varchar(31);
+
+  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> OLD.subscriber_id
+                               AND a.domain_id <=> b.id;
+  SELECT a.username, b.domain INTO new_subscriber_username, new_subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> NEW.subscriber_id
+                               AND a.domain_id <=> b.id;
+  SELECT attribute INTO old_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+  SELECT attribute INTO new_attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> NEW.attribute_id;
+
+  UPDATE kamailio.usr_preferences SET username = new_subscriber_username, domain = new_subscriber_domain,
+                                     attribute = new_attribute_name, value = NEW.value
+                               WHERE username <=> old_subscriber_username
+                                 AND domain <=> old_subscriber_domain
+                                 AND attribute <=> old_attribute_name
+                                 AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_drepl_trig BEFORE DELETE ON voip_usr_preferences
+  FOR EACH ROW BEGIN
+  DECLARE subscriber_username varchar(127);
+  DECLARE subscriber_domain varchar(127);
+  DECLARE attribute_name varchar(31);
+
+  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
+                              FROM voip_subscribers a, voip_domains b
+                             WHERE a.id <=> OLD.subscriber_id
+                               AND a.domain_id <=> b.id;
+  SELECT attribute INTO attribute_name
+                   FROM voip_preferences
+                  WHERE id <=> OLD.attribute_id;
+
+  DELETE FROM kamailio.usr_preferences WHERE username <=> subscriber_username
+                                        AND domain <=> subscriber_domain
+                                        AND attribute <=> attribute_name
+                                        AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_usr_preferences_blob` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `preference_id` int(11) unsigned NOT NULL,
+  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
+  `value` mediumblob DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `preference_id` (`preference_id`),
+  CONSTRAINT `fk_usr_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_usr_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_usr_preferences_blob_insert AFTER INSERT ON voip_usr_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_usr_preferences
+       SET value = NEW.id
+     WHERE id = NEW.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_usr_preferences_blob_delete AFTER DELETE ON voip_usr_preferences_blob
+  FOR EACH ROW BEGIN
+
+  UPDATE voip_usr_preferences
+       SET value = ''
+     WHERE id = OLD.preference_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `xmlgroups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `gname` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `xmlhostgroups` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` int(11) unsigned NOT NULL,
+  `host_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `gidx` (`group_id`),
+  KEY `xhg_hostid_ref` (`host_id`),
+  CONSTRAINT `xhg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `xmlgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `xhg_hostid_ref` FOREIGN KEY (`host_id`) REFERENCES `xmlhosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `xmlhosts` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ip` varchar(15) NOT NULL,
+  `port` int(5) unsigned NOT NULL,
+  `path` varchar(64) NOT NULL DEFAULT '/',
+  `sip_port` int(5) unsigned DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `xmlqueue` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `target` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `ctime` int(10) unsigned NOT NULL,
+  `atime` int(10) unsigned NOT NULL,
+  `tries` int(10) unsigned NOT NULL,
+  `next_try` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `next_try` (`next_try`,`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `bin_to_hex`(_bin VARCHAR(1023)
+) RETURNS varchar(1023) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _digits VARCHAR(4);
+  DECLARE _result VARCHAR(1023) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _digits = SUBSTR(_bin,-4 * _i,4);
+    IF LENGTH(_digits) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(COALESCE(CONV(_digits,2,16),"0"),_result);
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `hex_add`(_a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS varchar(256) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _carry, _result_digit INT DEFAULT 0;
+  DECLARE _result VARCHAR(256) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a, -1 * _i,1);
+    SET _b_digit = SUBSTR(_b, -1 * _i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 AND _carry = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result_digit = COALESCE(CONV(_a_digit,16,10),0) + COALESCE(CONV(_b_digit,16,10),0) + _carry;
+    SET _result = CONCAT(HEX(_result_digit & 15),_result);
+    IF _result_digit > 15 THEN
+      SET _carry = 1;
+    ELSE
+      SET _carry = 0;
+    END IF;
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `hex_and`(_a VARCHAR(255),
+  _b VARCHAR(255)
+) RETURNS varchar(255) CHARSET utf8 COLLATE utf8_general_ci
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _i int DEFAULT 1;
+  DECLARE _a_digit, _b_digit VARCHAR(1);
+  DECLARE _result VARCHAR(255) DEFAULT "";
+
+  digits_loop: LOOP
+    SET _a_digit = SUBSTR(_a,_i,1);
+    SET _b_digit = SUBSTR(_b,_i,1);
+    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 THEN
+      LEAVE digits_loop;
+    END IF;
+    SET _result = CONCAT(_result,HEX(COALESCE(conv(_a_digit,16,10),0) & COALESCE(CONV(_b_digit,16,10),0)));
+    SET _i = _i + 1;
+  END LOOP digits_loop;
+
+  RETURN _result;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_broadcast_address`(_ipnet VARCHAR(46)
+) RETURNS varbinary(16)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_hex VARCHAR(32);
+  DECLARE _broadcast_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_hex = hex_and(
+      HEX(INET6_ATON(substr(_ipnet,1,LOCATE("/",_ipnet) - 1))),
+      _mask_hex
+    );
+    SET _broadcast_bytes = UNHEX(hex_add(
+      _network_hex,
+      bin_to_hex(CONCAT(REPEAT("0",_mask_len),REPEAT("1",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)))
+    ));
+  ELSE
+    SET _broadcast_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _broadcast_bytes;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_network_address`(_ipnet VARCHAR(46)
+) RETURNS varbinary(16)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _mask_hex VARCHAR(32);
+  DECLARE _mask_len INT;
+
+  IF ip_is_cidr(_ipnet) THEN
+    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
+    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
+    SET _network_bytes = UNHEX(
+      hex_and(
+        HEX(INET6_ATON(SUBSTR(_ipnet,1,locate("/",_ipnet) - 1))),
+        _mask_hex
+      )
+    );
+  ELSE
+    SET _network_bytes = INET6_ATON(_ipnet);
+  END IF;
+
+  RETURN _network_bytes;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_allowed`(_uuid VARCHAR(36),
+  _ip VARCHAR(46)
+) RETURNS tinyint(1)
+    READS SQL DATA
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  DECLARE _network_bytes VARBINARY(16);
+  DECLARE _is_valid_ip, _is_ipv6 BOOLEAN DEFAULT 0;
+  DECLARE _aig_id, _aig_ids_done INT DEFAULT 0;
+  DECLARE _is_allowed BOOLEAN DEFAULT NULL;
+  
+  DECLARE usr_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_usr_preferences v
+    JOIN provisioning.voip_subscribers s on v.subscriber_id = s.id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE dom_aig_id_cursor CURSOR FOR SELECT
+      v.value
+    FROM provisioning.voip_dom_preferences v
+    JOIN provisioning.voip_subscribers s on v.domain_id = s.domain_id
+    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
+    WHERE
+      s.uuid = _uuid
+      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
+
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET _aig_ids_done = _aig_ids_done + 1;
+
+  IF IF(EXISTS(SELECT 1 FROM provisioning.voip_subscribers WHERE uuid = _uuid),0,1) THEN
+    
+    RETURN 0;
+  END IF;
+
+  SET _network_bytes = INET6_ATON(_ip);
+  SET _is_valid_ip = IF(_network_bytes IS NULL OR HEX(_network_bytes) = "00000000",0,1);
+  SET _is_ipv6 = IF(_is_valid_ip,ip_is_ipv6(_ip),0);
+
+  OPEN usr_aig_id_cursor;
+  aig_ids_loop: LOOP
+    IF _aig_ids_done = 0 THEN
+      FETCH usr_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 1 THEN
+        CLOSE usr_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          SET _is_allowed = NULL;
+          OPEN dom_aig_id_cursor;
+        END IF;
+      END IF;
+    END IF;
+    IF _aig_ids_done = 1 THEN
+      FETCH dom_aig_id_cursor INTO _aig_id;
+      IF _aig_ids_done = 2 THEN
+        CLOSE dom_aig_id_cursor;
+        IF _is_allowed IS NOT NULL THEN
+          RETURN _is_allowed;
+        ELSE
+          LEAVE aig_ids_loop;
+        END IF;
+      END IF;
+    END IF;
+    IF _is_allowed IS NULL THEN
+      SET _is_allowed = 0;
+    END IF;
+    IF _is_valid_ip THEN
+      IF _is_ipv6 THEN
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv6_net_from <= _network_bytes
+            AND aig._ipv6_net_to >= _network_bytes
+        LIMIT 1),0));
+      ELSE
+        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
+          FROM provisioning.voip_allowed_ip_groups aig
+          WHERE
+            aig.group_id = _aig_id 
+            AND aig._ipv4_net_from <= _network_bytes
+            AND aig._ipv4_net_to >= _network_bytes
+        LIMIT 1),0));
+      END IF;
+    ELSE
+      
+      RETURN 0;
+    END IF;
+  END LOOP aig_ids_loop;
+  
+  
+  RETURN 1;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_cidr`(_ipnet VARCHAR(46)
+) RETURNS tinyint(1)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE("/",_ipnet) = 0,0,1);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_ipv6`(_ipnet VARCHAR(46)
+) RETURNS tinyint(1)
+    NO SQL
+    DETERMINISTIC
+    SQL SECURITY INVOKER
+BEGIN
+
+  RETURN IF(LOCATE(".",_ipnet) = 0,1,0);
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50001 DROP VIEW IF EXISTS `v_sound_set_files`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_sound_set_files` AS with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `v` left join `voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `t` left join `voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_subscriber_cfs`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_subscriber_cfs` AS select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute` from ((((((((`voip_cf_destinations` `cfd` left join (`voip_cf_destination_sets` `cfds` left join `voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_time_periods_ical`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_time_periods_ical` AS select `p`.`id` AS `id`,`p`.`time_set_id` AS `time_set_id`,`p`.`start` AS `start`,`p`.`end` AS `end`,`p`.`comment` AS `comment`,concat('DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),'')),'')) AS `rrule_ical`,concat('BEGIN:VEVENT\n','UID:','sipwise',`p`.`id`,'@sipwise',`s`.`id`,'\n','SUMMARY:',`s`.`name`,' event ',`p`.`id`,'\n','DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',if(year(`p`.`end`) <> '0000',concat('DTEND:',date_format(`p`.`end`,'%Y%m%dT%H%i%s'),'\n'),''),ifnull(concat('DURATION:',`p`.`duration`,'\n'),''),ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),''),'\n'),''),ifnull(concat('DESCRIPTION:',`p`.`comment`,'\n'),''),'END:VEVENT\n') AS `event_ical` from (`voip_time_sets` `s` join `voip_time_periods` `p` on(`s`.`id` = `p`.`time_set_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_time_sets_ical`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_time_sets_ical` AS select `s`.`id` AS `id`,`s`.`name` AS `name`,concat('BEGIN:VCALENDAR\n','PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n',ifnull(concat('NAME:',`s`.`name`,'\n'),''),'VERSION:2.0\n\n',group_concat(`p`.`event_ical` separator '\n'),'END:VCALENDAR\n') AS `ical` from (`voip_time_sets` `s` left join `v_time_periods_ical` `p` on(`s`.`id` = `p`.`time_set_id`)) group by `s`.`id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+INSERT INTO `autoprov_sync_parameters` VALUES (1,'http','sync_uri','');
+INSERT INTO `autoprov_sync_parameters` VALUES (2,'http','sync_params','');
+INSERT INTO `autoprov_sync_parameters` VALUES (3,'http','sync_method','/^(?:GET|POST)$/i');
+INSERT INTO `autoprov_sync_parameters` VALUES (4,'http','security_handler','');
+INSERT INTO `autoprov_sync_parameters` VALUES (5,'redirect_grandstream','cid','');
+INSERT INTO `autoprov_sync_parameters` VALUES (6,'redirect_grandstream','key','');
+INSERT INTO `autoprov_sync_parameters` VALUES (7,'redirect_polycom','profile','');
+INSERT INTO `autoprov_sync_parameters` VALUES (8,'redirect_snom','profile','');
+INSERT INTO `autoprov_sync_parameters` VALUES (9,'redirect_snom','product_family','');
 INSERT INTO `language_strings` VALUES (1,'Client.Billing.MalformedAmount','de','Bitte geben Sie einen ganzzahligen Betrag ein.');
 INSERT INTO `language_strings` VALUES (2,'Client.Billing.MalformedAmount','en','Please specify the amount as an integral number.');
 INSERT INTO `language_strings` VALUES (3,'Client.Billing.MalformedAmount','es','Por favor, especifique la cantidad como un número entero.');
@@ -1494,921 +5497,7 @@ INSERT INTO `language_strings` VALUES (1248,'Client.Voip.PasswordMusthaveSpecial
 INSERT INTO `language_strings` VALUES (1249,'Client.Voip.PasswordMusthaveSpecialchar','de','Spezialzeichen müssen enthalten sein');
 INSERT INTO `language_strings` VALUES (1250,'Client.Voip.PasswordMusthaveSpecialchar','fr','The password must contain special characters');
 INSERT INTO `language_strings` VALUES (1251,'Client.Voip.PasswordMusthaveSpecialchar','es','The password must contain special characters');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `recording_calls` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `call_id` varchar(250) NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `end_time` datetime DEFAULT NULL,
-  `start_timestamp` decimal(13,3) DEFAULT NULL,
-  `end_timestamp` decimal(13,3) DEFAULT NULL,
-  `status` enum('recording','completed','confirmed') DEFAULT 'recording',
-  PRIMARY KEY (`id`),
-  KEY `call_id` (`call_id`),
-  KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `recording_metakeys` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `call` int(10) unsigned NOT NULL,
-  `key` char(255) NOT NULL,
-  `value` char(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `prim_lookup` (`value`,`key`),
-  KEY `fk_call_idx` (`call`),
-  CONSTRAINT `fk_call_idx` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `recording_streams` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `call` int(10) unsigned NOT NULL,
-  `local_filename` varchar(250) NOT NULL,
-  `full_filename` varchar(250) NOT NULL,
-  `file_format` varchar(10) NOT NULL,
-  `output_type` enum('mixed','single') NOT NULL,
-  `stream_id` int(10) unsigned NOT NULL,
-  `start_time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `end_time` datetime DEFAULT NULL,
-  `sample_rate` int(10) unsigned NOT NULL DEFAULT 0,
-  `channels` int(10) unsigned NOT NULL DEFAULT 0,
-  `ssrc` int(10) unsigned NOT NULL,
-  `start_timestamp` decimal(13,3) DEFAULT NULL,
-  `end_timestamp` decimal(13,3) DEFAULT NULL,
-  `tag_label` varchar(255) NOT NULL DEFAULT '',
-  `stream` longblob NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `call` (`call`),
-  CONSTRAINT `fk_call_id` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rtc_session` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `rtc_session_id` varchar(36) NOT NULL,
-  `rtc_network_tag` varchar(45) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rtc_session_idx` (`rtc_session_id`),
-  KEY `subscriber_idx` (`subscriber_id`),
-  CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rtc_user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL,
-  `rtc_user_id` varchar(36) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `reseller_idx` (`reseller_id`),
-  UNIQUE KEY `rtc_user_idx` (`rtc_user_id`),
-  CONSTRAINT `tl_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sms_journal` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(10) unsigned NOT NULL,
-  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `direction` enum('in','out','forward') NOT NULL DEFAULT 'in',
-  `caller` varchar(255) NOT NULL,
-  `callee` varchar(255) NOT NULL,
-  `text` mediumtext NOT NULL,
-  `reason` varchar(255) NOT NULL DEFAULT '',
-  `status` varchar(255) NOT NULL DEFAULT '',
-  `coding` varchar(16) NOT NULL,
-  `pcc_status` enum('none','pending','complete','failed') NOT NULL DEFAULT 'none',
-  `pcc_token` varchar(64) NOT NULL DEFAULT '',
-  `cli` varchar(128) NOT NULL DEFAULT '',
-  `smsc_peer` varchar(128) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `sms_journal_sub_dir_idx` (`subscriber_id`,`direction`),
-  KEY `sms_journal_time_idx` (`time`),
-  KEY `pcc_token_idx` (`id`,`pcc_token`,`pcc_status`),
-  CONSTRAINT `smsj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `upn_rewrite_set` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `new_cli` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `upn_rewrite_sources` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `upn_rewrite_set_id` int(11) unsigned NOT NULL,
-  `pattern` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_upn_rewrite_sources_1` (`upn_rewrite_set_id`),
-  CONSTRAINT `fk_upn_rewrite_sources_1` FOREIGN KEY (`upn_rewrite_set_id`) REFERENCES `upn_rewrite_set` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_sound_set_files` AS SELECT
- 1 AS `set_id`,
-  1 AS `reseller_id`,
-  1 AS `contract_id`,
-  1 AS `name`,
-  1 AS `description`,
-  1 AS `handle_id`,
-  1 AS `handle_name`,
-  1 AS `file_id`,
-  1 AS `filename`,
-  1 AS `loopplay`,
-  1 AS `parent_chain`,
-  1 AS `data_set_id`,
-  1 AS `data` */;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_subscriber_cfs` AS SELECT
- 1 AS `id`,
-  1 AS `uuid`,
-  1 AS `cf_type`,
-  1 AS `subscriber_id`,
-  1 AS `source_name`,
-  1 AS `source_mode`,
-  1 AS `source_is_regex`,
-  1 AS `source`,
-  1 AS `destination_name`,
-  1 AS `destination`,
-  1 AS `priority`,
-  1 AS `timeout`,
-  1 AS `announcement_id`,
-  1 AS `bnumber_name`,
-  1 AS `bnumber_mode`,
-  1 AS `bnumber_is_regex`,
-  1 AS `bnumber`,
-  1 AS `time_name`,
-  1 AS `year`,
-  1 AS `month`,
-  1 AS `mday`,
-  1 AS `wday`,
-  1 AS `hour`,
-  1 AS `minute` */;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_time_periods_ical` AS SELECT
- 1 AS `id`,
-  1 AS `time_set_id`,
-  1 AS `start`,
-  1 AS `end`,
-  1 AS `comment`,
-  1 AS `rrule_ical`,
-  1 AS `event_ical` */;
-SET character_set_client = @saved_cs_client;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_time_sets_ical` AS SELECT
- 1 AS `id`,
-  1 AS `name`,
-  1 AS `ical` */;
-SET character_set_client = @saved_cs_client;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_aig_sequence` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_aig_sequence` VALUES (100);
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_allowed_ip_groups` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(10) unsigned NOT NULL,
-  `ipnet` varchar(46) NOT NULL,
-  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
-  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
-  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
-  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `groupnet_idx` (`group_id`,`ipnet`),
-  KEY `groupid_idx` (`group_id`),
-  KEY `ipnet_idx` (`ipnet`),
-  KEY `aig_groupid_ipv4_from_to_idx` (`group_id`,`_ipv4_net_from`,`_ipv4_net_to`),
-  KEY `aig_groupid_ipv6_from_to_idx` (`group_id`,`_ipv6_net_from`,`_ipv6_net_to`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER provisioning.aig_create_trig before insert on provisioning.voip_allowed_ip_groups
-FOR EACH ROW SET
-  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
-  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
-  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
-  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null) */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_crepl_trig AFTER INSERT ON voip_allowed_ip_groups
-  FOR EACH ROW BEGIN
-
-  INSERT INTO kamailio.address (id, grp, ip_addr, mask)
-                         VALUES(NEW.id, NEW.group_id,
-                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
-                                IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32));
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER provisioning.aig_update_trig before update on provisioning.voip_allowed_ip_groups
-FOR EACH ROW SET
-  NEW._ipv4_net_from = if(ip_is_ipv6(NEW.ipnet),null,ip_get_network_address(NEW.ipnet)),
-  NEW._ipv4_net_to = if(ip_is_ipv6(NEW.ipnet),null,ip_get_broadcast_address(NEW.ipnet)),
-  NEW._ipv6_net_from = if(ip_is_ipv6(NEW.ipnet),ip_get_network_address(NEW.ipnet),null),
-  NEW._ipv6_net_to = if(ip_is_ipv6(NEW.ipnet),ip_get_broadcast_address(NEW.ipnet),null) */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_urepl_trig AFTER UPDATE ON voip_allowed_ip_groups
-  FOR EACH ROW BEGIN
-
-  UPDATE kamailio.address SET id = NEW.id, grp = NEW.group_id,
-                              ip_addr = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', 1), NEW.ipnet),
-                              mask = IF(LOCATE('/', NEW.ipnet), SUBSTRING_INDEX(NEW.ipnet, '/', -1), 32)
-                        WHERE id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_aig_drepl_trig BEFORE DELETE ON voip_allowed_ip_groups
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.address WHERE id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cc_mappings` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` char(36) NOT NULL,
-  `auth_key` varchar(255) NOT NULL,
-  `source_uuid` char(36) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `uuid_idx` (`uuid`),
-  KEY `uuid_authkey_idx` (`uuid`,`auth_key`),
-  CONSTRAINT `vs_uuid_ref` FOREIGN KEY (`uuid`) REFERENCES `voip_subscribers` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_bnumber_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `mode` enum('whitelist','blacklist') NOT NULL DEFAULT 'whitelist',
-  `is_regex` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cf_bnumbersets_sid_name_unique` (`subscriber_id`,`name`),
-  KEY `name_idx` (`name`),
-  CONSTRAINT `vcbs_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_bnumbers` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `bnumber_set_id` int(11) unsigned NOT NULL,
-  `bnumber` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `bset_idx` (`bnumber_set_id`),
-  KEY `bnumber_idx` (`bnumber`),
-  CONSTRAINT `v_cf_bsetid_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_destination_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sub_idx` (`subscriber_id`),
-  KEY `name_idx` (`name`),
-  CONSTRAINT `v_s_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_destinations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `destination_set_id` int(11) unsigned NOT NULL,
-  `destination` varchar(255) NOT NULL,
-  `priority` int(3) unsigned DEFAULT NULL,
-  `timeout` int(11) unsigned NOT NULL DEFAULT 300,
-  `announcement_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `dset_idx` (`destination_set_id`),
-  KEY `destination_idx` (`destination`),
-  KEY `d_s_announceid_ref` (`announcement_id`),
-  CONSTRAINT `d_s_announceid_ref` FOREIGN KEY (`announcement_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `v_cf_dsetid_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_mappings` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `type` enum('cfu','cfb','cfna','cft','cfs','cfr','cfo') NOT NULL DEFAULT 'cfu',
-  `destination_set_id` int(11) unsigned DEFAULT NULL,
-  `time_set_id` int(11) unsigned DEFAULT NULL,
-  `source_set_id` int(11) unsigned DEFAULT NULL,
-  `bnumber_set_id` int(11) unsigned DEFAULT NULL,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `sub_idx` (`subscriber_id`),
-  KEY `type_idx` (`type`),
-  KEY `cfmap_time_ref` (`time_set_id`),
-  KEY `cfmap_dest_ref` (`destination_set_id`),
-  KEY `vcm_bnumset_ref` (`bnumber_set_id`),
-  KEY `cfmap_sset_idx` (`source_set_id`),
-  CONSTRAINT `cfmap_dest_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `cfmap_time_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_cfmap_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vcm_bnumset_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vcm_sourceset_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_periods` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `time_set_id` int(11) unsigned NOT NULL,
-  `year` varchar(255) DEFAULT NULL,
-  `month` varchar(255) DEFAULT NULL,
-  `mday` varchar(255) DEFAULT NULL,
-  `wday` varchar(255) DEFAULT NULL,
-  `hour` varchar(255) DEFAULT NULL,
-  `minute` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `tset_idx` (`time_set_id`),
-  CONSTRAINT `v_cf_tsetid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_source_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `mode` enum('whitelist','blacklist') NOT NULL DEFAULT 'whitelist',
-  `is_regex` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cf_sourcesets_sid_name_unique` (`subscriber_id`,`name`),
-  KEY `sub_idx` (`subscriber_id`),
-  KEY `name_idx` (`name`),
-  CONSTRAINT `vcss_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_sources` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `source_set_id` int(11) unsigned NOT NULL,
-  `source` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sset_idx` (`source_set_id`),
-  KEY `source_idx` (`source`),
-  CONSTRAINT `v_cf_ssetid_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_cf_time_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `sub_idx` (`subscriber_id`),
-  KEY `name_idx` (`name`),
-  CONSTRAINT `v_cf_ts_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contacts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `firstname` varchar(127) DEFAULT NULL,
-  `lastname` varchar(127) DEFAULT NULL,
-  `company` varchar(127) DEFAULT NULL,
-  `phonenumber` varchar(31) DEFAULT NULL,
-  `homephonenumber` varchar(31) DEFAULT NULL,
-  `mobilenumber` varchar(31) DEFAULT NULL,
-  `faxnumber` varchar(31) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `homepage` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `subscriberid_idx` (`subscriber_id`),
-  CONSTRAINT `v_c_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_contacts_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contract_location_blocks` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `location_id` int(11) unsigned NOT NULL,
-  `ip` varchar(39) NOT NULL,
-  `mask` tinyint(1) unsigned DEFAULT NULL,
-  `_ipv4_net_from` varbinary(4) DEFAULT NULL,
-  `_ipv4_net_to` varbinary(4) DEFAULT NULL,
-  `_ipv6_net_from` varbinary(16) DEFAULT NULL,
-  `_ipv6_net_to` varbinary(16) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `vclb_unique_location_block` (`location_id`,`ip`,`mask`),
-  KEY `vclb_ipv4_from_idx` (`_ipv4_net_from`),
-  KEY `vclb_ipv4_to_idx` (`_ipv4_net_to`),
-  KEY `vclb_ipv6_from_idx` (`_ipv6_net_from`),
-  KEY `vclb_ipv6_to_idx` (`_ipv6_net_to`),
-  KEY `vclb_location_ref` (`location_id`),
-  CONSTRAINT `vclb_location_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contract_locations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `vcl_contract_name_idx` (`contract_id`,`name`),
-  CONSTRAINT `vcl_contract_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contract_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `location_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `conidattrid_idx` (`contract_id`,`attribute_id`),
-  KEY `contractid_idx` (`contract_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  KEY `v_c_p_locationid_ref` (`location_id`),
-  CONSTRAINT `v_c_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_c_p_locationid_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_crepl_trig AFTER INSERT ON voip_contract_preferences
-  FOR EACH ROW BEGIN
-
-  INSERT INTO kamailio.contract_preferences
-              (id, uuid, location_id, attribute, type, value, last_modified)
-       SELECT NEW.id, NEW.contract_id, NEW.location_id, attribute, type, NEW.value, '0'
-         FROM provisioning.voip_preferences
-        WHERE id <=> NEW.attribute_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_urepl_trig AFTER UPDATE ON voip_contract_preferences
-  FOR EACH ROW BEGIN
-
-  UPDATE kamailio.contract_preferences pp, provisioning.voip_preferences vp
-     SET pp.id = NEW.id, pp.uuid = NEW.contract_id, pp.location_id = NEW.location_id,
-         pp.type = vp.type, pp.attribute = vp.attribute,
-         pp.value = NEW.value, pp.last_modified = '0'
-   WHERE pp.id <=> OLD.id
-     AND vp.id <=> NEW.attribute_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_contractpref_drepl_trig BEFORE DELETE ON voip_contract_preferences
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.contract_preferences
-        WHERE id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contract_preferences_blob` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) unsigned NOT NULL,
-  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
-  `value` mediumblob DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `preference_id` (`preference_id`),
-  CONSTRAINT `fk_contract_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_contract_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_prefences_blob_insert AFTER INSERT ON voip_contract_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_contract_preferences
-       SET value = NEW.id
-     WHERE id = NEW.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_preferences_blob_delete AFTER DELETE ON voip_contract_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_contract_preferences
-       SET value = ''
-     WHERE preference_id = OLD.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_contract_speed_dial` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `contract_id` int(11) unsigned NOT NULL,
-  `slot` varchar(64) NOT NULL,
-  `destination` varchar(192) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `contractid_slot_idx` (`contract_id`,`slot`),
-  CONSTRAINT `v_csd_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_crepl_trig AFTER INSERT ON voip_contract_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE sd_domain varchar(64);
-  DECLARE target_domain varchar(64);
-  DECLARE at_end_pos smallint;
-  SET target_domain = 'local.sd.customer.domain';
-  SET at_end_pos = LOCATE('@', NEW.destination);
-  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
-
-  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
-                                   new_uri, fname, lname, description)
-                          VALUES(NEW.contract_id, target_domain,
-                                 NEW.slot, sd_domain,
-                                 NEW.destination, '', '', '');
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_urepl_trig AFTER UPDATE ON voip_contract_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE sd_domain varchar(64);
-  DECLARE target_domain varchar(64);
-  DECLARE at_end_pos smallint;
-  SET target_domain = 'local.sd.customer.domain';
-  SET at_end_pos = LOCATE('@', NEW.destination);
-  SET sd_domain = SUBSTR(NEW.destination FROM at_end_pos+1);
-
-  UPDATE kamailio.speed_dial SET username = NEW.contract_id, domain = target_domain,
-                               sd_username = NEW.slot, sd_domain = sd_domain,
-                               new_uri = NEW.destination
-                           WHERE username <=> OLD.contract_id
-                           AND domain <=> target_domain
-                           AND sd_username <=> OLD.slot;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_contract_sd_drepl_trig BEFORE DELETE ON voip_contract_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE target_domain varchar(64);
-  SET target_domain = 'local.sd.customer.domain';
-
-  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.contract_id
-                                  AND domain <=> target_domain
-                                  AND sd_username <=> OLD.slot;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_dbaliases` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) NOT NULL,
-  `domain_id` int(11) unsigned NOT NULL,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `is_primary` tinyint(1) NOT NULL DEFAULT 0,
-  `is_devid` tinyint(1) NOT NULL DEFAULT 0,
-  `devid_alias` varchar(127) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_dom_idx` (`username`,`domain_id`),
-  KEY `domainid_idx` (`domain_id`),
-  KEY `subscriberid_idx` (`subscriber_id`),
-  CONSTRAINT `v_da_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_da_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_dbaliases_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
-  CONSTRAINT `voip_dbaliases_ibfk_2` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_crepl_trig AFTER INSERT ON voip_dbaliases
-  FOR EACH ROW BEGIN
-  DECLARE dbalias_domain varchar(127);
-  DECLARE target_username varchar(127);
-  DECLARE target_domain varchar(127);
-
-  SELECT domain INTO dbalias_domain FROM voip_domains where id = NEW.domain_id;
-  SELECT a.username, b.domain INTO target_username, target_domain
-    FROM voip_subscribers a, voip_domains b
-    WHERE a.id <=> NEW.subscriber_id
-    AND b.id <=> a.domain_id;
-
-  INSERT INTO kamailio.dbaliases (alias_username, alias_domain,
-    username, domain, is_primary, is_devid, devid_alias)
-    VALUES(NEW.username, dbalias_domain, target_username, target_domain, NEW.is_primary, NEW.is_devid, NEW.devid_alias);
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_urepl_trig AFTER UPDATE ON voip_dbaliases
-  FOR EACH ROW BEGIN
-  DECLARE old_dbalias_domain varchar(127);
-  DECLARE new_dbalias_domain varchar(127);
-  DECLARE target_username varchar(127);
-  DECLARE target_domain varchar(127);
-
-  SELECT domain INTO old_dbalias_domain FROM voip_domains where id = OLD.domain_id;
-  SELECT domain INTO new_dbalias_domain FROM voip_domains where id = NEW.domain_id;
-  SELECT a.username, b.domain INTO target_username, target_domain
-    FROM voip_subscribers a, voip_domains b
-    WHERE a.id <=> NEW.subscriber_id
-    AND b.id <=> a.domain_id;
-
-  UPDATE kamailio.dbaliases SET alias_username = NEW.username, alias_domain = new_dbalias_domain,
-    username = target_username, domain = target_domain, is_primary = NEW.is_primary,
-    is_devid = NEW.is_devid, devid_alias = NEW.devid_alias
-    WHERE alias_username <=> OLD.username
-    AND alias_domain <=> old_dbalias_domain
-	AND is_primary <=> OLD.is_primary
-	AND is_devid <=> OLD.is_devid
-	AND devid_alias <=> OLD.devid_alias;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dba_drepl_trig BEFORE DELETE ON voip_dbaliases
-  FOR EACH ROW BEGIN
-  DECLARE dbalias_domain varchar(127);
-
-  SELECT domain INTO dbalias_domain FROM voip_domains where id = OLD.domain_id;
-
-  DELETE FROM kamailio.dbaliases WHERE alias_username <=> OLD.username
-                                  AND alias_domain <=> dbalias_domain;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_dev_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `device_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `devidattrid_idx` (`device_id`,`attribute_id`),
-  KEY `deviceid_idx` (`device_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_d_p_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_dev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_devprof_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `profile_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `devprofidattrid_idx` (`profile_id`,`attribute_id`),
-  KEY `devprofileid_idx` (`profile_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_devprof_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_p_p_deviceid_ref` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_dom_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `domain_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `domidattrid_idx` (`domain_id`,`attribute_id`),
-  KEY `domainid_idx` (`domain_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_d_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_d_p_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_dom_preferences_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
-  CONSTRAINT `voip_dom_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_dom_preferences` VALUES (1,2,62,'no',NOW());
 INSERT INTO `voip_dom_preferences` VALUES (2,2,66,'UPDATE_FALLBACK_INVITE',NOW());
 INSERT INTO `voip_dom_preferences` VALUES (3,2,90,'ice_strip_candidates',NOW());
@@ -2436,1023 +5525,7 @@ INSERT INTO `voip_dom_preferences` VALUES (26,2,334,'external',NOW());
 INSERT INTO `voip_dom_preferences` VALUES (27,2,305,'never',NOW());
 INSERT INTO `voip_dom_preferences` VALUES (28,2,77,'never',NOW());
 INSERT INTO `voip_dom_preferences` VALUES (29,2,380,'ring',NOW());
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_crepl_trig AFTER INSERT ON voip_dom_preferences
-  FOR EACH ROW BEGIN
-  DECLARE domain_name varchar(127);
-  DECLARE attribute_name varchar(31);
-  DECLARE attribute_type tinyint(3);
-
-  SELECT domain INTO domain_name
-                FROM voip_domains
-               WHERE id <=> NEW.domain_id;
-  SELECT attribute, type INTO attribute_name, attribute_type
-                         FROM voip_preferences
-                        WHERE id <=> NEW.attribute_id;
-
-  INSERT INTO kamailio.dom_preferences (domain, attribute, type, value)
-                                 VALUES(domain_name, attribute_name, attribute_type, NEW.value);
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_urepl_trig AFTER UPDATE ON voip_dom_preferences
-  FOR EACH ROW BEGIN
-  DECLARE old_domain_name varchar(127);
-  DECLARE new_domain_name varchar(127);
-  DECLARE old_attribute_name varchar(31);
-  DECLARE new_attribute_name varchar(31);
-
-  SELECT domain INTO old_domain_name
-                FROM voip_domains
-               WHERE id <=> OLD.domain_id;
-  SELECT domain INTO new_domain_name
-                FROM voip_domains
-               WHERE id <=> NEW.domain_id;
-  SELECT attribute INTO old_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-  SELECT attribute INTO new_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> NEW.attribute_id;
-
-  UPDATE kamailio.dom_preferences SET domain = new_domain_name,
-                                      attribute = new_attribute_name,
-                                      value = NEW.value
-                                WHERE domain <=> old_domain_name
-                                  AND attribute <=> old_attribute_name
-                                  AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dompref_drepl_trig BEFORE DELETE ON voip_dom_preferences
-  FOR EACH ROW BEGIN
-  DECLARE domain_name varchar(127);
-  DECLARE attribute_name varchar(31);
-
-  SELECT domain INTO domain_name
-                FROM voip_domains
-               WHERE id <=> OLD.domain_id;
-  SELECT attribute INTO attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-
-  DELETE FROM kamailio.dom_preferences WHERE domain <=> domain_name
-                                         AND attribute <=> attribute_name
-                                         AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_dom_preferences_blob` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) unsigned NOT NULL,
-  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
-  `value` mediumblob DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `preference_id` (`preference_id`),
-  CONSTRAINT `fk_dom_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_dom_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_dom_prefences_blob_insert AFTER INSERT ON voip_dom_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_dom_preferences
-       SET value = NEW.id
-     WHERE id = NEW.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_dom_prefences_blob_delete AFTER DELETE ON voip_dom_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_dom_preferences
-       SET value = ''
-     WHERE id = OLD.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_domains` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `domain` varchar(127) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `domain_idx` (`domain`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_domains` VALUES (2,'voip.sipwise.local');
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dom_crepl_trig AFTER INSERT ON voip_domains
-FOR EACH ROW BEGIN
-    
-    INSERT INTO kamailio.domain (domain) VALUES(NEW.domain);
-   
-    
-    INSERT INTO voip_dom_preferences (domain_id, attribute_id, value)
-    SELECT NEW.id, p.id, pe.value
-    FROM voip_preferences p, voip_preferences_enum pe
-    WHERE p.id <=> preference_id AND p.dom_pref=1 AND pe.dom_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_dom_drepl_trig BEFORE DELETE ON voip_domains
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.domain WHERE domain <=> OLD.domain;
-
-  
-  
-  DELETE FROM kamailio.dom_preferences WHERE domain <=> OLD.domain;
-  
-  DELETE FROM provisioning.voip_subscribers WHERE domain_id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_fax_data` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(10) unsigned NOT NULL,
-  `sid` varchar(255) NOT NULL,
-  `size` int(11) unsigned NOT NULL,
-  `checksum` char(32) NOT NULL,
-  `data` mediumblob NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `v_fd_sid_ref` (`sid`),
-  KEY `v_fd_subid_idx` (`subscriber_id`),
-  CONSTRAINT `v_fd_sid_ref` FOREIGN KEY (`sid`) REFERENCES `voip_fax_journal` (`sid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_fax_destinations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `destination` varchar(255) NOT NULL,
-  `filetype` enum('PS','TIFF','PDF','PDF14') NOT NULL DEFAULT 'TIFF',
-  `cc` tinyint(1) NOT NULL DEFAULT 0,
-  `incoming` tinyint(1) NOT NULL DEFAULT 1,
-  `outgoing` tinyint(1) NOT NULL DEFAULT 0,
-  `status` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `subdest_idx` (`subscriber_id`,`destination`),
-  CONSTRAINT `v_f_d_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_fax_destinations_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_fax_journal` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(10) unsigned NOT NULL,
-  `time` decimal(13,3) NOT NULL,
-  `direction` enum('in','out','mtf') NOT NULL,
-  `duration` int(11) unsigned NOT NULL DEFAULT 0,
-  `caller` varchar(255) NOT NULL,
-  `callee` varchar(255) NOT NULL,
-  `pages` int(10) unsigned NOT NULL DEFAULT 0,
-  `reason` varchar(255) NOT NULL,
-  `status` varchar(255) NOT NULL,
-  `signal_rate` int(10) unsigned NOT NULL DEFAULT 0,
-  `quality` varchar(255) NOT NULL DEFAULT '',
-  `filename` varchar(255) NOT NULL DEFAULT '',
-  `sid` varchar(255) NOT NULL,
-  `caller_uuid` char(36) DEFAULT NULL,
-  `callee_uuid` char(36) DEFAULT NULL,
-  `call_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `voip_fj_sub_dir_idx` (`subscriber_id`,`direction`),
-  KEY `voip_fj_time_idx` (`time`),
-  KEY `caller_uuid_idx` (`caller_uuid`),
-  KEY `callee_uuid_idx` (`callee_uuid`),
-  KEY `v_fj_sid_idx` (`sid`),
-  KEY `callid_idx` (`call_id`),
-  CONSTRAINT `v_fj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_fax_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `password` varchar(64) DEFAULT NULL,
-  `name` varchar(64) DEFAULT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 0,
-  `send_status` tinyint(1) NOT NULL DEFAULT 1,
-  `send_copy` tinyint(1) NOT NULL DEFAULT 1,
-  `t38` tinyint(1) NOT NULL DEFAULT 1,
-  `ecm` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `subscriberid_idx` (`subscriber_id`),
-  CONSTRAINT `v_f_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_fax_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_fielddev_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `device_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `fielddevidattrid_idx` (`device_id`,`attribute_id`),
-  KEY `fielddeviceid_idx` (`device_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_fd_p_fielddeviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_fdev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_header_rule_actions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `rule_id` int(11) unsigned NOT NULL,
-  `header` varchar(255) NOT NULL,
-  `header_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
-  `action_type` enum('set','add','remove','rsub','header','preference') NOT NULL,
-  `value_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
-  `value` varchar(255) DEFAULT NULL,
-  `rwr_set_id` int(11) unsigned DEFAULT NULL,
-  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
-  `priority` int(11) unsigned NOT NULL DEFAULT 100,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `rule_id_idx` (`rule_id`),
-  KEY `rwr_set_id_idx` (`rwr_set_id`),
-  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
-  KEY `priority_idx` (`priority`),
-  KEY `enabled_idx` (`enabled`),
-  CONSTRAINT `v_hra_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_hra_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_header_rule_condition_values` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `condition_id` int(11) unsigned NOT NULL,
-  `value` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `condition_id_idx` (`condition_id`),
-  CONSTRAINT `v_hrcv_conditionid_ref` FOREIGN KEY (`condition_id`) REFERENCES `voip_header_rule_conditions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_header_rule_conditions` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `rule_id` int(11) unsigned NOT NULL,
-  `match_type` enum('header','preference','avp') NOT NULL DEFAULT 'header',
-  `match_part` enum('full','username','domain','port') NOT NULL DEFAULT 'full',
-  `match_name` varchar(255) NOT NULL,
-  `expression` enum('is','contains','matches','regexp') NOT NULL,
-  `expression_negation` tinyint(1) NOT NULL DEFAULT 0,
-  `value_type` enum('input','preference','avp') NOT NULL,
-  `rwr_set_id` int(11) unsigned DEFAULT NULL,
-  `rwr_dp_id` int(11) unsigned DEFAULT NULL,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `rule_id_idx` (`rule_id`),
-  KEY `rwr_set_id_idx` (`rwr_set_id`),
-  KEY `rwr_dp_id_idx` (`rwr_dp_id`),
-  KEY `enabled_idx` (`enabled`),
-  CONSTRAINT `v_hrc_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_hrc_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_header_rule_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `res_name_idx` (`reseller_id`,`name`),
-  UNIQUE KEY `vhrs_subscriber_idx` (`subscriber_id`),
-  CONSTRAINT `vhrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vhrs_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_header_rules` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `set_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `priority` int(11) unsigned NOT NULL DEFAULT 100,
-  `direction` enum('inbound','outbound','local','peer','cf_inbound','cf_outbound','reply') NOT NULL DEFAULT 'inbound',
-  `stopper` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `enabled` tinyint(1) unsigned NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
-  KEY `direction_idx` (`direction`),
-  KEY `priority_idx` (`priority`),
-  KEY `enabled_idx` (`enabled`),
-  CONSTRAINT `v_hr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_header_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_mail_to_fax_acl` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `from_email` varchar(255) DEFAULT NULL,
-  `received_from` varchar(255) DEFAULT NULL,
-  `destination` varchar(255) DEFAULT NULL,
-  `use_regex` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `mtf_acl_sub_idx` (`subscriber_id`),
-  KEY `voip_mtf_acl_fe_idx` (`from_email`),
-  CONSTRAINT `v_mtf_acl_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_mail_to_fax_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `active` tinyint(1) NOT NULL DEFAULT 0,
-  `secret_key` varchar(255) DEFAULT NULL,
-  `last_secret_key_modify` timestamp NOT NULL DEFAULT NOW(),
-  `secret_key_renew` enum('never','daily','weekly','monthly') NOT NULL DEFAULT 'never',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mtf_p_sub_idx` (`subscriber_id`),
-  CONSTRAINT `v_mtf_p_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_mail_to_fax_secret_renew_notify` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `destination` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mtf_srn_subdest_idx` (`subscriber_id`,`destination`),
-  CONSTRAINT `v_mtf_secret_renew_notify_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_pbx_autoattendants` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `uuid` char(36) NOT NULL,
-  `choice` varchar(16) NOT NULL,
-  `destination` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `uuid_choice_idx` (`uuid`,`choice`),
-  KEY `fk_aa_sub_idx` (`subscriber_id`),
-  CONSTRAINT `voip_pbx_autoattendant_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_pbx_groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `group_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `subscriber_idx` (`subscriber_id`),
-  KEY `group_idx` (`group_id`),
-  CONSTRAINT `fk_v_sub_group` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(127) NOT NULL,
-  `priority` tinyint(3) NOT NULL DEFAULT 1,
-  `description` varchar(255) DEFAULT NULL,
-  `peering_contract_id` int(11) unsigned DEFAULT NULL,
-  `has_inbound_rules` tinyint(1) NOT NULL DEFAULT 0,
-  `time_set_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `vpg_time_set_ref` (`time_set_id`),
-  CONSTRAINT `vpg_time_set_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pgrp_urepl_trig AFTER UPDATE ON voip_peer_groups
-  FOR EACH ROW BEGIN
-
-  UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
-     SET rt.priority = NEW.priority
-   WHERE gw.id <=> rt.gw_id
-     AND gw.lcr_id = 1
-     AND gw.group_id <=> NEW.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pgrp_drepl_trig AFTER DELETE ON voip_peer_groups
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.lcr_rule WHERE group_id <=> OLD.id;
-  DELETE FROM kamailio.lcr_gw WHERE group_id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_hosts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) unsigned NOT NULL,
-  `name` varchar(64) NOT NULL DEFAULT '',
-  `ip` varchar(64) NOT NULL,
-  `host` varchar(64) DEFAULT NULL,
-  `port` int(5) NOT NULL DEFAULT 5060,
-  `transport` tinyint(3) unsigned DEFAULT NULL,
-  `weight` tinyint(3) NOT NULL DEFAULT 0,
-  `via_route` varchar(255) DEFAULT NULL,
-  `via_lb` tinyint(1) NOT NULL DEFAULT 0,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  `probe` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `grpname` (`group_id`,`name`),
-  KEY `grpidx` (`group_id`),
-  CONSTRAINT `v_ps_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_crepl_trig AFTER INSERT ON voip_peer_hosts
-  FOR EACH ROW BEGIN
-
-  DECLARE m_proto CHAR(4);
-  IF NEW.transport = 2 THEN
-    SET m_proto := 'TCP';
-  ELSEIF NEW.transport = 3 THEN
-    SET m_proto := 'TLS';
-  ELSE
-    SET m_proto := 'UDP';
-  END IF;
-
-  IF NEW.enabled THEN
-    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
-      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
-
-    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
-             FROM kamailio.lcr_rule rule
-             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
-            WHERE vpg.id <=> NEW.group_id;
-
-    INSERT INTO voip_peer_preferences (peer_host_id, attribute_id, value)
-    SELECT NEW.id, p.id, pe.value
-    FROM voip_preferences p, voip_preferences_enum pe
-    WHERE p.id <=> preference_id AND p.peer_pref=1 AND pe.peer_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
-
-    IF NEW.probe = 1 THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
-    END IF;
-
-  END IF;
-
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_phost_urepl_trig AFTER UPDATE ON voip_peer_hosts
-  FOR EACH ROW BEGIN
-
-  DECLARE m_proto CHAR(4);
-  DECLARE m_probechange INTEGER;
-
-  IF NEW.transport = 2 THEN
-    SET m_proto := 'TCP';
-  ELSEIF NEW.transport = 3 THEN
-    SET m_proto := 'TLS';
-  ELSE
-    SET m_proto := 'UDP';
-  END IF;
-
-  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
-
-    UPDATE kamailio.lcr_gw
-       SET gw_name = NEW.name, ip_addr = NEW.ip, hostname = NEW.host, port = NEW.port, transport = NEW.transport, flags = NEW.id
-     WHERE lcr_id = 1
-       AND flags <=> NEW.id;
-
-    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
-       SET rt.weight = NEW.weight
-     WHERE gw.id <=> rt.gw_id
-       AND gw.lcr_id = 1
-       AND gw.group_id <=> NEW.group_id
-       AND gw.flags <=> NEW.id;
-
-    IF OLD.probe = 1 AND (OLD.ip != NEW.ip OR OLD.port != NEW.port OR OLD.transport != NEW.transport OR OLD.name != NEW.name OR OLD.group_id != NEW.group_id) THEN
-      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
-      SET m_probechange := 1;
-    ELSEIF OLD.probe = 1 and NEW.probe = 0 THEN
-      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
-    END IF;
-    IF NEW.probe = 1 AND (m_probechange = 1 OR OLD.probe = 0) THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
-    END IF;
-
-  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
-
-    INSERT INTO kamailio.lcr_gw (lcr_id, gw_name, ip_addr, hostname, port, uri_scheme, transport, strip, flags, group_id)
-      VALUES(1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.id, NEW.group_id);
-
-    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
-             FROM kamailio.lcr_rule rule
-             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
-            WHERE vpg.id <=> NEW.group_id;
-
-    IF NEW.probe = 1 THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 0, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
-    END IF;
-
-  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
-
-    DELETE FROM kamailio.lcr_gw
-          WHERE lcr_id = 1
-            AND flags <=> NEW.id;
-
-    IF OLD.probe = 1 THEN
-      DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', NEW.id, ';%');
-    END IF;
-
-  END IF;
-
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_phost_drepl_trig AFTER DELETE ON voip_peer_hosts
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.lcr_gw
-    WHERE flags <=> OLD.id;
-
-  DELETE FROM kamailio.peer_preferences
-    WHERE uuid = OLD.id;
-
-  IF OLD.enabled = 1 AND OLD.probe = 1 THEN
-    DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_inbound_rules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) unsigned NOT NULL,
-  `field` varchar(255) NOT NULL,
-  `pattern` varchar(1023) NOT NULL,
-  `reject_code` int(3) DEFAULT NULL,
-  `reject_reason` varchar(64) DEFAULT NULL,
-  `priority` int(11) unsigned NOT NULL DEFAULT 50,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `grpidx` (`group_id`),
-  CONSTRAINT `v_pig_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `peer_host_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `peerhostid_idx` (`peer_host_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_p_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_p_p_peerhostid_ref` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_peer_preferences_ibfk_1` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`),
-  CONSTRAINT `voip_peer_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_crepl_trig AFTER INSERT ON voip_peer_preferences
-  FOR EACH ROW BEGIN
-
-  INSERT INTO kamailio.peer_preferences
-              (id, uuid, attribute, type, value, last_modified)
-       SELECT NEW.id, NEW.peer_host_id, attribute, type, NEW.value, '0'
-         FROM provisioning.voip_preferences
-        WHERE id <=> NEW.attribute_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_urepl_trig AFTER UPDATE ON voip_peer_preferences
-  FOR EACH ROW BEGIN
-
-  UPDATE kamailio.peer_preferences pp, provisioning.voip_preferences vp
-     SET pp.id = NEW.id, pp.uuid = NEW.peer_host_id, pp.type = vp.type,
-         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
-   WHERE pp.id <=> OLD.id
-     AND vp.id <=> NEW.attribute_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_peerpref_drepl_trig BEFORE DELETE ON voip_peer_preferences
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.peer_preferences
-        WHERE id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_preferences_blob` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) unsigned NOT NULL,
-  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
-  `value` mediumblob DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `preference_id` (`preference_id`),
-  CONSTRAINT `fk_peer_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_peer_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_peer_preferences_blob_insert AFTER INSERT ON voip_peer_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_peer_preferences
-       SET value = NEW.id
-     WHERE id = NEW.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_peer_preferences_blob_delete AFTER DELETE ON voip_peer_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_peer_preferences
-       SET value = ''
-     WHERE id = OLD.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_peer_rules` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) unsigned NOT NULL,
-  `callee_prefix` varchar(64) NOT NULL DEFAULT '',
-  `callee_pattern` varchar(64) DEFAULT '',
-  `caller_pattern` varchar(64) DEFAULT NULL,
-  `description` varchar(255) NOT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  `stopper` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `grpidx` (`group_id`),
-  CONSTRAINT `v_pg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prul_crepl_trig AFTER INSERT ON voip_peer_rules
-  FOR EACH ROW BEGIN
-
-  IF NEW.enabled = 1 THEN
-    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
-      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
-
-    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
-             FROM kamailio.lcr_gw gw
-             INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
-                                                        AND gw.lcr_id = 1
-                                                        AND vph.group_id = gw.group_id
-             INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
-            WHERE vph.group_id <=> NEW.group_id;
-  END IF;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prul_urepl_trig AFTER UPDATE ON voip_peer_rules
-  FOR EACH ROW BEGIN
-
-  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
-    UPDATE kamailio.lcr_rule
-       SET prefix = NEW.callee_prefix,
-           request_uri = NEW.callee_pattern,
-           from_uri = NEW.caller_pattern,
-           stopper = NEW.stopper,
-           group_id = NEW.group_id
-     WHERE prefix <=> OLD.callee_prefix
-       AND request_uri <=> OLD.callee_pattern
-       AND from_uri <=> OLD.caller_pattern
-       AND group_id <=> OLD.group_id
-       AND stopper <=> OLD.stopper;
-    IF OLD.group_id != NEW.group_id THEN
-        DELETE FROM kamailio.lcr_rule_target WHERE rule_id = OLD.id;
-        INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT gw.lcr_id, OLD.id, gw.id, vpg.priority, vph.weight
-             FROM kamailio.lcr_gw gw
-            INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
-                                                        AND gw.lcr_id = 1
-                                                        AND vph.group_id = gw.group_id
-            INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
-            WHERE vph.group_id <=> NEW.group_id;
-    END IF;
-  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
-    INSERT INTO kamailio.lcr_rule (lcr_id, prefix, request_uri, from_uri, stopper, enabled, group_id)
-      VALUES(1, NEW.callee_prefix, NEW.callee_pattern, NEW.caller_pattern, NEW.stopper, 1, NEW.group_id);
-
-    INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-        SELECT gw.lcr_id, LAST_INSERT_ID(), gw.id, vpg.priority, vph.weight
-          FROM kamailio.lcr_gw gw
-         INNER JOIN provisioning.voip_peer_hosts vph ON vph.name = gw.gw_name
-                                                    AND gw.lcr_id = 1
-                                                    AND vph.group_id = gw.group_id
-         INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = vph.group_id
-         WHERE vph.group_id <=> NEW.group_id;
-  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
-    DELETE FROM kamailio.lcr_rule
-          WHERE prefix <=> OLD.callee_prefix
-            AND request_uri <=> OLD.callee_pattern
-            AND from_uri <=> OLD.caller_pattern
-            AND group_id <=> OLD.group_id
-            AND stopper <=> OLD.stopper
-            LIMIT 1;
-  END IF;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER provisioning.voip_prul_drepl_trig AFTER DELETE ON voip_peer_rules
-  FOR EACH ROW BEGIN
-
-  DELETE FROM kamailio.lcr_rule
-        WHERE prefix <=> OLD.callee_prefix
-          AND request_uri <=> OLD.callee_pattern
-          AND from_uri <=> OLD.caller_pattern
-          AND group_id <=> OLD.group_id;
-
-  
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_preference_groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preference_groups` VALUES (1,'Call Forwards');
 INSERT INTO `voip_preference_groups` VALUES (2,'Call Blockings');
 INSERT INTO `voip_preference_groups` VALUES (3,'Access Restrictions');
@@ -3470,57 +5543,6 @@ INSERT INTO `voip_preference_groups` VALUES (15,'IMS Application Server');
 INSERT INTO `voip_preference_groups` VALUES (16,'SIP Response Codes');
 INSERT INTO `voip_preference_groups` VALUES (17,'Media Codec Transcoding Options');
 INSERT INTO `voip_preference_groups` VALUES (18,'CDR/EDR Export Settings');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_preference_relations` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `voip_preference_id` int(11) unsigned NOT NULL,
-  `autoprov_device_id` int(11) unsigned DEFAULT NULL,
-  `reseller_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `voip_pref_rel_devices` (`voip_preference_id`,`autoprov_device_id`),
-  KEY `voip_pref_rel_reselle` (`voip_preference_id`,`reseller_id`),
-  KEY `vpid_ref` (`voip_preference_id`),
-  KEY `adid_ref` (`autoprov_device_id`),
-  KEY `rid_ref` (`reseller_id`),
-  CONSTRAINT `adid_ref` FOREIGN KEY (`autoprov_device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `rid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `vpid_ref` FOREIGN KEY (`voip_preference_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `voip_preference_groups_id` int(11) unsigned NOT NULL,
-  `attribute` varchar(31) NOT NULL,
-  `label` varchar(255) NOT NULL,
-  `type` tinyint(3) NOT NULL DEFAULT 0,
-  `max_occur` tinyint(3) unsigned NOT NULL,
-  `usr_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `prof_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `dom_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `peer_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `contract_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `contract_location_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `dev_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `devprof_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `internal` tinyint(1) NOT NULL DEFAULT 0,
-  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
-  `data_type` enum('boolean','int','string','enum','blob') DEFAULT NULL,
-  `read_only` tinyint(1) NOT NULL DEFAULT 0,
-  `description` text DEFAULT NULL,
-  `dynamic` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `reseller_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `expose_to_subscriber` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `attribute_idx` (`attribute`),
-  KEY `vpgid_ref` (`voip_preference_groups_id`),
-  CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preferences` VALUES (1,3,'lock','Lock Level',0,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'enum',1,'For a list of possible values, see the \"lock\" field in the API doc for /api/subscribers. A lock value of \"none\" will not be returned to the caller. Read-only setting.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (2,2,'block_in_mode','Block Mode for inbound calls',1,1,1,1,0,0,1,0,0,0,0,NOW(),0,1,'boolean',0,'Specifies the operational mode of the incoming block list. If unset or set to a false value, it is a blacklist (accept all calls except from numbers listed in the block list), with a true value it is a whitelist (reject all calls except from numbers listed in the block list).',0,0,1);
 INSERT INTO `voip_preferences` VALUES (3,2,'block_in_list','Block List for inbound calls',0,0,1,1,0,0,1,0,0,0,0,NOW(),0,1,'string',0,'Contains wildcarded SIP usernames (the localpart of the whole SIP URI, eg., \"user\" of SIP URI \"user@example.com\") that are (not) allowed to call the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards like in shell patterns.',0,0,1);
@@ -3876,137 +5898,6 @@ INSERT INTO `voip_preferences` VALUES (393,8,'csc_conversations','CSC Conversati
 INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Device Provisioning',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Device Provisioning\' - An internal flag to be able to map Device Provisioning visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (396,6,'peer_auth_registrar_server','Specific value for the registrar server',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER.',0,0,0);
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_icheck_trig BEFORE INSERT ON voip_preferences
-FOR EACH ROW BEGIN
-    IF ( ((NEW.attribute like '\_\_%') and !NEW.dynamic)
-        or ((NEW.attribute not like '\_\_%') and NEW.dynamic)
-    ) THEN
-        SIGNAL sqlstate '45001' set message_text = "voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0";
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_ucheck_trig BEFORE UPDATE ON voip_preferences
-FOR EACH ROW BEGIN
-    IF ( ((NEW.attribute like '\_\_%') and !NEW.dynamic)
-        or ((NEW.attribute not like '\_\_%') and NEW.dynamic)
-    ) THEN
-        SIGNAL sqlstate '45001' set message_text = "voip_preferences attributes are allowed either '__' prefixed + dynamic=1 or without the '__' prefix and dynamic=0";
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_urepl_trig AFTER UPDATE ON voip_preferences
-  FOR EACH ROW BEGIN
-
-  IF OLD.attribute != NEW.attribute THEN
-    UPDATE kamailio.usr_preferences
-       SET attribute = NEW.attribute
-     WHERE attribute <=> OLD.attribute;
-    UPDATE kamailio.dom_preferences
-       SET attribute = NEW.attribute
-     WHERE attribute <=> OLD.attribute;
-    UPDATE kamailio.peer_preferences
-       SET attribute = NEW.attribute
-     WHERE attribute <=> OLD.attribute;
-    UPDATE kamailio.contract_preferences
-       SET attribute = NEW.attribute
-     WHERE attribute <=> OLD.attribute;
-    UPDATE kamailio.prof_preferences
-       SET attribute = NEW.attribute
-     WHERE attribute <=> OLD.attribute;
-  END IF; 
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_pref_drepl_trig BEFORE DELETE ON voip_preferences
-  FOR EACH ROW BEGIN
-
-  DELETE FROM voip_usr_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_dom_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_peer_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_contract_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_prof_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_fielddev_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_dev_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_devprof_preferences WHERE attribute_id <=> OLD.id;
-  DELETE FROM voip_reseller_preferences WHERE attribute_id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_preferences_enum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) unsigned DEFAULT NULL,
-  `label` varchar(128) DEFAULT NULL,
-  `value` varchar(128) DEFAULT NULL,
-  `usr_pref` tinyint(1) DEFAULT 0,
-  `prof_pref` tinyint(1) DEFAULT 0,
-  `dom_pref` tinyint(1) DEFAULT 0,
-  `peer_pref` tinyint(1) DEFAULT 0,
-  `contract_pref` tinyint(1) DEFAULT NULL,
-  `contract_location_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `dev_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `devprof_pref` tinyint(1) NOT NULL DEFAULT 0,
-  `fielddev_pref` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  `default_val` tinyint(1) DEFAULT NULL,
-  `reseller_pref` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `preference_id` (`preference_id`),
-  CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (9,62,'no','no',1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (10,62,'no','no',0,0,1,0,NULL,0,0,0,0,1,NULL);
@@ -4358,778 +6249,6 @@ INSERT INTO `voip_preferences_enum` VALUES (384,382,'7','7',1,1,1,1,0,0,0,0,0,0,
 INSERT INTO `voip_preferences_enum` VALUES (385,382,'8 (slower, better quality)','8',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (386,382,'9','9',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (387,382,'10 (slowest, best quality)','10',1,1,1,1,0,0,0,0,0,0,NULL);
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER enum_set_default AFTER INSERT ON voip_preferences_enum
-FOR EACH ROW BEGIN
-
-    DECLARE do_insert tinyint(3) unsigned;
-
-    SELECT IF(NEW.default_val = 1 AND NEW.value IS NOT NULL
-        AND (a.attribute NOT IN ("lock") 
-        OR NEW.value != "0"),1,0) INTO do_insert FROM voip_preferences a WHERE a.id = NEW.preference_id;
-
-    IF (NEW.dom_pref=1 AND do_insert=1) THEN
-        INSERT into voip_dom_preferences (domain_id, attribute_id, value)
-            SELECT e.id, NEW.preference_id, NEW.value
-            FROM voip_domains e
-            LEFT JOIN voip_dom_preferences v ON v.attribute_id = NEW.preference_id AND v.domain_id = e.id
-            WHERE v.id IS NULL;
-    END IF;
-    IF (NEW.peer_pref=1 AND do_insert=1) THEN
-        INSERT into voip_peer_preferences (peer_host_id, attribute_id, value)
-            SELECT e.id, NEW.preference_id, NEW.value
-            FROM voip_peer_hosts e
-            LEFT JOIN voip_peer_preferences v ON v.attribute_id = NEW.preference_id AND v.peer_host_id = e.id
-            WHERE v.id IS NULL;
-    END IF;
-    IF (NEW.usr_pref=1 AND do_insert=1) THEN
-        INSERT into voip_usr_preferences (subscriber_id, attribute_id, value)
-            SELECT e.id, NEW.preference_id, NEW.value
-            FROM voip_subscribers e
-            LEFT JOIN voip_usr_preferences v ON v.attribute_id = NEW.preference_id AND v.subscriber_id = e.id
-            WHERE v.id IS NULL;
-    END IF;
-    IF (NEW.prof_pref=1 AND do_insert=1) THEN
-        INSERT into voip_prof_preferences (profile_id, attribute_id, value)
-            SELECT e.id, NEW.preference_id, NEW.value
-            FROM voip_subscriber_profiles e
-            LEFT JOIN voip_prof_preferences v ON v.attribute_id = NEW.preference_id AND v.profile_id = e.id
-            WHERE v.id IS NULL;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER enum_update AFTER UPDATE ON voip_preferences_enum
-FOR EACH ROW BEGIN
-    UPDATE voip_usr_preferences SET value=NEW.value
-    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
-    UPDATE voip_dom_preferences SET value=NEW.value
-    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
-    UPDATE voip_peer_preferences SET value=NEW.value
-    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
-    UPDATE voip_prof_preferences SET value=NEW.value
-    WHERE attribute_id <=> NEW.preference_id AND value <=> OLD.value;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_prof_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `profile_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `profidattrid_idx` (`profile_id`,`attribute_id`),
-  KEY `profid_idx` (`profile_id`),
-  KEY `attrid_idx` (`attribute_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_crepl_trig AFTER INSERT ON voip_prof_preferences
-  FOR EACH ROW BEGIN
-  DECLARE attribute_name varchar(31);
-  DECLARE attribute_type tinyint(3);
-
-  SELECT attribute, type INTO attribute_name, attribute_type
-                         FROM voip_preferences
-                        WHERE id <=> NEW.attribute_id;
-
-  INSERT INTO kamailio.prof_preferences (uuid, attribute, type, value)
-                                 VALUES(NEW.profile_id, attribute_name, attribute_type, NEW.value);
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_urepl_trig AFTER UPDATE ON voip_prof_preferences
-  FOR EACH ROW BEGIN
-  DECLARE old_attribute_name varchar(31);
-  DECLARE new_attribute_name varchar(31);
-
-  SELECT attribute INTO old_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-  SELECT attribute INTO new_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> NEW.attribute_id;
-
-  UPDATE kamailio.prof_preferences SET uuid = NEW.profile_id,
-                                      attribute = new_attribute_name,
-                                      value = NEW.value
-                                WHERE uuid <=> OLD.profile_id
-                                  AND attribute <=> old_attribute_name
-                                  AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_profpref_drepl_trig BEFORE DELETE ON voip_prof_preferences
-  FOR EACH ROW BEGIN
-  DECLARE attribute_name varchar(31);
-
-  SELECT attribute INTO attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-
-  DELETE FROM kamailio.prof_preferences WHERE uuid <=> OLD.profile_id
-                                         AND attribute <=> attribute_name
-                                         AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_reminder` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `time` time NOT NULL,
-  `recur` enum('never','weekdays','always') NOT NULL DEFAULT 'never',
-  `active` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `subscriber_id` (`subscriber_id`),
-  KEY `active_time_idx` (`active`,`time`),
-  CONSTRAINT `v_rem_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_reseller_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  KEY `v_r_p_reseller_ref` (`reseller_id`),
-  CONSTRAINT `v_r_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_r_p_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_rewrite_rule_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
-  `name` varchar(32) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `caller_in_dpid` int(11) unsigned DEFAULT NULL,
-  `callee_in_dpid` int(11) unsigned DEFAULT NULL,
-  `caller_out_dpid` int(11) unsigned DEFAULT NULL,
-  `callee_out_dpid` int(11) unsigned DEFAULT NULL,
-  `caller_lnp_dpid` int(11) unsigned DEFAULT NULL,
-  `callee_lnp_dpid` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_idx` (`name`),
-  KEY `vrwrs_reseller_ref` (`reseller_id`),
-  CONSTRAINT `vrwrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_crepl_trig BEFORE INSERT ON voip_rewrite_rule_sets
-  FOR EACH ROW BEGIN
-
-  IF NEW.caller_in_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.caller_in_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-  IF NEW.callee_in_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.callee_in_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-  IF NEW.caller_out_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.caller_out_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-  IF NEW.callee_out_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.callee_out_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-  IF NEW.caller_lnp_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.caller_lnp_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-  IF NEW.callee_lnp_dpid IS NULL THEN
-    INSERT INTO voip_rwrs_sequence VALUES();
-    SET NEW.callee_lnp_dpid = (SELECT LAST_INSERT_ID());
-  END IF;
-
-  DELETE a FROM voip_rwrs_sequence a, voip_rwrs_sequence b WHERE a.id < b.id;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_urepl_trig AFTER UPDATE ON voip_rewrite_rule_sets
-  FOR EACH ROW BEGIN
-
-  IF NEW.caller_in_dpid != OLD.caller_in_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.caller_in_dpid WHERE dpid <=> OLD.caller_in_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.caller_in_dpid
-     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_in_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.caller_in_dpid
-     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_in_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.caller_in_dpid
-     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_in_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.caller_in_dpid
-     WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_in_dpid;
-  END IF;
-
-  IF NEW.callee_in_dpid != OLD.callee_in_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.callee_in_dpid WHERE dpid <=> OLD.callee_in_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.callee_in_dpid
-     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_in_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.callee_in_dpid
-     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_in_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.callee_in_dpid
-     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_in_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.callee_in_dpid
-     WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_in_dpid;
-  END IF;
-
-  IF NEW.caller_out_dpid != OLD.caller_out_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.caller_out_dpid WHERE dpid <=> OLD.caller_out_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.caller_out_dpid
-     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_out_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.caller_out_dpid
-     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_out_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.caller_out_dpid
-     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_out_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.caller_out_dpid
-     WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_out_dpid;
-  END IF;
-
-  IF NEW.callee_out_dpid != OLD.callee_out_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.callee_out_dpid WHERE dpid <=> OLD.callee_out_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.callee_out_dpid
-     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_out_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.callee_out_dpid
-     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_out_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.callee_out_dpid
-     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_out_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.callee_out_dpid
-     WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_out_dpid;
-  END IF;
-
-  IF NEW.caller_lnp_dpid != OLD.caller_lnp_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.caller_lnp_dpid WHERE dpid <=> OLD.caller_lnp_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.caller_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_lnp_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.caller_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_lnp_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.caller_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_lnp_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.caller_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.caller_lnp_dpid;
-  END IF;
-
-  IF NEW.callee_lnp_dpid != OLD.callee_lnp_dpid THEN
-    UPDATE kamailio.dialplan SET dpid = NEW.callee_lnp_dpid WHERE dpid <=> OLD.callee_lnp_dpid;
-    UPDATE voip_usr_preferences a, voip_preferences b
-       SET a.value = NEW.callee_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_lnp_dpid;
-    UPDATE voip_dom_preferences a, voip_preferences b
-       SET a.value = NEW.callee_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_lnp_dpid;
-    UPDATE voip_peer_preferences a, voip_preferences b
-       SET a.value = NEW.callee_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_lnp_dpid;
-    UPDATE voip_prof_preferences a, voip_preferences b
-       SET a.value = NEW.callee_lnp_dpid
-     WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-       AND a.attribute_id <=> b.id
-       AND a.value <=> OLD.callee_lnp_dpid;
-  END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrulesets_drepl_trig BEFORE DELETE ON voip_rewrite_rule_sets
-  FOR EACH ROW BEGIN
-
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_in_dpid;
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_in_dpid;
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_out_dpid;
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_out_dpid;
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_lnp_dpid;
-  DELETE a FROM voip_usr_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_lnp_dpid;
-
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_in_dpid;
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_in_dpid;
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_out_dpid;
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_out_dpid;
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_lnp_dpid;
-  DELETE a FROM voip_dom_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_lnp_dpid;
-
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_in_dpid;
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_in_dpid;
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_out_dpid;
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_out_dpid;
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_lnp_dpid;
-  DELETE a FROM voip_peer_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_lnp_dpid;
-
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_in_dpid;
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_in_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_in_dpid;
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_out_dpid;
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_out_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_out_dpid;
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_caller_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.caller_lnp_dpid;
-  DELETE a FROM voip_prof_preferences a, voip_preferences b
-   WHERE b.attribute <=> 'rewrite_callee_lnp_dpid'
-     AND a.attribute_id <=> b.id
-     AND a.value <=> OLD.callee_lnp_dpid;
-
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_in_dpid;
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_in_dpid;
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_out_dpid;
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_out_dpid;
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.caller_lnp_dpid;
-  DELETE FROM kamailio.dialplan WHERE dpid <=> OLD.callee_lnp_dpid;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_rewrite_rules` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `set_id` int(11) unsigned NOT NULL,
-  `match_pattern` varchar(128) NOT NULL DEFAULT '',
-  `replace_pattern` varchar(255) NOT NULL,
-  `description` varchar(127) NOT NULL DEFAULT '',
-  `direction` enum('in','out','lnp') NOT NULL DEFAULT 'in',
-  `field` enum('caller','callee') NOT NULL DEFAULT 'caller',
-  `priority` int(11) unsigned NOT NULL DEFAULT 50,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `setidx` (`set_id`),
-  KEY `dirfieldidx` (`direction`,`field`),
-  CONSTRAINT `v_rwr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_crepl_trig AFTER INSERT ON voip_rewrite_rules
-  FOR EACH ROW BEGIN
-
-  DECLARE new_set_id int(11) unsigned;
-
-  IF NEW.enabled = 1 THEN
-
-    IF NEW.direction = 'in' THEN
-      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'out' THEN
-      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'lnp' THEN
-      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    END IF;
-
-    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
-        VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
-  END IF;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_urepl_trig AFTER UPDATE ON voip_rewrite_rules
-  FOR EACH ROW BEGIN
-
-  DECLARE old_set_id int(11) unsigned;
-  DECLARE new_set_id int(11) unsigned;
-
-  IF OLD.enabled = 1 AND NEW.enabled = 1 THEN
-
-    IF OLD.direction = 'in' THEN
-      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    ELSEIF OLD.direction = 'out' THEN
-      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    ELSEIF OLD.direction = 'lnp' THEN
-      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    END IF;
-
-    IF NEW.direction = 'in' THEN
-      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'out' THEN
-      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'lnp' THEN
-      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    END IF;
-
-    UPDATE kamailio.dialplan
-       SET dpid      = new_set_id,
-           pr        = NEW.priority,
-           match_exp = NEW.match_pattern,
-           subst_exp = NEW.match_pattern,
-           repl_exp  = NEW.replace_pattern
-     WHERE dpid      <=> old_set_id
-       AND pr        <=> OLD.priority
-       AND match_exp <=> OLD.match_pattern
-       AND subst_exp <=> OLD.match_pattern
-       AND repl_exp  <=> OLD.replace_pattern;
-  ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
-
-    IF NEW.direction = 'in' THEN
-      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'out' THEN
-      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    ELSEIF NEW.direction = 'lnp' THEN
-      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;
-    END IF;
-
-    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)
-                          VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');
-  ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
-
-    IF OLD.direction = 'in' THEN
-      SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    ELSEIF OLD.direction = 'out' THEN
-      SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    ELSEIF OLD.direction = 'lnp' THEN
-      SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-        INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-    END IF;
-
-    DELETE FROM kamailio.dialplan
-     WHERE dpid      <=> old_set_id
-       AND pr        <=> OLD.priority
-       AND match_exp <=> OLD.match_pattern
-       AND subst_exp <=> OLD.match_pattern
-       AND repl_exp  <=> OLD.replace_pattern;
-  END IF;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_rwrules_drepl_trig BEFORE DELETE ON voip_rewrite_rules
-  FOR EACH ROW BEGIN
-
-  DECLARE old_set_id int(11) unsigned;
-
-  IF OLD.direction = 'in' THEN
-    SELECT IF(OLD.field = 'caller', caller_in_dpid, callee_in_dpid)
-  	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-  ELSEIF OLD.direction = 'out' THEN
-    SELECT IF(OLD.field = 'caller', caller_out_dpid, callee_out_dpid)
-	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-  ELSEIF OLD.direction = 'lnp' THEN
-    SELECT IF(OLD.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)
-	  INTO old_set_id FROM voip_rewrite_rule_sets WHERE id <=> OLD.set_id;
-  END IF;
-
-  DELETE FROM kamailio.dialplan
-   WHERE dpid      <=> old_set_id
-     AND pr        <=> OLD.priority
-     AND match_exp <=> OLD.match_pattern
-     AND subst_exp <=> OLD.match_pattern
-     AND repl_exp  <=> OLD.replace_pattern;
-
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_rwrs_sequence` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_sound_files` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(256) DEFAULT NULL,
-  `data` longblob DEFAULT NULL,
-  `handle_id` int(11) DEFAULT NULL,
-  `set_id` int(11) DEFAULT NULL,
-  `loopplay` tinyint(1) DEFAULT 0,
-  `codec` varchar(16) NOT NULL DEFAULT '',
-  `use_parent` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `set_id_ref` (`set_id`),
-  KEY `handle_set_id_idx` (`handle_id`,`set_id`),
-  CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_sound_groups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_sound_groups` VALUES (1,'early_rejects');
 INSERT INTO `voip_sound_groups` VALUES (2,'pbx');
 INSERT INTO `voip_sound_groups` VALUES (3,'calling_card');
@@ -5143,18 +6262,6 @@ INSERT INTO `voip_sound_groups` VALUES (10,'malicious_call_identification');
 INSERT INTO `voip_sound_groups` VALUES (11,'custom_announcements');
 INSERT INTO `voip_sound_groups` VALUES (12,'recent_calls');
 INSERT INTO `voip_sound_groups` VALUES (13,'early_media');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_sound_handles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) DEFAULT NULL,
-  `group_id` int(11) unsigned NOT NULL,
-  `expose_to_customer` tinyint(1) DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `v_s_h_group_ref` (`group_id`),
-  CONSTRAINT `v_s_h_group_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_sound_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `voip_sound_handles` VALUES (1,'block_in',1,1);
 INSERT INTO `voip_sound_handles` VALUES (2,'block_out',1,1);
 INSERT INTO `voip_sound_handles` VALUES (3,'block_ncos',1,1);
@@ -5306,659 +6413,10 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_sound_sets` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
-  `contract_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(256) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `contract_default` tinyint(1) NOT NULL DEFAULT 0,
-  `parent_id` int(11) DEFAULT NULL,
-  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  KEY `vss_reseller_ref` (`reseller_id`),
-  KEY `contract_id_idx` (`contract_id`),
-  KEY `parent_id_idx` (`parent_id`),
-  KEY `expose_to_customer_idx` (`expose_to_customer`),
-  CONSTRAINT `vss_parent_id_ref` FOREIGN KEY (`parent_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `vss_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_speed_dial` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `slot` varchar(64) NOT NULL,
-  `destination` varchar(192) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `subscriberid_slot_idx` (`subscriber_id`,`slot`),
-  CONSTRAINT `v_sd_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_crepl_trig AFTER INSERT ON voip_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE target_username varchar(64);
-  DECLARE target_domain varchar(64);
-
-  SELECT a.username, b.domain INTO target_username, target_domain
-                              FROM voip_subscribers a, voip_domains b
-                              WHERE a.id <=> NEW.subscriber_id
-                              AND b.id <=> a.domain_id;
-
-  INSERT INTO kamailio.speed_dial (username, domain, sd_username, sd_domain,
-                                  new_uri, fname, lname, description)
-                          VALUES(target_username, target_domain,
-                                 NEW.slot, target_domain,
-                                 NEW.destination, '', '', '');
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_urepl_trig AFTER UPDATE ON voip_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE old_username varchar(127);
-  DECLARE old_domain varchar(127);
-  DECLARE new_username varchar(127);
-  DECLARE new_domain varchar(127);
-
-  SELECT a.username, b.domain INTO old_username, old_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> OLD.subscriber_id
-                               AND b.id <=> a.domain_id;
-  SELECT a.username, b.domain INTO new_username, new_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> NEW.subscriber_id
-                               AND b.id <=> a.domain_id;
-
-  UPDATE kamailio.speed_dial SET username = new_username, domain = new_domain,
-                               sd_username = NEW.slot, sd_domain = new_domain,
-                               new_uri = NEW.destination
-                           WHERE username <=> old_username
-                           AND domain <=> old_domain
-                           AND sd_username <=> OLD.slot;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sd_drepl_trig BEFORE DELETE ON voip_speed_dial
-  FOR EACH ROW BEGIN
-  DECLARE old_username varchar(127);
-  DECLARE old_domain varchar(127);
-
-  SELECT a.username, b.domain INTO old_username, old_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> OLD.subscriber_id
-                               AND b.id <=> a.domain_id;
-
-  DELETE FROM kamailio.speed_dial WHERE username <=> old_username
-                                  AND domain <=> old_domain
-                                  AND sd_username <=> OLD.slot;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_subscriber_location_mappings` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `location` varchar(255) NOT NULL,
-  `caller_pattern` varchar(255) DEFAULT NULL,
-  `callee_pattern` varchar(255) DEFAULT NULL,
-  `mode` enum('add','replace','offline','forward') NOT NULL DEFAULT 'replace',
-  `to_username` varchar(255) DEFAULT NULL,
-  `external_id` varchar(255) DEFAULT NULL,
-  `enabled` tinyint(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `subscriber_id_idx` (`subscriber_id`),
-  KEY `external_id_idx` (`external_id`),
-  CONSTRAINT `v_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_subscriber_profile_attributes` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `profile_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `prof_attr_idx` (`profile_id`,`attribute_id`),
-  KEY `attribute_id` (`attribute_id`),
-  KEY `profile_idx` (`profile_id`),
-  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_subscriber_profile_attributes_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `voip_subscriber_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_subscriber_profile_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `vsp_resname_idx` (`reseller_id`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_subscriber_profiles` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `set_id` int(11) unsigned NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `set_default` tinyint(1) unsigned NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `set_name_idx` (`set_id`,`name`),
-  CONSTRAINT `voip_subscriber_profile_sets_ibfk_1` FOREIGN KEY (`set_id`) REFERENCES `voip_subscriber_profile_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_prof_crepl_trig AFTER INSERT ON voip_subscriber_profiles
-FOR EACH ROW BEGIN
-
-    INSERT INTO voip_prof_preferences (profile_id, attribute_id, value)
-    SELECT NEW.id, p.id, pe.value
-    FROM voip_preferences p, voip_preferences_enum pe
-    WHERE p.id <=> preference_id AND p.prof_pref=1 AND pe.prof_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_subscribers` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(127) NOT NULL,
-  `domain_id` int(11) unsigned NOT NULL,
-  `uuid` char(36) NOT NULL,
-  `password` varchar(40) DEFAULT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT 0,
-  `account_id` int(11) unsigned DEFAULT NULL,
-  `webusername` varchar(127) DEFAULT NULL,
-  `webpassword` char(56) DEFAULT NULL,
-  `is_pbx_pilot` tinyint(1) NOT NULL DEFAULT 0,
-  `is_pbx_group` tinyint(1) NOT NULL DEFAULT 0,
-  `pbx_hunt_policy` enum('serial','parallel','random','circular','none') DEFAULT 'none',
-  `pbx_hunt_timeout` int(4) unsigned DEFAULT NULL,
-  `pbx_extension` varchar(255) DEFAULT NULL,
-  `profile_set_id` int(11) unsigned DEFAULT NULL,
-  `profile_id` int(11) unsigned DEFAULT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `user_dom_idx` (`username`,`domain_id`),
-  UNIQUE KEY `uuid_idx` (`uuid`),
-  UNIQUE KEY `webuser_dom_idx` (`webusername`,`domain_id`),
-  KEY `accountid_idx` (`account_id`),
-  KEY `domainid_idx` (`domain_id`),
-  CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','bdc2e9857f935c8fe9a0c94131383cc0',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_crepl_trig AFTER INSERT ON voip_subscribers
-FOR EACH ROW BEGIN
-    
-    DECLARE subscriber_domain varchar(127);
-  
-    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;
-  
-    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)
-                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, '0',
-                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),
-                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));
-
-    
-    INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)
-    SELECT NEW.id, p.id, pe.value
-    FROM voip_preferences p, voip_preferences_enum pe
-    WHERE p.id <=> preference_id AND p.usr_pref=1 AND pe.usr_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_urepl_trig AFTER UPDATE ON voip_subscribers
-  FOR EACH ROW BEGIN
-  DECLARE old_subscriber_domain varchar(127);
-  DECLARE new_subscriber_domain varchar(127);
-
-  SELECT domain INTO old_subscriber_domain FROM voip_domains where id = OLD.domain_id;
-  SELECT domain INTO new_subscriber_domain FROM voip_domains where id = NEW.domain_id;
-
-  UPDATE kamailio.subscriber SET username = NEW.username, domain = new_subscriber_domain,
-                                uuid = NEW.uuid, password = NEW.password,
-                                ha1 = MD5(CONCAT(NEW.username, ':', new_subscriber_domain, ':', NEW.password)),
-                                ha1b = MD5(CONCAT(NEW.username, '@', new_subscriber_domain, ':', new_subscriber_domain, ':', NEW.password))
-                          WHERE username <=> OLD.username
-                            AND domain <=> old_subscriber_domain;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_sub_drepl_trig BEFORE DELETE ON voip_subscribers
-  FOR EACH ROW BEGIN
-  DECLARE subscriber_domain varchar(127);
-  DECLARE os_subscriber_id int(10) UNSIGNED;
-
-  SELECT domain INTO subscriber_domain FROM voip_domains where id = OLD.domain_id;
-  SELECT id INTO os_subscriber_id FROM kamailio.subscriber
-   WHERE username <=> OLD.username AND domain <=> subscriber_domain;
-
-  DELETE FROM kamailio.subscriber WHERE username <=> OLD.username
-                                   AND domain <=> subscriber_domain;
-
-  
-  
-  DELETE FROM kamailio.voicemail_users WHERE customer_id <=> OLD.uuid;
-
-  
-  
-  DELETE FROM kamailio.usr_preferences WHERE username <=> OLD.username
-                                        AND domain <=> subscriber_domain;
-  DELETE FROM kamailio.dbaliases WHERE username <=> OLD.username
-                                  AND domain <=> subscriber_domain;
-  DELETE FROM kamailio.speed_dial WHERE username <=> OLD.username
-                                  AND domain <=> subscriber_domain;
-  DELETE FROM kamailio.fax_preferences WHERE subscriber_id <=> os_subscriber_id;
-  DELETE FROM kamailio.fax_destinations WHERE subscriber_id <=> os_subscriber_id;
-  DELETE FROM kamailio.trusted WHERE tag <=> OLD.uuid;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_time_periods` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `time_set_id` int(11) unsigned NOT NULL,
-  `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `end` timestamp NOT NULL DEFAULT NOW(),
-  `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly') DEFAULT NULL,
-  `until` timestamp NULL DEFAULT NULL,
-  `count` int(11) DEFAULT NULL,
-  `interval` int(11) DEFAULT NULL,
-  `bysecond` varchar(45) DEFAULT NULL,
-  `byminute` varchar(45) DEFAULT NULL,
-  `byhour` varchar(45) DEFAULT NULL,
-  `byday` varchar(45) DEFAULT NULL,
-  `bymonthday` varchar(45) DEFAULT NULL,
-  `byyearday` varchar(45) DEFAULT NULL,
-  `byweekno` varchar(45) DEFAULT NULL,
-  `bymonth` varchar(45) DEFAULT NULL,
-  `bysetpos` varchar(45) DEFAULT NULL,
-  `comment` text DEFAULT NULL,
-  `duration` varchar(45) DEFAULT NULL,
-  `wkst` varchar(2) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `v_tp_tsid_ref` (`time_set_id`),
-  CONSTRAINT `v_tp_tsid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_time_sets` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL,
-  `contract_id` int(11) unsigned DEFAULT NULL,
-  `subscriber_id` int(11) unsigned DEFAULT NULL,
-  `name` varchar(90) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_UNIQUE` (`name`),
-  KEY `v_ts_rid_idx` (`reseller_id`),
-  KEY `v_ts_cid_idx` (`contract_id`),
-  KEY `v_ts_sid_ref` (`subscriber_id`),
-  CONSTRAINT `v_ts_sid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_trusted_sources` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(10) unsigned NOT NULL,
-  `src_ip` varchar(50) NOT NULL,
-  `protocol` varchar(4) NOT NULL,
-  `from_pattern` varchar(64) DEFAULT NULL,
-  `uuid` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `peer_idx` (`src_ip`),
-  KEY `subscriber_id_ref` (`subscriber_id`),
-  CONSTRAINT `subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER trusted_sources_insert AFTER INSERT ON voip_trusted_sources
-FOR EACH ROW
-    INSERT INTO kamailio.trusted (src_ip, proto, from_pattern, tag)
-    VALUES (NEW.src_ip, NEW.protocol, NEW.from_pattern, NEW.uuid) */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trusted_sources_update BEFORE UPDATE ON voip_trusted_sources
-FOR EACH ROW
-    UPDATE kamailio.trusted SET
-        src_ip=NEW.src_ip, proto=NEW.protocol, from_pattern=NEW.from_pattern, tag=NEW.uuid
-    WHERE
-        src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER trusted_sources_delete BEFORE DELETE ON voip_trusted_sources
-FOR EACH ROW
-    DELETE FROM kamailio.trusted 
-    WHERE src_ip <=> OLD.src_ip and proto <=> OLD.protocol and from_pattern <=> OLD.from_pattern and tag <=> OLD.uuid */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_usr_preferences` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `subscriber_id` int(11) unsigned NOT NULL,
-  `attribute_id` int(11) unsigned NOT NULL,
-  `value` varchar(128) NOT NULL,
-  `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `subidattrid_idx` (`subscriber_id`,`attribute_id`),
-  KEY `subscriberid_idx` (`subscriber_id`),
-  KEY `attributeid_idx` (`attribute_id`),
-  CONSTRAINT `v_u_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `v_u_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `voip_usr_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`),
-  CONSTRAINT `voip_usr_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','18820cd63551961a7f49472cb0168fc6',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_crepl_trig AFTER INSERT ON voip_usr_preferences
-  FOR EACH ROW BEGIN
-  DECLARE subscriber_username varchar(127);
-  DECLARE subscriber_domain varchar(127);
-  DECLARE subscriber_uuid char(36);
-  DECLARE attribute_name varchar(31);
-  DECLARE attribute_type tinyint(3);
-
-  SELECT a.username, b.domain, a.uuid INTO subscriber_username, subscriber_domain, subscriber_uuid
-                                      FROM voip_subscribers a, voip_domains b
-                                     WHERE a.id <=> NEW.subscriber_id
-                                       AND a.domain_id <=> b.id;
-  SELECT attribute, type INTO attribute_name, attribute_type
-                         FROM voip_preferences
-                        WHERE id <=> NEW.attribute_id;
-
-  INSERT INTO kamailio.usr_preferences (uuid, username, domain, attribute, type, value)
-                                VALUES(subscriber_uuid, subscriber_username, subscriber_domain,
-                                       attribute_name, attribute_type, NEW.value);
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_urepl_trig AFTER UPDATE ON voip_usr_preferences
-  FOR EACH ROW BEGIN
-  DECLARE old_subscriber_username varchar(127);
-  DECLARE new_subscriber_username varchar(127);
-  DECLARE old_subscriber_domain varchar(127);
-  DECLARE new_subscriber_domain varchar(127);
-  DECLARE old_attribute_name varchar(31);
-  DECLARE new_attribute_name varchar(31);
-
-  SELECT a.username, b.domain INTO old_subscriber_username, old_subscriber_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> OLD.subscriber_id
-                               AND a.domain_id <=> b.id;
-  SELECT a.username, b.domain INTO new_subscriber_username, new_subscriber_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> NEW.subscriber_id
-                               AND a.domain_id <=> b.id;
-  SELECT attribute INTO old_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-  SELECT attribute INTO new_attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> NEW.attribute_id;
-
-  UPDATE kamailio.usr_preferences SET username = new_subscriber_username, domain = new_subscriber_domain,
-                                     attribute = new_attribute_name, value = NEW.value
-                               WHERE username <=> old_subscriber_username
-                                 AND domain <=> old_subscriber_domain
-                                 AND attribute <=> old_attribute_name
-                                 AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_usrpref_drepl_trig BEFORE DELETE ON voip_usr_preferences
-  FOR EACH ROW BEGIN
-  DECLARE subscriber_username varchar(127);
-  DECLARE subscriber_domain varchar(127);
-  DECLARE attribute_name varchar(31);
-
-  SELECT a.username, b.domain INTO subscriber_username, subscriber_domain
-                              FROM voip_subscribers a, voip_domains b
-                             WHERE a.id <=> OLD.subscriber_id
-                               AND a.domain_id <=> b.id;
-  SELECT attribute INTO attribute_name
-                   FROM voip_preferences
-                  WHERE id <=> OLD.attribute_id;
-
-  DELETE FROM kamailio.usr_preferences WHERE username <=> subscriber_username
-                                        AND domain <=> subscriber_domain
-                                        AND attribute <=> attribute_name
-                                        AND value <=> OLD.value;
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `voip_usr_preferences_blob` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `preference_id` int(11) unsigned NOT NULL,
-  `content_type` varchar(128) NOT NULL DEFAULT 'application/data',
-  `value` mediumblob DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `preference_id` (`preference_id`),
-  CONSTRAINT `fk_usr_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_usr_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_usr_preferences_blob_insert AFTER INSERT ON voip_usr_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_usr_preferences
-       SET value = NEW.id
-     WHERE id = NEW.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_usr_preferences_blob_delete AFTER DELETE ON voip_usr_preferences_blob
-  FOR EACH ROW BEGIN
-
-  UPDATE voip_usr_preferences
-       SET value = ''
-     WHERE id = OLD.preference_id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `xmlgroups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `gname` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `xmlgroups` VALUES (5,'appserver');
 INSERT INTO `xmlgroups` VALUES (4,'loadbalancer');
 INSERT INTO `xmlgroups` VALUES (3,'presence');
@@ -5966,472 +6424,14 @@ INSERT INTO `xmlgroups` VALUES (1,'proxy');
 INSERT INTO `xmlgroups` VALUES (6,'proxy-ng');
 INSERT INTO `xmlgroups` VALUES (2,'registrar');
 INSERT INTO `xmlgroups` VALUES (7,'xmpp');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `xmlhostgroups` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) unsigned NOT NULL,
-  `host_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `gidx` (`group_id`),
-  KEY `xhg_hostid_ref` (`host_id`),
-  CONSTRAINT `xhg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `xmlgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `xhg_hostid_ref` FOREIGN KEY (`host_id`) REFERENCES `xmlhosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `xmlhostgroups` VALUES (1,1,1);
 INSERT INTO `xmlhostgroups` VALUES (2,5,2);
 INSERT INTO `xmlhostgroups` VALUES (3,6,3);
 INSERT INTO `xmlhostgroups` VALUES (4,4,4);
 INSERT INTO `xmlhostgroups` VALUES (5,7,5);
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `xmlhosts` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `ip` varchar(15) NOT NULL,
-  `port` int(5) unsigned NOT NULL,
-  `path` varchar(64) NOT NULL DEFAULT '/',
-  `sip_port` int(5) unsigned DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `xmlhosts` VALUES (1,'127.0.0.1',8000,'/RPC2',5062,'Kamailio');
 INSERT INTO `xmlhosts` VALUES (2,'127.0.0.1',8090,'/',NULL,'Sems');
 INSERT INTO `xmlhosts` VALUES (3,'127.0.0.1',5062,'/',NULL,'Kamailio-SR');
 INSERT INTO `xmlhosts` VALUES (4,'127.0.0.1',5060,'/',NULL,'Loadbalancer');
 INSERT INTO `xmlhosts` VALUES (5,'127.0.0.1',5582,'/',NULL,'Prosody');
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `xmlqueue` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `target` varchar(255) NOT NULL,
-  `body` text NOT NULL,
-  `ctime` int(10) unsigned NOT NULL,
-  `atime` int(10) unsigned NOT NULL,
-  `tries` int(10) unsigned NOT NULL,
-  `next_try` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `next_try` (`next_try`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `bin_to_hex`(_bin VARCHAR(1023)
-) RETURNS varchar(1023) CHARSET utf8 COLLATE utf8_general_ci
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _i int DEFAULT 1;
-  DECLARE _digits VARCHAR(4);
-  DECLARE _result VARCHAR(1023) DEFAULT "";
-
-  digits_loop: LOOP
-    SET _digits = SUBSTR(_bin,-4 * _i,4);
-    IF LENGTH(_digits) = 0 THEN
-      LEAVE digits_loop;
-    END IF;
-    SET _result = CONCAT(COALESCE(CONV(_digits,2,16),"0"),_result);
-    SET _i = _i + 1;
-  END LOOP digits_loop;
-
-  RETURN _result;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `hex_add`(_a VARCHAR(255),
-  _b VARCHAR(255)
-) RETURNS varchar(256) CHARSET utf8 COLLATE utf8_general_ci
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _i int DEFAULT 1;
-  DECLARE _a_digit, _b_digit VARCHAR(1);
-  DECLARE _carry, _result_digit INT DEFAULT 0;
-  DECLARE _result VARCHAR(256) DEFAULT "";
-
-  digits_loop: LOOP
-    SET _a_digit = SUBSTR(_a, -1 * _i,1);
-    SET _b_digit = SUBSTR(_b, -1 * _i,1);
-    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 AND _carry = 0 THEN
-      LEAVE digits_loop;
-    END IF;
-    SET _result_digit = COALESCE(CONV(_a_digit,16,10),0) + COALESCE(CONV(_b_digit,16,10),0) + _carry;
-    SET _result = CONCAT(HEX(_result_digit & 15),_result);
-    IF _result_digit > 15 THEN
-      SET _carry = 1;
-    ELSE
-      SET _carry = 0;
-    END IF;
-    SET _i = _i + 1;
-  END LOOP digits_loop;
-
-  RETURN _result;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `hex_and`(_a VARCHAR(255),
-  _b VARCHAR(255)
-) RETURNS varchar(255) CHARSET utf8 COLLATE utf8_general_ci
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _i int DEFAULT 1;
-  DECLARE _a_digit, _b_digit VARCHAR(1);
-  DECLARE _result VARCHAR(255) DEFAULT "";
-
-  digits_loop: LOOP
-    SET _a_digit = SUBSTR(_a,_i,1);
-    SET _b_digit = SUBSTR(_b,_i,1);
-    IF LENGTH(_a_digit) = 0 AND LENGTH(_b_digit) = 0 THEN
-      LEAVE digits_loop;
-    END IF;
-    SET _result = CONCAT(_result,HEX(COALESCE(conv(_a_digit,16,10),0) & COALESCE(CONV(_b_digit,16,10),0)));
-    SET _i = _i + 1;
-  END LOOP digits_loop;
-
-  RETURN _result;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_broadcast_address`(_ipnet VARCHAR(46)
-) RETURNS varbinary(16)
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _network_hex VARCHAR(32);
-  DECLARE _broadcast_bytes VARBINARY(16);
-  DECLARE _mask_hex VARCHAR(32);
-  DECLARE _mask_len INT;
-
-  IF ip_is_cidr(_ipnet) THEN
-    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
-    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
-    SET _network_hex = hex_and(
-      HEX(INET6_ATON(substr(_ipnet,1,LOCATE("/",_ipnet) - 1))),
-      _mask_hex
-    );
-    SET _broadcast_bytes = UNHEX(hex_add(
-      _network_hex,
-      bin_to_hex(CONCAT(REPEAT("0",_mask_len),REPEAT("1",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)))
-    ));
-  ELSE
-    SET _broadcast_bytes = INET6_ATON(_ipnet);
-  END IF;
-
-  RETURN _broadcast_bytes;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_network_address`(_ipnet VARCHAR(46)
-) RETURNS varbinary(16)
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _network_bytes VARBINARY(16);
-  DECLARE _mask_hex VARCHAR(32);
-  DECLARE _mask_len INT;
-
-  IF ip_is_cidr(_ipnet) THEN
-    SET _mask_len = SUBSTR(_ipnet,LOCATE("/",_ipnet) + 1);
-    SET _mask_hex = bin_to_hex(CONCAT(REPEAT("1",_mask_len),REPEAT("0",IF(ip_is_ipv6(_ipnet),128,32) - _mask_len)));
-    SET _network_bytes = UNHEX(
-      hex_and(
-        HEX(INET6_ATON(SUBSTR(_ipnet,1,locate("/",_ipnet) - 1))),
-        _mask_hex
-      )
-    );
-  ELSE
-    SET _network_bytes = INET6_ATON(_ipnet);
-  END IF;
-
-  RETURN _network_bytes;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_allowed`(_uuid VARCHAR(36),
-  _ip VARCHAR(46)
-) RETURNS tinyint(1)
-    READS SQL DATA
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  DECLARE _network_bytes VARBINARY(16);
-  DECLARE _is_valid_ip, _is_ipv6 BOOLEAN DEFAULT 0;
-  DECLARE _aig_id, _aig_ids_done INT DEFAULT 0;
-  DECLARE _is_allowed BOOLEAN DEFAULT NULL;
-  
-  DECLARE usr_aig_id_cursor CURSOR FOR SELECT
-      v.value
-    FROM provisioning.voip_usr_preferences v
-    JOIN provisioning.voip_subscribers s on v.subscriber_id = s.id
-    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
-    WHERE
-      s.uuid = _uuid
-      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
-
-  DECLARE dom_aig_id_cursor CURSOR FOR SELECT
-      v.value
-    FROM provisioning.voip_dom_preferences v
-    JOIN provisioning.voip_subscribers s on v.domain_id = s.domain_id
-    JOIN provisioning.voip_preferences a ON v.attribute_id = a.id
-    WHERE
-      s.uuid = _uuid
-      AND a.attribute IN ("man_allowed_ips_grp","allowed_ips_grp");
-
-  DECLARE CONTINUE HANDLER FOR NOT FOUND SET _aig_ids_done = _aig_ids_done + 1;
-
-  IF IF(EXISTS(SELECT 1 FROM provisioning.voip_subscribers WHERE uuid = _uuid),0,1) THEN
-    
-    RETURN 0;
-  END IF;
-
-  SET _network_bytes = INET6_ATON(_ip);
-  SET _is_valid_ip = IF(_network_bytes IS NULL OR HEX(_network_bytes) = "00000000",0,1);
-  SET _is_ipv6 = IF(_is_valid_ip,ip_is_ipv6(_ip),0);
-
-  OPEN usr_aig_id_cursor;
-  aig_ids_loop: LOOP
-    IF _aig_ids_done = 0 THEN
-      FETCH usr_aig_id_cursor INTO _aig_id;
-      IF _aig_ids_done = 1 THEN
-        CLOSE usr_aig_id_cursor;
-        IF _is_allowed IS NOT NULL THEN
-          RETURN _is_allowed;
-        ELSE
-          SET _is_allowed = NULL;
-          OPEN dom_aig_id_cursor;
-        END IF;
-      END IF;
-    END IF;
-    IF _aig_ids_done = 1 THEN
-      FETCH dom_aig_id_cursor INTO _aig_id;
-      IF _aig_ids_done = 2 THEN
-        CLOSE dom_aig_id_cursor;
-        IF _is_allowed IS NOT NULL THEN
-          RETURN _is_allowed;
-        ELSE
-          LEAVE aig_ids_loop;
-        END IF;
-      END IF;
-    END IF;
-    IF _is_allowed IS NULL THEN
-      SET _is_allowed = 0;
-    END IF;
-    IF _is_valid_ip THEN
-      IF _is_ipv6 THEN
-        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
-          FROM provisioning.voip_allowed_ip_groups aig
-          WHERE
-            aig.group_id = _aig_id 
-            AND aig._ipv6_net_from <= _network_bytes
-            AND aig._ipv6_net_to >= _network_bytes
-        LIMIT 1),0));
-      ELSE
-        SET _is_allowed = IF(_is_allowed,1,COALESCE((SELECT 1
-          FROM provisioning.voip_allowed_ip_groups aig
-          WHERE
-            aig.group_id = _aig_id 
-            AND aig._ipv4_net_from <= _network_bytes
-            AND aig._ipv4_net_to >= _network_bytes
-        LIMIT 1),0));
-      END IF;
-    ELSE
-      
-      RETURN 0;
-    END IF;
-  END LOOP aig_ids_loop;
-  
-  
-  RETURN 1;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_cidr`(_ipnet VARCHAR(46)
-) RETURNS tinyint(1)
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  RETURN IF(LOCATE("/",_ipnet) = 0,0,1);
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_ipv6`(_ipnet VARCHAR(46)
-) RETURNS tinyint(1)
-    NO SQL
-    DETERMINISTIC
-    SQL SECURITY INVOKER
-BEGIN
-
-  RETURN IF(LOCATE(".",_ipnet) = 0,1,0);
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50001 DROP VIEW IF EXISTS `v_sound_set_files`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_sound_set_files` AS with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `v` left join `voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `t` left join `voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`)) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-/*!50001 DROP VIEW IF EXISTS `v_subscriber_cfs`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_subscriber_cfs` AS select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute` from ((((((((`voip_cf_destinations` `cfd` left join (`voip_cf_destination_sets` `cfds` left join `voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1 */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-/*!50001 DROP VIEW IF EXISTS `v_time_periods_ical`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_time_periods_ical` AS select `p`.`id` AS `id`,`p`.`time_set_id` AS `time_set_id`,`p`.`start` AS `start`,`p`.`end` AS `end`,`p`.`comment` AS `comment`,concat('DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),'')),'')) AS `rrule_ical`,concat('BEGIN:VEVENT\n','UID:','sipwise',`p`.`id`,'@sipwise',`s`.`id`,'\n','SUMMARY:',`s`.`name`,' event ',`p`.`id`,'\n','DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',if(year(`p`.`end`) <> '0000',concat('DTEND:',date_format(`p`.`end`,'%Y%m%dT%H%i%s'),'\n'),''),ifnull(concat('DURATION:',`p`.`duration`,'\n'),''),ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),''),'\n'),''),ifnull(concat('DESCRIPTION:',`p`.`comment`,'\n'),''),'END:VEVENT\n') AS `event_ical` from (`voip_time_sets` `s` join `voip_time_periods` `p` on(`s`.`id` = `p`.`time_set_id`)) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-/*!50001 DROP VIEW IF EXISTS `v_time_sets_ical`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_time_sets_ical` AS select `s`.`id` AS `id`,`s`.`name` AS `name`,concat('BEGIN:VCALENDAR\n','PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n',ifnull(concat('NAME:',`s`.`name`,'\n'),''),'VERSION:2.0\n\n',group_concat(`p`.`event_ical` separator '\n'),'END:VCALENDAR\n') AS `ical` from (`voip_time_sets` `s` left join `v_time_periods_ical` `p` on(`s`.`id` = `p`.`time_set_id`)) group by `s`.`id` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 COMMIT;

@@ -22,22 +22,6 @@ CREATE TABLE `acl_role_mappings` (
   CONSTRAINT `arm_hasaccessto_ref` FOREIGN KEY (`has_access_to_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `acl_role_mappings` VALUES (1,1);
-INSERT INTO `acl_role_mappings` VALUES (1,2);
-INSERT INTO `acl_role_mappings` VALUES (1,3);
-INSERT INTO `acl_role_mappings` VALUES (1,4);
-INSERT INTO `acl_role_mappings` VALUES (1,5);
-INSERT INTO `acl_role_mappings` VALUES (1,6);
-INSERT INTO `acl_role_mappings` VALUES (2,2);
-INSERT INTO `acl_role_mappings` VALUES (2,3);
-INSERT INTO `acl_role_mappings` VALUES (2,4);
-INSERT INTO `acl_role_mappings` VALUES (2,5);
-INSERT INTO `acl_role_mappings` VALUES (3,3);
-INSERT INTO `acl_role_mappings` VALUES (3,4);
-INSERT INTO `acl_role_mappings` VALUES (3,5);
-INSERT INTO `acl_role_mappings` VALUES (4,4);
-INSERT INTO `acl_role_mappings` VALUES (4,5);
-INSERT INTO `acl_role_mappings` VALUES (5,5);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_roles` (
@@ -48,12 +32,6 @@ CREATE TABLE `acl_roles` (
   UNIQUE KEY `role_idx` (`role`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `acl_roles` VALUES (1,'system',0);
-INSERT INTO `acl_roles` VALUES (2,'admin',0);
-INSERT INTO `acl_roles` VALUES (3,'reseller',0);
-INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
-INSERT INTO `acl_roles` VALUES (5,'ccare',0);
-INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admins` (
@@ -87,7 +65,6 @@ CREATE TABLE `admins` (
   CONSTRAINT `a_roleid_ref` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_fees` (
@@ -124,7 +101,6 @@ CREATE TABLE `billing_fees` (
   CONSTRAINT `b_f_zoneid_ref` FOREIGN KEY (`billing_zone_id`) REFERENCES `billing_zones` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -231,8 +207,6 @@ CREATE TABLE `billing_fees_history` (
   CONSTRAINT `b_f_h_bzhid_ref` FOREIGN KEY (`billing_zones_history_id`) REFERENCES `billing_zones_history` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
-INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_fees_raw` (
@@ -289,7 +263,6 @@ CREATE TABLE `billing_mappings` (
   CONSTRAINT `bm_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_network_blocks` (
@@ -371,8 +344,8 @@ CREATE TABLE `billing_profiles` (
   `currency` varchar(31) DEFAULT NULL,
   `status` enum('active','terminated') NOT NULL DEFAULT 'active',
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
-  `terminate_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `terminate_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `advice_of_charge` tinyint(1) NOT NULL DEFAULT 0,
   `prepaid_library` enum('libswrate','libinewrate') NOT NULL DEFAULT 'libswrate',
   `ignore_domain` tinyint(1) NOT NULL DEFAULT 0,
@@ -383,7 +356,6 @@ CREATE TABLE `billing_profiles` (
   CONSTRAINT `b_p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active',NOW(),NOW(),NOW(),0,'libswrate',0);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_zones` (
@@ -396,7 +368,6 @@ CREATE TABLE `billing_zones` (
   CONSTRAINT `b_z_profileid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -454,7 +425,6 @@ CREATE TABLE `billing_zones_history` (
   CONSTRAINT `b_z_h_bzid_ref` FOREIGN KEY (`bz_id`) REFERENCES `billing_zones` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `call_list_suppressions` (
@@ -488,7 +458,7 @@ CREATE TABLE `contacts` (
   `email` varchar(255) DEFAULT NULL,
   `newsletter` tinyint(1) NOT NULL DEFAULT 0,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `faxnumber` varchar(31) DEFAULT NULL,
   `iban` varchar(34) DEFAULT NULL,
   `bic` varchar(11) DEFAULT NULL,
@@ -513,8 +483,6 @@ CREATE TABLE `contacts` (
   CONSTRAINT `ct_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contract_balances` (
@@ -540,7 +508,6 @@ CREATE TABLE `contract_balances` (
   CONSTRAINT `cb_invoiceid_ref` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contract_credits` (
@@ -550,7 +517,7 @@ CREATE TABLE `contract_credits` (
   `amount` double DEFAULT NULL,
   `reason` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `balanceid_idx` (`balance_id`),
   CONSTRAINT `cc_balanceid_ref` FOREIGN KEY (`balance_id`) REFERENCES `contract_balances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -610,7 +577,7 @@ CREATE TABLE `contracts` (
   `status` enum('pending','active','locked','terminated') NOT NULL DEFAULT 'active',
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `activate_timestamp` timestamp NULL DEFAULT NULL,
   `terminate_timestamp` timestamp NULL DEFAULT NULL,
   `max_subscribers` int(6) unsigned DEFAULT NULL,
@@ -636,7 +603,6 @@ CREATE TABLE `contracts` (
   CONSTRAINT `co_orderid_ref` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,NOW(),NOW(),NOW(),NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -677,7 +643,6 @@ CREATE TABLE `contracts_billing_profile_network` (
   CONSTRAINT `cbpn_pid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contracts_billing_profile_network_schedule` (
@@ -689,7 +654,6 @@ CREATE TABLE `contracts_billing_profile_network_schedule` (
   CONSTRAINT `cbpns_cbpnid_ref` FOREIGN KEY (`profile_network_id`) REFERENCES `contracts_billing_profile_network` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `credit_payments` (
@@ -729,7 +693,7 @@ CREATE TABLE `customers` (
   `comm_contact_id` int(11) unsigned DEFAULT NULL,
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `reseller_id` (`reseller_id`,`shopuser`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -783,18 +747,6 @@ CREATE TABLE `email_templates` (
   CONSTRAINT `fk_email_reseller` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (2,NULL,'passreset_default_email','default@sipwise.com','Password reset email','Dear Customer,\n\nPlease go to [% url %] to set your password and log into your self-care interface.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (3,NULL,'invoice_default_email','default@sipwise.com','Invoice #[%invoice.serial%] from [%invoice.period_start_obj.ymd%] to [%invoice.period_end_obj.ymd%]','Dear Customer,\n\nPlease find your invoice #[%invoice.serial%] for [%invoice.period_start_obj.month_name%], [%invoice.period_start_obj.year%] in attachment of this letter.\n\nYour faithful Sipwise system\n\n--\nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (4,NULL,'credit_warning_default_email','[% adminmail %]','Sipwise NGCP credit threshold notification','Credit threshold warning for: [% domain %]\nThe following contracts are below the configured threshold of [% threshold %]:\n\n[% contracts %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (5,NULL,'customer_fraud_lock_default_email','[% adminmail %]','Customer # [% customer_id %] locked by fraud detection','Customer # [% customer_id %] has been locked due to exceeding the configured\n[% IF interval == \"day\" -%]daily[% ELSIF interval == \"month\" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings.\n\nAffected subscribers:\n[% subscribers %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (6,NULL,'customer_fraud_warning_default_email','[% adminmail %]','Customer # [% customer_id %] exceeding fraud detection limit','Customer # [% customer_id %] is currently exceeding the configured\n[% IF interval == \"day\" -%]daily[% ELSIF interval == \"month\" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings,\nbut has not been locked due to configuration.\n\nAffected subscribers:\n[% subscribers %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
-INSERT INTO `email_templates` VALUES (7,NULL,'fax_receive_ok_default_email','[% mail_from %]','Incoming fax from [% caller %]','        New fax received:\n\n        Status: [% status %]\n        From:   [% caller %]\n        To:     [% callee %]\n        Pages:  [% pages %]\n        Date:   [% date %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','Fax_from_[% caller %]_at_[% date_file %]');
-INSERT INTO `email_templates` VALUES (8,NULL,'fax_send_copy_default_email','[% mail_from %]','Copy of an outgoing fax to [% callee %]','        Copy of the sent fax:\n\n        From:  [% caller %]\n        To:    [% callee %]\n        Pages: [% pages %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','Fax_from_[% caller %]_at_[% date_file %]');
-INSERT INTO `email_templates` VALUES (9,NULL,'fax_notify_ok_default_email','[% mail_from %]','Fax transmission to [% callee %] is successful','        Fax from [% caller %] to [% callee %] has been successfully sent.\n\n        Pages:   [% pages %]\n        Quality: [% quality %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
-INSERT INTO `email_templates` VALUES (10,NULL,'fax_notify_error_default_email','[% mail_from %]','Fax transmission to [% callee %] has failed','        Fax from [% caller %] to [% callee %] has failed.\n\n        Status:     [% status %]\n        Attempts:   [% attempts %]\n        Sent pages: [% sent_pages %] of [% pages %]\n        Reason:     [% reason %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
-INSERT INTO `email_templates` VALUES (11,NULL,'fax_notify_secret_update_default_email','[% mail_from %]','Preferences update notification','        Secret key for subscriber [% subscriber %] has been updated.\n\n        New secret key: [% secret_key %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
-INSERT INTO `email_templates` VALUES (12,NULL,'admin_passreset_default_email','default@sipwise.com','Password reset email','Dear Customer,\n\nPlease go to [% url %] to set your password and log into your admin interface.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoice_templates` (
@@ -991,8 +943,8 @@ CREATE TABLE `orders` (
   `shipping_costs` int(11) DEFAULT NULL,
   `invoice_id` int(11) unsigned DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
-  `complete_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `complete_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `customerid_idx` (`customer_id`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -1047,7 +999,7 @@ CREATE TABLE `payments` (
   `returncode` varchar(63) DEFAULT NULL,
   `externalstatus` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `state_idx` (`state`),
   KEY `mpaytid_idx` (`mpaytid`),
@@ -1075,11 +1027,6 @@ CREATE TABLE `products` (
   CONSTRAINT `p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `products` VALUES (1,NULL,'pstnpeering','PSTN_PEERING','PSTN Peering',1,NULL,NULL,NULL);
-INSERT INTO `products` VALUES (2,NULL,'sippeering','SIP_PEERING','SIP Peering',1,NULL,NULL,NULL);
-INSERT INTO `products` VALUES (3,NULL,'reseller','VOIP_RESELLER','VoIP Reseller',1,NULL,NULL,NULL);
-INSERT INTO `products` VALUES (4,NULL,'sipaccount','SIP_ACCOUNT','Basic SIP Account',1,NULL,NULL,NULL);
-INSERT INTO `products` VALUES (5,NULL,'pbxaccount','PBX_ACCOUNT','Cloud PBX Account',1,NULL,NULL,NULL);
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `profile_packages` (
@@ -1115,7 +1062,7 @@ CREATE TABLE `provisioning_templates` (
   `lang` enum('perl','js') NOT NULL DEFAULT 'js',
   `yaml` text NOT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `resnam_idx` (`reseller_id`,`name`),
   CONSTRAINT `p_t_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -1163,7 +1110,6 @@ CREATE TABLE `resellers` (
   CONSTRAINT `r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `resellers` VALUES (1,1,'default','active');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1303,7 +1249,7 @@ CREATE TABLE `voip_intercept` (
   `delivery_user` text DEFAULT NULL,
   `delivery_pass` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT NOW(),
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   `uuid` varchar(255) DEFAULT NULL,
   `sip_username` varchar(255) DEFAULT NULL,
@@ -1419,8 +1365,8 @@ CREATE TABLE `vouchers` (
   `customer_id` int(11) unsigned DEFAULT NULL,
   `package_id` int(11) unsigned DEFAULT NULL,
   `used_by_subscriber_id` int(11) unsigned DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT NOW(),
-  `used_at` timestamp NOT NULL DEFAULT NOW(),
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `used_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `valid_until` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `vouchers_rescode_idx` (`reseller_id`,`code`),
@@ -2534,4 +2480,58 @@ DELIMITER ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+INSERT INTO `acl_role_mappings` VALUES (1,1);
+INSERT INTO `acl_role_mappings` VALUES (1,2);
+INSERT INTO `acl_role_mappings` VALUES (1,3);
+INSERT INTO `acl_role_mappings` VALUES (1,4);
+INSERT INTO `acl_role_mappings` VALUES (1,5);
+INSERT INTO `acl_role_mappings` VALUES (1,6);
+INSERT INTO `acl_role_mappings` VALUES (2,2);
+INSERT INTO `acl_role_mappings` VALUES (2,3);
+INSERT INTO `acl_role_mappings` VALUES (2,4);
+INSERT INTO `acl_role_mappings` VALUES (2,5);
+INSERT INTO `acl_role_mappings` VALUES (3,3);
+INSERT INTO `acl_role_mappings` VALUES (3,4);
+INSERT INTO `acl_role_mappings` VALUES (3,5);
+INSERT INTO `acl_role_mappings` VALUES (4,4);
+INSERT INTO `acl_role_mappings` VALUES (4,5);
+INSERT INTO `acl_role_mappings` VALUES (5,5);
+INSERT INTO `acl_roles` VALUES (1,'system',0);
+INSERT INTO `acl_roles` VALUES (2,'admin',0);
+INSERT INTO `acl_roles` VALUES (3,'reseller',0);
+INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
+INSERT INTO `acl_roles` VALUES (5,'ccare',0);
+INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1);
+INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
+INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
+INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
+INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active',NOW(),NOW(),NOW(),0,'libswrate',0);
+INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
+INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,NOW(),NOW(),NOW(),NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
+INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
+INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (2,NULL,'passreset_default_email','default@sipwise.com','Password reset email','Dear Customer,\n\nPlease go to [% url %] to set your password and log into your self-care interface.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (3,NULL,'invoice_default_email','default@sipwise.com','Invoice #[%invoice.serial%] from [%invoice.period_start_obj.ymd%] to [%invoice.period_end_obj.ymd%]','Dear Customer,\n\nPlease find your invoice #[%invoice.serial%] for [%invoice.period_start_obj.month_name%], [%invoice.period_start_obj.year%] in attachment of this letter.\n\nYour faithful Sipwise system\n\n--\nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (4,NULL,'credit_warning_default_email','[% adminmail %]','Sipwise NGCP credit threshold notification','Credit threshold warning for: [% domain %]\nThe following contracts are below the configured threshold of [% threshold %]:\n\n[% contracts %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (5,NULL,'customer_fraud_lock_default_email','[% adminmail %]','Customer # [% customer_id %] locked by fraud detection','Customer # [% customer_id %] has been locked due to exceeding the configured\n[% IF interval == \"day\" -%]daily[% ELSIF interval == \"month\" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings.\n\nAffected subscribers:\n[% subscribers %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (6,NULL,'customer_fraud_warning_default_email','[% adminmail %]','Customer # [% customer_id %] exceeding fraud detection limit','Customer # [% customer_id %] is currently exceeding the configured\n[% IF interval == \"day\" -%]daily[% ELSIF interval == \"month\" -%]monthly[% END -%] credit balance threshold ([% interval_cost %] >= [% interval_limit %]) in the [% type %] settings,\nbut has not been locked due to configuration.\n\nAffected subscribers:\n[% subscribers %]\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `email_templates` VALUES (7,NULL,'fax_receive_ok_default_email','[% mail_from %]','Incoming fax from [% caller %]','        New fax received:\n\n        Status: [% status %]\n        From:   [% caller %]\n        To:     [% callee %]\n        Pages:  [% pages %]\n        Date:   [% date %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','Fax_from_[% caller %]_at_[% date_file %]');
+INSERT INTO `email_templates` VALUES (8,NULL,'fax_send_copy_default_email','[% mail_from %]','Copy of an outgoing fax to [% callee %]','        Copy of the sent fax:\n\n        From:  [% caller %]\n        To:    [% callee %]\n        Pages: [% pages %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','Fax_from_[% caller %]_at_[% date_file %]');
+INSERT INTO `email_templates` VALUES (9,NULL,'fax_notify_ok_default_email','[% mail_from %]','Fax transmission to [% callee %] is successful','        Fax from [% caller %] to [% callee %] has been successfully sent.\n\n        Pages:   [% pages %]\n        Quality: [% quality %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
+INSERT INTO `email_templates` VALUES (10,NULL,'fax_notify_error_default_email','[% mail_from %]','Fax transmission to [% callee %] has failed','        Fax from [% caller %] to [% callee %] has failed.\n\n        Status:     [% status %]\n        Attempts:   [% attempts %]\n        Sent pages: [% sent_pages %] of [% pages %]\n        Reason:     [% reason %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
+INSERT INTO `email_templates` VALUES (11,NULL,'fax_notify_secret_update_default_email','[% mail_from %]','Preferences update notification','        Secret key for subscriber [% subscriber %] has been updated.\n\n        New secret key: [% secret_key %]\n\n--\nPlease do not reply to this auto-generated E-Mail.','');
+INSERT INTO `email_templates` VALUES (12,NULL,'admin_passreset_default_email','default@sipwise.com','Password reset email','Dear Customer,\n\nPlease go to [% url %] to set your password and log into your admin interface.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
+INSERT INTO `products` VALUES (1,NULL,'pstnpeering','PSTN_PEERING','PSTN Peering',1,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (2,NULL,'sippeering','SIP_PEERING','SIP Peering',1,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (3,NULL,'reseller','VOIP_RESELLER','VoIP Reseller',1,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (4,NULL,'sipaccount','SIP_ACCOUNT','Basic SIP Account',1,NULL,NULL,NULL);
+INSERT INTO `products` VALUES (5,NULL,'pbxaccount','PBX_ACCOUNT','Cloud PBX Account',1,NULL,NULL,NULL);
+INSERT INTO `resellers` VALUES (1,1,'default','active');
 COMMIT;

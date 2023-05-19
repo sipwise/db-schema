@@ -252,7 +252,6 @@ CREATE TABLE `cdr_cash_balance` (
   UNIQUE KEY `ccbc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_cash_balance` VALUES (1,'cash_balance');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -306,8 +305,6 @@ CREATE TABLE `cdr_direction` (
   UNIQUE KEY `cdc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_direction` VALUES (1,'source');
-INSERT INTO `cdr_direction` VALUES (2,'destination');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -391,8 +388,6 @@ CREATE TABLE `cdr_export_status` (
   UNIQUE KEY `cesc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_export_status` VALUES (2,'ama_ccs');
-INSERT INTO `cdr_export_status` VALUES (1,'default');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -494,9 +489,6 @@ CREATE TABLE `cdr_provider` (
   UNIQUE KEY `cpc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_provider` VALUES (1,'carrier');
-INSERT INTO `cdr_provider` VALUES (2,'reseller');
-INSERT INTO `cdr_provider` VALUES (3,'customer');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -582,9 +574,6 @@ CREATE TABLE `cdr_relation` (
   UNIQUE KEY `crc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_relation` VALUES (1,'profile_package_id');
-INSERT INTO `cdr_relation` VALUES (2,'contract_balance_id');
-INSERT INTO `cdr_relation` VALUES (3,'prev_fragment_id');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -637,20 +626,6 @@ CREATE TABLE `cdr_tag` (
   UNIQUE KEY `ctc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_tag` VALUES (10,'balance_delta');
-INSERT INTO `cdr_tag` VALUES (1,'calling_party_category');
-INSERT INTO `cdr_tag` VALUES (7,'concurrent_calls_count');
-INSERT INTO `cdr_tag` VALUES (8,'concurrent_calls_count_customer');
-INSERT INTO `cdr_tag` VALUES (9,'concurrent_calls_quota');
-INSERT INTO `cdr_tag` VALUES (6,'extra_rate');
-INSERT INTO `cdr_tag` VALUES (2,'furnished_charging_info');
-INSERT INTO `cdr_tag` VALUES (4,'header=Diversion');
-INSERT INTO `cdr_tag` VALUES (11,'header=History-Info');
-INSERT INTO `cdr_tag` VALUES (3,'header=P-Asserted-Identity');
-INSERT INTO `cdr_tag` VALUES (5,'header=User-to-User');
-INSERT INTO `cdr_tag` VALUES (12,'hg_ext_response');
-INSERT INTO `cdr_tag` VALUES (14,'r_ua');
-INSERT INTO `cdr_tag` VALUES (13,'r_user');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -703,7 +678,6 @@ CREATE TABLE `cdr_time_balance` (
   UNIQUE KEY `ctbc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `cdr_time_balance` VALUES (1,'free_time_balance');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -775,13 +749,6 @@ CREATE TABLE `events_relation` (
   UNIQUE KEY `erc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `events_relation` VALUES (1,'primary_number_id');
-INSERT INTO `events_relation` VALUES (2,'subscriber_profile_id');
-INSERT INTO `events_relation` VALUES (3,'subscriber_profile_set_id');
-INSERT INTO `events_relation` VALUES (4,'pilot_subscriber_id');
-INSERT INTO `events_relation` VALUES (5,'pilot_primary_number_id');
-INSERT INTO `events_relation` VALUES (6,'pilot_subscriber_profile_id');
-INSERT INTO `events_relation` VALUES (7,'pilot_subscriber_profile_set_id');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -827,25 +794,6 @@ CREATE TABLE `events_tag` (
   UNIQUE KEY `etc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `events_tag` VALUES (1,'primary_number_cc');
-INSERT INTO `events_tag` VALUES (2,'primary_number_ac');
-INSERT INTO `events_tag` VALUES (3,'primary_number_sn');
-INSERT INTO `events_tag` VALUES (4,'pilot_primary_number_cc');
-INSERT INTO `events_tag` VALUES (5,'pilot_primary_number_ac');
-INSERT INTO `events_tag` VALUES (6,'pilot_primary_number_sn');
-INSERT INTO `events_tag` VALUES (7,'subscriber_profile_name');
-INSERT INTO `events_tag` VALUES (8,'subscriber_profile_set_name');
-INSERT INTO `events_tag` VALUES (9,'pilot_subscriber_profile_name');
-INSERT INTO `events_tag` VALUES (10,'pilot_subscriber_profile_set_name');
-INSERT INTO `events_tag` VALUES (11,'first_non_primary_alias_username_before');
-INSERT INTO `events_tag` VALUES (12,'first_non_primary_alias_username_after');
-INSERT INTO `events_tag` VALUES (13,'pilot_first_non_primary_alias_username_before');
-INSERT INTO `events_tag` VALUES (14,'pilot_first_non_primary_alias_username_after');
-INSERT INTO `events_tag` VALUES (15,'non_primary_alias_username');
-INSERT INTO `events_tag` VALUES (16,'primary_alias_username_before');
-INSERT INTO `events_tag` VALUES (17,'primary_alias_username_after');
-INSERT INTO `events_tag` VALUES (18,'pilot_primary_alias_username_before');
-INSERT INTO `events_tag` VALUES (19,'pilot_primary_alias_username_after');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1162,4 +1110,56 @@ CREATE TABLE `prepaid_costs` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+INSERT INTO `cdr_cash_balance` VALUES (1,'cash_balance');
+INSERT INTO `cdr_direction` VALUES (1,'source');
+INSERT INTO `cdr_direction` VALUES (2,'destination');
+INSERT INTO `cdr_export_status` VALUES (2,'ama_ccs');
+INSERT INTO `cdr_export_status` VALUES (1,'default');
+INSERT INTO `cdr_provider` VALUES (1,'carrier');
+INSERT INTO `cdr_provider` VALUES (2,'reseller');
+INSERT INTO `cdr_provider` VALUES (3,'customer');
+INSERT INTO `cdr_relation` VALUES (1,'profile_package_id');
+INSERT INTO `cdr_relation` VALUES (2,'contract_balance_id');
+INSERT INTO `cdr_relation` VALUES (3,'prev_fragment_id');
+INSERT INTO `cdr_tag` VALUES (10,'balance_delta');
+INSERT INTO `cdr_tag` VALUES (1,'calling_party_category');
+INSERT INTO `cdr_tag` VALUES (7,'concurrent_calls_count');
+INSERT INTO `cdr_tag` VALUES (8,'concurrent_calls_count_customer');
+INSERT INTO `cdr_tag` VALUES (9,'concurrent_calls_quota');
+INSERT INTO `cdr_tag` VALUES (6,'extra_rate');
+INSERT INTO `cdr_tag` VALUES (2,'furnished_charging_info');
+INSERT INTO `cdr_tag` VALUES (4,'header=Diversion');
+INSERT INTO `cdr_tag` VALUES (11,'header=History-Info');
+INSERT INTO `cdr_tag` VALUES (3,'header=P-Asserted-Identity');
+INSERT INTO `cdr_tag` VALUES (5,'header=User-to-User');
+INSERT INTO `cdr_tag` VALUES (12,'hg_ext_response');
+INSERT INTO `cdr_tag` VALUES (14,'r_ua');
+INSERT INTO `cdr_tag` VALUES (13,'r_user');
+INSERT INTO `cdr_time_balance` VALUES (1,'free_time_balance');
+INSERT INTO `events_relation` VALUES (1,'primary_number_id');
+INSERT INTO `events_relation` VALUES (2,'subscriber_profile_id');
+INSERT INTO `events_relation` VALUES (3,'subscriber_profile_set_id');
+INSERT INTO `events_relation` VALUES (4,'pilot_subscriber_id');
+INSERT INTO `events_relation` VALUES (5,'pilot_primary_number_id');
+INSERT INTO `events_relation` VALUES (6,'pilot_subscriber_profile_id');
+INSERT INTO `events_relation` VALUES (7,'pilot_subscriber_profile_set_id');
+INSERT INTO `events_tag` VALUES (1,'primary_number_cc');
+INSERT INTO `events_tag` VALUES (2,'primary_number_ac');
+INSERT INTO `events_tag` VALUES (3,'primary_number_sn');
+INSERT INTO `events_tag` VALUES (4,'pilot_primary_number_cc');
+INSERT INTO `events_tag` VALUES (5,'pilot_primary_number_ac');
+INSERT INTO `events_tag` VALUES (6,'pilot_primary_number_sn');
+INSERT INTO `events_tag` VALUES (7,'subscriber_profile_name');
+INSERT INTO `events_tag` VALUES (8,'subscriber_profile_set_name');
+INSERT INTO `events_tag` VALUES (9,'pilot_subscriber_profile_name');
+INSERT INTO `events_tag` VALUES (10,'pilot_subscriber_profile_set_name');
+INSERT INTO `events_tag` VALUES (11,'first_non_primary_alias_username_before');
+INSERT INTO `events_tag` VALUES (12,'first_non_primary_alias_username_after');
+INSERT INTO `events_tag` VALUES (13,'pilot_first_non_primary_alias_username_before');
+INSERT INTO `events_tag` VALUES (14,'pilot_first_non_primary_alias_username_after');
+INSERT INTO `events_tag` VALUES (15,'non_primary_alias_username');
+INSERT INTO `events_tag` VALUES (16,'primary_alias_username_before');
+INSERT INTO `events_tag` VALUES (17,'primary_alias_username_after');
+INSERT INTO `events_tag` VALUES (18,'pilot_primary_alias_username_before');
+INSERT INTO `events_tag` VALUES (19,'pilot_primary_alias_username_after');
 COMMIT;
