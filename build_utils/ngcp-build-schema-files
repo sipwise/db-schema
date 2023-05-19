@@ -97,12 +97,21 @@ for schema in "${schemes[@]}"; do
   echo "CREATE DATABASE ${schema};" >> "${schema}.sql"
   echo "USE ${schema};" >> "${schema}.sql"
 
-  # Replace all the dates in format YYYY-MM-DD HH:MM:SS with NOW() function
-  mysqldump "${schema}" --triggers --routines --compact \
-    --skip-extended-insert \
+  mysqldump "${schema}" --triggers --routines --compact --no-data \
     -S "${mariadb_dir}/mysqld.sock" \
-    | sed -r "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
     >> "${schema}.sql"
+
+  mysqldump "${schema}" --no-create-info --skip-triggers --compact --skip-extended-insert \
+    -S "${mariadb_dir}/mysqld.sock" \
+    > "${schema}_data.sql"
+
+  # We need to replace all other current dates with NOW() function
+  sed -ri "s/'[[:digit:]]{4}-[[:digit:]]{2}-[[:digit:]]{2} [[:digit:]]{2}:[[:digit:]]{2}:[[:digit:]]{2}'/NOW()/g" \
+    "${schema}_data.sql"
+
+  cat "${schema}_data.sql" >> "${schema}.sql"
+  rm -f "${schema}_data.sql"
+
   echo "COMMIT;" >> "${schema}.sql"
   echo "Done"
 done
