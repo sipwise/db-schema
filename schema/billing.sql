@@ -101,75 +101,6 @@ CREATE TABLE `billing_fees` (
   CONSTRAINT `b_f_zoneid_ref` FOREIGN KEY (`billing_zone_id`) REFERENCES `billing_zones` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger billing.bill_fees_crepl_trig after insert on billing_fees
-  for each row
-  begin
-  declare my_bzh_id int unsigned;
-
-  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
-
-  insert into billing.billing_fees_history
-    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
-      NEW.source, NEW.destination, NEW.direction,
-      NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
-      NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
-      NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.onpeak_use_free_time,
-      NEW.match_mode, NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
-      NEW.offpeak_use_free_time, NEW.aoc_pulse_amount_per_message);
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger billing.bill_fees_urepl_trig after update on billing_fees
-  for each row
-  begin
-  declare my_bzh_id int unsigned;
-
-  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
-
-  update billing.billing_fees_history
-    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
-      billing_zones_history_id = my_bzh_id,
-      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
-      type = NEW.type,
-      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
-      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
-      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
-      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
-      onpeak_use_free_time = NEW.onpeak_use_free_time, offpeak_use_free_time = NEW.offpeak_use_free_time,
-      match_mode = NEW.match_mode,
-      onpeak_extra_rate = NEW.onpeak_extra_rate, onpeak_extra_second = NEW.onpeak_extra_second,
-      offpeak_extra_rate = NEW.offpeak_extra_rate, offpeak_extra_second = NEW.offpeak_extra_second, 
-      aoc_pulse_amount_per_message = NEW.aoc_pulse_amount_per_message
-    where bf_id = OLD.id;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_fees_history` (
@@ -368,50 +299,6 @@ CREATE TABLE `billing_zones` (
   CONSTRAINT `b_z_profileid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER billing.bill_zones_crepl_trig AFTER INSERT ON billing_zones
-  FOR EACH ROW BEGIN
-
-  INSERT INTO billing_zones_history
-       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = '' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER billing.bill_zones_urepl_trig AFTER UPDATE ON billing_zones
-  FOR EACH ROW BEGIN
-
-  UPDATE billing_zones_history
-     SET bz_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
-         zone = NEW.zone, detail = NEW.detail
-   WHERE bz_id <=> OLD.id;
-
-  END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `billing_zones_history` (
@@ -603,27 +490,6 @@ CREATE TABLE `contracts` (
   CONSTRAINT `co_orderid_ref` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_contract_update AFTER UPDATE ON contracts
-FOR EACH ROW
-BEGIN
-    IF new.status = 'terminated' THEN
-        DELETE FROM contract_phonebook WHERE contract_id = old.id;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `contracts_billing_profile_network` (
@@ -1110,27 +976,6 @@ CREATE TABLE `resellers` (
   CONSTRAINT `r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_reseller_update AFTER UPDATE ON resellers
-FOR EACH ROW
-BEGIN
-    IF new.status = 'terminated' THEN
-        DELETE FROM reseller_phonebook WHERE reseller_id = old.id;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `subscriber_phonebook` (
@@ -1334,27 +1179,6 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `v_s_pnumid_ref` FOREIGN KEY (`primary_number_id`) REFERENCES `voip_numbers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_subscriber_update AFTER UPDATE ON voip_subscribers
-FOR EACH ROW
-BEGIN
-    IF new.status = 'terminated' THEN
-        DELETE FROM subscriber_phonebook WHERE subscriber_id = old.id;
-    END IF;
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `vouchers` (
@@ -2534,4 +2358,180 @@ INSERT INTO `products` VALUES (3,NULL,'reseller','VOIP_RESELLER','VoIP Reseller'
 INSERT INTO `products` VALUES (4,NULL,'sipaccount','SIP_ACCOUNT','Basic SIP Account',1,NULL,NULL,NULL);
 INSERT INTO `products` VALUES (5,NULL,'pbxaccount','PBX_ACCOUNT','Cloud PBX Account',1,NULL,NULL,NULL);
 INSERT INTO `resellers` VALUES (1,1,'default','active');
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger billing.bill_fees_crepl_trig after insert on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  insert into billing.billing_fees_history
+    values(NULL, NEW.id, NEW.billing_profile_id, my_bzh_id,
+      NEW.source, NEW.destination, NEW.direction,
+      NEW.type, NEW.onpeak_init_rate, NEW.onpeak_init_interval, NEW.onpeak_follow_rate,
+      NEW.onpeak_follow_interval, NEW.offpeak_init_rate, NEW.offpeak_init_interval,
+      NEW.offpeak_follow_rate, NEW.offpeak_follow_interval, NEW.onpeak_use_free_time,
+      NEW.match_mode, NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
+      NEW.offpeak_use_free_time, NEW.aoc_pulse_amount_per_message);
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger billing.bill_fees_urepl_trig after update on billing_fees
+  for each row
+  begin
+  declare my_bzh_id int unsigned;
+
+  select id into my_bzh_id from billing.billing_zones_history where bz_id = NEW.billing_zone_id;
+
+  update billing.billing_fees_history
+    set bf_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+      billing_zones_history_id = my_bzh_id,
+      source = NEW.source, destination = NEW.destination, direction = NEW.direction,
+      type = NEW.type,
+      onpeak_init_rate = NEW.onpeak_init_rate, onpeak_init_interval = NEW.onpeak_init_interval,
+      onpeak_follow_rate = NEW.onpeak_follow_rate, onpeak_follow_interval = NEW.onpeak_follow_interval,
+      offpeak_init_rate = NEW.offpeak_init_rate, offpeak_init_interval = NEW.offpeak_init_interval,
+      offpeak_follow_rate = NEW.offpeak_follow_rate, offpeak_follow_interval = NEW.offpeak_follow_interval,
+      onpeak_use_free_time = NEW.onpeak_use_free_time, offpeak_use_free_time = NEW.offpeak_use_free_time,
+      match_mode = NEW.match_mode,
+      onpeak_extra_rate = NEW.onpeak_extra_rate, onpeak_extra_second = NEW.onpeak_extra_second,
+      offpeak_extra_rate = NEW.offpeak_extra_rate, offpeak_extra_second = NEW.offpeak_extra_second, 
+      aoc_pulse_amount_per_message = NEW.aoc_pulse_amount_per_message
+    where bf_id = OLD.id;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER billing.bill_zones_crepl_trig AFTER INSERT ON billing_zones
+  FOR EACH ROW BEGIN
+
+  INSERT INTO billing_zones_history
+       VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER billing.bill_zones_urepl_trig AFTER UPDATE ON billing_zones
+  FOR EACH ROW BEGIN
+
+  UPDATE billing_zones_history
+     SET bz_id = NEW.id, billing_profile_id = NEW.billing_profile_id,
+         zone = NEW.zone, detail = NEW.detail
+   WHERE bz_id <=> OLD.id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_contract_update AFTER UPDATE ON contracts
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM contract_phonebook WHERE contract_id = old.id;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_reseller_update AFTER UPDATE ON resellers
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM reseller_phonebook WHERE reseller_id = old.id;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER phonebook_on_subscriber_update AFTER UPDATE ON voip_subscribers
+FOR EACH ROW
+BEGIN
+    IF new.status = 'terminated' THEN
+        DELETE FROM subscriber_phonebook WHERE subscriber_id = old.id;
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 COMMIT;

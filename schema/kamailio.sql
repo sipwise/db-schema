@@ -1052,7 +1052,7 @@ INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_annou
 INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never',NOW());
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring',NOW());
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local',NOW(),NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','18820cd63551961a7f49472cb0168fc6','f7fce1531d000a503129fb74dd91370b','fba8942e2029dff3b927dea07e56921a','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','7dee1fc72bfee8296bb6664f7e169c0d','ff3a54dd2a5ec5c159ceb7c418812876','c199766b02eb784fc18ea30e0813fa1c','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none',NOW());
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack',NOW());
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());

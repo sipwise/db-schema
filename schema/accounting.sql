@@ -193,56 +193,6 @@ CREATE TABLE `cdr` (
   KEY `ecrstatus` (`export_status`,`call_status`,`rating_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cascade_update_trig after update on accounting.cdr
-  for each row begin
-
-  update accounting.cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cascade_delete_trig after delete on accounting.cdr
-  for each row begin
-
-  delete from accounting.cdr_relation_data where cdr_id = OLD.id;
-  delete from accounting.cdr_cash_balance_data where cdr_id = OLD.id;
-  delete from accounting.cdr_time_balance_data where cdr_id = OLD.id;
-  delete from accounting.cdr_tag_data where cdr_id = OLD.id;
-  delete from accounting.cdr_export_status_data where cdr_id = OLD.id;
-  delete from accounting.cdr_group where cdr_id = OLD.id;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_cash_balance` (
@@ -252,36 +202,6 @@ CREATE TABLE `cdr_cash_balance` (
   UNIQUE KEY `ccbc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cash_balance_rest_cascade_delete_trig before delete on accounting.cdr_cash_balance
-  for each row begin
-
-    select * into @cb_count from (select count(1) from accounting.cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
-    if @cb_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @cb_count from (select count(1) from accounting.int_cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
-    if @cb_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.int_cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_cash_balance_data` (
@@ -305,80 +225,6 @@ CREATE TABLE `cdr_direction` (
   UNIQUE KEY `cdc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_direction_rest_cascade_delete_trig before delete on accounting.cdr_direction
-  for each row begin
-
-    select * into @rel_dir_count
-        from (select count(1) from accounting.cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
-    if @rel_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @cash_balance_dir_count
-        from (select count(1) from accounting.cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
-    if @cash_balance_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @time_balance_dir_count
-        from (select count(1) from accounting.cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
-    if @time_balance_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @tag_dir_count
-        from (select count(1) from accounting.cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
-    if @tag_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-
-    select * into @rel_dir_count
-        from (select count(1) from accounting.int_cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
-    if @rel_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @cash_balance_dir_count
-        from (select count(1) from accounting.int_cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
-    if @cash_balance_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @time_balance_dir_count
-        from (select count(1) from accounting.int_cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
-    if @time_balance_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @tag_dir_count
-        from (select count(1) from accounting.int_cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
-    if @tag_dir_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_export_status` (
@@ -388,36 +234,6 @@ CREATE TABLE `cdr_export_status` (
   UNIQUE KEY `cesc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_export_status_rest_cascade_delete_trig before delete on accounting.cdr_export_status
-  for each row begin
-
-    select * into @es_count from (select count(1) from accounting.cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
-    if @ct_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.cdr_export_status_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @es_count from (select count(1) from accounting.int_cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
-    if @ct_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.int_cdr_export_status_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_export_status_data` (
@@ -489,82 +305,6 @@ CREATE TABLE `cdr_provider` (
   UNIQUE KEY `cpc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_provider_rest_cascade_delete_trig before delete on accounting.cdr_provider
-  for each row begin
-
-    select * into @rel_prov_count
-        from (select count(1) from accounting.cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
-    if @rel_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @cash_balance_prov_count
-        from (select count(1) from accounting.cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
-    if @cash_balance_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @time_balance_prov_count
-        from (select count(1) from accounting.cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
-    if @time_balance_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @tag_prov_count
-        from (select count(1) from accounting.cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
-    if @tag_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-
-
-    select * into @rel_prov_count
-        from (select count(1) from accounting.int_cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
-    if @rel_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @cash_balance_prov_count
-        from (select count(1) from accounting.int_cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
-    if @cash_balance_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_cash_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @time_balance_prov_count
-        from (select count(1) from accounting.int_cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
-    if @time_balance_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @tag_prov_count
-        from (select count(1) from accounting.int_cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
-    if @tag_prov_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_relation` (
@@ -574,36 +314,6 @@ CREATE TABLE `cdr_relation` (
   UNIQUE KEY `crc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_relation_rest_cascade_delete_trig before delete on accounting.cdr_relation
-  for each row begin
-
-    select * into @rel_count from (select count(1) from accounting.cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
-    if @rel_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @rel_count from (select count(1) from accounting.int_cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
-    if @rel_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.int_cdr_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_relation_data` (
@@ -626,36 +336,6 @@ CREATE TABLE `cdr_tag` (
   UNIQUE KEY `ctc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_tag_rest_cascade_delete_trig before delete on accounting.cdr_tag
-  for each row begin
-
-    select * into @ct_count from (select count(1) from accounting.cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
-    if @ct_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @ct_count from (select count(1) from accounting.int_cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
-    if @ct_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.int_cdr_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_tag_data` (
@@ -678,36 +358,6 @@ CREATE TABLE `cdr_time_balance` (
   UNIQUE KEY `ctbc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_time_balance_rest_cascade_delete_trig before delete on accounting.cdr_time_balance
-  for each row begin
-
-    select * into @tb_count from (select count(1) from accounting.cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
-    if @tb_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-    select * into @tb_count from (select count(1) from accounting.int_cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
-    if @tb_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.int_cdr_time_balance_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cdr_time_balance_data` (
@@ -749,31 +399,6 @@ CREATE TABLE `events_relation` (
   UNIQUE KEY `erc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger events_relation_rest_cascade_delete_trig before delete on accounting.events_relation
-  for each row begin
-
-    select count(1) into @rel_count from (select count(1) from accounting.events_relation_data where relation_id = OLD.id limit 1) as cnt;
-
-    if @rel_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.events_relation, related data exists in accounting.events_relation_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `events_relation_data` (
@@ -794,31 +419,6 @@ CREATE TABLE `events_tag` (
   UNIQUE KEY `etc_type_idx` (`type`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger events_tag_rest_cascade_delete_trig before delete on accounting.events_tag
-  for each row begin
-
-    select count(1) into @tag_count from (select count(1) from accounting.events_tag_data where tag_id = OLD.id limit 1) as cnt;
-
-    if @tag_count > 0 then
-        set @err_msg = 'Error deleting data from accounting.events_tag, related data exists in accounting.events_tag_data';
-        signal sqlstate '45000' set message_text = @err_msg;
-    end if;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `events_tag_data` (
@@ -942,56 +542,6 @@ CREATE TABLE `int_cdr` (
   KEY `ecrstatus` (`export_status`,`call_status`,`rating_status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger int_cdr_cascade_update_trig after update on accounting.int_cdr
-  for each row begin
-
-  update accounting.int_cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.int_cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.int_cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.int_cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.int_cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
-  update accounting.int_cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger int_cdr_cascade_delete_trig after delete on accounting.int_cdr
-  for each row begin
-
-  delete from accounting.int_cdr_relation_data where cdr_id = OLD.id;
-  delete from accounting.int_cdr_cash_balance_data where cdr_id = OLD.id;
-  delete from accounting.int_cdr_time_balance_data where cdr_id = OLD.id;
-  delete from accounting.int_cdr_tag_data where cdr_id = OLD.id;
-  delete from accounting.int_cdr_export_status_data where cdr_id = OLD.id;
-  delete from accounting.int_cdr_group where cdr_id = OLD.id;
-
-  end */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `int_cdr_cash_balance_data` (
@@ -1162,4 +712,454 @@ INSERT INTO `events_tag` VALUES (16,'primary_alias_username_before');
 INSERT INTO `events_tag` VALUES (17,'primary_alias_username_after');
 INSERT INTO `events_tag` VALUES (18,'pilot_primary_alias_username_before');
 INSERT INTO `events_tag` VALUES (19,'pilot_primary_alias_username_after');
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cascade_update_trig after update on accounting.cdr
+  for each row begin
+
+  update accounting.cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cascade_delete_trig after delete on accounting.cdr
+  for each row begin
+
+  delete from accounting.cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.cdr_export_status_data where cdr_id = OLD.id;
+  delete from accounting.cdr_group where cdr_id = OLD.id;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_cash_balance_rest_cascade_delete_trig before delete on accounting.cdr_cash_balance
+  for each row begin
+
+    select * into @cb_count from (select count(1) from accounting.cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
+    if @cb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @cb_count from (select count(1) from accounting.int_cdr_cash_balance_data where cash_balance_id = OLD.id limit 1) as cnt;
+    if @cb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_cash_balance, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_direction_rest_cascade_delete_trig before delete on accounting.cdr_direction
+  for each row begin
+
+    select * into @rel_dir_count
+        from (select count(1) from accounting.cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
+    if @rel_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @cash_balance_dir_count
+        from (select count(1) from accounting.cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @cash_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @time_balance_dir_count
+        from (select count(1) from accounting.cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @time_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @tag_dir_count
+        from (select count(1) from accounting.cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
+    if @tag_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+
+    select * into @rel_dir_count
+        from (select count(1) from accounting.int_cdr_relation_data where direction_id = OLD.id limit 1) as cnt;
+    if @rel_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @cash_balance_dir_count
+        from (select count(1) from accounting.int_cdr_cash_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @cash_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @time_balance_dir_count
+        from (select count(1) from accounting.int_cdr_time_balance_data where direction_id = OLD.id limit 1) as cnt;
+    if @time_balance_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @tag_dir_count
+        from (select count(1) from accounting.int_cdr_tag_data where direction_id = OLD.id limit 1) as cnt;
+    if @tag_dir_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_export_status_rest_cascade_delete_trig before delete on accounting.cdr_export_status
+  for each row begin
+
+    select * into @es_count from (select count(1) from accounting.cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.cdr_export_status_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @es_count from (select count(1) from accounting.int_cdr_export_status_data where status_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_export_status, related data exists in accounting.int_cdr_export_status_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_provider_rest_cascade_delete_trig before delete on accounting.cdr_provider
+  for each row begin
+
+    select * into @rel_prov_count
+        from (select count(1) from accounting.cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
+    if @rel_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @cash_balance_prov_count
+        from (select count(1) from accounting.cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @cash_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @time_balance_prov_count
+        from (select count(1) from accounting.cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @time_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @tag_prov_count
+        from (select count(1) from accounting.cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
+    if @tag_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+
+
+    select * into @rel_prov_count
+        from (select count(1) from accounting.int_cdr_relation_data where provider_id = OLD.id limit 1) as cnt;
+    if @rel_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @cash_balance_prov_count
+        from (select count(1) from accounting.int_cdr_cash_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @cash_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_cash_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @time_balance_prov_count
+        from (select count(1) from accounting.int_cdr_time_balance_data where provider_id = OLD.id limit 1) as cnt;
+    if @time_balance_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @tag_prov_count
+        from (select count(1) from accounting.int_cdr_tag_data where provider_id = OLD.id limit 1) as cnt;
+    if @tag_prov_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_provider, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_relation_rest_cascade_delete_trig before delete on accounting.cdr_relation
+  for each row begin
+
+    select * into @rel_count from (select count(1) from accounting.cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
+    if @rel_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @rel_count from (select count(1) from accounting.int_cdr_relation_data where relation_id = OLD.id limit 1) as cnt;
+    if @rel_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_relation, related data exists in accounting.int_cdr_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_tag_rest_cascade_delete_trig before delete on accounting.cdr_tag
+  for each row begin
+
+    select * into @ct_count from (select count(1) from accounting.cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @ct_count from (select count(1) from accounting.int_cdr_tag_data where tag_id = OLD.id limit 1) as cnt;
+    if @ct_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_tag, related data exists in accounting.int_cdr_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger cdr_time_balance_rest_cascade_delete_trig before delete on accounting.cdr_time_balance
+  for each row begin
+
+    select * into @tb_count from (select count(1) from accounting.cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
+    if @tb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+    select * into @tb_count from (select count(1) from accounting.int_cdr_time_balance_data where time_balance_id = OLD.id limit 1) as cnt;
+    if @tb_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.cdr_time_balance, related data exists in accounting.int_cdr_time_balance_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger events_relation_rest_cascade_delete_trig before delete on accounting.events_relation
+  for each row begin
+
+    select count(1) into @rel_count from (select count(1) from accounting.events_relation_data where relation_id = OLD.id limit 1) as cnt;
+
+    if @rel_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.events_relation, related data exists in accounting.events_relation_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger events_tag_rest_cascade_delete_trig before delete on accounting.events_tag
+  for each row begin
+
+    select count(1) into @tag_count from (select count(1) from accounting.events_tag_data where tag_id = OLD.id limit 1) as cnt;
+
+    if @tag_count > 0 then
+        set @err_msg = 'Error deleting data from accounting.events_tag, related data exists in accounting.events_tag_data';
+        signal sqlstate '45000' set message_text = @err_msg;
+    end if;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger int_cdr_cascade_update_trig after update on accounting.int_cdr
+  for each row begin
+
+  update accounting.int_cdr_relation_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_cash_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_time_balance_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_tag_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
+  update accounting.int_cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 trigger int_cdr_cascade_delete_trig after delete on accounting.int_cdr
+  for each row begin
+
+  delete from accounting.int_cdr_relation_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_cash_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_time_balance_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_tag_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_export_status_data where cdr_id = OLD.id;
+  delete from accounting.int_cdr_group where cdr_id = OLD.id;
+
+  end */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 COMMIT;
