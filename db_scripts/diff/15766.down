@@ -1,0 +1,49 @@
+USE provisioning;
+
+DROP TRIGGER voip_sound_files_create_trig;
+DROP TRIGGER voip_sound_files_update_trig;
+DROP TRIGGER voip_sound_files_delete_trig;
+
+DROP TRIGGER voip_sound_sets_create_trig;
+DROP TRIGGER voip_sound_sets_update_trig;
+DROP TRIGGER voip_sound_sets_delete_trig;
+
+DROP PROCEDURE update_sound_set_handle_parents;
+
+CREATE OR REPLACE VIEW v_sound_set_files AS
+WITH RECURSIVE cte as (
+    SELECT v.id AS set_id, v.reseller_id, v.contract_id, v.name, v.description,
+           v.handle_id, v.handle_name,
+           v.id AS data_set_id,
+           JSON_ARRAY(v.id) AS parent_chain
+      FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+            FROM (voip_sound_sets s, voip_sound_handles h)
+           ) AS v
+      LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+     WHERE v.parent_id IS NULL
+    UNION all
+    SELECT v.id AS set_id, v.reseller_id, v.contract_id, v.name, v.description,
+           v.handle_id, v.handle_name,
+           IF(v.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+           JSON_ARRAY_INSERT(cte.parent_chain, '$[0]', v.id) AS parent_chain
+      FROM (SELECT t.*, f.filename, f.use_parent
+            FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                  FROM (voip_sound_sets s, voip_sound_handles h)
+                 ) AS t
+            LEFT JOIN voip_sound_files f ON f.handle_id = t.handle_id AND f.set_id = t.id
+           ) AS v
+      JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+)
+SELECT cte.set_id, cte.reseller_id, cte.contract_id, cte.name, cte.description,
+       cte.handle_id, cte.handle_name,
+       vsf.id as file_id, vsf.filename, vsf.loopplay,
+       REPLACE(REPLACE(REPLACE(
+          JSON_REMOVE(cte.parent_chain, '$[0]'),
+          '[', ''), ']', ''), ', ', ':'
+       ) AS parent_chain,
+       data_set_id,
+       vsf.data
+  FROM cte
+  LEFT JOIN voip_sound_files vsf ON vsf.set_id = cte.data_set_id AND vsf.handle_id = cte.handle_id;
+
+DROP TABLE voip_sound_set_handle_parents;
