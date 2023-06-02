@@ -1,0 +1,3 @@
+USE ngcp;
+
+ALTER TABLE timezone ADD COLUMN version VARCHAR(32);
