@@ -1,0 +1,3 @@
+USE ngcp;
+
+ALTER TABLE timezone DROP COLUMN version;
