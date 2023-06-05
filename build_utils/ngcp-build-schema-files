@@ -2,11 +2,17 @@
 
 set -euEo pipefail
 
-ngcp_dump_json_cmd="/usr/share/ngcp-db-schema/helper/ngcp-dump-json.pl"
+tools_dir="$(dirname "$0")"
+ngcp_dump_json_cmd="${tools_dir}/ngcp-dump-json.pl"
 if [[ ! -x "${ngcp_dump_json_cmd}" ]]; then
   echo "Can't find executable ${ngcp_dump_json_cmd}" >&2
-  echo "Please install ngcp-db-schema package" >&2
-  exit 1
+  echo "Failing back to installed one" >&2
+  ngcp_dump_json_cmd="/usr/share/ngcp-db-schema/helper/ngcp-dump-json.pl"
+  if [[ ! -x "${ngcp_dump_json_cmd}" ]]; then
+    echo "Can't find executable ${ngcp_dump_json_cmd}" >&2
+    echo "Please install ngcp-db-schema package" >&2
+    exit 1
+  fi
 fi
 
 mariadb_dir=$(mktemp -d /tmp/mariadb-build.XXXXXX)
