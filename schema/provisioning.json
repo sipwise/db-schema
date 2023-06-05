@@ -6132,6 +6132,66 @@
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles/name"
       },
+      "voip_sound_set_handle_parents/handle_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "handle_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/handle_id"
+      },
+      "voip_sound_set_handle_parents/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/id"
+      },
+      "voip_sound_set_handle_parents/parent_chain" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "parent_chain",
+         "COLUMN_TYPE" : "varchar(1024)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_chain"
+      },
+      "voip_sound_set_handle_parents/parent_set_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "parent_set_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_set_id"
+      },
+      "voip_sound_set_handle_parents/set_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "set_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_id"
+      },
       "voip_sound_sets/contract_default" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -8451,6 +8511,16 @@
          "TABLE_NAME" : "voip_sound_handles",
          "UPDATE_RULE" : "CASCADE",
          "key_col" : "voip_sound_handles/v_s_h_group_ref/group_id/voip_sound_groups/id"
+      },
+      "voip_sound_set_handle_parents/vshh_handle_id_ref/handle_id/voip_sound_handles/id" : {
+         "COLUMN_NAME" : "handle_id",
+         "CONSTRAINT_NAME" : "vshh_handle_id_ref",
+         "DELETE_RULE" : "CASCADE",
+         "REFERENCED_COLUMN_NAME" : "id",
+         "REFERENCED_TABLE_NAME" : "voip_sound_handles",
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "UPDATE_RULE" : "CASCADE",
+         "key_col" : "voip_sound_set_handle_parents/vshh_handle_id_ref/handle_id/voip_sound_handles/id"
       },
       "voip_sound_sets/vss_parent_id_ref/parent_id/voip_sound_sets/id" : {
          "COLUMN_NAME" : "parent_id",
@@ -12088,6 +12158,66 @@
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles/v_s_h_group_ref/1"
       },
+      "voip_sound_set_handle_parents/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/PRIMARY/1"
+      },
+      "voip_sound_set_handle_parents/handle_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "handle_id",
+         "INDEX_NAME" : "handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/handle_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/parent_set_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "parent_set_id",
+         "INDEX_NAME" : "parent_set_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_set_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/set_handle_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "set_id",
+         "INDEX_NAME" : "set_handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_handle_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/set_handle_id_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "handle_id",
+         "INDEX_NAME" : "set_handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_handle_id_idx/2"
+      },
       "voip_sound_sets/PRIMARY/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "id",
@@ -12801,6 +12931,11 @@
          "ROUTINE_DEFINITION" : "BEGIN\n\n  RETURN IF(LOCATE(\".\",_ipnet) = 0,1,0);\n\nEND",
          "ROUTINE_TYPE" : "FUNCTION",
          "key_col" : "ip_is_ipv6"
+      },
+      "update_sound_set_handle_parents" : {
+         "ROUTINE_DEFINITION" : "BEGIN\n    IF u_sound_set_id IS NOT NULL THEN\n        DELETE p FROM voip_sound_set_handle_parents p\n         WHERE set_id IN (\n            WITH RECURSIVE cte as (\n                SELECT s.id\n                  FROM voip_sound_sets s\n                 WHERE id = u_sound_set_id\n                UNION\n                SELECT s.id\n                  FROM voip_sound_sets s\n                  JOIN cte ON cte.id = s.parent_id\n            )\n            SELECT id\n              FROM cte\n           )\n           AND (handle_id = u_handle_id OR 1=1);\n\n        DELETE p FROM voip_sound_set_handle_parents p\n         WHERE set_id IN (\n            WITH RECURSIVE cte as (\n                SELECT s.id, s.parent_id\n                  FROM voip_sound_sets s\n                 WHERE id = u_sound_set_id\n                UNION\n                SELECT s.id, s.parent_id\n                  FROM voip_sound_sets s\n                  JOIN cte ON cte.parent_id = s.id\n            )\n            SELECT id\n              FROM cte\n           )\n           AND (handle_id = u_handle_id OR 1=1);\n\n        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)\n        WITH RECURSIVE cte as (\n                SELECT v.id AS set_id, v.handle_id,\n                       v.id AS data_set_id,\n                       CAST('' AS CHAR(4096)) AS parent_chain\n                  FROM (SELECT s.*, h.id as handle_id\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n            WHERE v.id = (\n                WITH RECURSIVE cte as (\n                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter\n                      FROM voip_sound_sets s\n                     WHERE id = u_sound_set_id\n                    UNION\n                    SELECT s.id, s.parent_id, iter+1 as iter\n                      FROM voip_sound_sets s\n                      JOIN cte ON cte.parent_id = s.id\n                )\n                SELECT id\n                  FROM cte\n                 WHERE iter = (SELECT max(iter) from cte)\n            )\n            AND (v.handle_id = u_handle_id OR 1=1)\n            UNION\n            SELECT v.id AS set_id, v.handle_id,\n                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,\n                   CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain\n              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name\n                    FROM (voip_sound_sets s, voip_sound_handles h)\n                   ) AS v\n              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id\n        )\n        SELECT set_id, handle_id,\n               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,\n               parent_chain\n          FROM cte;\n    ELSE\n        IF u_handle_id IS NOT NULL THEN\n            DELETE FROM voip_sound_set_handle_parents WHERE handle_id = u_handle_id;\n        ELSE\n            DELETE FROM voip_sound_set_handle_parents;\n        END IF;\n\n        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)\n        WITH RECURSIVE cte as (\n                SELECT v.id AS set_id, v.handle_id,\n                       v.id AS data_set_id,\n                       CAST('' AS CHAR(4096)) AS parent_chain\n                  FROM (SELECT s.*, h.id as handle_id\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n                 WHERE v.parent_id IS NULL\n                   AND (v.handle_id = u_handle_id OR 1=1)\n                 UNION\n                SELECT v.id AS set_id, v.handle_id,\n                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,\n                       CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain\n                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id\n        )\n        SELECT set_id, handle_id,\n               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,\n               parent_chain\n          FROM cte;\n    END IF;\n\nEND",
+         "ROUTINE_TYPE" : "PROCEDURE",
+         "key_col" : "update_sound_set_handle_parents"
       }
    },
    "tables" : {
@@ -13378,6 +13513,13 @@
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles"
       },
+      "voip_sound_set_handle_parents" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents"
+      },
       "voip_sound_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
@@ -13493,7 +13635,7 @@
    },
    "views" : {
       "v_sound_set_files" : {
-         "VIEW_DEFINITION" : "with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from `provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`) `v` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from `provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`) `t` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`))",
+         "VIEW_DEFINITION" : "select `r`.`set_id` AS `set_id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`r`.`handle_id` AS `handle_id`,`h`.`name` AS `handle_name`,if(`r`.`parent_set_id` is not null,`vsf_p`.`id`,`vsf`.`id`) AS `file_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`filename`,`vsf`.`filename`) AS `filename`,if(`r`.`parent_set_id` is not null,`vsf_p`.`loopplay`,`vsf`.`loopplay`) AS `loopplay`,replace(replace(replace(json_remove(`r`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`r`.`parent_set_id` AS `data_set_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`data`,`vsf`.`data`) AS `data` from ((((`provisioning`.`voip_sound_set_handle_parents` `r` join `provisioning`.`voip_sound_sets` `s` on(`s`.`id` = `r`.`set_id`)) join `provisioning`.`voip_sound_handles` `h` on(`h`.`id` = `r`.`handle_id`)) left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `r`.`set_id` and `vsf`.`handle_id` = `r`.`handle_id`)) left join `provisioning`.`voip_sound_files` `vsf_p` on(`vsf_p`.`set_id` = `r`.`parent_set_id` and `vsf_p`.`handle_id` = `r`.`handle_id`))",
          "key_col" : "v_sound_set_files"
       },
       "v_subscriber_cfs" : {
