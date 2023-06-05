@@ -25,8 +25,8 @@
          "key_col" : "downloads/expires_at"
       },
       "downloads/id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_bin",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_bin",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "id",
          "COLUMN_TYPE" : "char(36)",
@@ -37,8 +37,8 @@
          "key_col" : "downloads/id"
       },
       "downloads/state" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'NEW'",
          "COLUMN_NAME" : "state",
          "COLUMN_TYPE" : "enum('NEW','DOWNLOADED')",
@@ -61,8 +61,8 @@
          "key_col" : "downloads/updated_at"
       },
       "downloads/upload_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_bin",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_bin",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "upload_id",
          "COLUMN_TYPE" : "char(36)",
@@ -97,8 +97,8 @@
          "key_col" : "sessions/expires_at"
       },
       "sessions/id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_bin",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_bin",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "id",
          "COLUMN_TYPE" : "char(36)",
@@ -169,8 +169,8 @@
          "key_col" : "uploads/expires_at"
       },
       "uploads/id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_bin",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_bin",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "id",
          "COLUMN_TYPE" : "char(36)",
@@ -181,8 +181,8 @@
          "key_col" : "uploads/id"
       },
       "uploads/mime_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "mime_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -193,8 +193,8 @@
          "key_col" : "uploads/mime_type"
       },
       "uploads/original_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "original_name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -217,8 +217,8 @@
          "key_col" : "uploads/reseller_id"
       },
       "uploads/session_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_bin",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_bin",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "session_id",
          "COLUMN_TYPE" : "char(36)",
@@ -241,8 +241,8 @@
          "key_col" : "uploads/size"
       },
       "uploads/state" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'NEW'",
          "COLUMN_NAME" : "state",
          "COLUMN_TYPE" : "enum('NEW','UPLOADED')",
@@ -458,21 +458,21 @@
       "downloads" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "downloads",
          "key_col" : "downloads"
       },
       "sessions" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "sessions",
          "key_col" : "sessions"
       },
       "uploads" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "uploads",
          "key_col" : "uploads"
       }

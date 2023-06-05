@@ -1,8 +1,8 @@
 {
    "columns" : {
       "acc/callid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "callid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -13,8 +13,8 @@
          "key_col" : "acc/callid"
       },
       "acc/dst_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -25,8 +25,8 @@
          "key_col" : "acc/dst_domain"
       },
       "acc/dst_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "dst_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -37,8 +37,8 @@
          "key_col" : "acc/dst_leg"
       },
       "acc/dst_ouser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_ouser",
          "COLUMN_TYPE" : "varchar(64)",
@@ -49,8 +49,8 @@
          "key_col" : "acc/dst_ouser"
       },
       "acc/dst_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -61,8 +61,8 @@
          "key_col" : "acc/dst_user"
       },
       "acc/from_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "from_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -85,8 +85,8 @@
          "key_col" : "acc/id"
       },
       "acc/method" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "method",
          "COLUMN_TYPE" : "varchar(16)",
@@ -97,8 +97,8 @@
          "key_col" : "acc/method"
       },
       "acc/sip_code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_code",
          "COLUMN_TYPE" : "varchar(3)",
@@ -109,8 +109,8 @@
          "key_col" : "acc/sip_code"
       },
       "acc/sip_reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_reason",
          "COLUMN_TYPE" : "varchar(128)",
@@ -121,8 +121,8 @@
          "key_col" : "acc/sip_reason"
       },
       "acc/src_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -133,8 +133,8 @@
          "key_col" : "acc/src_domain"
       },
       "acc/src_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "src_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -145,8 +145,8 @@
          "key_col" : "acc/src_leg"
       },
       "acc/src_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -181,8 +181,8 @@
          "key_col" : "acc/time_hires"
       },
       "acc/to_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "to_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -193,8 +193,8 @@
          "key_col" : "acc/to_tag"
       },
       "acc_backup/callid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "callid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -205,8 +205,8 @@
          "key_col" : "acc_backup/callid"
       },
       "acc_backup/dst_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -217,8 +217,8 @@
          "key_col" : "acc_backup/dst_domain"
       },
       "acc_backup/dst_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "dst_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -229,8 +229,8 @@
          "key_col" : "acc_backup/dst_leg"
       },
       "acc_backup/dst_ouser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_ouser",
          "COLUMN_TYPE" : "varchar(64)",
@@ -241,8 +241,8 @@
          "key_col" : "acc_backup/dst_ouser"
       },
       "acc_backup/dst_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -253,8 +253,8 @@
          "key_col" : "acc_backup/dst_user"
       },
       "acc_backup/from_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "from_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -277,8 +277,8 @@
          "key_col" : "acc_backup/id"
       },
       "acc_backup/method" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "method",
          "COLUMN_TYPE" : "varchar(16)",
@@ -289,8 +289,8 @@
          "key_col" : "acc_backup/method"
       },
       "acc_backup/sip_code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_code",
          "COLUMN_TYPE" : "varchar(3)",
@@ -301,8 +301,8 @@
          "key_col" : "acc_backup/sip_code"
       },
       "acc_backup/sip_reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_reason",
          "COLUMN_TYPE" : "varchar(128)",
@@ -313,8 +313,8 @@
          "key_col" : "acc_backup/sip_reason"
       },
       "acc_backup/src_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -325,8 +325,8 @@
          "key_col" : "acc_backup/src_domain"
       },
       "acc_backup/src_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "src_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -337,8 +337,8 @@
          "key_col" : "acc_backup/src_leg"
       },
       "acc_backup/src_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -373,8 +373,8 @@
          "key_col" : "acc_backup/time_hires"
       },
       "acc_backup/to_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "to_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -385,8 +385,8 @@
          "key_col" : "acc_backup/to_tag"
       },
       "acc_cdi/callid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "callid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -421,8 +421,8 @@
          "key_col" : "acc_cdi/mark"
       },
       "acc_trash/callid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "callid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -433,8 +433,8 @@
          "key_col" : "acc_trash/callid"
       },
       "acc_trash/dst_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -445,8 +445,8 @@
          "key_col" : "acc_trash/dst_domain"
       },
       "acc_trash/dst_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "dst_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -457,8 +457,8 @@
          "key_col" : "acc_trash/dst_leg"
       },
       "acc_trash/dst_ouser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_ouser",
          "COLUMN_TYPE" : "varchar(64)",
@@ -469,8 +469,8 @@
          "key_col" : "acc_trash/dst_ouser"
       },
       "acc_trash/dst_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "dst_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -481,8 +481,8 @@
          "key_col" : "acc_trash/dst_user"
       },
       "acc_trash/from_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "from_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -505,8 +505,8 @@
          "key_col" : "acc_trash/id"
       },
       "acc_trash/method" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "method",
          "COLUMN_TYPE" : "varchar(16)",
@@ -517,8 +517,8 @@
          "key_col" : "acc_trash/method"
       },
       "acc_trash/sip_code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_code",
          "COLUMN_TYPE" : "varchar(3)",
@@ -529,8 +529,8 @@
          "key_col" : "acc_trash/sip_code"
       },
       "acc_trash/sip_reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "sip_reason",
          "COLUMN_TYPE" : "varchar(128)",
@@ -541,8 +541,8 @@
          "key_col" : "acc_trash/sip_reason"
       },
       "acc_trash/src_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_domain",
          "COLUMN_TYPE" : "varchar(128)",
@@ -553,8 +553,8 @@
          "key_col" : "acc_trash/src_domain"
       },
       "acc_trash/src_leg" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "src_leg",
          "COLUMN_TYPE" : "varchar(10240)",
@@ -565,8 +565,8 @@
          "key_col" : "acc_trash/src_leg"
       },
       "acc_trash/src_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "src_user",
          "COLUMN_TYPE" : "varchar(64)",
@@ -601,8 +601,8 @@
          "key_col" : "acc_trash/time_hires"
       },
       "acc_trash/to_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "to_tag",
          "COLUMN_TYPE" : "varchar(64)",
@@ -613,8 +613,8 @@
          "key_col" : "acc_trash/to_tag"
       },
       "cdr/call_code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_code",
          "COLUMN_TYPE" : "char(3)",
@@ -625,8 +625,8 @@
          "key_col" : "cdr/call_code"
       },
       "cdr/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -637,8 +637,8 @@
          "key_col" : "cdr/call_id"
       },
       "cdr/call_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'ok'",
          "COLUMN_NAME" : "call_status",
          "COLUMN_TYPE" : "enum('ok','busy','noanswer','cancel','offline','timeout','other','failed')",
@@ -649,8 +649,8 @@
          "key_col" : "cdr/call_status"
       },
       "cdr/call_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'call'",
          "COLUMN_NAME" : "call_type",
          "COLUMN_TYPE" : "enum('call','cfu','cft','cfb','cfna','cfs','sms','cfr','cfo')",
@@ -769,8 +769,8 @@
          "key_col" : "cdr/destination_customer_free_time"
       },
       "cdr/destination_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -781,8 +781,8 @@
          "key_col" : "cdr/destination_domain"
       },
       "cdr/destination_domain_in" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_domain_in",
          "COLUMN_TYPE" : "varchar(255)",
@@ -793,8 +793,8 @@
          "key_col" : "cdr/destination_domain_in"
       },
       "cdr/destination_external_contract_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_external_contract_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -805,8 +805,8 @@
          "key_col" : "cdr/destination_external_contract_id"
       },
       "cdr/destination_external_subscriber_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_external_subscriber_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -817,8 +817,8 @@
          "key_col" : "cdr/destination_external_subscriber_id"
       },
       "cdr/destination_gpp0" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp0",
          "COLUMN_TYPE" : "varchar(255)",
@@ -829,8 +829,8 @@
          "key_col" : "cdr/destination_gpp0"
       },
       "cdr/destination_gpp1" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp1",
          "COLUMN_TYPE" : "varchar(255)",
@@ -841,8 +841,8 @@
          "key_col" : "cdr/destination_gpp1"
       },
       "cdr/destination_gpp2" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp2",
          "COLUMN_TYPE" : "varchar(255)",
@@ -853,8 +853,8 @@
          "key_col" : "cdr/destination_gpp2"
       },
       "cdr/destination_gpp3" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp3",
          "COLUMN_TYPE" : "varchar(255)",
@@ -865,8 +865,8 @@
          "key_col" : "cdr/destination_gpp3"
       },
       "cdr/destination_gpp4" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp4",
          "COLUMN_TYPE" : "varchar(255)",
@@ -877,8 +877,8 @@
          "key_col" : "cdr/destination_gpp4"
       },
       "cdr/destination_gpp5" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp5",
          "COLUMN_TYPE" : "varchar(255)",
@@ -889,8 +889,8 @@
          "key_col" : "cdr/destination_gpp5"
       },
       "cdr/destination_gpp6" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp6",
          "COLUMN_TYPE" : "varchar(255)",
@@ -901,8 +901,8 @@
          "key_col" : "cdr/destination_gpp6"
       },
       "cdr/destination_gpp7" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp7",
          "COLUMN_TYPE" : "varchar(255)",
@@ -913,8 +913,8 @@
          "key_col" : "cdr/destination_gpp7"
       },
       "cdr/destination_gpp8" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp8",
          "COLUMN_TYPE" : "varchar(255)",
@@ -925,8 +925,8 @@
          "key_col" : "cdr/destination_gpp8"
       },
       "cdr/destination_gpp9" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp9",
          "COLUMN_TYPE" : "varchar(255)",
@@ -937,8 +937,8 @@
          "key_col" : "cdr/destination_gpp9"
       },
       "cdr/destination_lnp_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "destination_lnp_prefix",
          "COLUMN_TYPE" : "varchar(255)",
@@ -949,8 +949,8 @@
          "key_col" : "cdr/destination_lnp_prefix"
       },
       "cdr/destination_lnp_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_lnp_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -961,8 +961,8 @@
          "key_col" : "cdr/destination_lnp_type"
       },
       "cdr/destination_provider_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_provider_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1021,8 +1021,8 @@
          "key_col" : "cdr/destination_reseller_free_time"
       },
       "cdr/destination_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1033,8 +1033,8 @@
          "key_col" : "cdr/destination_user"
       },
       "cdr/destination_user_dialed" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_dialed",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1045,8 +1045,8 @@
          "key_col" : "cdr/destination_user_dialed"
       },
       "cdr/destination_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -1057,8 +1057,8 @@
          "key_col" : "cdr/destination_user_id"
       },
       "cdr/destination_user_in" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_in",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1069,8 +1069,8 @@
          "key_col" : "cdr/destination_user_in"
       },
       "cdr/destination_user_out" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "destination_user_out",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1093,8 +1093,8 @@
          "key_col" : "cdr/duration"
       },
       "cdr/export_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unexported'",
          "COLUMN_NAME" : "export_status",
          "COLUMN_TYPE" : "enum('unexported','ok','failed')",
@@ -1189,8 +1189,8 @@
          "key_col" : "cdr/is_fragmented"
       },
       "cdr/peer_auth_realm" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "peer_auth_realm",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1201,8 +1201,8 @@
          "key_col" : "cdr/peer_auth_realm"
       },
       "cdr/peer_auth_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "peer_auth_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1225,8 +1225,8 @@
          "key_col" : "cdr/rated_at"
       },
       "cdr/rating_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unrated'",
          "COLUMN_NAME" : "rating_status",
          "COLUMN_TYPE" : "enum('unrated','ok','failed')",
@@ -1297,8 +1297,8 @@
          "key_col" : "cdr/source_carrier_free_time"
       },
       "cdr/source_cli" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_cli",
          "COLUMN_TYPE" : "varchar(64)",
@@ -1369,8 +1369,8 @@
          "key_col" : "cdr/source_customer_free_time"
       },
       "cdr/source_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1381,8 +1381,8 @@
          "key_col" : "cdr/source_domain"
       },
       "cdr/source_external_contract_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_external_contract_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1393,8 +1393,8 @@
          "key_col" : "cdr/source_external_contract_id"
       },
       "cdr/source_external_subscriber_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_external_subscriber_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1405,8 +1405,8 @@
          "key_col" : "cdr/source_external_subscriber_id"
       },
       "cdr/source_gpp0" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp0",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1417,8 +1417,8 @@
          "key_col" : "cdr/source_gpp0"
       },
       "cdr/source_gpp1" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp1",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1429,8 +1429,8 @@
          "key_col" : "cdr/source_gpp1"
       },
       "cdr/source_gpp2" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp2",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1441,8 +1441,8 @@
          "key_col" : "cdr/source_gpp2"
       },
       "cdr/source_gpp3" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp3",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1453,8 +1453,8 @@
          "key_col" : "cdr/source_gpp3"
       },
       "cdr/source_gpp4" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp4",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1465,8 +1465,8 @@
          "key_col" : "cdr/source_gpp4"
       },
       "cdr/source_gpp5" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp5",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1477,8 +1477,8 @@
          "key_col" : "cdr/source_gpp5"
       },
       "cdr/source_gpp6" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp6",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1489,8 +1489,8 @@
          "key_col" : "cdr/source_gpp6"
       },
       "cdr/source_gpp7" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp7",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1501,8 +1501,8 @@
          "key_col" : "cdr/source_gpp7"
       },
       "cdr/source_gpp8" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp8",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1513,8 +1513,8 @@
          "key_col" : "cdr/source_gpp8"
       },
       "cdr/source_gpp9" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp9",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1525,8 +1525,8 @@
          "key_col" : "cdr/source_gpp9"
       },
       "cdr/source_ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_ip",
          "COLUMN_TYPE" : "varchar(64)",
@@ -1537,8 +1537,8 @@
          "key_col" : "cdr/source_ip"
       },
       "cdr/source_lnp_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "source_lnp_prefix",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1549,8 +1549,8 @@
          "key_col" : "cdr/source_lnp_prefix"
       },
       "cdr/source_lnp_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_lnp_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1561,8 +1561,8 @@
          "key_col" : "cdr/source_lnp_type"
       },
       "cdr/source_provider_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_provider_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1621,8 +1621,8 @@
          "key_col" : "cdr/source_reseller_free_time"
       },
       "cdr/source_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1633,8 +1633,8 @@
          "key_col" : "cdr/source_user"
       },
       "cdr/source_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -1645,8 +1645,8 @@
          "key_col" : "cdr/source_user_id"
       },
       "cdr/source_user_out" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "source_user_out",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1705,8 +1705,8 @@
          "key_col" : "cdr_cash_balance/id"
       },
       "cdr_cash_balance/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('cash_balance')",
@@ -1813,8 +1813,8 @@
          "key_col" : "cdr_direction/id"
       },
       "cdr_direction/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('source','destination')",
@@ -1837,8 +1837,8 @@
          "key_col" : "cdr_export_status/id"
       },
       "cdr_export_status/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1873,8 +1873,8 @@
          "key_col" : "cdr_export_status_data/cdr_start_time"
       },
       "cdr_export_status_data/export_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unexported'",
          "COLUMN_NAME" : "export_status",
          "COLUMN_TYPE" : "enum('unexported','ok','failed','skipped')",
@@ -1909,8 +1909,8 @@
          "key_col" : "cdr_export_status_data/status_id"
       },
       "cdr_group/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2053,8 +2053,8 @@
          "key_col" : "cdr_period_costs/customer_cost"
       },
       "cdr_period_costs/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'out'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('out','in')",
@@ -2101,8 +2101,8 @@
          "key_col" : "cdr_period_costs/fraud_limit_exceeded"
       },
       "cdr_period_costs/fraud_limit_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "fraud_limit_type",
          "COLUMN_TYPE" : "enum('contract','billing_profile')",
@@ -2161,8 +2161,8 @@
          "key_col" : "cdr_period_costs/notified_at"
       },
       "cdr_period_costs/notify_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'new'",
          "COLUMN_NAME" : "notify_status",
          "COLUMN_TYPE" : "enum('new','notified')",
@@ -2173,8 +2173,8 @@
          "key_col" : "cdr_period_costs/notify_status"
       },
       "cdr_period_costs/period" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "period",
          "COLUMN_TYPE" : "enum('month','day')",
@@ -2221,8 +2221,8 @@
          "key_col" : "cdr_provider/id"
       },
       "cdr_provider/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('carrier','reseller','customer')",
@@ -2245,8 +2245,8 @@
          "key_col" : "cdr_relation/id"
       },
       "cdr_relation/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('profile_package_id','contract_balance_id','prev_fragment_id')",
@@ -2341,8 +2341,8 @@
          "key_col" : "cdr_tag/id"
       },
       "cdr_tag/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2413,8 +2413,8 @@
          "key_col" : "cdr_tag_data/tag_id"
       },
       "cdr_tag_data/val" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "val",
          "COLUMN_TYPE" : "text",
@@ -2437,8 +2437,8 @@
          "key_col" : "cdr_time_balance/id"
       },
       "cdr_time_balance/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('free_time_balance')",
@@ -2533,8 +2533,8 @@
          "key_col" : "cdr_time_balance_data/val_before"
       },
       "events/export_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unexported'",
          "COLUMN_NAME" : "export_status",
          "COLUMN_TYPE" : "enum('unexported','ok','filtered','failed')",
@@ -2569,8 +2569,8 @@
          "key_col" : "events/id"
       },
       "events/new_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "new_status",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2581,8 +2581,8 @@
          "key_col" : "events/new_status"
       },
       "events/old_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "old_status",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2629,8 +2629,8 @@
          "key_col" : "events/timestamp"
       },
       "events/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2653,8 +2653,8 @@
          "key_col" : "events_relation/id"
       },
       "events_relation/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('primary_number_id','subscriber_profile_id','subscriber_profile_set_id','pilot_subscriber_id','pilot_primary_number_id','pilot_subscriber_profile_id','pilot_subscriber_profile_set_id')",
@@ -2725,8 +2725,8 @@
          "key_col" : "events_tag/id"
       },
       "events_tag/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('primary_number_cc','primary_number_ac','primary_number_sn','pilot_primary_number_cc','pilot_primary_number_ac','pilot_primary_number_sn','subscriber_profile_name','subscriber_profile_set_name','pilot_subscriber_profile_name','pilot_subscriber_profile_set_name','first_non_primary_alias_username_before','first_non_primary_alias_username_after','pilot_first_non_primary_alias_username_before','pilot_first_non_primary_alias_username_after','non_primary_alias_username','primary_alias_username_before','primary_alias_username_after','pilot_primary_alias_username_before','pilot_primary_alias_username_after')",
@@ -2773,8 +2773,8 @@
          "key_col" : "events_tag_data/tag_id"
       },
       "events_tag_data/val" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "val",
          "COLUMN_TYPE" : "text",
@@ -2785,8 +2785,8 @@
          "key_col" : "events_tag_data/val"
       },
       "int_cdr/acc_ref" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "acc_ref",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2797,8 +2797,8 @@
          "key_col" : "int_cdr/acc_ref"
       },
       "int_cdr/call_code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_code",
          "COLUMN_TYPE" : "char(3)",
@@ -2809,8 +2809,8 @@
          "key_col" : "int_cdr/call_code"
       },
       "int_cdr/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2821,8 +2821,8 @@
          "key_col" : "int_cdr/call_id"
       },
       "int_cdr/call_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'ok'",
          "COLUMN_NAME" : "call_status",
          "COLUMN_TYPE" : "enum('ok','busy','noanswer','cancel','offline','timeout','other','failed')",
@@ -2833,8 +2833,8 @@
          "key_col" : "int_cdr/call_status"
       },
       "int_cdr/call_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'call'",
          "COLUMN_NAME" : "call_type",
          "COLUMN_TYPE" : "enum('call','cfu','cft','cfb','cfna','cfs','sms','cfr','cfo')",
@@ -2953,8 +2953,8 @@
          "key_col" : "int_cdr/destination_customer_free_time"
       },
       "int_cdr/destination_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2965,8 +2965,8 @@
          "key_col" : "int_cdr/destination_domain"
       },
       "int_cdr/destination_domain_in" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_domain_in",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2977,8 +2977,8 @@
          "key_col" : "int_cdr/destination_domain_in"
       },
       "int_cdr/destination_external_contract_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_external_contract_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2989,8 +2989,8 @@
          "key_col" : "int_cdr/destination_external_contract_id"
       },
       "int_cdr/destination_external_subscriber_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_external_subscriber_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3001,8 +3001,8 @@
          "key_col" : "int_cdr/destination_external_subscriber_id"
       },
       "int_cdr/destination_gpp0" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp0",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3013,8 +3013,8 @@
          "key_col" : "int_cdr/destination_gpp0"
       },
       "int_cdr/destination_gpp1" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp1",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3025,8 +3025,8 @@
          "key_col" : "int_cdr/destination_gpp1"
       },
       "int_cdr/destination_gpp2" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp2",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3037,8 +3037,8 @@
          "key_col" : "int_cdr/destination_gpp2"
       },
       "int_cdr/destination_gpp3" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp3",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3049,8 +3049,8 @@
          "key_col" : "int_cdr/destination_gpp3"
       },
       "int_cdr/destination_gpp4" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp4",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3061,8 +3061,8 @@
          "key_col" : "int_cdr/destination_gpp4"
       },
       "int_cdr/destination_gpp5" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp5",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3073,8 +3073,8 @@
          "key_col" : "int_cdr/destination_gpp5"
       },
       "int_cdr/destination_gpp6" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp6",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3085,8 +3085,8 @@
          "key_col" : "int_cdr/destination_gpp6"
       },
       "int_cdr/destination_gpp7" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp7",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3097,8 +3097,8 @@
          "key_col" : "int_cdr/destination_gpp7"
       },
       "int_cdr/destination_gpp8" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp8",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3109,8 +3109,8 @@
          "key_col" : "int_cdr/destination_gpp8"
       },
       "int_cdr/destination_gpp9" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_gpp9",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3121,8 +3121,8 @@
          "key_col" : "int_cdr/destination_gpp9"
       },
       "int_cdr/destination_lnp_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "destination_lnp_prefix",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3133,8 +3133,8 @@
          "key_col" : "int_cdr/destination_lnp_prefix"
       },
       "int_cdr/destination_lnp_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination_lnp_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3145,8 +3145,8 @@
          "key_col" : "int_cdr/destination_lnp_type"
       },
       "int_cdr/destination_provider_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_provider_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3205,8 +3205,8 @@
          "key_col" : "int_cdr/destination_reseller_free_time"
       },
       "int_cdr/destination_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3217,8 +3217,8 @@
          "key_col" : "int_cdr/destination_user"
       },
       "int_cdr/destination_user_dialed" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_dialed",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3229,8 +3229,8 @@
          "key_col" : "int_cdr/destination_user_dialed"
       },
       "int_cdr/destination_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -3241,8 +3241,8 @@
          "key_col" : "int_cdr/destination_user_id"
       },
       "int_cdr/destination_user_in" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_in",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3253,8 +3253,8 @@
          "key_col" : "int_cdr/destination_user_in"
       },
       "int_cdr/destination_user_out" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "destination_user_out",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3277,8 +3277,8 @@
          "key_col" : "int_cdr/duration"
       },
       "int_cdr/export_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unexported'",
          "COLUMN_NAME" : "export_status",
          "COLUMN_TYPE" : "enum('unexported','ok','failed')",
@@ -3373,8 +3373,8 @@
          "key_col" : "int_cdr/is_fragmented"
       },
       "int_cdr/peer_auth_realm" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "peer_auth_realm",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3385,8 +3385,8 @@
          "key_col" : "int_cdr/peer_auth_realm"
       },
       "int_cdr/peer_auth_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "peer_auth_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3409,8 +3409,8 @@
          "key_col" : "int_cdr/rated_at"
       },
       "int_cdr/rating_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unrated'",
          "COLUMN_NAME" : "rating_status",
          "COLUMN_TYPE" : "enum('unrated','ok','failed')",
@@ -3481,8 +3481,8 @@
          "key_col" : "int_cdr/source_carrier_free_time"
       },
       "int_cdr/source_cli" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_cli",
          "COLUMN_TYPE" : "varchar(64)",
@@ -3553,8 +3553,8 @@
          "key_col" : "int_cdr/source_customer_free_time"
       },
       "int_cdr/source_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3565,8 +3565,8 @@
          "key_col" : "int_cdr/source_domain"
       },
       "int_cdr/source_external_contract_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_external_contract_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3577,8 +3577,8 @@
          "key_col" : "int_cdr/source_external_contract_id"
       },
       "int_cdr/source_external_subscriber_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_external_subscriber_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3589,8 +3589,8 @@
          "key_col" : "int_cdr/source_external_subscriber_id"
       },
       "int_cdr/source_gpp0" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp0",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3601,8 +3601,8 @@
          "key_col" : "int_cdr/source_gpp0"
       },
       "int_cdr/source_gpp1" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp1",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3613,8 +3613,8 @@
          "key_col" : "int_cdr/source_gpp1"
       },
       "int_cdr/source_gpp2" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp2",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3625,8 +3625,8 @@
          "key_col" : "int_cdr/source_gpp2"
       },
       "int_cdr/source_gpp3" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp3",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3637,8 +3637,8 @@
          "key_col" : "int_cdr/source_gpp3"
       },
       "int_cdr/source_gpp4" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp4",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3649,8 +3649,8 @@
          "key_col" : "int_cdr/source_gpp4"
       },
       "int_cdr/source_gpp5" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp5",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3661,8 +3661,8 @@
          "key_col" : "int_cdr/source_gpp5"
       },
       "int_cdr/source_gpp6" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp6",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3673,8 +3673,8 @@
          "key_col" : "int_cdr/source_gpp6"
       },
       "int_cdr/source_gpp7" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp7",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3685,8 +3685,8 @@
          "key_col" : "int_cdr/source_gpp7"
       },
       "int_cdr/source_gpp8" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp8",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3697,8 +3697,8 @@
          "key_col" : "int_cdr/source_gpp8"
       },
       "int_cdr/source_gpp9" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_gpp9",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3709,8 +3709,8 @@
          "key_col" : "int_cdr/source_gpp9"
       },
       "int_cdr/source_ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_ip",
          "COLUMN_TYPE" : "varchar(64)",
@@ -3721,8 +3721,8 @@
          "key_col" : "int_cdr/source_ip"
       },
       "int_cdr/source_lnp_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "source_lnp_prefix",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3733,8 +3733,8 @@
          "key_col" : "int_cdr/source_lnp_prefix"
       },
       "int_cdr/source_lnp_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source_lnp_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3745,8 +3745,8 @@
          "key_col" : "int_cdr/source_lnp_type"
       },
       "int_cdr/source_provider_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_provider_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3805,8 +3805,8 @@
          "key_col" : "int_cdr/source_reseller_free_time"
       },
       "int_cdr/source_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3817,8 +3817,8 @@
          "key_col" : "int_cdr/source_user"
       },
       "int_cdr/source_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -3829,8 +3829,8 @@
          "key_col" : "int_cdr/source_user_id"
       },
       "int_cdr/source_user_out" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "source_user_out",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3985,8 +3985,8 @@
          "key_col" : "int_cdr_export_status_data/cdr_start_time"
       },
       "int_cdr_export_status_data/export_status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'unexported'",
          "COLUMN_NAME" : "export_status",
          "COLUMN_TYPE" : "enum('unexported','ok','failed','skipped')",
@@ -4021,8 +4021,8 @@
          "key_col" : "int_cdr_export_status_data/status_id"
       },
       "int_cdr_group/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4189,8 +4189,8 @@
          "key_col" : "int_cdr_tag_data/tag_id"
       },
       "int_cdr_tag_data/val" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "val",
          "COLUMN_TYPE" : "text",
@@ -4285,8 +4285,8 @@
          "key_col" : "int_cdr_time_balance_data/val_before"
       },
       "malicious_calls/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4297,8 +4297,8 @@
          "key_col" : "malicious_calls/call_id"
       },
       "malicious_calls/callee" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "callee",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4309,8 +4309,8 @@
          "key_col" : "malicious_calls/callee"
       },
       "malicious_calls/callee_uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "callee_uuid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4321,8 +4321,8 @@
          "key_col" : "malicious_calls/callee_uuid"
       },
       "malicious_calls/caller" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "caller",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4369,8 +4369,8 @@
          "key_col" : "malicious_calls/reported_at"
       },
       "malicious_calls/source" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "source",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4405,8 +4405,8 @@
          "key_col" : "mark/acc_id"
       },
       "mark/collector" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "collector",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4429,8 +4429,8 @@
          "key_col" : "mark/id"
       },
       "prepaid_costs/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4453,8 +4453,8 @@
          "key_col" : "prepaid_costs/cost"
       },
       "prepaid_costs/destination_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -4489,8 +4489,8 @@
          "key_col" : "prepaid_costs/id"
       },
       "prepaid_costs/source_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_user_id",
          "COLUMN_TYPE" : "char(36)",
@@ -4503,10 +4503,10 @@
       "prepaid_costs/timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "timestamp",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "on update current_timestamp()",
+         "EXTRA" : "",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 5,
          "TABLE_NAME" : "prepaid_costs",
@@ -6645,245 +6645,245 @@
       "acc" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acc",
          "key_col" : "acc"
       },
       "acc_backup" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acc_backup",
          "key_col" : "acc_backup"
       },
       "acc_cdi" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acc_cdi",
          "key_col" : "acc_cdi"
       },
       "acc_trash" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acc_trash",
          "key_col" : "acc_trash"
       },
       "cdr" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr",
          "key_col" : "cdr"
       },
       "cdr_cash_balance" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_cash_balance",
          "key_col" : "cdr_cash_balance"
       },
       "cdr_cash_balance_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_cash_balance_data",
          "key_col" : "cdr_cash_balance_data"
       },
       "cdr_direction" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_direction",
          "key_col" : "cdr_direction"
       },
       "cdr_export_status" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_export_status",
          "key_col" : "cdr_export_status"
       },
       "cdr_export_status_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_export_status_data",
          "key_col" : "cdr_export_status_data"
       },
       "cdr_group" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_group",
          "key_col" : "cdr_group"
       },
       "cdr_mos_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_mos_data",
          "key_col" : "cdr_mos_data"
       },
       "cdr_period_costs" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_period_costs",
          "key_col" : "cdr_period_costs"
       },
       "cdr_provider" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_provider",
          "key_col" : "cdr_provider"
       },
       "cdr_relation" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_relation",
          "key_col" : "cdr_relation"
       },
       "cdr_relation_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_relation_data",
          "key_col" : "cdr_relation_data"
       },
       "cdr_tag" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_tag",
          "key_col" : "cdr_tag"
       },
       "cdr_tag_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_tag_data",
          "key_col" : "cdr_tag_data"
       },
       "cdr_time_balance" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_time_balance",
          "key_col" : "cdr_time_balance"
       },
       "cdr_time_balance_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_time_balance_data",
          "key_col" : "cdr_time_balance_data"
       },
       "events" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "events",
          "key_col" : "events"
       },
       "events_relation" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "events_relation",
          "key_col" : "events_relation"
       },
       "events_relation_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "events_relation_data",
          "key_col" : "events_relation_data"
       },
       "events_tag" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "events_tag",
          "key_col" : "events_tag"
       },
       "events_tag_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "events_tag_data",
          "key_col" : "events_tag_data"
       },
       "int_cdr" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr",
          "key_col" : "int_cdr"
       },
       "int_cdr_cash_balance_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_cash_balance_data",
          "key_col" : "int_cdr_cash_balance_data"
       },
       "int_cdr_export_status_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_export_status_data",
          "key_col" : "int_cdr_export_status_data"
       },
       "int_cdr_group" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_group",
          "key_col" : "int_cdr_group"
       },
       "int_cdr_relation_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_relation_data",
          "key_col" : "int_cdr_relation_data"
       },
       "int_cdr_tag_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_tag_data",
          "key_col" : "int_cdr_tag_data"
       },
       "int_cdr_time_balance_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "int_cdr_time_balance_data",
          "key_col" : "int_cdr_time_balance_data"
       },
       "malicious_calls" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "malicious_calls",
          "key_col" : "malicious_calls"
       },
       "mark" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "mark",
          "key_col" : "mark"
       },
       "prepaid_costs" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "prepaid_costs",
          "key_col" : "prepaid_costs"
       }

@@ -1,8 +1,8 @@
 {
    "columns" : {
       "autoprov_configs/content_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "content_type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -13,8 +13,8 @@
          "key_col" : "autoprov_configs/content_type"
       },
       "autoprov_configs/data" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "data",
          "COLUMN_TYPE" : "mediumtext",
@@ -49,8 +49,8 @@
          "key_col" : "autoprov_configs/id"
       },
       "autoprov_configs/version" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "version",
          "COLUMN_TYPE" : "varchar(255)",
@@ -133,8 +133,8 @@
          "key_col" : "autoprov_device_line_annotations/line_index"
       },
       "autoprov_device_line_annotations/position" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "position",
          "COLUMN_TYPE" : "enum('top','bottom','left','right','bottomleft','bottomright','topleft','topright')",
@@ -277,8 +277,8 @@
          "key_col" : "autoprov_device_line_ranges/id"
       },
       "autoprov_device_line_ranges/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -301,8 +301,8 @@
          "key_col" : "autoprov_device_line_ranges/num_lines"
       },
       "autoprov_devices/bootstrap_method" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'http'",
          "COLUMN_NAME" : "bootstrap_method",
          "COLUMN_TYPE" : "enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream','redirect_ale')",
@@ -313,8 +313,8 @@
          "key_col" : "autoprov_devices/bootstrap_method"
       },
       "autoprov_devices/bootstrap_uri" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "bootstrap_uri",
          "COLUMN_TYPE" : "varchar(255)",
@@ -349,8 +349,8 @@
          "key_col" : "autoprov_devices/front_image"
       },
       "autoprov_devices/front_image_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "front_image_type",
          "COLUMN_TYPE" : "varchar(32)",
@@ -373,8 +373,8 @@
          "key_col" : "autoprov_devices/front_thumbnail"
       },
       "autoprov_devices/front_thumbnail_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "front_thumbnail_type",
          "COLUMN_TYPE" : "varchar(32)",
@@ -409,8 +409,8 @@
          "key_col" : "autoprov_devices/mac_image"
       },
       "autoprov_devices/mac_image_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "mac_image_type",
          "COLUMN_TYPE" : "varchar(32)",
@@ -421,8 +421,8 @@
          "key_col" : "autoprov_devices/mac_image_type"
       },
       "autoprov_devices/model" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "model",
          "COLUMN_TYPE" : "varchar(255)",
@@ -457,8 +457,8 @@
          "key_col" : "autoprov_devices/reseller_id"
       },
       "autoprov_devices/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'phone'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('phone','extension')",
@@ -469,8 +469,8 @@
          "key_col" : "autoprov_devices/type"
       },
       "autoprov_devices/vendor" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "vendor",
          "COLUMN_TYPE" : "varchar(255)",
@@ -541,8 +541,8 @@
          "key_col" : "autoprov_field_device_lines/key_num"
       },
       "autoprov_field_device_lines/line_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'private'",
          "COLUMN_NAME" : "line_type",
          "COLUMN_TYPE" : "enum('private','shared','blf','speeddial','forward','transfer')",
@@ -577,8 +577,8 @@
          "key_col" : "autoprov_field_device_lines/subscriber_id"
       },
       "autoprov_field_device_lines/target_number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "target_number",
          "COLUMN_TYPE" : "varchar(100)",
@@ -613,8 +613,8 @@
          "key_col" : "autoprov_field_devices/contract_id"
       },
       "autoprov_field_devices/encryption_key" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "encryption_key",
          "COLUMN_TYPE" : "varchar(255)",
@@ -637,8 +637,8 @@
          "key_col" : "autoprov_field_devices/id"
       },
       "autoprov_field_devices/identifier" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "identifier",
          "COLUMN_TYPE" : "varchar(255)",
@@ -673,8 +673,8 @@
          "key_col" : "autoprov_field_devices/profile_id"
       },
       "autoprov_field_devices/station_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "station_name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -697,8 +697,8 @@
          "key_col" : "autoprov_firmwares/device_id"
       },
       "autoprov_firmwares/filename" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "filename",
          "COLUMN_TYPE" : "varchar(255)",
@@ -721,8 +721,8 @@
          "key_col" : "autoprov_firmwares/id"
       },
       "autoprov_firmwares/tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "tag",
          "COLUMN_TYPE" : "varchar(255)",
@@ -733,8 +733,8 @@
          "key_col" : "autoprov_firmwares/tag"
       },
       "autoprov_firmwares/version" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "version",
          "COLUMN_TYPE" : "varchar(255)",
@@ -805,8 +805,8 @@
          "key_col" : "autoprov_profiles/id"
       },
       "autoprov_profiles/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -841,8 +841,8 @@
          "key_col" : "autoprov_redirect_credentials/id"
       },
       "autoprov_redirect_credentials/password" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "password",
          "COLUMN_TYPE" : "varchar(255)",
@@ -853,8 +853,8 @@
          "key_col" : "autoprov_redirect_credentials/password"
       },
       "autoprov_redirect_credentials/user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "user",
          "COLUMN_TYPE" : "varchar(255)",
@@ -901,8 +901,8 @@
          "key_col" : "autoprov_sync/parameter_id"
       },
       "autoprov_sync/parameter_value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "parameter_value",
          "COLUMN_TYPE" : "varchar(255)",
@@ -913,8 +913,8 @@
          "key_col" : "autoprov_sync/parameter_value"
       },
       "autoprov_sync_parameters/bootstrap_method" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'http'",
          "COLUMN_NAME" : "bootstrap_method",
          "COLUMN_TYPE" : "enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream')",
@@ -937,8 +937,8 @@
          "key_col" : "autoprov_sync_parameters/id"
       },
       "autoprov_sync_parameters/parameter_constraint" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "parameter_constraint",
          "COLUMN_TYPE" : "varchar(255)",
@@ -949,8 +949,8 @@
          "key_col" : "autoprov_sync_parameters/parameter_constraint"
       },
       "autoprov_sync_parameters/parameter_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "parameter_name",
          "COLUMN_TYPE" : "enum('sync_uri','sync_method','sync_params','security_handler','profile','cid','key','product_family')",
@@ -973,8 +973,8 @@
          "key_col" : "emergency_containers/id"
       },
       "emergency_containers/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -997,8 +997,8 @@
          "key_col" : "emergency_containers/reseller_id"
       },
       "emergency_mappings/code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "code",
          "COLUMN_TYPE" : "varchar(32)",
@@ -1033,8 +1033,8 @@
          "key_col" : "emergency_mappings/id"
       },
       "emergency_mappings/prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "prefix",
          "COLUMN_TYPE" : "varchar(32)",
@@ -1045,8 +1045,8 @@
          "key_col" : "emergency_mappings/prefix"
       },
       "emergency_mappings/suffix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "suffix",
          "COLUMN_TYPE" : "varchar(32)",
@@ -1057,8 +1057,8 @@
          "key_col" : "emergency_mappings/suffix"
       },
       "language_strings/code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "code",
          "COLUMN_TYPE" : "varchar(63)",
@@ -1081,8 +1081,8 @@
          "key_col" : "language_strings/id"
       },
       "language_strings/language" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "language",
          "COLUMN_TYPE" : "char(2)",
@@ -1093,8 +1093,8 @@
          "key_col" : "language_strings/language"
       },
       "language_strings/string" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "string",
          "COLUMN_TYPE" : "text",
@@ -1105,8 +1105,8 @@
          "key_col" : "language_strings/string"
       },
       "recording_calls/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(250)",
@@ -1177,8 +1177,8 @@
          "key_col" : "recording_calls/start_timestamp"
       },
       "recording_calls/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'recording'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('recording','completed','confirmed')",
@@ -1213,8 +1213,8 @@
          "key_col" : "recording_metakeys/id"
       },
       "recording_metakeys/key" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "key",
          "COLUMN_TYPE" : "char(255)",
@@ -1225,8 +1225,8 @@
          "key_col" : "recording_metakeys/key"
       },
       "recording_metakeys/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "char(255)",
@@ -1285,8 +1285,8 @@
          "key_col" : "recording_streams/end_timestamp"
       },
       "recording_streams/file_format" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "file_format",
          "COLUMN_TYPE" : "varchar(10)",
@@ -1297,8 +1297,8 @@
          "key_col" : "recording_streams/file_format"
       },
       "recording_streams/full_filename" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "full_filename",
          "COLUMN_TYPE" : "varchar(250)",
@@ -1321,8 +1321,8 @@
          "key_col" : "recording_streams/id"
       },
       "recording_streams/local_filename" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "local_filename",
          "COLUMN_TYPE" : "varchar(250)",
@@ -1333,8 +1333,8 @@
          "key_col" : "recording_streams/local_filename"
       },
       "recording_streams/output_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "output_type",
          "COLUMN_TYPE" : "enum('mixed','single')",
@@ -1417,8 +1417,8 @@
          "key_col" : "recording_streams/stream_id"
       },
       "recording_streams/tag_label" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "tag_label",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1441,8 +1441,8 @@
          "key_col" : "rtc_session/id"
       },
       "rtc_session/rtc_network_tag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "rtc_network_tag",
          "COLUMN_TYPE" : "varchar(45)",
@@ -1453,8 +1453,8 @@
          "key_col" : "rtc_session/rtc_network_tag"
       },
       "rtc_session/rtc_session_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "rtc_session_id",
          "COLUMN_TYPE" : "varchar(36)",
@@ -1501,8 +1501,8 @@
          "key_col" : "rtc_user/reseller_id"
       },
       "rtc_user/rtc_user_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "rtc_user_id",
          "COLUMN_TYPE" : "varchar(36)",
@@ -1693,8 +1693,8 @@
          "key_col" : "upn_rewrite_set/id"
       },
       "upn_rewrite_set/new_cli" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "new_cli",
          "COLUMN_TYPE" : "varchar(45)",
@@ -1729,8 +1729,8 @@
          "key_col" : "upn_rewrite_sources/id"
       },
       "upn_rewrite_sources/pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "pattern",
          "COLUMN_TYPE" : "varchar(45)",
@@ -1837,8 +1837,8 @@
          "key_col" : "voip_allowed_ip_groups/id"
       },
       "voip_allowed_ip_groups/ipnet" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ipnet",
          "COLUMN_TYPE" : "varchar(46)",
@@ -1849,8 +1849,8 @@
          "key_col" : "voip_allowed_ip_groups/ipnet"
       },
       "voip_cc_mappings/auth_key" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "auth_key",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1873,8 +1873,8 @@
          "key_col" : "voip_cc_mappings/id"
       },
       "voip_cc_mappings/source_uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source_uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -1885,8 +1885,8 @@
          "key_col" : "voip_cc_mappings/source_uuid"
       },
       "voip_cc_mappings/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -1921,8 +1921,8 @@
          "key_col" : "voip_cf_bnumber_sets/is_regex"
       },
       "voip_cf_bnumber_sets/mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'whitelist'",
          "COLUMN_NAME" : "mode",
          "COLUMN_TYPE" : "enum('whitelist','blacklist')",
@@ -1933,8 +1933,8 @@
          "key_col" : "voip_cf_bnumber_sets/mode"
       },
       "voip_cf_bnumber_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1957,8 +1957,8 @@
          "key_col" : "voip_cf_bnumber_sets/subscriber_id"
       },
       "voip_cf_bnumbers/bnumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "bnumber",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2005,8 +2005,8 @@
          "key_col" : "voip_cf_destination_sets/id"
       },
       "voip_cf_destination_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2041,8 +2041,8 @@
          "key_col" : "voip_cf_destinations/announcement_id"
       },
       "voip_cf_destinations/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2185,8 +2185,8 @@
          "key_col" : "voip_cf_mappings/time_set_id"
       },
       "voip_cf_mappings/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'cfu'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('cfu','cfb','cfna','cft','cfs','cfr','cfo')",
@@ -2197,8 +2197,8 @@
          "key_col" : "voip_cf_mappings/type"
       },
       "voip_cf_periods/hour" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "hour",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2221,8 +2221,8 @@
          "key_col" : "voip_cf_periods/id"
       },
       "voip_cf_periods/mday" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "mday",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2233,8 +2233,8 @@
          "key_col" : "voip_cf_periods/mday"
       },
       "voip_cf_periods/minute" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "minute",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2245,8 +2245,8 @@
          "key_col" : "voip_cf_periods/minute"
       },
       "voip_cf_periods/month" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "month",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2269,8 +2269,8 @@
          "key_col" : "voip_cf_periods/time_set_id"
       },
       "voip_cf_periods/wday" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "wday",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2281,8 +2281,8 @@
          "key_col" : "voip_cf_periods/wday"
       },
       "voip_cf_periods/year" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "year",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2317,8 +2317,8 @@
          "key_col" : "voip_cf_source_sets/is_regex"
       },
       "voip_cf_source_sets/mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'whitelist'",
          "COLUMN_NAME" : "mode",
          "COLUMN_TYPE" : "enum('whitelist','blacklist')",
@@ -2329,8 +2329,8 @@
          "key_col" : "voip_cf_source_sets/mode"
       },
       "voip_cf_source_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2365,8 +2365,8 @@
          "key_col" : "voip_cf_sources/id"
       },
       "voip_cf_sources/source" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "source",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2401,8 +2401,8 @@
          "key_col" : "voip_cf_time_sets/id"
       },
       "voip_cf_time_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2425,8 +2425,8 @@
          "key_col" : "voip_cf_time_sets/subscriber_id"
       },
       "voip_contacts/company" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "company",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2437,8 +2437,8 @@
          "key_col" : "voip_contacts/company"
       },
       "voip_contacts/email" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "email",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2449,8 +2449,8 @@
          "key_col" : "voip_contacts/email"
       },
       "voip_contacts/faxnumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "faxnumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2461,8 +2461,8 @@
          "key_col" : "voip_contacts/faxnumber"
       },
       "voip_contacts/firstname" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "firstname",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2473,8 +2473,8 @@
          "key_col" : "voip_contacts/firstname"
       },
       "voip_contacts/homepage" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "homepage",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2485,8 +2485,8 @@
          "key_col" : "voip_contacts/homepage"
       },
       "voip_contacts/homephonenumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "homephonenumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2509,8 +2509,8 @@
          "key_col" : "voip_contacts/id"
       },
       "voip_contacts/lastname" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "lastname",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2521,8 +2521,8 @@
          "key_col" : "voip_contacts/lastname"
       },
       "voip_contacts/mobilenumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "mobilenumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2533,8 +2533,8 @@
          "key_col" : "voip_contacts/mobilenumber"
       },
       "voip_contacts/phonenumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "phonenumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2617,8 +2617,8 @@
          "key_col" : "voip_contract_location_blocks/id"
       },
       "voip_contract_location_blocks/ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ip",
          "COLUMN_TYPE" : "varchar(39)",
@@ -2665,8 +2665,8 @@
          "key_col" : "voip_contract_locations/contract_id"
       },
       "voip_contract_locations/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2689,8 +2689,8 @@
          "key_col" : "voip_contract_locations/id"
       },
       "voip_contract_locations/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2761,8 +2761,8 @@
          "key_col" : "voip_contract_preferences/modify_timestamp"
       },
       "voip_contract_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -2773,8 +2773,8 @@
          "key_col" : "voip_contract_preferences/value"
       },
       "voip_contract_preferences_blob/content_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'application/data'",
          "COLUMN_NAME" : "content_type",
          "COLUMN_TYPE" : "varchar(128)",
@@ -2833,8 +2833,8 @@
          "key_col" : "voip_contract_speed_dial/contract_id"
       },
       "voip_contract_speed_dial/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(192)",
@@ -2857,8 +2857,8 @@
          "key_col" : "voip_contract_speed_dial/id"
       },
       "voip_contract_speed_dial/slot" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "slot",
          "COLUMN_TYPE" : "varchar(64)",
@@ -2869,8 +2869,8 @@
          "key_col" : "voip_contract_speed_dial/slot"
       },
       "voip_dbaliases/devid_alias" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "devid_alias",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2941,8 +2941,8 @@
          "key_col" : "voip_dbaliases/subscriber_id"
       },
       "voip_dbaliases/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(127)",
@@ -3001,8 +3001,8 @@
          "key_col" : "voip_dev_preferences/modify_timestamp"
       },
       "voip_dev_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -3061,8 +3061,8 @@
          "key_col" : "voip_devprof_preferences/profile_id"
       },
       "voip_devprof_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -3121,8 +3121,8 @@
          "key_col" : "voip_dom_preferences/modify_timestamp"
       },
       "voip_dom_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -3133,8 +3133,8 @@
          "key_col" : "voip_dom_preferences/value"
       },
       "voip_dom_preferences_blob/content_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'application/data'",
          "COLUMN_NAME" : "content_type",
          "COLUMN_TYPE" : "varchar(128)",
@@ -3181,8 +3181,8 @@
          "key_col" : "voip_dom_preferences_blob/value"
       },
       "voip_domains/domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "domain",
          "COLUMN_TYPE" : "varchar(127)",
@@ -3205,8 +3205,8 @@
          "key_col" : "voip_domains/id"
       },
       "voip_fax_data/checksum" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "checksum",
          "COLUMN_TYPE" : "char(32)",
@@ -3241,8 +3241,8 @@
          "key_col" : "voip_fax_data/id"
       },
       "voip_fax_data/sid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "sid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3289,8 +3289,8 @@
          "key_col" : "voip_fax_destinations/cc"
       },
       "voip_fax_destinations/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3301,8 +3301,8 @@
          "key_col" : "voip_fax_destinations/destination"
       },
       "voip_fax_destinations/filetype" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'TIFF'",
          "COLUMN_NAME" : "filetype",
          "COLUMN_TYPE" : "enum('PS','TIFF','PDF','PDF14')",
@@ -3373,8 +3373,8 @@
          "key_col" : "voip_fax_destinations/subscriber_id"
       },
       "voip_fax_journal/call_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "call_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3385,8 +3385,8 @@
          "key_col" : "voip_fax_journal/call_id"
       },
       "voip_fax_journal/callee" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "callee",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3397,8 +3397,8 @@
          "key_col" : "voip_fax_journal/callee"
       },
       "voip_fax_journal/callee_uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "callee_uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -3409,8 +3409,8 @@
          "key_col" : "voip_fax_journal/callee_uuid"
       },
       "voip_fax_journal/caller" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "caller",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3421,8 +3421,8 @@
          "key_col" : "voip_fax_journal/caller"
       },
       "voip_fax_journal/caller_uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "caller_uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -3433,8 +3433,8 @@
          "key_col" : "voip_fax_journal/caller_uuid"
       },
       "voip_fax_journal/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('in','out','mtf')",
@@ -3457,8 +3457,8 @@
          "key_col" : "voip_fax_journal/duration"
       },
       "voip_fax_journal/filename" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "filename",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3493,8 +3493,8 @@
          "key_col" : "voip_fax_journal/pages"
       },
       "voip_fax_journal/quality" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "quality",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3505,8 +3505,8 @@
          "key_col" : "voip_fax_journal/quality"
       },
       "voip_fax_journal/reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "reason",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3517,8 +3517,8 @@
          "key_col" : "voip_fax_journal/reason"
       },
       "voip_fax_journal/sid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "sid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3541,8 +3541,8 @@
          "key_col" : "voip_fax_journal/signal_rate"
       },
       "voip_fax_journal/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3613,8 +3613,8 @@
          "key_col" : "voip_fax_preferences/id"
       },
       "voip_fax_preferences/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(64)",
@@ -3625,8 +3625,8 @@
          "key_col" : "voip_fax_preferences/name"
       },
       "voip_fax_preferences/password" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "password",
          "COLUMN_TYPE" : "varchar(64)",
@@ -3733,8 +3733,8 @@
          "key_col" : "voip_fielddev_preferences/modify_timestamp"
       },
       "voip_fielddev_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -3745,8 +3745,8 @@
          "key_col" : "voip_fielddev_preferences/value"
       },
       "voip_header_rule_actions/action_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "action_type",
          "COLUMN_TYPE" : "enum('set','add','remove','rsub','header','preference')",
@@ -3769,8 +3769,8 @@
          "key_col" : "voip_header_rule_actions/enabled"
       },
       "voip_header_rule_actions/header" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "header",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3781,8 +3781,8 @@
          "key_col" : "voip_header_rule_actions/header"
       },
       "voip_header_rule_actions/header_part" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'full'",
          "COLUMN_NAME" : "header_part",
          "COLUMN_TYPE" : "enum('full','username','domain','port')",
@@ -3853,8 +3853,8 @@
          "key_col" : "voip_header_rule_actions/rwr_set_id"
       },
       "voip_header_rule_actions/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3865,8 +3865,8 @@
          "key_col" : "voip_header_rule_actions/value"
       },
       "voip_header_rule_actions/value_part" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'full'",
          "COLUMN_NAME" : "value_part",
          "COLUMN_TYPE" : "enum('full','username','domain','port')",
@@ -3901,8 +3901,8 @@
          "key_col" : "voip_header_rule_condition_values/id"
       },
       "voip_header_rule_condition_values/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3925,8 +3925,8 @@
          "key_col" : "voip_header_rule_conditions/enabled"
       },
       "voip_header_rule_conditions/expression" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "expression",
          "COLUMN_TYPE" : "enum('is','contains','matches','regexp')",
@@ -3961,8 +3961,8 @@
          "key_col" : "voip_header_rule_conditions/id"
       },
       "voip_header_rule_conditions/match_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "match_name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3973,8 +3973,8 @@
          "key_col" : "voip_header_rule_conditions/match_name"
       },
       "voip_header_rule_conditions/match_part" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'full'",
          "COLUMN_NAME" : "match_part",
          "COLUMN_TYPE" : "enum('full','username','domain','port')",
@@ -3985,8 +3985,8 @@
          "key_col" : "voip_header_rule_conditions/match_part"
       },
       "voip_header_rule_conditions/match_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'header'",
          "COLUMN_NAME" : "match_type",
          "COLUMN_TYPE" : "enum('header','preference','avp')",
@@ -4033,8 +4033,8 @@
          "key_col" : "voip_header_rule_conditions/rwr_set_id"
       },
       "voip_header_rule_conditions/value_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value_type",
          "COLUMN_TYPE" : "enum('input','preference','avp')",
@@ -4045,8 +4045,8 @@
          "key_col" : "voip_header_rule_conditions/value_type"
       },
       "voip_header_rule_sets/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4069,8 +4069,8 @@
          "key_col" : "voip_header_rule_sets/id"
       },
       "voip_header_rule_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4105,8 +4105,8 @@
          "key_col" : "voip_header_rule_sets/subscriber_id"
       },
       "voip_header_rules/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4117,8 +4117,8 @@
          "key_col" : "voip_header_rules/description"
       },
       "voip_header_rules/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'inbound'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('inbound','outbound','local','peer','cf_inbound','cf_outbound','reply')",
@@ -4153,8 +4153,8 @@
          "key_col" : "voip_header_rules/id"
       },
       "voip_header_rules/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4201,8 +4201,8 @@
          "key_col" : "voip_header_rules/stopper"
       },
       "voip_mail_to_fax_acl/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4213,8 +4213,8 @@
          "key_col" : "voip_mail_to_fax_acl/destination"
       },
       "voip_mail_to_fax_acl/from_email" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "from_email",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4237,8 +4237,8 @@
          "key_col" : "voip_mail_to_fax_acl/id"
       },
       "voip_mail_to_fax_acl/received_from" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "received_from",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4309,8 +4309,8 @@
          "key_col" : "voip_mail_to_fax_preferences/last_secret_key_modify"
       },
       "voip_mail_to_fax_preferences/secret_key" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "secret_key",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4321,8 +4321,8 @@
          "key_col" : "voip_mail_to_fax_preferences/secret_key"
       },
       "voip_mail_to_fax_preferences/secret_key_renew" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'never'",
          "COLUMN_NAME" : "secret_key_renew",
          "COLUMN_TYPE" : "enum('never','daily','weekly','monthly')",
@@ -4345,8 +4345,8 @@
          "key_col" : "voip_mail_to_fax_preferences/subscriber_id"
       },
       "voip_mail_to_fax_secret_renew_notify/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4381,8 +4381,8 @@
          "key_col" : "voip_mail_to_fax_secret_renew_notify/subscriber_id"
       },
       "voip_pbx_autoattendants/choice" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "choice",
          "COLUMN_TYPE" : "varchar(16)",
@@ -4393,8 +4393,8 @@
          "key_col" : "voip_pbx_autoattendants/choice"
       },
       "voip_pbx_autoattendants/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4429,8 +4429,8 @@
          "key_col" : "voip_pbx_autoattendants/subscriber_id"
       },
       "voip_pbx_autoattendants/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -4477,8 +4477,8 @@
          "key_col" : "voip_pbx_groups/subscriber_id"
       },
       "voip_peer_groups/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4513,8 +4513,8 @@
          "key_col" : "voip_peer_groups/id"
       },
       "voip_peer_groups/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(127)",
@@ -4585,8 +4585,8 @@
          "key_col" : "voip_peer_hosts/group_id"
       },
       "voip_peer_hosts/host" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "host",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4609,8 +4609,8 @@
          "key_col" : "voip_peer_hosts/id"
       },
       "voip_peer_hosts/ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ip",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4621,8 +4621,8 @@
          "key_col" : "voip_peer_hosts/ip"
       },
       "voip_peer_hosts/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4681,8 +4681,8 @@
          "key_col" : "voip_peer_hosts/via_lb"
       },
       "voip_peer_hosts/via_route" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "via_route",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4717,8 +4717,8 @@
          "key_col" : "voip_peer_inbound_rules/enabled"
       },
       "voip_peer_inbound_rules/field" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "field",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4753,8 +4753,8 @@
          "key_col" : "voip_peer_inbound_rules/id"
       },
       "voip_peer_inbound_rules/pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "pattern",
          "COLUMN_TYPE" : "varchar(1023)",
@@ -4789,8 +4789,8 @@
          "key_col" : "voip_peer_inbound_rules/reject_code"
       },
       "voip_peer_inbound_rules/reject_reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "reject_reason",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4849,8 +4849,8 @@
          "key_col" : "voip_peer_preferences/peer_host_id"
       },
       "voip_peer_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4861,8 +4861,8 @@
          "key_col" : "voip_peer_preferences/value"
       },
       "voip_peer_preferences_blob/content_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'application/data'",
          "COLUMN_NAME" : "content_type",
          "COLUMN_TYPE" : "varchar(128)",
@@ -4909,8 +4909,8 @@
          "key_col" : "voip_peer_preferences_blob/value"
       },
       "voip_peer_rules/callee_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "callee_pattern",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4921,8 +4921,8 @@
          "key_col" : "voip_peer_rules/callee_pattern"
       },
       "voip_peer_rules/callee_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "callee_prefix",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4933,8 +4933,8 @@
          "key_col" : "voip_peer_rules/callee_prefix"
       },
       "voip_peer_rules/caller_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "caller_pattern",
          "COLUMN_TYPE" : "varchar(64)",
@@ -4945,8 +4945,8 @@
          "key_col" : "voip_peer_rules/caller_pattern"
       },
       "voip_peer_rules/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5017,8 +5017,8 @@
          "key_col" : "voip_preference_groups/id"
       },
       "voip_preference_groups/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5077,8 +5077,8 @@
          "key_col" : "voip_preference_relations/voip_preference_id"
       },
       "voip_preferences/attribute" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "attribute",
          "COLUMN_TYPE" : "varchar(31)",
@@ -5113,8 +5113,8 @@
          "key_col" : "voip_preferences/contract_pref"
       },
       "voip_preferences/data_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "data_type",
          "COLUMN_TYPE" : "enum('boolean','int','string','enum','blob')",
@@ -5125,8 +5125,8 @@
          "key_col" : "voip_preferences/data_type"
       },
       "voip_preferences/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "text",
@@ -5245,8 +5245,8 @@
          "key_col" : "voip_preferences/internal"
       },
       "voip_preferences/label" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "label",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5461,8 +5461,8 @@
          "key_col" : "voip_preferences_enum/id"
       },
       "voip_preferences_enum/label" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "label",
          "COLUMN_TYPE" : "varchar(128)",
@@ -5533,8 +5533,8 @@
          "key_col" : "voip_preferences_enum/usr_pref"
       },
       "voip_preferences_enum/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -5593,8 +5593,8 @@
          "key_col" : "voip_prof_preferences/profile_id"
       },
       "voip_prof_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -5629,8 +5629,8 @@
          "key_col" : "voip_reminder/id"
       },
       "voip_reminder/recur" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'never'",
          "COLUMN_NAME" : "recur",
          "COLUMN_TYPE" : "enum('never','weekdays','always')",
@@ -5713,8 +5713,8 @@
          "key_col" : "voip_reseller_preferences/reseller_id"
       },
       "voip_reseller_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -5797,8 +5797,8 @@
          "key_col" : "voip_rewrite_rule_sets/caller_out_dpid"
       },
       "voip_rewrite_rule_sets/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5821,8 +5821,8 @@
          "key_col" : "voip_rewrite_rule_sets/id"
       },
       "voip_rewrite_rule_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(32)",
@@ -5845,8 +5845,8 @@
          "key_col" : "voip_rewrite_rule_sets/reseller_id"
       },
       "voip_rewrite_rules/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(127)",
@@ -5857,8 +5857,8 @@
          "key_col" : "voip_rewrite_rules/description"
       },
       "voip_rewrite_rules/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'in'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('in','out','lnp')",
@@ -5881,8 +5881,8 @@
          "key_col" : "voip_rewrite_rules/enabled"
       },
       "voip_rewrite_rules/field" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'caller'",
          "COLUMN_NAME" : "field",
          "COLUMN_TYPE" : "enum('caller','callee')",
@@ -5905,8 +5905,8 @@
          "key_col" : "voip_rewrite_rules/id"
       },
       "voip_rewrite_rules/match_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "match_pattern",
          "COLUMN_TYPE" : "varchar(128)",
@@ -5929,8 +5929,8 @@
          "key_col" : "voip_rewrite_rules/priority"
       },
       "voip_rewrite_rules/replace_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "replace_pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5965,8 +5965,8 @@
          "key_col" : "voip_rwrs_sequence/id"
       },
       "voip_sound_files/codec" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "codec",
          "COLUMN_TYPE" : "varchar(16)",
@@ -5989,8 +5989,8 @@
          "key_col" : "voip_sound_files/data"
       },
       "voip_sound_files/filename" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "filename",
          "COLUMN_TYPE" : "varchar(256)",
@@ -6073,8 +6073,8 @@
          "key_col" : "voip_sound_groups/id"
       },
       "voip_sound_groups/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6121,8 +6121,8 @@
          "key_col" : "voip_sound_handles/id"
       },
       "voip_sound_handles/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(256)",
@@ -6131,6 +6131,66 @@
          "ORDINAL_POSITION" : 2,
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles/name"
+      },
+      "voip_sound_set_handle_parents/handle_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "handle_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/handle_id"
+      },
+      "voip_sound_set_handle_parents/id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "auto_increment",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/id"
+      },
+      "voip_sound_set_handle_parents/parent_chain" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "parent_chain",
+         "COLUMN_TYPE" : "varchar(1024)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_chain"
+      },
+      "voip_sound_set_handle_parents/parent_set_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "parent_set_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_set_id"
+      },
+      "voip_sound_set_handle_parents/set_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "set_id",
+         "COLUMN_TYPE" : "int(11)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_id"
       },
       "voip_sound_sets/contract_default" : {
          "CHARACTER_SET_NAME" : null,
@@ -6157,8 +6217,8 @@
          "key_col" : "voip_sound_sets/contract_id"
       },
       "voip_sound_sets/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6193,8 +6253,8 @@
          "key_col" : "voip_sound_sets/id"
       },
       "voip_sound_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(256)",
@@ -6229,8 +6289,8 @@
          "key_col" : "voip_sound_sets/reseller_id"
       },
       "voip_speed_dial/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(192)",
@@ -6253,8 +6313,8 @@
          "key_col" : "voip_speed_dial/id"
       },
       "voip_speed_dial/slot" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "slot",
          "COLUMN_TYPE" : "varchar(64)",
@@ -6277,8 +6337,8 @@
          "key_col" : "voip_speed_dial/subscriber_id"
       },
       "voip_subscriber_location_mappings/callee_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "callee_pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6289,8 +6349,8 @@
          "key_col" : "voip_subscriber_location_mappings/callee_pattern"
       },
       "voip_subscriber_location_mappings/caller_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "caller_pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6313,8 +6373,8 @@
          "key_col" : "voip_subscriber_location_mappings/enabled"
       },
       "voip_subscriber_location_mappings/external_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "external_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6337,8 +6397,8 @@
          "key_col" : "voip_subscriber_location_mappings/id"
       },
       "voip_subscriber_location_mappings/location" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "location",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6349,8 +6409,8 @@
          "key_col" : "voip_subscriber_location_mappings/location"
       },
       "voip_subscriber_location_mappings/mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'replace'",
          "COLUMN_NAME" : "mode",
          "COLUMN_TYPE" : "enum('add','replace','offline','forward')",
@@ -6373,8 +6433,8 @@
          "key_col" : "voip_subscriber_location_mappings/subscriber_id"
       },
       "voip_subscriber_location_mappings/to_username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "to_username",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6421,8 +6481,8 @@
          "key_col" : "voip_subscriber_profile_attributes/profile_id"
       },
       "voip_subscriber_profile_sets/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6445,8 +6505,8 @@
          "key_col" : "voip_subscriber_profile_sets/id"
       },
       "voip_subscriber_profile_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6469,8 +6529,8 @@
          "key_col" : "voip_subscriber_profile_sets/reseller_id"
       },
       "voip_subscriber_profiles/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6493,8 +6553,8 @@
          "key_col" : "voip_subscriber_profiles/id"
       },
       "voip_subscriber_profiles/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6625,8 +6685,8 @@
          "key_col" : "voip_subscribers/modify_timestamp"
       },
       "voip_subscribers/password" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "password",
          "COLUMN_TYPE" : "varchar(40)",
@@ -6637,8 +6697,8 @@
          "key_col" : "voip_subscribers/password"
       },
       "voip_subscribers/pbx_extension" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "pbx_extension",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6649,8 +6709,8 @@
          "key_col" : "voip_subscribers/pbx_extension"
       },
       "voip_subscribers/pbx_hunt_policy" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'none'",
          "COLUMN_NAME" : "pbx_hunt_policy",
          "COLUMN_TYPE" : "enum('serial','parallel','random','circular','none')",
@@ -6697,8 +6757,8 @@
          "key_col" : "voip_subscribers/profile_set_id"
       },
       "voip_subscribers/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(127)",
@@ -6709,8 +6769,8 @@
          "key_col" : "voip_subscribers/username"
       },
       "voip_subscribers/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -6721,8 +6781,8 @@
          "key_col" : "voip_subscribers/uuid"
       },
       "voip_subscribers/webpassword" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "webpassword",
          "COLUMN_TYPE" : "char(56)",
@@ -6733,8 +6793,8 @@
          "key_col" : "voip_subscribers/webpassword"
       },
       "voip_subscribers/webusername" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "webusername",
          "COLUMN_TYPE" : "varchar(127)",
@@ -6745,8 +6805,8 @@
          "key_col" : "voip_subscribers/webusername"
       },
       "voip_time_periods/byday" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "byday",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6757,8 +6817,8 @@
          "key_col" : "voip_time_periods/byday"
       },
       "voip_time_periods/byhour" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "byhour",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6769,8 +6829,8 @@
          "key_col" : "voip_time_periods/byhour"
       },
       "voip_time_periods/byminute" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "byminute",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6781,8 +6841,8 @@
          "key_col" : "voip_time_periods/byminute"
       },
       "voip_time_periods/bymonth" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bymonth",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6793,8 +6853,8 @@
          "key_col" : "voip_time_periods/bymonth"
       },
       "voip_time_periods/bymonthday" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bymonthday",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6805,8 +6865,8 @@
          "key_col" : "voip_time_periods/bymonthday"
       },
       "voip_time_periods/bysecond" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bysecond",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6817,8 +6877,8 @@
          "key_col" : "voip_time_periods/bysecond"
       },
       "voip_time_periods/bysetpos" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bysetpos",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6829,8 +6889,8 @@
          "key_col" : "voip_time_periods/bysetpos"
       },
       "voip_time_periods/byweekno" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "byweekno",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6841,8 +6901,8 @@
          "key_col" : "voip_time_periods/byweekno"
       },
       "voip_time_periods/byyearday" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "byyearday",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6853,8 +6913,8 @@
          "key_col" : "voip_time_periods/byyearday"
       },
       "voip_time_periods/comment" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "comment",
          "COLUMN_TYPE" : "text",
@@ -6877,8 +6937,8 @@
          "key_col" : "voip_time_periods/count"
       },
       "voip_time_periods/duration" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "duration",
          "COLUMN_TYPE" : "varchar(45)",
@@ -6891,7 +6951,7 @@
       "voip_time_periods/end" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "end",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -6901,8 +6961,8 @@
          "key_col" : "voip_time_periods/end"
       },
       "voip_time_periods/freq" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "freq",
          "COLUMN_TYPE" : "enum('secondly','minutely','hourly','daily','weekly','monthly','yearly')",
@@ -6939,10 +6999,10 @@
       "voip_time_periods/start" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "start",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "on update current_timestamp()",
+         "EXTRA" : "",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "voip_time_periods",
@@ -6973,8 +7033,8 @@
          "key_col" : "voip_time_periods/until"
       },
       "voip_time_periods/wkst" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "wkst",
          "COLUMN_TYPE" : "varchar(2)",
@@ -7009,8 +7069,8 @@
          "key_col" : "voip_time_sets/id"
       },
       "voip_time_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(90)",
@@ -7045,8 +7105,8 @@
          "key_col" : "voip_time_sets/subscriber_id"
       },
       "voip_trusted_sources/from_pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "from_pattern",
          "COLUMN_TYPE" : "varchar(64)",
@@ -7069,8 +7129,8 @@
          "key_col" : "voip_trusted_sources/id"
       },
       "voip_trusted_sources/protocol" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "protocol",
          "COLUMN_TYPE" : "varchar(4)",
@@ -7081,8 +7141,8 @@
          "key_col" : "voip_trusted_sources/protocol"
       },
       "voip_trusted_sources/src_ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "src_ip",
          "COLUMN_TYPE" : "varchar(50)",
@@ -7105,8 +7165,8 @@
          "key_col" : "voip_trusted_sources/subscriber_id"
       },
       "voip_trusted_sources/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "varchar(64)",
@@ -7165,8 +7225,8 @@
          "key_col" : "voip_usr_preferences/subscriber_id"
       },
       "voip_usr_preferences/value" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "value",
          "COLUMN_TYPE" : "varchar(128)",
@@ -7177,8 +7237,8 @@
          "key_col" : "voip_usr_preferences/value"
       },
       "voip_usr_preferences_blob/content_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'application/data'",
          "COLUMN_NAME" : "content_type",
          "COLUMN_TYPE" : "varchar(128)",
@@ -7237,8 +7297,8 @@
          "key_col" : "xmlgroups/id"
       },
       "xmlgroups/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(32)",
@@ -7285,8 +7345,8 @@
          "key_col" : "xmlhostgroups/id"
       },
       "xmlhosts/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -7309,8 +7369,8 @@
          "key_col" : "xmlhosts/id"
       },
       "xmlhosts/ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ip",
          "COLUMN_TYPE" : "varchar(15)",
@@ -7321,8 +7381,8 @@
          "key_col" : "xmlhosts/ip"
       },
       "xmlhosts/path" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'/'",
          "COLUMN_NAME" : "path",
          "COLUMN_TYPE" : "varchar(64)",
@@ -7369,8 +7429,8 @@
          "key_col" : "xmlqueue/atime"
       },
       "xmlqueue/body" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "body",
          "COLUMN_TYPE" : "text",
@@ -7417,8 +7477,8 @@
          "key_col" : "xmlqueue/next_try"
       },
       "xmlqueue/target" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "target",
          "COLUMN_TYPE" : "varchar(255)",
@@ -8451,6 +8511,16 @@
          "TABLE_NAME" : "voip_sound_handles",
          "UPDATE_RULE" : "CASCADE",
          "key_col" : "voip_sound_handles/v_s_h_group_ref/group_id/voip_sound_groups/id"
+      },
+      "voip_sound_set_handle_parents/vshh_handle_id_ref/handle_id/voip_sound_handles/id" : {
+         "COLUMN_NAME" : "handle_id",
+         "CONSTRAINT_NAME" : "vshh_handle_id_ref",
+         "DELETE_RULE" : "CASCADE",
+         "REFERENCED_COLUMN_NAME" : "id",
+         "REFERENCED_TABLE_NAME" : "voip_sound_handles",
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "UPDATE_RULE" : "CASCADE",
+         "key_col" : "voip_sound_set_handle_parents/vshh_handle_id_ref/handle_id/voip_sound_handles/id"
       },
       "voip_sound_sets/vss_parent_id_ref/parent_id/voip_sound_sets/id" : {
          "COLUMN_NAME" : "parent_id",
@@ -12100,6 +12170,66 @@
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles/v_s_h_group_ref/1"
       },
+      "voip_sound_set_handle_parents/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/PRIMARY/1"
+      },
+      "voip_sound_set_handle_parents/handle_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "handle_id",
+         "INDEX_NAME" : "handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/handle_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/parent_set_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "parent_set_id",
+         "INDEX_NAME" : "parent_set_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/parent_set_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/set_handle_id_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "set_id",
+         "INDEX_NAME" : "set_handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_handle_id_idx/1"
+      },
+      "voip_sound_set_handle_parents/set_handle_id_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "handle_id",
+         "INDEX_NAME" : "set_handle_id_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents/set_handle_id_idx/2"
+      },
       "voip_sound_sets/PRIMARY/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "id",
@@ -12813,153 +12943,158 @@
          "ROUTINE_DEFINITION" : "BEGIN\n\n  RETURN IF(LOCATE(\".\",_ipnet) = 0,1,0);\n\nEND",
          "ROUTINE_TYPE" : "FUNCTION",
          "key_col" : "ip_is_ipv6"
+      },
+      "update_sound_set_handle_parents" : {
+         "ROUTINE_DEFINITION" : "BEGIN\n    IF u_sound_set_id IS NOT NULL THEN\n        DELETE p FROM voip_sound_set_handle_parents p\n         WHERE set_id IN (\n            WITH RECURSIVE cte as (\n                SELECT s.id\n                  FROM voip_sound_sets s\n                 WHERE id = u_sound_set_id\n                UNION\n                SELECT s.id\n                  FROM voip_sound_sets s\n                  JOIN cte ON cte.id = s.parent_id\n            )\n            SELECT id\n              FROM cte\n           )\n           AND (handle_id = u_handle_id OR 1=1);\n\n        DELETE p FROM voip_sound_set_handle_parents p\n         WHERE set_id IN (\n            WITH RECURSIVE cte as (\n                SELECT s.id, s.parent_id\n                  FROM voip_sound_sets s\n                 WHERE id = u_sound_set_id\n                UNION\n                SELECT s.id, s.parent_id\n                  FROM voip_sound_sets s\n                  JOIN cte ON cte.parent_id = s.id\n            )\n            SELECT id\n              FROM cte\n           )\n           AND (handle_id = u_handle_id OR 1=1);\n\n        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)\n        WITH RECURSIVE cte as (\n                SELECT v.id AS set_id, v.handle_id,\n                       v.id AS data_set_id,\n                       CAST('' AS CHAR(4096)) AS parent_chain\n                  FROM (SELECT s.*, h.id as handle_id\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n            WHERE v.id = (\n                WITH RECURSIVE cte as (\n                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter\n                      FROM voip_sound_sets s\n                     WHERE id = u_sound_set_id\n                    UNION\n                    SELECT s.id, s.parent_id, iter+1 as iter\n                      FROM voip_sound_sets s\n                      JOIN cte ON cte.parent_id = s.id\n                )\n                SELECT id\n                  FROM cte\n                 WHERE iter = (SELECT max(iter) from cte)\n            )\n            AND (v.handle_id = u_handle_id OR 1=1)\n            UNION\n            SELECT v.id AS set_id, v.handle_id,\n                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,\n                   CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain\n              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name\n                    FROM (voip_sound_sets s, voip_sound_handles h)\n                   ) AS v\n              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id\n        )\n        SELECT set_id, handle_id,\n               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,\n               parent_chain\n          FROM cte;\n    ELSE\n        IF u_handle_id IS NOT NULL THEN\n            DELETE FROM voip_sound_set_handle_parents WHERE handle_id = u_handle_id;\n        ELSE\n            DELETE FROM voip_sound_set_handle_parents;\n        END IF;\n\n        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)\n        WITH RECURSIVE cte as (\n                SELECT v.id AS set_id, v.handle_id,\n                       v.id AS data_set_id,\n                       CAST('' AS CHAR(4096)) AS parent_chain\n                  FROM (SELECT s.*, h.id as handle_id\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n                 WHERE v.parent_id IS NULL\n                   AND (v.handle_id = u_handle_id OR 1=1)\n                 UNION\n                SELECT v.id AS set_id, v.handle_id,\n                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,\n                       CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain\n                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name\n                        FROM (voip_sound_sets s, voip_sound_handles h)\n                       ) AS v\n                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id\n                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id\n        )\n        SELECT set_id, handle_id,\n               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,\n               parent_chain\n          FROM cte;\n    END IF;\n\nEND",
+         "ROUTINE_TYPE" : "PROCEDURE",
+         "key_col" : "update_sound_set_handle_parents"
       }
    },
    "tables" : {
       "autoprov_configs" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_configs",
          "key_col" : "autoprov_configs"
       },
       "autoprov_device_extensions" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_device_extensions",
          "key_col" : "autoprov_device_extensions"
       },
       "autoprov_device_line_annotations" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_device_line_annotations",
          "key_col" : "autoprov_device_line_annotations"
       },
       "autoprov_device_line_ranges" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_device_line_ranges",
          "key_col" : "autoprov_device_line_ranges"
       },
       "autoprov_devices" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_devices",
          "key_col" : "autoprov_devices"
       },
       "autoprov_field_device_lines" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_field_device_lines",
          "key_col" : "autoprov_field_device_lines"
       },
       "autoprov_field_devices" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_field_devices",
          "key_col" : "autoprov_field_devices"
       },
       "autoprov_firmwares" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_firmwares",
          "key_col" : "autoprov_firmwares"
       },
       "autoprov_firmwares_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_firmwares_data",
          "key_col" : "autoprov_firmwares_data"
       },
       "autoprov_profiles" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_profiles",
          "key_col" : "autoprov_profiles"
       },
       "autoprov_redirect_credentials" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_redirect_credentials",
          "key_col" : "autoprov_redirect_credentials"
       },
       "autoprov_sync" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_sync",
          "key_col" : "autoprov_sync"
       },
       "autoprov_sync_parameters" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "autoprov_sync_parameters",
          "key_col" : "autoprov_sync_parameters"
       },
       "emergency_containers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "emergency_containers",
          "key_col" : "emergency_containers"
       },
       "emergency_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "emergency_mappings",
          "key_col" : "emergency_mappings"
       },
       "language_strings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "language_strings",
          "key_col" : "language_strings"
       },
       "recording_calls" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "recording_calls",
          "key_col" : "recording_calls"
       },
       "recording_metakeys" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "recording_metakeys",
          "key_col" : "recording_metakeys"
       },
       "recording_streams" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams"
       },
       "rtc_session" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "rtc_session",
          "key_col" : "rtc_session"
       },
       "rtc_user" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "rtc_user",
          "key_col" : "rtc_user"
       },
@@ -12973,532 +13108,539 @@
       "upn_rewrite_set" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "upn_rewrite_set",
          "key_col" : "upn_rewrite_set"
       },
       "upn_rewrite_sources" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "upn_rewrite_sources",
          "key_col" : "upn_rewrite_sources"
       },
       "voip_aig_sequence" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_aig_sequence",
          "key_col" : "voip_aig_sequence"
       },
       "voip_allowed_ip_groups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_allowed_ip_groups",
          "key_col" : "voip_allowed_ip_groups"
       },
       "voip_cc_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cc_mappings",
          "key_col" : "voip_cc_mappings"
       },
       "voip_cf_bnumber_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_bnumber_sets",
          "key_col" : "voip_cf_bnumber_sets"
       },
       "voip_cf_bnumbers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_bnumbers",
          "key_col" : "voip_cf_bnumbers"
       },
       "voip_cf_destination_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_destination_sets",
          "key_col" : "voip_cf_destination_sets"
       },
       "voip_cf_destinations" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_destinations",
          "key_col" : "voip_cf_destinations"
       },
       "voip_cf_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_mappings",
          "key_col" : "voip_cf_mappings"
       },
       "voip_cf_periods" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_periods",
          "key_col" : "voip_cf_periods"
       },
       "voip_cf_source_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_source_sets",
          "key_col" : "voip_cf_source_sets"
       },
       "voip_cf_sources" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_sources",
          "key_col" : "voip_cf_sources"
       },
       "voip_cf_time_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_cf_time_sets",
          "key_col" : "voip_cf_time_sets"
       },
       "voip_contacts" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contacts",
          "key_col" : "voip_contacts"
       },
       "voip_contract_location_blocks" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contract_location_blocks",
          "key_col" : "voip_contract_location_blocks"
       },
       "voip_contract_locations" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contract_locations",
          "key_col" : "voip_contract_locations"
       },
       "voip_contract_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contract_preferences",
          "key_col" : "voip_contract_preferences"
       },
       "voip_contract_preferences_blob" : {
          "CREATE_OPTIONS" : "`PAGE_COMPRESSED`=1",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contract_preferences_blob",
          "key_col" : "voip_contract_preferences_blob"
       },
       "voip_contract_speed_dial" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_contract_speed_dial",
          "key_col" : "voip_contract_speed_dial"
       },
       "voip_dbaliases" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_dbaliases",
          "key_col" : "voip_dbaliases"
       },
       "voip_dev_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_dev_preferences",
          "key_col" : "voip_dev_preferences"
       },
       "voip_devprof_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_devprof_preferences",
          "key_col" : "voip_devprof_preferences"
       },
       "voip_dom_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_dom_preferences",
          "key_col" : "voip_dom_preferences"
       },
       "voip_dom_preferences_blob" : {
          "CREATE_OPTIONS" : "`PAGE_COMPRESSED`=1",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_dom_preferences_blob",
          "key_col" : "voip_dom_preferences_blob"
       },
       "voip_domains" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_domains",
          "key_col" : "voip_domains"
       },
       "voip_fax_data" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_fax_data",
          "key_col" : "voip_fax_data"
       },
       "voip_fax_destinations" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_fax_destinations",
          "key_col" : "voip_fax_destinations"
       },
       "voip_fax_journal" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_fax_journal",
          "key_col" : "voip_fax_journal"
       },
       "voip_fax_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_fax_preferences",
          "key_col" : "voip_fax_preferences"
       },
       "voip_fielddev_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_fielddev_preferences",
          "key_col" : "voip_fielddev_preferences"
       },
       "voip_header_rule_actions" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_header_rule_actions",
          "key_col" : "voip_header_rule_actions"
       },
       "voip_header_rule_condition_values" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_header_rule_condition_values",
          "key_col" : "voip_header_rule_condition_values"
       },
       "voip_header_rule_conditions" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_header_rule_conditions",
          "key_col" : "voip_header_rule_conditions"
       },
       "voip_header_rule_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_header_rule_sets",
          "key_col" : "voip_header_rule_sets"
       },
       "voip_header_rules" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_header_rules",
          "key_col" : "voip_header_rules"
       },
       "voip_mail_to_fax_acl" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_mail_to_fax_acl",
          "key_col" : "voip_mail_to_fax_acl"
       },
       "voip_mail_to_fax_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_mail_to_fax_preferences",
          "key_col" : "voip_mail_to_fax_preferences"
       },
       "voip_mail_to_fax_secret_renew_notify" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_mail_to_fax_secret_renew_notify",
          "key_col" : "voip_mail_to_fax_secret_renew_notify"
       },
       "voip_pbx_autoattendants" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_pbx_autoattendants",
          "key_col" : "voip_pbx_autoattendants"
       },
       "voip_pbx_groups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_pbx_groups",
          "key_col" : "voip_pbx_groups"
       },
       "voip_peer_groups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_groups",
          "key_col" : "voip_peer_groups"
       },
       "voip_peer_hosts" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_hosts",
          "key_col" : "voip_peer_hosts"
       },
       "voip_peer_inbound_rules" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_inbound_rules",
          "key_col" : "voip_peer_inbound_rules"
       },
       "voip_peer_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_preferences",
          "key_col" : "voip_peer_preferences"
       },
       "voip_peer_preferences_blob" : {
          "CREATE_OPTIONS" : "`PAGE_COMPRESSED`=1",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_preferences_blob",
          "key_col" : "voip_peer_preferences_blob"
       },
       "voip_peer_rules" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_peer_rules",
          "key_col" : "voip_peer_rules"
       },
       "voip_preference_groups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_preference_groups",
          "key_col" : "voip_preference_groups"
       },
       "voip_preference_relations" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_preference_relations",
          "key_col" : "voip_preference_relations"
       },
       "voip_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_preferences",
          "key_col" : "voip_preferences"
       },
       "voip_preferences_enum" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_preferences_enum",
          "key_col" : "voip_preferences_enum"
       },
       "voip_prof_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_prof_preferences",
          "key_col" : "voip_prof_preferences"
       },
       "voip_reminder" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_reminder",
          "key_col" : "voip_reminder"
       },
       "voip_reseller_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_reseller_preferences",
          "key_col" : "voip_reseller_preferences"
       },
       "voip_rewrite_rule_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_rewrite_rule_sets",
          "key_col" : "voip_rewrite_rule_sets"
       },
       "voip_rewrite_rules" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_rewrite_rules",
          "key_col" : "voip_rewrite_rules"
       },
       "voip_rwrs_sequence" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_rwrs_sequence",
          "key_col" : "voip_rwrs_sequence"
       },
       "voip_sound_files" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_sound_files",
          "key_col" : "voip_sound_files"
       },
       "voip_sound_groups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_sound_groups",
          "key_col" : "voip_sound_groups"
       },
       "voip_sound_handles" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_sound_handles",
          "key_col" : "voip_sound_handles"
+      },
+      "voip_sound_set_handle_parents" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
+         "TABLE_NAME" : "voip_sound_set_handle_parents",
+         "key_col" : "voip_sound_set_handle_parents"
       },
       "voip_sound_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_sound_sets",
          "key_col" : "voip_sound_sets"
       },
       "voip_speed_dial" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_speed_dial",
          "key_col" : "voip_speed_dial"
       },
       "voip_subscriber_location_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscriber_location_mappings",
          "key_col" : "voip_subscriber_location_mappings"
       },
       "voip_subscriber_profile_attributes" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscriber_profile_attributes",
          "key_col" : "voip_subscriber_profile_attributes"
       },
       "voip_subscriber_profile_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscriber_profile_sets",
          "key_col" : "voip_subscriber_profile_sets"
       },
       "voip_subscriber_profiles" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscriber_profiles",
          "key_col" : "voip_subscriber_profiles"
       },
       "voip_subscribers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers"
       },
       "voip_time_periods" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_time_periods",
          "key_col" : "voip_time_periods"
       },
       "voip_time_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_time_sets",
          "key_col" : "voip_time_sets"
       },
       "voip_trusted_sources" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_trusted_sources",
          "key_col" : "voip_trusted_sources"
       },
       "voip_usr_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_usr_preferences",
          "key_col" : "voip_usr_preferences"
       },
       "voip_usr_preferences_blob" : {
          "CREATE_OPTIONS" : "`PAGE_COMPRESSED`=1",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_usr_preferences_blob",
          "key_col" : "voip_usr_preferences_blob"
       },
       "xmlgroups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "xmlgroups",
          "key_col" : "xmlgroups"
       },
       "xmlhostgroups" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "xmlhostgroups",
          "key_col" : "xmlhostgroups"
       },
       "xmlhosts" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "xmlhosts",
          "key_col" : "xmlhosts"
       },
       "xmlqueue" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "xmlqueue",
          "key_col" : "xmlqueue"
       }
@@ -14026,6 +14168,60 @@
          "TRIGGER_NAME" : "voip_sd_urepl_trig",
          "key_col" : "voip_sd_urepl_trig/voip_speed_dial"
       },
+      "voip_sound_files_create_trig/voip_sound_files" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_files",
+         "TRIGGER_NAME" : "voip_sound_files_create_trig",
+         "key_col" : "voip_sound_files_create_trig/voip_sound_files"
+      },
+      "voip_sound_files_delete_trig/voip_sound_files" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    DECLARE done INT DEFAULT 0;\n    DECLARE set_id INT DEFAULT 0;\n    DECLARE x CURSOR FOR\n        SELECT DISTINCT set_id\n          FROM voip_sound_set_handle_parents\n         WHERE parent_set_id = OLD.set_id\n           AND handle_id = OLD.handle_id;\n    DECLARE continue handler FOR NOT FOUND SET done = true;\n\n    OPEN x;\n    iter: LOOP\n        FETCH x INTO set_id;\n        IF done THEN\n            LEAVE iter;\n        END IF;\n        CALL update_sound_set_handle_parents(set_id, OLD.handle_id);\n    END LOOP;\n    CLOSE x;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_files",
+         "TRIGGER_NAME" : "voip_sound_files_delete_trig",
+         "key_col" : "voip_sound_files_delete_trig/voip_sound_files"
+      },
+      "voip_sound_files_update_trig/voip_sound_files" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_files",
+         "TRIGGER_NAME" : "voip_sound_files_update_trig",
+         "key_col" : "voip_sound_files_update_trig/voip_sound_files"
+      },
+      "voip_sound_sets_create_trig/voip_sound_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    IF NEW.parent_id IS NOT NULL THEN\n        CALL update_sound_set_handle_parents(NEW.id, NULL);\n    END IF;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_sets",
+         "TRIGGER_NAME" : "voip_sound_sets_create_trig",
+         "key_col" : "voip_sound_sets_create_trig/voip_sound_sets"
+      },
+      "voip_sound_sets_delete_trig/voip_sound_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    DECLARE done INT DEFAULT 0;\n    DECLARE set_id INT DEFAULT 0;\n    DECLARE x CURSOR FOR\n        SELECT DISTINCT set_id\n          FROM voip_sound_set_handle_parents\n         WHERE parent_set_id = OLD.id;\n    DECLARE continue handler FOR NOT FOUND SET done = true;\n\n    OPEN x;\n    iter: LOOP\n        FETCH x INTO set_id;\n        IF done THEN\n            LEAVE iter;\n        END IF;\n        CALL update_sound_set_handle_parents(set_id, NULL);\n    END LOOP;\n    CLOSE x;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_sets",
+         "TRIGGER_NAME" : "voip_sound_sets_delete_trig",
+         "key_col" : "voip_sound_sets_delete_trig/voip_sound_sets"
+      },
+      "voip_sound_sets_update_trig/voip_sound_sets" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n    IF NOT (OLD.parent_id <=> NEW.parent_id) THEN\n        CALL update_sound_set_handle_parents(NEW.id, NULL);\n    END IF;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_sound_sets",
+         "TRIGGER_NAME" : "voip_sound_sets_update_trig",
+         "key_col" : "voip_sound_sets_update_trig/voip_sound_sets"
+      },
       "voip_sub_crepl_trig/voip_subscribers" : {
          "ACTION_STATEMENT" : "BEGIN\n    \n    DECLARE subscriber_domain varchar(127);\n  \n    SELECT domain INTO subscriber_domain FROM voip_domains where id = NEW.domain_id;\n  \n    INSERT INTO kamailio.subscriber (username, domain, uuid, password, datetime_created, ha1, ha1b)\n                     VALUES(NEW.username, subscriber_domain, NEW.uuid, NEW.password, '0',\n                            MD5(CONCAT(NEW.username, ':', subscriber_domain, ':', NEW.password)),\n                            MD5(CONCAT(NEW.username, '@', subscriber_domain, ':', subscriber_domain, ':', NEW.password)));\n\n    \n    INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)\n    SELECT NEW.id, p.id, pe.value\n    FROM voip_preferences p, voip_preferences_enum pe\n    WHERE p.id <=> preference_id AND p.usr_pref=1 AND pe.usr_pref=1 AND pe.default_val=1 AND pe.value IS NOT NULL;\nEND",
          "ACTION_TIMING" : "AFTER",
@@ -14101,7 +14297,7 @@
    },
    "views" : {
       "v_sound_set_files" : {
-         "VIEW_DEFINITION" : "with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`)) `v` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`provisioning`.`voip_sound_sets` `s` join `provisioning`.`voip_sound_handles` `h`)) `t` left join `provisioning`.`voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`))",
+         "VIEW_DEFINITION" : "select `r`.`set_id` AS `set_id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`r`.`handle_id` AS `handle_id`,`h`.`name` AS `handle_name`,if(`r`.`parent_set_id` is not null,`vsf_p`.`id`,`vsf`.`id`) AS `file_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`filename`,`vsf`.`filename`) AS `filename`,if(`r`.`parent_set_id` is not null,`vsf_p`.`loopplay`,`vsf`.`loopplay`) AS `loopplay`,replace(replace(replace(json_remove(`r`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`r`.`parent_set_id` AS `data_set_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`data`,`vsf`.`data`) AS `data` from ((((`provisioning`.`voip_sound_set_handle_parents` `r` join `provisioning`.`voip_sound_sets` `s` on(`s`.`id` = `r`.`set_id`)) join `provisioning`.`voip_sound_handles` `h` on(`h`.`id` = `r`.`handle_id`)) left join `provisioning`.`voip_sound_files` `vsf` on(`vsf`.`set_id` = `r`.`set_id` and `vsf`.`handle_id` = `r`.`handle_id`)) left join `provisioning`.`voip_sound_files` `vsf_p` on(`vsf_p`.`set_id` = `r`.`parent_set_id` and `vsf_p`.`handle_id` = `r`.`handle_id`))",
          "key_col" : "v_sound_set_files"
       },
       "v_subscriber_cfs" : {

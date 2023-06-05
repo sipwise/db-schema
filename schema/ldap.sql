@@ -19,7 +19,7 @@ CREATE TABLE `ldap_attr_mappings` (
   `param_order` tinyint(4) NOT NULL,
   `expect_return` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -41,7 +41,7 @@ CREATE TABLE `ldap_oc_mappings` (
   `delete_proc` varchar(255) DEFAULT NULL,
   `expect_return` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -65,9 +65,9 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `ldap_entries` AS select `billing`.`contracts`.`id` AS `id`,concat('o=',`billing`.`contracts`.`id`,',dc=hpbx,dc=sipwise,dc=com') AS `dn`,3 AS `oc_map_id`,0 AS `parent`,`billing`.`contracts`.`id` AS `keyval` from `billing`.`contracts` union select `users`.`id` + 100000 AS `org_id`,concat('uid=',`users`.`uuid`,',o=',`users`.`account_id`,',dc=hpbx,dc=sipwise,dc=com') AS `Name_exp_2`,1 AS `1`,`users`.`account_id` AS `account_id`,`users`.`id` AS `id` from `ldap`.`users` */;
@@ -78,9 +78,9 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `org` AS select `billing`.`contracts`.`id` AS `id`,`billing`.`contracts`.`id` AS `o`,'dc=hpbx,dc=sipwise,dc=com' AS `dc` from `billing`.`contracts` */;
@@ -91,9 +91,9 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `users` AS select `pvs`.`id` AS `id`,`pvs`.`account_id` AS `account_id`,`pvs`.`uuid` AS `uuid`,`pvs`.`username` AS `username`,`pvs`.`password` AS `password`,`vup`.`value` AS `displayname`,`pvs`.`pbx_extension` AS `phone` from ((`provisioning`.`voip_subscribers` `pvs` left join `provisioning`.`voip_preferences` `vp` on(`vp`.`attribute` = 'display_name')) left join `provisioning`.`voip_usr_preferences` `vup` on(`vup`.`subscriber_id` = `pvs`.`id` and `vup`.`attribute_id` = `vp`.`id`)) */;

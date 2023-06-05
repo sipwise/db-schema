@@ -37,8 +37,8 @@
          "key_col" : "db_schema/id"
       },
       "db_schema/node" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "node",
          "COLUMN_TYPE" : "varchar(64)",
@@ -67,14 +67,14 @@
          "COLUMN_NAME" : "created_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/created_at"
       },
       "timezone/id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "id",
          "COLUMN_TYPE" : "enum('1')",
@@ -91,14 +91,14 @@
          "COLUMN_NAME" : "modified_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "on update current_timestamp()",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/modified_at"
       },
       "timezone/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -108,6 +108,18 @@
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/name"
       },
+      "timezone/version" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "version",
+         "COLUMN_TYPE" : "varchar(32)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/version"
+      },
       "tzinfo_version/created_at" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -115,14 +127,14 @@
          "COLUMN_NAME" : "created_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "tzinfo_version",
          "key_col" : "tzinfo_version/created_at"
       },
       "tzinfo_version/id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "id",
          "COLUMN_TYPE" : "enum('1')",
@@ -139,14 +151,14 @@
          "COLUMN_NAME" : "modified_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "on update current_timestamp()",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "tzinfo_version",
          "key_col" : "tzinfo_version/modified_at"
       },
       "tzinfo_version/version" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "version",
          "COLUMN_TYPE" : "varchar(255)",
@@ -237,28 +249,28 @@
       "date_range_helper" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "date_range_helper",
          "key_col" : "date_range_helper"
       },
       "db_schema" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "db_schema",
          "key_col" : "db_schema"
       },
       "timezone" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone"
       },
       "tzinfo_version" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "tzinfo_version",
          "key_col" : "tzinfo_version"
       }

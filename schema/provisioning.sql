@@ -15,7 +15,7 @@ CREATE TABLE `autoprov_configs` (
   PRIMARY KEY (`id`),
   KEY `fk_config_device_idx` (`device_id`),
   CONSTRAINT `fk_config_device_idx` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -29,7 +29,7 @@ CREATE TABLE `autoprov_device_extensions` (
   KEY `fk_dev_ext_const` (`extension_id`),
   CONSTRAINT `fk_dev_dev_const` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_dev_ext_const` FOREIGN KEY (`extension_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -44,7 +44,7 @@ CREATE TABLE `autoprov_device_line_annotations` (
   UNIQUE KEY `range_idx_k` (`range_id`,`line_index`),
   KEY `fk_anno_range` (`range_id`),
   CONSTRAINT `fk_anno_range` FOREIGN KEY (`range_id`) REFERENCES `autoprov_device_line_ranges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -62,7 +62,7 @@ CREATE TABLE `autoprov_device_line_ranges` (
   PRIMARY KEY (`id`),
   KEY `fk_device_line` (`device_id`),
   CONSTRAINT `fk_device_line` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -84,7 +84,7 @@ CREATE TABLE `autoprov_devices` (
   `extensions_num` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `reseller_idx` (`reseller_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -105,7 +105,7 @@ CREATE TABLE `autoprov_field_device_lines` (
   CONSTRAINT `autoprov_field_device_lines_ibfk_1` FOREIGN KEY (`linerange_id`) REFERENCES `autoprov_device_line_ranges` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_fdev_line_const` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_sub_line_const` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -123,7 +123,7 @@ CREATE TABLE `autoprov_field_devices` (
   KEY `fk_fdev_subscriber_idx` (`contract_id`),
   KEY `fk_fdev_profile_idx` (`profile_id`),
   CONSTRAINT `fk_fdev_profile_idx` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -137,7 +137,7 @@ CREATE TABLE `autoprov_firmwares` (
   KEY `fk_device_idx` (`device_id`),
   KEY `version_idx` (`device_id`,`version`),
   CONSTRAINT `fk_device_idx` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -148,7 +148,7 @@ CREATE TABLE `autoprov_firmwares_data` (
   PRIMARY KEY (`id`),
   KEY `afd_fw_id_idx` (`fw_id`),
   CONSTRAINT `fk_fw_idx` FOREIGN KEY (`fw_id`) REFERENCES `autoprov_firmwares` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -159,7 +159,7 @@ CREATE TABLE `autoprov_profiles` (
   PRIMARY KEY (`id`),
   KEY `fk_profile_config_idx` (`config_id`),
   CONSTRAINT `fk_profile_config_idx` FOREIGN KEY (`config_id`) REFERENCES `autoprov_configs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -171,7 +171,7 @@ CREATE TABLE `autoprov_redirect_credentials` (
   PRIMARY KEY (`id`),
   KEY `ap_devid_fk` (`device_id`),
   CONSTRAINT `autoprov_redirect_credentials_ibfk_1` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -185,7 +185,7 @@ CREATE TABLE `autoprov_sync` (
   KEY `a_s_deviceid_ref` (`device_id`),
   CONSTRAINT `a_s_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `a_s_paramid_ref` FOREIGN KEY (`parameter_id`) REFERENCES `autoprov_sync_parameters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -196,7 +196,7 @@ CREATE TABLE `autoprov_sync_parameters` (
   `parameter_constraint` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `sync_parameter` (`bootstrap_method`,`parameter_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -208,7 +208,7 @@ CREATE TABLE `emergency_containers` (
   UNIQUE KEY `res_name_idx` (`reseller_id`,`name`),
   KEY `reseller_idx` (`reseller_id`),
   KEY `name_idx` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -221,7 +221,7 @@ CREATE TABLE `emergency_mappings` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ec_code_idx` (`emergency_container_id`,`code`),
   CONSTRAINT `container_fk` FOREIGN KEY (`emergency_container_id`) REFERENCES `emergency_containers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -232,7 +232,7 @@ CREATE TABLE `language_strings` (
   `string` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codelang_idx` (`code`,`language`)
-) ENGINE=InnoDB AUTO_INCREMENT=1252 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1252 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -247,7 +247,7 @@ CREATE TABLE `recording_calls` (
   PRIMARY KEY (`id`),
   KEY `call_id` (`call_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -260,7 +260,7 @@ CREATE TABLE `recording_metakeys` (
   KEY `prim_lookup` (`value`,`key`),
   KEY `fk_call_idx` (`call`),
   CONSTRAINT `fk_call_idx` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -284,7 +284,7 @@ CREATE TABLE `recording_streams` (
   PRIMARY KEY (`id`),
   KEY `call` (`call`),
   CONSTRAINT `fk_call_id` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -297,7 +297,7 @@ CREATE TABLE `rtc_session` (
   UNIQUE KEY `rtc_session_idx` (`rtc_session_id`),
   KEY `subscriber_idx` (`subscriber_id`),
   CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -309,7 +309,7 @@ CREATE TABLE `rtc_user` (
   UNIQUE KEY `reseller_idx` (`reseller_id`),
   UNIQUE KEY `rtc_user_idx` (`rtc_user_id`),
   CONSTRAINT `tl_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -342,7 +342,7 @@ CREATE TABLE `upn_rewrite_set` (
   `subscriber_id` int(11) unsigned NOT NULL,
   `new_cli` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -353,7 +353,7 @@ CREATE TABLE `upn_rewrite_sources` (
   PRIMARY KEY (`id`),
   KEY `fk_upn_rewrite_sources_1` (`upn_rewrite_set_id`),
   CONSTRAINT `fk_upn_rewrite_sources_1` FOREIGN KEY (`upn_rewrite_set_id`) REFERENCES `upn_rewrite_set` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -423,7 +423,7 @@ SET character_set_client = @saved_cs_client;
 CREATE TABLE `voip_aig_sequence` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -441,7 +441,7 @@ CREATE TABLE `voip_allowed_ip_groups` (
   KEY `ipnet_idx` (`ipnet`),
   KEY `aig_groupid_ipv4_from_to_idx` (`group_id`,`_ipv4_net_from`,`_ipv4_net_to`),
   KEY `aig_groupid_ipv6_from_to_idx` (`group_id`,`_ipv6_net_from`,`_ipv6_net_to`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -454,7 +454,7 @@ CREATE TABLE `voip_cc_mappings` (
   KEY `uuid_idx` (`uuid`),
   KEY `uuid_authkey_idx` (`uuid`,`auth_key`),
   CONSTRAINT `vs_uuid_ref` FOREIGN KEY (`uuid`) REFERENCES `voip_subscribers` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -468,7 +468,7 @@ CREATE TABLE `voip_cf_bnumber_sets` (
   UNIQUE KEY `cf_bnumbersets_sid_name_unique` (`subscriber_id`,`name`),
   KEY `name_idx` (`name`),
   CONSTRAINT `vcbs_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -480,7 +480,7 @@ CREATE TABLE `voip_cf_bnumbers` (
   KEY `bset_idx` (`bnumber_set_id`),
   KEY `bnumber_idx` (`bnumber`),
   CONSTRAINT `v_cf_bsetid_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -492,7 +492,7 @@ CREATE TABLE `voip_cf_destination_sets` (
   KEY `sub_idx` (`subscriber_id`),
   KEY `name_idx` (`name`),
   CONSTRAINT `v_s_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -509,7 +509,7 @@ CREATE TABLE `voip_cf_destinations` (
   KEY `d_s_announceid_ref` (`announcement_id`),
   CONSTRAINT `d_s_announceid_ref` FOREIGN KEY (`announcement_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `v_cf_dsetid_ref` FOREIGN KEY (`destination_set_id`) REFERENCES `voip_cf_destination_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -534,7 +534,7 @@ CREATE TABLE `voip_cf_mappings` (
   CONSTRAINT `v_cfmap_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vcm_bnumset_ref` FOREIGN KEY (`bnumber_set_id`) REFERENCES `voip_cf_bnumber_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vcm_sourceset_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -550,7 +550,7 @@ CREATE TABLE `voip_cf_periods` (
   PRIMARY KEY (`id`),
   KEY `tset_idx` (`time_set_id`),
   CONSTRAINT `v_cf_tsetid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_cf_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -565,7 +565,7 @@ CREATE TABLE `voip_cf_source_sets` (
   KEY `sub_idx` (`subscriber_id`),
   KEY `name_idx` (`name`),
   CONSTRAINT `vcss_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -577,7 +577,7 @@ CREATE TABLE `voip_cf_sources` (
   KEY `sset_idx` (`source_set_id`),
   KEY `source_idx` (`source`),
   CONSTRAINT `v_cf_ssetid_ref` FOREIGN KEY (`source_set_id`) REFERENCES `voip_cf_source_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -589,7 +589,7 @@ CREATE TABLE `voip_cf_time_sets` (
   KEY `sub_idx` (`subscriber_id`),
   KEY `name_idx` (`name`),
   CONSTRAINT `v_cf_ts_subid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -609,7 +609,7 @@ CREATE TABLE `voip_contacts` (
   KEY `subscriberid_idx` (`subscriber_id`),
   CONSTRAINT `v_c_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_contacts_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -630,7 +630,7 @@ CREATE TABLE `voip_contract_location_blocks` (
   KEY `vclb_ipv6_to_idx` (`_ipv6_net_to`),
   KEY `vclb_location_ref` (`location_id`),
   CONSTRAINT `vclb_location_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -642,7 +642,7 @@ CREATE TABLE `voip_contract_locations` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `vcl_contract_name_idx` (`contract_id`,`name`),
   CONSTRAINT `vcl_contract_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -660,7 +660,7 @@ CREATE TABLE `voip_contract_preferences` (
   KEY `v_c_p_locationid_ref` (`location_id`),
   CONSTRAINT `v_c_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_c_p_locationid_ref` FOREIGN KEY (`location_id`) REFERENCES `voip_contract_locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -672,7 +672,7 @@ CREATE TABLE `voip_contract_preferences_blob` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `preference_id` (`preference_id`),
   CONSTRAINT `fk_contract_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_contract_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci `PAGE_COMPRESSED`=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -684,7 +684,7 @@ CREATE TABLE `voip_contract_speed_dial` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `contractid_slot_idx` (`contract_id`,`slot`),
   CONSTRAINT `v_csd_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `billing`.`contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -704,7 +704,7 @@ CREATE TABLE `voip_dbaliases` (
   CONSTRAINT `v_da_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_dbaliases_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
   CONSTRAINT `voip_dbaliases_ibfk_2` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -720,7 +720,7 @@ CREATE TABLE `voip_dev_preferences` (
   KEY `attributeid_idx` (`attribute_id`),
   CONSTRAINT `v_d_p_deviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_dev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -736,7 +736,7 @@ CREATE TABLE `voip_devprof_preferences` (
   KEY `attributeid_idx` (`attribute_id`),
   CONSTRAINT `v_devprof_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_p_p_deviceid_ref` FOREIGN KEY (`profile_id`) REFERENCES `autoprov_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -754,7 +754,7 @@ CREATE TABLE `voip_dom_preferences` (
   CONSTRAINT `v_d_p_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_dom_preferences_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`),
   CONSTRAINT `voip_dom_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -766,7 +766,7 @@ CREATE TABLE `voip_dom_preferences_blob` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `preference_id` (`preference_id`),
   CONSTRAINT `fk_dom_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_dom_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci `PAGE_COMPRESSED`=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -775,7 +775,7 @@ CREATE TABLE `voip_domains` (
   `domain` varchar(127) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `domain_idx` (`domain`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -790,7 +790,7 @@ CREATE TABLE `voip_fax_data` (
   KEY `v_fd_sid_ref` (`sid`),
   KEY `v_fd_subid_idx` (`subscriber_id`),
   CONSTRAINT `v_fd_sid_ref` FOREIGN KEY (`sid`) REFERENCES `voip_fax_journal` (`sid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -807,7 +807,7 @@ CREATE TABLE `voip_fax_destinations` (
   UNIQUE KEY `subdest_idx` (`subscriber_id`,`destination`),
   CONSTRAINT `v_f_d_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_fax_destinations_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -837,7 +837,7 @@ CREATE TABLE `voip_fax_journal` (
   KEY `v_fj_sid_idx` (`sid`),
   KEY `callid_idx` (`call_id`),
   CONSTRAINT `v_fj_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -855,7 +855,7 @@ CREATE TABLE `voip_fax_preferences` (
   UNIQUE KEY `subscriberid_idx` (`subscriber_id`),
   CONSTRAINT `v_f_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_fax_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -871,7 +871,7 @@ CREATE TABLE `voip_fielddev_preferences` (
   KEY `attributeid_idx` (`attribute_id`),
   CONSTRAINT `v_fd_p_fielddeviceid_ref` FOREIGN KEY (`device_id`) REFERENCES `autoprov_field_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_fdev_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -895,7 +895,7 @@ CREATE TABLE `voip_header_rule_actions` (
   KEY `enabled_idx` (`enabled`),
   CONSTRAINT `v_hra_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_hra_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -906,7 +906,7 @@ CREATE TABLE `voip_header_rule_condition_values` (
   PRIMARY KEY (`id`),
   KEY `condition_id_idx` (`condition_id`),
   CONSTRAINT `v_hrcv_conditionid_ref` FOREIGN KEY (`condition_id`) REFERENCES `voip_header_rule_conditions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -929,7 +929,7 @@ CREATE TABLE `voip_header_rule_conditions` (
   KEY `enabled_idx` (`enabled`),
   CONSTRAINT `v_hrc_ruleid_ref` FOREIGN KEY (`rule_id`) REFERENCES `voip_header_rules` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_hrc_rwrset_ref` FOREIGN KEY (`rwr_set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -944,7 +944,7 @@ CREATE TABLE `voip_header_rule_sets` (
   UNIQUE KEY `vhrs_subscriber_idx` (`subscriber_id`),
   CONSTRAINT `vhrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vhrs_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -963,7 +963,7 @@ CREATE TABLE `voip_header_rules` (
   KEY `priority_idx` (`priority`),
   KEY `enabled_idx` (`enabled`),
   CONSTRAINT `v_hr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_header_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -978,7 +978,7 @@ CREATE TABLE `voip_mail_to_fax_acl` (
   KEY `mtf_acl_sub_idx` (`subscriber_id`),
   KEY `voip_mtf_acl_fe_idx` (`from_email`),
   CONSTRAINT `v_mtf_acl_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -992,7 +992,7 @@ CREATE TABLE `voip_mail_to_fax_preferences` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `mtf_p_sub_idx` (`subscriber_id`),
   CONSTRAINT `v_mtf_p_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1003,7 +1003,7 @@ CREATE TABLE `voip_mail_to_fax_secret_renew_notify` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `mtf_srn_subdest_idx` (`subscriber_id`,`destination`),
   CONSTRAINT `v_mtf_secret_renew_notify_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1017,7 +1017,7 @@ CREATE TABLE `voip_pbx_autoattendants` (
   KEY `uuid_choice_idx` (`uuid`,`choice`),
   KEY `fk_aa_sub_idx` (`subscriber_id`),
   CONSTRAINT `voip_pbx_autoattendant_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1029,7 +1029,7 @@ CREATE TABLE `voip_pbx_groups` (
   KEY `subscriber_idx` (`subscriber_id`),
   KEY `group_idx` (`group_id`),
   CONSTRAINT `fk_v_sub_group` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1045,7 +1045,7 @@ CREATE TABLE `voip_peer_groups` (
   UNIQUE KEY `name` (`name`),
   KEY `vpg_time_set_ref` (`time_set_id`),
   CONSTRAINT `vpg_time_set_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1066,7 +1066,7 @@ CREATE TABLE `voip_peer_hosts` (
   UNIQUE KEY `grpname` (`group_id`,`name`),
   KEY `grpidx` (`group_id`),
   CONSTRAINT `v_ps_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1082,7 +1082,7 @@ CREATE TABLE `voip_peer_inbound_rules` (
   PRIMARY KEY (`id`),
   KEY `grpidx` (`group_id`),
   CONSTRAINT `v_pig_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1099,7 +1099,7 @@ CREATE TABLE `voip_peer_preferences` (
   CONSTRAINT `v_p_p_peerhostid_ref` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_peer_preferences_ibfk_1` FOREIGN KEY (`peer_host_id`) REFERENCES `voip_peer_hosts` (`id`),
   CONSTRAINT `voip_peer_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1111,7 +1111,7 @@ CREATE TABLE `voip_peer_preferences_blob` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `preference_id` (`preference_id`),
   CONSTRAINT `fk_peer_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_peer_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci `PAGE_COMPRESSED`=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1127,7 +1127,7 @@ CREATE TABLE `voip_peer_rules` (
   PRIMARY KEY (`id`),
   KEY `grpidx` (`group_id`),
   CONSTRAINT `v_pg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1135,7 +1135,7 @@ CREATE TABLE `voip_preference_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1153,7 +1153,7 @@ CREATE TABLE `voip_preference_relations` (
   CONSTRAINT `adid_ref` FOREIGN KEY (`autoprov_device_id`) REFERENCES `autoprov_devices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `rid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vpid_ref` FOREIGN KEY (`voip_preference_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1186,7 +1186,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1209,7 +1209,7 @@ CREATE TABLE `voip_preferences_enum` (
   PRIMARY KEY (`id`),
   KEY `preference_id` (`preference_id`),
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1223,7 +1223,7 @@ CREATE TABLE `voip_prof_preferences` (
   KEY `profidattrid_idx` (`profile_id`,`attribute_id`),
   KEY `profid_idx` (`profile_id`),
   KEY `attrid_idx` (`attribute_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1237,7 +1237,7 @@ CREATE TABLE `voip_reminder` (
   UNIQUE KEY `subscriber_id` (`subscriber_id`),
   KEY `active_time_idx` (`active`,`time`),
   CONSTRAINT `v_rem_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1252,7 +1252,7 @@ CREATE TABLE `voip_reseller_preferences` (
   KEY `v_r_p_reseller_ref` (`reseller_id`),
   CONSTRAINT `v_r_p_attributeid_ref` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_r_p_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1271,7 +1271,7 @@ CREATE TABLE `voip_rewrite_rule_sets` (
   UNIQUE KEY `name_idx` (`name`),
   KEY `vrwrs_reseller_ref` (`reseller_id`),
   CONSTRAINT `vrwrs_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1289,14 +1289,14 @@ CREATE TABLE `voip_rewrite_rules` (
   KEY `setidx` (`set_id`),
   KEY `dirfieldidx` (`direction`,`field`),
   CONSTRAINT `v_rwr_setid_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_rewrite_rule_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `voip_rwrs_sequence` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1314,7 +1314,7 @@ CREATE TABLE `voip_sound_files` (
   KEY `handle_set_id_idx` (`handle_id`,`set_id`),
   CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1322,7 +1322,7 @@ CREATE TABLE `voip_sound_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1334,7 +1334,22 @@ CREATE TABLE `voip_sound_handles` (
   PRIMARY KEY (`id`),
   KEY `v_s_h_group_ref` (`group_id`),
   CONSTRAINT `v_s_h_group_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_sound_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `voip_sound_set_handle_parents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `set_id` int(11) NOT NULL,
+  `handle_id` int(11) NOT NULL,
+  `parent_set_id` int(11) DEFAULT NULL,
+  `parent_chain` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `set_handle_id_idx` (`set_id`,`handle_id`),
+  KEY `handle_id_idx` (`handle_id`),
+  KEY `parent_set_id_idx` (`parent_set_id`),
+  CONSTRAINT `vshh_handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1354,7 +1369,7 @@ CREATE TABLE `voip_sound_sets` (
   KEY `expose_to_customer_idx` (`expose_to_customer`),
   CONSTRAINT `vss_parent_id_ref` FOREIGN KEY (`parent_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `vss_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `billing`.`resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1366,7 +1381,7 @@ CREATE TABLE `voip_speed_dial` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `subscriberid_slot_idx` (`subscriber_id`,`slot`),
   CONSTRAINT `v_sd_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1384,7 +1399,7 @@ CREATE TABLE `voip_subscriber_location_mappings` (
   KEY `subscriber_id_idx` (`subscriber_id`),
   KEY `external_id_idx` (`external_id`),
   CONSTRAINT `v_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1398,7 +1413,7 @@ CREATE TABLE `voip_subscriber_profile_attributes` (
   KEY `profile_idx` (`profile_id`),
   CONSTRAINT `voip_subscriber_profile_attributes_ibfk_1` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_subscriber_profile_attributes_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `voip_subscriber_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1409,7 +1424,7 @@ CREATE TABLE `voip_subscriber_profile_sets` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `vsp_resname_idx` (`reseller_id`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1422,7 +1437,7 @@ CREATE TABLE `voip_subscriber_profiles` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `set_name_idx` (`set_id`,`name`),
   CONSTRAINT `voip_subscriber_profile_sets_ibfk_1` FOREIGN KEY (`set_id`) REFERENCES `voip_subscriber_profile_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1453,15 +1468,15 @@ CREATE TABLE `voip_subscribers` (
   KEY `domainid_idx` (`domain_id`),
   CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `voip_time_periods` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `time_set_id` int(11) unsigned NOT NULL,
-  `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `start` timestamp NOT NULL,
+  `end` timestamp NOT NULL,
   `freq` enum('secondly','minutely','hourly','daily','weekly','monthly','yearly') DEFAULT NULL,
   `until` timestamp NULL DEFAULT NULL,
   `count` int(11) DEFAULT NULL,
@@ -1481,7 +1496,7 @@ CREATE TABLE `voip_time_periods` (
   PRIMARY KEY (`id`),
   KEY `v_tp_tsid_ref` (`time_set_id`),
   CONSTRAINT `v_tp_tsid_ref` FOREIGN KEY (`time_set_id`) REFERENCES `voip_time_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1497,7 +1512,7 @@ CREATE TABLE `voip_time_sets` (
   KEY `v_ts_cid_idx` (`contract_id`),
   KEY `v_ts_sid_ref` (`subscriber_id`),
   CONSTRAINT `v_ts_sid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1512,7 +1527,7 @@ CREATE TABLE `voip_trusted_sources` (
   KEY `peer_idx` (`src_ip`),
   KEY `subscriber_id_ref` (`subscriber_id`),
   CONSTRAINT `subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1530,7 +1545,7 @@ CREATE TABLE `voip_usr_preferences` (
   CONSTRAINT `v_u_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_usr_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`),
   CONSTRAINT `voip_usr_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1542,7 +1557,7 @@ CREATE TABLE `voip_usr_preferences_blob` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `preference_id` (`preference_id`),
   CONSTRAINT `fk_usr_blob_pref_id` FOREIGN KEY (`preference_id`) REFERENCES `voip_usr_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci `PAGE_COMPRESSED`=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci `PAGE_COMPRESSED`=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1551,7 +1566,7 @@ CREATE TABLE `xmlgroups` (
   `name` varchar(32) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `gname` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1564,7 +1579,7 @@ CREATE TABLE `xmlhostgroups` (
   KEY `xhg_hostid_ref` (`host_id`),
   CONSTRAINT `xhg_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `xmlgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `xhg_hostid_ref` FOREIGN KEY (`host_id`) REFERENCES `xmlhosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1576,7 +1591,7 @@ CREATE TABLE `xmlhosts` (
   `sip_port` int(5) unsigned DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1590,19 +1605,19 @@ CREATE TABLE `xmlqueue` (
   `next_try` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `next_try` (`next_try`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `bin_to_hex`(_bin VARCHAR(1023)
-) RETURNS varchar(1023) CHARSET utf8 COLLATE utf8_general_ci
+) RETURNS varchar(1023) CHARSET utf8mb3 COLLATE utf8mb3_general_ci
     NO SQL
     DETERMINISTIC
     SQL SECURITY INVOKER
@@ -1634,13 +1649,13 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `hex_add`(_a VARCHAR(255),
   _b VARCHAR(255)
-) RETURNS varchar(256) CHARSET utf8 COLLATE utf8_general_ci
+) RETURNS varchar(256) CHARSET utf8mb3 COLLATE utf8mb3_general_ci
     NO SQL
     DETERMINISTIC
     SQL SECURITY INVOKER
@@ -1680,13 +1695,13 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `hex_and`(_a VARCHAR(255),
   _b VARCHAR(255)
-) RETURNS varchar(255) CHARSET utf8 COLLATE utf8_general_ci
+) RETURNS varchar(255) CHARSET utf8mb3 COLLATE utf8mb3_general_ci
     NO SQL
     DETERMINISTIC
     SQL SECURITY INVOKER
@@ -1719,9 +1734,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_broadcast_address`(_ipnet VARCHAR(46)
 ) RETURNS varbinary(16)
@@ -1763,9 +1778,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `ip_get_network_address`(_ipnet VARCHAR(46)
 ) RETURNS varbinary(16)
@@ -1804,9 +1819,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_allowed`(_uuid VARCHAR(36),
   _ip VARCHAR(46)
@@ -1916,9 +1931,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_cidr`(_ipnet VARCHAR(46)
 ) RETURNS tinyint(1)
@@ -1940,9 +1955,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `ip_is_ipv6`(_ipnet VARCHAR(46)
 ) RETURNS tinyint(1)
@@ -1959,16 +1974,138 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_sound_set_handle_parents`(IN u_sound_set_id INT, IN u_handle_id INT)
+BEGIN
+    IF u_sound_set_id IS NOT NULL THEN
+        DELETE p FROM voip_sound_set_handle_parents p
+         WHERE set_id IN (
+            WITH RECURSIVE cte as (
+                SELECT s.id
+                  FROM voip_sound_sets s
+                 WHERE id = u_sound_set_id
+                UNION
+                SELECT s.id
+                  FROM voip_sound_sets s
+                  JOIN cte ON cte.id = s.parent_id
+            )
+            SELECT id
+              FROM cte
+           )
+           AND (handle_id = u_handle_id OR 1=1);
+
+        DELETE p FROM voip_sound_set_handle_parents p
+         WHERE set_id IN (
+            WITH RECURSIVE cte as (
+                SELECT s.id, s.parent_id
+                  FROM voip_sound_sets s
+                 WHERE id = u_sound_set_id
+                UNION
+                SELECT s.id, s.parent_id
+                  FROM voip_sound_sets s
+                  JOIN cte ON cte.parent_id = s.id
+            )
+            SELECT id
+              FROM cte
+           )
+           AND (handle_id = u_handle_id OR 1=1);
+
+        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
+        WITH RECURSIVE cte as (
+                SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain
+                  FROM (SELECT s.*, h.id as handle_id
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+            WHERE v.id = (
+                WITH RECURSIVE cte as (
+                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
+                      FROM voip_sound_sets s
+                     WHERE id = u_sound_set_id
+                    UNION
+                    SELECT s.id, s.parent_id, iter+1 as iter
+                      FROM voip_sound_sets s
+                      JOIN cte ON cte.parent_id = s.id
+                )
+                SELECT id
+                  FROM cte
+                 WHERE iter = (SELECT max(iter) from cte)
+            )
+            AND (v.handle_id = u_handle_id OR 1=1)
+            UNION
+            SELECT v.id AS set_id, v.handle_id,
+                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                   CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain
+              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                    FROM (voip_sound_sets s, voip_sound_handles h)
+                   ) AS v
+              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
+               parent_chain
+          FROM cte;
+    ELSE
+        IF u_handle_id IS NOT NULL THEN
+            DELETE FROM voip_sound_set_handle_parents WHERE handle_id = u_handle_id;
+        ELSE
+            DELETE FROM voip_sound_set_handle_parents;
+        END IF;
+
+        INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
+        WITH RECURSIVE cte as (
+                SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain
+                  FROM (SELECT s.*, h.id as handle_id
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                 WHERE v.parent_id IS NULL
+                   AND (v.handle_id = u_handle_id OR 1=1)
+                 UNION
+                SELECT v.id AS set_id, v.handle_id,
+                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                       CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain
+                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
+               parent_chain
+          FROM cte;
+    END IF;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50001 DROP VIEW IF EXISTS `v_sound_set_files`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_sound_set_files` AS with recursive cte as (select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,`v`.`id` AS `data_set_id`,json_array(`v`.`id`) AS `parent_chain` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `v` left join `voip_sound_files` `f` on(`f`.`handle_id` = `v`.`handle_id` and `f`.`set_id` = `v`.`id`)) where `v`.`parent_id` is null union all select `v`.`id` AS `set_id`,`v`.`reseller_id` AS `reseller_id`,`v`.`contract_id` AS `contract_id`,`v`.`name` AS `name`,`v`.`description` AS `description`,`v`.`handle_id` AS `handle_id`,`v`.`handle_name` AS `handle_name`,if(`v`.`use_parent` = 0,`v`.`id`,`cte`.`data_set_id`) AS `data_set_id`,json_array_insert(`cte`.`parent_chain`,'$[0]',`v`.`id`) AS `parent_chain` from ((select `t`.`id` AS `id`,`t`.`reseller_id` AS `reseller_id`,`t`.`contract_id` AS `contract_id`,`t`.`name` AS `name`,`t`.`description` AS `description`,`t`.`contract_default` AS `contract_default`,`t`.`parent_id` AS `parent_id`,`t`.`expose_to_customer` AS `expose_to_customer`,`t`.`handle_id` AS `handle_id`,`t`.`handle_name` AS `handle_name`,`f`.`filename` AS `filename`,`f`.`use_parent` AS `use_parent` from ((select `s`.`id` AS `id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`s`.`contract_default` AS `contract_default`,`s`.`parent_id` AS `parent_id`,`s`.`expose_to_customer` AS `expose_to_customer`,`h`.`id` AS `handle_id`,`h`.`name` AS `handle_name` from (`voip_sound_sets` `s` join `voip_sound_handles` `h`)) `t` left join `voip_sound_files` `f` on(`f`.`handle_id` = `t`.`handle_id` and `f`.`set_id` = `t`.`id`))) `v` join `cte` on(`cte`.`set_id` = `v`.`parent_id` and `cte`.`handle_id` = `v`.`handle_id`)))select `cte`.`set_id` AS `set_id`,`cte`.`reseller_id` AS `reseller_id`,`cte`.`contract_id` AS `contract_id`,`cte`.`name` AS `name`,`cte`.`description` AS `description`,`cte`.`handle_id` AS `handle_id`,`cte`.`handle_name` AS `handle_name`,`vsf`.`id` AS `file_id`,`vsf`.`filename` AS `filename`,`vsf`.`loopplay` AS `loopplay`,replace(replace(replace(json_remove(`cte`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`cte`.`data_set_id` AS `data_set_id`,`vsf`.`data` AS `data` from (`cte` left join `voip_sound_files` `vsf` on(`vsf`.`set_id` = `cte`.`data_set_id` and `vsf`.`handle_id` = `cte`.`handle_id`)) */;
+/*!50001 VIEW `v_sound_set_files` AS select `r`.`set_id` AS `set_id`,`s`.`reseller_id` AS `reseller_id`,`s`.`contract_id` AS `contract_id`,`s`.`name` AS `name`,`s`.`description` AS `description`,`r`.`handle_id` AS `handle_id`,`h`.`name` AS `handle_name`,if(`r`.`parent_set_id` is not null,`vsf_p`.`id`,`vsf`.`id`) AS `file_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`filename`,`vsf`.`filename`) AS `filename`,if(`r`.`parent_set_id` is not null,`vsf_p`.`loopplay`,`vsf`.`loopplay`) AS `loopplay`,replace(replace(replace(json_remove(`r`.`parent_chain`,'$[0]'),'[',''),']',''),', ',':') AS `parent_chain`,`r`.`parent_set_id` AS `data_set_id`,if(`r`.`parent_set_id` is not null,`vsf_p`.`data`,`vsf`.`data`) AS `data` from ((((`voip_sound_set_handle_parents` `r` join `voip_sound_sets` `s` on(`s`.`id` = `r`.`set_id`)) join `voip_sound_handles` `h` on(`h`.`id` = `r`.`handle_id`)) left join `voip_sound_files` `vsf` on(`vsf`.`set_id` = `r`.`set_id` and `vsf`.`handle_id` = `r`.`handle_id`)) left join `voip_sound_files` `vsf_p` on(`vsf_p`.`set_id` = `r`.`parent_set_id` and `vsf_p`.`handle_id` = `r`.`handle_id`)) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1976,9 +2113,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_subscriber_cfs` AS select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute` from ((((((((`voip_cf_destinations` `cfd` left join (`voip_cf_destination_sets` `cfds` left join `voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1 */;
@@ -1989,9 +2126,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_time_periods_ical` AS select `p`.`id` AS `id`,`p`.`time_set_id` AS `time_set_id`,`p`.`start` AS `start`,`p`.`end` AS `end`,`p`.`comment` AS `comment`,concat('DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),'')),'')) AS `rrule_ical`,concat('BEGIN:VEVENT\n','UID:','sipwise',`p`.`id`,'@sipwise',`s`.`id`,'\n','SUMMARY:',`s`.`name`,' event ',`p`.`id`,'\n','DTSTART:',date_format(`p`.`start`,'%Y%m%dT%H%i%s'),'\n',if(year(`p`.`end`) <> '0000',concat('DTEND:',date_format(`p`.`end`,'%Y%m%dT%H%i%s'),'\n'),''),ifnull(concat('DURATION:',`p`.`duration`,'\n'),''),ifnull(concat('RRULE:','FREQ=',`p`.`freq`,ifnull(concat(';COUNT=',`p`.`count`),''),ifnull(concat(';UNTIL=',date_format(`p`.`until`,'%Y%m%dT%H%i%s')),''),ifnull(concat(';INTERVAL=',`p`.`interval`),''),ifnull(concat(';BYSECOND=',`p`.`bysecond`),''),ifnull(concat(';BYMINUTE=',`p`.`byminute`),''),ifnull(concat(';BYHOUR=',`p`.`byhour`),''),ifnull(concat(';BYDAY=',`p`.`byday`),''),ifnull(concat(';BYMONTHDAY=',`p`.`bymonthday`),''),ifnull(concat(';BYYEARDAY=',`p`.`byyearday`),''),ifnull(concat(';BYWEEKNO=',`p`.`byweekno`),''),ifnull(concat(';BYMONTH=',`p`.`bymonth`),''),ifnull(concat(';BYSETPOS=',`p`.`bysetpos`),''),ifnull(concat(';WKST=',`p`.`wkst`),''),'\n'),''),ifnull(concat('DESCRIPTION:',`p`.`comment`,'\n'),''),'END:VEVENT\n') AS `event_ical` from (`voip_time_sets` `s` join `voip_time_periods` `p` on(`s`.`id` = `p`.`time_set_id`)) */;
@@ -2002,9 +2139,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_time_sets_ical` AS select `s`.`id` AS `id`,`s`.`name` AS `name`,concat('BEGIN:VCALENDAR\n','PRODID:-//Mozilla.org/NONSGML Mozilla Calendar V1.1//EN\n',ifnull(concat('NAME:',`s`.`name`,'\n'),''),'VERSION:2.0\n\n',group_concat(`p`.`event_ical` separator '\n'),'END:VCALENDAR\n') AS `ical` from (`voip_time_sets` `s` left join `v_time_periods_ical` `p` on(`s`.`id` = `p`.`time_set_id`)) group by `s`.`id` */;
@@ -4187,7 +4324,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','7dee1fc72bfee8296bb6664f7e169c0d',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','702ffcc962a81073b11c4ba5fcda8212',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
@@ -4211,9 +4348,9 @@ INSERT INTO `xmlhosts` VALUES (5,'127.0.0.1',5582,'/',NULL,'Prosody');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4231,9 +4368,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4254,9 +4391,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4274,9 +4411,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4297,9 +4434,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4317,9 +4454,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4341,9 +4478,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4366,9 +4503,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4387,9 +4524,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4409,9 +4546,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4431,9 +4568,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4460,9 +4597,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4490,9 +4627,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4513,9 +4650,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4543,9 +4680,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4580,9 +4717,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4603,9 +4740,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4633,9 +4770,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4674,9 +4811,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4704,9 +4841,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4726,9 +4863,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4748,9 +4885,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4773,9 +4910,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4799,9 +4936,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4823,9 +4960,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -4844,9 +4981,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4894,9 +5031,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -4977,9 +5114,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5004,9 +5141,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -5028,9 +5165,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -5052,9 +5189,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -5073,9 +5210,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5095,9 +5232,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5117,9 +5254,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5149,9 +5286,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5212,9 +5349,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -5238,9 +5375,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5260,9 +5397,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5282,9 +5419,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5318,9 +5455,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5346,9 +5483,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5398,9 +5535,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5423,9 +5560,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5449,9 +5586,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5482,9 +5619,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5508,9 +5645,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5552,9 +5689,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5713,9 +5850,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5838,9 +5975,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5875,9 +6012,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -5967,9 +6104,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -6005,9 +6142,166 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_create_trig AFTER UPDATE ON voip_sound_files
+    FOR each ROW BEGIN
+
+    CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_update_trig AFTER UPDATE ON voip_sound_files
+    FOR each ROW BEGIN
+
+    CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_delete_trig AFTER DELETE ON voip_sound_files
+    FOR each ROW BEGIN
+
+    DECLARE done INT DEFAULT 0;
+    DECLARE set_id INT DEFAULT 0;
+    DECLARE x CURSOR FOR
+        SELECT DISTINCT set_id
+          FROM voip_sound_set_handle_parents
+         WHERE parent_set_id = OLD.set_id
+           AND handle_id = OLD.handle_id;
+    DECLARE continue handler FOR NOT FOUND SET done = true;
+
+    OPEN x;
+    iter: LOOP
+        FETCH x INTO set_id;
+        IF done THEN
+            LEAVE iter;
+        END IF;
+        CALL update_sound_set_handle_parents(set_id, OLD.handle_id);
+    END LOOP;
+    CLOSE x;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_create_trig AFTER INSERT ON voip_sound_sets
+    FOR each ROW BEGIN
+
+    IF NEW.parent_id IS NOT NULL THEN
+        CALL update_sound_set_handle_parents(NEW.id, NULL);
+    END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_update_trig AFTER UPDATE ON voip_sound_sets
+    FOR each ROW BEGIN
+
+    IF NOT (OLD.parent_id <=> NEW.parent_id) THEN
+        CALL update_sound_set_handle_parents(NEW.id, NULL);
+    END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_delete_trig AFTER DELETE ON voip_sound_sets
+    FOR each ROW BEGIN
+
+    DECLARE done INT DEFAULT 0;
+    DECLARE set_id INT DEFAULT 0;
+    DECLARE x CURSOR FOR
+        SELECT DISTINCT set_id
+          FROM voip_sound_set_handle_parents
+         WHERE parent_set_id = OLD.id;
+    DECLARE continue handler FOR NOT FOUND SET done = true;
+
+    OPEN x;
+    iter: LOOP
+        FETCH x INTO set_id;
+        IF done THEN
+            LEAVE iter;
+        END IF;
+        CALL update_sound_set_handle_parents(set_id, NULL);
+    END LOOP;
+    CLOSE x;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6035,9 +6329,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6072,9 +6366,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6100,9 +6394,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -6122,9 +6416,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6154,9 +6448,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6183,9 +6477,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6225,9 +6519,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6243,9 +6537,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -6263,9 +6557,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -6281,9 +6575,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6315,9 +6609,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6360,9 +6654,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -6393,9 +6687,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -6415,9 +6709,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;

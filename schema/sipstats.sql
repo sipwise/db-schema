@@ -10,7 +10,7 @@ CREATE TABLE `mark` (
   `name` varchar(255) NOT NULL,
   `value` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -19,7 +19,7 @@ CREATE TABLE `message_packets` (
   `packet` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`message`,`packet`),
   KEY `packet` (`packet`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci
  PARTITION BY RANGE (`message`)
 (PARTITION `p700000` VALUES LESS THAN (700000) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -102,7 +102,7 @@ CREATE TABLE `statistics` (
   `res_5xx` bigint(20) unsigned NOT NULL DEFAULT 0,
   `res_6xx` bigint(20) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`,`timestamp`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci
  PARTITION BY RANGE (floor(`timestamp`))
 (PARTITION `p_old` VALUES LESS THAN (600) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;

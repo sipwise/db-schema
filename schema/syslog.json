@@ -37,8 +37,8 @@
          "key_col" : "SystemEvents/DeviceReportedTime"
       },
       "SystemEvents/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -73,8 +73,8 @@
          "key_col" : "SystemEvents/EventID"
       },
       "SystemEvents/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -85,8 +85,8 @@
          "key_col" : "SystemEvents/EventLogType"
       },
       "SystemEvents/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -97,8 +97,8 @@
          "key_col" : "SystemEvents/EventSource"
       },
       "SystemEvents/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -121,8 +121,8 @@
          "key_col" : "SystemEvents/Facility"
       },
       "SystemEvents/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -133,8 +133,8 @@
          "key_col" : "SystemEvents/FromHost"
       },
       "SystemEvents/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -205,8 +205,8 @@
          "key_col" : "SystemEvents/MaxUsage"
       },
       "SystemEvents/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -265,8 +265,8 @@
          "key_col" : "SystemEvents/ReceivedAt"
       },
       "SystemEvents/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -325,8 +325,8 @@
          "key_col" : "se1/DeviceReportedTime"
       },
       "se1/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -361,8 +361,8 @@
          "key_col" : "se1/EventID"
       },
       "se1/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -373,8 +373,8 @@
          "key_col" : "se1/EventLogType"
       },
       "se1/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -385,8 +385,8 @@
          "key_col" : "se1/EventSource"
       },
       "se1/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -409,8 +409,8 @@
          "key_col" : "se1/Facility"
       },
       "se1/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -421,8 +421,8 @@
          "key_col" : "se1/FromHost"
       },
       "se1/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -493,8 +493,8 @@
          "key_col" : "se1/MaxUsage"
       },
       "se1/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -553,8 +553,8 @@
          "key_col" : "se1/ReceivedAt"
       },
       "se1/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -613,8 +613,8 @@
          "key_col" : "se10/DeviceReportedTime"
       },
       "se10/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -649,8 +649,8 @@
          "key_col" : "se10/EventID"
       },
       "se10/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -661,8 +661,8 @@
          "key_col" : "se10/EventLogType"
       },
       "se10/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -673,8 +673,8 @@
          "key_col" : "se10/EventSource"
       },
       "se10/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -697,8 +697,8 @@
          "key_col" : "se10/Facility"
       },
       "se10/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -709,8 +709,8 @@
          "key_col" : "se10/FromHost"
       },
       "se10/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -781,8 +781,8 @@
          "key_col" : "se10/MaxUsage"
       },
       "se10/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -841,8 +841,8 @@
          "key_col" : "se10/ReceivedAt"
       },
       "se10/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -901,8 +901,8 @@
          "key_col" : "se11/DeviceReportedTime"
       },
       "se11/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -937,8 +937,8 @@
          "key_col" : "se11/EventID"
       },
       "se11/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -949,8 +949,8 @@
          "key_col" : "se11/EventLogType"
       },
       "se11/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -961,8 +961,8 @@
          "key_col" : "se11/EventSource"
       },
       "se11/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -985,8 +985,8 @@
          "key_col" : "se11/Facility"
       },
       "se11/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -997,8 +997,8 @@
          "key_col" : "se11/FromHost"
       },
       "se11/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1069,8 +1069,8 @@
          "key_col" : "se11/MaxUsage"
       },
       "se11/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -1129,8 +1129,8 @@
          "key_col" : "se11/ReceivedAt"
       },
       "se11/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1189,8 +1189,8 @@
          "key_col" : "se12/DeviceReportedTime"
       },
       "se12/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -1225,8 +1225,8 @@
          "key_col" : "se12/EventID"
       },
       "se12/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1237,8 +1237,8 @@
          "key_col" : "se12/EventLogType"
       },
       "se12/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1249,8 +1249,8 @@
          "key_col" : "se12/EventSource"
       },
       "se12/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1273,8 +1273,8 @@
          "key_col" : "se12/Facility"
       },
       "se12/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1285,8 +1285,8 @@
          "key_col" : "se12/FromHost"
       },
       "se12/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1357,8 +1357,8 @@
          "key_col" : "se12/MaxUsage"
       },
       "se12/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -1417,8 +1417,8 @@
          "key_col" : "se12/ReceivedAt"
       },
       "se12/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1477,8 +1477,8 @@
          "key_col" : "se13/DeviceReportedTime"
       },
       "se13/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -1513,8 +1513,8 @@
          "key_col" : "se13/EventID"
       },
       "se13/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1525,8 +1525,8 @@
          "key_col" : "se13/EventLogType"
       },
       "se13/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1537,8 +1537,8 @@
          "key_col" : "se13/EventSource"
       },
       "se13/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1561,8 +1561,8 @@
          "key_col" : "se13/Facility"
       },
       "se13/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1573,8 +1573,8 @@
          "key_col" : "se13/FromHost"
       },
       "se13/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1645,8 +1645,8 @@
          "key_col" : "se13/MaxUsage"
       },
       "se13/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -1705,8 +1705,8 @@
          "key_col" : "se13/ReceivedAt"
       },
       "se13/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1765,8 +1765,8 @@
          "key_col" : "se14/DeviceReportedTime"
       },
       "se14/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -1801,8 +1801,8 @@
          "key_col" : "se14/EventID"
       },
       "se14/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1813,8 +1813,8 @@
          "key_col" : "se14/EventLogType"
       },
       "se14/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1825,8 +1825,8 @@
          "key_col" : "se14/EventSource"
       },
       "se14/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1849,8 +1849,8 @@
          "key_col" : "se14/Facility"
       },
       "se14/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1861,8 +1861,8 @@
          "key_col" : "se14/FromHost"
       },
       "se14/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -1933,8 +1933,8 @@
          "key_col" : "se14/MaxUsage"
       },
       "se14/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -1993,8 +1993,8 @@
          "key_col" : "se14/ReceivedAt"
       },
       "se14/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2053,8 +2053,8 @@
          "key_col" : "se15/DeviceReportedTime"
       },
       "se15/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -2089,8 +2089,8 @@
          "key_col" : "se15/EventID"
       },
       "se15/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2101,8 +2101,8 @@
          "key_col" : "se15/EventLogType"
       },
       "se15/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2113,8 +2113,8 @@
          "key_col" : "se15/EventSource"
       },
       "se15/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2137,8 +2137,8 @@
          "key_col" : "se15/Facility"
       },
       "se15/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2149,8 +2149,8 @@
          "key_col" : "se15/FromHost"
       },
       "se15/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2221,8 +2221,8 @@
          "key_col" : "se15/MaxUsage"
       },
       "se15/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -2281,8 +2281,8 @@
          "key_col" : "se15/ReceivedAt"
       },
       "se15/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2341,8 +2341,8 @@
          "key_col" : "se16/DeviceReportedTime"
       },
       "se16/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -2377,8 +2377,8 @@
          "key_col" : "se16/EventID"
       },
       "se16/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2389,8 +2389,8 @@
          "key_col" : "se16/EventLogType"
       },
       "se16/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2401,8 +2401,8 @@
          "key_col" : "se16/EventSource"
       },
       "se16/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2425,8 +2425,8 @@
          "key_col" : "se16/Facility"
       },
       "se16/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2437,8 +2437,8 @@
          "key_col" : "se16/FromHost"
       },
       "se16/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2509,8 +2509,8 @@
          "key_col" : "se16/MaxUsage"
       },
       "se16/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -2569,8 +2569,8 @@
          "key_col" : "se16/ReceivedAt"
       },
       "se16/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2629,8 +2629,8 @@
          "key_col" : "se17/DeviceReportedTime"
       },
       "se17/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -2665,8 +2665,8 @@
          "key_col" : "se17/EventID"
       },
       "se17/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2677,8 +2677,8 @@
          "key_col" : "se17/EventLogType"
       },
       "se17/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2689,8 +2689,8 @@
          "key_col" : "se17/EventSource"
       },
       "se17/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2713,8 +2713,8 @@
          "key_col" : "se17/Facility"
       },
       "se17/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2725,8 +2725,8 @@
          "key_col" : "se17/FromHost"
       },
       "se17/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2797,8 +2797,8 @@
          "key_col" : "se17/MaxUsage"
       },
       "se17/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -2857,8 +2857,8 @@
          "key_col" : "se17/ReceivedAt"
       },
       "se17/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2917,8 +2917,8 @@
          "key_col" : "se18/DeviceReportedTime"
       },
       "se18/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -2953,8 +2953,8 @@
          "key_col" : "se18/EventID"
       },
       "se18/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2965,8 +2965,8 @@
          "key_col" : "se18/EventLogType"
       },
       "se18/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -2977,8 +2977,8 @@
          "key_col" : "se18/EventSource"
       },
       "se18/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3001,8 +3001,8 @@
          "key_col" : "se18/Facility"
       },
       "se18/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3013,8 +3013,8 @@
          "key_col" : "se18/FromHost"
       },
       "se18/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3085,8 +3085,8 @@
          "key_col" : "se18/MaxUsage"
       },
       "se18/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -3145,8 +3145,8 @@
          "key_col" : "se18/ReceivedAt"
       },
       "se18/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3205,8 +3205,8 @@
          "key_col" : "se19/DeviceReportedTime"
       },
       "se19/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -3241,8 +3241,8 @@
          "key_col" : "se19/EventID"
       },
       "se19/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3253,8 +3253,8 @@
          "key_col" : "se19/EventLogType"
       },
       "se19/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3265,8 +3265,8 @@
          "key_col" : "se19/EventSource"
       },
       "se19/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3289,8 +3289,8 @@
          "key_col" : "se19/Facility"
       },
       "se19/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3301,8 +3301,8 @@
          "key_col" : "se19/FromHost"
       },
       "se19/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3373,8 +3373,8 @@
          "key_col" : "se19/MaxUsage"
       },
       "se19/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -3433,8 +3433,8 @@
          "key_col" : "se19/ReceivedAt"
       },
       "se19/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3493,8 +3493,8 @@
          "key_col" : "se2/DeviceReportedTime"
       },
       "se2/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -3529,8 +3529,8 @@
          "key_col" : "se2/EventID"
       },
       "se2/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3541,8 +3541,8 @@
          "key_col" : "se2/EventLogType"
       },
       "se2/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3553,8 +3553,8 @@
          "key_col" : "se2/EventSource"
       },
       "se2/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3577,8 +3577,8 @@
          "key_col" : "se2/Facility"
       },
       "se2/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3589,8 +3589,8 @@
          "key_col" : "se2/FromHost"
       },
       "se2/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3661,8 +3661,8 @@
          "key_col" : "se2/MaxUsage"
       },
       "se2/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -3721,8 +3721,8 @@
          "key_col" : "se2/ReceivedAt"
       },
       "se2/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3781,8 +3781,8 @@
          "key_col" : "se20/DeviceReportedTime"
       },
       "se20/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -3817,8 +3817,8 @@
          "key_col" : "se20/EventID"
       },
       "se20/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3829,8 +3829,8 @@
          "key_col" : "se20/EventLogType"
       },
       "se20/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3841,8 +3841,8 @@
          "key_col" : "se20/EventSource"
       },
       "se20/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3865,8 +3865,8 @@
          "key_col" : "se20/Facility"
       },
       "se20/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3877,8 +3877,8 @@
          "key_col" : "se20/FromHost"
       },
       "se20/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -3949,8 +3949,8 @@
          "key_col" : "se20/MaxUsage"
       },
       "se20/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -4009,8 +4009,8 @@
          "key_col" : "se20/ReceivedAt"
       },
       "se20/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4069,8 +4069,8 @@
          "key_col" : "se21/DeviceReportedTime"
       },
       "se21/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -4105,8 +4105,8 @@
          "key_col" : "se21/EventID"
       },
       "se21/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4117,8 +4117,8 @@
          "key_col" : "se21/EventLogType"
       },
       "se21/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4129,8 +4129,8 @@
          "key_col" : "se21/EventSource"
       },
       "se21/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4153,8 +4153,8 @@
          "key_col" : "se21/Facility"
       },
       "se21/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4165,8 +4165,8 @@
          "key_col" : "se21/FromHost"
       },
       "se21/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4237,8 +4237,8 @@
          "key_col" : "se21/MaxUsage"
       },
       "se21/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -4297,8 +4297,8 @@
          "key_col" : "se21/ReceivedAt"
       },
       "se21/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4357,8 +4357,8 @@
          "key_col" : "se22/DeviceReportedTime"
       },
       "se22/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -4393,8 +4393,8 @@
          "key_col" : "se22/EventID"
       },
       "se22/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4405,8 +4405,8 @@
          "key_col" : "se22/EventLogType"
       },
       "se22/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4417,8 +4417,8 @@
          "key_col" : "se22/EventSource"
       },
       "se22/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4441,8 +4441,8 @@
          "key_col" : "se22/Facility"
       },
       "se22/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4453,8 +4453,8 @@
          "key_col" : "se22/FromHost"
       },
       "se22/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4525,8 +4525,8 @@
          "key_col" : "se22/MaxUsage"
       },
       "se22/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -4585,8 +4585,8 @@
          "key_col" : "se22/ReceivedAt"
       },
       "se22/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4645,8 +4645,8 @@
          "key_col" : "se23/DeviceReportedTime"
       },
       "se23/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -4681,8 +4681,8 @@
          "key_col" : "se23/EventID"
       },
       "se23/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4693,8 +4693,8 @@
          "key_col" : "se23/EventLogType"
       },
       "se23/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4705,8 +4705,8 @@
          "key_col" : "se23/EventSource"
       },
       "se23/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4729,8 +4729,8 @@
          "key_col" : "se23/Facility"
       },
       "se23/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4741,8 +4741,8 @@
          "key_col" : "se23/FromHost"
       },
       "se23/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4813,8 +4813,8 @@
          "key_col" : "se23/MaxUsage"
       },
       "se23/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -4873,8 +4873,8 @@
          "key_col" : "se23/ReceivedAt"
       },
       "se23/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4933,8 +4933,8 @@
          "key_col" : "se24/DeviceReportedTime"
       },
       "se24/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -4969,8 +4969,8 @@
          "key_col" : "se24/EventID"
       },
       "se24/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4981,8 +4981,8 @@
          "key_col" : "se24/EventLogType"
       },
       "se24/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -4993,8 +4993,8 @@
          "key_col" : "se24/EventSource"
       },
       "se24/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5017,8 +5017,8 @@
          "key_col" : "se24/Facility"
       },
       "se24/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5029,8 +5029,8 @@
          "key_col" : "se24/FromHost"
       },
       "se24/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5101,8 +5101,8 @@
          "key_col" : "se24/MaxUsage"
       },
       "se24/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -5161,8 +5161,8 @@
          "key_col" : "se24/ReceivedAt"
       },
       "se24/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5221,8 +5221,8 @@
          "key_col" : "se25/DeviceReportedTime"
       },
       "se25/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -5257,8 +5257,8 @@
          "key_col" : "se25/EventID"
       },
       "se25/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5269,8 +5269,8 @@
          "key_col" : "se25/EventLogType"
       },
       "se25/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5281,8 +5281,8 @@
          "key_col" : "se25/EventSource"
       },
       "se25/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5305,8 +5305,8 @@
          "key_col" : "se25/Facility"
       },
       "se25/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5317,8 +5317,8 @@
          "key_col" : "se25/FromHost"
       },
       "se25/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5389,8 +5389,8 @@
          "key_col" : "se25/MaxUsage"
       },
       "se25/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -5449,8 +5449,8 @@
          "key_col" : "se25/ReceivedAt"
       },
       "se25/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5509,8 +5509,8 @@
          "key_col" : "se26/DeviceReportedTime"
       },
       "se26/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -5545,8 +5545,8 @@
          "key_col" : "se26/EventID"
       },
       "se26/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5557,8 +5557,8 @@
          "key_col" : "se26/EventLogType"
       },
       "se26/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5569,8 +5569,8 @@
          "key_col" : "se26/EventSource"
       },
       "se26/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5593,8 +5593,8 @@
          "key_col" : "se26/Facility"
       },
       "se26/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5605,8 +5605,8 @@
          "key_col" : "se26/FromHost"
       },
       "se26/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5677,8 +5677,8 @@
          "key_col" : "se26/MaxUsage"
       },
       "se26/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -5737,8 +5737,8 @@
          "key_col" : "se26/ReceivedAt"
       },
       "se26/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5797,8 +5797,8 @@
          "key_col" : "se27/DeviceReportedTime"
       },
       "se27/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -5833,8 +5833,8 @@
          "key_col" : "se27/EventID"
       },
       "se27/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5845,8 +5845,8 @@
          "key_col" : "se27/EventLogType"
       },
       "se27/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5857,8 +5857,8 @@
          "key_col" : "se27/EventSource"
       },
       "se27/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5881,8 +5881,8 @@
          "key_col" : "se27/Facility"
       },
       "se27/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5893,8 +5893,8 @@
          "key_col" : "se27/FromHost"
       },
       "se27/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -5965,8 +5965,8 @@
          "key_col" : "se27/MaxUsage"
       },
       "se27/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -6025,8 +6025,8 @@
          "key_col" : "se27/ReceivedAt"
       },
       "se27/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6085,8 +6085,8 @@
          "key_col" : "se28/DeviceReportedTime"
       },
       "se28/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -6121,8 +6121,8 @@
          "key_col" : "se28/EventID"
       },
       "se28/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6133,8 +6133,8 @@
          "key_col" : "se28/EventLogType"
       },
       "se28/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6145,8 +6145,8 @@
          "key_col" : "se28/EventSource"
       },
       "se28/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6169,8 +6169,8 @@
          "key_col" : "se28/Facility"
       },
       "se28/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6181,8 +6181,8 @@
          "key_col" : "se28/FromHost"
       },
       "se28/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6253,8 +6253,8 @@
          "key_col" : "se28/MaxUsage"
       },
       "se28/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -6313,8 +6313,8 @@
          "key_col" : "se28/ReceivedAt"
       },
       "se28/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6373,8 +6373,8 @@
          "key_col" : "se3/DeviceReportedTime"
       },
       "se3/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -6409,8 +6409,8 @@
          "key_col" : "se3/EventID"
       },
       "se3/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6421,8 +6421,8 @@
          "key_col" : "se3/EventLogType"
       },
       "se3/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6433,8 +6433,8 @@
          "key_col" : "se3/EventSource"
       },
       "se3/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6457,8 +6457,8 @@
          "key_col" : "se3/Facility"
       },
       "se3/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6469,8 +6469,8 @@
          "key_col" : "se3/FromHost"
       },
       "se3/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6541,8 +6541,8 @@
          "key_col" : "se3/MaxUsage"
       },
       "se3/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -6601,8 +6601,8 @@
          "key_col" : "se3/ReceivedAt"
       },
       "se3/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6661,8 +6661,8 @@
          "key_col" : "se4/DeviceReportedTime"
       },
       "se4/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -6697,8 +6697,8 @@
          "key_col" : "se4/EventID"
       },
       "se4/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6709,8 +6709,8 @@
          "key_col" : "se4/EventLogType"
       },
       "se4/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6721,8 +6721,8 @@
          "key_col" : "se4/EventSource"
       },
       "se4/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6745,8 +6745,8 @@
          "key_col" : "se4/Facility"
       },
       "se4/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6757,8 +6757,8 @@
          "key_col" : "se4/FromHost"
       },
       "se4/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6829,8 +6829,8 @@
          "key_col" : "se4/MaxUsage"
       },
       "se4/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -6889,8 +6889,8 @@
          "key_col" : "se4/ReceivedAt"
       },
       "se4/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6949,8 +6949,8 @@
          "key_col" : "se5/DeviceReportedTime"
       },
       "se5/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -6985,8 +6985,8 @@
          "key_col" : "se5/EventID"
       },
       "se5/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -6997,8 +6997,8 @@
          "key_col" : "se5/EventLogType"
       },
       "se5/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7009,8 +7009,8 @@
          "key_col" : "se5/EventSource"
       },
       "se5/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7033,8 +7033,8 @@
          "key_col" : "se5/Facility"
       },
       "se5/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7045,8 +7045,8 @@
          "key_col" : "se5/FromHost"
       },
       "se5/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7117,8 +7117,8 @@
          "key_col" : "se5/MaxUsage"
       },
       "se5/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -7177,8 +7177,8 @@
          "key_col" : "se5/ReceivedAt"
       },
       "se5/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7237,8 +7237,8 @@
          "key_col" : "se6/DeviceReportedTime"
       },
       "se6/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -7273,8 +7273,8 @@
          "key_col" : "se6/EventID"
       },
       "se6/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7285,8 +7285,8 @@
          "key_col" : "se6/EventLogType"
       },
       "se6/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7297,8 +7297,8 @@
          "key_col" : "se6/EventSource"
       },
       "se6/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7321,8 +7321,8 @@
          "key_col" : "se6/Facility"
       },
       "se6/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7333,8 +7333,8 @@
          "key_col" : "se6/FromHost"
       },
       "se6/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7405,8 +7405,8 @@
          "key_col" : "se6/MaxUsage"
       },
       "se6/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -7465,8 +7465,8 @@
          "key_col" : "se6/ReceivedAt"
       },
       "se6/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7525,8 +7525,8 @@
          "key_col" : "se7/DeviceReportedTime"
       },
       "se7/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -7561,8 +7561,8 @@
          "key_col" : "se7/EventID"
       },
       "se7/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7573,8 +7573,8 @@
          "key_col" : "se7/EventLogType"
       },
       "se7/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7585,8 +7585,8 @@
          "key_col" : "se7/EventSource"
       },
       "se7/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7609,8 +7609,8 @@
          "key_col" : "se7/Facility"
       },
       "se7/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7621,8 +7621,8 @@
          "key_col" : "se7/FromHost"
       },
       "se7/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7693,8 +7693,8 @@
          "key_col" : "se7/MaxUsage"
       },
       "se7/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -7753,8 +7753,8 @@
          "key_col" : "se7/ReceivedAt"
       },
       "se7/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7813,8 +7813,8 @@
          "key_col" : "se8/DeviceReportedTime"
       },
       "se8/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -7849,8 +7849,8 @@
          "key_col" : "se8/EventID"
       },
       "se8/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7861,8 +7861,8 @@
          "key_col" : "se8/EventLogType"
       },
       "se8/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7873,8 +7873,8 @@
          "key_col" : "se8/EventSource"
       },
       "se8/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7897,8 +7897,8 @@
          "key_col" : "se8/Facility"
       },
       "se8/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7909,8 +7909,8 @@
          "key_col" : "se8/FromHost"
       },
       "se8/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -7981,8 +7981,8 @@
          "key_col" : "se8/MaxUsage"
       },
       "se8/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -8041,8 +8041,8 @@
          "key_col" : "se8/ReceivedAt"
       },
       "se8/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8101,8 +8101,8 @@
          "key_col" : "se9/DeviceReportedTime"
       },
       "se9/EventBinaryData" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventBinaryData",
          "COLUMN_TYPE" : "text",
@@ -8137,8 +8137,8 @@
          "key_col" : "se9/EventID"
       },
       "se9/EventLogType" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventLogType",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8149,8 +8149,8 @@
          "key_col" : "se9/EventLogType"
       },
       "se9/EventSource" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventSource",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8161,8 +8161,8 @@
          "key_col" : "se9/EventSource"
       },
       "se9/EventUser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "EventUser",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8185,8 +8185,8 @@
          "key_col" : "se9/Facility"
       },
       "se9/FromHost" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "FromHost",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8197,8 +8197,8 @@
          "key_col" : "se9/FromHost"
       },
       "se9/GenericFileName" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "GenericFileName",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8269,8 +8269,8 @@
          "key_col" : "se9/MaxUsage"
       },
       "se9/Message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "Message",
          "COLUMN_TYPE" : "text",
@@ -8329,8 +8329,8 @@
          "key_col" : "se9/ReceivedAt"
       },
       "se9/SysLogTag" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "SysLogTag",
          "COLUMN_TYPE" : "varchar(60)",
@@ -8709,203 +8709,203 @@
       "SystemEvents" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MRG_MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "SystemEvents",
          "key_col" : "SystemEvents"
       },
       "se1" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se1",
          "key_col" : "se1"
       },
       "se10" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se10",
          "key_col" : "se10"
       },
       "se11" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se11",
          "key_col" : "se11"
       },
       "se12" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se12",
          "key_col" : "se12"
       },
       "se13" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se13",
          "key_col" : "se13"
       },
       "se14" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se14",
          "key_col" : "se14"
       },
       "se15" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se15",
          "key_col" : "se15"
       },
       "se16" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se16",
          "key_col" : "se16"
       },
       "se17" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se17",
          "key_col" : "se17"
       },
       "se18" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se18",
          "key_col" : "se18"
       },
       "se19" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se19",
          "key_col" : "se19"
       },
       "se2" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se2",
          "key_col" : "se2"
       },
       "se20" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se20",
          "key_col" : "se20"
       },
       "se21" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se21",
          "key_col" : "se21"
       },
       "se22" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se22",
          "key_col" : "se22"
       },
       "se23" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se23",
          "key_col" : "se23"
       },
       "se24" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se24",
          "key_col" : "se24"
       },
       "se25" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se25",
          "key_col" : "se25"
       },
       "se26" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se26",
          "key_col" : "se26"
       },
       "se27" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se27",
          "key_col" : "se27"
       },
       "se28" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se28",
          "key_col" : "se28"
       },
       "se3" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se3",
          "key_col" : "se3"
       },
       "se4" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se4",
          "key_col" : "se4"
       },
       "se5" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se5",
          "key_col" : "se5"
       },
       "se6" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se6",
          "key_col" : "se6"
       },
       "se7" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se7",
          "key_col" : "se7"
       },
       "se8" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se8",
          "key_col" : "se8"
       },
       "se9" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "MyISAM",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "se9",
          "key_col" : "se9"
       }

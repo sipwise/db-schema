@@ -1,8 +1,8 @@
 {
    "columns" : {
       "mark/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -897,14 +897,14 @@
       "mark" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "mark",
          "key_col" : "mark"
       },
       "message_packets" : {
          "CREATE_OPTIONS" : "partitioned",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "message_packets",
          "key_col" : "message_packets"
       },
@@ -925,7 +925,7 @@
       "statistics" : {
          "CREATE_OPTIONS" : "partitioned",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "statistics",
          "key_col" : "statistics"
       }

@@ -20,7 +20,7 @@ CREATE TABLE `acl_role_mappings` (
   KEY `hasaccesstoid_idx` (`has_access_to_id`),
   CONSTRAINT `arm_accessorid_ref` FOREIGN KEY (`accessor_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `arm_hasaccessto_ref` FOREIGN KEY (`has_access_to_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -30,7 +30,7 @@ CREATE TABLE `acl_roles` (
   `is_acl` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_idx` (`role`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -63,7 +63,7 @@ CREATE TABLE `admins` (
   KEY `roleid_idx` (`role_id`),
   CONSTRAINT `a_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `a_roleid_ref` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -99,7 +99,7 @@ CREATE TABLE `billing_fees` (
   KEY `bf_destsrcdir_idx` (`billing_profile_id`,`type`,`match_mode`,`destination`,`source`,`direction`),
   CONSTRAINT `b_f_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `b_f_zoneid_ref` FOREIGN KEY (`billing_zone_id`) REFERENCES `billing_zones` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -136,7 +136,7 @@ CREATE TABLE `billing_fees_history` (
   KEY `bfh_destsrcdir_idx` (`billing_profile_id`,`type`,`match_mode`,`destination`,`bf_id`,`source`,`direction`),
   CONSTRAINT `b_f_h_bfid_ref` FOREIGN KEY (`bf_id`) REFERENCES `billing_fees` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   CONSTRAINT `b_f_h_bzhid_ref` FOREIGN KEY (`billing_zones_history_id`) REFERENCES `billing_zones_history` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -170,7 +170,7 @@ CREATE TABLE `billing_fees_raw` (
   KEY `showfeesc_idx` (`billing_profile_id`,`billing_zone_id`,`destination`),
   KEY `bfr_destsrcdir_idx` (`billing_profile_id`,`type`,`match_mode`,`destination`,`source`,`direction`),
   KEY `bfr_srcdestdir_idx` (`billing_profile_id`,`type`,`match_mode`,`direction`,`source`,`destination`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -192,7 +192,7 @@ CREATE TABLE `billing_mappings` (
   CONSTRAINT `b_m_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `b_m_productid_ref` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `bm_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -212,7 +212,7 @@ CREATE TABLE `billing_network_blocks` (
   KEY `bnb_ipv6_to_idx` (`_ipv6_net_to`),
   KEY `bnb_network_ref` (`network_id`),
   CONSTRAINT `bnb_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -225,7 +225,7 @@ CREATE TABLE `billing_networks` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `bn_resname_idx` (`reseller_id`,`name`),
   CONSTRAINT `bn_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -237,7 +237,7 @@ CREATE TABLE `billing_peaktime_special` (
   PRIMARY KEY (`id`),
   KEY `profileid_idx` (`billing_profile_id`),
   CONSTRAINT `b_p_s_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -250,7 +250,7 @@ CREATE TABLE `billing_peaktime_weekdays` (
   PRIMARY KEY (`id`),
   KEY `profileid_idx` (`billing_profile_id`),
   CONSTRAINT `b_p_w_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -285,7 +285,7 @@ CREATE TABLE `billing_profiles` (
   UNIQUE KEY `reshand_idx` (`reseller_id`,`handle`,`terminate_timestamp`),
   KEY `resellerid_idx` (`reseller_id`),
   CONSTRAINT `b_p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -297,7 +297,7 @@ CREATE TABLE `billing_zones` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `profnamdes_idx` (`billing_profile_id`,`zone`,`detail`),
   CONSTRAINT `b_z_profileid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -310,7 +310,7 @@ CREATE TABLE `billing_zones_history` (
   PRIMARY KEY (`id`),
   KEY `bzid_idx` (`bz_id`),
   CONSTRAINT `b_z_h_bzid_ref` FOREIGN KEY (`bz_id`) REFERENCES `billing_zones` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -324,7 +324,7 @@ CREATE TABLE `call_list_suppressions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cls_domain_direction_pattern_idx` (`domain`,`direction`,`pattern`),
   KEY `cls_direction_mode_domain_idx` (`direction`,`mode`,`domain`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -345,7 +345,7 @@ CREATE TABLE `contacts` (
   `email` varchar(255) DEFAULT NULL,
   `newsletter` tinyint(1) NOT NULL DEFAULT 0,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NULL DEFAULT NULL,
   `faxnumber` varchar(31) DEFAULT NULL,
   `iban` varchar(34) DEFAULT NULL,
   `bic` varchar(11) DEFAULT NULL,
@@ -368,7 +368,7 @@ CREATE TABLE `contacts` (
   KEY `ct_resellerid_ref` (`reseller_id`),
   KEY `email_idx` (`email`),
   CONSTRAINT `ct_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -393,7 +393,7 @@ CREATE TABLE `contract_balances` (
   KEY `invoiceid_idx` (`invoice_id`),
   CONSTRAINT `c_b_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cb_invoiceid_ref` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -404,11 +404,11 @@ CREATE TABLE `contract_credits` (
   `amount` double DEFAULT NULL,
   `reason` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `balanceid_idx` (`balance_id`),
   CONSTRAINT `cc_balanceid_ref` FOREIGN KEY (`balance_id`) REFERENCES `contract_balances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -424,7 +424,7 @@ CREATE TABLE `contract_fraud_preferences` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `contract_id` (`contract_id`),
   CONSTRAINT `contract_id_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -438,7 +438,7 @@ CREATE TABLE `contract_phonebook` (
   KEY `name_idx` (`name`),
   KEY `number_idx` (`number`),
   CONSTRAINT `pb_contract_id_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -451,7 +451,7 @@ CREATE TABLE `contract_registers` (
   PRIMARY KEY (`id`),
   KEY `contractid_idx` (`contract_id`),
   CONSTRAINT `c_r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -464,7 +464,7 @@ CREATE TABLE `contracts` (
   `status` enum('pending','active','locked','terminated') NOT NULL DEFAULT 'active',
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NOT NULL,
   `activate_timestamp` timestamp NULL DEFAULT NULL,
   `terminate_timestamp` timestamp NULL DEFAULT NULL,
   `max_subscribers` int(6) unsigned DEFAULT NULL,
@@ -488,7 +488,7 @@ CREATE TABLE `contracts` (
   CONSTRAINT `c_productid_ref` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `co_contactid_ref` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `co_orderid_ref` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -507,7 +507,7 @@ CREATE TABLE `contracts_billing_profile_network` (
   CONSTRAINT `cbpn_cid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cbpn_nid_ref` FOREIGN KEY (`billing_network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `cbpn_pid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -518,7 +518,7 @@ CREATE TABLE `contracts_billing_profile_network_schedule` (
   PRIMARY KEY (`id`),
   KEY `cbpns_pnid_est_idx` (`profile_network_id`,`effective_start_time`),
   CONSTRAINT `cbpns_cbpnid_ref` FOREIGN KEY (`profile_network_id`) REFERENCES `contracts_billing_profile_network` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -531,7 +531,7 @@ CREATE TABLE `credit_payments` (
   KEY `paymentid_idx` (`payment_id`),
   CONSTRAINT `cp_creditid_ref` FOREIGN KEY (`credit_id`) REFERENCES `contract_credits` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cp_paymentid_ref` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -544,7 +544,7 @@ CREATE TABLE `customer_registers` (
   PRIMARY KEY (`id`),
   KEY `customerid_idx` (`customer_id`),
   CONSTRAINT `c_r_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -559,7 +559,7 @@ CREATE TABLE `customers` (
   `comm_contact_id` int(11) unsigned DEFAULT NULL,
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `reseller_id` (`reseller_id`,`shopuser`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -571,7 +571,7 @@ CREATE TABLE `customers` (
   CONSTRAINT `cu_contactid_ref` FOREIGN KEY (`contact_id`) REFERENCES `contacts` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `cu_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `cu_techcontact_ref` FOREIGN KEY (`tech_contact_id`) REFERENCES `contacts` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -584,7 +584,7 @@ CREATE TABLE `domain_resellers` (
   KEY `resellerid_idx` (`reseller_id`),
   CONSTRAINT `dr_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `dr_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -596,7 +596,7 @@ CREATE TABLE `domains` (
   UNIQUE KEY `domain_idx` (`domain`),
   KEY `resellerid_idx` (`reseller_id`),
   CONSTRAINT `d_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -611,7 +611,7 @@ CREATE TABLE `email_templates` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `reseller_name_idx` (`reseller_id`,`name`),
   CONSTRAINT `fk_email_reseller` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -625,7 +625,7 @@ CREATE TABLE `invoice_templates` (
   PRIMARY KEY (`id`),
   KEY `invoice_templates_ibfk_1` (`reseller_id`),
   CONSTRAINT `invoice_templates_ibfk_1` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -645,7 +645,7 @@ CREATE TABLE `invoices` (
   UNIQUE KEY `serial_idx` (`serial`),
   KEY `invoice_contract_fk` (`contract_id`),
   CONSTRAINT `invoice_contract_fk` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -672,7 +672,7 @@ CREATE TABLE `journals` (
   KEY `txid_idx` (`tx_id`),
   CONSTRAINT `j_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`),
   CONSTRAINT `j_roleid_ref` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -689,7 +689,7 @@ CREATE TABLE `lnp_numbers` (
   KEY `l_n_lnpproid_ref` (`lnp_provider_id`),
   KEY `l_n_start_idx` (`start`),
   CONSTRAINT `l_n_lnpproid_ref` FOREIGN KEY (`lnp_provider_id`) REFERENCES `lnp_providers` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -700,7 +700,7 @@ CREATE TABLE `lnp_providers` (
   `authoritative` tinyint(1) NOT NULL DEFAULT 0,
   `skip_rewrite` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -718,7 +718,7 @@ CREATE TABLE `ncos_levels` (
   KEY `nl_time_set_id_idx` (`time_set_id`),
   CONSTRAINT `c_l_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nl_time_set_id_ref` FOREIGN KEY (`time_set_id`) REFERENCES `provisioning`.`voip_time_sets` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -732,7 +732,7 @@ CREATE TABLE `ncos_lnp_list` (
   KEY `c_l_l_lnpproid_ref` (`lnp_provider_id`),
   CONSTRAINT `c_l_l_lnpproid_ref` FOREIGN KEY (`lnp_provider_id`) REFERENCES `lnp_providers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `c_l_l_ncoslevid_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -744,7 +744,7 @@ CREATE TABLE `ncos_lnp_pattern_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `listpat_idx` (`ncos_lnp_list_id`,`pattern`),
   CONSTRAINT `c_p_l_ncoslnplist_ref` FOREIGN KEY (`ncos_lnp_list_id`) REFERENCES `ncos_lnp_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -756,7 +756,7 @@ CREATE TABLE `ncos_pattern_list` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `levpat_idx` (`ncos_level_id`,`pattern`),
   CONSTRAINT `c_p_l_ncoslevid_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -769,7 +769,7 @@ CREATE TABLE `ncos_set_levels` (
   KEY `nlm_ncos_level_id_idx` (`ncos_level_id`),
   CONSTRAINT `nlm_ncos_level_id_ref` FOREIGN KEY (`ncos_level_id`) REFERENCES `ncos_levels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nlm_ncos_set_id_ref` FOREIGN KEY (`ncos_set_id`) REFERENCES `ncos_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -781,7 +781,7 @@ CREATE TABLE `ncos_sets` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `resname_idx` (`reseller_id`,`name`),
   CONSTRAINT `n_c_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -794,7 +794,7 @@ CREATE TABLE `order_payments` (
   KEY `paymentid_idx` (`payment_id`),
   CONSTRAINT `op_orderid_ref` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `op_paymentid_ref` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -809,8 +809,8 @@ CREATE TABLE `orders` (
   `shipping_costs` int(11) DEFAULT NULL,
   `invoice_id` int(11) unsigned DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `complete_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NULL DEFAULT NULL,
+  `complete_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `customerid_idx` (`customer_id`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -820,7 +820,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `o_customerid_ref` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `o_invoiceid_ref` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `o_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -837,7 +837,7 @@ CREATE TABLE `package_profile_sets` (
   CONSTRAINT `pps_network_ref` FOREIGN KEY (`network_id`) REFERENCES `billing_networks` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `pps_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `pps_profile_ref` FOREIGN KEY (`profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -850,7 +850,7 @@ CREATE TABLE `password_resets` (
   KEY `uuid_idx` (`uuid`),
   KEY `fk_pwd_reset_sub` (`subscriber_id`),
   CONSTRAINT `fk_pwd_reset_sub` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -865,12 +865,12 @@ CREATE TABLE `payments` (
   `returncode` varchar(63) DEFAULT NULL,
   `externalstatus` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `state_idx` (`state`),
   KEY `mpaytid_idx` (`mpaytid`),
   KEY `status_idx` (`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -891,7 +891,7 @@ CREATE TABLE `products` (
   KEY `profileid_idx` (`billing_profile_id`),
   CONSTRAINT `p_bilprofid_ref` FOREIGN KEY (`billing_profile_id`) REFERENCES `billing_profiles` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `p_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -916,7 +916,7 @@ CREATE TABLE `profile_packages` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `pp_resname_idx` (`reseller_id`,`name`),
   CONSTRAINT `pp_reseller_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -932,7 +932,7 @@ CREATE TABLE `provisioning_templates` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `resnam_idx` (`reseller_id`,`name`),
   CONSTRAINT `p_t_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -947,7 +947,7 @@ CREATE TABLE `reseller_brandings` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `reseller_idx` (`reseller_id`),
   CONSTRAINT `branding_reseller_fk` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -961,7 +961,7 @@ CREATE TABLE `reseller_phonebook` (
   KEY `name_idx` (`name`),
   KEY `number_idx` (`number`),
   CONSTRAINT `pb_reseller_id_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -974,7 +974,7 @@ CREATE TABLE `resellers` (
   UNIQUE KEY `contractid_idx` (`contract_id`),
   UNIQUE KEY `name_idx` (`name`),
   CONSTRAINT `r_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -989,7 +989,7 @@ CREATE TABLE `subscriber_phonebook` (
   KEY `name_idx` (`name`),
   KEY `number_idx` (`number`),
   CONSTRAINT `pb_subscriber_id_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1036,7 +1036,7 @@ CREATE TABLE `topup_log` (
   CONSTRAINT `tl_profile_before_ref` FOREIGN KEY (`profile_before_id`) REFERENCES `billing_profiles` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tl_subscriber_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `tl_voucher_ref` FOREIGN KEY (`voucher_id`) REFERENCES `vouchers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -1094,7 +1094,7 @@ CREATE TABLE `voip_intercept` (
   `delivery_user` text DEFAULT NULL,
   `delivery_pass` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `create_timestamp` timestamp NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   `uuid` varchar(255) DEFAULT NULL,
   `sip_username` varchar(255) DEFAULT NULL,
@@ -1105,7 +1105,7 @@ CREATE TABLE `voip_intercept` (
   KEY `resellerid_idx` (`reseller_id`),
   KEY `number_idx` (`number`),
   KEY `deleted_idx` (`deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1118,7 +1118,7 @@ CREATE TABLE `voip_number_block_resellers` (
   KEY `resellerid_idx` (`reseller_id`),
   CONSTRAINT `vnbr_numblockid_ref` FOREIGN KEY (`number_block_id`) REFERENCES `voip_number_blocks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vnbr_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1132,7 +1132,7 @@ CREATE TABLE `voip_number_blocks` (
   `authoritative` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `prefix_idx` (`cc`,`ac`,`sn_prefix`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1145,7 +1145,7 @@ CREATE TABLE `voip_numbers` (
   `subscriber_id` int(11) unsigned DEFAULT NULL,
   `status` enum('active','reserved','locked','deported') NOT NULL DEFAULT 'active',
   `ported` tinyint(1) NOT NULL DEFAULT 0,
-  `list_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `list_timestamp` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `number_idx` (`cc`,`ac`,`sn`),
   KEY `listts_idx` (`list_timestamp`),
@@ -1153,7 +1153,7 @@ CREATE TABLE `voip_numbers` (
   KEY `subscriberid_idx` (`subscriber_id`),
   CONSTRAINT `v_n_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `v_n_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1177,7 +1177,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `v_s_contractid_ref` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_s_domainid_ref` FOREIGN KEY (`domain_id`) REFERENCES `domains` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `v_s_pnumid_ref` FOREIGN KEY (`primary_number_id`) REFERENCES `voip_numbers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1203,16 +1203,16 @@ CREATE TABLE `vouchers` (
   CONSTRAINT `vouchers_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `contracts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vouchers_ibfk_3` FOREIGN KEY (`used_by_subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `vouchers_package_ref` FOREIGN KEY (`package_id`) REFERENCES `profile_packages` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `check_billing_fee_offpeak`(_billing_profile_id int(11),
   _t decimal(13,3),
@@ -1300,16 +1300,16 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_fee`(_billing_profile_id int(11),
   _t decimal(13,3),
   _source varchar(511),
   _destination varchar(511),
   _contract_id int(11)
-) RETURNS varchar(100) CHARSET utf8 COLLATE utf8_general_ci
+) RETURNS varchar(100) CHARSET utf8mb3 COLLATE utf8mb3_general_ci
     READS SQL DATA
     DETERMINISTIC
 begin
@@ -1341,9 +1341,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_fee_id`(_billing_profile_id int(11),
   _type enum('call','sms'),
@@ -1482,9 +1482,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_network_contract_cnt`(_network_id int,
   _limit int
@@ -1531,9 +1531,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_contract_id`(_contract_id int(11),
   _epoch decimal(13,3)
@@ -1577,9 +1577,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_contract_id_network`(_contract_id int(11),
   _epoch decimal(13,3),
@@ -1637,9 +1637,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_peer_host_id`(_peer_host_id int(11),
   _epoch decimal(13,3)
@@ -1662,9 +1662,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_peer_host_id_network`(_peer_host_id int(11),
   _epoch decimal(13,3),
@@ -1688,9 +1688,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_uuid`(_uuid varchar(36),
   _epoch decimal(13,3)
@@ -1712,9 +1712,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_by_uuid_network`(_uuid varchar(36),
   _epoch decimal(13,3),
@@ -1738,9 +1738,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_billing_profile_contract_cnt`(_profile_id int,
   _limit int
@@ -1787,9 +1787,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `get_lnp_number_id`(_destination varchar(511),
   _epoch decimal(13,3)
@@ -1831,9 +1831,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `add_contract_billing_profile_network_schedule`(
   _contract_id int(11) unsigned,
@@ -1868,9 +1868,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `create_contract_billing_profile_network_from_package`(
   in _contract_id int(11) unsigned,
@@ -1895,9 +1895,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `fill_billing_fees`(in in_profile_id int)
 begin
@@ -1945,9 +1945,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `schedule_contract_billing_profile_network`(
   in _contract_id int(11) unsigned,
@@ -2129,9 +2129,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `transform_billing_mappings`()
 begin
@@ -2230,9 +2230,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `_v_actual_effective_start_time` AS select `cbpn`.`contract_id` AS `contract_id`,max(`cbpns`.`effective_start_time`) AS `effective_start_time` from (`contracts_billing_profile_network_schedule` `cbpns` join `contracts_billing_profile_network` `cbpn` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) where `cbpns`.`effective_start_time` <= unix_timestamp(current_timestamp()) and `cbpn`.`base` = 1 group by `cbpn`.`contract_id` */;
@@ -2243,9 +2243,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_actual_billing_profiles` AS select `est`.`contract_id` AS `contract_id`,`cbpn`.`billing_profile_id` AS `billing_profile_id` from ((`contracts_billing_profile_network_schedule` `cbpns` join `contracts_billing_profile_network` `cbpn` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) join `_v_actual_effective_start_time` `est` on(`est`.`contract_id` = `cbpn`.`contract_id` and `cbpns`.`effective_start_time` = `est`.`effective_start_time`)) where `cbpn`.`base` = 1 */;
@@ -2256,9 +2256,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_contract_billing_profile_network_schedules` AS select `cbpns`.`id` AS `id`,`cbpn`.`contract_id` AS `contract_id`,`cbpn`.`start_date` AS `start_date`,`cbpn`.`end_date` AS `end_date`,`cbpn`.`billing_profile_id` AS `billing_profile_id`,`cbpn`.`billing_network_id` AS `network_id`,`cbpns`.`effective_start_time` AS `effective_start_time`,from_unixtime(`cbpns`.`effective_start_time`) AS `effective_start_date`,`bp`.`name` AS `billing_profile_name`,`bp`.`handle` AS `billing_profile_handle`,`bn`.`name` AS `billing_network_name` from (((`contracts_billing_profile_network` `cbpn` join `contracts_billing_profile_network_schedule` `cbpns` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) join `billing_profiles` `bp` on(`bp`.`id` = `cbpn`.`billing_profile_id`)) left join `billing_networks` `bn` on(`bn`.`id` = `cbpn`.`billing_network_id`)) */;
@@ -2269,9 +2269,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_contract_timezone` AS select `cc`.`id` AS `contact_id`,`c`.`id` AS `contract_id`,coalesce(`cc`.`timezone`,`rc`.`timezone`,`t`.`name`) AS `name` from (((((`billing`.`contracts` `c` join `billing`.`contacts` `cc` on(`cc`.`id` = `c`.`contact_id`)) left join `billing`.`resellers` `r` on(`r`.`id` = `cc`.`reseller_id`)) left join `billing`.`contracts` `i` on(`i`.`id` = `r`.`contract_id`)) left join `billing`.`contacts` `rc` on(`rc`.`id` = `i`.`contact_id`)) join `ngcp`.`timezone` `t`) */;
@@ -2282,9 +2282,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_reseller_timezone` AS select `rc`.`id` AS `contact_id`,`r`.`id` AS `reseller_id`,coalesce(`rc`.`timezone`,`t`.`name`) AS `name` from (((`billing`.`resellers` `r` join `billing`.`contracts` `i` on(`i`.`id` = `r`.`contract_id`)) join `billing`.`contacts` `rc` on(`rc`.`id` = `i`.`contact_id`)) join `ngcp`.`timezone` `t`) */;
@@ -2295,9 +2295,9 @@ DELIMITER ;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_subscriber_timezone` AS select `sc`.`id` AS `contact_id`,`s`.`id` AS `subscriber_id`,`s`.`uuid` AS `uuid`,coalesce(`sc`.`timezone`,`cc`.`timezone`,`rc`.`timezone`,`t`.`name`) AS `name` from (((((((`billing`.`voip_subscribers` `s` left join `billing`.`contacts` `sc` on(`sc`.`id` = `s`.`contact_id`)) join `billing`.`contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `billing`.`contacts` `cc` on(`cc`.`id` = `c`.`contact_id`)) join `billing`.`resellers` `r` on(`r`.`id` = `cc`.`reseller_id`)) join `billing`.`contracts` `i` on(`i`.`id` = `r`.`contract_id`)) join `billing`.`contacts` `rc` on(`rc`.`id` = `i`.`contact_id`)) join `ngcp`.`timezone` `t`) */;
@@ -2334,8 +2334,8 @@ INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
 INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active',NOW(),NOW(),NOW(),0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,NOW(),NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,NOW(),NOW(),NULL,NULL,NULL,NULL,NULL);
 INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,NOW(),NOW(),NOW(),NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
@@ -2361,9 +2361,9 @@ INSERT INTO `resellers` VALUES (1,1,'default','active');
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -2392,9 +2392,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -2430,9 +2430,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -2451,9 +2451,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
@@ -2474,9 +2474,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -2495,9 +2495,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
@@ -2516,9 +2516,9 @@ DELIMITER ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;

@@ -121,8 +121,8 @@
          "key_col" : "sipwise_mam/stanza"
       },
       "sipwise_mam/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(255)",
@@ -133,8 +133,8 @@
          "key_col" : "sipwise_mam/username"
       },
       "sipwise_mam/with" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "with",
          "COLUMN_TYPE" : "varchar(255)",
@@ -145,8 +145,8 @@
          "key_col" : "sipwise_mam/with"
       },
       "sipwise_offline/domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -181,8 +181,8 @@
          "key_col" : "sipwise_offline/stanza"
       },
       "sipwise_offline/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(255)",
@@ -320,7 +320,7 @@
       "prosody" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "prosody",
          "key_col" : "prosody"
       },

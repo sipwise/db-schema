@@ -9,7 +9,7 @@ USE ngcp;
 CREATE TABLE `date_range_helper` (
   `d` date DEFAULT NULL,
   KEY `d` (`d`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -20,27 +20,28 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=835 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=837 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `timezone` (
   `id` enum('1') NOT NULL,
   `name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `modified_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `version` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tzinfo_version` (
   `id` enum('1') NOT NULL,
   `version` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `modified_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 INSERT INTO `date_range_helper` VALUES ('1970-01-01');
 INSERT INTO `date_range_helper` VALUES ('1970-01-02');
@@ -30876,6 +30877,8 @@ INSERT INTO `db_schema` VALUES (831,15762,'spce',NOW());
 INSERT INTO `db_schema` VALUES (832,15763,'spce',NOW());
 INSERT INTO `db_schema` VALUES (833,15764,'spce',NOW());
 INSERT INTO `db_schema` VALUES (834,15765,'spce',NOW());
-INSERT INTO `timezone` VALUES ('1','localtime',NOW(),NOW());
+INSERT INTO `db_schema` VALUES (835,15766,'spce',NOW());
+INSERT INTO `db_schema` VALUES (836,15767,'spce',NOW());
+INSERT INTO `timezone` VALUES ('1','localtime',NOW(),NOW(),NULL);
 INSERT INTO `tzinfo_version` VALUES ('1','0',NOW(),NOW());
 COMMIT;

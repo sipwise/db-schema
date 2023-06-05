@@ -1,8 +1,8 @@
 {
    "columns" : {
       "ldap_attr_mappings/add_proc" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "add_proc",
          "COLUMN_TYPE" : "varchar(255)",
@@ -13,8 +13,8 @@
          "key_col" : "ldap_attr_mappings/add_proc"
       },
       "ldap_attr_mappings/delete_proc" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "delete_proc",
          "COLUMN_TYPE" : "varchar(255)",
@@ -37,8 +37,8 @@
          "key_col" : "ldap_attr_mappings/expect_return"
       },
       "ldap_attr_mappings/from_tbls" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "from_tbls",
          "COLUMN_TYPE" : "varchar(255)",
@@ -61,8 +61,8 @@
          "key_col" : "ldap_attr_mappings/id"
       },
       "ldap_attr_mappings/join_where" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "join_where",
          "COLUMN_TYPE" : "varchar(255)",
@@ -73,8 +73,8 @@
          "key_col" : "ldap_attr_mappings/join_where"
       },
       "ldap_attr_mappings/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -109,8 +109,8 @@
          "key_col" : "ldap_attr_mappings/param_order"
       },
       "ldap_attr_mappings/sel_expr" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "sel_expr",
          "COLUMN_TYPE" : "varchar(255)",
@@ -121,8 +121,8 @@
          "key_col" : "ldap_attr_mappings/sel_expr"
       },
       "ldap_attr_mappings/sel_expr_u" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "sel_expr_u",
          "COLUMN_TYPE" : "varchar(255)",
@@ -133,8 +133,8 @@
          "key_col" : "ldap_attr_mappings/sel_expr_u"
       },
       "ldap_oc_mappings/create_proc" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_proc",
          "COLUMN_TYPE" : "varchar(255)",
@@ -145,8 +145,8 @@
          "key_col" : "ldap_oc_mappings/create_proc"
       },
       "ldap_oc_mappings/delete_proc" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "delete_proc",
          "COLUMN_TYPE" : "varchar(255)",
@@ -181,8 +181,8 @@
          "key_col" : "ldap_oc_mappings/id"
       },
       "ldap_oc_mappings/keycol" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "keycol",
          "COLUMN_TYPE" : "varchar(64)",
@@ -193,8 +193,8 @@
          "key_col" : "ldap_oc_mappings/keycol"
       },
       "ldap_oc_mappings/keytbl" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "keytbl",
          "COLUMN_TYPE" : "varchar(64)",
@@ -205,8 +205,8 @@
          "key_col" : "ldap_oc_mappings/keytbl"
       },
       "ldap_oc_mappings/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(64)",
@@ -249,14 +249,14 @@
       "ldap_attr_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ldap_attr_mappings",
          "key_col" : "ldap_attr_mappings"
       },
       "ldap_oc_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ldap_oc_mappings",
          "key_col" : "ldap_oc_mappings"
       }

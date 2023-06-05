@@ -13,7 +13,7 @@ CREATE TABLE `call_info` (
   `amount` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `call_info_sip_code_period_idx` (`sip_code`,`period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -38,6 +38,6 @@ CREATE TABLE `cdr_info` (
   `last_rated_id` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `cdr_info_period_idx` (`period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 COMMIT;

@@ -49,8 +49,8 @@
          "key_col" : "acl_roles/is_acl"
       },
       "acl_roles/role" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "role",
          "COLUMN_TYPE" : "varchar(64)",
@@ -97,8 +97,8 @@
          "key_col" : "admins/can_reset_password"
       },
       "admins/email" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "email",
          "COLUMN_TYPE" : "varchar(255)",
@@ -193,8 +193,8 @@
          "key_col" : "admins/lawful_intercept"
       },
       "admins/login" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "login",
          "COLUMN_TYPE" : "varchar(31)",
@@ -205,8 +205,8 @@
          "key_col" : "admins/login"
       },
       "admins/md5pass" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "md5pass",
          "COLUMN_TYPE" : "char(32)",
@@ -253,8 +253,8 @@
          "key_col" : "admins/role_id"
       },
       "admins/saltedpass" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "saltedpass",
          "COLUMN_TYPE" : "char(54)",
@@ -277,8 +277,8 @@
          "key_col" : "admins/show_passwords"
       },
       "admins/ssl_client_certificate" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "ssl_client_certificate",
          "COLUMN_TYPE" : "text",
@@ -337,8 +337,8 @@
          "key_col" : "billing_fees/billing_zone_id"
       },
       "billing_fees/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -349,8 +349,8 @@
          "key_col" : "billing_fees/destination"
       },
       "billing_fees/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'out'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('in','out')",
@@ -373,8 +373,8 @@
          "key_col" : "billing_fees/id"
       },
       "billing_fees/match_mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'regex_longest_pattern'",
          "COLUMN_NAME" : "match_mode",
          "COLUMN_TYPE" : "enum('regex_longest_pattern','regex_longest_match','prefix','exact_destination')",
@@ -553,8 +553,8 @@
          "key_col" : "billing_fees/onpeak_use_free_time"
       },
       "billing_fees/source" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'.'",
          "COLUMN_NAME" : "source",
          "COLUMN_TYPE" : "varchar(255)",
@@ -565,8 +565,8 @@
          "key_col" : "billing_fees/source"
       },
       "billing_fees/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'call'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('call','sms')",
@@ -625,8 +625,8 @@
          "key_col" : "billing_fees_history/billing_zones_history_id"
       },
       "billing_fees_history/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -637,8 +637,8 @@
          "key_col" : "billing_fees_history/destination"
       },
       "billing_fees_history/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'out'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('in','out')",
@@ -661,8 +661,8 @@
          "key_col" : "billing_fees_history/id"
       },
       "billing_fees_history/match_mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'regex_longest_pattern'",
          "COLUMN_NAME" : "match_mode",
          "COLUMN_TYPE" : "enum('regex_longest_pattern','regex_longest_match','prefix','exact_destination')",
@@ -841,8 +841,8 @@
          "key_col" : "billing_fees_history/onpeak_use_free_time"
       },
       "billing_fees_history/source" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'.'",
          "COLUMN_NAME" : "source",
          "COLUMN_TYPE" : "varchar(255)",
@@ -853,8 +853,8 @@
          "key_col" : "billing_fees_history/source"
       },
       "billing_fees_history/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'call'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('call','sms')",
@@ -901,8 +901,8 @@
          "key_col" : "billing_fees_raw/billing_zone_id"
       },
       "billing_fees_raw/destination" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "destination",
          "COLUMN_TYPE" : "varchar(255)",
@@ -913,8 +913,8 @@
          "key_col" : "billing_fees_raw/destination"
       },
       "billing_fees_raw/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'out'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('in','out')",
@@ -937,8 +937,8 @@
          "key_col" : "billing_fees_raw/id"
       },
       "billing_fees_raw/match_mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'regex_longest_pattern'",
          "COLUMN_NAME" : "match_mode",
          "COLUMN_TYPE" : "enum('regex_longest_pattern','regex_longest_match','prefix','exact_destination')",
@@ -1117,8 +1117,8 @@
          "key_col" : "billing_fees_raw/onpeak_use_free_time"
       },
       "billing_fees_raw/source" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'.'",
          "COLUMN_NAME" : "source",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1129,8 +1129,8 @@
          "key_col" : "billing_fees_raw/source"
       },
       "billing_fees_raw/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'call'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('call','sms')",
@@ -1285,8 +1285,8 @@
          "key_col" : "billing_network_blocks/id"
       },
       "billing_network_blocks/ip" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ip",
          "COLUMN_TYPE" : "varchar(39)",
@@ -1321,8 +1321,8 @@
          "key_col" : "billing_network_blocks/network_id"
       },
       "billing_networks/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1345,8 +1345,8 @@
          "key_col" : "billing_networks/id"
       },
       "billing_networks/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1369,8 +1369,8 @@
          "key_col" : "billing_networks/reseller_id"
       },
       "billing_networks/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','terminated')",
@@ -1513,8 +1513,8 @@
          "key_col" : "billing_profiles/create_timestamp"
       },
       "billing_profiles/currency" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "currency",
          "COLUMN_TYPE" : "varchar(31)",
@@ -1549,8 +1549,8 @@
          "key_col" : "billing_profiles/fraud_daily_lock"
       },
       "billing_profiles/fraud_daily_notify" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "fraud_daily_notify",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1585,8 +1585,8 @@
          "key_col" : "billing_profiles/fraud_interval_lock"
       },
       "billing_profiles/fraud_interval_notify" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "fraud_interval_notify",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1609,8 +1609,8 @@
          "key_col" : "billing_profiles/fraud_use_reseller_rates"
       },
       "billing_profiles/handle" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "handle",
          "COLUMN_TYPE" : "varchar(63)",
@@ -1693,8 +1693,8 @@
          "key_col" : "billing_profiles/interval_free_time"
       },
       "billing_profiles/interval_unit" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'month'",
          "COLUMN_NAME" : "interval_unit",
          "COLUMN_TYPE" : "enum('week','month')",
@@ -1717,8 +1717,8 @@
          "key_col" : "billing_profiles/modify_timestamp"
       },
       "billing_profiles/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(31)",
@@ -1741,8 +1741,8 @@
          "key_col" : "billing_profiles/prepaid"
       },
       "billing_profiles/prepaid_library" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'libswrate'",
          "COLUMN_NAME" : "prepaid_library",
          "COLUMN_TYPE" : "enum('libswrate','libinewrate')",
@@ -1765,8 +1765,8 @@
          "key_col" : "billing_profiles/reseller_id"
       },
       "billing_profiles/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','terminated')",
@@ -1801,8 +1801,8 @@
          "key_col" : "billing_zones/billing_profile_id"
       },
       "billing_zones/detail" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "detail",
          "COLUMN_TYPE" : "varchar(127)",
@@ -1825,8 +1825,8 @@
          "key_col" : "billing_zones/id"
       },
       "billing_zones/zone" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "zone",
          "COLUMN_TYPE" : "varchar(127)",
@@ -1861,8 +1861,8 @@
          "key_col" : "billing_zones_history/bz_id"
       },
       "billing_zones_history/detail" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "detail",
          "COLUMN_TYPE" : "varchar(127)",
@@ -1885,8 +1885,8 @@
          "key_col" : "billing_zones_history/id"
       },
       "billing_zones_history/zone" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "zone",
          "COLUMN_TYPE" : "varchar(127)",
@@ -1897,8 +1897,8 @@
          "key_col" : "billing_zones_history/zone"
       },
       "call_list_suppressions/direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'outgoing'",
          "COLUMN_NAME" : "direction",
          "COLUMN_TYPE" : "enum('outgoing','incoming')",
@@ -1909,8 +1909,8 @@
          "key_col" : "call_list_suppressions/direction"
       },
       "call_list_suppressions/domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1933,8 +1933,8 @@
          "key_col" : "call_list_suppressions/id"
       },
       "call_list_suppressions/label" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'obfuscated'",
          "COLUMN_NAME" : "label",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1945,8 +1945,8 @@
          "key_col" : "call_list_suppressions/label"
       },
       "call_list_suppressions/mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'disabled'",
          "COLUMN_NAME" : "mode",
          "COLUMN_TYPE" : "enum('disabled','filter','obfuscate')",
@@ -1957,8 +1957,8 @@
          "key_col" : "call_list_suppressions/mode"
       },
       "call_list_suppressions/pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'.'",
          "COLUMN_NAME" : "pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1969,8 +1969,8 @@
          "key_col" : "call_list_suppressions/pattern"
       },
       "contacts/bankname" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bankname",
          "COLUMN_TYPE" : "varchar(255)",
@@ -1981,8 +1981,8 @@
          "key_col" : "contacts/bankname"
       },
       "contacts/bic" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "bic",
          "COLUMN_TYPE" : "varchar(11)",
@@ -1993,8 +1993,8 @@
          "key_col" : "contacts/bic"
       },
       "contacts/city" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "city",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2005,8 +2005,8 @@
          "key_col" : "contacts/city"
       },
       "contacts/company" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "company",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2017,8 +2017,8 @@
          "key_col" : "contacts/company"
       },
       "contacts/comregnum" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "comregnum",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2029,8 +2029,8 @@
          "key_col" : "contacts/comregnum"
       },
       "contacts/country" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "country",
          "COLUMN_TYPE" : "char(2)",
@@ -2043,18 +2043,18 @@
       "contacts/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 17,
          "TABLE_NAME" : "contacts",
          "key_col" : "contacts/create_timestamp"
       },
       "contacts/email" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "email",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2065,8 +2065,8 @@
          "key_col" : "contacts/email"
       },
       "contacts/faxnumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "faxnumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2077,8 +2077,8 @@
          "key_col" : "contacts/faxnumber"
       },
       "contacts/firstname" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "firstname",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2089,8 +2089,8 @@
          "key_col" : "contacts/firstname"
       },
       "contacts/gender" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gender",
          "COLUMN_TYPE" : "enum('male','female')",
@@ -2101,8 +2101,8 @@
          "key_col" : "contacts/gender"
       },
       "contacts/gpp0" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp0",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2113,8 +2113,8 @@
          "key_col" : "contacts/gpp0"
       },
       "contacts/gpp1" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp1",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2125,8 +2125,8 @@
          "key_col" : "contacts/gpp1"
       },
       "contacts/gpp2" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp2",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2137,8 +2137,8 @@
          "key_col" : "contacts/gpp2"
       },
       "contacts/gpp3" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp3",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2149,8 +2149,8 @@
          "key_col" : "contacts/gpp3"
       },
       "contacts/gpp4" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp4",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2161,8 +2161,8 @@
          "key_col" : "contacts/gpp4"
       },
       "contacts/gpp5" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp5",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2173,8 +2173,8 @@
          "key_col" : "contacts/gpp5"
       },
       "contacts/gpp6" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp6",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2185,8 +2185,8 @@
          "key_col" : "contacts/gpp6"
       },
       "contacts/gpp7" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp7",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2197,8 +2197,8 @@
          "key_col" : "contacts/gpp7"
       },
       "contacts/gpp8" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp8",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2209,8 +2209,8 @@
          "key_col" : "contacts/gpp8"
       },
       "contacts/gpp9" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "gpp9",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2221,8 +2221,8 @@
          "key_col" : "contacts/gpp9"
       },
       "contacts/iban" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "iban",
          "COLUMN_TYPE" : "varchar(34)",
@@ -2245,8 +2245,8 @@
          "key_col" : "contacts/id"
       },
       "contacts/lastname" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "lastname",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2257,8 +2257,8 @@
          "key_col" : "contacts/lastname"
       },
       "contacts/mobilenumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "mobilenumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2293,8 +2293,8 @@
          "key_col" : "contacts/newsletter"
       },
       "contacts/phonenumber" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "phonenumber",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2305,8 +2305,8 @@
          "key_col" : "contacts/phonenumber"
       },
       "contacts/postcode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "postcode",
          "COLUMN_TYPE" : "varchar(16)",
@@ -2329,8 +2329,8 @@
          "key_col" : "contacts/reseller_id"
       },
       "contacts/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','terminated')",
@@ -2341,8 +2341,8 @@
          "key_col" : "contacts/status"
       },
       "contacts/street" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "street",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2365,8 +2365,8 @@
          "key_col" : "contacts/terminate_timestamp"
       },
       "contacts/timezone" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "timezone",
          "COLUMN_TYPE" : "varchar(80)",
@@ -2377,8 +2377,8 @@
          "key_col" : "contacts/timezone"
       },
       "contacts/vatnum" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "vatnum",
          "COLUMN_TYPE" : "varchar(127)",
@@ -2595,11 +2595,11 @@
       "contract_credits/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 7,
          "TABLE_NAME" : "contract_credits",
          "key_col" : "contract_credits/create_timestamp"
@@ -2629,8 +2629,8 @@
          "key_col" : "contract_credits/modify_timestamp"
       },
       "contract_credits/reason" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "reason",
          "COLUMN_TYPE" : "text",
@@ -2641,8 +2641,8 @@
          "key_col" : "contract_credits/reason"
       },
       "contract_credits/state" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'init'",
          "COLUMN_NAME" : "state",
          "COLUMN_TYPE" : "enum('init','transact','charged','failed','success')",
@@ -2689,8 +2689,8 @@
          "key_col" : "contract_fraud_preferences/fraud_daily_lock"
       },
       "contract_fraud_preferences/fraud_daily_notify" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "fraud_daily_notify",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2725,8 +2725,8 @@
          "key_col" : "contract_fraud_preferences/fraud_interval_lock"
       },
       "contract_fraud_preferences/fraud_interval_notify" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "fraud_interval_notify",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2773,8 +2773,8 @@
          "key_col" : "contract_phonebook/id"
       },
       "contract_phonebook/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2785,8 +2785,8 @@
          "key_col" : "contract_phonebook/name"
       },
       "contract_phonebook/number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "number",
          "COLUMN_TYPE" : "varchar(255)",
@@ -2797,8 +2797,8 @@
          "key_col" : "contract_phonebook/number"
       },
       "contract_registers/actor" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "actor",
          "COLUMN_TYPE" : "varchar(15)",
@@ -2821,8 +2821,8 @@
          "key_col" : "contract_registers/contract_id"
       },
       "contract_registers/data" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "data",
          "COLUMN_TYPE" : "text",
@@ -2845,8 +2845,8 @@
          "key_col" : "contract_registers/id"
       },
       "contract_registers/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(31)",
@@ -2895,7 +2895,7 @@
       "contracts/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -2917,8 +2917,8 @@
          "key_col" : "contracts/customer_id"
       },
       "contracts/external_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "external_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3049,8 +3049,8 @@
          "key_col" : "contracts/send_invoice"
       },
       "contracts/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('pending','active','locked','terminated')",
@@ -3253,8 +3253,8 @@
          "key_col" : "credit_payments/payment_id"
       },
       "customer_registers/actor" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "actor",
          "COLUMN_TYPE" : "varchar(15)",
@@ -3277,8 +3277,8 @@
          "key_col" : "customer_registers/customer_id"
       },
       "customer_registers/data" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "data",
          "COLUMN_TYPE" : "text",
@@ -3301,8 +3301,8 @@
          "key_col" : "customer_registers/id"
       },
       "customer_registers/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(31)",
@@ -3351,18 +3351,18 @@
       "customers/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "customers",
          "key_col" : "customers/create_timestamp"
       },
       "customers/external_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "external_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3409,8 +3409,8 @@
          "key_col" : "customers/reseller_id"
       },
       "customers/shoppass" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "shoppass",
          "COLUMN_TYPE" : "varchar(31)",
@@ -3421,8 +3421,8 @@
          "key_col" : "customers/shoppass"
       },
       "customers/shopuser" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "shopuser",
          "COLUMN_TYPE" : "varchar(31)",
@@ -3481,8 +3481,8 @@
          "key_col" : "domain_resellers/reseller_id"
       },
       "domains/domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "domain",
          "COLUMN_TYPE" : "varchar(127)",
@@ -3517,8 +3517,8 @@
          "key_col" : "domains/reseller_id"
       },
       "email_templates/attachment_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "attachment_name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3529,8 +3529,8 @@
          "key_col" : "email_templates/attachment_name"
       },
       "email_templates/body" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "body",
          "COLUMN_TYPE" : "mediumtext",
@@ -3541,8 +3541,8 @@
          "key_col" : "email_templates/body"
       },
       "email_templates/from_email" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "from_email",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3565,8 +3565,8 @@
          "key_col" : "email_templates/id"
       },
       "email_templates/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3589,8 +3589,8 @@
          "key_col" : "email_templates/reseller_id"
       },
       "email_templates/subject" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "subject",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3601,8 +3601,8 @@
          "key_col" : "email_templates/subject"
       },
       "invoice_templates/call_direction" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'out'",
          "COLUMN_NAME" : "call_direction",
          "COLUMN_TYPE" : "enum('in','out','in_out')",
@@ -3637,8 +3637,8 @@
          "key_col" : "invoice_templates/id"
       },
       "invoice_templates/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -3661,8 +3661,8 @@
          "key_col" : "invoice_templates/reseller_id"
       },
       "invoice_templates/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'svg'",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('svg','html')",
@@ -3733,8 +3733,8 @@
          "key_col" : "invoices/data"
       },
       "invoices/generator" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "generator",
          "COLUMN_TYPE" : "enum('auto','web')",
@@ -3793,8 +3793,8 @@
          "key_col" : "invoices/sent_date"
       },
       "invoices/serial" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "serial",
          "COLUMN_TYPE" : "varchar(32)",
@@ -3817,8 +3817,8 @@
          "key_col" : "journals/content"
       },
       "journals/content_format" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'json'",
          "COLUMN_NAME" : "content_format",
          "COLUMN_TYPE" : "enum('storable','json','json_deflate','sereal')",
@@ -3841,8 +3841,8 @@
          "key_col" : "journals/id"
       },
       "journals/operation" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'create'",
          "COLUMN_NAME" : "operation",
          "COLUMN_TYPE" : "enum('create','update','delete')",
@@ -3877,8 +3877,8 @@
          "key_col" : "journals/resource_id"
       },
       "journals/resource_name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "resource_name",
          "COLUMN_TYPE" : "varchar(64)",
@@ -3913,8 +3913,8 @@
          "key_col" : "journals/timestamp"
       },
       "journals/tx_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "tx_id",
          "COLUMN_TYPE" : "varchar(36)",
@@ -3937,8 +3937,8 @@
          "key_col" : "journals/user_id"
       },
       "journals/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(127)",
@@ -3985,8 +3985,8 @@
          "key_col" : "lnp_numbers/lnp_provider_id"
       },
       "lnp_numbers/number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "number",
          "COLUMN_TYPE" : "varchar(31)",
@@ -3997,8 +3997,8 @@
          "key_col" : "lnp_numbers/number"
       },
       "lnp_numbers/routing_number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "routing_number",
          "COLUMN_TYPE" : "varchar(31)",
@@ -4021,8 +4021,8 @@
          "key_col" : "lnp_numbers/start"
       },
       "lnp_numbers/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4057,8 +4057,8 @@
          "key_col" : "lnp_providers/id"
       },
       "lnp_providers/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4069,8 +4069,8 @@
          "key_col" : "lnp_providers/name"
       },
       "lnp_providers/prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "''",
          "COLUMN_NAME" : "prefix",
          "COLUMN_TYPE" : "varchar(32)",
@@ -4093,8 +4093,8 @@
          "key_col" : "lnp_providers/skip_rewrite"
       },
       "ncos_levels/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "text",
@@ -4129,8 +4129,8 @@
          "key_col" : "ncos_levels/intra_pbx"
       },
       "ncos_levels/level" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "level",
          "COLUMN_TYPE" : "varchar(31)",
@@ -4153,8 +4153,8 @@
          "key_col" : "ncos_levels/local_ac"
       },
       "ncos_levels/mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'blacklist'",
          "COLUMN_NAME" : "mode",
          "COLUMN_TYPE" : "enum('blacklist','whitelist')",
@@ -4189,8 +4189,8 @@
          "key_col" : "ncos_levels/time_set_id"
       },
       "ncos_lnp_list/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "text",
@@ -4237,8 +4237,8 @@
          "key_col" : "ncos_lnp_list/ncos_level_id"
       },
       "ncos_lnp_pattern_list/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "text",
@@ -4273,8 +4273,8 @@
          "key_col" : "ncos_lnp_pattern_list/ncos_lnp_list_id"
       },
       "ncos_lnp_pattern_list/pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4285,8 +4285,8 @@
          "key_col" : "ncos_lnp_pattern_list/pattern"
       },
       "ncos_pattern_list/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "text",
@@ -4321,8 +4321,8 @@
          "key_col" : "ncos_pattern_list/ncos_level_id"
       },
       "ncos_pattern_list/pattern" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "pattern",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4369,8 +4369,8 @@
          "key_col" : "ncos_set_levels/ncos_set_id"
       },
       "ncos_sets/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4393,8 +4393,8 @@
          "key_col" : "ncos_sets/id"
       },
       "ncos_sets/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -4455,11 +4455,11 @@
       "orders/complete_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "complete_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 12,
          "TABLE_NAME" : "orders",
          "key_col" : "orders/complete_timestamp"
@@ -4467,11 +4467,11 @@
       "orders/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "orders",
          "key_col" : "orders/create_timestamp"
@@ -4561,8 +4561,8 @@
          "key_col" : "orders/shipping_costs"
       },
       "orders/state" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'init'",
          "COLUMN_NAME" : "state",
          "COLUMN_TYPE" : "enum('init','transact','failed','success')",
@@ -4573,8 +4573,8 @@
          "key_col" : "orders/state"
       },
       "orders/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(31)",
@@ -4597,8 +4597,8 @@
          "key_col" : "orders/value"
       },
       "package_profile_sets/discriminator" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "discriminator",
          "COLUMN_TYPE" : "enum('initial','underrun','topup')",
@@ -4693,8 +4693,8 @@
          "key_col" : "password_resets/timestamp"
       },
       "password_resets/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -4719,11 +4719,11 @@
       "payments/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "payments",
          "key_col" : "payments/create_timestamp"
@@ -4741,8 +4741,8 @@
          "key_col" : "payments/errno"
       },
       "payments/externalstatus" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "externalstatus",
          "COLUMN_TYPE" : "text",
@@ -4789,8 +4789,8 @@
          "key_col" : "payments/mpaytid"
       },
       "payments/returncode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "returncode",
          "COLUMN_TYPE" : "varchar(63)",
@@ -4801,8 +4801,8 @@
          "key_col" : "payments/returncode"
       },
       "payments/state" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "state",
          "COLUMN_TYPE" : "enum('init','transact','failed','success')",
@@ -4813,8 +4813,8 @@
          "key_col" : "payments/state"
       },
       "payments/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "varchar(31)",
@@ -4825,8 +4825,8 @@
          "key_col" : "payments/status"
       },
       "payments/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "varchar(31)",
@@ -4849,8 +4849,8 @@
          "key_col" : "products/billing_profile_id"
       },
       "products/class" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "class",
          "COLUMN_TYPE" : "enum('sippeering','pstnpeering','reseller','sipaccount','pbxaccount')",
@@ -4861,8 +4861,8 @@
          "key_col" : "products/class"
       },
       "products/handle" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "handle",
          "COLUMN_TYPE" : "varchar(63)",
@@ -4885,8 +4885,8 @@
          "key_col" : "products/id"
       },
       "products/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(127)",
@@ -4945,8 +4945,8 @@
          "key_col" : "products/weight"
       },
       "profile_packages/balance_interval_start_mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'1st'",
          "COLUMN_NAME" : "balance_interval_start_mode",
          "COLUMN_TYPE" : "enum('create','create_tz','1st','1st_tz','topup','topup_interval')",
@@ -4957,8 +4957,8 @@
          "key_col" : "profile_packages/balance_interval_start_mode"
       },
       "profile_packages/balance_interval_unit" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'month'",
          "COLUMN_NAME" : "balance_interval_unit",
          "COLUMN_TYPE" : "enum('minute','hour','day','week','month')",
@@ -4981,8 +4981,8 @@
          "key_col" : "profile_packages/balance_interval_value"
       },
       "profile_packages/carry_over_mode" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'carry_over'",
          "COLUMN_NAME" : "carry_over_mode",
          "COLUMN_TYPE" : "enum('carry_over','carry_over_timely','discard')",
@@ -4993,8 +4993,8 @@
          "key_col" : "profile_packages/carry_over_mode"
       },
       "profile_packages/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5029,8 +5029,8 @@
          "key_col" : "profile_packages/initial_balance"
       },
       "profile_packages/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5077,8 +5077,8 @@
          "key_col" : "profile_packages/service_charge"
       },
       "profile_packages/timely_duration_unit" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "timely_duration_unit",
          "COLUMN_TYPE" : "enum('minute','hour','day','week','month')",
@@ -5161,8 +5161,8 @@
          "key_col" : "provisioning_templates/create_timestamp"
       },
       "provisioning_templates/description" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "description",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5185,8 +5185,8 @@
          "key_col" : "provisioning_templates/id"
       },
       "provisioning_templates/lang" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'js'",
          "COLUMN_NAME" : "lang",
          "COLUMN_TYPE" : "enum('perl','js')",
@@ -5209,8 +5209,8 @@
          "key_col" : "provisioning_templates/modify_timestamp"
       },
       "provisioning_templates/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5233,8 +5233,8 @@
          "key_col" : "provisioning_templates/reseller_id"
       },
       "provisioning_templates/yaml" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "yaml",
          "COLUMN_TYPE" : "text",
@@ -5245,8 +5245,8 @@
          "key_col" : "provisioning_templates/yaml"
       },
       "reseller_brandings/csc_color_primary" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "csc_color_primary",
          "COLUMN_TYPE" : "varchar(45)",
@@ -5257,8 +5257,8 @@
          "key_col" : "reseller_brandings/csc_color_primary"
       },
       "reseller_brandings/csc_color_secondary" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "csc_color_secondary",
          "COLUMN_TYPE" : "varchar(45)",
@@ -5269,8 +5269,8 @@
          "key_col" : "reseller_brandings/csc_color_secondary"
       },
       "reseller_brandings/css" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "css",
          "COLUMN_TYPE" : "mediumtext",
@@ -5305,8 +5305,8 @@
          "key_col" : "reseller_brandings/logo"
       },
       "reseller_brandings/logo_image_type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "logo_image_type",
          "COLUMN_TYPE" : "varchar(32)",
@@ -5341,8 +5341,8 @@
          "key_col" : "reseller_phonebook/id"
       },
       "reseller_phonebook/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5353,8 +5353,8 @@
          "key_col" : "reseller_phonebook/name"
       },
       "reseller_phonebook/number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "number",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5401,8 +5401,8 @@
          "key_col" : "resellers/id"
       },
       "resellers/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(63)",
@@ -5413,8 +5413,8 @@
          "key_col" : "resellers/name"
       },
       "resellers/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','locked','terminated')",
@@ -5437,8 +5437,8 @@
          "key_col" : "subscriber_phonebook/id"
       },
       "subscriber_phonebook/name" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "name",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5449,8 +5449,8 @@
          "key_col" : "subscriber_phonebook/name"
       },
       "subscriber_phonebook/number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "number",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5593,8 +5593,8 @@
          "key_col" : "topup_log/lock_level_before"
       },
       "topup_log/message" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "message",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5605,8 +5605,8 @@
          "key_col" : "topup_log/message"
       },
       "topup_log/outcome" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "outcome",
          "COLUMN_TYPE" : "enum('ok','failed')",
@@ -5665,8 +5665,8 @@
          "key_col" : "topup_log/profile_before_id"
       },
       "topup_log/request_token" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "request_token",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5701,8 +5701,8 @@
          "key_col" : "topup_log/timestamp"
       },
       "topup_log/type" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
          "COLUMN_TYPE" : "enum('cash','voucher','set_balance')",
@@ -5713,8 +5713,8 @@
          "key_col" : "topup_log/type"
       },
       "topup_log/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(127)",
@@ -5749,8 +5749,8 @@
          "key_col" : "voip_intercept/LIID"
       },
       "voip_intercept/cc_delivery_host" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "cc_delivery_host",
          "COLUMN_TYPE" : "varchar(64)",
@@ -5787,7 +5787,7 @@
       "voip_intercept/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -5809,8 +5809,8 @@
          "key_col" : "voip_intercept/deleted"
       },
       "voip_intercept/delivery_host" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "delivery_host",
          "COLUMN_TYPE" : "varchar(15)",
@@ -5821,8 +5821,8 @@
          "key_col" : "voip_intercept/delivery_host"
       },
       "voip_intercept/delivery_pass" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "delivery_pass",
          "COLUMN_TYPE" : "text",
@@ -5845,8 +5845,8 @@
          "key_col" : "voip_intercept/delivery_port"
       },
       "voip_intercept/delivery_user" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "delivery_user",
          "COLUMN_TYPE" : "text",
@@ -5881,8 +5881,8 @@
          "key_col" : "voip_intercept/modify_timestamp"
       },
       "voip_intercept/number" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "number",
          "COLUMN_TYPE" : "varchar(63)",
@@ -5905,8 +5905,8 @@
          "key_col" : "voip_intercept/reseller_id"
       },
       "voip_intercept/sip_domain" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "sip_domain",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5917,8 +5917,8 @@
          "key_col" : "voip_intercept/sip_domain"
       },
       "voip_intercept/sip_username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "sip_username",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5929,8 +5929,8 @@
          "key_col" : "voip_intercept/sip_username"
       },
       "voip_intercept/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "varchar(255)",
@@ -5977,8 +5977,8 @@
          "key_col" : "voip_number_block_resellers/reseller_id"
       },
       "voip_number_blocks/ac" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ac",
          "COLUMN_TYPE" : "varchar(7)",
@@ -6049,8 +6049,8 @@
          "key_col" : "voip_number_blocks/sn_length"
       },
       "voip_number_blocks/sn_prefix" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "sn_prefix",
          "COLUMN_TYPE" : "varchar(31)",
@@ -6061,8 +6061,8 @@
          "key_col" : "voip_number_blocks/sn_prefix"
       },
       "voip_numbers/ac" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "ac",
          "COLUMN_TYPE" : "varchar(7)",
@@ -6099,11 +6099,11 @@
       "voip_numbers/list_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "current_timestamp()",
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "list_timestamp",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "on update current_timestamp()",
-         "IS_NULLABLE" : "NO",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 9,
          "TABLE_NAME" : "voip_numbers",
          "key_col" : "voip_numbers/list_timestamp"
@@ -6133,8 +6133,8 @@
          "key_col" : "voip_numbers/reseller_id"
       },
       "voip_numbers/sn" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "sn",
          "COLUMN_TYPE" : "varchar(31)",
@@ -6145,8 +6145,8 @@
          "key_col" : "voip_numbers/sn"
       },
       "voip_numbers/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','reserved','locked','deported')",
@@ -6205,8 +6205,8 @@
          "key_col" : "voip_subscribers/domain_id"
       },
       "voip_subscribers/external_id" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "external_id",
          "COLUMN_TYPE" : "varchar(255)",
@@ -6241,8 +6241,8 @@
          "key_col" : "voip_subscribers/primary_number_id"
       },
       "voip_subscribers/status" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'active'",
          "COLUMN_NAME" : "status",
          "COLUMN_TYPE" : "enum('active','locked','terminated')",
@@ -6253,8 +6253,8 @@
          "key_col" : "voip_subscribers/status"
       },
       "voip_subscribers/username" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "username",
          "COLUMN_TYPE" : "varchar(127)",
@@ -6265,8 +6265,8 @@
          "key_col" : "voip_subscribers/username"
       },
       "voip_subscribers/uuid" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "uuid",
          "COLUMN_TYPE" : "char(36)",
@@ -6289,8 +6289,8 @@
          "key_col" : "vouchers/amount"
       },
       "vouchers/code" : {
-         "CHARACTER_SET_NAME" : "utf8",
-         "COLLATION_NAME" : "utf8_general_ci",
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "code",
          "COLUMN_TYPE" : "varchar(255)",
@@ -10722,7 +10722,7 @@
          "INDEX_NAME" : "listts_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
-         "NULLABLE" : "",
+         "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_numbers",
@@ -11084,420 +11084,420 @@
       "acl_role_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acl_role_mappings",
          "key_col" : "acl_role_mappings"
       },
       "acl_roles" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "acl_roles",
          "key_col" : "acl_roles"
       },
       "admins" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "admins",
          "key_col" : "admins"
       },
       "billing_fees" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_fees",
          "key_col" : "billing_fees"
       },
       "billing_fees_history" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_fees_history",
          "key_col" : "billing_fees_history"
       },
       "billing_fees_raw" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_fees_raw",
          "key_col" : "billing_fees_raw"
       },
       "billing_mappings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_mappings",
          "key_col" : "billing_mappings"
       },
       "billing_network_blocks" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_network_blocks",
          "key_col" : "billing_network_blocks"
       },
       "billing_networks" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_networks",
          "key_col" : "billing_networks"
       },
       "billing_peaktime_special" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_peaktime_special",
          "key_col" : "billing_peaktime_special"
       },
       "billing_peaktime_weekdays" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_peaktime_weekdays",
          "key_col" : "billing_peaktime_weekdays"
       },
       "billing_profiles" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_profiles",
          "key_col" : "billing_profiles"
       },
       "billing_zones" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_zones",
          "key_col" : "billing_zones"
       },
       "billing_zones_history" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "billing_zones_history",
          "key_col" : "billing_zones_history"
       },
       "call_list_suppressions" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "call_list_suppressions",
          "key_col" : "call_list_suppressions"
       },
       "contacts" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contacts",
          "key_col" : "contacts"
       },
       "contract_balances" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contract_balances",
          "key_col" : "contract_balances"
       },
       "contract_credits" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contract_credits",
          "key_col" : "contract_credits"
       },
       "contract_fraud_preferences" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contract_fraud_preferences",
          "key_col" : "contract_fraud_preferences"
       },
       "contract_phonebook" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contract_phonebook",
          "key_col" : "contract_phonebook"
       },
       "contract_registers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contract_registers",
          "key_col" : "contract_registers"
       },
       "contracts" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contracts",
          "key_col" : "contracts"
       },
       "contracts_billing_profile_network" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contracts_billing_profile_network",
          "key_col" : "contracts_billing_profile_network"
       },
       "contracts_billing_profile_network_schedule" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "contracts_billing_profile_network_schedule",
          "key_col" : "contracts_billing_profile_network_schedule"
       },
       "credit_payments" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "credit_payments",
          "key_col" : "credit_payments"
       },
       "customer_registers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "customer_registers",
          "key_col" : "customer_registers"
       },
       "customers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "customers",
          "key_col" : "customers"
       },
       "domain_resellers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "domain_resellers",
          "key_col" : "domain_resellers"
       },
       "domains" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "domains",
          "key_col" : "domains"
       },
       "email_templates" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "email_templates",
          "key_col" : "email_templates"
       },
       "invoice_templates" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "invoice_templates",
          "key_col" : "invoice_templates"
       },
       "invoices" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "invoices",
          "key_col" : "invoices"
       },
       "journals" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "journals",
          "key_col" : "journals"
       },
       "lnp_numbers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "lnp_numbers",
          "key_col" : "lnp_numbers"
       },
       "lnp_providers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "lnp_providers",
          "key_col" : "lnp_providers"
       },
       "ncos_levels" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_levels",
          "key_col" : "ncos_levels"
       },
       "ncos_lnp_list" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_lnp_list",
          "key_col" : "ncos_lnp_list"
       },
       "ncos_lnp_pattern_list" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_lnp_pattern_list",
          "key_col" : "ncos_lnp_pattern_list"
       },
       "ncos_pattern_list" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_pattern_list",
          "key_col" : "ncos_pattern_list"
       },
       "ncos_set_levels" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_set_levels",
          "key_col" : "ncos_set_levels"
       },
       "ncos_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "ncos_sets",
          "key_col" : "ncos_sets"
       },
       "order_payments" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "order_payments",
          "key_col" : "order_payments"
       },
       "orders" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "orders",
          "key_col" : "orders"
       },
       "package_profile_sets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "package_profile_sets",
          "key_col" : "package_profile_sets"
       },
       "password_resets" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "password_resets",
          "key_col" : "password_resets"
       },
       "payments" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "payments",
          "key_col" : "payments"
       },
       "products" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "products",
          "key_col" : "products"
       },
       "profile_packages" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "profile_packages",
          "key_col" : "profile_packages"
       },
       "provisioning_templates" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "provisioning_templates",
          "key_col" : "provisioning_templates"
       },
       "reseller_brandings" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "reseller_brandings",
          "key_col" : "reseller_brandings"
       },
       "reseller_phonebook" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "reseller_phonebook",
          "key_col" : "reseller_phonebook"
       },
       "resellers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "resellers",
          "key_col" : "resellers"
       },
       "subscriber_phonebook" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "subscriber_phonebook",
          "key_col" : "subscriber_phonebook"
       },
       "topup_log" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "topup_log",
          "key_col" : "topup_log"
       },
       "voip_intercept" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_intercept",
          "key_col" : "voip_intercept"
       },
       "voip_number_block_resellers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_number_block_resellers",
          "key_col" : "voip_number_block_resellers"
       },
       "voip_number_blocks" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_number_blocks",
          "key_col" : "voip_number_blocks"
       },
       "voip_numbers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_numbers",
          "key_col" : "voip_numbers"
       },
       "voip_subscribers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers"
       },
       "vouchers" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
-         "TABLE_COLLATION" : "utf8_general_ci",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "vouchers",
          "key_col" : "vouchers"
       }
