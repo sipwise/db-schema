@@ -108,6 +108,18 @@
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/name"
       },
+      "timezone/version" : {
+         "CHARACTER_SET_NAME" : "utf8",
+         "COLLATION_NAME" : "utf8_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "version",
+         "COLUMN_TYPE" : "varchar(32)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "timezone",
+         "key_col" : "timezone/version"
+      },
       "tzinfo_version/created_at" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
