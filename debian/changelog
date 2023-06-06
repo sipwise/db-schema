@@ -1,3 +1,14 @@
+ngcp-db-schema (11.3.1.3+0~mr11.3.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [fa8b338] MT#56693 rework parent sound sets aggregation and selection
+  * [5d0ebb4] MT#56693 fix 15766.up improve parent_chain aggregation
+
+  [ Sipwise Jenkins Builder ]
+  * [827b66b] MT#56693 fix 15766.up improve parent_chain aggregation, schemes update
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 06 Jun 2023 09:37:08 +0200
+
 ngcp-db-schema (11.3.1.2+0~mr11.3.1.2) unstable; urgency=medium
 
   [ Mykola Malkov ]
