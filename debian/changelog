@@ -1,3 +1,13 @@
+ngcp-db-schema (11.3.1.4+0~mr11.3.1.4) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [6d83f2e] MT#57563 add ngcp.timezone version column
+
+  [ Sipwise Jenkins Builder ]
+  * [a3ed843] MT#57563 add ngcp.timezone version column, schemes update
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 07 Jun 2023 09:12:14 +0200
+
 ngcp-db-schema (11.3.1.3+0~mr11.3.1.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
