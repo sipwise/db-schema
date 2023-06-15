@@ -14087,6 +14087,33 @@
          "TRIGGER_NAME" : "voip_prul_urepl_trig",
          "key_col" : "voip_prul_urepl_trig/voip_peer_rules"
       },
+      "voip_resellerpref_crepl_trig/voip_reseller_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  INSERT INTO kamailio.reseller_preferences\n              (id, uuid, attribute, type, value, last_modified)\n       SELECT NEW.id, NEW.reseller_id, attribute, type, NEW.value, '0'\n         FROM provisioning.voip_preferences\n        WHERE id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "INSERT",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_reseller_preferences",
+         "TRIGGER_NAME" : "voip_resellerpref_crepl_trig",
+         "key_col" : "voip_resellerpref_crepl_trig/voip_reseller_preferences"
+      },
+      "voip_resellerpref_drepl_trig/voip_reseller_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  DELETE FROM kamailio.reseller_preferences\n        WHERE id <=> OLD.id;\n\n  END",
+         "ACTION_TIMING" : "BEFORE",
+         "EVENT_MANIPULATION" : "DELETE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_reseller_preferences",
+         "TRIGGER_NAME" : "voip_resellerpref_drepl_trig",
+         "key_col" : "voip_resellerpref_drepl_trig/voip_reseller_preferences"
+      },
+      "voip_resellerpref_urepl_trig/voip_reseller_preferences" : {
+         "ACTION_STATEMENT" : "BEGIN\n\n  UPDATE kamailio.reseller_preferences pp, provisioning.voip_preferences vp\n     SET pp.id = NEW.id, pp.uuid = NEW.reseller_id, pp.type = vp.type,\n         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'\n   WHERE pp.id <=> OLD.id\n     AND vp.id <=> NEW.attribute_id;\n\n  END",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "provisioning",
+         "EVENT_OBJECT_TABLE" : "voip_reseller_preferences",
+         "TRIGGER_NAME" : "voip_resellerpref_urepl_trig",
+         "key_col" : "voip_resellerpref_urepl_trig/voip_reseller_preferences"
+      },
       "voip_rwrules_crepl_trig/voip_rewrite_rules" : {
          "ACTION_STATEMENT" : "BEGIN\n\n  DECLARE new_set_id int(11) unsigned;\n\n  IF NEW.enabled = 1 THEN\n\n    IF NEW.direction = 'in' THEN\n      SELECT IF(NEW.field = 'caller', caller_in_dpid, callee_in_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'out' THEN\n      SELECT IF(NEW.field = 'caller', caller_out_dpid, callee_out_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    ELSEIF NEW.direction = 'lnp' THEN\n      SELECT IF(NEW.field = 'caller', caller_lnp_dpid, callee_lnp_dpid)\n        INTO new_set_id FROM voip_rewrite_rule_sets WHERE id <=> NEW.set_id;\n    END IF;\n\n    INSERT INTO kamailio.dialplan (dpid,pr,match_op,match_exp,match_len,subst_exp,repl_exp,attrs)\n        VALUES(new_set_id,NEW.priority,1,NEW.match_pattern,0,NEW.match_pattern,NEW.replace_pattern,'');\n  END IF;\n\nEND",
          "ACTION_TIMING" : "AFTER",

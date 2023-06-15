@@ -605,6 +605,23 @@ CREATE TABLE `pua` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reseller_preferences` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) NOT NULL,
+  `username` varchar(255) NOT NULL DEFAULT '0',
+  `domain` varchar(64) NOT NULL DEFAULT '',
+  `attribute` varchar(32) NOT NULL DEFAULT '',
+  `type` int(11) NOT NULL DEFAULT 0,
+  `value` varchar(128) NOT NULL DEFAULT '',
+  `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
+  PRIMARY KEY (`id`),
+  KEY `ua_idx` (`uuid`,`attribute`),
+  KEY `uda_idx` (`username`,`domain`,`attribute`),
+  KEY `av_idx` (`attribute`,`value`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rls_presentity` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `rlsubs_did` varchar(255) NOT NULL,
@@ -1052,7 +1069,7 @@ INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_annou
 INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never',NOW());
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring',NOW());
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local',NOW(),NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','e57a61dbbf0c1e959b4d52b052d94cca','19db190e8775af8f4b49ccb4f63de505','32d1147419704e7bc7d9c388c0694251','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','e1c2601c6a448a7b8aff90fb6a1c217d','0a799047585d088375293571363cfccc','a055f00375c7d1d3ed1572f81d8b6e23','9bcb88b6-541a-43da-8fdc-816f5557ff93','',NOW());
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none',NOW());
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack',NOW());
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never',NOW());

@@ -1186,7 +1186,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=398 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -3486,8 +3486,8 @@ INSERT INTO `voip_preferences` VALUES (34,6,'peer_auth_pass','Peer Authenticatio
 INSERT INTO `voip_preferences` VALUES (35,3,'unauth_inbound_calls','Allow inbound calls from foreign subscribers',1,1,0,1,1,0,0,0,0,0,0,NOW(),0,0,'boolean',0,'Allow unauthenticated inbound calls from FOREIGN domain to users within this domain. Use with care - it allows to flood your users with voice spam.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (36,6,'peer_auth_realm','Peer Authentication Domain',0,1,1,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'A realm (hostname) used to identify and for authentication against a peer host.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (40,6,'peer_auth_register','Enable Peer Authentication',1,1,1,1,1,1,0,0,0,0,0,NOW(),0,0,'boolean',0,'Specifies whether registration at the peer host is desired.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (41,3,'concurrent_max','Maximum number of concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of overall (incoming and outgoing) concurrent on-net and off-net calls for a subscriber or peer, excluding calls from subscriber to the application server and intra-PBX calls.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (42,3,'concurrent_max_out','Maximum number of outbound concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of outgoing concurrent on-net and off-net calls coming from a subscriber or going to a peer, excluding calls from subscriber to the application server and intra-PBX calls.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (41,3,'concurrent_max','Maximum number of concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of overall (incoming and outgoing) concurrent on-net and off-net calls for a subscriber or peer, excluding calls from subscriber to the application server and intra-PBX calls.',0,1,0);
+INSERT INTO `voip_preferences` VALUES (42,3,'concurrent_max_out','Maximum number of outbound concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of outgoing concurrent on-net and off-net calls coming from a subscriber or going to a peer, excluding calls from subscriber to the application server and intra-PBX calls.',0,1,0);
 INSERT INTO `voip_preferences` VALUES (43,3,'allowed_clis','Allowed CLIs for outbound calls',0,0,1,0,0,0,1,0,0,0,0,NOW(),0,0,'string',0,'A list of shell patterns specifying which CLIs are allowed to be set by the subscriber. \"*\", \"?\" and \"[x-y]\" with \"x\" and \"y\" representing numbers from 0 to 9 may be used as wildcards as usual in shell patterns.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (45,8,'account_id','Internal Contract #',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',0,NULL,0,0,0);
 INSERT INTO `voip_preferences` VALUES (46,8,'ext_contract_id','External Contract #',0,1,1,0,0,0,0,0,0,0,0,NOW(),1,0,'string',0,NULL,0,0,0);
@@ -3557,8 +3557,8 @@ INSERT INTO `voip_preferences` VALUES (115,8,'auto_attendant','Auto Attendant',1
 INSERT INTO `voip_preferences` VALUES (116,8,'voice_mail','Voice Mail',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\"Voice Mail\" - An internal flag for the voice_mail pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (117,8,'fax_server','Fax Server',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\"Fax Server\" - An internal flag for the fax_server pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (119,4,'emergency_location_object','MIME encapsulated Location Information in the INVITE',2,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'blob',0,'SDP MIME object related to location to be added on an emergency call',0,0,0);
-INSERT INTO `voip_preferences` VALUES (120,3,'concurrent_max_total','Total max number of overall concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of overall (incoming and outgoing) concurrent calls for subscribers.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (121,3,'concurrent_max_out_total','Total max number of outbound concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of outgoing concurrent calls coming from subscribers.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (120,3,'concurrent_max_total','Total max number of overall concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of overall (incoming and outgoing) concurrent calls for subscribers.',0,1,0);
+INSERT INTO `voip_preferences` VALUES (121,3,'concurrent_max_out_total','Total max number of outbound concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of outgoing concurrent calls coming from subscribers.',0,1,0);
 INSERT INTO `voip_preferences` VALUES (122,4,'voicemail_echo_number','Number to be played in voicebox',1,1,1,0,0,0,0,0,0,0,0,NOW(),0,0,'string',0,'If set, will be played as Number of the voicebox owner. Otherwise the number of the preference \"cli\" is used.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (123,5,'lbrtp_set','The cluster set used for SIP lb and RTP',0,1,0,1,1,1,0,0,0,0,0,NOW(),0,0,'enum',0,'Use a particular cluster set of load-balancers for SIP towards this endpoint (only for peers, as for subscribers it is defined by Path during registration) and of RTP relays (both peers and subscribers).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (124,3,'allowed_clis_reject_policy','User-Provided CLI rejection mode',0,1,1,1,1,0,1,0,0,0,0,NOW(),0,0,'enum',0,'Define an action to be executed if User-Provided Number doesn\'t match the \'allowed_clis\' list',0,0,0);
@@ -3737,9 +3737,9 @@ INSERT INTO `voip_preferences` VALUES (320,12,'play_announce_to_callee','Play an
 INSERT INTO `voip_preferences` VALUES (321,4,'colp_cf','Show Call Forward Destination to Caller',0,1,1,1,1,0,0,0,0,0,0,NOW(),0,1,'boolean',0,'When forwarding a call, send the destination number or user back to the calling party.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (322,17,'transcode_dtmf','Transcode to RFC DTMF events',0,1,1,1,1,1,0,0,0,0,0,NOW(),0,0,'boolean',0,'Translate inband PCM DTMF tones to RFC DTMF events.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (323,1,'cfo','Internal Call Forward Overflow #',1,0,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',1,'The id pointing to the \"Call Forward Overflow\" entry in the voip_cf_mappings table',0,0,0);
-INSERT INTO `voip_preferences` VALUES (324,3,'concurrent_max_in_total','Total max number of inbound concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of incoming concurrent calls going to subscribers.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (324,3,'concurrent_max_in_total','Total max number of inbound concurrent calls',1,1,1,1,1,0,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum total number of incoming concurrent calls going to subscribers.',0,1,0);
 INSERT INTO `voip_preferences` VALUES (325,3,'concurrent_max_in_per_account','Maximum number of inbound concurrent calls for Customer',1,1,1,1,1,0,0,0,0,0,0,NOW(),0,0,'int',0,'Maximum number of incoming concurrent on-net and off-net calls to subscribers within the same Customer account, excluding calls from the application server and intra-PBX calls.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (326,3,'concurrent_max_in','Maximum number of inbound concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of incoming concurrent on-net and off-net calls going to a subscriber or coming from a peer, excluding subscriber\'s intra-PBX calls.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (326,3,'concurrent_max_in','Maximum number of inbound concurrent calls',1,1,1,1,1,1,1,1,0,0,0,NOW(),0,0,'int',0,'Maximum number of incoming concurrent on-net and off-net calls going to a subscriber or coming from a peer, excluding subscriber\'s intra-PBX calls.',0,1,0);
 INSERT INTO `voip_preferences` VALUES (327,8,'last_number_redial','Enable last number redial VSC',1,1,1,1,1,0,0,0,0,0,0,NOW(),0,0,'boolean',0,'Enable the Vertical Service Code to redial latest dialed number for this subscriber/domain.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (328,17,'convert_dtmf_info','Convert DTMF INFO to RFC DTMF events',1,1,1,1,1,0,0,0,0,0,0,NOW(),0,0,'boolean',0,'Convert SIP INFO messages containing application/dtmf-relay or application/dtmf payloads to RFC DTMF events. ATTENTION: for internal use only, external generated INFO messages will be not converted but passed through.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (329,8,'contact_ringtimeout','Ring Timeout of each single contact',1,1,1,1,1,0,0,0,0,0,0,NOW(),0,1,'int',0,'Specifies how many seconds each single contact should ring before the calls goes to the next one. It is considered only in case of forking based on Q value.',0,0,0);
@@ -3809,6 +3809,7 @@ INSERT INTO `voip_preferences` VALUES (393,8,'csc_conversations','CSC Conversati
 INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Device Provisioning',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Device Provisioning\' - An internal flag to be able to map Device Provisioning visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (396,6,'peer_auth_registrar_server','Specific value for the registrar server',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (397,8,'reseller_id','Internal Reseller #\'',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',0,NULL,0,0,0);
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (9,62,'no','no',1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (10,62,'no','no',0,0,1,0,NULL,0,0,0,0,1,NULL);
@@ -4324,7 +4325,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','e57a61dbbf0c1e959b4d52b052d94cca',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','e1c2601c6a448a7b8aff90fb6a1c217d',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
@@ -5636,6 +5637,75 @@ DELIMITER ;;
   DELETE FROM kamailio.prof_preferences WHERE uuid <=> OLD.profile_id
                                          AND attribute <=> attribute_name
                                          AND value <=> OLD.value;
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_crepl_trig AFTER INSERT ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  INSERT INTO kamailio.reseller_preferences
+              (id, uuid, attribute, type, value, last_modified)
+       SELECT NEW.id, NEW.reseller_id, attribute, type, NEW.value, '0'
+         FROM provisioning.voip_preferences
+        WHERE id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_urepl_trig AFTER UPDATE ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  UPDATE kamailio.reseller_preferences pp, provisioning.voip_preferences vp
+     SET pp.id = NEW.id, pp.uuid = NEW.reseller_id, pp.type = vp.type,
+         pp.attribute = vp.attribute, pp.value = NEW.value, pp.last_modified = '0'
+   WHERE pp.id <=> OLD.id
+     AND vp.id <=> NEW.attribute_id;
+
+  END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`sipwise`@`localhost`*/ /*!50003 TRIGGER voip_resellerpref_drepl_trig BEFORE DELETE ON voip_reseller_preferences
+  FOR EACH ROW BEGIN
+
+  DELETE FROM kamailio.reseller_preferences
+        WHERE id <=> OLD.id;
+
   END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
