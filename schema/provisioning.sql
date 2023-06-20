@@ -1186,7 +1186,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=398 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=399 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1209,7 +1209,7 @@ CREATE TABLE `voip_preferences_enum` (
   PRIMARY KEY (`id`),
   KEY `preference_id` (`preference_id`),
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=390 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1455,6 +1455,7 @@ CREATE TABLE `voip_subscribers` (
   `is_pbx_group` tinyint(1) NOT NULL DEFAULT 0,
   `pbx_hunt_policy` enum('serial','parallel','random','circular','none') DEFAULT 'none',
   `pbx_hunt_timeout` int(4) unsigned DEFAULT NULL,
+  `pbx_hunt_cancel_mode` enum('bye','cancel') DEFAULT 'cancel',
   `pbx_extension` varchar(255) DEFAULT NULL,
   `profile_set_id` int(11) unsigned DEFAULT NULL,
   `profile_id` int(11) unsigned DEFAULT NULL,
@@ -1987,6 +1988,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `update_sound_set_handle_parents`(IN
 BEGIN
     IF u_sound_set_id IS NOT NULL THEN
         DELETE p FROM voip_sound_set_handle_parents p
+         WHERE set_id = u_sound_set_id
+           AND NOT EXISTS (SELECT id
+                             FROM voip_sound_sets
+                            WHERE id = u_sound_set_id);
+
+        DELETE p FROM voip_sound_set_handle_parents p
          WHERE set_id IN (
             WITH RECURSIVE cte as (
                 SELECT s.id
@@ -1999,63 +2006,51 @@ BEGIN
             )
             SELECT id
               FROM cte
-           )
-           AND (handle_id = u_handle_id OR 1=1);
-
-        DELETE p FROM voip_sound_set_handle_parents p
-         WHERE set_id IN (
-            WITH RECURSIVE cte as (
-                SELECT s.id, s.parent_id
-                  FROM voip_sound_sets s
-                 WHERE id = u_sound_set_id
-                UNION
-                SELECT s.id, s.parent_id
-                  FROM voip_sound_sets s
-                  JOIN cte ON cte.parent_id = s.id
-            )
-            SELECT id
-              FROM cte
-           )
+         )
            AND (handle_id = u_handle_id OR 1=1);
 
         INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
-        WITH RECURSIVE cte as (
+        SELECT v.set_id, v.handle_id, v.data_set_id, v.parent_chain
+          FROM (
+            WITH RECURSIVE cte as (
                 SELECT v.id AS set_id, v.handle_id,
-                       v.id AS data_set_id,
-                       CAST('' AS CHAR(4096)) AS parent_chain
+                           v.id AS data_set_id,
+                           CAST('' AS CHAR(4096)) AS parent_chain
                   FROM (SELECT s.*, h.id as handle_id
+                          FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                 WHERE v.id = (
+                    WITH RECURSIVE cte as (
+                        SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
+                          FROM voip_sound_sets s
+                         WHERE id = u_sound_set_id
+                        UNION
+                        SELECT s.id, s.parent_id, iter+1 as iter
+                          FROM voip_sound_sets s
+                          JOIN cte ON cte.parent_id = s.id
+                    )
+                    SELECT id
+                      FROM cte
+                     WHERE iter = (SELECT max(iter) from cte)
+                 )
+                   AND (v.handle_id = u_handle_id OR 1=1)
+                 UNION
+                SELECT v.id AS set_id, v.handle_id,
+                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                       CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain
+                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
                         FROM (voip_sound_sets s, voip_sound_handles h)
                        ) AS v
                   LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-            WHERE v.id = (
-                WITH RECURSIVE cte as (
-                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
-                      FROM voip_sound_sets s
-                     WHERE id = u_sound_set_id
-                    UNION
-                    SELECT s.id, s.parent_id, iter+1 as iter
-                      FROM voip_sound_sets s
-                      JOIN cte ON cte.parent_id = s.id
-                )
-                SELECT id
-                  FROM cte
-                 WHERE iter = (SELECT max(iter) from cte)
+                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
             )
-            AND (v.handle_id = u_handle_id OR 1=1)
-            UNION
-            SELECT v.id AS set_id, v.handle_id,
-                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
-                   CONCAT(v.parent_id, IF(cte.parent_chain, ':', ''), cte.parent_chain) as parent_chain
-              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                    FROM (voip_sound_sets s, voip_sound_handles h)
-                   ) AS v
-              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
-        )
-        SELECT set_id, handle_id,
-               IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
-               parent_chain
-          FROM cte;
+            SELECT set_id, handle_id,
+                   IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
+                   parent_chain
+              FROM cte
+        ) as v
+      ON DUPLICATE KEY UPDATE parent_set_id=v.data_set_id, parent_chain=v.parent_chain;
     ELSE
         IF u_handle_id IS NOT NULL THEN
             DELETE FROM voip_sound_set_handle_parents WHERE handle_id = u_handle_id;
@@ -3810,6 +3805,7 @@ INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Devi
 INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (396,6,'peer_auth_registrar_server','Specific value for the registrar server',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (397,8,'reseller_id','Internal Reseller #\'',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',0,NULL,0,0,0);
+INSERT INTO `voip_preferences` VALUES (398,9,'cloud_pbx_hunt_cancel_mode','termination mode for early stage legs',0,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'enum',0,'This is a termination mode for call legs in the early dialog stage. Can be: bye or cancel.',0,0,0);
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (9,62,'no','no',1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (10,62,'no','no',0,0,1,0,NULL,0,0,0,0,1,NULL);
@@ -4161,6 +4157,8 @@ INSERT INTO `voip_preferences_enum` VALUES (384,382,'7','7',1,1,1,1,0,0,0,0,0,0,
 INSERT INTO `voip_preferences_enum` VALUES (385,382,'8 (slower, better quality)','8',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (386,382,'9','9',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (387,382,'10 (slowest, best quality)','10',1,1,1,1,0,0,0,0,0,0,NULL);
+INSERT INTO `voip_preferences_enum` VALUES (388,398,'bye','bye',1,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `voip_preferences_enum` VALUES (389,398,'cancel','cancel',1,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `voip_sound_groups` VALUES (1,'early_rejects');
 INSERT INTO `voip_sound_groups` VALUES (2,'pbx');
 INSERT INTO `voip_sound_groups` VALUES (3,'calling_card');
@@ -4325,7 +4323,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','e1c2601c6a448a7b8aff90fb6a1c217d',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','f18820efc46b27ca1e79defc53a13ce0',0,NULL,NULL,NULL,0,0,'none',NULL,'cancel',NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
@@ -6219,7 +6217,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_create_trig AFTER UPDATE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
 
@@ -6239,7 +6237,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_update_trig AFTER UPDATE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
 
@@ -6259,7 +6257,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_delete_trig AFTER DELETE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     DECLARE done INT DEFAULT 0;
     DECLARE set_id INT DEFAULT 0;
@@ -6296,11 +6294,9 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_create_trig AFTER INSERT ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
-    IF NEW.parent_id IS NOT NULL THEN
-        CALL update_sound_set_handle_parents(NEW.id, NULL);
-    END IF;
+    CALL update_sound_set_handle_parents(NEW.id, NULL);
 
 END */;;
 DELIMITER ;
@@ -6318,7 +6314,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_update_trig AFTER UPDATE ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     IF NOT (OLD.parent_id <=> NEW.parent_id) THEN
         CALL update_sound_set_handle_parents(NEW.id, NULL);
@@ -6340,7 +6336,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_delete_trig AFTER DELETE ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     DECLARE done INT DEFAULT 0;
     DECLARE set_id INT DEFAULT 0;
@@ -6359,6 +6355,8 @@ DELIMITER ;;
         CALL update_sound_set_handle_parents(set_id, NULL);
     END LOOP;
     CLOSE x;
+
+    CALL update_sound_set_handle_parents(OLD.id, NULL);
 
 END */;;
 DELIMITER ;

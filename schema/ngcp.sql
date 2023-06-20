@@ -20,7 +20,7 @@ CREATE TABLE `db_schema` (
   `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`)
-) ENGINE=InnoDB AUTO_INCREMENT=841 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=842 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -30883,6 +30883,7 @@ INSERT INTO `db_schema` VALUES (837,15768,'spce',NOW());
 INSERT INTO `db_schema` VALUES (838,15770,'spce',NOW());
 INSERT INTO `db_schema` VALUES (839,15771,'spce',NOW());
 INSERT INTO `db_schema` VALUES (840,15772,'spce',NOW());
+INSERT INTO `db_schema` VALUES (841,15773,'spce',NOW());
 INSERT INTO `timezone` VALUES ('1','localtime',NOW(),NOW(),NULL);
 INSERT INTO `tzinfo_version` VALUES ('1','0',NOW(),NOW());
 COMMIT;
