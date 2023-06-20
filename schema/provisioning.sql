@@ -5124,7 +5124,7 @@ CREATE TABLE `voip_sound_files` (
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_create_trig AFTER UPDATE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
 
@@ -5144,7 +5144,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_update_trig AFTER UPDATE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
 
@@ -5164,7 +5164,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_delete_trig AFTER DELETE ON voip_sound_files
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     DECLARE done INT DEFAULT 0;
     DECLARE set_id INT DEFAULT 0;
@@ -5420,11 +5420,9 @@ CREATE TABLE `voip_sound_sets` (
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_create_trig AFTER INSERT ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
-    IF NEW.parent_id IS NOT NULL THEN
-        CALL update_sound_set_handle_parents(NEW.id, NULL);
-    END IF;
+    CALL update_sound_set_handle_parents(NEW.id, NULL);
 
 END */;;
 DELIMITER ;
@@ -5442,7 +5440,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_update_trig AFTER UPDATE ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     IF NOT (OLD.parent_id <=> NEW.parent_id) THEN
         CALL update_sound_set_handle_parents(NEW.id, NULL);
@@ -5464,7 +5462,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_sets_delete_trig AFTER DELETE ON voip_sound_sets
-    FOR each ROW BEGIN
+FOR each ROW BEGIN
 
     DECLARE done INT DEFAULT 0;
     DECLARE set_id INT DEFAULT 0;
@@ -5483,6 +5481,8 @@ DELIMITER ;;
         CALL update_sound_set_handle_parents(set_id, NULL);
     END LOOP;
     CLOSE x;
+
+    CALL update_sound_set_handle_parents(OLD.id, NULL);
 
 END */;;
 DELIMITER ;
@@ -5706,7 +5706,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','10b72ebfac3b71bee22315beaad1a41d',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','55c7acd26dae61498ab9cf330798c4f1',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
