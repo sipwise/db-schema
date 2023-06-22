@@ -1186,7 +1186,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=399 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=398 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1209,7 +1209,7 @@ CREATE TABLE `voip_preferences_enum` (
   PRIMARY KEY (`id`),
   KEY `preference_id` (`preference_id`),
   CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=390 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=388 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1455,7 +1455,6 @@ CREATE TABLE `voip_subscribers` (
   `is_pbx_group` tinyint(1) NOT NULL DEFAULT 0,
   `pbx_hunt_policy` enum('serial','parallel','random','circular','none') DEFAULT 'none',
   `pbx_hunt_timeout` int(4) unsigned DEFAULT NULL,
-  `pbx_hunt_cancel_mode` enum('bye','cancel') DEFAULT 'cancel',
   `pbx_extension` varchar(255) DEFAULT NULL,
   `profile_set_id` int(11) unsigned DEFAULT NULL,
   `profile_id` int(11) unsigned DEFAULT NULL,
@@ -3805,7 +3804,6 @@ INSERT INTO `voip_preferences` VALUES (394,8,'csc_device_provisioning','CSC Devi
 INSERT INTO `voip_preferences` VALUES (395,8,'csc_hunt_groups','CSC Hunt Groups',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'boolean',0,'\'CSC Hunt Groups\' - An internal flag to be able to map Hunt Groups visibility to subscriber profiles. Not directly used',0,0,1);
 INSERT INTO `voip_preferences` VALUES (396,6,'peer_auth_registrar_server','Specific value for the registrar server',0,1,0,0,0,1,0,0,0,0,0,NOW(),0,0,'string',0,'Registrar server value is used as a registration R-URI as well as From/To domain in the outbound REGISTER.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (397,8,'reseller_id','Internal Reseller #\'',1,1,1,0,0,0,0,0,0,0,0,NOW(),1,0,'int',0,NULL,0,0,0);
-INSERT INTO `voip_preferences` VALUES (398,9,'cloud_pbx_hunt_cancel_mode','termination mode for early stage legs',0,1,1,0,0,0,0,0,0,0,0,NOW(),1,1,'enum',0,'This is a termination mode for call legs in the early dialog stage. Can be: bye or cancel.',0,0,0);
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (9,62,'no','no',1,1,0,0,NULL,0,0,0,0,NULL,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (10,62,'no','no',0,0,1,0,NULL,0,0,0,0,1,NULL);
@@ -4157,8 +4155,6 @@ INSERT INTO `voip_preferences_enum` VALUES (384,382,'7','7',1,1,1,1,0,0,0,0,0,0,
 INSERT INTO `voip_preferences_enum` VALUES (385,382,'8 (slower, better quality)','8',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (386,382,'9','9',1,1,1,1,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (387,382,'10 (slowest, best quality)','10',1,1,1,1,0,0,0,0,0,0,NULL);
-INSERT INTO `voip_preferences_enum` VALUES (388,398,'bye','bye',1,0,0,0,0,0,0,0,0,0,0);
-INSERT INTO `voip_preferences_enum` VALUES (389,398,'cancel','cancel',1,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `voip_sound_groups` VALUES (1,'early_rejects');
 INSERT INTO `voip_sound_groups` VALUES (2,'pbx');
 INSERT INTO `voip_sound_groups` VALUES (3,'calling_card');
@@ -4323,7 +4319,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','f18820efc46b27ca1e79defc53a13ce0',0,NULL,NULL,NULL,0,0,'none',NULL,'cancel',NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','6b359b89c7a97447d0400459b1150a46',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());

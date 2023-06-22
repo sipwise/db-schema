@@ -6620,7 +6620,7 @@
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
          "IS_NULLABLE" : "NO",
-         "ORDINAL_POSITION" : 19,
+         "ORDINAL_POSITION" : 18,
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/create_timestamp"
       },
@@ -6680,7 +6680,7 @@
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "on update current_timestamp()",
          "IS_NULLABLE" : "NO",
-         "ORDINAL_POSITION" : 18,
+         "ORDINAL_POSITION" : 17,
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/modify_timestamp"
       },
@@ -6704,21 +6704,9 @@
          "COLUMN_TYPE" : "varchar(255)",
          "EXTRA" : "",
          "IS_NULLABLE" : "YES",
-         "ORDINAL_POSITION" : 15,
-         "TABLE_NAME" : "voip_subscribers",
-         "key_col" : "voip_subscribers/pbx_extension"
-      },
-      "voip_subscribers/pbx_hunt_cancel_mode" : {
-         "CHARACTER_SET_NAME" : "utf8mb3",
-         "COLLATION_NAME" : "utf8mb3_general_ci",
-         "COLUMN_DEFAULT" : "'cancel'",
-         "COLUMN_NAME" : "pbx_hunt_cancel_mode",
-         "COLUMN_TYPE" : "enum('bye','cancel')",
-         "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 14,
          "TABLE_NAME" : "voip_subscribers",
-         "key_col" : "voip_subscribers/pbx_hunt_cancel_mode"
+         "key_col" : "voip_subscribers/pbx_extension"
       },
       "voip_subscribers/pbx_hunt_policy" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
@@ -6752,7 +6740,7 @@
          "COLUMN_TYPE" : "int(11) unsigned",
          "EXTRA" : "",
          "IS_NULLABLE" : "YES",
-         "ORDINAL_POSITION" : 17,
+         "ORDINAL_POSITION" : 16,
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/profile_id"
       },
@@ -6764,7 +6752,7 @@
          "COLUMN_TYPE" : "int(11) unsigned",
          "EXTRA" : "",
          "IS_NULLABLE" : "YES",
-         "ORDINAL_POSITION" : 16,
+         "ORDINAL_POSITION" : 15,
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/profile_set_id"
       },
