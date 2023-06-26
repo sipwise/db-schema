@@ -1,0 +1,5 @@
+use billing;
+
+ALTER TABLE ncos_levels DROP COLUMN `expose_to_customer`;
+
+ALTER TABLE ncos_sets DROP COLUMN `expose_to_customer`;

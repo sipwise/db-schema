@@ -1,0 +1,9 @@
+use billing;
+
+ALTER TABLE ncos_levels
+  ADD COLUMN `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
+  ADD KEY `expose_to_customer_idx` (`expose_to_customer`);
+
+ALTER TABLE ncos_sets
+  ADD COLUMN `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
+  ADD KEY `expose_to_customer_idx` (`expose_to_customer`);
