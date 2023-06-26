@@ -1,3 +1,61 @@
+ngcp-db-schema (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [4fbcd5b] MT#55307 fix not replicated dbscript name
+  * [d23bfb8] MT#55307 fix kamailio.acc existing index creation
+  * [6135289] MT#55307 change index acc method_callid_idx to method_idx
+  * [763541f] MT#56693 rework parent sound sets aggregation and selection
+  * [51a4206] MT#56693 fix 15766.up improve parent_chain aggregation
+  * [5547700] MT#57563 add ngcp.timezone version column
+  * [4fd9399] MT#56693 fix voip_sound_set_handle_parents updates
+  * [bf1ea80] MT#57580 add ncos_levels,ncos_sets expose_to_customer
+
+  [ Rene Krenn ]
+  * [e57e7ee] MT#57064 add index for recording_calls.status
+
+  [ Sipwise Jenkins Builder ]
+  * [5f01cb0] MT#55307 fix not replicated dbscript name, schemes update
+  * [68a0863] MT#57099 Fix diff on v_sound_set_files view, schemes update
+  * [95cfde1] MT#57099 Fix diff on v_sound_set_files view #2, schemes update
+  * [67e3c1b] MT#57349 Expose to customer and subscriber the record_call param, schemes update
+  * [da8defc] MT#56693 fix 15766.up improve parent_chain aggregation, schemes update
+  * [0f9ca37] MT#57563 add ngcp.timezone version column, schemes update
+  * [722524f] MT#33031 New call limits prefs at reseller level, schemes update
+  * [4f9b353] MT#56845 New subscriber preference: `cloud_pbx_hunt_cancel_mode`, schemes update
+  * [94d1a99] MT#57453 Update schema files for MR11.4 release
+
+  [ Mykola Malkov ]
+  * [b0078a5] MT#57099 Fix diff on v_sound_set_files view
+  * [82e1140] MT#57099 Fix diff on v_sound_set_files view #2
+  * [f6c799c] MT#57151 change init_connect connection_collation
+  * [bee375a] MT#57270 Don't wipe sql dump header
+  * [38db6c1] MT#57270 Add final commit to sql dump
+  * [e765f3b] MT#57270 Add routines to sql dump
+  * [3565048] MT#57270 Update schema files
+  * [1d95c51] MT#57270 Add missing trigger info to json file
+  * [428a92a] MT#57270 Update schema files
+  * [a7cc6b3] MT#57270 Split dumping of DDL and data
+  * [8f6ae65] MT#57270 Update schema files
+  * [9dc3ac4] MT#57270 Create triggers after data inserts
+  * [53b48c8] MT#57270 Update schema files
+  * [b8294a0] MT#55285 Try local ngcp-dump-json.pl instead of installed
+
+  [ Alessio Garzi ]
+  * [daf3c8d] MT#57110 New cdr aggregated field r_user
+  * [3a3cefb] MT#57110 New cdr aggregated field r_ua
+  * [be1b44e] MT#33031 New table reseller_preferences + triggers
+  * [d7ad993] MT#33031 Create reseller_id usr preference for old subscribers
+  * [368a7b4] MT#33031 reseller_id preference set as internal
+  * [074bb9c] MT#33031 New call limits prefs at reseller level
+
+  [ Donat Zenichev ]
+  * [a6594c0] MT#57376 Introducing new 'peer_auth_registrar_server' peer pref
+
+  [ Marco Capetta ]
+  * [9938919] MT#57349 Expose to customer and subscriber the record_call param
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 26 Jun 2023 14:09:35 +0200
+
 ngcp-db-schema (11.4.0.0+0~mr11.4.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
