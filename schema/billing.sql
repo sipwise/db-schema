@@ -713,9 +713,11 @@ CREATE TABLE `ncos_levels` (
   `intra_pbx` tinyint(1) NOT NULL DEFAULT 0,
   `description` text DEFAULT NULL,
   `time_set_id` int(11) unsigned DEFAULT NULL,
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `reslev_idx` (`reseller_id`,`level`),
   KEY `nl_time_set_id_idx` (`time_set_id`),
+  KEY `expose_to_customer_idx` (`expose_to_customer`),
   CONSTRAINT `c_l_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `nl_time_set_id_ref` FOREIGN KEY (`time_set_id`) REFERENCES `provisioning`.`voip_time_sets` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
@@ -778,8 +780,10 @@ CREATE TABLE `ncos_sets` (
   `reseller_id` int(11) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
+  `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `resname_idx` (`reseller_id`,`name`),
+  KEY `expose_to_customer_idx` (`expose_to_customer`),
   CONSTRAINT `n_c_resellerid_ref` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

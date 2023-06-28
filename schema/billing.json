@@ -4104,6 +4104,18 @@
          "TABLE_NAME" : "ncos_levels",
          "key_col" : "ncos_levels/description"
       },
+      "ncos_levels/expose_to_customer" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "expose_to_customer",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 9,
+         "TABLE_NAME" : "ncos_levels",
+         "key_col" : "ncos_levels/expose_to_customer"
+      },
       "ncos_levels/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -4379,6 +4391,18 @@
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "ncos_sets",
          "key_col" : "ncos_sets/description"
+      },
+      "ncos_sets/expose_to_customer" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "expose_to_customer",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "ncos_sets",
+         "key_col" : "ncos_sets/expose_to_customer"
       },
       "ncos_sets/id" : {
          "CHARACTER_SET_NAME" : null,
@@ -9612,6 +9636,18 @@
          "TABLE_NAME" : "ncos_levels",
          "key_col" : "ncos_levels/PRIMARY/1"
       },
+      "ncos_levels/expose_to_customer_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "expose_to_customer",
+         "INDEX_NAME" : "expose_to_customer_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "ncos_levels",
+         "key_col" : "ncos_levels/expose_to_customer_idx/1"
+      },
       "ncos_levels/nl_time_set_id_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "time_set_id",
@@ -9827,6 +9863,18 @@
          "SUB_PART" : null,
          "TABLE_NAME" : "ncos_sets",
          "key_col" : "ncos_sets/PRIMARY/1"
+      },
+      "ncos_sets/expose_to_customer_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "expose_to_customer",
+         "INDEX_NAME" : "expose_to_customer_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "ncos_sets",
+         "key_col" : "ncos_sets/expose_to_customer_idx/1"
       },
       "ncos_sets/resname_idx/1" : {
          "COLLATION" : "A",
