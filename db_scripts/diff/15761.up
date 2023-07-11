@@ -1,5 +1,5 @@
 USE kamailio;
 
 ALTER TABLE acc
-    DROP KEY method_callid_idx,
+    DROP KEY IF EXISTS method_callid_idx,
     ADD KEY method_idx (method);
