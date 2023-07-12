@@ -1,3 +1,4 @@
 USE ngcp;
+SET sql_log_bin=0;
 
 ALTER TABLE timezone DROP COLUMN version;
