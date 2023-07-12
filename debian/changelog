@@ -1,3 +1,13 @@
+ngcp-db-schema (11.3.1.6+0~mr11.3.1.6) unstable; urgency=medium
+
+  [ Sipwise Jenkins Builder ]
+  * [44b0e0f] MT#56693 fix voip_sound_set_handle_parents updates, schemes update
+
+  [ Kirill Solomko ]
+  * [3286e68] MT#57563 fix ngcp.timzeone version as not_replicated
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 12 Jul 2023 11:05:59 +0200
+
 ngcp-db-schema (11.3.1.5+0~mr11.3.1.5) unstable; urgency=medium
 
   [ Kirill Solomko ]
