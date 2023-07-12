@@ -1,3 +1,10 @@
+ngcp-db-schema (11.1.1.5+0~mr11.1.1.5) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [0067cf4] MT#57563 fix ngcp.timzeone version as not_replicated
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 12 Jul 2023 11:05:52 +0200
+
 ngcp-db-schema (11.1.1.4+0~mr11.1.1.4) unstable; urgency=medium
 
   [ Kirill Solomko ]
