@@ -1,3 +1,10 @@
+ngcp-db-schema (11.4.1.3+0~mr11.4.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d07313c] MT#57708 change sound_set_handle_parents index and proc
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 13 Jul 2023 14:45:35 +0200
+
 ngcp-db-schema (11.4.1.2+0~mr11.4.1.2) unstable; urgency=medium
 
   [ Kirill Solomko ]
