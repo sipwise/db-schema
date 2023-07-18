@@ -1,0 +1,6 @@
+USE kamailio;
+SET autocommit=0;
+
+DELETE FROM `dispatcher` WHERE destination = 'sip:127.0.0.1:5085';
+
+COMMIT;

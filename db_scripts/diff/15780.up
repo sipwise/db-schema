@@ -1,0 +1,12 @@
+USE kamailio;
+SET autocommit=0;
+
+INSERT INTO `dispatcher` SET
+	setid = '5',
+	destination = 'sip:127.0.0.1:5085',
+	flags = '0',
+	priority = '0',
+	attrs = '',
+	description = 'Cloud PBX servers';
+
+COMMIT;
