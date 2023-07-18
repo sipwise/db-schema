@@ -617,11 +617,12 @@ CREATE TABLE `email_templates` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invoice_templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `reseller_id` int(11) unsigned NOT NULL,
+  `reseller_id` int(11) unsigned DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `type` enum('svg','html') NOT NULL DEFAULT 'svg',
   `data` mediumblob DEFAULT NULL,
   `call_direction` enum('in','out','in_out') NOT NULL DEFAULT 'out',
+  `category` enum('customer','peer','reseller','did') NOT NULL DEFAULT 'customer',
   PRIMARY KEY (`id`),
   KEY `invoice_templates_ibfk_1` (`reseller_id`),
   CONSTRAINT `invoice_templates_ibfk_1` FOREIGN KEY (`reseller_id`) REFERENCES `resellers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

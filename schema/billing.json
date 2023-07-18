@@ -3612,6 +3612,18 @@
          "TABLE_NAME" : "invoice_templates",
          "key_col" : "invoice_templates/call_direction"
       },
+      "invoice_templates/category" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "'customer'",
+         "COLUMN_NAME" : "category",
+         "COLUMN_TYPE" : "enum('customer','peer','reseller','did')",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 7,
+         "TABLE_NAME" : "invoice_templates",
+         "key_col" : "invoice_templates/category"
+      },
       "invoice_templates/data" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -3651,11 +3663,11 @@
       "invoice_templates/reseller_id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "NULL",
          "COLUMN_NAME" : "reseller_id",
          "COLUMN_TYPE" : "int(11) unsigned",
          "EXTRA" : "",
-         "IS_NULLABLE" : "NO",
+         "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 2,
          "TABLE_NAME" : "invoice_templates",
          "key_col" : "invoice_templates/reseller_id"
@@ -9414,7 +9426,7 @@
          "INDEX_NAME" : "invoice_templates_ibfk_1",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
-         "NULLABLE" : "",
+         "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "invoice_templates",
