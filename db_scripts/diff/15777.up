@@ -1,0 +1,7 @@
+USE provisioning;
+
+ALTER TABLE voip_fax_data ADD COLUMN `time` decimal(13,3);
+
+UPDATE voip_fax_data fd LEFT JOIN voip_fax_journal fj ON fd.sid = fj.sid SET fd.`time` = fj.`time`;
+
+ALTER TABLE voip_fax_data MODIFY COLUMN `time` decimal(13,3) NOT NULL;
