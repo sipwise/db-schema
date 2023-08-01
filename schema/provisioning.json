@@ -3276,6 +3276,18 @@
          "TABLE_NAME" : "voip_fax_data",
          "key_col" : "voip_fax_data/subscriber_id"
       },
+      "voip_fax_data/time" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "time",
+         "COLUMN_TYPE" : "decimal(13,3)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 7,
+         "TABLE_NAME" : "voip_fax_data",
+         "key_col" : "voip_fax_data/time"
+      },
       "voip_fax_destinations/cc" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
