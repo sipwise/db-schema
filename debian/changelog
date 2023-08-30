@@ -1,3 +1,37 @@
+ngcp-db-schema (11.5.1.0+0~mr11.5.1.0) unstable; urgency=medium
+
+  [ Sipwise Jenkins Builder ]
+  * [2e7d385] MT#57580 add ncos_levels,ncos_sets expose_to_customer, schemes update
+  * [15118cc] MT#57563 fix ngcp.timzeone version as not_replicated, schemes update
+  * [2685627] MT#57708 change sound_set_handle_parents index and proc, schemes update
+  * [b515489] MT#56845 New subscriber preference: `cloud_pbx_hunt_cancel_mode`, schemes update
+  * [fe29811] MT#53849 peer/reseller invoicing, schemes update
+  * [83c20db] MT#57573 Remove dates substitution, schemes update
+  * [ac2f588] MT#56977 add Brazilian Portuguese language to the enum preference, schemes update
+  * [ecfeace] MT#57382 voip_fax_data.time column, schemes update
+  * [2157574] MT#57577 expose to customer and subscriber ncos_id and ncos_set_id prefs, schemes update
+
+  [ Kirill Solomko ]
+  * [e96fb82] MT#57811 adjust 15761 drop index to "if exists"
+  * [ff81df9] MT#57563 fix ngcp.timzeone version as not_replicated
+  * [38051cf] MT#57708 change sound_set_handle_parents index and proc
+
+  [ Donat Zenichev ]
+  * [91f1ea3] MT#56845 New subscriber preference: `cloud_pbx_hunt_cancel_mode`
+
+  [ Rene Krenn ]
+  * [f13ac61] MT#53849 peer/reseller invoicing
+  * [7a8ceb0] MT#57382 voip_fax_data.time column
+
+  [ Mykola Malkov ]
+  * [21654d0] MT#57573 Remove dates substitution
+
+  [ Marco Capetta ]
+  * [604656c] MT#56977 add Brazilian Portuguese language to the enum preference
+  * [9e1ef76] MT#57577 expose to customer and subscriber ncos_id and ncos_set_id prefs
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 30 Aug 2023 18:03:18 +0200
+
 ngcp-db-schema (11.5.0.0+0~mr11.5.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
