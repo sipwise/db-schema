@@ -269,7 +269,7 @@ CREATE TABLE `dispatcher` (
   `attrs` varchar(128) NOT NULL DEFAULT '',
   `description` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1041,6 +1041,7 @@ INSERT INTO `dispatcher` VALUES (1,2,'sip:127.0.0.1:5070',0,0,'','Voicemail serv
 INSERT INTO `dispatcher` VALUES (2,3,'sip:127.0.0.1:5080',0,0,'','Application servers');
 INSERT INTO `dispatcher` VALUES (3,4,'sip:127.0.0.1:5090',0,0,'','Fax2Mail servers');
 INSERT INTO `dispatcher` VALUES (4,5,'sip:127.0.0.1:5085',0,0,'','Cloud PBX servers');
+INSERT INTO `dispatcher` VALUES (5,5,'sip:127.0.0.1:5085',0,0,'','Cloud PBX servers');
 INSERT INTO `dom_preferences` VALUES (1,'','0','voip.sipwise.local','sst_enable',0,'no','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (2,'','0','voip.sipwise.local','sst_refresh_method',0,'UPDATE_FALLBACK_INVITE','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (3,'','0','voip.sipwise.local','use_rtpproxy',0,'ice_strip_candidates','1900-01-01 00:00:01');
@@ -1069,7 +1070,7 @@ INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_annou
 INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','6001036beeecabc92d044652b2bfa793','cb76265a8ee522b15d96cf9bd4341d2a','c53f5b5e7e8d1d0b71c4cd165a7d8de3','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','086e7ca0a2154ed6443a5b32830f126e','72e00e488d7094f2e0c897a589f21b45','5d8a658089425927ba7d7f3814de3999','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
