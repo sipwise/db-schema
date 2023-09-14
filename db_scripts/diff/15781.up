@@ -1,0 +1,54 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='NAT and Media Flow Control';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "sip_ping_notify",
+label = "Enable CSTA notification",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "boolean",
+read_only = 0,
+description = "When a user fails answering to our SIP ping, trigger a CSTA notification.";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "sip_ping_notify_codecs_list",
+label = "Reply code triggering notify",
+type = 0,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "int",
+read_only = 0,
+description = "Specify the list of SIP responses to the SIP ping that triggers a CSTA event notification. NOTE: the following reply codes will never trigger an event because they are considered positive answers: 200, 403, 404, 405, 486.";
+
+
+COMMIT;

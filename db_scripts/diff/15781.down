@@ -1,0 +1,7 @@
+USE provisioning;
+SET autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = 'sip_ping_notify';
+DELETE FROM voip_preferences WHERE attribute = 'sip_ping_notify_codecs_list';
+
+COMMIT;
