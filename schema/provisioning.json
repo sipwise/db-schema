@@ -6975,7 +6975,7 @@
       "voip_time_periods/end" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "end",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -7023,10 +7023,10 @@
       "voip_time_periods/start" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
          "COLUMN_NAME" : "start",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "",
+         "EXTRA" : "on update current_timestamp()",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "voip_time_periods",

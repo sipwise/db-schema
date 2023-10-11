@@ -345,7 +345,7 @@ CREATE TABLE `contacts` (
   `email` varchar(255) DEFAULT NULL,
   `newsletter` tinyint(1) NOT NULL DEFAULT 0,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NULL DEFAULT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `faxnumber` varchar(31) DEFAULT NULL,
   `iban` varchar(34) DEFAULT NULL,
   `bic` varchar(11) DEFAULT NULL,
@@ -404,7 +404,7 @@ CREATE TABLE `contract_credits` (
   `amount` double DEFAULT NULL,
   `reason` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NULL DEFAULT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `balanceid_idx` (`balance_id`),
   CONSTRAINT `cc_balanceid_ref` FOREIGN KEY (`balance_id`) REFERENCES `contract_balances` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -464,7 +464,7 @@ CREATE TABLE `contracts` (
   `status` enum('pending','active','locked','terminated') NOT NULL DEFAULT 'active',
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `activate_timestamp` timestamp NULL DEFAULT NULL,
   `terminate_timestamp` timestamp NULL DEFAULT NULL,
   `max_subscribers` int(6) unsigned DEFAULT NULL,
@@ -559,7 +559,7 @@ CREATE TABLE `customers` (
   `comm_contact_id` int(11) unsigned DEFAULT NULL,
   `external_id` varchar(255) DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NULL DEFAULT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `reseller_id` (`reseller_id`,`shopuser`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -814,8 +814,8 @@ CREATE TABLE `orders` (
   `shipping_costs` int(11) DEFAULT NULL,
   `invoice_id` int(11) unsigned DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NULL DEFAULT NULL,
-  `complete_timestamp` timestamp NULL DEFAULT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `complete_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `customerid_idx` (`customer_id`),
   KEY `resellerid_idx` (`reseller_id`),
@@ -870,7 +870,7 @@ CREATE TABLE `payments` (
   `returncode` varchar(63) DEFAULT NULL,
   `externalstatus` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NULL DEFAULT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `state_idx` (`state`),
   KEY `mpaytid_idx` (`mpaytid`),
@@ -1099,7 +1099,7 @@ CREATE TABLE `voip_intercept` (
   `delivery_user` text DEFAULT NULL,
   `delivery_pass` text DEFAULT NULL,
   `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `create_timestamp` timestamp NOT NULL,
+  `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   `uuid` varchar(255) DEFAULT NULL,
   `sip_username` varchar(255) DEFAULT NULL,
@@ -1150,7 +1150,7 @@ CREATE TABLE `voip_numbers` (
   `subscriber_id` int(11) unsigned DEFAULT NULL,
   `status` enum('active','reserved','locked','deported') NOT NULL DEFAULT 'active',
   `ported` tinyint(1) NOT NULL DEFAULT 0,
-  `list_timestamp` timestamp NULL DEFAULT NULL,
+  `list_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `number_idx` (`cc`,`ac`,`sn`),
   KEY `listts_idx` (`list_timestamp`),
@@ -2336,13 +2336,13 @@ INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600
 INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2023-10-02 15:35:30','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2023-10-11 15:51:48','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2023-10-02 15:35:08',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2023-10-02 15:35:10',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2023-10-11 15:51:26','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2023-10-11 15:51:28','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2023-10-02 15:35:26','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2023-10-11 15:51:45','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
