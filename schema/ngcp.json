@@ -67,7 +67,7 @@
          "COLUMN_NAME" : "created_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/created_at"
@@ -91,7 +91,7 @@
          "COLUMN_NAME" : "modified_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "on update current_timestamp()",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "timezone",
          "key_col" : "timezone/modified_at"
@@ -127,7 +127,7 @@
          "COLUMN_NAME" : "created_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 3,
          "TABLE_NAME" : "tzinfo_version",
          "key_col" : "tzinfo_version/created_at"
@@ -151,7 +151,7 @@
          "COLUMN_NAME" : "modified_at",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "on update current_timestamp()",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "tzinfo_version",
          "key_col" : "tzinfo_version/modified_at"

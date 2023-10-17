@@ -2043,11 +2043,11 @@
       "contacts/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 17,
          "TABLE_NAME" : "contacts",
          "key_col" : "contacts/create_timestamp"
@@ -2595,11 +2595,11 @@
       "contract_credits/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 7,
          "TABLE_NAME" : "contract_credits",
          "key_col" : "contract_credits/create_timestamp"
@@ -2895,7 +2895,7 @@
       "contracts/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -3351,11 +3351,11 @@
       "customers/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "customers",
          "key_col" : "customers/create_timestamp"
@@ -4491,11 +4491,11 @@
       "orders/complete_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "complete_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 12,
          "TABLE_NAME" : "orders",
          "key_col" : "orders/complete_timestamp"
@@ -4503,11 +4503,11 @@
       "orders/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "orders",
          "key_col" : "orders/create_timestamp"
@@ -4755,11 +4755,11 @@
       "payments/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 11,
          "TABLE_NAME" : "payments",
          "key_col" : "payments/create_timestamp"
@@ -5823,7 +5823,7 @@
       "voip_intercept/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
          "COLUMN_NAME" : "create_timestamp",
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
@@ -6135,11 +6135,11 @@
       "voip_numbers/list_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_DEFAULT" : "current_timestamp()",
          "COLUMN_NAME" : "list_timestamp",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "",
-         "IS_NULLABLE" : "YES",
+         "EXTRA" : "on update current_timestamp()",
+         "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 9,
          "TABLE_NAME" : "voip_numbers",
          "key_col" : "voip_numbers/list_timestamp"
@@ -10782,7 +10782,7 @@
          "INDEX_NAME" : "listts_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
-         "NULLABLE" : "YES",
+         "NULLABLE" : "",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_numbers",

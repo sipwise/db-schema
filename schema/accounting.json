@@ -4503,10 +4503,10 @@
       "prepaid_costs/timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
-         "COLUMN_DEFAULT" : null,
+         "COLUMN_DEFAULT" : "current_timestamp()",
          "COLUMN_NAME" : "timestamp",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "",
+         "EXTRA" : "on update current_timestamp()",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 5,
          "TABLE_NAME" : "prepaid_costs",

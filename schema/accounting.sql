@@ -653,7 +653,7 @@ CREATE TABLE `prepaid_costs` (
   `call_id` varchar(255) NOT NULL,
   `cost` double NOT NULL,
   `free_time_used` int(10) unsigned NOT NULL,
-  `timestamp` timestamp NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `source_user_id` char(36) NOT NULL,
   `destination_user_id` char(36) NOT NULL,
   PRIMARY KEY (`id`),
