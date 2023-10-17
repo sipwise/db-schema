@@ -1,0 +1,150 @@
+USE accounting;
+
+ALTER TABLE accounting.prepaid_costs
+  MODIFY `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE accounting.malicious_calls
+  MODIFY `reported_at` timestamp NOT NULL DEFAULT current_timestamp();
+
+ALTER TABLE accounting.int_cdr
+  MODIFY `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE accounting.cdr
+  MODIFY `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+USE billing;
+
+ALTER TABLE billing.voip_numbers
+  MODIFY `list_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE billing.orders
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  MODIFY `complete_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.customers
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.payments
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.vouchers
+  MODIFY `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  MODIFY `used_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  MODIFY `valid_until` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE billing.provisioning_templates
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.billing_profiles
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  MODIFY `terminate_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.contracts
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.contract_credits
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.voip_intercept
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE billing.contacts
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+USE carrier;
+
+USE fileshare;
+
+USE kamailio;
+
+ALTER TABLE kamailio.subscriber
+  MODIFY `datetime_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE kamailio.mobile_push_registrations
+  MODIFY `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE kamailio.voicemail_users
+  MODIFY `stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+USE ldap;
+
+USE ngcp;
+
+ALTER TABLE ngcp.tzinfo_version
+  MODIFY `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  MODIFY `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE ngcp.db_schema
+  MODIFY `applied_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE ngcp.timezone
+  MODIFY `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  MODIFY `modified_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+USE prosody;
+
+USE provisioning;
+
+ALTER TABLE provisioning.voip_reseller_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.recording_streams
+  MODIFY `start_time` timestamp NOT NULL DEFAULT current_timestamp();
+
+ALTER TABLE provisioning.recording_calls
+  MODIFY `start_time` timestamp NOT NULL DEFAULT current_timestamp();
+
+ALTER TABLE provisioning.voip_mail_to_fax_preferences
+  MODIFY `last_secret_key_modify` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE provisioning.voip_prof_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_subscribers
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `create_timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE provisioning.voip_time_periods
+  MODIFY `start` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  MODIFY `end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00';
+
+ALTER TABLE provisioning.voip_usr_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.sms_journal
+  MODIFY `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_dev_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_fielddev_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_dom_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_peer_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_devprof_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+ALTER TABLE provisioning.voip_contract_preferences
+  MODIFY `modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp();
+
+USE sipstats;
+
+USE stats;
+
