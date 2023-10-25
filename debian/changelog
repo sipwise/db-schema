@@ -1,3 +1,10 @@
+ngcp-db-schema (11.5.1.4+0~mr11.5.1.4) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [feb39ad] MT#55307 add drop index if exist `method_callid_idx`
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 25 Oct 2023 19:45:10 +0200
+
 ngcp-db-schema (11.5.1.3+0~mr11.5.1.3) unstable; urgency=medium
 
   * [5d90472] MT#57598 Add explicit_defaults_for_timestamp option, schema update
