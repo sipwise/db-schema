@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE attribute = 'clir_override';
+UPDATE voip_preferences SET expose_to_subscriber = 1 WHERE attribute = 'clir_override';
+
+COMMIT;
