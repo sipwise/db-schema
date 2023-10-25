@@ -20,7 +20,7 @@ DELIMITER ;;
       VALUES(NEW.id, 1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.group_id);
 
     INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+           SELECT rule.lcr_id, rule.id, NEW.id, vpg.priority, NEW.weight
              FROM kamailio.lcr_rule rule
              INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
             WHERE vpg.id <=> NEW.group_id;
@@ -88,7 +88,7 @@ DELIMITER ;;
       VALUES(NEW.id, 1, NEW.name, NEW.ip, NEW.host, NEW.port, 1, NEW.transport, 0, NEW.group_id);
 
     INSERT INTO kamailio.lcr_rule_target (lcr_id, rule_id, gw_id, priority, weight)
-           SELECT rule.lcr_id, rule.id, LAST_INSERT_ID(), vpg.priority, NEW.weight
+           SELECT rule.lcr_id, rule.id, NEW.id, vpg.priority, NEW.weight
              FROM kamailio.lcr_rule rule
              INNER JOIN provisioning.voip_peer_groups vpg ON vpg.id = rule.group_id
             WHERE vpg.id <=> NEW.group_id;
