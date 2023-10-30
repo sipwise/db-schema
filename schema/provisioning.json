@@ -305,7 +305,7 @@
          "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : "'http'",
          "COLUMN_NAME" : "bootstrap_method",
-         "COLUMN_TYPE" : "enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream','redirect_ale')",
+         "COLUMN_TYPE" : "enum('http','redirect_panasonic','redirect_yealink','redirect_polycom','redirect_snom','redirect_grandstream','redirect_ale','none')",
          "EXTRA" : "",
          "IS_NULLABLE" : "YES",
          "ORDINAL_POSITION" : 12,
