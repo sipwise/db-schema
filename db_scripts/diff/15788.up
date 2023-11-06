@@ -1,0 +1,39 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Cloud PBX';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "announce_conn_type",
+label = "Office-Hours and Early Reject announcement connection type",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "enum",
+read_only = 0,
+description = "Define what type of connection to use in case of Office-Hours and Early Rejects. If set to 'early' the announcement is played with early media (183). If set to 'established' the announcement is played after a 200 OK.";
+
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'Early', 'early', 1, 0, 0, 0, 0, 0, 1),
+(@pref_id, 'Established', 'established', 1, 0, 0, 0, 0, 0, 0);
+
+COMMIT;
