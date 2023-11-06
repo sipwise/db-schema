@@ -275,7 +275,7 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
 
   if [ -x "$SYNC_DB" ] ; then
       PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody mysql"
-      PRX_IGNORE_TABLES="kamailio.voicemail_spool provisioning.autoprov_firmwares_data"
+      PRX_IGNORE_TABLES="kamailio.voicemail_spool provisioning.autoprov_firmwares_data provisioning.voip_fax_data"
       EXTRA_SYNC_DB_OPTS=""
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
           EXTRA_SYNC_DB_OPTS="--local-user=root --set-local-grants"
