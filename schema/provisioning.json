@@ -8446,15 +8446,15 @@
          "UPDATE_RULE" : "CASCADE",
          "key_col" : "voip_preferences/vpgid_ref/voip_preference_groups_id/voip_preference_groups/id"
       },
-      "voip_preferences_enum/voip_preferences_enum_ibfk_1/preference_id/voip_preferences/id" : {
+      "voip_preferences_enum/pref_id_fk/preference_id/voip_preferences/id" : {
          "COLUMN_NAME" : "preference_id",
-         "CONSTRAINT_NAME" : "voip_preferences_enum_ibfk_1",
-         "DELETE_RULE" : "RESTRICT",
+         "CONSTRAINT_NAME" : "pref_id_fk",
+         "DELETE_RULE" : "CASCADE",
          "REFERENCED_COLUMN_NAME" : "id",
          "REFERENCED_TABLE_NAME" : "voip_preferences",
          "TABLE_NAME" : "voip_preferences_enum",
-         "UPDATE_RULE" : "RESTRICT",
-         "key_col" : "voip_preferences_enum/voip_preferences_enum_ibfk_1/preference_id/voip_preferences/id"
+         "UPDATE_RULE" : "CASCADE",
+         "key_col" : "voip_preferences_enum/pref_id_fk/preference_id/voip_preferences/id"
       },
       "voip_reminder/v_rem_subscriberid_ref/subscriber_id/voip_subscribers/id" : {
          "COLUMN_NAME" : "subscriber_id",
@@ -11858,17 +11858,17 @@
          "TABLE_NAME" : "voip_preferences_enum",
          "key_col" : "voip_preferences_enum/PRIMARY/1"
       },
-      "voip_preferences_enum/preference_id/1" : {
+      "voip_preferences_enum/pref_id_fk/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "preference_id",
-         "INDEX_NAME" : "preference_id",
+         "INDEX_NAME" : "pref_id_fk",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_preferences_enum",
-         "key_col" : "voip_preferences_enum/preference_id/1"
+         "key_col" : "voip_preferences_enum/pref_id_fk/1"
       },
       "voip_prof_preferences/PRIMARY/1" : {
          "COLLATION" : "A",
