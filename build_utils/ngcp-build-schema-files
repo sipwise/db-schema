@@ -18,35 +18,36 @@ fi
 mariadb_dir=$(mktemp -d /tmp/mariadb-build.XXXXXX)
 chown mysql:mysql "${mariadb_dir}"
 
+cp -a /etc/mysql/my.cnf               "${mariadb_dir}/"
+sed -i '/port/d'                      "${mariadb_dir}/my.cnf"
+sed -i '/socket/d'                    "${mariadb_dir}/my.cnf"
+sed -i '/datadir/d'                   "${mariadb_dir}/my.cnf"
+sed -i '/tmpdir/d'                    "${mariadb_dir}/my.cnf"
+sed -i '/innodb_log_group_home_dir/d' "${mariadb_dir}/my.cnf"
+sed -i '/log-error/d'                 "${mariadb_dir}/my.cnf"
+sed -i '/pid-file/d'                  "${mariadb_dir}/my.cnf"
+sed -i '/slow_query_log_file/d'       "${mariadb_dir}/my.cnf"
+sed -i '/log_bin/d'                   "${mariadb_dir}/my.cnf"
+sed -i '/innodb_data_home_dir/d'      "${mariadb_dir}/my.cnf"
+echo "datadir = ${mariadb_dir}"    >> "${mariadb_dir}/my.cnf"
+
 declare -a mysql_install_options
-mysql_install_options+=("--no-defaults")
+mysql_install_options+=("--defaults-file=${mariadb_dir}/my.cnf")
 mysql_install_options+=("--verbose")
 mysql_install_options+=("--skip-test-db")
-mysql_install_options+=("--innodb_encrypt_tables=off")
-mysql_install_options+=("--innodb_encrypt_log=0")
-mysql_install_options+=("--encrypt_binlog=0")
-mysql_install_options+=("--datadir=${mariadb_dir}")
 mysql_install_options+=("--user=mysql")
 mysql_install_options+=("--skip-networking")
-mysql_install_options+=("--sql-mode=NO_ENGINE_SUBSTITUTION")
-mysql_install_options+=("--character-set-server=utf8")
-mysql_install_options+=("--collation-server=utf8_general_ci")
 
 mysql_install_db "${mysql_install_options[@]}"
 
 declare -a mysqld_options
-mysqld_options+=("--no-defaults")
+mysqld_options+=("--defaults-file=${mariadb_dir}/my.cnf")
 mysqld_options+=("--pid-file=${mariadb_dir}/mysqld.pid")
 mysqld_options+=("--datadir=${mariadb_dir}")
 mysqld_options+=("--user=mysql")
 mysqld_options+=("--socket=${mariadb_dir}/mysqld.sock")
 mysqld_options+=("--log-error=${mariadb_dir}/mysqld.log")
 mysqld_options+=("--skip-networking")
-mysqld_options+=("--sql-mode=NO_ENGINE_SUBSTITUTION")
-mysqld_options+=("--character-set-server=utf8")
-mysqld_options+=("--init-connect='SET NAMES utf8; SET collation_connection = utf8_general_ci; SET sql_mode = STRICT_TRANS_TABLES'")
-mysqld_options+=("--collation-server=utf8_general_ci")
-mysqld_options+=("--explicit-defaults-for-timestamp=0")
 
 mariadbd "${mysqld_options[@]}" &>/dev/null &
 
