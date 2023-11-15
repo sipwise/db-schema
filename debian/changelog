@@ -1,3 +1,11 @@
+ngcp-db-schema (12.0.1.2+0~mr12.0.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [bc0ce70] MT#58547 provisioning<>kamailio.lcr_gw use id instead of flags
+  * [0d2fa5b] MT#58547 fix voip_peer_host triggers lcr_rule_target
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Nov 2023 09:59:48 +0100
+
 ngcp-db-schema (12.0.1.1+0~mr12.0.1.1) unstable; urgency=medium
 
   * New release.
