@@ -33,7 +33,9 @@ SELECT last_insert_id() INTO @pref_id;
 INSERT INTO voip_preferences_enum
 (preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
 VALUES
-(@pref_id, 'Early', 'early', 1, 0, 0, 0, 0, 0, 1),
-(@pref_id, 'Established', 'established', 1, 0, 0, 0, 0, 0, 0);
+(@pref_id, 'use domain default', 'NULL', 1, 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Early', 'early', 1, 0, 1, 0, 0, 0, 0),
+(@pref_id, 'Early', 'early', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Established', 'established', 1, 1, 1, 0, 0, 0, 0);
 
 COMMIT;
