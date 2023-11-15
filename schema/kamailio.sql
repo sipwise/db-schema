@@ -910,7 +910,7 @@ CREATE TABLE `usr_preferences` (
   KEY `ua_idx` (`uuid`,`attribute`),
   KEY `uda_idx` (`username`,`domain`,`attribute`),
   KEY `av_idx` (`attribute`,`value`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -1071,10 +1071,11 @@ INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_annou
 INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','3b165de0821f5e138d31ae5067ecb6e1','529d7e0f1f03a3cd86422e19889f1359','23cb7fba72ef806a5f51bf1859e48f77','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','30366c36629286638be8be5b4eff6adc','464330e5e9f3a5e2a6d047b54a1ac11b','86bf54bc8ca7f94be8dc00308cc6f8cf','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
+INSERT INTO `usr_preferences` VALUES (7,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `version` VALUES ('acc',5);
 INSERT INTO `version` VALUES ('acc_cdrs',2);
 INSERT INTO `version` VALUES ('active_watchers',12);
