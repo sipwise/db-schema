@@ -1,0 +1,7 @@
+use provisioning;
+set autocommit=0;
+
+# disable on subscribers's preferences
+UPDATE voip_preferences SET usr_pref = 0 WHERE attribute = 'peer_auth_registrar_server';
+
+COMMIT;
