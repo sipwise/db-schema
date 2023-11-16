@@ -1,0 +1,4 @@
+use provisioning;
+# this is a fixup and the column was already supposed to be varchar(46), therefore,
+# bringing it back to the state it comes with in 15710.up
+alter table voip_allowed_ip_groups modify column ipnet varchar(46) not null;
