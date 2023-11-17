@@ -4401,7 +4401,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','871e72ea60cb8892366ef138ee28567c',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','26d1f10fb754a3bb642439f12f839bc2',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
