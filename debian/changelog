@@ -1,3 +1,10 @@
+ngcp-db-schema (11.4.1.5+0~mr11.4.1.5) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2e371f3] MT#58768 fix voip_allowed_ip_groups.ipnet column
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 17 Nov 2023 16:47:40 +0100
+
 ngcp-db-schema (11.4.1.4+0~mr11.4.1.4) unstable; urgency=medium
 
   * [fe9df63] MT#57708 change sound_set_handle_parents index and proc, schemes update
