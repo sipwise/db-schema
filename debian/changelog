@@ -1,3 +1,10 @@
+ngcp-db-schema (10.5.1.2+0~mr10.5.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ec76904] MT#58768 fix voip_allowed_ip_groups.ipnet column
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 17 Nov 2023 16:45:41 +0100
+
 ngcp-db-schema (10.5.1.1+0~mr10.5.1.1) unstable; urgency=medium
 
   [ Alessio Garzi ]
