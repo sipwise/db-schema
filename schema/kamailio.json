@@ -6794,6 +6794,16 @@
       }
    },
    "constraints" : {
+      "lcr_gw/lcr_gw_id_ref/id/voip_peer_hosts/id" : {
+         "COLUMN_NAME" : "id",
+         "CONSTRAINT_NAME" : "lcr_gw_id_ref",
+         "DELETE_RULE" : "CASCADE",
+         "REFERENCED_COLUMN_NAME" : "id",
+         "REFERENCED_TABLE_NAME" : "voip_peer_hosts",
+         "TABLE_NAME" : "lcr_gw",
+         "UPDATE_RULE" : "CASCADE",
+         "key_col" : "lcr_gw/lcr_gw_id_ref/id/voip_peer_hosts/id"
+      },
       "lcr_rule_target/l_r_t_gwid_ref/gw_id/lcr_gw/id" : {
          "COLUMN_NAME" : "gw_id",
          "CONSTRAINT_NAME" : "l_r_t_gwid_ref",
