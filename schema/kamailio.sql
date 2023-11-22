@@ -392,7 +392,8 @@ CREATE TABLE `lcr_gw` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `lcr_id_gw_name_idx` (`lcr_id`,`gw_name`),
   KEY `lcr_id_idx` (`lcr_id`),
-  KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`)
+  KEY `lcr_id_ip_addr_idx` (`lcr_id`,`ip_addr`),
+  CONSTRAINT `lcr_gw_id_ref` FOREIGN KEY (`id`) REFERENCES `provisioning`.`voip_peer_hosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -1069,7 +1070,7 @@ INSERT INTO `dom_preferences` VALUES (27,'','0','voip.sipwise.local','play_annou
 INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_push_enable',0,'never','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','d4b3ac5a24fb80a7c34fb8f8fe95ee46','889b5f175a4545246eebeefa19c2d542','bc95c20b6d30477fc1b8d28dd36e59c6','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','0b6576702ffb7b331995dc024c949136','67e8134fc44f14b4dc241de37b32e058','aa713f49145e7176ba537052698daa43','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
