@@ -1,0 +1,9 @@
+USE kamailio;
+SET autocommit=0;
+
+DROP TABLE `queues`;
+DROP TABLE `agents`;
+DROP TABLE `tiers`;
+DROP TABLE `members`;
+
+COMMIT;

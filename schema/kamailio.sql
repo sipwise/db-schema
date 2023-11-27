@@ -141,6 +141,36 @@ CREATE TABLE `address` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agents` (
+  `name` varchar(255) DEFAULT NULL,
+  `instance_id` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `contact` varchar(1024) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `max_no_answer` int(11) NOT NULL DEFAULT 0,
+  `wrap_up_time` int(11) NOT NULL DEFAULT 0,
+  `reject_delay_time` int(11) NOT NULL DEFAULT 0,
+  `busy_delay_time` int(11) NOT NULL DEFAULT 0,
+  `no_answer_delay_time` int(11) NOT NULL DEFAULT 0,
+  `last_bridge_start` int(11) NOT NULL DEFAULT 0,
+  `last_bridge_end` int(11) NOT NULL DEFAULT 0,
+  `last_offered_call` int(11) NOT NULL DEFAULT 0,
+  `last_status_change` int(11) NOT NULL DEFAULT 0,
+  `no_answer_count` int(11) NOT NULL DEFAULT 0,
+  `calls_answered` int(11) NOT NULL DEFAULT 0,
+  `talk_time` int(11) NOT NULL DEFAULT 0,
+  `ready_time` int(11) NOT NULL DEFAULT 0,
+  `external_calls_count` int(11) NOT NULL DEFAULT 0,
+  KEY `idx_name` (`name`),
+  KEY `idx_state` (`state`),
+  KEY `idx_last_offered_call` (`last_offered_call`),
+  KEY `idx_name_status_state` (`status`,`state`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `aliases` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ruid` varchar(64) NOT NULL DEFAULT '',
@@ -479,6 +509,31 @@ CREATE TABLE `location_attrs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `members` (
+  `queue` varchar(255) DEFAULT NULL,
+  `instance_id` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) NOT NULL DEFAULT '',
+  `session_uuid` varchar(255) NOT NULL DEFAULT '',
+  `cid_number` varchar(255) DEFAULT NULL,
+  `cid_name` varchar(255) DEFAULT NULL,
+  `system_epoch` int(11) NOT NULL DEFAULT 0,
+  `joined_epoch` int(11) NOT NULL DEFAULT 0,
+  `rejoined_epoch` int(11) NOT NULL DEFAULT 0,
+  `bridge_epoch` int(11) NOT NULL DEFAULT 0,
+  `abandoned_epoch` int(11) NOT NULL DEFAULT 0,
+  `base_score` int(11) NOT NULL DEFAULT 0,
+  `skill_score` int(11) NOT NULL DEFAULT 0,
+  `serving_agent` varchar(255) DEFAULT NULL,
+  `serving_system` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  KEY `idx_serving_agent_system_state` (`state`,`serving_agent`,`serving_system`),
+  KEY `idx_queue_cid_number_state` (`queue`,`cid_number`,`state`),
+  KEY `idx_uuid_session_uuid_state_queue` (`uuid`,`session_uuid`,`state`,`queue`),
+  KEY `idx_serving_agent_uuid_instance_id` (`serving_agent`,`uuid`,`instance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mobile_push_registrations` (
   `reg_id` varbinary(3072) NOT NULL,
   `type` enum('gcm','apns') NOT NULL,
@@ -603,6 +658,28 @@ CREATE TABLE `pua` (
   KEY `dialog1_idx` (`pres_id`,`pres_uri`),
   KEY `record_idx` (`pres_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `queues` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `strategy` varchar(64) DEFAULT 'longest-idle-agent',
+  `moh_sound` varchar(255) DEFAULT 'local_stream://moh',
+  `time_base_score` varchar(64) DEFAULT 'queue',
+  `max_wait_time` varchar(10) DEFAULT '0',
+  `max_wait_time_with_no_agent` varchar(10) DEFAULT '0',
+  `max_wait_time_with_no_agent_time_reached` varchar(10) DEFAULT '0',
+  `tier_rules_apply` varchar(10) DEFAULT 'false',
+  `tier_rule_wait_second` varchar(10) DEFAULT '300',
+  `tier_rule_wait_multiply_level` varchar(10) DEFAULT 'true',
+  `tier_rule_no_agent_no_wait` varchar(10) DEFAULT 'true',
+  `discard_abandoned_after` varchar(10) DEFAULT '60',
+  `abandoned_resume_allowed` varchar(10) DEFAULT 'false',
+  `record_template` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -781,6 +858,17 @@ CREATE TABLE `subscriber` (
   KEY `username_idx` (`username`),
   KEY `uuid_idx` (`uuid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tiers` (
+  `queue` varchar(255) DEFAULT NULL,
+  `agent` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `level` int(11) NOT NULL DEFAULT 1,
+  `position` int(11) NOT NULL DEFAULT 1,
+  KEY `idx_queue_agent` (`queue`,`agent`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -1072,7 +1160,7 @@ INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_pus
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','5aa328a14ecc6a7ca82930f59123566c','203fb9b0e9f77d7eb31215909457c996','1c1d7829a861df148a7aeb030ed3368c','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','b7f8737a0c6696296e722a384b8eb047','93a2d0738881e1f0a1f76727f350244a','cf9504da416e2871c2def6ddb1f286b6','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');

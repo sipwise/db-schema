@@ -1,0 +1,88 @@
+USE kamailio;
+SET autocommit=0;
+
+-- SQL schema is custom
+CREATE TABLE `queues` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) NOT NULL,
+  `strategy` varchar(64) DEFAULT 'longest-idle-agent',
+  `moh_sound`varchar(255) DEFAULT 'local_stream://moh',
+  `time_base_score` varchar(64) DEFAULT 'queue',
+  `max_wait_time` varchar(10) DEFAULT '0',
+  `max_wait_time_with_no_agent` varchar(10) DEFAULT '0',
+  `max_wait_time_with_no_agent_time_reached` varchar(10) DEFAULT '0',
+  `tier_rules_apply` varchar(10) DEFAULT 'false',
+  `tier_rule_wait_second` varchar(10) DEFAULT '300',
+  `tier_rule_wait_multiply_level` varchar(10) DEFAULT 'true',
+  `tier_rule_no_agent_no_wait` varchar(10) DEFAULT 'true',
+  `discard_abandoned_after` varchar(10) DEFAULT '60',
+  `abandoned_resume_allowed` varchar(10) DEFAULT 'false',
+  `record_template` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_name` (`name`)
+) ENGINE=InnoDB;
+
+-- SQL schema is taken from upstream
+CREATE TABLE `agents` (
+  `name` VARCHAR(255),
+  `instance_id` VARCHAR(255),
+  `uuid` VARCHAR(255),
+  `type` VARCHAR(255),
+  `contact` VARCHAR(1024),
+  `status` VARCHAR(255),
+  `state` VARCHAR(255),
+  `max_no_answer` INTEGER NOT NULL DEFAULT 0,
+  `wrap_up_time` INTEGER NOT NULL DEFAULT 0,
+  `reject_delay_time` INTEGER NOT NULL DEFAULT 0,
+  `busy_delay_time` INTEGER NOT NULL DEFAULT 0,
+  `no_answer_delay_time` INTEGER NOT NULL DEFAULT 0,
+  `last_bridge_start` INTEGER NOT NULL DEFAULT 0,
+  `last_bridge_end` INTEGER NOT NULL DEFAULT 0,
+  `last_offered_call` INTEGER NOT NULL DEFAULT 0,
+  `last_status_change` INTEGER NOT NULL DEFAULT 0,
+  `no_answer_count` INTEGER NOT NULL DEFAULT 0,
+  `calls_answered` INTEGER NOT NULL DEFAULT 0,
+  `talk_time` INTEGER NOT NULL DEFAULT 0,
+  `ready_time` INTEGER NOT NULL DEFAULT 0,
+  `external_calls_count` INTEGER NOT NULL DEFAULT 0,
+  KEY `idx_name` (`name`),
+  KEY `idx_state` (`state`),
+  KEY `idx_last_offered_call` (`last_offered_call`),
+  KEY `idx_name_status_state` (`status`, `state`, `name`)
+) ENGINE=InnoDB;
+
+-- SQL schema is taken from upstream
+CREATE TABLE `tiers` (
+  `queue` VARCHAR(255),
+  `agent` VARCHAR(255),
+  `state` VARCHAR(255),
+  `level` INTEGER NOT NULL DEFAULT 1,
+  `position` INTEGER NOT NULL DEFAULT 1,
+  KEY `idx_queue_agent` (`queue`, `agent`)
+) ENGINE=InnoDB;
+
+-- SQL schema is taken from upstream
+CREATE TABLE `members` (
+  `queue` VARCHAR(255),
+  `instance_id` VARCHAR(255),
+  `uuid` VARCHAR(255) NOT NULL DEFAULT '',
+  `session_uuid` VARCHAR(255) NOT NULL DEFAULT '',
+  `cid_number` VARCHAR(255),
+  `cid_name` VARCHAR(255),
+  `system_epoch` INTEGER NOT NULL DEFAULT 0,
+  `joined_epoch` INTEGER NOT NULL DEFAULT 0,
+  `rejoined_epoch` INTEGER NOT NULL DEFAULT 0,
+  `bridge_epoch` INTEGER NOT NULL DEFAULT 0,
+  `abandoned_epoch` INTEGER NOT NULL DEFAULT 0,
+  `base_score` INTEGER NOT NULL DEFAULT 0,
+  `skill_score` INTEGER NOT NULL DEFAULT 0,
+  `serving_agent` VARCHAR(255),
+  `serving_system` VARCHAR(255),
+  `state` VARCHAR(255),
+  KEY `idx_serving_agent_system_state` (`state`, `serving_agent`, `serving_system`),
+  KEY `idx_queue_cid_number_state` (`queue`, `cid_number`, `state`),
+  KEY `idx_uuid_session_uuid_state_queue` (`uuid`, `session_uuid`, `state`, `queue`),
+  KEY `idx_serving_agent_uuid_instance_id` (`serving_agent`, `uuid`, `instance_id`)
+) ENGINE=InnoDB;
+
+COMMIT;
