@@ -1,309 +1,1224 @@
-#!/bin/bash
+#!/bin/env python3
+"""This script takes care of NGCP database versioning.
 
-# iff executed under VERBOSE=yes provide more information
-verbose() {
-  if [[ "$VERBOSE" == "yes" ]] ; then
-    echo "$*"
-  fi
-}
+It can initialise, upgrade and downgrade an NGCP database
+using .up and .down scripts
 
-usage() {
-  echo -e "Usage: $0 [OPTION]..." 1>&2
-  echo -e "\t-f: Force update, even if running on active node" 1>&2
-}
+For more info you can run check the docstring descriptions or
+run the script with --help
+"""
+import argparse
+import configparser
+import os
+import re
+import signal
+import sys
+import tempfile
+import textwrap
+import time
+from io import BufferedRandom
+from pathlib import Path
+from subprocess import PIPE, Popen
+from typing import Any, Dict, List, Optional
 
-FORCE_ACTIVE_NODE=false
-RUN_SYNC_DB=false
-SYNC_DB="/usr/sbin/ngcp-sync-db"
-NOT_REPLICATED_REV_APPLIED=false
-DB_BASE="${DB_BASE:-/usr/share/ngcp-db-schema}"
+import pymysql.cursors
+from pymysql import Connection
 
-while getopts "fh" opt; do
-    case "${opt}" in
-        f)
-            FORCE_ACTIVE_NODE=true
-            ;;
-        h)
-            usage; exit 0;
-            ;;
-        *)
-            usage; exit 1;
-            ;;
-    esac
-done
-shift $((OPTIND-1))
+Revisions = Dict[str, Dict[int, str]]
+DBSchema = Dict[int, List[str]]
+ConfigDict = Dict[str, str | int | bool]
 
-nodename=$(/usr/sbin/ngcp-nodename 2>/dev/null || echo "unknown")
-if [ "${nodename}" = "unknown" ] ; then
-  echo "Error: nodename could not be identified." >&2
-  exit 1
-fi
 
-. /etc/default/ngcp-roles
-. /etc/default/ngcp-db
+class Config:
+    """Config class.
 
-declare -r SIPWISE_EXTRA_CNF="/etc/mysql/sipwise_extra.cnf"
+    Contains all the script collected configuration, states, etc.
 
-if [ ! -f "${SIPWISE_EXTRA_CNF}" ]; then
-  echo "Error: missing DB credentials file '${SIPWISE_EXTRA_CNF}'." >&2
-  exit 1
-fi
+    It's a global variable and available throughout the script but
+    it is instantiated in main()
 
-declare -a MYSQL_OPTS=()
-if [[ -n "${MYSQL_SOCKET:-}" ]]; then
-  MYSQL_OPTS+=("-u" "root")
-  MYSQL_OPTS+=("-S" "${MYSQL_SOCKET}")
-else
-  service mariadb start || true
-  MYSQL_OPTS+=("--defaults-extra-file=${SIPWISE_EXTRA_CNF}")
-fi
+    Attributes:
+        db_socket_user (str): database user when connected via socket
+        db_socket (str): database socket
+        db_backup_conf_file (str): database conf file to use when socket
+                                   is not available
 
-# check connection with sipwise user
-if ! mysql "${MYSQL_OPTS[@]}" -e 'SELECT 1;' &>/dev/null ; then
-  echo "Error: can't connect to MariaDB using '${MYSQL_OPTS[*]}'" >&2
-  exit 1
-fi
+        db_schema_table (str): database schema table name
+        node_name_file (str): node name file
+        roles_file (str): node roles file
+        db_file (str): node db config file
+        ngcp_sync_db_script: (str) = ngcp sync db script
 
-# support automated installation
-if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
-  echo "Running in automated installation mode, ignoring check for empty db_schema."
-else
-  if [ "$(mysql "${MYSQL_OPTS[@]}" -e 'select * from ngcp.db_schema;' 2>/dev/null)" = "" ] ; then
-    echo "================================================================="
-    echo "Warning: the db_schema table of the ngcp database is empty."
-    echo "Are you sure you want to proceed with applying db-schema changes?"
-    echo "This will DROP and then re-initialize your existing database."
-    printf "Please type 'agree' to really continue: "
+        scripts_dir (str): directory containing .up/.down scripts
+        scripts_dir_order (List[str]): order to apply scripts
+                                       from the subdirectories
 
-    unset AGREE
-    read AGREE
-    if [ "$AGREE" != "agree" ]; then
-      echo "Exiting as requested." >&2
-      exit 1
-    fi
-  fi
-fi
+        automated (bool): wether the script is run in the automated mode
+                          that automatically init the db schema if it's empty.
+                          this option is taken from either
+                          AUTOMATED_INSTALL_MODE os.environ
+                          (backward compatibility) or from the args
+        skip_sync_db (bool): skip db synchronisation (if applicable)
+                             this option is taken from either SKIP_SYNC_DB
+                             os.environ (backward compatibility)
+                             or from the args
+        debug (bool): debug/verbose mode
+        mode (str): 'up' mode or 'down' mode
+        to_revision (int): if the script must apply/remove up to
+                           (and including) a certain revision
+        force (bool): run this script on the active node
+        supported_args (List[str]): a list of the attributes described above
+                                    that can be also passed args,
+                                    to automate the code
 
-if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
-  mysql "${MYSQL_OPTS[@]}" < "${DB_BASE}/db_scripts/init/0005_create_ngcp.up"
-fi
+        _args (Any): parsed argspare result (usually Namespace())
+        _subproc (Popen): Popen handler to an opened subprocess, if any
+        _prompt_is_shown (bool): if the prompt is shown, a helper
+                                 to handle SIGINT
+        _interrupted (bool): if the script was interrupted with SIGINT
+        _not_replicated_was_applied (bool): if at least one not_replicated
+                                            script was applied/removed
+        _temp_sql_file (BufferedRandom): used to accumulate the sql scripts
+            data when batch mode is enabled
 
-if ! mysql "${MYSQL_OPTS[@]}" -e 'use ngcp;' 2>/dev/null ; then
-  echo 'Error: ngcp database does not exist.' >&2
-  exit 1
-fi
+        node_name (str): current node name
+        node_roles (ConfigDict): current node roles
+        node_dbconf (ConfigDict): current node db config
+        node_state (str): current node state (active/inactive,etc.)
+        db_conn (Connection): database connection handler
+        db_schema (DBSchema): database schema revisions state
+        revisions (Revisions): revisions that are read from
+                               the scripts directory
 
-if ! mysql "${MYSQL_OPTS[@]}" ngcp -e 'describe db_schema'  >/dev/null; then
-  echo 'Error: db_schema table does not exit.' >&2
-  exit 1
-fi
+        sync_db_databases (str): a string containing a space separated list
+                                 of databases that ngcp-sync-db
+                                 needs to synchronise
+        sync_db_ignore_tables (str): a string containing a space separated list
+                                 of tables that ngcp-sync-db needs to ignore
 
-if [ -z "$SKIP_SYNC_DB" ] && [ "$NGCP_TYPE" = "carrier" ] && [ "$NGCP_IS_PROXY" = "yes" ] ; then
-  if ! $FORCE_ACTIVE_NODE && [ ! -x "$SYNC_DB" ] ; then
-    echo "Error: ${SYNC_DB} is required for carrier proxy (or lacking execute permissions)." >&2
-    exit 1
-  fi
-  RUN_SYNC_DB=true
-fi
+    """
+    # db options
+    db_socket_user: str = 'root'
+    db_socket: str = '/run/mysqld/mysqld.sock'
+    db_backup_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
 
-running_on_active_node() {
-  if [ "$nodename" = "spce" ] ; then
+    # required config files location options
+    db_schema_table: str = 'ngcp.db_schema'
+    node_name_file: str = '/etc/ngcp_nodename'
+    roles_file: str = '/etc/default/ngcp-roles'
+    db_file: str = '/etc/default/ngcp-db'
+    ngcp_sync_db_script: str = '/usr/sbin/ngcp-sync-db'
+
+    # scripts dir location
+    scripts_dir: str = '/usr/share/ngcp-db-schema/db_scripts'
+    scripts_dir_order: List[str] = ['init', 'base', 'diff']
+
+    # default config options
+    automated: bool = False
+    skip_sync_db: bool = False
+    debug: bool = False
+    mode: str = 'up'
+    to_revision: int = 0
+    force: bool = False
+    batch_mode: bool = False
+    supported_args: List[str] = ['automated', 'debug', 'force', 'mode',
+                                 'skip_sync_db', 'to_revision', 'batch_mode']
+
+    # internal attributes
+    _args: Any = None
+    _subproc: Optional[Popen[Any]] = None
+    _prompt_is_shown: bool = False
+    _interrupted: bool = False
+    _not_replicated_was_applied: bool = False
+    _temp_sql_file: BufferedRandom = \
+        tempfile.NamedTemporaryFile()  # type: ignore
+
+    # attributes that are initialised in __init__()
+    node_name: str
+    node_roles: ConfigDict
+    node_dbconf: ConfigDict
+    node_state: str
+    db_conn: Connection  # type: ignore
+    db_schema: DBSchema
+    revisions: Revisions
+
+    # ngcp sync db related options
+    sync_db_databases = 'ngcp billing carrier kamailio ' + \
+                        'provisioning prosody mysql'
+    sync_db_ignore_tables = 'kamailio.voicemail_spool ' + \
+                            'provisioning.autoprov_firmwares_data ' + \
+                            'provisioning.voip_fax_data'
+
+    def __init__(self) -> None:
+        """Config class constructor.
+
+        Takes over SIGINT handling
+
+        """
+        def handle_signal(signum: int, _: Any) -> None:
+            if self._prompt_is_shown:
+                log('aborted.')
+                shutdown(0)
+            if self._subproc:
+                log('waiting for the subprocess to finish...')
+                self._subproc.wait()
+            self._interrupted = True
+
+        signal.signal(signal.SIGINT, handle_signal)
+
+    def setup(self) -> None:
+        """Prepares info that is used by the script."""
+        self.node_name = get_node_name()
+        self.node_state = get_node_state()
+        self.node_roles = get_node_roles()
+        self.node_dbconf = get_node_dbconf()
+        self.db_conn = connect_db()
+        self.db_schema = get_db_schema()
+
+
+class MyRawTextHelpFormatter(argparse.RawDescriptionHelpFormatter):
+    """Class that provides with better argparse help formatting."""
+
+    def __add_whitespace(self, idx: int, w_space: int, text: str) -> Any:
+        """Adds whitespace formatting."""
+        if idx == 0:
+            return text
+        return (' ' * w_space) + text
+
+    def _split_lines(self, text: Any, width: int) -> Any:
+        """Handles wrapping and bullet points formatting."""
+        text = text.splitlines()
+        for idx, line in enumerate(text):
+            if not re.match(r'^\s*$', line):
+                line = line.strip() + '\n'
+            search = re.search(r'\s*[0-9\-]{0,}\.?\s*', line)
+            if line.strip() == '':
+                text[idx] = ''
+            elif search:
+                l_space = search.end()
+                lines = [self.__add_whitespace(i, l_space, x)
+                         for i, x in enumerate(textwrap.wrap(line, width))]
+                text[idx] = lines
+
+        return [item for sublist in text for item in sublist]
+
+
+"""Instantiated in main()."""
+config: Config
+
+
+def _logit(l_str: str, indent: int, end: str, s_char: str = '->') -> None:
+    """Formats and prints the log string.
+
+    Used by public functions such as log(), debug(), error()
+
+    Args:
+        l_str (str): log string
+        indent (int): indentation level
+        end (str): line ending string
+        s_char: line start string
+
+    Returns:
+        None
+
+    """
+    print('%s%s %s' % (' ' * 4 * indent, s_char, l_str), end=end)
+
+
+def log(l_str: str, indent: int = 0, end: str = '\n') -> None:
+    """Prints the log string.
+
+    Public function used in the code to always print a log string
+
+    Args:
+        l_str (str): log string
+        indent (int): indentation level
+        end (str): line ending string
+
+    Returns:
+        None
+
+    """
+    _logit(l_str, indent, end)
+
+
+def debug(l_str: str, indent: int = 0, end: str = '\n') -> None:
+    """Print the debug string.
+
+    Public function used in the code to print debug info,
+    only if debug is enabled
+
+    Args:
+        l_str (str): log string
+        indent (int): indentation level
+        end (str): line ending string
+
+    Returns:
+        None
+
+    """
+    if config.debug:
+        _logit(l_str, indent, end, '=>')
+
+
+def error(l_str: str, indent: int = 0, end: str = '\n') -> None:
+    """Print the error string.
+
+    Public function used in the code to print error
+
+    Args:
+        l_str (str): log string
+        indent (int): indentation level
+        end (str): line ending string
+
+    Returns:
+        None
+
+    """
+    _logit(f'Error: {l_str}', indent, end, '!>')
+
+
+def str_to_bool(in_str: str) -> bool:
+    """Converts a string into its boolean representation.
+
+    'true', 'yes', '1' - boolean strings
+
+    Args:
+        in_str (str): input string
+
+    Returns:
+        bool: True if the string has boolean representation,
+              otherwise False
+
+    """
+    return in_str.lower() in ('true', 'yes', '1')
+
+
+def c_str(in_str: str) -> str:
+    """Makes a string compact by trimming excess whitespace.
+
+    Args:
+        in_str (str): input string
+
+    Returns:
+        str: compact string
+
+    """
+    out_str = in_str.strip()
+    return re.sub(r'\s{2,}|\n', ' ', out_str, flags=re.MULTILINE)
+
+
+def connect_db() -> Connection:  # type: ignore
+    """Connects to the database to perform versioning on.
+
+    Args:
+        None
+
+    Returns:
+        Connection: database connection handler
+
+    """
+    db_host = config.node_dbconf['pair_dbhost']
+    db_port = int(config.node_dbconf['pair_dbport'])
+    db_user = config.db_socket_user
+    db_socket: Optional[str] = config.db_socket
+    db_connect_method: str = str(db_socket)
+
+    db_backup_config_file: Optional[str] = None
+    if not os.access(str(db_socket), os.R_OK):
+        debug(c_str(f"""
+            socket file {db_socket} is not readable,
+            using {db_backup_config_file}
+        """))
+
+        db_backup_config_file = db_connect_method = config.db_backup_conf_file
+        db_socket = None
+
+        try:
+            with open(db_backup_config_file) as file:
+                for line in file.readlines():
+                    m = re.match(r'^user\s+=\s+(\S+)', line)
+                    if m:
+                        db_user = m.group(1)
+                        break
+        except FileNotFoundError as e:
+            error(f'cannot access {db_backup_config_file}: {e}')
+            shutdown(1)
+
+        cmd: List[str] = ['ngcp-service', 'start', 'mariadb']
+        try:
+            debug(f'run_cmd as: {cmd}')
+            stdout, stderr = run_cmd(*tuple(cmd))
+            log(stdout.decode())
+            if stderr:
+                raise ChildProcessError(stderr.decode())
+        except ChildProcessError as e:
+            error(f'could start mariadb service: {e}')
+            shutdown(1)
+
+    try:
+        db_conn: Connection = pymysql.connect(  # type: ignore
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            unix_socket=db_socket,
+            autocommit=0,
+            read_default_file=db_backup_config_file,
+        )
+        log(
+            'connected to database %s:%d via %s as %s' %
+            (db_host, db_port, db_connect_method, db_user)
+        )
+        return db_conn
+    except pymysql.Error as e:
+        error(
+            'could not connect to database %s:%d via %s as %s: %s' %
+            (db_host, db_port, db_connect_method, db_user, e)
+        )
+        shutdown(1)
+    return db_conn
+
+
+def parse_args() -> None:
+    """Parses command line arguments.
+
+    Stores them in config.args upon success as well as
+    Update the corresponding config attributes provided in
+    config.supported_args
+
+    Args:
+        None
+
+    Returns:
+        None
+
+    """
+    parser = argparse.ArgumentParser(
+        description=c_str("""
+        NGCP database schema versioning tool that upgrades
+        and downgrades the database schema state.
+        """),
+        formatter_class=MyRawTextHelpFormatter,
+        allow_abbrev=False,
+        argument_default=argparse.SUPPRESS,
+    )
+    # Define arguments
+    parser.add_argument(
+        '--force', '-f',
+        dest='force',
+        action='store_true',
+        help="""
+        force the database schema to be applied even if the node is inactive.
+        """)
+
+    parser.add_argument(
+        '--mode', '-m',
+        dest='mode',
+        type=str,
+        help="""
+        schema upgrade mode:
+
+        - 'up' (default): upgrades the database
+        - 'down': downgrades the database.
+        """)
+
+    parser.add_argument(
+        '--verbose', '-v',
+        dest='debug',
+        action='store_true',
+        help="""
+        enable verbose output (debug mode).
+        """)
+
+    parser.add_argument(
+        '--to-revision', '-t',
+        dest='to_revision',
+        type=int,
+        help="""
+        max revision to upgrade/downgrade the schema (including the revision).
+        """)
+
+    parser.add_argument(
+        '--automated', '-a',
+        dest='automated',
+        action='store_true',
+        help="""
+        automated mode, does not prompt about an empty db_schema and
+        automatically initialises it if empty '(including the revision).
+        """)
+
+    parser.add_argument(
+        '--skip-ro-db-sync', '-s',
+        dest='skip_db_sync',
+        action='store_true',
+        help="""
+        (Carrier only): skip automatic ngcp-sync-db invokation on proxy
+        nodes if at least one not_replicated scripts was applied.
+        """)
+
+    parser.add_argument(
+        '--batch-mode', '-b',
+        dest='batch_mode',
+        action='store_true',
+        help="""
+        (Experimental batch mode)
+        Instead of applying scripts and sql statements one by one,
+        they are accumulated and applied all at once.
+        """)
+
+    args = parser.parse_args()
+    for arg in config.supported_args:
+        if hasattr(args, arg):
+            config.__dict__[arg] = getattr(args, arg)
+        elif (arg == 'automated'):
+            config.automated = str_to_bool(
+                os.getenv('AUTOMATED_INSTALL_MODE', '')
+            )
+        elif (arg == 'skip_sync_db'):
+            config.skip_sync_db = str_to_bool(
+                os.getenv('SKIP_SYNC_DB', '')
+            )
+    config._args = args
+
+
+def get_node_name() -> str:
+    """Fetches node name.
+
+    Args:
+        None
+
+    Returns:
+        str: node name
+
+    """
+    with open(config.node_name_file, 'r', encoding='utf8') as file:
+        return file.readline().strip()
+
+
+def run_cmd(*cmd: Any, **kwargs: Any) -> tuple[bytes, bytes]:
+    """Runs system command.
+
+    Args:
+        cmd (tuple[str]): command and arguments
+
+    Returns:
+        (bytes, bytes): stdout, stderr
+
+    """
+    stdin = None
+    if 'stdin' in kwargs:
+        stdin = kwargs['stdin']
+    config._subproc = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    out, err = config._subproc.communicate(input=stdin)
+    config._subproc = None
+    return out, err
+
+
+def read_revision_file(filename: str) -> bytes:
+    """Reads revision file.
+
+    Currently not used due to issues with the existing scripts
+    not being correctly SQL syntax compatible and only "mysql console"
+    compatible
+
+    Args:
+        filename (str): filename to read
+
+    Returns:
+        bytes: sql data
+
+    """
+    raise NotImplementedError(c_str(
+        f'{sys._getframe().f_code.co_name}() must not be used'
+    ))
+
+    sql: bytes = bytes()
+    default_delimiter = ';'
+    delimiter_set = ''
+    rx_delimiter_declare = re.compile(r'^\s*delimiter\s+(\S+)', re.IGNORECASE)
+    rx_delimiter_char: re.Pattern[str] = re.Pattern()
+    rx_delimiter_end: re.Pattern[str] = re.Pattern()
+    rx_use_stmt_no_end = re.compile(r'^use\s*\S+[^;]\s*$', re.IGNORECASE)
+    with open(filename, mode='rb') as file:
+        for b_line in file.readlines():
+            line = new_line = b_line.decode()
+            modified = False
+            m_delim = rx_delimiter_declare.search(line)
+            if m_delim:
+                delim = m_delim.group(1)
+                if delimiter_set:
+                    if delim == default_delimiter:
+                        delimiter_set = ''
+                    elif delimiter_set != delim and \
+                            delimiter_set != default_delimiter:
+                        error(c_str(f"""
+                            Found an unexpected delimiter combo,
+                            active delimiter={delimiter_set},
+                            new delimiter={delim}
+                        """))
+                        shutdown(1)
+                    else:
+                        delimiter_set = delim
+                else:
+                    delimiter_set = delim
+                rx_delimiter_char = re.compile(rf'\s*\{delimiter_set}\s*$')
+                rx_delimiter_end = re.compile(rf'\w+\s*\{delimiter_set}\s*$')
+                new_line = rx_delimiter_declare.sub('', line)
+                if new_line != line:
+                    modified = True
+            elif delimiter_set:
+                m_char = rx_delimiter_char.search(line)
+                if m_char:
+                    m_end = rx_delimiter_end.search(line)
+                    new_line = line.replace(
+                        f'{delimiter_set}',
+                        m_end and f'{default_delimiter}' or '',
+                        1
+                    )
+                    if line != new_line:
+                        modified = True
+            m_use_no_end = rx_use_stmt_no_end.search(line.strip())
+            if m_use_no_end:
+                new_line = f'{line.strip()}{default_delimiter}\n'
+                if line != new_line:
+                    modified = True
+            sql += new_line.encode() if modified else b_line
+    return sql
+
+
+def get_node_state() -> str:
+    """Fetches node state.
+
+    state: ['active','standby','unknown','transition']
+
+    Args:
+        None
+
+    Returns
+        str: the state string
+
+    """
+    stdout, stderr = run_cmd(
+        '/usr/sbin/ngcp-check-active', '-v', 'root'
+    )
+    if stderr:
+        node_state = 'unknown'
+    else:
+        node_state = stdout.decode().strip()
+    return node_state
+
+
+def get_node_roles() -> ConfigDict:
+    """Fetches node roles.
+
+    Args:
+        None
+
+    Returns
+        ConfigDict: config Dict containing node roles
+                    as well as its type
+
+    """
+    roles_config = configparser.ConfigParser()
+    default_section = roles_config.default_section
+    node_roles: ConfigDict = {}
+    with open(config.roles_file) as file:
+        roles_config.read_string(
+            f'[{default_section}]\n{file.read()}'
+        )
+    for k, v in roles_config[default_section].items():
+        m = re.search('ngcp_is_(\\w+)', k)
+        if m:
+            val = True if v == '"yes"' else False
+            node_roles[m.group(1)] = val
+        elif k == 'ngcp_type':
+            node_roles[k] = v.replace('"', '')
+
+    return node_roles
+
+
+def get_node_dbconf() -> ConfigDict:
+    """Fetches node db config.
+
+    Db config represents hosts, ports and other info
+
+    Args:
+        None
+
+    Returns
+        ConfigDict: config Dict containing node db config
+
+    """
+    db_config = configparser.ConfigParser()
+    default_section = db_config.default_section
+    node_dbconf: ConfigDict = {}
+    with open(config.db_file) as file:
+        db_config.read_string(
+            f'[{default_section}]\n{file.read()}'
+        )
+    for k, v in db_config[default_section].items():
+        node_dbconf[k.lower()] = v
+    return node_dbconf
+
+
+def get_db_schema() -> DBSchema:
+    """Fetches db schema.
+
+    Db schema contains already applied revisions
+
+    Args:
+        None
+
+    Returns
+        DbSchema: revisions applied to nodes, the return
+                  value is an empty Dict if the db schema
+                  is not yet initialised
+
+    """
+    db_schema: DBSchema = {}
+    cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
+
+    cursor.execute("""
+        SELECT table_schema, table_name
+          FROM information_schema.tables
+         WHERE concat(table_schema ,'.', table_name) = %s
+    """, config.db_schema_table)
+    if cursor.rowcount == 0:
+        debug(f'{config.db_schema_table} table does not exist')
+        return db_schema
+
+    cursor.execute(f"""
+        SELECT revision, node
+          FROM {config.db_schema_table}
+    """)
+
+    for row in cursor:
+        revision = row[0]
+        node = row[1]
+        if revision not in db_schema:
+            db_schema[revision] = []
+        db_schema[revision].append(node)
+    cursor.close()
+
+    debug(f'found existing {config.db_schema_table} table')
+
+    return db_schema
+
+
+def get_revisions() -> Revisions:
+    """Fetches revisions.
+
+    The revisions are read from the scripts directory
+
+    Args:
+        None
+
+    Returns
+        Revision: a Dict structure with revisions
+                  and script names
+
+
+    """
+    debug('fetching db scripts...')
+    mode = config.mode
+    revisions: Revisions = {}
+    for spec in config.scripts_dir_order:
+        revisions[spec] = {}
+        for path in Path(f'{config.scripts_dir}/{spec}').glob(f'*.{mode}'):
+            revision = int(path.stem.split('_')[0])
+            revisions[spec][revision] = path.name
+        if not revisions[spec]:
+            error(f'empty dir {config.scripts_dir}/{config.scripts_dir_order}')
+            shutdown(1)
+    return revisions
+
+
+def apply_revisions(revisions: Revisions) -> None:
+    """Applies revisions.
+
+    Processes through fetched revisions and depending
+    on the mode calls either apply_up_scipt() or apply_down_script()
+
+    If the batch mode is enabled it also invokes run_cmd() with
+    the accumulated config_temp_sql_file
+
+    Args:
+        revisions (Revisions): revisions structure
+
+    Returns
+        None
+
+    """
+    mode = config.mode
+    dir_specs = config.scripts_dir_order
+    max_schema_revision = 0
+
+    if config.db_schema:
+        del dir_specs[0]
+        max_schema_revision = max(config.db_schema)
+
+    if mode == 'down':
+        dir_specs.reverse()
+
+    for spec in dir_specs:
+        sorted_revisions = sorted(revisions[spec].keys())
+        if mode == 'down':
+            sorted_revisions.reverse()
+        for revision in sorted_revisions:
+            script = revisions[spec][revision]
+            script_name = f'{spec}/{script}'
+            ret = 0
+            if mode == 'up':
+                ret = apply_up_script(script_name, revision)
+            else:
+                # silently skip all revisionns that are greater
+                # than max revision in the db_schema as there is
+                # nothing to remove
+                if max_schema_revision and revision > max_schema_revision:
+                    continue
+                ret = apply_down_script(script_name, revision)
+            if not ret:
+                break
+            if config._interrupted:
+                log('stopped.')
+                return
+        else:
+            continue
+        break
+
+    if config.batch_mode and config._temp_sql_file.tell():
+        debug(f'using accumulated sql {config._temp_sql_file.name}')
+        log('applying schema changes')
+        config._temp_sql_file.flush()
+        _, stderr = run_cmd(
+            '/usr/bin/mysql', '-e', f'source {config._temp_sql_file.name}'
+        )
+        if stderr:
+            error(f'could not apply schema changes: {stderr.decode()}')
+            shutdown(1)
+        config.db_conn.commit()
+
+
+def apply_up_script(script_name: str, revision: int) -> int:
+    """Applies .up script.
+
+    Performs various checks to determins if the .up script
+    should be applied or skipped.
+
+    The script is skipped if:
+       - it is 'replicated' and already present in db_schema[revision]
+       - it is 'not_replicaed' and already present in
+         db_schema[revision][node_name]
+
+    The script and further scripts are stopped if:
+       - config.to_revision > 0 and the current revision number
+         is greater than config.to_revision
+
+    Calls run_cmd() to apply the script file using 'mysql' consoel
+
+    If batch mode is enabled, instead of calling run_cmd() and insert
+    into the db_schema table applied revisions, all the data is accumulated
+    into config._temp_sql_file, to be then applied all at once in
+    apply_revisions() all at once
+
+    Upon success, insert a new entry into ngcp.db_schema
+
+    Args:
+        script_name (str): script name (excluding the base dir)
+        revision (int): revision number
+
+    Returns
+        int: 1 - if successfully applied or skipped,
+             0 - if should be stopped and future revisions will not
+                 be applied
+
+    """
+    node_name = config.node_name
+    db_schema = config.db_schema
+
+    not_replicated = 'not_replicated' in script_name
+    node_in_db_schema = False
+
+    if revision in db_schema:
+        node_in_db_schema = node_name in db_schema[revision]
+
+    if config.to_revision > 0 and revision > config.to_revision:
+        log(f'stopping as next revision {revision} ' +
+            f'is greater than {config.to_revision}')
+        return 0
+
+    if revision in db_schema:
+        if not not_replicated or node_in_db_schema:
+            debug(f'skip already applied revision {script_name}')
+            return 1
+
+    script_filename = f'{config.scripts_dir}/{script_name}'
+
+    if not config.batch_mode:
+        log(f'applying revision {script_name}')
+        _, stderr = run_cmd(
+            '/usr/bin/mysql', '-e', f'source {script_filename}'
+        )
+        if stderr:
+            error(f'could not apply revision: {stderr.decode()}')
+            shutdown(1)
+    else:
+        log(f'adding revision {script_name}')
+        with open(script_filename, 'rb') as file:
+            config._temp_sql_file.write(file.read())
+
+    try:
+        if not config.batch_mode:
+            with config.db_conn.cursor() as cursor:
+                cursor.execute(f"""
+                INSERT INTO {config.db_schema_table}
+                (revision, node) VALUES (%s, %s)
+                """, (revision, node_name))
+            config.db_conn.commit()
+        else:
+            sql = c_str(f"""
+                INSERT INTO {config.db_schema_table}
+                (revision, node) VALUES ({revision}, '{node_name}')
+            """)
+            config._temp_sql_file.write(
+                str(f'\n; {sql}; COMMIT;\n').encode()
+            )
+
+        if revision in db_schema:
+            db_schema[revision].append(node_name)
+        else:
+            db_schema[revision] = [node_name]
+
+        if not_replicated:
+            config._not_replicated_was_applied = True
+    except pymysql.Error as e:
+        error(f'could not apply revision: {e}')
+        shutdown(1)
     return 1
-  else
-    if /usr/sbin/ngcp-check-active -q ; then
-      if $FORCE_ACTIVE_NODE; then
-        echo "Force update on active node as requested."
-      else
-        echo "This seems to be the active node, nothing to do."
-      fi
-      return 0
-    else
-      echo "This seems to be the inactive node, applying revisions."
-      return 1
-    fi
-  fi
-}
-
-if running_on_active_node ; then
-  ACTIVE_NODE=true
-else
-  ACTIVE_NODE=false
-fi
-
-apply_revision() {
-  [ -n "$1" ] || return 1
-
-  rev="$1"
-  revname="$(basename "$rev")"
-
-  printf "Applying revision script %s: " "$rev"
-  if mysql "${MYSQL_OPTS[@]}" < "$rev" ; then
-    echo "done"
-  else
-    echo "failed. :(" >&2
-    echo "Please resolve the problem and run ngcp-update-db-schema again." >&2
-    exit 1
-  fi
-
-  if mysql "${MYSQL_OPTS[@]}" ngcp -e "insert into db_schema values (0, '${revname}', '${nodename}', CURRENT_TIMESTAMP);" ; then
-    verbose "Marked revision $rev as applied."
-  else
-    echo "Error while executing DB commands using revision $rev for node $nodename" >&2
-    exit 1
-  fi
-}
-
-# execute the rev script iff there's no entry for *any* host yet
-apply_revs() {
-  [ -n "$1" ] || return 1
-
-  revs="$1"
-
-  # generate list of rev scripts that are node specific, used inside
-  # missing_revision's ngcp-check-rev-applied ... --node $nodename
-  for rev in $revs ; do
-    revision_file="$(find ${DB_BASE}/ -name "${rev}")"
-
-    case "$revision_file" in
-      *_not_replicated.up)
-        node_revs="$node_revs $rev"
-        ;;
-    esac
-  done
-
-  declare -a check_rev_opts=("--schema=db_schema")
-  if [[ -n "${MYSQL_SOCKET:-}" ]]; then
-    check_rev_opts+=("--socket=${MYSQL_SOCKET}")
-  fi
-
-  # shellcheck disable=SC2086
-  for missing_revision in \
-    $( {
-        ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $revs                         | awk '/^No match for revision/ {print $5}' ;
-        ngcp-check-rev-applied "${check_rev_opts[@]}" --revision $node_revs --node "$nodename" | awk '/^No match for revision/ {print $5}' ;
-       } | sort -n -u ) ; do
-    revision_file="$(find ${DB_BASE}/ -name "$missing_revision")"
-
-    # execute the rev script iff there's no entry for the *current* host yet
-    case "$revision_file" in
-      *_not_replicated.up)
-        if ngcp-check-rev-applied "${check_rev_opts[@]}" --revision "$missing_revision" --node "$nodename" | grep -q 'already executed' ; then
-          continue
-        fi
-        ;;
-    esac
-
-    if [ -r "$revision_file" ] ; then
-      apply_revision "$revision_file"
-      if [[ $revision_file == *_not_replicated.up ]] ; then
-        NOT_REPLICATED_REV_APPLIED=true
-      fi
-    else
-      echo "Warning: missing revision $missing_revision identified but could not find according db-schema file."
-    fi
-  done
-}
 
 
-revision_wrapper() {
-  [ -n "$1" ] || return 1
+def apply_down_script(script_name: str, revision: int) -> int:
+    """Applies .up script.
 
-  local revlist
+    Performs various checks to determins if the .down script
+    should be applied or skipped.
 
-  for rev in "$@" ; do
+    The script is skipped if:
+       - it is 'replicated' and not present in db_schema[revision]
+       - it is 'not_replicaed' and not present in
+         db_schema[revision][node_name]
 
-    if ! [ -r "$rev" ] ; then
-      echo "Error: $rev can not be read." >&2
-      exit 1
-    fi
+    The script and further scripts are stopped if:
+       - config.to_revision > 0 and the current revision number
+         is lesser than config.to_revision
 
-    cd "$(dirname "$rev")" || exit 1 # would fail if a script references a file (like language_strings.txt) in its CWD
+    Calls run_cmd() to apply the script file using 'mysql' consoel
 
-    revname="$(basename "$rev")"
+    Upon success, removes the corresponding entry from ngcp.db_schema
 
-    case "$revname" in
-      # the scripts that should be executed on *all* hosts, no matter whether
-      # they are active or inactive, since the script's content doesn't get replicated
-      # NOTE: the actual logic is inside the apply_revs to avoid *_not_replicated.up
-      # scripts being executed independent from the other ones
-      *_not_replicated.up)
-        revlist="$revlist $(basename "$rev")"
-        ;;
-      *)
-        if $ACTIVE_NODE ; then
-	  if $FORCE_ACTIVE_NODE; then
-            revlist="$revlist $(basename "$rev")"
-	  else
-            verbose "Replication script ${revname} noted, nothing to do on active node"
-	  fi
-        else
-          revlist="$revlist $(basename "$rev")"
-        fi
-        ;;
-    esac
+    If batch mode is enabled, instead of calling run_cmd() and insert
+    into the db_schema table applied revisions, all the data is accumulated
+    into config._temp_sql_file, to be then applied all at once in
+    apply_revisions() all at once
 
-  done
+    Args:
+        script_name (str): script name (excluding the base dir)
+        revision (int): revision number
 
-  apply_revs "$revlist"
-}
+    Returns
+        int: 1 - if successfully applied or skipped,
+             0 - if should be stopped and future revisions will not
+                 be applied
 
-# make sure we get sorted 10XXX after 9XXX
-cd "${DB_BASE}/db_scripts/base/"
-# shellcheck disable=SC2035 disable=SC2046
-revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo "${DB_BASE}/db_scripts/base/$file"; done)
+    """
+    node_name = config.node_name
+    db_schema = config.db_schema
 
-cd "${DB_BASE}/db_scripts/diff/"
-# shellcheck disable=SC2035 disable=SC2046
-revision_wrapper $(printf '%s\0' *.up | sort -z -n | while IFS= read -r -d "" file; do \
-                   echo "${DB_BASE}/db_scripts/diff/$file"; done)
+    not_replicated = 'not_replicated' in script_name
+    node_in_db_schema = False
 
-# for carrier prx* hosts sync master-slave replication for not_replicated statements (if any)
-if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE" ]); then
+    if revision in db_schema:
+        node_in_db_schema = node_name in db_schema[revision]
 
-  # check connection to MariaDB on port 3308 using socket to bypass auth as root has invalid password
-  if ! mysql -S /run/mysqld/mysqld2.sock -e 'SELECT 1;' &>/dev/null ; then
-    echo "Error: can't connect to local MariaDB:3308 using socket '/run/mysqld/mysqld2.sock'" >&2
-    exit 1
-  fi
+    if config.to_revision > 0 and revision < config.to_revision:
+        log(f'stopping as next revision {revision} ' +
+            f'is lesser than {config.to_revision}')
+        return 0
 
-  # Reset 'root' password temporary to allow ngcp-sync-db replicate all credentials from db01
-  if ! mysql -S /run/mysqld/mysqld2.sock -e "SET PASSWORD FOR root@localhost = '';" 2>/dev/null ; then
-    echo "Error: Failed to temporary reset password for user 'root' on MariaDB:3308" >&2
-    exit 1
-  fi
+    if revision not in db_schema or \
+       not_replicated and not node_in_db_schema:
+        debug(f'skip already removed revision {script_name}')
+        return 1
 
-  if [ -x "$SYNC_DB" ] ; then
-      PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody mysql"
-      PRX_IGNORE_TABLES="kamailio.voicemail_spool provisioning.autoprov_firmwares_data"
-      EXTRA_SYNC_DB_OPTS=""
-      if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
-          EXTRA_SYNC_DB_OPTS="--local-user=root --set-local-grants"
-      fi
+    script_filename = f'{config.scripts_dir}/{script_name}'
 
-      # determine the preferred db node a or b if the default db01 is the constants
-      MASTER_NODE_PREF=""
-      if [ "$CENTRAL_DBHOST" == "db01" ] ; then
-        NODE_SIDE="a"
-        if [[ "$nodename" == *b ]] ; then
-          NODE_SIDE="b"
-        fi
-        MASTER_NODE_PREF="db01${NODE_SIDE}"
-      fi
-      if [ -n "$MASTER_NODE_PREF" ] ; then
-        EXTRA_SYNC_DB_OPTS="$EXTRA_SYNC_DB_OPTS --master-host $MASTER_NODE_PREF"
-      fi
+    if not config.batch_mode:
+        log(f'Removing revision {script_name}')
+        _, stderr = run_cmd(
+            '/usr/bin/mysql', '-e', f'source {script_filename}'
+        )
+        if stderr:
+            error(
+                f'could not remove revision {script_name}: {stderr.decode()}'
+            )
+            shutdown(1)
+    else:
+        log(f'adding revision {script_name}')
+        with open(script_filename, 'rb') as file:
+            config._temp_sql_file.write(file.read())
 
-      # shellcheck disable=SC2086
-      if /usr/sbin/ngcp-sync-db --verbose --force --use-central-db --repl-mode "master-slave" --databases "${PRX_SYNC_DBS}" --ignore-tables "${PRX_IGNORE_TABLES}" --ssh-tunnel=33125 ${EXTRA_SYNC_DB_OPTS} --local-host=${LOCAL_DBHOST} --local-port=${LOCAL_DBPORT}; then
-          echo "Syncing 'not_replicated' statements from the central node."
-      else
-          echo "Error: While syncing 'not_replicated' statements from the central node, please run ngcp-sync-db-wrapper manually to fix them." >&2
-          exit 1
-      fi
-  else
-      echo "Warning: Skipping sync of 'not_replicated' statements from the central node as ${SYNC_DB} is missing on the current node." >&2
-  fi
-fi
+    try:
+        if not config.batch_mode:
+            with config.db_conn.cursor() as cursor:
+                rows = 0
+                if not_replicated:
+                    rows = cursor.execute(f"""
+                    DELETE FROM {config.db_schema_table}
+                    WHERE revision = %s
+                    AND node = %s
+                    """, (revision, node_name))
+                else:
+                    rows = cursor.execute(f"""
+                    DELETE FROM {config.db_schema_table}
+                    WHERE revision = %s
+                    """, revision)
+                if rows <= 0:
+                    raise ValueError(script_name)
+            config.db_conn.commit()
+        else:
+            sql = c_str(f"""
+                DELETE FROM {config.db_schema_table}
+                WHERE revision = {revision}
+            """)
+            if not_replicated:
+                sql += f" AND node = '{node_name}'"
 
-## END OF FILE #################################################################
+            config._temp_sql_file.write(
+                str(f'\n; {sql} COMMIT;\n').encode()
+            )
+
+        if revision in db_schema:
+            if not_replicated:
+                db_schema[revision].remove(node_name)
+            else:
+                del db_schema[revision]
+
+        if not_replicated:
+            config._not_replicated_was_applied = True
+    except pymysql.Error as e:
+        error(f'could not apply revision {script_name}: {e}')
+        shutdown(1)
+    except ValueError as e:
+        error(f'could not remove revision {e}')
+        shutdown(1)
+
+    return 1
+
+
+def sync_ro_db() -> None:
+    """Synchronises R/O database.
+
+    This function is called after successful database upgrade/downgrade
+    operations with the .up/.down scripts
+
+    It calls ngcp-sync-db script with specific options to re-establish
+    master-slave replication from the central db* nodes
+
+    It is only called on:
+        - carrier platform
+        - proxy nodes
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    if config.skip_sync_db or not config._not_replicated_was_applied:
+        debug(c_str("""
+            skip sync R/O database preparation as
+            'not_replicated' scripts were not applied
+        """))
+        return
+
+    ngcp_type = config.node_roles['ngcp_type']
+    if ngcp_type != 'carrier':
+        debug('skip sync R/O database preparation on non "carrier" nodes')
+        return
+
+    log(c_str("""
+        at least one not_replicated script was applied,
+        preparing to sync R/O database.'
+    """))
+
+    if 'proxy' not in config.node_roles:
+        log(c_str("""
+            skip R/O database sync because this node
+            does not have the 'proxy' role.
+        """))
+        return
+
+    sync_dbs_opt = config.sync_db_databases
+    ignore_tables_opt = config.sync_db_ignore_tables
+
+    extra_sync_opt = ''
+    if config.automated:
+        extra_sync_opt = '--local-user=root --set-local-grants'
+
+    master_node_pref = ''
+    central_dbhost = config.node_dbconf['central_dbhost']
+    if central_dbhost == 'db01':
+        node_side = 'a'
+        if config.node_name.endswith('b'):
+            node_side = 'b'
+        master_node_pref = f'{central_dbhost}{node_side}'
+    if master_node_pref:
+        extra_sync_opt += f' --master-host {master_node_pref}'
+
+    local_dbhost = config.node_dbconf['local_dbhost']
+    local_dbport = config.node_dbconf['local_dbport']
+
+    cmd: List[str | int] = [config.ngcp_sync_db_script,
+                            '--verbose',
+                            '--force',
+                            '--use-central-db',
+                            '--repl-mode', 'master-slave',
+                            '--databases', sync_dbs_opt,
+                            '--ignore-tables', ignore_tables_opt,
+                            '--ssh-tunnel', '33125',
+                            extra_sync_opt,
+                            '--local-host', local_dbhost,
+                            '--local-port', local_dbport]
+    try:
+        debug(f'run_cmd as: {cmd}')
+        stdout, stderr = run_cmd(*tuple(cmd))
+        log(stdout.decode())
+        if stderr:
+            raise ChildProcessError(stderr.decode())
+    except ChildProcessError as e:
+        error(f'could not complete ngcp-sync-db: {e}')
+        shutdown(1)
+
+
+def check_active_node() -> None:
+    """Checks if the current node is active.
+
+    Stops the script if the current node is active and the --force
+    argument is not provided
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    active = get_node_state()
+    if active:
+        if not config.force:
+            log(c_str(f"""
+                Stopping because the current node {config.node_name} is active.
+            """))
+            shutdown(1)
+        else:
+            debug(c_str(
+                f"""current node {config.node_name} is inactive
+                but force mode is enabled."""
+            ))
+
+
+def check_and_show_prompt() -> None:
+    """Checks and shows the db init agreement prompt.
+
+    If the db_schema is not yet initialised and --automated mode
+    is not set, a prompt is shown that expects 'agree' confirmation
+    from the user, otherwise the script is aborted
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    if not config.db_schema and not config.automated:
+        prompt = """
+        =================================================================
+        Warning: the db_schema table of the ngcp database is empty.
+        Are you sure you want to proceed with applying db-schema changes ?
+        This will DROP and then re-initialize your existing database.
+        Please type 'agree' and press Enter to really continue: """
+        prompt = prompt.strip()
+        prompt = '\n'.join([line.strip() for line in prompt.splitlines()])
+        prompt += ' '
+        config._prompt_is_shown = True
+        response = input(prompt)
+        if response != 'agree':
+            log('Aborted.')
+            shutdown(0)
+
+
+def show_start_summary() -> None:
+    """Print options that the script is invoked with.
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    log(f'{os.path.basename(sys.argv[0])} started with the following options:')
+    log('-----------------------------------')
+    for arg in config.supported_args:
+        v = getattr(config, arg)
+        log(f'{arg}: {v}')
+    log('-----------------------------------')
+
+
+def shutdown(retcode: int) -> None:
+    """Called when the script needs to be manually stopped.
+
+    Args:
+        ret (int): return code, 0 - ok
+                                1 - error
+
+    Returns
+        None
+
+    """
+    sys.exit(retcode)
+
+
+def main() -> None:
+    """Main entry function.
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    try:
+        started_at = time.time()
+        global config
+        config = Config()
+        parse_args()
+        show_start_summary()
+        config.setup()
+        check_active_node()
+        check_and_show_prompt()
+        revisions = get_revisions()
+        apply_revisions(revisions)
+        sync_ro_db()
+        log('done in %.2fs.' % (time.time()-started_at))
+        shutdown(0)
+    except Exception as err:  # noqa: B902
+        error(str(err))
+        shutdown(1)
+
+
+if __name__ == '__main__':
+    main()

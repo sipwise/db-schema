@@ -4,5 +4,16 @@
 # Uncomment this to turn on verbose mode.
 # export DH_VERBOSE=1
 
+FLAKE8      := "/usr/bin/flake8"
+ISORT       := "/usr/bin/isort"
+MYPY        := "/usr/bin/mypy"
+CHK_SCRIPT  := "ngcp-update-db-schema"
+
 %:
 	dh $@
+
+execute_before_dh_auto_test:
+	$(FLAKE8) $(CHK_SCRIPT)
+	$(ISORT) --check $(CHK_SCRIPT)
+	$(MYPY) $(CHK_SCRIPT)
+
