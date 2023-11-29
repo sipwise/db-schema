@@ -1,3 +1,46 @@
+ngcp-db-schema (12.2.0.0+0~mr12.2.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [7661ccb] MT#57598 update timestamp defaults to NOT NULL
+  * [aec9db0] MT#58547 provisioning<>kamailio.lcr_gw use id instead of flags
+  * [12ab0a6] MT#58547 fix voip_peer_host triggers lcr_rule_target
+  * [ed2d300] MT#55307 add drop index if exist `method_callid_idx`
+  * [2f4e966] MT#58673 voip_preferences_enum add foreign key cascade support
+  * [9c6ef86] MT#58768 fix voip_allowed_ip_groups.ipnet column
+
+  [ Sipwise Jenkins Builder ]
+  * [f531706] MT#57598 update timestamp defaults to NOT NULL, schemes update
+  * [f8b53f1] MT#58547 provisioning<>kamailio.lcr_gw use id instead of flags, schemes update
+  * [28e754c] MT#58547 fix voip_peer_host triggers lcr_rule_target, schemes update
+  * [e263d36] MT#55307 add drop index if exist `method_callid_idx`, schemes update
+  * [8907c09] MT#58600 Don't expose to customer/subscriber the 'clir_override' pref, schemes update
+  * [2dad7b6] MT#55033 Restore provisioning.bootstrap_method 'none' value, schemes update
+  * [d84d094] MT#58673 voip_preferences_enum add foreign key cascade support, schemes update
+  * [364a00e] MT#58702 Copy and modify existing my.cnf for building, schemes update
+  * [7b8452e] MT#58625 Add preference announce_conn_type, schemes update
+  * [a4b6609] MT#58625 Add 'announce_conn_type' prefs to the domain pref, schemes update
+  * [39d0b3a] MT#58625 set default value for dom_pref announce_conn_type, schemes update
+  * [a853c31] MT#58688 Expose peer_auth_registrar_server to usr_pref, schemes update
+  * [ec19f25] MT#58768 fix voip_allowed_ip_groups.ipnet column, schemes update
+
+  [ Marco Capetta ]
+  * [edf7159] MT#58600 Don't expose to customer/subscriber the 'clir_override' pref
+  * [f34cc99] MT#55033 Restore provisioning.bootstrap_method 'none' value
+
+  [ Volodymyr Fedorov ]
+  * [1f629c8] MT#58385 mysqld2 skip provisioning.voip_fax_data
+
+  [ Mykola Malkov ]
+  * [430c6fa] MT#58702 Copy and modify existing my.cnf for building
+
+  [ Daniel Grotti ]
+  * [91812eb] MT#58625 Add preference announce_conn_type
+  * [22ddb31] MT#58625 Add 'announce_conn_type' prefs to the domain pref
+  * [8a4082e] MT#58625 set default value for dom_pref announce_conn_type
+  * [686e45a] MT#58688 Expose peer_auth_registrar_server to usr_pref
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 29 Nov 2023 13:35:51 +0100
+
 ngcp-db-schema (12.1.0.0+0~mr12.1.0.0) unstable; urgency=medium
 
   [ Donat Zenichev ]
