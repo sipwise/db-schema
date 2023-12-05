@@ -58,10 +58,10 @@ class Config:
                           this option is taken from either
                           AUTOMATED_INSTALL_MODE os.environ
                           (backward compatibility) or from the args
-        skip_sync_db (bool): skip db synchronisation (if applicable)
-                             this option is taken from either SKIP_SYNC_DB
-                             os.environ (backward compatibility)
-                             or from the args
+        skip_ro_db_sync (bool): skip db synchronisation (if applicable)
+                                this option is taken from either SKIP_SYNC_DB
+                                os.environ (backward compatibility)
+                                or from the args
         debug (bool): debug/verbose mode
         mode (str): 'up' mode or 'down' mode
         to_revision (int): if the script must apply/remove up to
@@ -115,14 +115,15 @@ class Config:
 
     # default config options
     automated: bool = False
-    skip_sync_db: bool = False
+    skip_ro_db_sync: bool = False
     debug: bool = False
     mode: str = 'up'
     to_revision: int = 0
     force: bool = False
     batch_mode: bool = False
-    supported_args: List[str] = ['automated', 'debug', 'force', 'mode',
-                                 'skip_sync_db', 'to_revision', 'batch_mode']
+    supported_args: List[str] = ['automated', 'batch_mode', 'debug', 'force',
+                                 'mode', 'skip_ro_db_sync', 'db_socket',
+                                 'to_revision']
 
     # internal attributes
     _args: Any = None
@@ -326,12 +327,13 @@ def connect_db() -> Connection:  # type: ignore
 
     db_backup_config_file: Optional[str] = None
     if not os.access(str(db_socket), os.R_OK):
+        db_backup_config_file = db_connect_method = config.db_backup_conf_file
+
         debug(c_str(f"""
             socket file {db_socket} is not readable,
             using {db_backup_config_file}
         """))
 
-        db_backup_config_file = db_connect_method = config.db_backup_conf_file
         db_socket = None
 
         try:
@@ -449,7 +451,7 @@ def parse_args() -> None:
 
     parser.add_argument(
         '--skip-ro-db-sync', '-s',
-        dest='skip_db_sync',
+        dest='skip_ro_db_sync',
         action='store_true',
         help="""
         (Carrier only): skip automatic ngcp-sync-db invokation on proxy
@@ -466,6 +468,15 @@ def parse_args() -> None:
         they are accumulated and applied all at once.
         """)
 
+    parser.add_argument(
+        '--db-socket',
+        dest='db_socket',
+        type=str,
+        help=f"""
+        Database socket file to use instead of the default one
+        ({config.db_socket})
+        """)
+
     args = parser.parse_args()
     for arg in config.supported_args:
         if hasattr(args, arg):
@@ -474,10 +485,12 @@ def parse_args() -> None:
             config.automated = str_to_bool(
                 os.getenv('AUTOMATED_INSTALL_MODE', '')
             )
-        elif (arg == 'skip_sync_db'):
-            config.skip_sync_db = str_to_bool(
+        elif (arg == 'skip_ro_db_sync'):
+            config.skip_ro_db_sync = str_to_bool(
                 os.getenv('SKIP_SYNC_DB', '')
             )
+        elif (arg == 'db_socket'):
+            config.db_socket = os.getenv('MYSQL_SOCKET', config.db_socket)
     config._args = args
 
 
@@ -1035,7 +1048,7 @@ def sync_ro_db() -> None:
         None
 
     """
-    if config.skip_sync_db or not config._not_replicated_was_applied:
+    if config.skip_ro_db_sync or not config._not_replicated_was_applied:
         debug(c_str("""
             skip sync R/O database preparation as
             'not_replicated' scripts were not applied
