@@ -69,11 +69,15 @@ if ! "${started}"; then
 fi
 
 mysql -S "${mariadb_dir}/mysqld.sock" -e \
-  "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY 'sipwise' WITH GRANT OPTION;"
+  "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY 'sipwise' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
 echo "Running ngcp-update-db-schema..."
-MYSQL_SOCKET="${mariadb_dir}/mysqld.sock" AUTOMATED_INSTALL_MODE=1 \
-  SKIP_SYNC_DB=1 /usr/sbin/ngcp-update-db-schema -f
+  /usr/sbin/ngcp-update-db-schema \
+    --skip-ro-db-sync \
+    --automated \
+    --force \
+    --verbose \
+    --db-socket="${mariadb_dir}/mysqld.sock"
 echo "Done"
 
 declare -a schemes=()
