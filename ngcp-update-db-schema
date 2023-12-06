@@ -40,8 +40,9 @@ class Config:
     Attributes:
         db_socket_user (str): database user when connected via socket
         db_socket (str): database socket
-        db_backup_conf_file (str): database conf file to use when socket
-                                   is not available
+        db_defaults_conf_file (str): database defaults conf file to use when
+                                     socket is not available
+        db_connect_method (str): 'socket' or 'config' (default: socket)
 
         db_schema_table (str): database schema table name
         node_name_file (str): node name file
@@ -100,7 +101,8 @@ class Config:
     # db options
     db_socket_user: str = 'root'
     db_socket: str = '/run/mysqld/mysqld.sock'
-    db_backup_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
+    db_defaults_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
+    db_connect_method: str = 'socket'
 
     # required config files location options
     db_schema_table: str = 'ngcp.db_schema'
@@ -121,8 +123,11 @@ class Config:
     to_revision: int = 0
     force: bool = False
     batch_mode: bool = False
-    supported_args: List[str] = ['automated', 'batch_mode', 'debug', 'force',
-                                 'mode', 'skip_ro_db_sync', 'db_socket',
+    supported_args: List[str] = ['automated', 'batch_mode',
+                                 'db_socket', 'db_connect_method',
+                                 'db_defaults_conf_file',
+                                 'debug', 'force',
+                                 'mode', 'skip_ro_db_sync',
                                  'to_revision']
 
     # internal attributes
@@ -133,6 +138,7 @@ class Config:
     _not_replicated_was_applied: bool = False
     _temp_sql_file: BufferedRandom = \
         tempfile.NamedTemporaryFile()  # type: ignore
+    _run_cmd_mysql_options: List[str] = []
 
     # attributes that are initialised in __init__()
     node_name: str
@@ -322,29 +328,52 @@ def connect_db() -> Connection:  # type: ignore
     db_host = config.node_dbconf['pair_dbhost']
     db_port = int(config.node_dbconf['pair_dbport'])
     db_user = config.db_socket_user
-    db_socket: Optional[str] = config.db_socket
-    db_connect_method: str = str(db_socket)
+    db_socket = config.db_socket
+    db_defaults_conf_file = config.db_defaults_conf_file
+    db_connect_method = config.db_connect_method
 
-    db_backup_config_file: Optional[str] = None
-    if not os.access(str(db_socket), os.R_OK):
-        db_backup_config_file = db_connect_method = config.db_backup_conf_file
+    socket_available = os.access(str(db_socket), os.R_OK)
 
+    if db_connect_method == 'socket' and not socket_available:
         debug(c_str(f"""
             socket file {db_socket} is not readable,
-            using {db_backup_config_file}
+            using {db_defaults_conf_file}
         """))
+        db_connect_method == 'config'
 
-        db_socket = None
-
+    if db_connect_method == 'socket':
+        config._run_cmd_mysql_options = ['-u', db_user, '-S', db_socket]
         try:
-            with open(db_backup_config_file) as file:
+            db_conn: Connection = pymysql.connect(  # type: ignore
+                host=db_host,
+                port=db_port,
+                user=db_user,
+                unix_socket=db_socket,
+                autocommit=0,
+            )
+            log(
+                'connected to database %s:%d via socket %s as %s' %
+                (db_host, db_port, db_socket, db_user)
+            )
+        except pymysql.Error as e:
+            error(
+                'could not connect to database %s:%d via socket %s as %s: %s' %
+                (db_host, db_port, db_connect_method, db_user, e)
+            )
+            shutdown(1)
+    elif db_connect_method == 'config':
+        config._run_cmd_mysql_options = [
+            f'--defaults-extra-file={db_defaults_conf_file}'
+        ]
+        try:
+            with open(db_defaults_conf_file) as file:
                 for line in file.readlines():
                     m = re.match(r'^user\s+=\s+(\S+)', line)
                     if m:
                         db_user = m.group(1)
                         break
         except FileNotFoundError as e:
-            error(f'cannot access {db_backup_config_file}: {e}')
+            error(f'cannot access {db_defaults_conf_file}: {e}')
             shutdown(1)
 
         cmd: List[str] = ['ngcp-service', 'start', 'mariadb']
@@ -358,26 +387,28 @@ def connect_db() -> Connection:  # type: ignore
             error(f'could start mariadb service: {e}')
             shutdown(1)
 
-    try:
-        db_conn: Connection = pymysql.connect(  # type: ignore
-            host=db_host,
-            port=db_port,
-            user=db_user,
-            unix_socket=db_socket,
-            autocommit=0,
-            read_default_file=db_backup_config_file,
-        )
-        log(
-            'connected to database %s:%d via %s as %s' %
-            (db_host, db_port, db_connect_method, db_user)
-        )
-        return db_conn
-    except pymysql.Error as e:
-        error(
-            'could not connect to database %s:%d via %s as %s: %s' %
-            (db_host, db_port, db_connect_method, db_user, e)
-        )
+        try:
+            db_conn: Connection = pymysql.connect(  # type: ignore
+                host=db_host,
+                port=db_port,
+                user=db_user,
+                read_default_file=db_defaults_conf_file,
+                autocommit=0,
+            )
+            log(
+                'connected to database %s:%d via config %s as %s' %
+                (db_host, db_port, db_defaults_conf_file, db_user)
+            )
+        except pymysql.Error as e:
+            error(
+                'could not connect to database %s:%d via config %s as %s: %s' %
+                (db_host, db_port, db_defaults_conf_file, db_user, e)
+            )
+            shutdown(1)
+    else:
+        error('unknown database connection scenario')
         shutdown(1)
+
     return db_conn
 
 
@@ -475,6 +506,25 @@ def parse_args() -> None:
         help=f"""
         Database socket file to use instead of the default one
         ({config.db_socket})
+        """)
+
+    parser.add_argument(
+        '--db-defaults-conf-file',
+        dest='db_defaults_conf_file',
+        type=str,
+        help=f"""
+        Database defaults config file to use insted of the default one
+        ({config.db_defaults_conf_file})
+        """)
+
+    parser.add_argument(
+        '--db-connect-method',
+        dest='db_connect_method',
+        choices=['socket', 'config'],
+        type=str,
+        help=f"""
+        Force database connect method instead of the default one
+        ({config.db_connect_method})
         """)
 
     args = parser.parse_args()
@@ -804,7 +854,8 @@ def apply_revisions(revisions: Revisions) -> None:
         log('applying schema changes')
         config._temp_sql_file.flush()
         _, stderr = run_cmd(
-            '/usr/bin/mysql', '-e', f'source {config._temp_sql_file.name}'
+            '/usr/bin/mysql', *config._run_cmd_mysql_options,
+            '-e', f'source {config._temp_sql_file.name}'
         )
         if stderr:
             error(f'could not apply schema changes: {stderr.decode()}')
@@ -870,7 +921,8 @@ def apply_up_script(script_name: str, revision: int) -> int:
     if not config.batch_mode:
         log(f'applying revision {script_name}')
         _, stderr = run_cmd(
-            '/usr/bin/mysql', '-e', f'source {script_filename}'
+            '/usr/bin/mysql', *config._run_cmd_mysql_options,
+            '-e', f'source {script_filename}'
         )
         if stderr:
             error(f'could not apply revision: {stderr.decode()}')
@@ -968,7 +1020,8 @@ def apply_down_script(script_name: str, revision: int) -> int:
     if not config.batch_mode:
         log(f'Removing revision {script_name}')
         _, stderr = run_cmd(
-            '/usr/bin/mysql', '-e', f'source {script_filename}'
+            '/usr/bin/mysql', *config._run_cmd_mysql_options,
+            '-e', f'source {script_filename}'
         )
         if stderr:
             error(
