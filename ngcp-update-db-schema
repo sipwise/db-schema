@@ -358,7 +358,7 @@ def connect_db() -> Connection:  # type: ignore
         except pymysql.Error as e:
             error(
                 'could not connect to database %s:%d via socket %s as %s: %s' %
-                (db_host, db_port, db_connect_method, db_user, e)
+                (db_host, db_port, db_socket, db_user, e)
             )
             shutdown(1)
     elif db_connect_method == 'config':
@@ -374,17 +374,6 @@ def connect_db() -> Connection:  # type: ignore
                         break
         except FileNotFoundError as e:
             error(f'cannot access {db_defaults_conf_file}: {e}')
-            shutdown(1)
-
-        cmd: List[str] = ['ngcp-service', 'start', 'mariadb']
-        try:
-            debug(f'run_cmd as: {cmd}')
-            stdout, stderr = run_cmd(*tuple(cmd))
-            log(stdout.decode())
-            if stderr:
-                raise ChildProcessError(stderr.decode())
-        except ChildProcessError as e:
-            error(f'could start mariadb service: {e}')
             shutdown(1)
 
         try:
