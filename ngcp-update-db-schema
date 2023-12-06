@@ -922,6 +922,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
             config._temp_sql_file.write(file.read())
 
     try:
+        config.db_conn.ping(reconnect=True)
         if not config.batch_mode:
             with config.db_conn.cursor() as cursor:
                 cursor.execute(f"""
@@ -1023,6 +1024,7 @@ def apply_down_script(script_name: str, revision: int) -> int:
             config._temp_sql_file.write(file.read())
 
     try:
+        config.db_conn.ping(reconnect=True)
         if not config.batch_mode:
             with config.db_conn.cursor() as cursor:
                 rows = 0
@@ -1173,12 +1175,12 @@ def check_active_node() -> None:
     if active:
         if not config.force:
             log(c_str(f"""
-                Stopping because the current node {config.node_name} is active.
+                stopping because the current node {config.node_name} is active.
             """))
             shutdown(1)
         else:
             debug(c_str(
-                f"""current node {config.node_name} is inactive
+                f"""current node {config.node_name} is active
                 but force mode is enabled."""
             ))
 
