@@ -50,37 +50,41 @@ class Config:
         db_file (str): node db config file
         ngcp_sync_db_script: (str) = ngcp sync db script
 
-        scripts_dir (str): directory containing .up/.down scripts
-        scripts_dir_order (List[str]): order to apply scripts
-                                       from the subdirectories
-
         automated (bool): wether the script is run in the automated mode
-                          that automatically init the db schema if it's empty.
-                          this option is taken from either
-                          AUTOMATED_INSTALL_MODE os.environ
-                          (backward compatibility) or from the args
+            that automatically init the db schema if it's empty.
+            this option is taken from either
+            AUTOMATED_INSTALL_MODE os.environ
+            (backward compatibility) or from the args
         skip_ro_db_sync (bool): skip db synchronisation (if applicable)
-                                this option is taken from either SKIP_SYNC_DB
-                                os.environ (backward compatibility)
-                                or from the args
+            this option is taken from either SKIP_SYNC_DB
+            os.environ (backward compatibility) or from the args
         debug (bool): debug/verbose mode
         mode (str): 'up' mode or 'down' mode
         to_revision (int): if the script must apply/remove up to
-                           (and including) a certain revision
+            (and including) a certain revision
         force (bool): run this script on the active node
+        batch_mode (bool): instead of applying scripts one by one, collects
+            them all and builds a single sql file that is applied in one go
+        db_scripts_dir (str): directory containing .up/.down scripts
         supported_args (List[str]): a list of the attributes described above
-                                    that can be also passed args,
-                                    to automate the code
+            that can be also passed args, to automate the code
 
         _args (Any): parsed argspare result (usually Namespace())
         _subproc (Popen): Popen handler to an opened subprocess, if any
-        _prompt_is_shown (bool): if the prompt is shown, a helper
-                                 to handle SIGINT
+        _prompt_is_shown (bool): if the prompt is shown,
+            a helper to handle SIGINT
         _interrupted (bool): if the script was interrupted with SIGINT
         _not_replicated_was_applied (bool): if at least one not_replicated
-                                            script was applied/removed
+            script was applied/removed
         _temp_sql_file (BufferedRandom): used to accumulate the sql scripts
             data when batch mode is enabled
+        _run_cmd_mysql_options (List[str]) = extra options that are passed
+            to every invokation of run_cmd() that calls the 'mysql' console
+            command. needed to use same connection (socket/config/user, etc.)
+            as the pymysql db connection
+        _scripts_dir_order (List[str]): order to apply scripts
+            from the subdirectories
+
 
         node_name (str): current node name
         node_roles (ConfigDict): current node roles
@@ -89,13 +93,12 @@ class Config:
         db_conn (Connection): database connection handler
         db_schema (DBSchema): database schema revisions state
         revisions (Revisions): revisions that are read from
-                               the scripts directory
+            the scripts directory
 
         sync_db_databases (str): a string containing a space separated list
-                                 of databases that ngcp-sync-db
-                                 needs to synchronise
+            of databases that ngcp-sync-db will synchronise
         sync_db_ignore_tables (str): a string containing a space separated list
-                                 of tables that ngcp-sync-db needs to ignore
+            of tables that ngcp-sync-db should ignore
 
     """
     # db options
@@ -111,10 +114,6 @@ class Config:
     db_file: str = '/etc/default/ngcp-db'
     ngcp_sync_db_script: str = '/usr/sbin/ngcp-sync-db'
 
-    # scripts dir location
-    scripts_dir: str = '/usr/share/ngcp-db-schema/db_scripts'
-    scripts_dir_order: List[str] = ['init', 'base', 'diff']
-
     # default config options
     automated: bool = False
     skip_ro_db_sync: bool = False
@@ -123,9 +122,11 @@ class Config:
     to_revision: int = 0
     force: bool = False
     batch_mode: bool = False
+    db_scripts_dir: str = '/usr/share/ngcp-db-schema/db_scripts'
     supported_args: List[str] = ['automated', 'batch_mode',
                                  'db_socket', 'db_connect_method',
                                  'db_defaults_conf_file',
+                                 'db_scripts_dir',
                                  'debug', 'force',
                                  'mode', 'skip_ro_db_sync',
                                  'to_revision']
@@ -139,6 +140,7 @@ class Config:
     _temp_sql_file: BufferedRandom = \
         tempfile.NamedTemporaryFile()  # type: ignore
     _run_cmd_mysql_options: List[str] = []
+    _scripts_dir_order: List[str] = ['init', 'base', 'diff']
 
     # attributes that are initialised in __init__()
     node_name: str
@@ -516,6 +518,15 @@ def parse_args() -> None:
         ({config.db_connect_method})
         """)
 
+    parser.add_argument(
+        '--db-scripts-dir',
+        dest='db_scripts_dir',
+        type=str,
+        help=f"""
+        Override database .up/.down scripts directory instead of the
+        default one ({config.db_scripts_dir})
+        """)
+
     args = parser.parse_args()
     for arg in config.supported_args:
         if hasattr(args, arg):
@@ -774,14 +785,15 @@ def get_revisions() -> Revisions:
     debug('fetching db scripts...')
     mode = config.mode
     revisions: Revisions = {}
-    for spec in config.scripts_dir_order:
+    for spec in config._scripts_dir_order:
+        rev_dir = f'{config.db_scripts_dir}/{spec}'
+        if not os.access(rev_dir, os.R_OK):
+            error(f'non-existing or empty scripts dir {rev_dir}')
+            shutdown(1)
         revisions[spec] = {}
-        for path in Path(f'{config.scripts_dir}/{spec}').glob(f'*.{mode}'):
+        for path in Path(f'{config.db_scripts_dir}/{spec}').glob(f'*.{mode}'):
             revision = int(path.stem.split('_')[0])
             revisions[spec][revision] = path.name
-        if not revisions[spec]:
-            error(f'empty dir {config.scripts_dir}/{config.scripts_dir_order}')
-            shutdown(1)
     return revisions
 
 
@@ -802,7 +814,7 @@ def apply_revisions(revisions: Revisions) -> None:
 
     """
     mode = config.mode
-    dir_specs = config.scripts_dir_order
+    dir_specs = config._scripts_dir_order
     max_schema_revision = 0
 
     if config.db_schema:
@@ -905,7 +917,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
             debug(f'skip already applied revision {script_name}')
             return 1
 
-    script_filename = f'{config.scripts_dir}/{script_name}'
+    script_filename = f'{config.db_scripts_dir}/{script_name}'
 
     if not config.batch_mode:
         log(f'applying revision {script_name}')
@@ -1005,7 +1017,7 @@ def apply_down_script(script_name: str, revision: int) -> int:
         debug(f'skip already removed revision {script_name}')
         return 1
 
-    script_filename = f'{config.scripts_dir}/{script_name}'
+    script_filename = f'{config.db_scripts_dir}/{script_name}'
 
     if not config.batch_mode:
         log(f'Removing revision {script_name}')
