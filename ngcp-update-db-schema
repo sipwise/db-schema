@@ -137,8 +137,7 @@ class Config:
     _prompt_is_shown: bool = False
     _interrupted: bool = False
     _not_replicated_was_applied: bool = False
-    _temp_sql_file: BufferedRandom = \
-        tempfile.NamedTemporaryFile()  # type: ignore
+    _temp_sql_file: BufferedRandom = None  # type: ignore
     _run_cmd_mysql_options: List[str] = []
     _scripts_dir_order: List[str] = ['init', 'base', 'diff']
 
@@ -403,6 +402,8 @@ def connect_db() -> Connection:  # type: ignore
     else:
         error('unknown database connection scenario')
         shutdown(1)
+
+    db_conn.query('SET SESSION wait_timeout = 600;')
 
     return db_conn
 
@@ -827,6 +828,16 @@ def apply_revisions(revisions: Revisions) -> None:
 
     if mode == 'down':
         dir_specs.reverse()
+
+    if config.batch_mode:
+        config._temp_sql_file = tempfile.NamedTemporaryFile()  # type: ignore
+        config._temp_sql_file.write(
+            str(
+                'SET SESSION wait_timeout = 600;\n' +
+                'SET SESSION net_read_timeout = 600;\n' +
+                'SET SESSION net_write_timeout = 600;\n'
+            ).encode()
+        )
 
     for spec in dir_specs:
         sorted_revisions = sorted(revisions[spec].keys())
