@@ -344,7 +344,10 @@ def connect_db() -> Connection:  # type: ignore
         db_connect_method == 'config'
 
     if db_connect_method == 'socket':
-        config._run_cmd_mysql_options = ['-u', db_user, '-S', db_socket]
+        config._run_cmd_mysql_options = [
+            '-h', str(db_host), '-P', str(db_port),
+            '-u', db_user, '-S', db_socket
+            ]
         try:
             db_conn: Connection = pymysql.connect(  # type: ignore
                 host=db_host,
@@ -365,6 +368,7 @@ def connect_db() -> Connection:  # type: ignore
             shutdown(1)
     elif db_connect_method == 'config':
         config._run_cmd_mysql_options = [
+            '-h', str(db_host), '-P', str(db_port),
             f'--defaults-extra-file={db_defaults_conf_file}'
         ]
         try:
