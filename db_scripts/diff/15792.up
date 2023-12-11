@@ -1,0 +1,28 @@
+USE accounting;
+
+CREATE TABLE cdr_presentity (
+  call_id varchar(255) NOT NULL,
+  event varchar(64) NOT NULL,
+  received_time decimal(13,3) NOT NULL,
+  body TEXT NOT NULL,
+  PRIMARY KEY (call_id,event,received_time),
+  KEY `cdr_presentity_rtime_idx` (`received_time`)
+) ENGINE=InnoDB CHARSET=utf8;
+
+USE kamailio;
+
+DELIMITER ;;
+CREATE TRIGGER cdr_presentity_insert_trig AFTER INSERT ON kamailio.presentity
+FOR EACH ROW
+BEGIN
+    -- Extract CallID using regular expression
+
+    DECLARE _call_id VARCHAR(255);
+    
+    SET _call_id = (SELECT TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\n]+)'), 'CallID:', '')));
+    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN
+        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
+    END IF;
+
+END;;
+DELIMITER ;

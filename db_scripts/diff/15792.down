@@ -1,0 +1,7 @@
+USE kamailio;
+
+DROP TRIGGER IF EXISTS cdr_presentity_insert_trig;
+
+USE accounting;
+
+DROP TABLE cdr_presentity;
