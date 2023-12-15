@@ -136,6 +136,7 @@ class Config:
     _subproc: Optional[Popen[Any]] = None
     _prompt_is_shown: bool = False
     _interrupted: bool = False
+    _script_was_applied: bool = False
     _not_replicated_was_applied: bool = False
     _temp_sql_file: BufferedRandom = None  # type: ignore
     _run_cmd_mysql_options: List[str] = []
@@ -877,6 +878,10 @@ def apply_revisions(revisions: Revisions) -> None:
             error(f'could not apply schema changes: {stderr.decode()}')
             shutdown(1)
         config.db_conn.commit()
+        config._script_was_applied = True
+
+    if not config._script_was_applied:
+        log('nothing to apply')
 
 
 def apply_up_script(script_name: str, revision: int) -> int:
@@ -957,6 +962,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
                 (revision, node) VALUES (%s, %s)
                 """, (revision, node_name))
             config.db_conn.commit()
+            config._script_was_applied = True
         else:
             sql = c_str(f"""
                 INSERT INTO {config.db_schema_table}
@@ -1069,6 +1075,7 @@ def apply_down_script(script_name: str, revision: int) -> int:
                 if rows <= 0:
                     raise ValueError(script_name)
             config.db_conn.commit()
+            config._script_was_applied = True
         else:
             sql = c_str(f"""
                 DELETE FROM {config.db_schema_table}
