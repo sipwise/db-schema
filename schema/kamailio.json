@@ -10293,13 +10293,22 @@
    },
    "triggers" : {
       "cdr_presentity_insert_trig/presentity" : {
-         "ACTION_STATEMENT" : "BEGIN\n    \n\n    DECLARE _call_id VARCHAR(255);\n    \n    SET _call_id = (SELECT TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\\n]+)'), 'CallID:', '')));\n    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN\n        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);\n    END IF;\n\nEND",
+         "ACTION_STATEMENT" : "BEGIN\n    \n\n    DECLARE _call_id VARCHAR(255);\n    \n    SET _call_id = (SELECT REPLACE(REPLACE(TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\\n\\r]+)'), 'CallID:', '')), '\\r', ''), '\\n', ''));\n    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN\n        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);\n    END IF;\n\nEND",
          "ACTION_TIMING" : "AFTER",
          "EVENT_MANIPULATION" : "INSERT",
          "EVENT_OBJECT_SCHEMA" : "kamailio",
          "EVENT_OBJECT_TABLE" : "presentity",
          "TRIGGER_NAME" : "cdr_presentity_insert_trig",
          "key_col" : "cdr_presentity_insert_trig/presentity"
+      },
+      "cdr_presentity_update_trig/presentity" : {
+         "ACTION_STATEMENT" : "BEGIN\n    \n\n    DECLARE _call_id VARCHAR(255);\n    \n    SET _call_id = (SELECT REPLACE(REPLACE(TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\\n\\r]+)'), 'CallID:', '')), '\\r', ''), '\\n', ''));\n    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN\n        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);\n    END IF;\n\nEND",
+         "ACTION_TIMING" : "AFTER",
+         "EVENT_MANIPULATION" : "UPDATE",
+         "EVENT_OBJECT_SCHEMA" : "kamailio",
+         "EVENT_OBJECT_TABLE" : "presentity",
+         "TRIGGER_NAME" : "cdr_presentity_update_trig",
+         "key_col" : "cdr_presentity_update_trig/presentity"
       }
    },
    "views" : {

@@ -1072,7 +1072,7 @@ INSERT INTO `dom_preferences` VALUES (28,'','0','voip.sipwise.local','mobile_pus
 INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_member_mode',0,'ring','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','3b83d5950a37a71c90233d350bb6a1b2','935eee5a7187ec00c312b12c12a83276','d62a26d36989e1d8a966ae46d34339c9','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','3ac1dbaf91a1adbce47ebf8dacfd4c92','d26a746a01c740c74c6b6a10060c76da','c5c999555d23277c91ee30cd1d033fa1','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
@@ -1126,7 +1126,34 @@ BEGIN
 
     DECLARE _call_id VARCHAR(255);
     
-    SET _call_id = (SELECT TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\n]+)'), 'CallID:', '')));
+    SET _call_id = (SELECT REPLACE(REPLACE(TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\n\r]+)'), 'CallID:', '')), '\r', ''), '\n', ''));
+    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN
+        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
+    END IF;
+
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb3 */ ;
+/*!50003 SET character_set_results = utf8mb3 */ ;
+/*!50003 SET collation_connection  = utf8mb3_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER cdr_presentity_update_trig AFTER UPDATE ON kamailio.presentity
+FOR EACH ROW
+BEGIN
+    
+
+    DECLARE _call_id VARCHAR(255);
+    
+    SET _call_id = (SELECT REPLACE(REPLACE(TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\n\r]+)'), 'CallID:', '')), '\r', ''), '\n', ''));
     IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN
         INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
     END IF;
