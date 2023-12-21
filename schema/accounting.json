@@ -2208,6 +2208,54 @@
          "TABLE_NAME" : "cdr_period_costs",
          "key_col" : "cdr_period_costs/reseller_cost"
       },
+      "cdr_presentity/body" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "body",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/body"
+      },
+      "cdr_presentity/call_id" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "call_id",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/call_id"
+      },
+      "cdr_presentity/event" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "event",
+         "COLUMN_TYPE" : "varchar(64)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/event"
+      },
+      "cdr_presentity/received_time" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : null,
+         "COLUMN_NAME" : "received_time",
+         "COLUMN_TYPE" : "decimal(13,3)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/received_time"
+      },
       "cdr_provider/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -5343,6 +5391,54 @@
          "TABLE_NAME" : "cdr_period_costs",
          "key_col" : "cdr_period_costs/contract_id/4"
       },
+      "cdr_presentity/PRIMARY/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "call_id",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/PRIMARY/1"
+      },
+      "cdr_presentity/PRIMARY/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "event",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/PRIMARY/2"
+      },
+      "cdr_presentity/PRIMARY/3" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "received_time",
+         "INDEX_NAME" : "PRIMARY",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 3,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/PRIMARY/3"
+      },
+      "cdr_presentity/cdr_presentity_rtime_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "received_time",
+         "INDEX_NAME" : "cdr_presentity_rtime_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity/cdr_presentity_rtime_idx/1"
+      },
       "cdr_provider/PRIMARY/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "id",
@@ -6732,6 +6828,13 @@
          "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "cdr_period_costs",
          "key_col" : "cdr_period_costs"
+      },
+      "cdr_presentity" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
+         "TABLE_NAME" : "cdr_presentity",
+         "key_col" : "cdr_presentity"
       },
       "cdr_provider" : {
          "CREATE_OPTIONS" : "",
