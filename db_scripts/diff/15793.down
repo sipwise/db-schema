@@ -1,0 +1,20 @@
+USE kamailio;
+
+DROP TRIGGER cdr_presentity_insert_trig;
+DROP TRIGGER cdr_presentity_update_trig;
+
+DELIMITER ;;
+CREATE TRIGGER cdr_presentity_insert_trig AFTER INSERT ON kamailio.presentity
+FOR EACH ROW
+BEGIN
+    -- Extract CallID using regular expression
+
+    DECLARE _call_id VARCHAR(255);
+    
+    SET _call_id = (SELECT TRIM(REGEXP_REPLACE(REGEXP_SUBSTR(NEW.body, 'CallID:([^\n]+)'), 'CallID:', '')));
+    IF LENGTH(_call_id) > 0 AND NEW.event = 'vq-rtcpxr' THEN
+        INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
+    END IF;
+
+END;;
+DELIMITER ;
