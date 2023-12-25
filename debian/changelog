@@ -1,3 +1,10 @@
+ngcp-db-schema (12.1.1.2+0~mr12.1.1.2) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [0f9f714] MT#58629 persist presentity body 12.1
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 25 Dec 2023 06:49:07 +0100
+
 ngcp-db-schema (12.1.1.1+0~mr12.1.1.1) unstable; urgency=medium
 
   * New release.
