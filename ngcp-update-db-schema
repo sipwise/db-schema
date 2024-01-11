@@ -104,6 +104,7 @@ class Config:
     # db options
     db_socket_user: str = 'root'
     db_socket: str = '/run/mysqld/mysqld.sock'
+    db_local_socket: str = '/run/mysqld/mysqld2.sock'
     db_defaults_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
     db_connect_method: str = 'socket'
 
@@ -892,7 +893,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
 
     The script is skipped if:
        - it is 'replicated' and already present in db_schema[revision]
-       - it is 'not_replicaed' and already present in
+       - it is 'not_replicated' and already present in
          db_schema[revision][node_name]
 
     The script and further scripts are stopped if:
@@ -1153,9 +1154,54 @@ def sync_ro_db() -> None:
     sync_dbs_opt = config.sync_db_databases
     ignore_tables_opt = config.sync_db_ignore_tables
 
-    extra_sync_opt = ''
+    db_local_socket = config.db_local_socket
+    db_defaults_conf_file = config.db_defaults_conf_file
+
+    extra_sync_opt = []
     if config.automated:
-        extra_sync_opt = '--local-user=root --set-local-grants'
+        extra_sync_opt += ['--set-local-grants']
+        db_user = ''
+        db_pass = ''
+        try:
+            with open(db_defaults_conf_file) as file:
+                for line in file.readlines():
+                    m = re.match(r'^user\s+=\s+(\S+)', line)
+                    if m:
+                        db_user = m.group(1)
+                    m = re.match(r'^password\s+=\s+(\S+)', line)
+                    if m:
+                        db_pass = m.group(1)
+        except FileNotFoundError as e:
+            error(f'cannot access {db_defaults_conf_file}: {e}')
+            shutdown(1)
+
+        socket_available = os.access(str(db_local_socket), os.R_OK)
+        if not socket_available:
+            error(f'socket {db_local_socket} is not available')
+            shutdown(1)
+
+        if not (db_user and db_pass):
+            error(f'could not fetch credentials from {db_defaults_conf_file}')
+            shutdown(1)
+
+        debug(f'set privileges for user={db_user} socket={db_local_socket}')
+        try:
+            run_cmd_mysql_options = ['-u', 'root', '-S', db_local_socket]
+            _, stderr = run_cmd(
+                '/usr/bin/mysql', *run_cmd_mysql_options,
+                '-e', c_str(f"""
+                    grant all privileges
+                    on *.*
+                    to '{db_user}'@'localhost' identified by '{db_pass}'
+                    with grant option;
+                    flush privileges;
+                """)
+            )
+            if stderr:
+                raise ChildProcessError(stderr.decode())
+        except ChildProcessError as e:
+            error(f'could not set privileges for user={db_user}: {e}')
+            shutdown(1)
 
     master_node_pref = ''
     central_dbhost = config.node_dbconf['central_dbhost']
@@ -1165,7 +1211,7 @@ def sync_ro_db() -> None:
             node_side = 'b'
         master_node_pref = f'{central_dbhost}{node_side}'
     if master_node_pref:
-        extra_sync_opt += f' --master-host {master_node_pref}'
+        extra_sync_opt += ['--master-host', master_node_pref]
 
     local_dbhost = config.node_dbconf['local_dbhost']
     local_dbport = config.node_dbconf['local_dbport']
@@ -1178,7 +1224,7 @@ def sync_ro_db() -> None:
                             '--databases', sync_dbs_opt,
                             '--ignore-tables', ignore_tables_opt,
                             '--ssh-tunnel', '33125',
-                            extra_sync_opt,
+                            *extra_sync_opt,
                             '--local-host', local_dbhost,
                             '--local-port', local_dbport]
     try:
