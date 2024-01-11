@@ -1243,6 +1243,7 @@ def check_active_node() -> None:
 
     Stops the script if the current node is active and the --force
     argument is not provided
+    This function always succeeds on CE platforms
 
     Args:
         None
@@ -1251,7 +1252,13 @@ def check_active_node() -> None:
         None
 
     """
+    ngcp_type = config.node_roles['ngcp_type']
+
+    if ngcp_type == 'spce':
+        return
+
     active = get_node_state()
+
     if active:
         if not config.force:
             log(c_str(f"""
