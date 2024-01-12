@@ -40,6 +40,7 @@ class Config:
     Attributes:
         db_socket_user (str): database user when connected via socket
         db_socket (str): database socket
+        db_ro_socket (str): database socket of R/O instance
         db_defaults_conf_file (str): database defaults conf file to use when
                                      socket is not available
         db_connect_method (str): 'socket' or 'config' (default: socket)
@@ -104,7 +105,7 @@ class Config:
     # db options
     db_socket_user: str = 'root'
     db_socket: str = '/run/mysqld/mysqld.sock'
-    db_local_socket: str = '/run/mysqld/mysqld2.sock'
+    db_ro_socket: str = '/run/mysqld/mysqld2.sock'
     db_defaults_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
     db_connect_method: str = 'socket'
 
@@ -118,6 +119,7 @@ class Config:
     # default config options
     automated: bool = False
     skip_ro_db_sync: bool = False
+    force_ro_db_sync: bool = False
     debug: bool = False
     mode: str = 'up'
     to_revision: int = 0
@@ -129,7 +131,9 @@ class Config:
                                  'db_defaults_conf_file',
                                  'db_scripts_dir',
                                  'debug', 'force',
-                                 'mode', 'skip_ro_db_sync',
+                                 'mode',
+                                 'skip_ro_db_sync',
+                                 'force_ro_db_sync',
                                  'to_revision']
 
     # internal attributes
@@ -433,7 +437,18 @@ def parse_args() -> None:
         allow_abbrev=False,
         argument_default=argparse.SUPPRESS,
     )
+
+    ro_db_sync_group = parser.add_mutually_exclusive_group()
+
     # Define arguments
+    parser.add_argument(
+        '--verbose', '-v',
+        dest='debug',
+        action='store_true',
+        help="""
+        enable verbose output (debug mode).
+        """)
+
     parser.add_argument(
         '--force', '-f',
         dest='force',
@@ -454,14 +469,6 @@ def parse_args() -> None:
         """)
 
     parser.add_argument(
-        '--verbose', '-v',
-        dest='debug',
-        action='store_true',
-        help="""
-        enable verbose output (debug mode).
-        """)
-
-    parser.add_argument(
         '--to-revision', '-t',
         dest='to_revision',
         type=int,
@@ -479,15 +486,6 @@ def parse_args() -> None:
         """)
 
     parser.add_argument(
-        '--skip-ro-db-sync', '-s',
-        dest='skip_ro_db_sync',
-        action='store_true',
-        help="""
-        (Carrier only): skip automatic ngcp-sync-db invokation on proxy
-        nodes if at least one not_replicated scripts was applied.
-        """)
-
-    parser.add_argument(
         '--batch-mode', '-b',
         dest='batch_mode',
         action='store_true',
@@ -495,6 +493,24 @@ def parse_args() -> None:
         (Experimental batch mode)
         Instead of applying scripts and sql statements one by one,
         they are accumulated and applied all at once.
+        """)
+
+    ro_db_sync_group.add_argument(
+        '--skip-ro-db-sync',
+        dest='skip_ro_db_sync',
+        action='store_true',
+        help="""
+        (Carrier only): skip automatic ngcp-sync-db invokation on proxy
+        nodes if at least one not_replicated scripts was applied.
+        """)
+
+    ro_db_sync_group.add_argument(
+        '--force-ro-db-sync',
+        dest='force_ro_db_sync',
+        action='store_true',
+        help="""
+        (Carrier only): force automatic ngcp-sync-db invokation on proxy
+        nodes even if no not_replicated scripts were applied.
         """)
 
     parser.add_argument(
@@ -1127,81 +1143,94 @@ def sync_ro_db() -> None:
         None
 
     """
-    if config.skip_ro_db_sync or not config._not_replicated_was_applied:
+    ngcp_type = config.node_roles['ngcp_type']
+    if ngcp_type != 'carrier':
+        debug('skip sync R/O database on non "carrier" nodes')
+        return
+
+    if 'proxy' not in config.node_roles:
+        debug(c_str("""
+            skip R/O database sync because this node
+            does not have the 'proxy' role.
+        """))
+        return
+
+    if config.skip_ro_db_sync:
+        debug(c_str("""
+            skip sync R/O database preparation as
+            'skip_ro_db_sync' option is provided
+        """))
+        return
+
+    if config.force_ro_db_sync:
+        debug(c_str("""
+            force sync R/O database preparation as
+            'force_ro_db_sync' option is provided
+        """))
+    elif config._not_replicated_was_applied:
+        debug(c_str("""
+            at least one not_replicated script was applied,
+            preparing to sync R/O database.'
+        """))
+    else:
         debug(c_str("""
             skip sync R/O database preparation as
             'not_replicated' scripts were not applied
         """))
         return
 
-    ngcp_type = config.node_roles['ngcp_type']
-    if ngcp_type != 'carrier':
-        debug('skip sync R/O database preparation on non "carrier" nodes')
-        return
-
-    log(c_str("""
-        at least one not_replicated script was applied,
-        preparing to sync R/O database.'
-    """))
-
-    if 'proxy' not in config.node_roles:
-        log(c_str("""
-            skip R/O database sync because this node
-            does not have the 'proxy' role.
-        """))
-        return
-
     sync_dbs_opt = config.sync_db_databases
     ignore_tables_opt = config.sync_db_ignore_tables
 
-    db_local_socket = config.db_local_socket
+    db_ro_socket = config.db_ro_socket
     db_defaults_conf_file = config.db_defaults_conf_file
 
     extra_sync_opt = []
     if config.automated:
         extra_sync_opt += ['--set-local-grants']
-        db_user = ''
-        db_pass = ''
-        try:
-            with open(db_defaults_conf_file) as file:
-                for line in file.readlines():
-                    m = re.match(r'^user\s+=\s+(\S+)', line)
-                    if m:
-                        db_user = m.group(1)
-                    m = re.match(r'^password\s+=\s+(\S+)', line)
-                    if m:
-                        db_pass = m.group(1)
-        except FileNotFoundError as e:
-            error(f'cannot access {db_defaults_conf_file}: {e}')
-            shutdown(1)
 
-        socket_available = os.access(str(db_local_socket), os.R_OK)
-        if not socket_available:
-            error(f'socket {db_local_socket} is not available')
-            shutdown(1)
+    db_user = ''
+    db_pass = ''
+    try:
+        with open(db_defaults_conf_file) as file:
+            for line in file.readlines():
+                m = re.match(r'^user\s+=\s+(\S+)', line)
+                if m:
+                    db_user = m.group(1)
+                m = re.match(r'^password\s+=\s+(\S+)', line)
+                if m:
+                    db_pass = m.group(1)
+    except FileNotFoundError as e:
+        error(f'cannot access {db_defaults_conf_file}: {e}')
+        shutdown(1)
 
-        if not (db_user and db_pass):
-            error(f'could not fetch credentials from {db_defaults_conf_file}')
-            shutdown(1)
+    socket_available = os.access(str(db_ro_socket), os.R_OK)
+    if not socket_available:
+        error(f'socket {db_ro_socket} is not available')
+        shutdown(1)
 
-        debug(f'set privileges for user={db_user} socket={db_local_socket}')
-        try:
-            run_cmd_mysql_options = ['-u', 'root', '-S', db_local_socket]
-            _, stderr = run_cmd(
-                '/usr/bin/mysql', *run_cmd_mysql_options,
-                '-e', c_str(f"""
-                    grant all privileges
-                    on *.*
-                    to '{db_user}'@'localhost' identified by '{db_pass}'
-                    with grant option;
-                    flush privileges;
-                """)
-            )
-            if stderr:
-                raise ChildProcessError(stderr.decode())
-        except ChildProcessError as e:
-            error(f'could not set privileges for user={db_user}: {e}')
-            shutdown(1)
+    if not (db_user and db_pass):
+        error(f'could not fetch credentials from {db_defaults_conf_file}')
+        shutdown(1)
+
+    debug(f'set privileges for user={db_user} socket={db_ro_socket}')
+    try:
+        run_cmd_mysql_options = ['-u', 'root', '-S', db_ro_socket]
+        _, stderr = run_cmd(
+            '/usr/bin/mysql', *run_cmd_mysql_options,
+            '-e', c_str(f"""
+                grant all privileges
+                on *.*
+                to '{db_user}'@'localhost' identified by '{db_pass}'
+                with grant option;
+                flush privileges;
+            """)
+        )
+        if stderr:
+            raise ChildProcessError(stderr.decode())
+    except ChildProcessError as e:
+        error(f'could not set privileges for user={db_user}: {e}')
+        shutdown(1)
 
     master_node_pref = ''
     central_dbhost = config.node_dbconf['central_dbhost']
@@ -1229,6 +1258,7 @@ def sync_ro_db() -> None:
                             '--local-port', local_dbport]
     try:
         debug(f'run_cmd as: {cmd}')
+        log('running ngcp-sync-db...')
         stdout, stderr = run_cmd(*tuple(cmd))
         log(stdout.decode())
         if stderr:
