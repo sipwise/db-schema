@@ -1,3 +1,39 @@
+ngcp-db-schema (12.2.1.0+0~mr12.2.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [b084c5e] MT#58395 new python based ngcp-update-db-schema script
+  * [2713479] MT#58395 add MYSQL_SOCKET env parsing, add --db-socket opt
+  * [fd55aeb] MT#58395 improve db_connect() and apply mysql options to run_cmd()
+  * [bad6f60] MT#58395 do not start mariadb with config connect method
+  * [dfb3a8b] MT#58395 reconnect when pymysql connection is closed
+  * [7928836] MT#58395 add --db-scripts-dir command line option
+  * [c09976d] MT#58395 include db_host and db_port into mysql cmd opts
+  * [05be634] MT#58395 increase session timeouts
+  * [b00218a] MT#58395 add 'nothing to apply' output
+  * [9318793] MT#59057 improve sync_ro_db logic
+  * [4b8d30c] MT#59132 disable active node checks on CE platforms
+  * [c3ea0bd] MT#59137 add force ro db sync option
+  * [a4a2fe6] MT#58395 fix node state check
+
+  [ Mykola Malkov ]
+  * [84e2286] MT#58395 Use new keys of ngcp-update-db-schema
+  * [473081e] MT#58395 Add usage of --db-scripts-dir option
+
+  [ Daniel Grotti ]
+  * [554e3e3] MT#58683 Set flags 8 in dispatcher when peer is probed
+
+  [ Sipwise Jenkins Builder ]
+  * [b0ddf92] MT#58395 Update schema files
+
+  [ Rene Krenn ]
+  * [3c332fc] MT#58629 persist presentity body
+  * [04f1cff] MT#58629 persist presentity body updates
+
+  [ Donat Zenichev ]
+  * [84fab7c] MT#57609 Add tables required by the FS mod_callcenter
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Jan 2024 14:46:09 +0100
+
 ngcp-db-schema (12.2.0.0+0~mr12.2.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
