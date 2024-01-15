@@ -687,6 +687,7 @@ def get_node_state() -> str:
     stdout, stderr = run_cmd(
         '/usr/sbin/ngcp-check-active', '-v', 'root'
     )
+    node_state = 'unknown'
     if stderr:
         node_state = 'unknown'
     else:
@@ -1287,17 +1288,17 @@ def check_active_node() -> None:
     if ngcp_type == 'spce':
         return
 
-    active = get_node_state()
+    node_state = get_node_state()
 
-    if active:
+    if node_state != 'standby':
         if not config.force:
             log(c_str(f"""
-                stopping because the current node {config.node_name} is active.
+                stopping because node {config.node_name} state is {node_state}
             """))
             shutdown(1)
         else:
             debug(c_str(
-                f"""current node {config.node_name} is active
+                f"""current node {config.node_name} state is {node_state}
                 but force mode is enabled."""
             ))
 
