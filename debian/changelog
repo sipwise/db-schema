@@ -1,3 +1,10 @@
+ngcp-db-schema (12.0.1.5+0~mr12.0.1.5) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [6eb4584] MT#58709 address update_sound_set_handle_parents() sp deadlocks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 24 Jan 2024 19:02:05 +0100
+
 ngcp-db-schema (12.0.1.4+0~mr12.0.1.4) unstable; urgency=medium
 
   * [a56bbdd] MT#58768 fix voip_allowed_ip_groups.ipnet column, update schema
