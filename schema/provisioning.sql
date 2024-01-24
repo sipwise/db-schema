@@ -5123,7 +5123,7 @@ CREATE TABLE `voip_sound_files` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_create_trig AFTER UPDATE ON voip_sound_files
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER voip_sound_files_create_trig AFTER INSERT ON voip_sound_files
 FOR each ROW BEGIN
 
     CALL update_sound_set_handle_parents(NEW.set_id, NEW.handle_id);
@@ -5384,9 +5384,9 @@ CREATE TABLE `voip_sound_set_handle_parents` (
   `parent_set_id` int(11) DEFAULT NULL,
   `parent_chain` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `set_handle_id_idx` (`set_id`,`handle_id`),
   KEY `handle_id_idx` (`handle_id`),
   KEY `parent_set_id_idx` (`parent_set_id`),
+  KEY `set_handle_id_idx` (`set_id`,`handle_id`),
   CONSTRAINT `vshh_handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5706,7 +5706,7 @@ CREATE TABLE `voip_subscribers` (
   CONSTRAINT `voip_subscribers_ibfk_1` FOREIGN KEY (`domain_id`) REFERENCES `voip_domains` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','d96332307271ea0b6191f6cc01f3b008',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','377117bf69dc1216c2f76c55706576df',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
