@@ -7,30 +7,11 @@ Homepage: https://www.sipwise.com/
 Rules-Requires-Root: no
 Build-Depends:
  debhelper-compat (= 13),
- dh-exec,
- dh-python,
- flake8,
- isort,
- mypy,
- python3-all,
- python3-flake8-blind-except,
- python3-flake8-builtins,
- python3-flake8-class-newline,
- python3-flake8-comprehensions,
- python3-flake8-docstrings,
- python3-flake8-polyfill,
- python3-flake8-quotes,
- python3-pep8-naming,
- python3-pymysql,
- python3-setuptools,
- python3-typeshed,
 
 Package: ngcp-db-schema
 Architecture: all
 Depends:
  ngcp-system-tools-ce | ngcp-system-tools,
- python3-pymysql,
- python3-yaml,
  ${misc:Depends},
 Description: database schema for Sipwise's NGCP platform
  This package provides the database schema for Sipwise's NGCP
