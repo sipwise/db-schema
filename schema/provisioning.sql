@@ -1985,6 +1985,163 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_sound_set_handle_parents`(IN u_sound_set_id INT, IN u_handle_id INT)
 BEGIN
+    
+    DECLARE done INT DEFAULT FALSE;
+
+
+    DECLARE x_set_id INT DEFAULT 0;
+    DECLARE x_handle_id INT DEFAULT 0;
+    DECLARE x_parent_set_id INT DEFAULT NULL;
+    DECLARE x_parent_chain VARCHAR(255) DEFAULT '';
+
+
+    
+    DECLARE x_sound_set_handle CURSOR FOR
+        WITH RECURSIVE cte as (
+            SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain,
+                       CAST(0 as unsigned) AS affected
+              FROM (SELECT s.*, h.id as handle_id
+                      FROM (voip_sound_sets s, voip_sound_handles h)
+                   ) AS v
+              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+             WHERE v.id = (
+                WITH RECURSIVE cte as (
+                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
+                      FROM voip_sound_sets s
+                     WHERE id = u_sound_set_id
+                    UNION
+                    SELECT s.id, s.parent_id, iter+1 as iter
+                      FROM voip_sound_sets s
+                      JOIN cte ON cte.parent_id = s.id
+                )
+                SELECT id
+                  FROM cte
+                 WHERE iter = (SELECT max(iter) from cte)
+             )
+               AND v.handle_id = u_handle_id
+             UNION
+            SELECT v.id AS set_id, v.handle_id,
+                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                   CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain,
+                   IF(v.id = u_sound_set_id OR v.parent_id = u_sound_set_id OR affected = 1, 1, 0)
+              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                    FROM (voip_sound_sets s, voip_sound_handles h)
+                   ) AS v
+              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as parent_set_id,
+               parent_chain
+          FROM cte
+         WHERE set_id = u_sound_set_id OR affected = 1;
+
+
+    
+    DECLARE x_sound_set CURSOR FOR
+        WITH RECURSIVE cte as (
+            SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain,
+                       CAST(0 as unsigned) AS affected
+              FROM (SELECT s.*, h.id as handle_id
+                      FROM (voip_sound_sets s, voip_sound_handles h)
+                   ) AS v
+              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+             WHERE v.id = (
+                WITH RECURSIVE cte as (
+                    SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
+                      FROM voip_sound_sets s
+                     WHERE id = u_sound_set_id
+                    UNION
+                    SELECT s.id, s.parent_id, iter+1 as iter
+                      FROM voip_sound_sets s
+                      JOIN cte ON cte.parent_id = s.id
+                )
+                SELECT id
+                  FROM cte
+                 WHERE iter = (SELECT max(iter) from cte)
+             )
+             UNION
+            SELECT v.id AS set_id, v.handle_id,
+                   IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                   CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain,
+                   IF(v.id = u_sound_set_id OR v.parent_id = u_sound_set_id OR affected = 1, 1, 0)
+              FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                    FROM (voip_sound_sets s, voip_sound_handles h)
+                   ) AS v
+              LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+              JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as parent_set_id,
+               parent_chain
+          FROM cte
+         WHERE set_id = u_sound_set_id OR affected = 1;
+
+
+
+    
+    DECLARE x_handle CURSOR FOR
+        WITH RECURSIVE cte as (
+                SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain
+                  FROM (SELECT s.*, h.id as handle_id
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                 WHERE v.parent_id IS NULL
+                   AND v.handle_id = u_handle_id
+                 UNION
+                SELECT v.id AS set_id, v.handle_id,
+                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                       CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain
+                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as parent_set_id,
+               parent_chain
+          FROM cte;
+
+
+    
+    DECLARE x CURSOR FOR
+        WITH RECURSIVE cte as (
+                SELECT v.id AS set_id, v.handle_id,
+                       v.id AS data_set_id,
+                       CAST('' AS CHAR(4096)) AS parent_chain
+                  FROM (SELECT s.*, h.id as handle_id
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                 WHERE v.parent_id IS NULL
+                 UNION
+                SELECT v.id AS set_id, v.handle_id,
+                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
+                       CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain
+                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
+                        FROM (voip_sound_sets s, voip_sound_handles h)
+                       ) AS v
+                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
+                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
+        )
+        SELECT set_id, handle_id,
+               IF(data_set_id = set_id, NULL, data_set_id) as parent_set_id,
+               parent_chain
+          FROM cte;
+
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=TRUE;
+
+
+    
     IF u_sound_set_id IS NOT NULL THEN
         DELETE p FROM voip_sound_set_handle_parents p
          WHERE set_id = u_sound_set_id
@@ -2009,47 +2166,18 @@ BEGIN
              )
                AND handle_id = u_handle_id;
 
-            INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
-            WITH RECURSIVE cte as (
-                SELECT v.id AS set_id, v.handle_id,
-                           v.id AS data_set_id,
-                           CAST('' AS CHAR(4096)) AS parent_chain,
-                           CAST(0 as unsigned) AS affected
-                  FROM (SELECT s.*, h.id as handle_id
-                          FROM (voip_sound_sets s, voip_sound_handles h)
-                       ) AS v
-                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                 WHERE v.id = (
-                    WITH RECURSIVE cte as (
-                        SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
-                          FROM voip_sound_sets s
-                         WHERE id = u_sound_set_id
-                        UNION
-                        SELECT s.id, s.parent_id, iter+1 as iter
-                          FROM voip_sound_sets s
-                          JOIN cte ON cte.parent_id = s.id
-                    )
-                    SELECT id
-                      FROM cte
-                     WHERE iter = (SELECT max(iter) from cte)
-                 )
-                   AND v.handle_id = u_handle_id
-                 UNION
-                SELECT v.id AS set_id, v.handle_id,
-                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
-                       CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain,
-                       IF(v.id = u_sound_set_id OR v.parent_id = u_sound_set_id OR affected = 1, 1, 0)
-                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                        FROM (voip_sound_sets s, voip_sound_handles h)
-                       ) AS v
-                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
-            )
-            SELECT set_id, handle_id,
-                   IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
-                   parent_chain
-              FROM cte
-             WHERE set_id = u_sound_set_id OR affected = 1;
+            OPEN x_sound_set_handle;
+            iter: LOOP
+                FETCH x_sound_set_handle INTO x_set_id, x_handle_id, x_parent_set_id, x_parent_chain;
+                IF done THEN
+                    LEAVE iter;
+                END IF;
+                INSERT INTO voip_sound_set_handle_parents
+                    (set_id, handle_id, parent_set_id, parent_chain)
+                VALUES
+                    (x_set_id, x_handle_id, x_parent_set_id, x_parent_chain);
+            END LOOP;
+            CLOSE x_sound_set_handle;
         ELSE
             DELETE p FROM voip_sound_set_handle_parents p
              WHERE set_id IN (
@@ -2066,103 +2194,50 @@ BEGIN
                   FROM cte
              );
 
-            INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
-            WITH RECURSIVE cte as (
-                SELECT v.id AS set_id, v.handle_id,
-                           v.id AS data_set_id,
-                           CAST('' AS CHAR(4096)) AS parent_chain,
-                           CAST(0 as unsigned) AS affected
-                  FROM (SELECT s.*, h.id as handle_id
-                          FROM (voip_sound_sets s, voip_sound_handles h)
-                       ) AS v
-                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                 WHERE v.id = (
-                    WITH RECURSIVE cte as (
-                        SELECT s.id, s.parent_id, CAST(0 as unsigned) as iter
-                          FROM voip_sound_sets s
-                         WHERE id = u_sound_set_id
-                        UNION
-                        SELECT s.id, s.parent_id, iter+1 as iter
-                          FROM voip_sound_sets s
-                          JOIN cte ON cte.parent_id = s.id
-                    )
-                    SELECT id
-                      FROM cte
-                     WHERE iter = (SELECT max(iter) from cte)
-                 )
-                 UNION
-                SELECT v.id AS set_id, v.handle_id,
-                       IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
-                       CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain,
-                       IF(v.id = u_sound_set_id OR v.parent_id = u_sound_set_id OR affected = 1, 1, 0)
-                  FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                        FROM (voip_sound_sets s, voip_sound_handles h)
-                       ) AS v
-                  LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                  JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
-            )
-            SELECT set_id, handle_id,
-                   IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
-                   parent_chain
-              FROM cte
-             WHERE set_id = u_sound_set_id OR affected = 1;
+            OPEN x_sound_set;
+            iter: LOOP
+                FETCH x_sound_set INTO x_set_id, x_handle_id, x_parent_set_id, x_parent_chain;
+                IF done THEN
+                    LEAVE iter;
+                END IF;
+                INSERT INTO voip_sound_set_handle_parents
+                    (set_id, handle_id, parent_set_id, parent_chain)
+                VALUES
+                    (x_set_id, x_handle_id, x_parent_set_id, x_parent_chain);
+            END LOOP;
+            CLOSE x_sound_set;
         END IF;
     ELSE
         IF u_handle_id IS NOT NULL THEN
             DELETE FROM voip_sound_set_handle_parents WHERE handle_id = u_handle_id;
 
-            INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
-            WITH RECURSIVE cte as (
-                    SELECT v.id AS set_id, v.handle_id,
-                           v.id AS data_set_id,
-                           CAST('' AS CHAR(4096)) AS parent_chain
-                      FROM (SELECT s.*, h.id as handle_id
-                            FROM (voip_sound_sets s, voip_sound_handles h)
-                           ) AS v
-                      LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                     WHERE v.parent_id IS NULL
-                       AND v.handle_id = u_handle_id
-                     UNION
-                    SELECT v.id AS set_id, v.handle_id,
-                           IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
-                           CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain
-                      FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                            FROM (voip_sound_sets s, voip_sound_handles h)
-                           ) AS v
-                      LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                      JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
-            )
-            SELECT set_id, handle_id,
-                   IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
-                   parent_chain
-              FROM cte;
+            OPEN x_handle;
+            iter: LOOP
+                FETCH x_handle INTO x_set_id, x_handle_id, x_parent_set_id, x_parent_chain;
+                IF done THEN
+                    LEAVE iter;
+                END IF;
+                INSERT INTO voip_sound_set_handle_parents
+                    (set_id, handle_id, parent_set_id, parent_chain)
+                VALUES
+                    (x_set_id, x_handle_id, x_parent_set_id, x_parent_chain);
+            END LOOP;
+            CLOSE x_handle;
         ELSE
             DELETE FROM voip_sound_set_handle_parents;
 
-            INSERT INTO voip_sound_set_handle_parents(set_id, handle_id, parent_set_id, parent_chain)
-            WITH RECURSIVE cte as (
-                    SELECT v.id AS set_id, v.handle_id,
-                           v.id AS data_set_id,
-                           CAST('' AS CHAR(4096)) AS parent_chain
-                      FROM (SELECT s.*, h.id as handle_id
-                            FROM (voip_sound_sets s, voip_sound_handles h)
-                           ) AS v
-                      LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                     WHERE v.parent_id IS NULL
-                     UNION
-                    SELECT v.id AS set_id, v.handle_id,
-                           IF(f.use_parent = 0, v.id, cte.data_set_id) AS data_set_id,
-                           CONCAT(v.parent_id, IF(LENGTH(cte.parent_chain) > 1, ':', ''), cte.parent_chain) as parent_chain
-                      FROM (SELECT s.*, h.id as handle_id, h.name as handle_name
-                            FROM (voip_sound_sets s, voip_sound_handles h)
-                           ) AS v
-                      LEFT JOIN voip_sound_files f ON f.handle_id = v.handle_id AND f.set_id = v.id
-                      JOIN cte ON cte.set_id = v.parent_id AND cte.handle_id = v.handle_id
-            )
-            SELECT set_id, handle_id,
-                   IF(data_set_id = set_id, NULL, data_set_id) as data_set_id,
-                   parent_chain
-              FROM cte;
+            OPEN x;
+            iter: LOOP
+                FETCH x INTO x_set_id, x_handle_id, x_parent_set_id, x_parent_chain;
+                IF done THEN
+                    LEAVE iter;
+                END IF;
+                INSERT INTO voip_sound_set_handle_parents
+                    (set_id, handle_id, parent_set_id, parent_chain)
+                VALUES
+                    (x_set_id, x_handle_id, x_parent_set_id, x_parent_chain);
+            END LOOP;
+            CLOSE x;
         END IF;
     END IF;
 
@@ -4401,7 +4476,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
-INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','26d1f10fb754a3bb642439f12f839bc2',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
+INSERT INTO `voip_subscribers` VALUES (3,'no_such_number',2,'9bcb88b6-541a-43da-8fdc-816f5557ff93','300fe0133470abbd7fbe99ba24f85aa9',0,NULL,NULL,NULL,0,0,'none',NULL,NULL,NULL,NULL,NOW(),NOW());
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack',NOW());
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never',NOW());
