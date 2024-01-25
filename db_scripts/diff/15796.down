@@ -1,0 +1,14 @@
+USE provisioning;
+SET autocommit = 0;
+
+SELECT id INTO @vp_id FROM voip_preferences WHERE attribute = 'record_call';
+
+UPDATE voip_preferences SET data_type = 'boolean' WHERE id = @vp_id;
+
+DELETE FROM voip_preferences_enum where preference_id = @vp_id;
+
+UPDATE voip_usr_preferences SET value = 0 WHERE attribute_id = @vp_id and value > 1;
+UPDATE voip_dom_preferences SET value = 0 WHERE attribute_id = @vp_id and value > 1;
+UPDATE voip_prof_preferences SET value = 0 WHERE attribute_id = @vp_id and value > 1;
+
+COMMIT;

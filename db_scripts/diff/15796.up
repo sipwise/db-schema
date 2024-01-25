@@ -1,0 +1,119 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vp_id FROM voip_preferences
+  WHERE attribute = 'record_call';
+
+UPDATE voip_preferences
+  SET data_type = 'enum'
+  WHERE id = @vp_id;
+
+-- Off (never) is the default for domain and peer
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "Off (never)",
+value = 0,
+usr_pref = 0,
+prof_pref = 0,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 1,
+reseller_pref = NULL;
+
+-- Off (never) is the optional for subscriber and subscriber profile
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "Off (never)",
+value = 0,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 0,
+reseller_pref = NULL;
+
+-- use domain default is the default for subscriber and subscriber profile
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "use domain default",
+value = NULL,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 1,
+reseller_pref = NULL;
+
+-- On (always) is the optional for all
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "On (always)",
+value = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 0,
+reseller_pref = NULL;
+
+-- On demand using VSC (initially disabled) is the optional for all but peer
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "On demand using VSC (initially disabled)",
+value = 2,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 0,
+reseller_pref = NULL;
+
+-- On demand using VSC (initially enabled) is the optional for all but peer
+INSERT INTO voip_preferences_enum
+  SET
+preference_id =  @vp_id,
+label = "On demand using VSC (initially enabled)",
+value = 3,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+default_val = 0,
+reseller_pref = NULL;
+
+COMMIT;
