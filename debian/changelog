@@ -1,3 +1,9 @@
+ngcp-db-schema (11.5.1.8+0~mr11.5.1.8) unstable; urgency=medium
+
+  * [87aeba0] MT#58709 Update schema files
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 31 Jan 2024 10:27:22 +0100
+
 ngcp-db-schema (11.5.1.7+0~mr11.5.1.7) unstable; urgency=medium
 
   [ Kirill Solomko ]
