@@ -175,7 +175,7 @@ ALTER TABLE `address` MODIFY `tag` VARCHAR(64) CHARACTER SET latin1;
 ALTER TABLE `version` DEFAULT CHARACTER SET latin1;
 ALTER TABLE `version` MODIFY `table_name` varchar(32) CHARACTER SET latin1 NOT NULL;
 
-SET FOREIGN_KEY_CHECKS=0;
+ALTER TABLE `voicemail_spool` DROP FOREIGN KEY `v_s_mailboxuser_ref`;
 
 ALTER TABLE `voicemail_users` DEFAULT CHARACTER SET latin1;
 ALTER TABLE `voicemail_users` MODIFY `customer_id` char(36) CHARACTER SET latin1 NOT NULL DEFAULT '';
@@ -211,7 +211,7 @@ ALTER TABLE `voicemail_spool` MODIFY `duration` varchar(16) CHARACTER SET latin1
 ALTER TABLE `voicemail_spool` MODIFY `mailboxuser` varchar(255) CHARACTER SET latin1 DEFAULT '';
 ALTER TABLE `voicemail_spool` MODIFY `mailboxcontext` varchar(63) CHARACTER SET latin1 DEFAULT '';
 
-SET FOREIGN_KEY_CHECKS=1;
+ALTER TABLE `voicemail_spool` ADD CONSTRAINT `v_s_mailboxuser_ref` FOREIGN KEY (`mailboxuser`) REFERENCES `voicemail_users` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `fax_preferences` DEFAULT CHARACTER SET latin1;
 ALTER TABLE `fax_preferences` MODIFY `password` varchar(64) CHARACTER SET latin1 default NULL;
