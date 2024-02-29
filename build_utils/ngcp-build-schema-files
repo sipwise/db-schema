@@ -99,6 +99,7 @@ schemes+=("provisioning")
 schemes+=("sipstats")
 schemes+=("stats")
 schemes+=("syslog")
+schemes+=("freeswitch")
 
 for schema in "${schemes[@]}"; do
   echo "Running ngcp-dump-json.pl for schema '${schema}'..."
