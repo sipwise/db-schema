@@ -61,8 +61,9 @@ class Config:
             os.environ (backward compatibility) or from the args
         debug (bool): debug/verbose mode
         mode (str): 'up' mode or 'down' mode
-        to_revision (int): if the script must apply/remove up to
-            (and including) a certain revision
+        to_revision (int): processes revisions depending on the mode:
+            - mode=up: applies all revisions including to_revision
+            - mode=down: removes all revisions excluding to_revision
         force (bool): run this script on the active node
         batch_mode (bool): instead of applying scripts one by one, collects
             them all and builds a single sql file that is applied in one go
@@ -473,7 +474,10 @@ def parse_args() -> None:
         dest='to_revision',
         type=int,
         help="""
-        max revision to upgrade/downgrade the schema (including the revision).
+        max revision to upgrade/downgrade the schema depending on the mode:
+
+        - mode=up: applies all revisions including --to-revision
+        - mode=down: removes all revisions excluding --to-revision
         """)
 
     parser.add_argument(
@@ -1015,8 +1019,7 @@ def apply_down_script(script_name: str, revision: int) -> int:
          db_schema[revision][node_name]
 
     The script and further scripts are stopped if:
-       - config.to_revision > 0 and the current revision number
-         is lesser than config.to_revision
+       - config.to_revision > 0 and to_revision <= config.to_revision
 
     Calls run_cmd() to apply the script file using 'mysql' consoel
 
@@ -1046,9 +1049,9 @@ def apply_down_script(script_name: str, revision: int) -> int:
     if revision in db_schema:
         node_in_db_schema = node_name in db_schema[revision]
 
-    if config.to_revision > 0 and revision < config.to_revision:
+    if config.to_revision > 0 and revision <= config.to_revision:
         log(f'stopping as next revision {revision} ' +
-            f'is lesser than {config.to_revision}')
+            f'is lesser or equal to {config.to_revision}')
         return 0
 
     if revision not in db_schema or \
