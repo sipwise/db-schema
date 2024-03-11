@@ -10526,6 +10526,18 @@
          "TABLE_NAME" : "usr_preferences",
          "key_col" : "usr_preferences/uda_idx/3"
       },
+      "usr_preferences/uda_idx/4" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "value",
+         "INDEX_NAME" : "uda_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 4,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "usr_preferences",
+         "key_col" : "usr_preferences/uda_idx/4"
+      },
       "version/table_name_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "table_name",

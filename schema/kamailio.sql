@@ -996,8 +996,8 @@ CREATE TABLE `usr_preferences` (
   `last_modified` datetime NOT NULL DEFAULT '1900-01-01 00:00:01',
   PRIMARY KEY (`id`),
   KEY `ua_idx` (`uuid`,`attribute`),
-  KEY `uda_idx` (`username`,`domain`,`attribute`),
-  KEY `av_idx` (`attribute`,`value`)
+  KEY `av_idx` (`attribute`,`value`),
+  KEY `uda_idx` (`username`,`domain`,`attribute`,`value`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
@@ -1161,7 +1161,7 @@ INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_me
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (31,'','0','voip.sipwise.local','record_call',0,'0','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','4796016cf116857b55ba18e8955f2a1b','a2b00362983e90895f053b5b0016460f','f8c0c2ca1f2df0831dbc0b09dd201b10','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','91720981d0945a7abdce4d55cbf94f4f','b90a1e9e46c63a54bd0a10372f4b0246','04bd4b7b3ac5b3aa82f7f89041654ba4','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');

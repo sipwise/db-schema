@@ -1,0 +1,6 @@
+USE kamailio;
+
+ALTER TABLE usr_preferences
+    DROP KEY `uda_idx`,
+     ADD KEY `uda_idx` (`username`,`domain`,`attribute`);
+
