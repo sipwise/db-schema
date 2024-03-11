@@ -1,0 +1,6 @@
+USE ngcp;
+
+ALTER TABLE db_schema
+    ADD COLUMN `release` varchar(32),
+    ADD KEY release_idx(`release`);
+

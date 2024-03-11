@@ -48,6 +48,18 @@
          "TABLE_NAME" : "db_schema",
          "key_col" : "db_schema/node"
       },
+      "db_schema/release" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "release",
+         "COLUMN_TYPE" : "varchar(32)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/release"
+      },
       "db_schema/revision" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -194,6 +206,18 @@
          "SUB_PART" : null,
          "TABLE_NAME" : "db_schema",
          "key_col" : "db_schema/PRIMARY/1"
+      },
+      "db_schema/release_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "release",
+         "INDEX_NAME" : "release_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/release_idx/1"
       },
       "db_schema/rev_idx/1" : {
          "COLLATION" : "A",

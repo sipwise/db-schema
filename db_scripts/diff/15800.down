@@ -1,0 +1,3 @@
+USE ngcp;
+
+ALTER TABLE db_schema DROP COLUMN `release`;
