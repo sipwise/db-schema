@@ -1,3 +1,24 @@
+ngcp-db-schema (12.3.1.0+0~mr12.3.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [4017d35] MT#58709 address update_sound_set_handle_parents() sp deadlocks
+  * [25257f1] MT#59386 address foreign key handling in 6425.up/down
+  * [66174a6] MT#59348 peering server create trigger fix preferences
+  * [18d29c0] MT#59543 ngcp-update-db-schema adjust down mode and to-revision
+  * [a3ee3ac] MT#59616 update kamailio.usr_preferences uda_idx
+  * [b8194e4] MT#59614 add ngcp.db_schema release column
+
+  [ Richard Fuchs ]
+  * [66cc017] MT#59038 rtpengine: add VSC options
+
+  [ Donat Zenichev ]
+  * [60f9554] MT#59482 Intoduce new database `freeswitch`
+
+  [ Mykola Malkov ]
+  * [1b51bfd] MT#59482 Add freeswitch schema to the list
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 15 Mar 2024 08:47:12 +0100
+
 ngcp-db-schema (12.3.0.0+0~mr12.3.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
