@@ -1,0 +1,18 @@
+USE provisioning;
+SET autocommit=0;
+
+
+SELECT id INTO @vp_pai_id FROM voip_preferences
+    WHERE attribute = 'outbound_pai_user';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id=@vp_pai_id and value = 'rcv_display/np_display';
+
+SELECT id INTO @vp_from_id FROM voip_preferences
+    WHERE attribute = 'outbound_from_user';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id=@vp_from_id and value = 'rcv_display/np_display';
+
+
+COMMIT;
