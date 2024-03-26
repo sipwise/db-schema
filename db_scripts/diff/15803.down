@@ -1,0 +1,17 @@
+use provisioning;
+
+ALTER TABLE voip_cf_mappings DROP COLUMN `use_redirection`;
+
+ALTER VIEW v_subscriber_cfs AS
+SELECT cfm.id, vs.uuid, cfm.type cf_type, cfm.subscriber_id, cfss.name source_name, cfss.mode source_mode, cfss.is_regex source_is_regex, cfs.source, cfds.name destination_name, cfd.destination, cfd.priority, cfd.timeout, cfd.announcement_id, cfbs.name bnumber_name, cfbs.mode bnumber_mode, cfbs.is_regex bnumber_is_regex, cfb.bnumber, cfts.name time_name, cft.year, cft.month, cft.mday, cft.wday, cft.hour, cft.minute
+  FROM voip_cf_mappings cfm
+  RIGHT JOIN voip_cf_destination_sets cfds ON cfm.destination_set_id = cfds.id
+  RIGHT JOIN voip_cf_destinations cfd ON cfd.destination_set_id = cfds.id
+  LEFT JOIN voip_cf_source_sets cfss ON cfm.source_set_id = cfss.id
+  LEFT JOIN voip_cf_sources cfs ON cfs.source_set_id = cfss.id
+  LEFT JOIN voip_cf_bnumber_sets cfbs ON cfm.bnumber_set_id = cfbs.id
+  LEFT JOIN voip_cf_bnumbers cfb ON cfb.bnumber_set_id = cfbs.id
+  LEFT JOIN voip_cf_time_sets cfts ON cfm.time_set_id = cfts.id
+  LEFT JOIN voip_cf_periods cft ON cft.time_set_id = cfts.id
+  LEFT JOIN voip_subscribers vs ON vs.id = cfm.subscriber_id
+WHERE cfm.enabled = 1;

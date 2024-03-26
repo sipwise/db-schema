@@ -2196,6 +2196,18 @@
          "TABLE_NAME" : "voip_cf_mappings",
          "key_col" : "voip_cf_mappings/type"
       },
+      "voip_cf_mappings/use_redirection" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "use_redirection",
+         "COLUMN_TYPE" : "tinyint(1) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 9,
+         "TABLE_NAME" : "voip_cf_mappings",
+         "key_col" : "voip_cf_mappings/use_redirection"
+      },
       "voip_cf_periods/hour" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
@@ -14352,7 +14364,7 @@
          "key_col" : "v_sound_set_files"
       },
       "v_subscriber_cfs" : {
-         "VIEW_DEFINITION" : "select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute` from ((((((((`provisioning`.`voip_cf_destinations` `cfd` left join (`provisioning`.`voip_cf_destination_sets` `cfds` left join `provisioning`.`voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `provisioning`.`voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1",
+         "VIEW_DEFINITION" : "select `cfm`.`id` AS `id`,`vs`.`uuid` AS `uuid`,`cfm`.`type` AS `cf_type`,`cfm`.`subscriber_id` AS `subscriber_id`,`cfss`.`name` AS `source_name`,`cfss`.`mode` AS `source_mode`,`cfss`.`is_regex` AS `source_is_regex`,`cfs`.`source` AS `source`,`cfds`.`name` AS `destination_name`,`cfd`.`destination` AS `destination`,`cfd`.`priority` AS `priority`,`cfd`.`timeout` AS `timeout`,`cfd`.`announcement_id` AS `announcement_id`,`cfbs`.`name` AS `bnumber_name`,`cfbs`.`mode` AS `bnumber_mode`,`cfbs`.`is_regex` AS `bnumber_is_regex`,`cfb`.`bnumber` AS `bnumber`,`cfts`.`name` AS `time_name`,`cft`.`year` AS `year`,`cft`.`month` AS `month`,`cft`.`mday` AS `mday`,`cft`.`wday` AS `wday`,`cft`.`hour` AS `hour`,`cft`.`minute` AS `minute`,`cfm`.`use_redirection` AS `use_redirection` from ((((((((`provisioning`.`voip_cf_destinations` `cfd` left join (`provisioning`.`voip_cf_destination_sets` `cfds` left join `provisioning`.`voip_cf_mappings` `cfm` on(`cfm`.`destination_set_id` = `cfds`.`id`)) on(`cfd`.`destination_set_id` = `cfds`.`id`)) left join `provisioning`.`voip_cf_source_sets` `cfss` on(`cfm`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_sources` `cfs` on(`cfs`.`source_set_id` = `cfss`.`id`)) left join `provisioning`.`voip_cf_bnumber_sets` `cfbs` on(`cfm`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_bnumbers` `cfb` on(`cfb`.`bnumber_set_id` = `cfbs`.`id`)) left join `provisioning`.`voip_cf_time_sets` `cfts` on(`cfm`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_cf_periods` `cft` on(`cft`.`time_set_id` = `cfts`.`id`)) left join `provisioning`.`voip_subscribers` `vs` on(`vs`.`id` = `cfm`.`subscriber_id`)) where `cfm`.`enabled` = 1",
          "key_col" : "v_subscriber_cfs"
       },
       "v_time_periods_ical" : {
