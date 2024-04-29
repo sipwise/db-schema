@@ -786,6 +786,7 @@ def get_db_schema() -> DBSchema:
             db_schema[revision] = []
         db_schema[revision].append(node)
     cursor.close()
+    config.db_conn.commit()
 
     debug(f'found existing {config.db_schema_table} table')
 
