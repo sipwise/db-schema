@@ -1,0 +1,41 @@
+USE provisioning;
+SET autocommit=0;
+
+-- revert previous addition to 'outbound_pai_user' and 'outbound_from_user'
+SELECT id INTO @vp_pai_id FROM voip_preferences
+    WHERE attribute = 'outbound_pai_user';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id=@vp_pai_id and value = 'rcv_display/np_display';
+
+SELECT id INTO @vp_from_id FROM voip_preferences
+    WHERE attribute = 'outbound_from_user';
+
+DELETE FROM voip_preferences_enum
+    WHERE preference_id=@vp_from_id and value = 'rcv_display/np_display';
+
+
+-- add the option to 'outbound_pai_display' and 'outbound_from_display'
+SELECT id INTO @vp_pai_id FROM voip_preferences
+    WHERE attribute = 'outbound_pai_display';
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+VALUES (
+    @vp_pai_id, 'Received or Network-Provided Display-name',
+    'rcv_display/np_display',
+    1, 1, 1, 1, 0, 0, 0, 0, NULL
+);
+
+SELECT id INTO @vp_from_id FROM voip_preferences
+    WHERE attribute = 'outbound_from_display';
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, prof_pref, dom_pref, peer_pref, contract_pref, contract_location_pref, dev_pref, devprof_pref, default_val)
+VALUES (
+    @vp_from_id, 'Received or Network-Provided Display-name',
+    'rcv_display/np_display',
+    1, 1, 1, 1, 0, 0, 0, 0, NULL
+);
+
+COMMIT;
