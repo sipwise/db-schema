@@ -1,3 +1,10 @@
+ngcp-db-schema (12.3.1.2+0~mr12.3.1.2) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [aa220ac] MT#59736 Fix addition of 'rcv_display/np_display' in 'outbound_X_display'
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 13 May 2024 13:06:05 +0200
+
 ngcp-db-schema (12.3.1.1+0~mr12.3.1.1) unstable; urgency=medium
 
   * New release.
