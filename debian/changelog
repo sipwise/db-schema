@@ -1,3 +1,10 @@
+ngcp-db-schema (12.3.1.3+0~mr12.3.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [9fddb24] MT#59988 fix update-db-schema ngcp.db_schema locks
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 May 2024 14:04:40 +0200
+
 ngcp-db-schema (12.3.1.2+0~mr12.3.1.2) unstable; urgency=medium
 
   [ Marco Capetta ]
