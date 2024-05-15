@@ -1,0 +1,6 @@
+use provisioning;
+set autocommit=0;
+
+UPDATE voip_preferences SET expose_to_customer = 1 WHERE fielddev_pref = 1;
+
+COMMIT;
