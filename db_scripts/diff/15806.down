@@ -1,0 +1,4 @@
+USE accounting;
+SET autocommit=0;
+DELETE FROM cdr_tag WHERE type IN ('header=P-Preferred-Identity');
+COMMIT;

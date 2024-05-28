@@ -345,7 +345,7 @@ CREATE TABLE `cdr_tag` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ctc_type_idx` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -692,6 +692,7 @@ INSERT INTO `cdr_tag` VALUES (2,'furnished_charging_info');
 INSERT INTO `cdr_tag` VALUES (4,'header=Diversion');
 INSERT INTO `cdr_tag` VALUES (11,'header=History-Info');
 INSERT INTO `cdr_tag` VALUES (3,'header=P-Asserted-Identity');
+INSERT INTO `cdr_tag` VALUES (15,'header=P-Preferred-Identity');
 INSERT INTO `cdr_tag` VALUES (5,'header=User-to-User');
 INSERT INTO `cdr_tag` VALUES (12,'hg_ext_response');
 INSERT INTO `cdr_tag` VALUES (14,'r_ua');
