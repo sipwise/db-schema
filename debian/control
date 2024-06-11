@@ -21,6 +21,7 @@ Build-Depends:
  python3-flake8-polyfill,
  python3-flake8-quotes,
  python3-pep8-naming,
+ python3-prettytable,
  python3-pymysql,
  python3-setuptools,
  python3-typeshed,
@@ -29,6 +30,7 @@ Package: ngcp-db-schema
 Architecture: all
 Depends:
  ngcp-system-tools-ce | ngcp-system-tools,
+ python3-prettytable,
  python3-pymysql,
  python3-yaml,
  ${misc:Depends},

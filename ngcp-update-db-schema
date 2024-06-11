@@ -9,6 +9,7 @@ run the script with --help
 """
 import argparse
 import configparser
+import json
 import os
 import re
 import signal
@@ -22,11 +23,17 @@ from subprocess import PIPE, Popen
 from typing import Any, Dict, List, Optional
 
 import pymysql.cursors
+from prettytable import PrettyTable
 from pymysql import Connection
 
 Revisions = Dict[str, Dict[int, str]]
 DBSchema = Dict[int, List[str]]
 ConfigDict = Dict[str, str | int | bool]
+
+
+class RevisionApplyError(Exception):
+    """Exception for revision apply error."""
+    pass
 
 
 class Config:
@@ -49,7 +56,9 @@ class Config:
         node_name_file (str): node name file
         roles_file (str): node roles file
         db_file (str): node db config file
-        ngcp_sync_db_script: (str) = ngcp sync db script
+        ngcp_sync_db_script (str): ngcp sync db script
+
+        ngcp_version_file: (str): file containing ngcp version string
 
         automated (bool): wether the script is run in the automated mode
             that automatically init the db schema if it's empty.
@@ -64,10 +73,19 @@ class Config:
         to_revision (int): processes revisions depending on the mode:
             - mode=up: applies all revisions including to_revision
             - mode=down: removes all revisions excluding to_revision
+        set_release (str): specify release version that is set
+            to all applied .up scripts instead of fetching it from
+            /etc/ngcp_version. Only works with mode=up
+        downgrade_release (str): downgrades the specified release
+            mutually exclusive with 'mode'
         force (bool): run this script on the active node
         batch_mode (bool): instead of applying scripts one by one, collects
             them all and builds a single sql file that is applied in one go
         db_scripts_dir (str): directory containing .up/.down scripts
+        get_release_info (bool): instead of applying revisionins, it returns
+            a list of applied releases
+        as_json (bool): return result from get-release-info as json rather
+            than a table (and potentially other return data in the future)
         supported_args (List[str]): a list of the attributes described above
             that can be also passed args, to automate the code
 
@@ -86,12 +104,16 @@ class Config:
             as the pymysql db connection
         _scripts_dir_order (List[str]): order to apply scripts
             from the subdirectories
+        _post_set_release_for_revisions (List[int]): set release in the
+            db_schema table for all revisions that were applied when
+            the `release` column was not available
 
 
         node_name (str): current node name
         node_roles (ConfigDict): current node roles
         node_dbconf (ConfigDict): current node db config
         node_state (str): current node state (active/inactive,etc.)
+        ngcp_version (str): current NGCP version
         db_conn (Connection): database connection handler
         db_schema (DBSchema): database schema revisions state
         revisions (Revisions): revisions that are read from
@@ -103,6 +125,7 @@ class Config:
             of tables that ngcp-sync-db should ignore
 
     """
+
     # db options
     db_socket_user: str = 'root'
     db_socket: str = '/run/mysqld/mysqld.sock'
@@ -116,17 +139,22 @@ class Config:
     roles_file: str = '/etc/default/ngcp-roles'
     db_file: str = '/etc/default/ngcp-db'
     ngcp_sync_db_script: str = '/usr/sbin/ngcp-sync-db'
+    ngcp_version_file: str = '/etc/ngcp_version'
 
     # default config options
     automated: bool = False
-    skip_ro_db_sync: bool = False
-    force_ro_db_sync: bool = False
+    skip_ro_db_sync: bool
+    force_ro_db_sync: bool
     debug: bool = False
     mode: str = 'up'
-    to_revision: int = 0
+    to_revision: int
+    set_release: str
+    downgrade_release: str
     force: bool = False
     batch_mode: bool = False
     db_scripts_dir: str = '/usr/share/ngcp-db-schema/db_scripts'
+    get_release_info: bool = False
+    as_json: bool = False
     supported_args: List[str] = ['automated', 'batch_mode',
                                  'db_socket', 'db_connect_method',
                                  'db_defaults_conf_file',
@@ -135,7 +163,11 @@ class Config:
                                  'mode',
                                  'skip_ro_db_sync',
                                  'force_ro_db_sync',
-                                 'to_revision']
+                                 'to_revision',
+                                 'downgrade_release',
+                                 'set_release',
+                                 'get_release_info',
+                                 'as_json']
 
     # internal attributes
     _args: Any = None
@@ -147,12 +179,14 @@ class Config:
     _temp_sql_file: BufferedRandom = None  # type: ignore
     _run_cmd_mysql_options: List[str] = []
     _scripts_dir_order: List[str] = ['init', 'base', 'diff']
+    _post_set_release_for_revisions: List[int] = []
 
     # attributes that are initialised in __init__()
     node_name: str
     node_roles: ConfigDict
     node_dbconf: ConfigDict
     node_state: str
+    ngcp_version: str
     db_conn: Connection  # type: ignore
     db_schema: DBSchema
     revisions: Revisions
@@ -170,6 +204,7 @@ class Config:
         Takes over SIGINT handling
 
         """
+
         def handle_signal(signum: int, _: Any) -> None:
             if self._prompt_is_shown:
                 log('aborted.')
@@ -181,12 +216,16 @@ class Config:
 
         signal.signal(signal.SIGINT, handle_signal)
 
-    def setup(self) -> None:
+    def setup_config(self) -> None:
         """Prepares info that is used by the script."""
         self.node_name = get_node_name()
         self.node_state = get_node_state()
         self.node_roles = get_node_roles()
         self.node_dbconf = get_node_dbconf()
+        self.ngcp_version = get_ngcp_version()
+
+    def setup_db(self) -> None:
+        """Prepares database related setup."""
         self.db_conn = connect_db()
         self.db_schema = get_db_schema()
 
@@ -362,7 +401,7 @@ def connect_db() -> Connection:  # type: ignore
                 unix_socket=db_socket,
                 autocommit=0,
             )
-            log(
+            debug(
                 'connected to database %s:%d via socket %s as %s' %
                 (db_host, db_port, db_socket, db_user)
             )
@@ -440,6 +479,7 @@ def parse_args() -> None:
     )
 
     ro_db_sync_group = parser.add_mutually_exclusive_group()
+    downgrade_group = parser.add_mutually_exclusive_group()
 
     # Define arguments
     parser.add_argument(
@@ -458,7 +498,7 @@ def parse_args() -> None:
         force the database schema to be applied even if the node is inactive.
         """)
 
-    parser.add_argument(
+    downgrade_group.add_argument(
         '--mode', '-m',
         dest='mode',
         type=str,
@@ -467,6 +507,8 @@ def parse_args() -> None:
 
         - 'up' (default): upgrades the database
         - 'down': downgrades the database.
+
+        mutually exclusive with --downgrade-release
         """)
 
     parser.add_argument(
@@ -478,6 +520,27 @@ def parse_args() -> None:
 
         - mode=up: applies all revisions including --to-revision
         - mode=down: removes all revisions excluding --to-revision
+        """)
+
+    parser.add_argument(
+        '--set-release',
+        dest='set_release',
+        type=str,
+        help="""
+        set release to a specific version instead of fetching it from
+        /etc/ngcp_version.
+
+        only works with mode=up
+        """)
+
+    downgrade_group.add_argument(
+        '--downgrade-release',
+        dest='downgrade_release',
+        type=str,
+        help="""
+        downgrade all applied revisions of the specified release
+
+        mutually exclusive with --mode
         """)
 
     parser.add_argument(
@@ -554,7 +617,26 @@ def parse_args() -> None:
         default one ({config.db_scripts_dir})
         """)
 
+    parser.add_argument(
+        '--get-release-info',
+        dest='get_release_info',
+        action='store_true',
+        help="""
+        Fetch a list of releases and min/max revision per release.
+        """)
+
+    parser.add_argument(
+        '--as-json',
+        dest='as_json',
+        action='store_true',
+        help="""
+        Return data is represented as JSON
+
+        (only works for --get-release-info)
+        """)
+
     args = parser.parse_args()
+
     for arg in config.supported_args:
         if hasattr(args, arg):
             config.__dict__[arg] = getattr(args, arg)
@@ -568,6 +650,20 @@ def parse_args() -> None:
             )
         elif (arg == 'db_socket'):
             config.db_socket = os.getenv('MYSQL_SOCKET', config.db_socket)
+
+    if hasattr(args, 'downgrade_release'):
+        config.mode = 'down'
+
+    if hasattr(config, 'set_release') and config.mode == 'down':
+        parser.print_help(sys.stderr)
+        print(
+            sys.argv[0] +
+            ' ' +
+            'error: argument --set-release: requires --mode=up',
+            file=sys.stderr
+        )
+        sys.exit(1)
+
     config._args = args
 
 
@@ -676,6 +772,20 @@ def read_revision_file(filename: str) -> bytes:
     return sql
 
 
+def get_ngcp_version() -> str:
+    """Fetches NGCP version.
+
+    Args:
+        None
+
+    Returns
+        str: the version string
+
+    """
+    with open(config.ngcp_version_file, 'r', encoding='utf8') as file:
+        return file.readline().strip()
+
+
 def get_node_state() -> str:
     """Fetches node state.
 
@@ -778,10 +888,20 @@ def get_db_schema() -> DBSchema:
         debug(f'{config.db_schema_table} table does not exist')
         return db_schema
 
-    cursor.execute(f"""
-        SELECT revision, node
-          FROM {config.db_schema_table}
-    """)
+    if getattr(config, 'downgrade_release', False):
+        if not check_release_column_exists():
+            error('Cannot use downgrade release on the old database version')
+            shutdown(1)
+        cursor.execute(f"""
+            SELECT revision, node
+            FROM {config.db_schema_table}
+            WHERE `release` = %s
+        """, config.downgrade_release)
+    else:
+        cursor.execute(f"""
+            SELECT revision, node
+            FROM {config.db_schema_table}
+        """)
 
     for row in cursor:
         revision = row[0]
@@ -795,6 +915,36 @@ def get_db_schema() -> DBSchema:
     debug(f'found existing {config.db_schema_table} table')
 
     return db_schema
+
+
+def check_release_column_exists() -> bool:
+    """Checks existence of ngcp.db_schema release colimn.
+
+    Args:
+        None
+
+    Returns
+        bool: True if exists, False otherwise
+
+    """
+    cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
+
+    cursor.execute("""
+        SELECT COUNT(column_name)
+          FROM information_schema.columns
+         WHERE concat(table_schema ,'.', table_name) = %s
+           AND column_name = 'release'
+    """, config.db_schema_table)
+
+    column_exists = 0
+    row = cursor.fetchone()
+    if row:
+        column_exists = row[0]
+
+    cursor.close()
+    config.db_conn.commit()
+
+    return bool(column_exists)
 
 
 def get_revisions() -> Revisions:
@@ -863,45 +1013,51 @@ def apply_revisions(revisions: Revisions) -> None:
             ).encode()
         )
 
-    for spec in dir_specs:
-        sorted_revisions = sorted(revisions[spec].keys())
-        if mode == 'down':
-            sorted_revisions.reverse()
-        for revision in sorted_revisions:
-            script = revisions[spec][revision]
-            script_name = f'{spec}/{script}'
-            ret = 0
-            if mode == 'up':
-                ret = apply_up_script(script_name, revision)
+    try:
+        for spec in dir_specs:
+            sorted_revisions = sorted(revisions[spec].keys())
+            if mode == 'down':
+                sorted_revisions.reverse()
+            for revision in sorted_revisions:
+                script = revisions[spec][revision]
+                script_name = f'{spec}/{script}'
+                ret = 0
+                if mode == 'up':
+                    ret = apply_up_script(script_name, revision)
+                else:
+                    # silently skip all revisionns that are greater
+                    # than max revision in the db_schema as there is
+                    # nothing to remove
+                    if max_schema_revision and revision > max_schema_revision:
+                        continue
+                    ret = apply_down_script(script_name, revision)
+                if not ret:
+                    break
+                if config._interrupted:
+                    log('stopped.')
+                    return
             else:
-                # silently skip all revisionns that are greater
-                # than max revision in the db_schema as there is
-                # nothing to remove
-                if max_schema_revision and revision > max_schema_revision:
-                    continue
-                ret = apply_down_script(script_name, revision)
-            if not ret:
-                break
-            if config._interrupted:
-                log('stopped.')
-                return
-        else:
-            continue
-        break
+                continue
+            break
 
-    if config.batch_mode and config._temp_sql_file.tell():
-        debug(f'using accumulated sql {config._temp_sql_file.name}')
-        log('applying schema changes')
-        config._temp_sql_file.flush()
-        _, stderr = run_cmd(
-            '/usr/bin/mysql', *config._run_cmd_mysql_options,
-            '-e', f'source {config._temp_sql_file.name}'
-        )
-        if stderr:
-            error(f'could not apply schema changes: {stderr.decode()}')
-            shutdown(1)
-        config.db_conn.commit()
-        config._script_was_applied = True
+        if config.batch_mode and config._temp_sql_file.tell():
+            debug(f'using accumulated sql {config._temp_sql_file.name}')
+            log('applying schema changes')
+            config._temp_sql_file.flush()
+            _, stderr = run_cmd(
+                '/usr/bin/mysql', *config._run_cmd_mysql_options,
+                '-e', f'source {config._temp_sql_file.name}'
+            )
+            if stderr:
+                error(f'could not apply schema changes: {stderr.decode()}')
+                shutdown(1)
+            config.db_conn.commit()
+            config._script_was_applied = True
+
+        post_set_release_for_applied_revisions()
+    except RevisionApplyError:
+        post_set_release_for_applied_revisions()
+        shutdown(1)
 
     if not config._script_was_applied:
         log('nothing to apply')
@@ -950,7 +1106,8 @@ def apply_up_script(script_name: str, revision: int) -> int:
     if revision in db_schema:
         node_in_db_schema = node_name in db_schema[revision]
 
-    if config.to_revision > 0 and revision > config.to_revision:
+    to_revision = getattr(config, 'to_revision', 0)
+    if to_revision > 0 and revision > config.to_revision:
         log(f'stopping as next revision {revision} ' +
             f'is greater than {config.to_revision}')
         return 0
@@ -982,18 +1139,21 @@ def apply_up_script(script_name: str, revision: int) -> int:
             with config.db_conn.cursor() as cursor:
                 cursor.execute(f"""
                 INSERT INTO {config.db_schema_table}
-                (revision, node) VALUES (%s, %s)
+                (`revision`, `node`) VALUES (%s, %s)
                 """, (revision, node_name))
             config.db_conn.commit()
             config._script_was_applied = True
         else:
             sql = c_str(f"""
                 INSERT INTO {config.db_schema_table}
-                (revision, node) VALUES ({revision}, '{node_name}')
+                (`revision`, `node`)
+                VALUES
+                ({revision}, '{node_name}')
             """)
             config._temp_sql_file.write(
                 str(f'\n; {sql}; COMMIT;\n').encode()
             )
+        config._post_set_release_for_revisions.append(revision)
 
         if revision in db_schema:
             db_schema[revision].append(node_name)
@@ -1004,7 +1164,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
             config._not_replicated_was_applied = True
     except pymysql.Error as e:
         error(f'could not apply revision: {e}')
-        shutdown(1)
+        raise RevisionApplyError(e)
     return 1
 
 
@@ -1050,7 +1210,8 @@ def apply_down_script(script_name: str, revision: int) -> int:
     if revision in db_schema:
         node_in_db_schema = node_name in db_schema[revision]
 
-    if config.to_revision > 0 and revision <= config.to_revision:
+    to_revision = getattr(config, 'to_revision', 0)
+    if to_revision > 0 and revision <= config.to_revision:
         log(f'stopping as next revision {revision} ' +
             f'is lesser or equal to {config.to_revision}')
         return 0
@@ -1107,7 +1268,7 @@ def apply_down_script(script_name: str, revision: int) -> int:
                 sql += f" AND node = '{node_name}'"
 
             config._temp_sql_file.write(
-                str(f'\n; {sql} COMMIT;\n').encode()
+                str(f'\n; {sql}; COMMIT;\n').encode()
             )
 
         if revision in db_schema:
@@ -1120,12 +1281,45 @@ def apply_down_script(script_name: str, revision: int) -> int:
             config._not_replicated_was_applied = True
     except pymysql.Error as e:
         error(f'could not apply revision {script_name}: {e}')
-        shutdown(1)
+        raise RevisionApplyError(e)
     except ValueError as e:
         error(f'could not remove revision {e}')
-        shutdown(1)
+        raise RevisionApplyError(e)
 
     return 1
+
+
+def post_set_release_for_applied_revisions() -> None:
+    """Sets release column for applied revisions.
+
+    Sets release column for applied revisions
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    if config.mode != 'up':
+        return
+    if not config._post_set_release_for_revisions:
+        return
+    if not check_release_column_exists():
+        return
+
+    release = getattr(config, 'set_release', config.ngcp_version)
+    cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
+
+    cursor.execute(f"""
+        UPDATE {config.db_schema_table}
+           SET `release` = '{release}',
+               applied_at = applied_at
+         WHERE revision IN {tuple(config._post_set_release_for_revisions)}
+    """)
+
+    cursor.close()
+    config.db_conn.commit()
 
 
 def sync_ro_db() -> None:
@@ -1338,6 +1532,51 @@ def check_and_show_prompt() -> None:
             shutdown(0)
 
 
+def show_release_info() -> None:
+    """Shows releases info.
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    if not check_release_column_exists():
+        error('Cannot use get release info on the old database version')
+        shutdown(1)
+
+    cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
+
+    cursor.execute(f"""
+        SELECT `release`, min(revision), max(revision), COUNT(revision)
+          FROM {config.db_schema_table}
+         GROUP BY 1
+    """)
+
+    if config.as_json:
+        data: Dict[str, Dict[str, int]] = {}
+        for row in cursor:
+            release = row[0]
+            min_rev = row[1]
+            max_rev = row[2]
+            count = row[3]
+            data[release] = {
+                'min_revision': min_rev,
+                'max_revision': max_rev,
+                'count': count
+            }
+        print(json.dumps(data, sort_keys=True))
+    else:
+        table = PrettyTable(['release',
+                             'min_revision', 'max_revision',
+                             'count'])
+        table.align = 'r'
+        for row in cursor:
+            table.add_row(row)
+        print(table)
+
+
 def show_start_summary() -> None:
     """Print options that the script is invoked with.
 
@@ -1351,8 +1590,13 @@ def show_start_summary() -> None:
     log(f'{os.path.basename(sys.argv[0])} started with the following options:')
     log('-----------------------------------')
     for arg in config.supported_args:
-        v = getattr(config, arg)
-        log(f'{arg}: {v}')
+        if hasattr(config, arg):
+            v = getattr(config, arg)
+            log(f'{arg}: {v}')
+    log('-----------------------------------')
+    log('node_name: ' + config.node_name)
+    log('node_state: ' + config.node_state)
+    log('ngcp_version: ' + config.ngcp_version)
     log('-----------------------------------')
 
 
@@ -1385,14 +1629,19 @@ def main() -> None:
         global config
         config = Config()
         parse_args()
-        show_start_summary()
-        config.setup()
-        check_active_node()
-        check_and_show_prompt()
-        revisions = get_revisions()
-        apply_revisions(revisions)
-        sync_ro_db()
-        log('done in %.2fs.' % (time.time()-started_at))
+        config.setup_config()
+        if config.get_release_info:
+            config.setup_db()
+            show_release_info()
+        else:
+            show_start_summary()
+            config.setup_db()
+            check_active_node()
+            check_and_show_prompt()
+            revisions = get_revisions()
+            apply_revisions(revisions)
+            sync_ro_db()
+            log('done in %.2fs.' % (time.time()-started_at))
         shutdown(0)
     except Exception as err:  # noqa: B902
         error(str(err))
