@@ -1139,14 +1139,14 @@ def apply_up_script(script_name: str, revision: int) -> int:
             with config.db_conn.cursor() as cursor:
                 cursor.execute(f"""
                 INSERT INTO {config.db_schema_table}
-                (`revision`, `node`) VALUES (%s, %s)
+                (revision, node) VALUES (%s, %s)
                 """, (revision, node_name))
             config.db_conn.commit()
             config._script_was_applied = True
         else:
             sql = c_str(f"""
                 INSERT INTO {config.db_schema_table}
-                (`revision`, `node`)
+                (revision, node)
                 VALUES
                 ({revision}, '{node_name}')
             """)
@@ -1169,7 +1169,7 @@ def apply_up_script(script_name: str, revision: int) -> int:
 
 
 def apply_down_script(script_name: str, revision: int) -> int:
-    """Applies .up script.
+    """Applies .down script.
 
     Performs various checks to determins if the .down script
     should be applied or skipped.
@@ -1315,7 +1315,9 @@ def post_set_release_for_applied_revisions() -> None:
         UPDATE {config.db_schema_table}
            SET `release` = '{release}',
                applied_at = applied_at
-         WHERE revision IN {tuple(config._post_set_release_for_revisions)}
+         WHERE revision IN ({
+            ','.join(str(x) for x in config._post_set_release_for_revisions)
+         })
     """)
 
     cursor.close()
