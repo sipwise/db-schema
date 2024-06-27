@@ -1,0 +1,31 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Call Blockings';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "adm_ncos_exceptions",
+label = "Administrative NCOS Exceptions",
+type = 0,
+max_occur = 0,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+reseller_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "int",
+read_only = 0,
+description = "List of numbers that the subscriber is allowed to call even if blocked by the NCOS. If the called number matches, then all the NCOS and administrative NCOS checks are skipped.";
+
+COMMIT;
