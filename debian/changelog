@@ -1,3 +1,10 @@
+ngcp-db-schema (9.5.10.0+0~mr9.5.10.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [21b6431] MT#59386 address foreign key handling in 6425.up/down
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 01 Jul 2024 15:42:41 +0200
+
 ngcp-db-schema (9.5.9.0+0~mr9.5.9.0) unstable; urgency=medium
 
   * New release.
