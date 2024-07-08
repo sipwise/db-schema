@@ -1,0 +1,18 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT `id` FROM `voip_preferences`
+  WHERE attribute='announce_conn_type'
+  INTO @pref_id;
+
+# properly set NULL value for domain default of subscriber
+UPDATE `voip_preferences_enum`
+  SET value = NULL
+  WHERE preference_id = @pref_id AND usr_pref = 1 AND label = 'use domain default';
+
+# additionally update description for the preference 'announce_conn_type'
+UPDATE `voip_preferences`
+  SET description = "Define what type of connection to use in case of pre-announcements (such as office-hours, early rejects, pre-recording announcement etc.). If set to 'early' the announcement is played with early media (183). If set to 'established' the announcement is played using established connection (200OK)."
+  WHERE id = @pref_id;
+
+COMMIT;

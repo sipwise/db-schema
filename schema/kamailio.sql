@@ -1161,11 +1161,11 @@ INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_me
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (31,'','0','voip.sipwise.local','record_call',0,'0','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','2d79ee154b034d0e0dc2088b5d0580ca','f5f339fdd311510f19c2092296e6f5c7','c27d3e7e7ac9a3d56a1a20ce5c22d942','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','ce08e59923aa66bced8018cad0cbe60d','8d718b69f5d0c5032014b016e5d31235','a83e2938cdb925dcf7efffc25f9cc9b7','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
-INSERT INTO `usr_preferences` VALUES (7,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','announce_conn_type',0,'NULL','1900-01-01 00:00:01');
+INSERT INTO `usr_preferences` VALUES (7,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','announce_conn_type',0,'','1900-01-01 00:00:01');
 INSERT INTO `version` VALUES ('acc',5);
 INSERT INTO `version` VALUES ('acc_cdrs',2);
 INSERT INTO `version` VALUES ('active_watchers',12);
