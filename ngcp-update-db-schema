@@ -1356,14 +1356,14 @@ def sync_ro_db() -> None:
         """))
         return
 
-    if config.skip_ro_db_sync:
+    if getattr(config, 'skip_ro_db_sync', False):
         debug(c_str("""
             skip sync R/O database preparation as
             'skip_ro_db_sync' option is provided
         """))
         return
 
-    if config.force_ro_db_sync:
+    if getattr(config, 'force_ro_db_sync', False):
         debug(c_str("""
             force sync R/O database preparation as
             'force_ro_db_sync' option is provided
