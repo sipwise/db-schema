@@ -1,0 +1,11 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT `id` FROM `voip_preferences`
+  WHERE attribute='announce_conn_type'
+  INTO @pref_id;
+
+UPDATE `voip_preferences_enum` set value = 'NULL'
+  WHERE preference_id = @pref_id AND usr_pref = 1 AND label = 'use domain default';
+
+COMMIT;
