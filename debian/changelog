@@ -1,3 +1,13 @@
+ngcp-db-schema (12.4.1.2+0~mr12.4.1.2) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [1c2fbd0] MT#60309 Enable pref ignore_cf_when_hunting only at customer level
+
+  [ Kirill Solomko ]
+  * [cde661b] MT#60468 fix undefiend force_ro_db_sync error
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 08 Jul 2024 14:48:07 +0200
+
 ngcp-db-schema (12.4.1.1+0~mr12.4.1.1) unstable; urgency=medium
 
   * New release.
