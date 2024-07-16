@@ -1,3 +1,11 @@
+ngcp-db-schema (12.3.1.4+0~mr12.3.1.4) unstable; urgency=medium
+
+  [ Donat Zenichev ]
+  * [9257b65] MT#58625 Fixup for 8a4082e20
+  * [959f17f] MT#58625 remove invalid announce_conn_type pref values
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 16 Jul 2024 15:07:29 +0200
+
 ngcp-db-schema (12.3.1.3+0~mr12.3.1.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
