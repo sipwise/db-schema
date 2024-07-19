@@ -4143,9 +4143,9 @@
       "voip_header_rules/direction" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
-         "COLUMN_DEFAULT" : "'inbound'",
+         "COLUMN_DEFAULT" : "'a_inbound'",
          "COLUMN_NAME" : "direction",
-         "COLUMN_TYPE" : "enum('inbound','outbound','local','peer','b_outbound','cf_inbound','cf_outbound','reply')",
+         "COLUMN_TYPE" : "enum('a_inbound','a_outbound','local','peer','b_outbound','cf_inbound','cf_outbound','reply')",
          "EXTRA" : "",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 6,

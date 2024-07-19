@@ -1,0 +1,9 @@
+SET sql_log_bin=0;
+use provisioning;
+
+UPDATE voip_header_rules SET `direction` = 'inbound' WHERE `direction` = 'a_inbound';
+UPDATE voip_header_rules SET `direction` = 'outbound' WHERE `direction` = 'a_outbound';
+
+ALTER TABLE voip_header_rules MODIFY `direction` enum('inbound','outbound','local','peer','b_outbound','cf_inbound','cf_outbound','reply') NOT NULL DEFAULT 'inbound';
+
+commit;
