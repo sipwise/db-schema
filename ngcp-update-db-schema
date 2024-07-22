@@ -1191,6 +1191,9 @@ def apply_down_script(script_name: str, revision: int) -> int:
     into config._temp_sql_file, to be then applied all at once in
     apply_revisions() all at once
 
+    Note: down script 15800 is automatically skipped as it contains
+    addition of the 'release' table, which is crucial for downgrades.
+
     Args:
         script_name (str): script name (excluding the base dir)
         revision (int): revision number
@@ -1215,6 +1218,10 @@ def apply_down_script(script_name: str, revision: int) -> int:
         log(f'stopping as next revision {revision} ' +
             f'is lesser or equal to {config.to_revision}')
         return 0
+
+    if revision == 15800:
+        log(f'skip non-removable revision {script_name}')
+        return 1
 
     if revision not in db_schema or \
        not_replicated and not node_in_db_schema:
