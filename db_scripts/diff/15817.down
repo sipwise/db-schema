@@ -1,0 +1,15 @@
+USE provisioning;
+
+DROP TABLE `voip_subscriber_password_journal`;
+DROP TABLE `voip_subscriber_webpassword_journal`;
+
+ALTER TABLE voip_subscribers
+  DROP COLUMN `password_modify_timestamp`,
+  DROP COLUMN `webpassword_modify_timestamp`;
+
+USE billing;
+
+ALTER TABLE admins
+  DROP COLUMN `saltedpass_modify_timestamp`;
+
+DROP TABLE `admin_password_journal`;

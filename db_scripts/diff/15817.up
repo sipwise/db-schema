@@ -1,0 +1,43 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers
+  ADD COLUMN `password_modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  ADD COLUMN `webpassword_modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+CREATE TABLE `voip_subscriber_password_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `value` char(56) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `subscriber_created_idx` (`subscriber_id`, `created_at`),
+  KEY `subscriber_value_idx` (`subscriber_id`, `value`),
+  CONSTRAINT `subscriber_id_pass_j_fk` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `voip_subscriber_webpassword_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `subscriber_id` int(11) unsigned NOT NULL,
+  `value` char(56) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `subscriber_created_idx` (`subscriber_id`, `created_at`),
+  KEY `subscriber_value_idx` (`subscriber_id`, `value`),
+  CONSTRAINT `subscriber_id_webpass_j_fk` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+USE billing;
+
+ALTER TABLE admins
+  ADD COLUMN `saltedpass_modify_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+CREATE TABLE `admin_password_journal` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) unsigned NOT NULL,
+  `value` char(54) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `admin_created_idx` (`admin_id`, `created_at`),
+  KEY `admin_value_idx` (`admin_id`, `value`),
+  CONSTRAINT `admin_id_pass_j_fk` FOREIGN KEY (`admin_id`) REFERENCES `admins` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
