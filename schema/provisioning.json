@@ -12566,6 +12566,18 @@
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/domainid_idx/1"
       },
+      "voip_subscribers/is_pbx_group_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "is_pbx_group",
+         "INDEX_NAME" : "is_pbx_group_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voip_subscribers",
+         "key_col" : "voip_subscribers/is_pbx_group_idx/1"
+      },
       "voip_subscribers/user_dom_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "username",

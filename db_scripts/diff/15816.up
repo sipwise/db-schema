@@ -1,0 +1,3 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers ADD KEY `is_pbx_group_idx` (`is_pbx_group`);

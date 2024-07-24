@@ -1,0 +1,4 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers DROP KEY `is_pbx_group_idx`;
+
