@@ -1,3 +1,35 @@
+ngcp-db-schema (13.0.0.0+0~mr13.0.0.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [c76ede1] MT#59993 New cdr aggregated field header=P-Preferred-Identity
+  * [2ea9955] MT#60035 Add new subscriber's preference adm_ncos_exceptions
+  * [ceeb342] MT#60511 add voip_header_rules direction "b_outbound"
+  * [fc2b77c] MT#59913 add Portuguese language to the enum preference
+  * [fde9340] MT#60515 rename hm inbound/outbound directions to a_inbound/a_outbound
+
+  [ Alessio Garzi ]
+  * [5f0bfda] MT#60309 Enable pref ignore_cf_when_hunting only at customer level
+
+  [ Kirill Solomko ]
+  * [0f37c59] MT#60306 add release based downgrade support
+  * [e488cee] MT#60306 post_set_release fix sql revision where query
+  * [fc1b59a] MT#60468 fix undefiend force_ro_db_sync error
+  * [93ad856] MT#58625 remove invalid announce_conn_type pref values
+  * [701c1f7] MT#60540 skip non-removable 15800 revision
+  * [860449e] MT#59979 add provisioning.voip_subscribers.is_pbx_group index
+  * [52927d3] MT#59449 add voip_subscirber, admin password_journal tables
+
+  [ Donat Zenichev ]
+  * [7932f83] MT#58625 Fixup for 8a4082e20
+
+  [ Rene Krenn ]
+  * [4a6a986] MT#60432 support even larger cdr_period_costs amounts
+
+  [ Mykola Malkov ]
+  * [d4ee50c] MT#58395 Add --batch-mode for ngcp-update-db-schema
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Sun, 28 Jul 2024 12:01:38 +0200
+
 ngcp-db-schema (12.5.0.0+0~mr12.5.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
