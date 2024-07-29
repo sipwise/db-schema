@@ -108,6 +108,18 @@
          "TABLE_NAME" : "admin_password_journal",
          "key_col" : "admin_password_journal/value"
       },
+      "admins/ban_increment_stage" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "ban_increment_stage",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 22,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/ban_increment_stage"
+      },
       "admins/billing_data" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,

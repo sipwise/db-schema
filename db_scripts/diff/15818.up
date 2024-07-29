@@ -1,0 +1,9 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers
+  ADD COLUMN `ban_increment_stage` int(11) unsigned NOT NULL DEFAULT 0;
+
+USE billing;
+
+ALTER TABLE admins
+  ADD COLUMN `ban_increment_stage` int(11) unsigned NOT NULL DEFAULT 0;
