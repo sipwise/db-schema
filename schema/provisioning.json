@@ -6732,6 +6732,18 @@
          "TABLE_NAME" : "voip_subscribers",
          "key_col" : "voip_subscribers/admin"
       },
+      "voip_subscribers/ban_increment_stage" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "ban_increment_stage",
+         "COLUMN_TYPE" : "int(11) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 22,
+         "TABLE_NAME" : "voip_subscribers",
+         "key_col" : "voip_subscribers/ban_increment_stage"
+      },
       "voip_subscribers/create_timestamp" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,

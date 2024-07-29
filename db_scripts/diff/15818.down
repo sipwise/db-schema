@@ -1,0 +1,7 @@
+USE provisioning;
+
+ALTER TABLE voip_subscribers DROP COLUMN `ban_increment_stage`;
+
+USE billing;
+
+ALTER TABLE admins DROP COLUMN `ban_increment_stage`;
