@@ -1,3 +1,10 @@
+ngcp-db-schema (12.4.1.4+0~mr12.4.1.4) unstable; urgency=medium
+
+  [ Alessio Garzi ]
+  * [23945bc] MT#60309 Enable pref ignore_cf_when_hunting at domain level
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 23 Aug 2024 08:01:41 +0200
+
 ngcp-db-schema (12.4.1.3+0~mr12.4.1.3) unstable; urgency=medium
 
   [ Donat Zenichev ]
