@@ -1356,7 +1356,7 @@ def sync_ro_db() -> None:
         debug('skip sync R/O database on non "carrier" nodes')
         return
 
-    if 'proxy' not in config.node_roles:
+    if 'proxy' not in config.node_roles or config.node_roles['proxy'] is False:
         debug(c_str("""
             skip R/O database sync because this node
             does not have the 'proxy' role.
