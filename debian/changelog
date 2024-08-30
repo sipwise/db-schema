@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.4+0~mr12.5.1.4) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [97a5704] MT#60515 fix 15813_not_replicated script
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 30 Aug 2024 18:26:01 +0200
+
 ngcp-db-schema (12.5.1.3+0~mr12.5.1.3) unstable; urgency=medium
 
   [ Kirill Solomko ]
