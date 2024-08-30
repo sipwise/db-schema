@@ -413,8 +413,8 @@ def connect_db() -> Connection:  # type: ignore
             shutdown(1)
     elif db_connect_method == 'config':
         config._run_cmd_mysql_options = [
+            f'--defaults-extra-file={db_defaults_conf_file}',
             '-h', str(db_host), '-P', str(db_port),
-            f'--defaults-extra-file={db_defaults_conf_file}'
         ]
         try:
             with open(db_defaults_conf_file) as file:
@@ -888,6 +888,8 @@ def get_db_schema() -> DBSchema:
         debug(f'{config.db_schema_table} table does not exist')
         return db_schema
 
+    debug(f'found existing {config.db_schema_table} table')
+
     if getattr(config, 'downgrade_release', False):
         if not check_release_column_exists():
             error('Cannot use downgrade release on the old database version')
@@ -912,7 +914,15 @@ def get_db_schema() -> DBSchema:
     cursor.close()
     config.db_conn.commit()
 
-    debug(f'found existing {config.db_schema_table} table')
+    if config.mode == 'down' and not db_schema:
+        if config.downgrade_release:
+            error(c_str(f"""
+                could not find entries in db_schema \
+                table matching release '{config.downgrade_release}'
+                """))
+        else:
+            error('could not find entries in db_schema')
+        shutdown(1)
 
     return db_schema
 
@@ -1524,6 +1534,9 @@ def check_and_show_prompt() -> None:
         None
 
     """
+    if config.mode == 'down' and not config.db_schema:
+        shutdown(1)
+
     if not config.db_schema and not config.automated:
         prompt = """
         =================================================================
