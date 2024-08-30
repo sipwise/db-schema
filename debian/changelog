@@ -1,3 +1,11 @@
+ngcp-db-schema (12.5.1.3+0~mr12.5.1.3) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [10d2018] MT#60817 fix sync_ro_db() 'proxy' node role check
+  * [b2efd51] MT#60822 fix --defaults-extra-file arg usage
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 30 Aug 2024 12:58:16 +0200
+
 ngcp-db-schema (12.5.1.2+0~mr12.5.1.2) unstable; urgency=medium
 
   [ Alessio Garzi ]
