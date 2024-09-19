@@ -3905,7 +3905,7 @@
          "COLLATION_NAME" : "utf8mb3_general_ci",
          "COLUMN_DEFAULT" : null,
          "COLUMN_NAME" : "type",
-         "COLUMN_TYPE" : "enum('gcm','apns')",
+         "COLUMN_TYPE" : "enum('apns','fcm')",
          "EXTRA" : "",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 2,
