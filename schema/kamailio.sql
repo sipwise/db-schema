@@ -536,7 +536,7 @@ CREATE TABLE `members` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `mobile_push_registrations` (
   `reg_id` varbinary(3072) NOT NULL,
-  `type` enum('gcm','apns') NOT NULL,
+  `type` enum('apns','fcm') NOT NULL,
   `subscriber_id` int(10) unsigned NOT NULL,
   `device_id` varbinary(255) NOT NULL,
   `apns_type` varchar(255) NOT NULL DEFAULT '',
@@ -1161,7 +1161,7 @@ INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_me
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (31,'','0','voip.sipwise.local','record_call',0,'0','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','132021c0eec05015c8acb0895e14587e','1e41142bf4617531b57b44430d8b0c57','d95bf6191971f76227330982d381c748','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','a90f8f7f20ead470ce0985d3523ac0bc','07621127b292caa80ad879de2fe217bb','8ac109dadf416426968d4e36e0334b98','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
