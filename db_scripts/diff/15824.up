@@ -1,0 +1,4 @@
+use kamailio;
+alter table mobile_push_registrations change `type` `type` enum('gcm', 'apns', 'fcm') not null;
+update mobile_push_registrations set `type` = 'fcm' where `type` = 'gcm';
+alter table mobile_push_registrations change `type` `type` enum('apns', 'fcm') not null;
