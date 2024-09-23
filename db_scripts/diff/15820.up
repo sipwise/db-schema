@@ -1,0 +1,6 @@
+USE provisioning;
+SET autocommit=0;
+
+DELETE FROM voip_sound_handles WHERE name = 'voicebox_unavailable';
+
+COMMIT;
