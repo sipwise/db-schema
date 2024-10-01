@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.5+0~mr12.5.1.5) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [ceb7032] MT#53790 pushd: change `gcm` to `fcm`
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 01 Oct 2024 16:33:29 +0200
+
 ngcp-db-schema (12.5.1.4+0~mr12.5.1.4) unstable; urgency=medium
 
   [ Marco Capetta ]
