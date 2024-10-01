@@ -274,7 +274,7 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
   fi
 
   if [ -x "$SYNC_DB" ] ; then
-      PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody mysql"
+      PRX_SYNC_DBS="ngcp billing carrier kamailio provisioning prosody"
       PRX_IGNORE_TABLES="kamailio.voicemail_spool provisioning.autoprov_firmwares_data"
       EXTRA_SYNC_DB_OPTS=""
       if [ -n "$AUTOMATED_INSTALL_MODE" ] ; then
@@ -283,15 +283,19 @@ if $RUN_SYNC_DB && ($NOT_REPLICATED_REV_APPLIED || [ -n "$AUTOMATED_INSTALL_MODE
 
       # determine the preferred db node a or b if the default db01 is the constants
       MASTER_NODE_PREF=""
-      if [ "$CENTRAL_DBHOST" == "db01" ] ; then
-        NODE_SIDE="a"
-        if [[ "$nodename" == *b ]] ; then
-          NODE_SIDE="b"
-        fi
-        MASTER_NODE_PREF="db01${NODE_SIDE}"
-      fi
-      if [ -n "$MASTER_NODE_PREF" ] ; then
-        EXTRA_SYNC_DB_OPTS="$EXTRA_SYNC_DB_OPTS --master-host $MASTER_NODE_PREF"
+      if [[ -n "${NGCP_UPGRADE:-}" ]]; then
+          if [ "$CENTRAL_DBHOST" == "db01" ] ; then
+            NODE_SIDE="a"
+            if [[ "$nodename" == *b ]] || [ "$nodename" == "sp2" ] ; then
+              NODE_SIDE="b"
+            fi
+            MASTER_NODE_PREF="db01${NODE_SIDE}"
+          else
+            MASTER_NODE_PREF="$CENTRAL_DBHOST"
+          fi
+          if [ -n "$MASTER_NODE_PREF" ] ; then
+            EXTRA_SYNC_DB_OPTS="$EXTRA_SYNC_DB_OPTS --master-host $MASTER_NODE_PREF"
+          fi
       fi
 
       # shellcheck disable=SC2086
