@@ -86,6 +86,9 @@ class Config:
             a list of applied releases
         as_json (bool): return result from get-release-info as json rather
             than a table (and potentially other return data in the future)
+        ngcp_upgrade (bool): defines if the script is run under 'ngcp-upgrade'
+            this option automatically uses NGCP_UPGRADE os.environ,
+            unless provided
         supported_args (List[str]): a list of the attributes described above
             that can be also passed args, to automate the code
 
@@ -155,6 +158,7 @@ class Config:
     db_scripts_dir: str = '/usr/share/ngcp-db-schema/db_scripts'
     get_release_info: bool = False
     as_json: bool = False
+    ngcp_upgrade: bool = False
     supported_args: List[str] = ['automated', 'batch_mode',
                                  'db_socket', 'db_connect_method',
                                  'db_defaults_conf_file',
@@ -167,7 +171,8 @@ class Config:
                                  'downgrade_release',
                                  'set_release',
                                  'get_release_info',
-                                 'as_json']
+                                 'as_json',
+                                 'ngcp_upgrade']
 
     # internal attributes
     _args: Any = None
@@ -193,7 +198,7 @@ class Config:
 
     # ngcp sync db related options
     sync_db_databases = 'ngcp billing carrier kamailio ' + \
-                        'provisioning prosody mysql'
+                        'provisioning prosody'
     sync_db_ignore_tables = 'kamailio.voicemail_spool ' + \
                             'provisioning.autoprov_firmwares_data ' + \
                             'provisioning.voip_fax_data'
@@ -635,6 +640,15 @@ def parse_args() -> None:
         (only works for --get-release-info)
         """)
 
+    parser.add_argument(
+        '--ngcp-upgrade', '-u',
+        dest='ngcp_upgrade',
+        action='store_true',
+        help="""
+        ngcp upgrade mode, affects certain aspects of applying up scripts
+        and sync R/O db
+        """)
+
     args = parser.parse_args()
 
     for arg in config.supported_args:
@@ -650,6 +664,10 @@ def parse_args() -> None:
             )
         elif (arg == 'db_socket'):
             config.db_socket = os.getenv('MYSQL_SOCKET', config.db_socket)
+        elif (arg == 'ngcp_upgrade'):
+            config.ngcp_upgrade = str_to_bool(
+                os.getenv('NGCP_UPGRADE', '')
+            )
 
     if hasattr(args, 'downgrade_release'):
         config.mode = 'down'
@@ -1397,6 +1415,8 @@ def sync_ro_db() -> None:
         """))
         return
 
+    log('preparing RO db sync...')
+
     sync_dbs_opt = config.sync_db_databases
     ignore_tables_opt = config.sync_db_ignore_tables
 
@@ -1451,14 +1471,32 @@ def sync_ro_db() -> None:
         shutdown(1)
 
     master_node_pref = ''
-    central_dbhost = config.node_dbconf['central_dbhost']
-    if central_dbhost == 'db01':
-        node_side = 'a'
-        if config.node_name.endswith('b'):
-            node_side = 'b'
-        master_node_pref = f'{central_dbhost}{node_side}'
-    if master_node_pref:
-        extra_sync_opt += ['--master-host', master_node_pref]
+    if config.ngcp_upgrade:
+        central_dbhost = config.node_dbconf['central_dbhost']
+        if central_dbhost == 'db01':
+            node_side = ''
+            is_a_side = re.search(r'\d{2}a$', config.node_name)
+            is_b_side = re.search(r'\d{2}b$', config.node_name)
+            if is_a_side or config.node_name == 'sp1':
+                node_side = 'a'
+            elif is_b_side or config.node_name == 'sp2':
+                node_side = 'b'
+            else:
+                error('could not determine valid node side during upgrade')
+                shutdown(1)
+
+            master_node_pref = f'{central_dbhost}{node_side}'
+        elif central_dbhost in ['db01a', 'db01b']:
+            master_node_pref = str(central_dbhost)
+
+        if master_node_pref:
+            extra_sync_opt += ['--master-host', master_node_pref]
+        else:
+            error(c_str("""
+                could not determine valid master db node during upgrade
+                expected: db01, db01a, db01b
+            """))
+            shutdown(1)
 
     local_dbhost = config.node_dbconf['local_dbhost']
     local_dbport = config.node_dbconf['local_dbport']
