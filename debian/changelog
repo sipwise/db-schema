@@ -1,3 +1,19 @@
+ngcp-db-schema (13.0.1.0+0~mr13.0.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [95b0f87] MT#59449 add ban_increment_stage column
+  * [397da1d] MT#60817 fix sync_ro_db() 'proxy' node role check
+  * [9f2d351] MT#60822 fix --defaults-extra-file arg usage
+
+  [ Alessio Garzi ]
+  * [9a9374e] MT#60309 Enable pref ignore_cf_when_hunting at domain level
+
+  [ Marco Capetta ]
+  * [06f112c] MT#60515 fix 15813_not_replicated script
+  * [712151c] MT#58272 remove obsolete early_reject.voicebox_unavailable sound
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 01 Oct 2024 09:58:52 +0200
+
 ngcp-db-schema (13.0.0.0+0~mr13.0.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
