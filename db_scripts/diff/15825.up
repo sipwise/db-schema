@@ -1,0 +1,41 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Cloud PBX';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "aa_extensions_dial_mode",
+label = "Auto-Attendant extensions dialing mode",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "enum",
+read_only = 0,
+description = "Define which type of extensions dialing mode to use for the Auto-Attendant application. If enabled, then instant mode is used (doesn't require *asterisk sign to be added in front of extension). Otherwise, if disabled (default), a dial of extensions is only through the *asterisk sign.";
+
+
+SELECT last_insert_id() INTO @pref_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@pref_id, 'use domain default', NULL, 1, 0, 1, 0, 0, 0, 1),
+(@pref_id, 'Disabled', 'disabled', 1, 0, 1, 0, 0, 0, 0),
+(@pref_id, 'Disabled', 'disabled', 0, 1, 0, 0, 0, 0, 1),
+(@pref_id, 'Enabled', 'enabled', 1, 1, 1, 0, 0, 0, 0);
+
+COMMIT;
