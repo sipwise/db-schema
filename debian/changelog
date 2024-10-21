@@ -1,3 +1,13 @@
+ngcp-db-schema (13.0.2.0+0~mr13.0.2.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [af6aee7] MT#53790 pushd: change `gcm` to `fcm`
+
+  [ Kirill Solomko ]
+  * [e612fb5] MT#61041 improve RO db sync master node and upgrade
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 21 Oct 2024 19:21:01 +0200
+
 ngcp-db-schema (13.0.1.0+0~mr13.0.1.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
