@@ -1,0 +1,3 @@
+use billing;
+
+alter table admins drop column auth_mode;
