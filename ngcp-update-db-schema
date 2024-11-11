@@ -201,7 +201,8 @@ class Config:
                         'provisioning prosody'
     sync_db_ignore_tables = 'kamailio.voicemail_spool ' + \
                             'provisioning.autoprov_firmwares_data ' + \
-                            'provisioning.voip_fax_data'
+                            'provisioning.voip_fax_data ' + \
+                            'billing.journals'
 
     def __init__(self) -> None:
         """Config class constructor.
