@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.8+0~mr12.5.1.8) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [1e0aabb] MT#61409 fix space when enlisting sync_ro_dbs
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Nov 2024 16:16:35 +0100
+
 ngcp-db-schema (12.5.1.7+0~mr12.5.1.7) unstable; urgency=medium
 
   [ Kirill Solomko ]
