@@ -197,7 +197,7 @@ class Config:
     revisions: Revisions
 
     # ngcp sync db related options
-    sync_db_databases = 'ngcp billing carrier kamailio freeswitch' + \
+    sync_db_databases = 'ngcp billing carrier kamailio freeswitch ' + \
                         'provisioning prosody'
     sync_db_ignore_tables = 'kamailio.voicemail_spool ' + \
                             'provisioning.autoprov_firmwares_data ' + \
