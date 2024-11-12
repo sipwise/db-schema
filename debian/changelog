@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.7+0~mr12.5.1.7) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [127f5ba] MT#61409 sync_ro_db: add freeswitch table
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 12 Nov 2024 14:36:41 +0100
+
 ngcp-db-schema (12.5.1.6+0~mr12.5.1.6) unstable; urgency=medium
 
   [ Kirill Solomko ]
