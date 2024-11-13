@@ -1,4 +1,6 @@
 USE kamailio;
+SET autocommit=0;
+SET sql_log_bin=0;
 
 UPDATE lcr_gw SET flags = id;
 
