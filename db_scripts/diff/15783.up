@@ -1,6 +1,4 @@
 USE provisioning;
-SET autocommit=0;
-SET sql_log_bin=0;
 
 
 DROP TRIGGER IF EXISTS voip_phost_crepl_trig;
@@ -140,9 +138,6 @@ SET autocommit=0;
 
 UPDATE lcr_gw SET id = flags WHERE flags != 0;
 UPDATE lcr_gw SET flags = 0;
-
-ALTER TABLE lcr_gw
-  DROP CONSTRAINT IF EXISTS `lcr_gw_id_ref`;
 
 ALTER TABLE lcr_gw
   ADD CONSTRAINT `lcr_gw_id_ref` FOREIGN KEY (`id`) REFERENCES `provisioning`.`voip_peer_hosts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
