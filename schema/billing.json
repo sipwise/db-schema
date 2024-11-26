@@ -6510,7 +6510,7 @@
          "COLUMN_DEFAULT" : "current_timestamp()",
          "COLUMN_NAME" : "valid_until",
          "COLUMN_TYPE" : "timestamp",
-         "EXTRA" : "on update current_timestamp()",
+         "EXTRA" : "",
          "IS_NULLABLE" : "NO",
          "ORDINAL_POSITION" : 10,
          "TABLE_NAME" : "vouchers",

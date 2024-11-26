@@ -1,0 +1,3 @@
+use billing;
+
+alter table vouchers modify `valid_until` timestamp NOT NULL DEFAULT current_timestamp();
