@@ -1634,7 +1634,7 @@ def show_release_info() -> None:
                              'count'])
         table.align = 'r'
         for row in cursor:
-            table.add_row(row)
+            table.add_row(list(row))
         print(table)
 
 
