@@ -935,13 +935,13 @@ def get_db_schema() -> DBSchema:
 
     if config.mode == 'down' and not db_schema:
         if config.downgrade_release:
-            error(c_str(f"""
-                could not find entries in db_schema \
+            log(c_str(f"""
+                could not find entries in db_schema
                 table matching release '{config.downgrade_release}'
                 """))
         else:
-            error('could not find entries in db_schema')
-        shutdown(1)
+            log('could not find entries in db_schema')
+        shutdown(0)
 
     return db_schema
 
