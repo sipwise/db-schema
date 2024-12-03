@@ -1,3 +1,13 @@
+ngcp-db-schema (12.5.1.9+0~mr12.5.1.9) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [3bc08dc] MT#61351 change 15783.up to not_replicated
+
+  [ Marco Capetta ]
+  * [36463fd] MT#60677 ngcp-update-db-schema skip billing.journals for mysqld2
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 03 Dec 2024 15:43:37 +0100
+
 ngcp-db-schema (12.5.1.8+0~mr12.5.1.8) unstable; urgency=medium
 
   [ Kirill Solomko ]
