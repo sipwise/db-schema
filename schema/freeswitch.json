@@ -720,6 +720,90 @@
          "TABLE_NAME" : "complete",
          "key_col" : "complete/sticky"
       },
+      "db_data/data" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "data",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/data"
+      },
+      "db_data/data_key" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "data_key",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/data_key"
+      },
+      "db_data/hostname" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "hostname",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/hostname"
+      },
+      "db_data/realm" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "realm",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/realm"
+      },
+      "group_data/groupname" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "groupname",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data/groupname"
+      },
+      "group_data/hostname" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "hostname",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data/hostname"
+      },
+      "group_data/url" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "url",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data/url"
+      },
       "interfaces/description" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
@@ -803,6 +887,54 @@
          "ORDINAL_POSITION" : 1,
          "TABLE_NAME" : "interfaces",
          "key_col" : "interfaces/type"
+      },
+      "limit_data/hostname" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "hostname",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 1,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/hostname"
+      },
+      "limit_data/id" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "id",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 3,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/id"
+      },
+      "limit_data/realm" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "realm",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 2,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/realm"
+      },
+      "limit_data/uuid" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "uuid",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 4,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/uuid"
       },
       "nat/hostname" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
@@ -2703,6 +2835,114 @@
          "TABLE_NAME" : "complete",
          "key_col" : "complete/complete9/2"
       },
+      "db_data/dd_data_key_realm/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "data_key",
+         "INDEX_NAME" : "dd_data_key_realm",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/dd_data_key_realm/1"
+      },
+      "db_data/dd_data_key_realm/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "realm",
+         "INDEX_NAME" : "dd_data_key_realm",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/dd_data_key_realm/2"
+      },
+      "db_data/dd_realm/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "realm",
+         "INDEX_NAME" : "dd_realm",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data/dd_realm/1"
+      },
+      "group_data/gd_groupname/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "groupname",
+         "INDEX_NAME" : "gd_groupname",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data/gd_groupname/1"
+      },
+      "group_data/gd_url/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "url",
+         "INDEX_NAME" : "gd_url",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data/gd_url/1"
+      },
+      "limit_data/ld_hostname/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "hostname",
+         "INDEX_NAME" : "ld_hostname",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/ld_hostname/1"
+      },
+      "limit_data/ld_id/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "id",
+         "INDEX_NAME" : "ld_id",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/ld_id/1"
+      },
+      "limit_data/ld_realm/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "realm",
+         "INDEX_NAME" : "ld_realm",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/ld_realm/1"
+      },
+      "limit_data/ld_uuid/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "uuid",
+         "INDEX_NAME" : "ld_uuid",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data/ld_uuid/1"
+      },
       "nat/nat_map_port_proto/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "port",
@@ -3766,12 +4006,33 @@
          "TABLE_NAME" : "complete",
          "key_col" : "complete"
       },
+      "db_data" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
+         "TABLE_NAME" : "db_data",
+         "key_col" : "db_data"
+      },
+      "group_data" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
+         "TABLE_NAME" : "group_data",
+         "key_col" : "group_data"
+      },
       "interfaces" : {
          "CREATE_OPTIONS" : "",
          "ENGINE" : "InnoDB",
          "TABLE_COLLATION" : "utf8mb3_general_ci",
          "TABLE_NAME" : "interfaces",
          "key_col" : "interfaces"
+      },
+      "limit_data" : {
+         "CREATE_OPTIONS" : "",
+         "ENGINE" : "InnoDB",
+         "TABLE_COLLATION" : "utf8mb3_general_ci",
+         "TABLE_NAME" : "limit_data",
+         "key_col" : "limit_data"
       },
       "nat" : {
          "CREATE_OPTIONS" : "",

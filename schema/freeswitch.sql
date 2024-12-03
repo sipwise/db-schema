@@ -147,6 +147,17 @@ CREATE TABLE `complete` (
   KEY `complete10` (`a10`,`hostname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `db_data` (
+  `hostname` varchar(255) DEFAULT NULL,
+  `realm` varchar(255) DEFAULT NULL,
+  `data_key` varchar(255) DEFAULT NULL,
+  `data` varchar(255) DEFAULT NULL,
+  UNIQUE KEY `dd_data_key_realm` (`data_key`,`realm`),
+  KEY `dd_realm` (`realm`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 /*!50001 CREATE VIEW `detailed_calls` AS SELECT
@@ -218,6 +229,16 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `group_data` (
+  `hostname` varchar(255) DEFAULT NULL,
+  `groupname` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  KEY `gd_groupname` (`groupname`),
+  KEY `gd_url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `interfaces` (
   `type` varchar(128) DEFAULT NULL,
   `name` varchar(1024) DEFAULT NULL,
@@ -226,6 +247,19 @@ CREATE TABLE `interfaces` (
   `filename` varchar(4096) DEFAULT NULL,
   `syntax` varchar(4096) DEFAULT NULL,
   `hostname` varchar(256) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `limit_data` (
+  `hostname` varchar(255) DEFAULT NULL,
+  `realm` varchar(255) DEFAULT NULL,
+  `id` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  KEY `ld_hostname` (`hostname`),
+  KEY `ld_realm` (`realm`),
+  KEY `ld_id` (`id`),
+  KEY `ld_uuid` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

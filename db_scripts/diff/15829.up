@@ -1,0 +1,33 @@
+USE freeswitch;
+
+--
+-- all tables below are taken from the upstream
+--
+
+CREATE TABLE `limit_data` (
+  `hostname` VARCHAR(255) DEFAULT NULL,
+  `realm` VARCHAR(255) DEFAULT NULL,
+  `id` VARCHAR(255) DEFAULT NULL,
+  `uuid` VARCHAR(255) DEFAULT NULL,
+  KEY `ld_hostname` (`hostname`),
+  KEY `ld_realm` (`realm`),
+  KEY `ld_id` (`id`),
+  KEY `ld_uuid` (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `db_data` (
+  `hostname` VARCHAR(255) DEFAULT NULL,
+  `realm` VARCHAR(255) DEFAULT NULL,
+  `data_key` VARCHAR(255) DEFAULT NULL,
+  `data` VARCHAR(255) DEFAULT NULL,
+  KEY `dd_realm` (`realm`),
+  UNIQUE KEY `dd_data_key_realm` (`data_key`, `realm`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `group_data` (
+  `hostname` VARCHAR(255) DEFAULT NULL,
+  `groupname` VARCHAR(255) DEFAULT NULL,
+  `url` VARCHAR(255) DEFAULT NULL,
+  KEY `gd_groupname` (`groupname`),
+  KEY `gd_url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

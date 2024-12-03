@@ -1,0 +1,5 @@
+USE freeswitch;
+
+DROP TABLE IF EXISTS `limit_data`;
+DROP TABLE IF EXISTS `db_data`;
+DROP TABLE IF EXISTS `group_data`;
