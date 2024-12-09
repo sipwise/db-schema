@@ -1,3 +1,39 @@
+ngcp-db-schema (13.2.0.0+0~mr13.2.0.0) unstable; urgency=medium
+
+  [ Richard Fuchs ]
+  * [d75b113] MT#53790 pushd: change `gcm` to `fcm`
+  * [74c6744] MT#61676 rtpengine: support SDP media removal
+
+  [ Kirill Solomko ]
+  * [4d014bc] MT#61041 improve RO db sync master node and upgrade
+  * [7d97ff6] MT#61409 sync_ro_db: add freeswitch table
+  * [a9b6424] MT#61409 fix space when enlisting sync_ro_dbs
+  * [0afdb6c] MT#61351 change 15783.up to not_replicated
+  * [e2849d4] Revert "MT#61351 change 15783.up to not_replicated"
+  * [c332fc9] MT#61351 change 15783.up to not_replicated
+  * [f24006d] MT#61626 PrettyTable debian/trixie compatibility
+
+  [ Marco Capetta ]
+  * [383f752] MT#60677 ngcp-update-db-schema skip billing.journals for mysqld2
+
+  [ Donat Zenichev ]
+  * [94ab2b6] MT#61254 preference: AA mixed mode of choice/dial ext. handling
+  * [152000f] MT#61530 freeswitch: add some missing tables
+
+  [ Rene Krenn ]
+  * [ebbccfd] MT#59447 append admins.auth_mode
+
+  [ Alessio Garzi ]
+  * [3b31c56] MT#60765 Remove prefs codecs_id_filter and codecs_id_list
+
+  [ Mykola Malkov ]
+  * [3143cc8] MT#61408 Don't fail if there is no revisions to delete
+
+  [ Bertold Vincze ]
+  * [0f863bf] MT#61525 Remove ON UPDATE from vouchers
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 09 Dec 2024 11:25:28 +0100
+
 ngcp-db-schema (13.1.0.0+0~mr13.1.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
