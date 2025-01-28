@@ -18,7 +18,6 @@ Build-Depends:
  python3-flake8-class-newline,
  python3-flake8-comprehensions,
  python3-flake8-docstrings,
- python3-flake8-polyfill,
  python3-flake8-quotes,
  python3-pep8-naming,
  python3-prettytable,
