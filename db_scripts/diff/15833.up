@@ -1,0 +1,6 @@
+use billing;
+
+alter table admins
+  add column enable_2fa tinyint(1) not null default 0,
+  add column show_otp_registration_info tinyint(1) not null default 0,
+  add column otp_secret char(32) default null;

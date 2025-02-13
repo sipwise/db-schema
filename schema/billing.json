@@ -180,6 +180,18 @@
          "TABLE_NAME" : "admins",
          "key_col" : "admins/email"
       },
+      "admins/enable_2fa" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "enable_2fa",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 24,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/enable_2fa"
+      },
       "admins/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -260,7 +272,7 @@
          "COLUMN_TYPE" : "timestamp",
          "EXTRA" : "",
          "IS_NULLABLE" : "NO",
-         "ORDINAL_POSITION" : 24,
+         "ORDINAL_POSITION" : 27,
          "TABLE_NAME" : "admins",
          "key_col" : "admins/last_banned_at"
       },
@@ -272,7 +284,7 @@
          "COLUMN_TYPE" : "varchar(45)",
          "EXTRA" : "",
          "IS_NULLABLE" : "YES",
-         "ORDINAL_POSITION" : 25,
+         "ORDINAL_POSITION" : 28,
          "TABLE_NAME" : "admins",
          "key_col" : "admins/last_banned_ip"
       },
@@ -311,6 +323,18 @@
          "ORDINAL_POSITION" : 4,
          "TABLE_NAME" : "admins",
          "key_col" : "admins/md5pass"
+      },
+      "admins/otp_secret" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "otp_secret",
+         "COLUMN_TYPE" : "char(32)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 26,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/otp_secret"
       },
       "admins/read_only" : {
          "CHARACTER_SET_NAME" : null,
@@ -371,6 +395,18 @@
          "ORDINAL_POSITION" : 21,
          "TABLE_NAME" : "admins",
          "key_col" : "admins/saltedpass_modify_timestamp"
+      },
+      "admins/show_otp_registration_info" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "show_otp_registration_info",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 25,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/show_otp_registration_info"
       },
       "admins/show_passwords" : {
          "CHARACTER_SET_NAME" : null,

@@ -71,6 +71,9 @@ CREATE TABLE `admins` (
   `saltedpass_modify_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `ban_increment_stage` int(11) unsigned NOT NULL DEFAULT 0,
   `auth_mode` enum('local','ldap') NOT NULL DEFAULT 'local',
+  `enable_2fa` tinyint(1) NOT NULL DEFAULT 0,
+  `show_otp_registration_info` tinyint(1) NOT NULL DEFAULT 0,
+  `otp_secret` char(32) DEFAULT NULL,
   `last_banned_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_banned_ip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -2480,18 +2483,18 @@ INSERT INTO `acl_roles` VALUES (3,'reseller',0);
 INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
 INSERT INTO `acl_roles` VALUES (5,'ccare',0);
 INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-03-13 14:47:54',0,'local','0000-00-00 00:00:00',NULL);
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-03-16 14:51:05',0,'local',0,0,NULL,'0000-00-00 00:00:00',NULL);
 INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-03-13 14:46:27','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-03-16 14:50:58','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-03-13 14:43:11','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-03-13 14:43:39','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-03-16 14:50:43','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-03-16 14:50:44','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-03-13 14:45:53','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-03-16 14:50:55','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');

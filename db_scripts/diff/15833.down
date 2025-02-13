@@ -1,0 +1,6 @@
+use billing;
+
+alter table admins
+  drop column enable_2fa,
+  drop column show_otp_registration_info,
+  drop column otp_secret;
