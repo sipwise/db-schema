@@ -1,0 +1,9 @@
+USE billing;
+
+DROP VIEW v_contract_phonebook;
+DROP VIEW v_contract_shared_phonebook;
+DROP VIEW v_contract_reseller_phonebook;
+
+DROP VIEW v_subscriber_phonebook;
+DROP VIEW v_subscriber_contract_phonebook;
+DROP VIEW v_subscriber_reseller_phonebook;

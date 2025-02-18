@@ -1082,6 +1082,32 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_contract_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `contract_id`,
+  1 AS `number`,
+  1 AS `name`,
+  1 AS `shared` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_contract_reseller_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `contract_id`,
+  1 AS `number`,
+  1 AS `name` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_contract_shared_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `contract_id`,
+  1 AS `number`,
+  1 AS `name`,
+  1 AS `shared` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_contract_timezone` AS SELECT
  1 AS `contact_id`,
   1 AS `contract_id`,
@@ -1093,6 +1119,33 @@ SET character_set_client = utf8;
  1 AS `contact_id`,
   1 AS `reseller_id`,
   1 AS `name` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_subscriber_contract_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `subscriber_id`,
+  1 AS `number`,
+  1 AS `name`,
+  1 AS `shared` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_subscriber_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `subscriber_id`,
+  1 AS `number`,
+  1 AS `name`,
+  1 AS `shared` */;
+SET character_set_client = @saved_cs_client;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `v_subscriber_reseller_phonebook` AS SELECT
+ 1 AS `id`,
+  1 AS `subscriber_id`,
+  1 AS `number`,
+  1 AS `name`,
+  1 AS `shared` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
@@ -2286,6 +2339,45 @@ DELIMITER ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_contract_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_contract_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_contract_reseller_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_contract_reseller_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name` from `contract_phonebook` `cp` union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_contract_shared_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_contract_shared_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!50001 DROP VIEW IF EXISTS `v_contract_timezone`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -2309,6 +2401,45 @@ DELIMITER ;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_reseller_timezone` AS select `rc`.`id` AS `contact_id`,`r`.`id` AS `reseller_id`,coalesce(`rc`.`timezone`,`t`.`name`) AS `name` from (((`billing`.`resellers` `r` join `billing`.`contracts` `i` on(`i`.`id` = `r`.`contract_id`)) join `billing`.`contacts` `rc` on(`rc`.`id` = `i`.`contact_id`)) join `ngcp`.`timezone` `t`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_subscriber_contract_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_subscriber_contract_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` where `sp`.`shared` = 0 union all select `sp`.`id` AS `id`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (((`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `ss`.`contract_id` and `sp2`.`shared` = 0)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from (`contract_phonebook` `cp` join `voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id` and !(`cp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_subscriber_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_subscriber_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` where `sp`.`shared` = 0 union all select `sp`.`id` AS `id`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (((`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `ss`.`contract_id` and `sp2`.`shared` = 0)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from (`contract_phonebook` `cp` join `voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id` and !(`cp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from (((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)) and !(`rp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+/*!50001 DROP VIEW IF EXISTS `v_subscriber_reseller_phonebook`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb3 */;
+/*!50001 SET character_set_results     = utf8mb3 */;
+/*!50001 SET collation_connection      = utf8mb3_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `v_subscriber_reseller_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from (((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id` and !(`rp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2347,18 +2478,18 @@ INSERT INTO `acl_roles` VALUES (3,'reseller',0);
 INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
 INSERT INTO `acl_roles` VALUES (5,'ccare',0);
 INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2024-12-03 14:16:06',0,'local');
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-02-19 12:48:56',0,'local');
 INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2024-12-03 14:16:00','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-02-19 12:48:50','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2024-12-03 14:15:44','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2024-12-03 14:15:46','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-02-19 12:48:24','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-02-19 12:48:27','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2024-12-03 14:15:52','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-02-19 12:48:47','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
