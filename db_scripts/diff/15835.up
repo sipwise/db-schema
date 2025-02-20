@@ -1,0 +1,11 @@
+USE billing;
+
+ALTER TABLE admins
+ADD COLUMN last_banned_at TIMESTAMP DEFAULT NULL,
+ADD COLUMN last_banned_ip VARCHAR(45) DEFAULT NULL;
+
+USE provisioning;
+
+ALTER TABLE voip_subscribers
+ADD COLUMN last_banned_at TIMESTAMP DEFAULT NULL,
+ADD COLUMN last_banned_ip VARCHAR(45) DEFAULT NULL;

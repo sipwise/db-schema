@@ -1,0 +1,11 @@
+USE billing;
+
+ALTER TABLE admins
+DROP COLUMN last_banned_at,
+DROP COLUMN last_banned_ip;
+
+USE provisioning;
+
+ALTER TABLE voip_subscribers
+DROP COLUMN last_banned_at,
+DROP COLUMN last_banned_ip;

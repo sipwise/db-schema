@@ -252,6 +252,30 @@
          "TABLE_NAME" : "admins",
          "key_col" : "admins/is_system"
       },
+      "admins/last_banned_at" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "'0000-00-00 00:00:00'",
+         "COLUMN_NAME" : "last_banned_at",
+         "COLUMN_TYPE" : "timestamp",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 24,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/last_banned_at"
+      },
+      "admins/last_banned_ip" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "last_banned_ip",
+         "COLUMN_TYPE" : "varchar(45)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 25,
+         "TABLE_NAME" : "admins",
+         "key_col" : "admins/last_banned_ip"
+      },
       "admins/lawful_intercept" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
