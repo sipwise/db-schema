@@ -1,12 +1,14 @@
+SET sql_log_bin=0;
+
 USE mysql;
-CREATE DATABASE freeswitch CHARACTER SET 'utf8';
+CREATE DATABASE IF NOT EXISTS freeswitch CHARACTER SET 'utf8';
 
 USE freeswitch;
 
 --
 -- all tables below are taken from the upstream
 --
-CREATE TABLE `aliases` (
+CREATE TABLE IF NOT EXISTS `aliases` (
   `sticky` int(11) DEFAULT NULL,
   `alias` varchar(128) DEFAULT NULL,
   `command` varchar(4096) DEFAULT NULL,
@@ -14,7 +16,7 @@ CREATE TABLE `aliases` (
   KEY `alias1` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `calls` (
+CREATE TABLE IF NOT EXISTS `calls` (
   `call_uuid` varchar(255) DEFAULT NULL,
   `call_created` varchar(128) DEFAULT NULL,
   `call_created_epoch` int(11) DEFAULT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE `calls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- deviation from upstream: `application_data` and `presence_data` converted to TEXT
-CREATE TABLE `channels` (
+CREATE TABLE IF NOT EXISTS `channels` (
   `uuid` varchar(256) DEFAULT NULL,
   `direction` varchar(32) DEFAULT NULL,
   `created` varchar(128) DEFAULT NULL,
@@ -72,7 +74,7 @@ CREATE TABLE `channels` (
   KEY `uuindex2` (`call_uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `complete` (
+CREATE TABLE IF NOT EXISTS `complete` (
   `sticky` int(11) DEFAULT NULL,
   `a1` varchar(128) DEFAULT NULL,
   `a2` varchar(128) DEFAULT NULL,
@@ -97,7 +99,7 @@ CREATE TABLE `complete` (
   KEY `complete10` (`a10`,`hostname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `interfaces` (
+CREATE TABLE IF NOT EXISTS `interfaces` (
   `type` varchar(128) DEFAULT NULL,
   `name` varchar(1024) DEFAULT NULL,
   `description` varchar(4096) DEFAULT NULL,
@@ -107,7 +109,7 @@ CREATE TABLE `interfaces` (
   `hostname` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `nat` (
+CREATE TABLE IF NOT EXISTS `nat` (
   `sticky` int(11) DEFAULT NULL,
   `port` int(11) DEFAULT NULL,
   `proto` int(11) DEFAULT NULL,
@@ -115,7 +117,7 @@ CREATE TABLE `nat` (
   KEY `nat_map_port_proto` (`port`,`proto`,`hostname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `recovery` (
+CREATE TABLE IF NOT EXISTS `recovery` (
   `runtime_uuid` varchar(255) DEFAULT NULL,
   `technology` varchar(255) DEFAULT NULL,
   `profile_name` varchar(255) DEFAULT NULL,
@@ -128,7 +130,7 @@ CREATE TABLE `recovery` (
   KEY `recovery4` (`runtime_uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `registrations` (
+CREATE TABLE IF NOT EXISTS `registrations` (
   `reg_user` varchar(256) DEFAULT NULL,
   `realm` varchar(256) DEFAULT NULL,
   `token` varchar(256) DEFAULT NULL,
@@ -142,7 +144,7 @@ CREATE TABLE `registrations` (
   KEY `regindex1` (`reg_user`,`realm`,`hostname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_authentication` (
+CREATE TABLE IF NOT EXISTS `sip_authentication` (
   `nonce` varchar(255) DEFAULT NULL,
   `expires` bigint(20) DEFAULT NULL,
   `profile_name` varchar(255) DEFAULT NULL,
@@ -155,7 +157,7 @@ CREATE TABLE `sip_authentication` (
   KEY `sa_last_nc` (`last_nc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_dialogs` (
+CREATE TABLE IF NOT EXISTS `sip_dialogs` (
   `call_id` varchar(255) DEFAULT NULL,
   `uuid` varchar(255) DEFAULT NULL,
   `sip_to_user` varchar(255) DEFAULT NULL,
@@ -196,7 +198,7 @@ CREATE TABLE `sip_dialogs` (
   KEY `sd_sip_from_tag` (`sip_from_tag`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_presence` (
+CREATE TABLE IF NOT EXISTS `sip_presence` (
   `sip_user` varchar(255) DEFAULT NULL,
   `sip_host` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
@@ -216,7 +218,7 @@ CREATE TABLE `sip_presence` (
   KEY `sp_expires` (`expires`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_registrations` (
+CREATE TABLE IF NOT EXISTS `sip_registrations` (
   `call_id` varchar(255) DEFAULT NULL,
   `sip_user` varchar(255) DEFAULT NULL,
   `sip_host` varchar(255) DEFAULT NULL,
@@ -266,7 +268,7 @@ CREATE TABLE `sip_registrations` (
   KEY `sr_orig_hostname` (`orig_hostname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_shared_appearance_dialogs` (
+CREATE TABLE IF NOT EXISTS `sip_shared_appearance_dialogs` (
   `profile_name` varchar(255) DEFAULT NULL,
   `hostname` varchar(255) DEFAULT NULL,
   `contact_str` varchar(255) DEFAULT NULL,
@@ -280,7 +282,7 @@ CREATE TABLE `sip_shared_appearance_dialogs` (
   KEY `ssd_expires` (`expires`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_shared_appearance_subscriptions` (
+CREATE TABLE IF NOT EXISTS `sip_shared_appearance_subscriptions` (
   `subscriber` varchar(255) DEFAULT NULL,
   `call_id` varchar(255) DEFAULT NULL,
   `aor` varchar(255) DEFAULT NULL,
@@ -295,7 +297,7 @@ CREATE TABLE `sip_shared_appearance_subscriptions` (
   KEY `ssa_aor` (`aor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `sip_subscriptions` (
+CREATE TABLE IF NOT EXISTS `sip_subscriptions` (
   `proto` varchar(255) DEFAULT NULL,
   `sip_user` varchar(255) DEFAULT NULL,
   `sip_host` varchar(255) DEFAULT NULL,
@@ -337,7 +339,7 @@ CREATE TABLE `sip_subscriptions` (
   KEY `ss_contact` (`contact`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `tasks` (
+CREATE TABLE IF NOT EXISTS `tasks` (
   `task_id` int(11) DEFAULT NULL,
   `task_desc` varchar(4096) DEFAULT NULL,
   `task_group` varchar(1024) DEFAULT NULL,
@@ -350,7 +352,7 @@ CREATE TABLE `tasks` (
 --
 -- the views below are taken from the upstream, schemas are kept AS it is.
 --
-CREATE view `basic_calls` AS
+CREATE view IF NOT EXISTS `basic_calls` AS
 SELECT
   a.uuid AS uuid,
   a.direction AS direction,
@@ -402,7 +404,7 @@ SELECT
   LEFT JOIN channels b ON b.uuid = c.callee_uuid AND b.hostname = c.hostname
   WHERE a.uuid = c.caller_uuid OR a.uuid NOT IN (SELECT callee_uuid FROM calls);
 
-CREATE VIEW `detailed_calls` AS
+CREATE VIEW IF NOT EXISTS `detailed_calls` AS
 SELECT
 	a.uuid AS uuid,
 	a.direction AS direction,
