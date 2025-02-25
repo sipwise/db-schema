@@ -80,7 +80,6 @@ echo "Running ngcp-update-db-schema..."
   /usr/sbin/ngcp-update-db-schema \
     --skip-ro-db-sync \
     --automated \
-    --batch-mode \
     --force \
     --verbose \
     ${db_scripts_dir_opt} \
