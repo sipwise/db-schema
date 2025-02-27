@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.10+0~mr12.5.1.10) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [66c3e4b] MT#62243 make 15798 not replicated
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 27 Feb 2025 15:36:13 +0100
+
 ngcp-db-schema (12.5.1.9+0~mr12.5.1.9) unstable; urgency=medium
 
   [ Kirill Solomko ]
