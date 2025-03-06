@@ -1,0 +1,54 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Cloud PBX';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "aa_timeout_repetition",
+label = "Auto-Attendant message repetition on timeout",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "int",
+read_only = 0,
+description = "Define Auto-Attendant number of message repetitions played before reaching associated overflow in case of timeout";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "aa_wrongkey_repetition",
+label = "Auto-Attendant message repetition on wrong key",
+type = 0,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "int",
+read_only = 0,
+description = "Define Auto-Attendant number of message repetitions played before reaching associated overflow in case of wrong keypress";
+
+
+COMMIT;
