@@ -1,0 +1,7 @@
+USE kamailio;
+set autocommit=0;
+
+ALTER TABLE htable CHANGE COLUMN `key_name` `key_name` VARCHAR(64) DEFAULT '' NOT NULL;
+ALTER TABLE htable CHANGE COLUMN `key_value` `key_value` VARCHAR(128) DEFAULT '' NOT NULL;
+
+COMMIT;

@@ -393,10 +393,10 @@ CREATE TABLE `fax_preferences` (
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `htable` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `key_name` varchar(64) NOT NULL DEFAULT '',
+  `key_name` varchar(256) NOT NULL DEFAULT '',
   `key_type` int(11) NOT NULL DEFAULT 0,
   `value_type` int(11) NOT NULL DEFAULT 0,
-  `key_value` varchar(128) NOT NULL DEFAULT '',
+  `key_value` varchar(512) NOT NULL DEFAULT '',
   `expires` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
@@ -1162,7 +1162,7 @@ INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_c
 INSERT INTO `dom_preferences` VALUES (31,'','0','voip.sipwise.local','record_call',0,'0','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (32,'','0','voip.sipwise.local','aa_extensions_dial_mode',0,'disabled','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','6810ea25aa6c83337437c82a6cff690f','4da2b13a7d733c4b65e0f9f3548386ba','31c3147f7d006c788ef6b54346f6f925','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','35d1bc6a6c46461a4690b9514d7cc419','212922b8ec2a83de64d8e0c4463c0a7b','1d9c80fd13b01d3bb41ba0eee5657b06','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
