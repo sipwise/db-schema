@@ -1,3 +1,11 @@
+ngcp-db-schema (12.5.1.11+0~mr12.5.1.11) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [f261ecf] MT#62349 remove triggers from 15783_not_replicated.up
+  * [624b438] MT#62349 voip_phost_*_trig update
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 14 Mar 2025 10:58:12 +0100
+
 ngcp-db-schema (12.5.1.10+0~mr12.5.1.10) unstable; urgency=medium
 
   [ Kirill Solomko ]
