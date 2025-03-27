@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE freeswitch;
 USE freeswitch;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `aliases` (
   `sticky` int(11) DEFAULT NULL,
   `alias` varchar(128) DEFAULT NULL,
@@ -15,7 +16,7 @@ CREATE TABLE `aliases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `basic_calls` AS SELECT
  1 AS `uuid`,
   1 AS `direction`,
@@ -60,7 +61,7 @@ SET character_set_client = utf8;
   1 AS `call_created_epoch` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `calls` (
   `call_uuid` varchar(255) DEFAULT NULL,
   `call_created` varchar(128) DEFAULT NULL,
@@ -75,7 +76,7 @@ CREATE TABLE `calls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `channels` (
   `uuid` varchar(256) DEFAULT NULL,
   `direction` varchar(32) DEFAULT NULL,
@@ -121,7 +122,7 @@ CREATE TABLE `channels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `complete` (
   `sticky` int(11) DEFAULT NULL,
   `a1` varchar(128) DEFAULT NULL,
@@ -148,7 +149,7 @@ CREATE TABLE `complete` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `db_data` (
   `hostname` varchar(255) DEFAULT NULL,
   `realm` varchar(255) DEFAULT NULL,
@@ -159,7 +160,7 @@ CREATE TABLE `db_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `detailed_calls` AS SELECT
  1 AS `uuid`,
   1 AS `direction`,
@@ -228,7 +229,7 @@ SET character_set_client = utf8;
   1 AS `call_created_epoch` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `group_data` (
   `hostname` varchar(255) DEFAULT NULL,
   `groupname` varchar(255) DEFAULT NULL,
@@ -238,7 +239,7 @@ CREATE TABLE `group_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `interfaces` (
   `type` varchar(128) DEFAULT NULL,
   `name` varchar(1024) DEFAULT NULL,
@@ -250,7 +251,7 @@ CREATE TABLE `interfaces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `limit_data` (
   `hostname` varchar(255) DEFAULT NULL,
   `realm` varchar(255) DEFAULT NULL,
@@ -263,7 +264,7 @@ CREATE TABLE `limit_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nat` (
   `sticky` int(11) DEFAULT NULL,
   `port` int(11) DEFAULT NULL,
@@ -273,7 +274,7 @@ CREATE TABLE `nat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recovery` (
   `runtime_uuid` varchar(255) DEFAULT NULL,
   `technology` varchar(255) DEFAULT NULL,
@@ -288,7 +289,7 @@ CREATE TABLE `recovery` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `registrations` (
   `reg_user` varchar(256) DEFAULT NULL,
   `realm` varchar(256) DEFAULT NULL,
@@ -304,7 +305,7 @@ CREATE TABLE `registrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_authentication` (
   `nonce` varchar(255) DEFAULT NULL,
   `expires` bigint(20) DEFAULT NULL,
@@ -319,7 +320,7 @@ CREATE TABLE `sip_authentication` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_dialogs` (
   `call_id` varchar(255) DEFAULT NULL,
   `uuid` varchar(255) DEFAULT NULL,
@@ -362,7 +363,7 @@ CREATE TABLE `sip_dialogs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_presence` (
   `sip_user` varchar(255) DEFAULT NULL,
   `sip_host` varchar(255) DEFAULT NULL,
@@ -384,7 +385,7 @@ CREATE TABLE `sip_presence` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_registrations` (
   `call_id` varchar(255) DEFAULT NULL,
   `sip_user` varchar(255) DEFAULT NULL,
@@ -436,7 +437,7 @@ CREATE TABLE `sip_registrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_shared_appearance_dialogs` (
   `profile_name` varchar(255) DEFAULT NULL,
   `hostname` varchar(255) DEFAULT NULL,
@@ -452,7 +453,7 @@ CREATE TABLE `sip_shared_appearance_dialogs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_shared_appearance_subscriptions` (
   `subscriber` varchar(255) DEFAULT NULL,
   `call_id` varchar(255) DEFAULT NULL,
@@ -469,7 +470,7 @@ CREATE TABLE `sip_shared_appearance_subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sip_subscriptions` (
   `proto` varchar(255) DEFAULT NULL,
   `sip_user` varchar(255) DEFAULT NULL,
@@ -513,7 +514,7 @@ CREATE TABLE `sip_subscriptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tasks` (
   `task_id` int(11) DEFAULT NULL,
   `task_desc` varchar(4096) DEFAULT NULL,
@@ -550,4 +551,6 @@ CREATE TABLE `tasks` (
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;
