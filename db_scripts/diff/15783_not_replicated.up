@@ -67,9 +67,11 @@ DELIMITER ;;
      WHERE lcr_id = 1
        AND id <=> NEW.id;
 
-    UPDATE kamailio.lcr_rule_target rt, kamailio.lcr_gw gw
+    UPDATE kamailio.lcr_rule_target rt
+      JOIN kamailio.lcr_gw as gw ON gw.id = rt.gw_id
        SET rt.weight = NEW.weight
-     WHERE gw.id <=> rt.gw_id
+     WHERE gw.id <=> NEW.id
+       AND gw.id <=> rt.gw_id
        AND gw.lcr_id = 1
        AND gw.group_id <=> NEW.group_id;
 
