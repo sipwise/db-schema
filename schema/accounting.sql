@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE accounting;
 USE accounting;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
@@ -28,7 +29,7 @@ CREATE TABLE `acc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_backup` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
@@ -51,7 +52,7 @@ CREATE TABLE `acc_backup` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_cdi` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `callid` varchar(255) NOT NULL,
@@ -61,7 +62,7 @@ CREATE TABLE `acc_cdi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_trash` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
@@ -84,7 +85,7 @@ CREATE TABLE `acc_trash` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -194,7 +195,7 @@ CREATE TABLE `cdr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_cash_balance` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('cash_balance') NOT NULL,
@@ -203,7 +204,7 @@ CREATE TABLE `cdr_cash_balance` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_cash_balance_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -217,7 +218,7 @@ CREATE TABLE `cdr_cash_balance_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_direction` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('source','destination') NOT NULL,
@@ -226,7 +227,7 @@ CREATE TABLE `cdr_direction` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_export_status` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
@@ -235,7 +236,7 @@ CREATE TABLE `cdr_export_status` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_export_status_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `status_id` int(3) unsigned NOT NULL,
@@ -247,7 +248,7 @@ CREATE TABLE `cdr_export_status_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_group` (
   `cdr_id` int(10) unsigned NOT NULL,
   `call_id` varchar(255) NOT NULL,
@@ -258,7 +259,7 @@ CREATE TABLE `cdr_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_mos_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `mos_average` decimal(5,1) DEFAULT NULL,
@@ -270,7 +271,7 @@ CREATE TABLE `cdr_mos_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_period_costs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -297,7 +298,7 @@ CREATE TABLE `cdr_period_costs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_provider` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('carrier','reseller','customer') NOT NULL,
@@ -306,7 +307,7 @@ CREATE TABLE `cdr_provider` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_relation` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('profile_package_id','contract_balance_id','prev_fragment_id') NOT NULL,
@@ -315,7 +316,7 @@ CREATE TABLE `cdr_relation` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_relation_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -328,7 +329,7 @@ CREATE TABLE `cdr_relation_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_tag` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
@@ -337,7 +338,7 @@ CREATE TABLE `cdr_tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_tag_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -350,7 +351,7 @@ CREATE TABLE `cdr_tag_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_time_balance` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('free_time_balance') NOT NULL,
@@ -359,7 +360,7 @@ CREATE TABLE `cdr_time_balance` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_time_balance_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -373,7 +374,7 @@ CREATE TABLE `cdr_time_balance_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
@@ -391,7 +392,7 @@ CREATE TABLE `events` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_relation` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('primary_number_id','subscriber_profile_id','subscriber_profile_set_id','pilot_subscriber_id','pilot_primary_number_id','pilot_subscriber_profile_id','pilot_subscriber_profile_set_id') NOT NULL,
@@ -400,7 +401,7 @@ CREATE TABLE `events_relation` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_relation_data` (
   `event_id` int(11) unsigned NOT NULL,
   `relation_id` int(3) unsigned NOT NULL,
@@ -411,7 +412,7 @@ CREATE TABLE `events_relation_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_tag` (
   `id` int(3) unsigned NOT NULL AUTO_INCREMENT,
   `type` enum('primary_number_cc','primary_number_ac','primary_number_sn','pilot_primary_number_cc','pilot_primary_number_ac','pilot_primary_number_sn','subscriber_profile_name','subscriber_profile_set_name','pilot_subscriber_profile_name','pilot_subscriber_profile_set_name','first_non_primary_alias_username_before','first_non_primary_alias_username_after','pilot_first_non_primary_alias_username_before','pilot_first_non_primary_alias_username_after','non_primary_alias_username','primary_alias_username_before','primary_alias_username_after','pilot_primary_alias_username_before','pilot_primary_alias_username_after') NOT NULL,
@@ -420,7 +421,7 @@ CREATE TABLE `events_tag` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_tag_data` (
   `event_id` int(11) unsigned NOT NULL,
   `tag_id` int(3) unsigned NOT NULL,
@@ -431,7 +432,7 @@ CREATE TABLE `events_tag_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -543,7 +544,7 @@ CREATE TABLE `int_cdr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_cash_balance_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -557,7 +558,7 @@ CREATE TABLE `int_cdr_cash_balance_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_export_status_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `status_id` int(3) unsigned NOT NULL,
@@ -569,7 +570,7 @@ CREATE TABLE `int_cdr_export_status_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_group` (
   `cdr_id` int(10) unsigned NOT NULL,
   `call_id` varchar(255) NOT NULL,
@@ -580,7 +581,7 @@ CREATE TABLE `int_cdr_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_relation_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -593,7 +594,7 @@ CREATE TABLE `int_cdr_relation_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_tag_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -606,7 +607,7 @@ CREATE TABLE `int_cdr_tag_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_time_balance_data` (
   `cdr_id` int(10) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
@@ -620,7 +621,7 @@ CREATE TABLE `int_cdr_time_balance_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `malicious_calls` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `callee_uuid` varchar(255) NOT NULL,
@@ -637,7 +638,7 @@ CREATE TABLE `malicious_calls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mark` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `collector` varchar(255) NOT NULL,
@@ -647,7 +648,7 @@ CREATE TABLE `mark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prepaid_costs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `call_id` varchar(255) NOT NULL,
@@ -660,6 +661,7 @@ CREATE TABLE `prepaid_costs` (
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*M!999999\- enable the sandbox mode */ 
 INSERT INTO `cdr_cash_balance` VALUES (1,'cash_balance');
 INSERT INTO `cdr_direction` VALUES (1,'source');
 INSERT INTO `cdr_direction` VALUES (2,'destination');
@@ -712,6 +714,7 @@ INSERT INTO `events_tag` VALUES (16,'primary_alias_username_before');
 INSERT INTO `events_tag` VALUES (17,'primary_alias_username_after');
 INSERT INTO `events_tag` VALUES (18,'pilot_primary_alias_username_before');
 INSERT INTO `events_tag` VALUES (19,'pilot_primary_alias_username_after');
+/*M!999999\- enable the sandbox mode */ 
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;

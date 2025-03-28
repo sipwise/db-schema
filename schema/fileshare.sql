@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE fileshare;
 USE fileshare;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `downloads` (
   `id` char(36) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL DEFAULT '',
   `state` enum('NEW','DOWNLOADED') NOT NULL DEFAULT 'NEW',
@@ -20,7 +21,7 @@ CREATE TABLE `downloads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sessions` (
   `id` char(36) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL DEFAULT '',
   `ttl` int(11) DEFAULT NULL,
@@ -32,7 +33,7 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `uploads` (
   `id` char(36) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL DEFAULT '',
   `data` longblob DEFAULT NULL,
@@ -57,4 +58,6 @@ CREATE TABLE `uploads` (
   CONSTRAINT `uploads_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;

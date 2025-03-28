@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE ldap;
 USE ldap;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ldap_attr_mappings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `oc_map_id` int(10) unsigned NOT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE `ldap_attr_mappings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `ldap_entries` AS SELECT
  1 AS `id`,
   1 AS `dn`,
@@ -31,7 +32,7 @@ SET character_set_client = utf8;
   1 AS `keyval` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ldap_oc_mappings` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
@@ -44,14 +45,14 @@ CREATE TABLE `ldap_oc_mappings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `org` AS SELECT
  1 AS `id`,
   1 AS `o`,
   1 AS `dc` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `users` AS SELECT
  1 AS `id`,
   1 AS `account_id`,
@@ -100,6 +101,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+/*M!999999\- enable the sandbox mode */ 
 INSERT INTO `ldap_attr_mappings` VALUES (1,1,'uidNumber','users.id',NULL,'users',NULL,NULL,NULL,3,0);
 INSERT INTO `ldap_attr_mappings` VALUES (2,1,'uid','users.uuid',NULL,'users',NULL,NULL,NULL,3,0);
 INSERT INTO `ldap_attr_mappings` VALUES (3,1,'userPassword','users.password',NULL,'users',NULL,NULL,NULL,3,0);
@@ -108,4 +110,5 @@ INSERT INTO `ldap_attr_mappings` VALUES (5,1,'telephoneNumber','users.phone',NUL
 INSERT INTO `ldap_attr_mappings` VALUES (6,1,'displayName','users.displayname',NULL,'users',NULL,NULL,NULL,3,0);
 INSERT INTO `ldap_oc_mappings` VALUES (1,'inetOrgPerson','users','id',NULL,NULL,0);
 INSERT INTO `ldap_oc_mappings` VALUES (3,'organization','org','id',NULL,NULL,0);
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;

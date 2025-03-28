@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE carrier;
 USE carrier;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contracts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `external_id` varchar(255) DEFAULT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE `contracts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `credits` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -31,7 +32,7 @@ CREATE TABLE `credits` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `external_id` varchar(255) DEFAULT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `interceptions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `url` varchar(31) NOT NULL,
@@ -51,7 +52,7 @@ CREATE TABLE `interceptions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `numbers` (
   `number` varchar(42) NOT NULL,
   `subscriber_id` int(11) unsigned DEFAULT NULL,
@@ -62,7 +63,7 @@ CREATE TABLE `numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) unsigned NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) unsigned DEFAULT NULL,
@@ -88,7 +89,7 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subscribers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `external_id` varchar(255) DEFAULT NULL,
@@ -107,4 +108,6 @@ CREATE TABLE `subscribers` (
   CONSTRAINT `subscribers_ibfk_1` FOREIGN KEY (`contract_id`) REFERENCES `contracts` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;

@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE sipstats;
 USE sipstats;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mark` (
   `name` varchar(255) NOT NULL,
   `value` bigint(20) unsigned NOT NULL,
@@ -13,7 +14,7 @@ CREATE TABLE `mark` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `message_packets` (
   `message` bigint(20) unsigned NOT NULL,
   `packet` bigint(20) unsigned NOT NULL,
@@ -24,7 +25,7 @@ CREATE TABLE `message_packets` (
 (PARTITION `p700000` VALUES LESS THAN (700000) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `messages` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `timestamp` decimal(17,6) NOT NULL,
@@ -52,7 +53,7 @@ CREATE TABLE `messages` (
 (PARTITION `p700000` VALUES LESS THAN (700000) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `packets` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `timestamp` decimal(17,6) NOT NULL,
@@ -68,7 +69,7 @@ CREATE TABLE `packets` (
 (PARTITION `p700000` VALUES LESS THAN (700000) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `statistics` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `timestamp` decimal(17,6) NOT NULL,
@@ -106,4 +107,6 @@ CREATE TABLE `statistics` (
  PARTITION BY RANGE (floor(`timestamp`))
 (PARTITION `p_old` VALUES LESS THAN (600) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;
