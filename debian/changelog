@@ -1,3 +1,11 @@
+ngcp-db-schema (11.5.1.13+0~mr11.5.1.13) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [4707478] MT#61351 change 15783.up to not_replicated
+  * [2ae2976] MT#62396 fix voip_phost_urepl_trig weight update
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 02 Apr 2025 12:44:54 +0200
+
 ngcp-db-schema (11.5.1.12+0~mr11.5.1.12) unstable; urgency=medium
 
   [ Kirill Solomko ]
