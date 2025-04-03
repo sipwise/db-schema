@@ -4,8 +4,9 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE syslog;
 USE syslog;
+/*M!999999\- enable the sandbox mode */ 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `SystemEvents` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -35,7 +36,7 @@ CREATE TABLE `SystemEvents` (
 ) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci INSERT_METHOD=FIRST UNION=(`se1`,`se2`,`se3`,`se4`,`se5`,`se6`,`se7`,`se8`,`se9`,`se10`,`se11`,`se12`,`se13`,`se14`,`se15`,`se16`,`se17`,`se18`,`se19`,`se20`,`se21`,`se22`,`se23`,`se24`,`se25`,`se26`,`se27`,`se28`);
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se1` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -65,7 +66,7 @@ CREATE TABLE `se1` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se10` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -95,7 +96,7 @@ CREATE TABLE `se10` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se11` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -125,7 +126,7 @@ CREATE TABLE `se11` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se12` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -155,7 +156,7 @@ CREATE TABLE `se12` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se13` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -185,7 +186,7 @@ CREATE TABLE `se13` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se14` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -215,7 +216,7 @@ CREATE TABLE `se14` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se15` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -245,7 +246,7 @@ CREATE TABLE `se15` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se16` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -275,7 +276,7 @@ CREATE TABLE `se16` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se17` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -305,7 +306,7 @@ CREATE TABLE `se17` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se18` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -335,7 +336,7 @@ CREATE TABLE `se18` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se19` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -365,7 +366,7 @@ CREATE TABLE `se19` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se2` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -395,7 +396,7 @@ CREATE TABLE `se2` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se20` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -425,7 +426,7 @@ CREATE TABLE `se20` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se21` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -455,7 +456,7 @@ CREATE TABLE `se21` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se22` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -485,7 +486,7 @@ CREATE TABLE `se22` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se23` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -515,7 +516,7 @@ CREATE TABLE `se23` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se24` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -545,7 +546,7 @@ CREATE TABLE `se24` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se25` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -575,7 +576,7 @@ CREATE TABLE `se25` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se26` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -605,7 +606,7 @@ CREATE TABLE `se26` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se27` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -635,7 +636,7 @@ CREATE TABLE `se27` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se28` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -665,7 +666,7 @@ CREATE TABLE `se28` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se3` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -695,7 +696,7 @@ CREATE TABLE `se3` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se4` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -725,7 +726,7 @@ CREATE TABLE `se4` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se5` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -755,7 +756,7 @@ CREATE TABLE `se5` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se6` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -785,7 +786,7 @@ CREATE TABLE `se6` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se7` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -815,7 +816,7 @@ CREATE TABLE `se7` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se8` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -845,7 +846,7 @@ CREATE TABLE `se8` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `se9` (
   `ID` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `CustomerID` bigint(20) DEFAULT NULL,
@@ -874,4 +875,6 @@ CREATE TABLE `se9` (
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */ 
 COMMIT;

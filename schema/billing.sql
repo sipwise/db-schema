@@ -4,14 +4,15 @@ SET SESSION autocommit=0;
 SET SESSION unique_checks=0;
 CREATE DATABASE billing;
 USE billing;
+/*M!999999\- enable the sandbox mode */ 
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `_v_actual_effective_start_time` AS SELECT
  1 AS `contract_id`,
   1 AS `effective_start_time` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acl_role_mappings` (
   `accessor_id` int(11) unsigned NOT NULL,
   `has_access_to_id` int(11) unsigned NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE `acl_role_mappings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acl_roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `role` varchar(64) NOT NULL,
@@ -33,7 +34,7 @@ CREATE TABLE `acl_roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admin_password_journal` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `admin_id` int(11) unsigned NOT NULL,
@@ -46,7 +47,7 @@ CREATE TABLE `admin_password_journal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `admins` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -82,7 +83,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_fees` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `billing_profile_id` int(11) unsigned NOT NULL,
@@ -118,7 +119,7 @@ CREATE TABLE `billing_fees` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_fees_history` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `bf_id` int(11) unsigned DEFAULT NULL,
@@ -155,7 +156,7 @@ CREATE TABLE `billing_fees_history` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_fees_raw` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `billing_profile_id` int(11) unsigned NOT NULL,
@@ -189,7 +190,7 @@ CREATE TABLE `billing_fees_raw` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_mappings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `start_date` datetime DEFAULT NULL,
@@ -211,7 +212,7 @@ CREATE TABLE `billing_mappings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_network_blocks` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `network_id` int(11) unsigned NOT NULL,
@@ -231,7 +232,7 @@ CREATE TABLE `billing_network_blocks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_networks` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -244,7 +245,7 @@ CREATE TABLE `billing_networks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_peaktime_special` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `billing_profile_id` int(11) unsigned NOT NULL,
@@ -256,7 +257,7 @@ CREATE TABLE `billing_peaktime_special` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_peaktime_weekdays` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `billing_profile_id` int(11) unsigned NOT NULL,
@@ -269,7 +270,7 @@ CREATE TABLE `billing_peaktime_weekdays` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_profiles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -304,7 +305,7 @@ CREATE TABLE `billing_profiles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_zones` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `billing_profile_id` int(11) unsigned NOT NULL,
@@ -316,7 +317,7 @@ CREATE TABLE `billing_zones` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billing_zones_history` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `bz_id` int(11) unsigned DEFAULT NULL,
@@ -329,7 +330,7 @@ CREATE TABLE `billing_zones_history` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `call_list_suppressions` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `domain` varchar(255) NOT NULL DEFAULT '',
@@ -343,7 +344,7 @@ CREATE TABLE `call_list_suppressions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contacts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -387,7 +388,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contract_balances` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -412,7 +413,7 @@ CREATE TABLE `contract_balances` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contract_credits` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `balance_id` int(11) unsigned NOT NULL,
@@ -427,7 +428,7 @@ CREATE TABLE `contract_credits` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contract_fraud_preferences` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -443,7 +444,7 @@ CREATE TABLE `contract_fraud_preferences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contract_phonebook` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -457,7 +458,7 @@ CREATE TABLE `contract_phonebook` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contract_registers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -470,7 +471,7 @@ CREATE TABLE `contract_registers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contracts` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) unsigned DEFAULT NULL,
@@ -507,7 +508,7 @@ CREATE TABLE `contracts` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contracts_billing_profile_network` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -526,7 +527,7 @@ CREATE TABLE `contracts_billing_profile_network` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `contracts_billing_profile_network_schedule` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `profile_network_id` int(11) unsigned NOT NULL,
@@ -537,7 +538,7 @@ CREATE TABLE `contracts_billing_profile_network_schedule` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `credit_payments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `credit_id` int(11) unsigned NOT NULL,
@@ -550,7 +551,7 @@ CREATE TABLE `credit_payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customer_registers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) unsigned NOT NULL,
@@ -563,7 +564,7 @@ CREATE TABLE `customer_registers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -590,7 +591,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `domain_resellers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `domain_id` int(11) unsigned NOT NULL,
@@ -603,7 +604,7 @@ CREATE TABLE `domain_resellers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `domains` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `domain` varchar(127) NOT NULL,
@@ -615,7 +616,7 @@ CREATE TABLE `domains` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `email_templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -630,7 +631,7 @@ CREATE TABLE `email_templates` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `invoice_templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -645,7 +646,7 @@ CREATE TABLE `invoice_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `invoices` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -665,7 +666,7 @@ CREATE TABLE `invoices` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `journals` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `operation` enum('create','update','delete') NOT NULL DEFAULT 'create',
@@ -692,7 +693,7 @@ CREATE TABLE `journals` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lnp_numbers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `number` varchar(31) NOT NULL,
@@ -709,7 +710,7 @@ CREATE TABLE `lnp_numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `lnp_providers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -720,7 +721,7 @@ CREATE TABLE `lnp_providers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_levels` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -740,7 +741,7 @@ CREATE TABLE `ncos_levels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_lnp_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ncos_level_id` int(11) unsigned NOT NULL,
@@ -754,7 +755,7 @@ CREATE TABLE `ncos_lnp_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_lnp_pattern_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ncos_lnp_list_id` int(11) unsigned NOT NULL,
@@ -766,7 +767,7 @@ CREATE TABLE `ncos_lnp_pattern_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_pattern_list` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ncos_level_id` int(11) unsigned NOT NULL,
@@ -778,7 +779,7 @@ CREATE TABLE `ncos_pattern_list` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_set_levels` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ncos_set_id` int(11) unsigned NOT NULL,
@@ -791,7 +792,7 @@ CREATE TABLE `ncos_set_levels` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `ncos_sets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -805,7 +806,7 @@ CREATE TABLE `ncos_sets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order_payments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `order_id` int(11) unsigned NOT NULL,
@@ -818,7 +819,7 @@ CREATE TABLE `order_payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -844,7 +845,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `package_profile_sets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `package_id` int(11) unsigned NOT NULL,
@@ -861,7 +862,7 @@ CREATE TABLE `package_profile_sets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_resets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `subscriber_id` int(11) unsigned NOT NULL,
@@ -874,7 +875,7 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `payments` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `amount` int(11) DEFAULT NULL,
@@ -894,7 +895,7 @@ CREATE TABLE `payments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `products` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -915,7 +916,7 @@ CREATE TABLE `products` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `profile_packages` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -940,7 +941,7 @@ CREATE TABLE `profile_packages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `provisioning_templates` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -956,7 +957,7 @@ CREATE TABLE `provisioning_templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reseller_brandings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned NOT NULL,
@@ -971,7 +972,7 @@ CREATE TABLE `reseller_brandings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `reseller_phonebook` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned NOT NULL,
@@ -985,7 +986,7 @@ CREATE TABLE `reseller_phonebook` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `resellers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -998,7 +999,7 @@ CREATE TABLE `resellers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subscriber_phonebook` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `subscriber_id` int(11) unsigned NOT NULL,
@@ -1013,7 +1014,7 @@ CREATE TABLE `subscriber_phonebook` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `topup_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(127) DEFAULT NULL,
@@ -1060,13 +1061,13 @@ CREATE TABLE `topup_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_actual_billing_profiles` AS SELECT
  1 AS `contract_id`,
   1 AS `billing_profile_id` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_contract_billing_profile_network_schedules` AS SELECT
  1 AS `id`,
   1 AS `contract_id`,
@@ -1081,21 +1082,21 @@ SET character_set_client = utf8;
   1 AS `billing_network_name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_contract_timezone` AS SELECT
  1 AS `contact_id`,
   1 AS `contract_id`,
   1 AS `name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_reseller_timezone` AS SELECT
  1 AS `contact_id`,
   1 AS `reseller_id`,
   1 AS `name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
+SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_subscriber_timezone` AS SELECT
  1 AS `contact_id`,
   1 AS `subscriber_id`,
@@ -1103,7 +1104,7 @@ SET character_set_client = utf8;
   1 AS `name` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voip_intercept` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `reseller_id` int(11) unsigned DEFAULT NULL,
@@ -1129,7 +1130,7 @@ CREATE TABLE `voip_intercept` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voip_number_block_resellers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `number_block_id` int(11) unsigned NOT NULL,
@@ -1142,7 +1143,7 @@ CREATE TABLE `voip_number_block_resellers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voip_number_blocks` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `cc` int(4) unsigned NOT NULL,
@@ -1156,7 +1157,7 @@ CREATE TABLE `voip_number_blocks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voip_numbers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `cc` int(4) unsigned NOT NULL,
@@ -1177,7 +1178,7 @@ CREATE TABLE `voip_numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `voip_subscribers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
@@ -1201,7 +1202,7 @@ CREATE TABLE `voip_subscribers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vouchers` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
@@ -2325,6 +2326,7 @@ DELIMITER ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+/*M!999999\- enable the sandbox mode */ 
 INSERT INTO `acl_role_mappings` VALUES (1,1);
 INSERT INTO `acl_role_mappings` VALUES (1,2);
 INSERT INTO `acl_role_mappings` VALUES (1,3);
@@ -2347,18 +2349,18 @@ INSERT INTO `acl_roles` VALUES (3,'reseller',0);
 INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
 INSERT INTO `acl_roles` VALUES (5,'ccare',0);
 INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-03-13 15:08:47',0,'local');
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-04-03 07:34:53',0,'local');
 INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-03-13 15:08:40','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-04-03 07:31:24','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-03-13 15:08:24','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-03-13 15:08:26','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-04-03 07:27:22','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-04-03 07:28:05','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-03-13 15:08:37','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-04-03 07:30:45','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
@@ -2379,6 +2381,7 @@ INSERT INTO `products` VALUES (3,NULL,'reseller','VOIP_RESELLER','VoIP Reseller'
 INSERT INTO `products` VALUES (4,NULL,'sipaccount','SIP_ACCOUNT','Basic SIP Account',1,NULL,NULL,NULL);
 INSERT INTO `products` VALUES (5,NULL,'pbxaccount','PBX_ACCOUNT','Cloud PBX Account',1,NULL,NULL,NULL);
 INSERT INTO `resellers` VALUES (1,1,'default','active');
+/*M!999999\- enable the sandbox mode */ 
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
