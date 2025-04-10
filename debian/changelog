@@ -1,3 +1,30 @@
+ngcp-db-schema (13.4.0.0+0~mr13.4.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2f6fb5e] MT#61971 remove python3-flake8-polyfill dependency
+  * [a678d82] MT#61805 add contract and subcsriber phonebook views
+  * [1163d44] MT#62243 make 15798 not replicated
+  * [ed514b8] MT#62349 remove triggers from 15783_not_replicated.up
+  * [88a9810] MT#62349 voip_phost_*_trig update
+  * [fa6ecec] MT#62396 fix voip_phost_urepl_trig weight update
+
+  [ Bertold Vincze ]
+  * [8ab7ebf] MT#62177 Add ban-related db fields to bAdmins and pSubscribers
+
+  [ Mykola Malkov ]
+  * [c97401a] MT#62243 Remove usage of --batch option
+
+  [ Alessio Garzi ]
+  * [f38e51e] MT#61255 New prefs aa_timeout_repetition and aa_wrongkey_repetition
+
+  [ Victor Seva ]
+  * [83253ed] MT#62337 kamailio: changes for 6.0.1 version
+
+  [ Rene Krenn ]
+  * [d8788e7] MT#53706 add OTP secret cols
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 10 Apr 2025 08:26:44 +0200
+
 ngcp-db-schema (13.3.0.0+0~mr13.3.0.0) unstable; urgency=medium
 
   * New release.
