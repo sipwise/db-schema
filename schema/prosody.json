@@ -195,53 +195,53 @@
    },
    "constraints" : {},
    "indexes" : {
-      "prosody/prosody_index/1" : {
+      "prosody/prosody_unique_index/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "host",
-         "INDEX_NAME" : "prosody_index",
+         "INDEX_NAME" : "prosody_unique_index",
          "INDEX_TYPE" : "BTREE",
-         "NON_UNIQUE" : 1,
+         "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : 20,
          "TABLE_NAME" : "prosody",
-         "key_col" : "prosody/prosody_index/1"
+         "key_col" : "prosody/prosody_unique_index/1"
       },
-      "prosody/prosody_index/2" : {
+      "prosody/prosody_unique_index/2" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "user",
-         "INDEX_NAME" : "prosody_index",
+         "INDEX_NAME" : "prosody_unique_index",
          "INDEX_TYPE" : "BTREE",
-         "NON_UNIQUE" : 1,
+         "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 2,
          "SUB_PART" : 20,
          "TABLE_NAME" : "prosody",
-         "key_col" : "prosody/prosody_index/2"
+         "key_col" : "prosody/prosody_unique_index/2"
       },
-      "prosody/prosody_index/3" : {
+      "prosody/prosody_unique_index/3" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "store",
-         "INDEX_NAME" : "prosody_index",
+         "INDEX_NAME" : "prosody_unique_index",
          "INDEX_TYPE" : "BTREE",
-         "NON_UNIQUE" : 1,
+         "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 3,
          "SUB_PART" : 20,
          "TABLE_NAME" : "prosody",
-         "key_col" : "prosody/prosody_index/3"
+         "key_col" : "prosody/prosody_unique_index/3"
       },
-      "prosody/prosody_index/4" : {
+      "prosody/prosody_unique_index/4" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "key",
-         "INDEX_NAME" : "prosody_index",
+         "INDEX_NAME" : "prosody_unique_index",
          "INDEX_TYPE" : "BTREE",
-         "NON_UNIQUE" : 1,
+         "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 4,
          "SUB_PART" : 20,
          "TABLE_NAME" : "prosody",
-         "key_col" : "prosody/prosody_index/4"
+         "key_col" : "prosody/prosody_unique_index/4"
       },
       "sipwise_mam/PRIMARY/1" : {
          "COLLATION" : "A",

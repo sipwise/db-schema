@@ -14,7 +14,7 @@ CREATE TABLE `prosody` (
   `key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `type` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `value` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  KEY `prosody_index` (`host`(20),`user`(20),`store`(20),`key`(20))
+  UNIQUE KEY `prosody_unique_index` (`host`(20),`user`(20),`store`(20),`key`(20)) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
