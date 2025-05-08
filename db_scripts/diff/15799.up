@@ -1,0 +1,13 @@
+USE provisioning;
+SET autocommit=0;
+
+ALTER TABLE voip_preferences_enum
+    DROP FOREIGN KEY `pref_id_fk`,
+    DROP KEY IF EXISTS `preference_id`,
+    DROP KEY IF EXISTS `pref_id_fk`;
+
+ALTER TABLE voip_preferences_enum
+    ADD KEY `pref_id_idx` (`preference_id`),
+    ADD CONSTRAINT `pref_id_fk` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+COMMIT;
