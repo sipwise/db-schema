@@ -12046,17 +12046,17 @@
          "TABLE_NAME" : "voip_preferences_enum",
          "key_col" : "voip_preferences_enum/PRIMARY/1"
       },
-      "voip_preferences_enum/pref_id_fk/1" : {
+      "voip_preferences_enum/pref_id_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "preference_id",
-         "INDEX_NAME" : "pref_id_fk",
+         "INDEX_NAME" : "pref_id_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voip_preferences_enum",
-         "key_col" : "voip_preferences_enum/pref_id_fk/1"
+         "key_col" : "voip_preferences_enum/pref_id_idx/1"
       },
       "voip_prof_preferences/PRIMARY/1" : {
          "COLLATION" : "A",
