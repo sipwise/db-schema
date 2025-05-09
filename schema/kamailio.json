@@ -6972,6 +6972,30 @@
          "TABLE_NAME" : "voicemail_spool",
          "key_col" : "voicemail_spool/recording"
       },
+      "voicemail_spool/transcript" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "''",
+         "COLUMN_NAME" : "transcript",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 16,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/transcript"
+      },
+      "voicemail_spool/transcript_status" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "'none'",
+         "COLUMN_NAME" : "transcript_status",
+         "COLUMN_TYPE" : "enum('none','pending','done')",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 15,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/transcript_status"
+      },
       "voicemail_users/attach" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
@@ -10586,17 +10610,53 @@
          "TABLE_NAME" : "voicemail_spool",
          "key_col" : "voicemail_spool/dir/1"
       },
-      "voicemail_spool/mailboxuser_idx/1" : {
+      "voicemail_spool/mboxuser_msgnum_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "mailboxuser",
-         "INDEX_NAME" : "mailboxuser_idx",
+         "INDEX_NAME" : "mboxuser_msgnum_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voicemail_spool",
-         "key_col" : "voicemail_spool/mailboxuser_idx/1"
+         "key_col" : "voicemail_spool/mboxuser_msgnum_idx/1"
+      },
+      "voicemail_spool/mboxuser_msgnum_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "msgnum",
+         "INDEX_NAME" : "mboxuser_msgnum_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/mboxuser_msgnum_idx/2"
+      },
+      "voicemail_spool/transcript_status_mailboxuser_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "transcript_status",
+         "INDEX_NAME" : "transcript_status_mailboxuser_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/transcript_status_mailboxuser_idx/1"
+      },
+      "voicemail_spool/transcript_status_mailboxuser_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "mailboxuser",
+         "INDEX_NAME" : "transcript_status_mailboxuser_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/transcript_status_mailboxuser_idx/2"
       },
       "voicemail_users/PRIMARY/1" : {
          "COLLATION" : "A",

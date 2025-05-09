@@ -1428,6 +1428,30 @@
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams/tag_label"
       },
+      "recording_streams/transcript" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "''",
+         "COLUMN_NAME" : "transcript",
+         "COLUMN_TYPE" : "text",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 18,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/transcript"
+      },
+      "recording_streams/transcript_status" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "'none'",
+         "COLUMN_NAME" : "transcript_status",
+         "COLUMN_TYPE" : "enum('none','pending','done')",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 17,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/transcript_status"
+      },
       "rtc_session/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -9609,6 +9633,30 @@
          "SUB_PART" : null,
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams/call/1"
+      },
+      "recording_streams/transcript_status_call_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "transcript_status",
+         "INDEX_NAME" : "transcript_status_call_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/transcript_status_call_idx/1"
+      },
+      "recording_streams/transcript_status_call_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "call",
+         "INDEX_NAME" : "transcript_status_call_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/transcript_status_call_idx/2"
       },
       "rtc_session/PRIMARY/1" : {
          "COLLATION" : "A",

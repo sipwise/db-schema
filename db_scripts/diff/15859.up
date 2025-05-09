@@ -1,0 +1,13 @@
+use provisioning;
+alter table recording_streams
+  add column transcript_status enum('none', 'pending', 'done') not null default 'none',
+  add column transcript text not null default '',
+  add index transcript_status_call_idx (transcript_status, `call`);
+
+use kamailio;
+alter table voicemail_spool
+  add column transcript_status enum('none', 'pending', 'done') not null default 'none',
+  add column transcript text not null default '',
+  drop index mailboxuser_idx,
+  add index mboxuser_msgnum_idx (mailboxuser, msgnum),
+  add index transcript_status_mailboxuser_idx (transcript_status, mailboxuser);

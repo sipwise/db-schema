@@ -1,0 +1,13 @@
+use provisioning;
+alter table recording_streams
+  drop index transcript_status_call_idx,
+  drop column transcript_status,
+  drop column transcript;
+
+use kamailio;
+alter table voicemail_spool
+  drop index transcript_status_mailboxuser_idx,
+  drop column transcript_status,
+  drop column transcript,
+  drop index mboxuser_msgnum_idx,
+  add index mailboxuser_idx (mailboxuser);

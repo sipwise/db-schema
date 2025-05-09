@@ -283,8 +283,11 @@ CREATE TABLE `recording_streams` (
   `end_timestamp` decimal(13,3) DEFAULT NULL,
   `tag_label` varchar(255) NOT NULL DEFAULT '',
   `stream` longblob NOT NULL DEFAULT '',
+  `transcript_status` enum('none','pending','done') NOT NULL DEFAULT 'none',
+  `transcript` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `call` (`call`),
+  KEY `transcript_status_call_idx` (`transcript_status`,`call`),
   CONSTRAINT `fk_call_id` FOREIGN KEY (`call`) REFERENCES `recording_calls` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
