@@ -1,3 +1,10 @@
+ngcp-db-schema (13.3.1.2+0~mr13.3.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [9fc3166] MT#59836 fix voip_preferences_enum preference_id key
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 12 May 2025 15:31:25 +0200
+
 ngcp-db-schema (13.3.1.1+0~mr13.3.1.1) unstable; urgency=medium
 
   * New release.
