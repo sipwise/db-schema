@@ -109,5 +109,21 @@ CREATE TABLE `subscribers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*M!999999\- enable the sandbox mode */ 
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
 /*M!999999\- enable the sandbox mode */ 
 COMMIT;

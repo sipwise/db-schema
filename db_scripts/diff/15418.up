@@ -51,7 +51,7 @@ create procedure transform_billing_mappings() begin
               order by bm2.start_date desc limit 1) order by bm1.id asc;
           declare continue handler for not found set _mappings_done = true;
 
-          set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 1.001,_t + 1)) - 1);
+          set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),0);
           set _bm_ids = "";
           set _mappings_done = false;
           open mappings_cur;

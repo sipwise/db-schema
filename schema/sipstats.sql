@@ -108,5 +108,15 @@ CREATE TABLE `statistics` (
 (PARTITION `p_old` VALUES LESS THAN (600) ENGINE = InnoDB);
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*M!999999\- enable the sandbox mode */ 
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
+set autocommit=0;
+commit;
 /*M!999999\- enable the sandbox mode */ 
 COMMIT;
