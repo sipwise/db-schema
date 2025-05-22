@@ -71,9 +71,9 @@ fi
 mysql -S "${mariadb_dir}/mysqld.sock" -e \
   "GRANT ALL PRIVILEGES ON *.* TO sipwise@localhost IDENTIFIED BY 'sipwise' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-db_scripts_dir_opt=''
+declare -a update_options
 if [[ -n "${DB_BASE:-}" ]]; then
-  db_scripts_dir_opt="--db-scripts-dir=${DB_BASE}/db_scripts"
+  update_options=("--db-scripts-dir=${DB_BASE}/db_scripts")
 fi
 
 echo "Running ngcp-update-db-schema..."
@@ -82,7 +82,7 @@ echo "Running ngcp-update-db-schema..."
     --automated \
     --force \
     --verbose \
-    ${db_scripts_dir_opt} \
+    "${update_options[@]}" \
     --db-socket="${mariadb_dir}/mysqld.sock"
 echo "Done"
 
@@ -127,12 +127,14 @@ for schema in "${schemes[@]}"; do
   echo "Done"
 
   echo "Running mysqldump for schema '${schema}'..."
-  echo "SET FOREIGN_KEY_CHECKS=0;" > "${schema}.sql"
-  echo "SET NAMES utf8;" >> "${schema}.sql"
-  echo "SET SESSION autocommit=0;" >> "${schema}.sql"
-  echo "SET SESSION unique_checks=0;" >> "${schema}.sql"
-  echo "CREATE DATABASE ${schema};" >> "${schema}.sql"
-  echo "USE ${schema};" >> "${schema}.sql"
+  cat >"${schema}.sql" <<-SCHEMA
+	SET FOREIGN_KEY_CHECKS=0;
+	SET NAMES utf8;
+	SET SESSION autocommit=0;
+	SET SESSION unique_checks=0;
+	CREATE DATABASE ${schema};
+	USE ${schema};
+SCHEMA
 
   mysqldump "${schema}" --skip-triggers --routines --compact --no-data \
     -S "${mariadb_dir}/mysqld.sock" \
@@ -159,7 +161,6 @@ done
 
 tries=0
 max_tries=10
-stopped=false
 mysql_pid=$(cat "${mariadb_dir}/mysqld.pid")
 if [[ -z "${mysql_pid}" ]]; then
   echo "Can't get mysql pid from ${mariadb_dir}/mysqld.pid" >&2
