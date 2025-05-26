@@ -2160,7 +2160,7 @@ main: begin
             order by bm2.start_date desc limit 1) order by bm1.base asc, bm1.id asc;
         declare continue handler for not found set _mappings_done = true;
 
-        set _effective_start_time = (select unix_timestamp(if(_is_end,_t + 1.001,_t + 1)) - 1);
+        set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),if(_is_end, 0.001, 0));
         set _bm_ids = "";
         set _mappings_done = false;
         open mappings_cur;
@@ -2238,7 +2238,7 @@ begin
     nested1: begin
 
       declare events_cur cursor for select t,is_end from (
-        (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+        (select coalesce(bm.start_date,from_unixtime(1) - 1) as t, 0 as is_end
           from billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
         union all
         (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from billing_mappings where contract_id = _contract_id)
@@ -2264,7 +2264,7 @@ begin
               order by bm2.start_date desc limit 1) order by bm1.id asc;
           declare continue handler for not found set _mappings_done = true;
 
-          set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),0);
+          set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),if(_is_end, 0.001, 0));
           set _bm_ids = "";
           set _mappings_done = false;
           open mappings_cur;
@@ -2492,7 +2492,7 @@ commit;
 set autocommit=0;
 commit;
 set autocommit=0;
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-05-20 17:01:33',0,'local',0,0,NULL,'0000-00-00 00:00:00',NULL);
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-05-26 14:19:00',0,'local',0,0,NULL,'0000-00-00 00:00:00',NULL);
 commit;
 set autocommit=0;
 INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
@@ -2515,7 +2515,7 @@ commit;
 set autocommit=0;
 commit;
 set autocommit=0;
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-05-20 17:01:09','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-05-26 14:18:32','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 commit;
 set autocommit=0;
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
@@ -2526,8 +2526,8 @@ commit;
 set autocommit=0;
 commit;
 set autocommit=0;
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-05-20 17:00:19','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-05-20 17:00:23','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-05-26 14:17:39','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-05-26 14:17:43','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 commit;
 set autocommit=0;
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
@@ -2541,7 +2541,7 @@ commit;
 set autocommit=0;
 commit;
 set autocommit=0;
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-05-20 17:01:01','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-05-26 14:18:23','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 commit;
 set autocommit=0;
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);

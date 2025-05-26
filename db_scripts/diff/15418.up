@@ -25,7 +25,7 @@ create procedure transform_billing_mappings() begin
     nested1: begin
 
       declare events_cur cursor for select t,is_end from (
-        (select coalesce(bm.start_date,from_unixtime(0)) as t, 0 as is_end
+        (select coalesce(bm.start_date,from_unixtime(1) - 1) as t, 0 as is_end
           from billing_mappings bm join contracts c on bm.contract_id = c.id where contract_id = _contract_id)
         union all
         (select coalesce(end_date,from_unixtime(2147483647) - 0.001) as t, 1 as is_end from billing_mappings where contract_id = _contract_id)
@@ -51,7 +51,7 @@ create procedure transform_billing_mappings() begin
               order by bm2.start_date desc limit 1) order by bm1.id asc;
           declare continue handler for not found set _mappings_done = true;
 
-          set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),0);
+          set _effective_start_time = coalesce((select unix_timestamp(if(_is_end,_t + 0.001,_t))),if(_is_end, 0.001, 0));
           set _bm_ids = "";
           set _mappings_done = false;
           open mappings_cur;
