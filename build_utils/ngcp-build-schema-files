@@ -38,7 +38,7 @@ mysql_install_options+=("--skip-test-db")
 mysql_install_options+=("--user=mysql")
 mysql_install_options+=("--skip-networking")
 
-mysql_install_db "${mysql_install_options[@]}"
+mariadb-install-db "${mysql_install_options[@]}"
 
 declare -a mysqld_options
 mysqld_options+=("--defaults-file=${mariadb_dir}/my.cnf")
