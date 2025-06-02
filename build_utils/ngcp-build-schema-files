@@ -86,24 +86,6 @@ echo "Running ngcp-update-db-schema..."
     --db-socket="${mariadb_dir}/mysqld.sock"
 echo "Done"
 
-echo "Setting some columns to zero unixtime and predefined passwords for reproducible builds"
-mysql -S "${mariadb_dir}/mysqld.sock" -e "USE billing;
-  UPDATE admins SET saltedpass_modify_timestamp='1970-01-01 00:00:00';
-  UPDATE billing_profiles SET modify_timestamp='1970-01-01 00:00:00';
-  UPDATE contacts SET modify_timestamp='1970-01-01 00:00:00';
-  UPDATE contracts SET modify_timestamp='1970-01-01 00:00:00';"
-mysql -S "${mariadb_dir}/mysqld.sock" -e "USE ngcp;
-  UPDATE db_schema SET applied_at='1970-01-01 00:00:00';
-  UPDATE timezone SET created_at='1970-01-01 00:00:00', modified_at='1970-01-01 00:00:00';
-  UPDATE tzinfo_version SET created_at='1970-01-01 00:00:00', modified_at='1970-01-01 00:00:00';"
-mysql -S "${mariadb_dir}/mysqld.sock" -e "USE provisioning;
-  UPDATE voip_dom_preferences SET modify_timestamp='1970-01-01 00:00:00';
-  UPDATE voip_preferences SET modify_timestamp='1970-01-01 00:00:00';
-  UPDATE voip_subscribers SET password='3141a404c8ea3225685c856639841817', modify_timestamp='1970-01-01 00:00:00', password_modify_timestamp='1970-01-01 00:00:00', webpassword_modify_timestamp='1970-01-01 00:00:00';
-  UPDATE voip_usr_preferences SET modify_timestamp='1970-01-01 00:00:00';"
-mysql -S "${mariadb_dir}/mysqld.sock" -e "USE kamailio;
-  UPDATE subscriber SET password='3141a404c8ea3225685c856639841817', ha1='236feed92d0f30e96c46e1f53ec8c5f3', ha1b='44048240e652808415beba7afd895bf0', datetime_created='1970-01-01 00:00:00';"
-
 declare -a schemes=()
 schemes+=("accounting")
 schemes+=("billing")

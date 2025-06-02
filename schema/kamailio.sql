@@ -1251,7 +1251,7 @@ commit;
 set autocommit=0;
 commit;
 set autocommit=0;
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','3141a404c8ea3225685c856639841817','236feed92d0f30e96c46e1f53ec8c5f3','44048240e652808415beba7afd895bf0','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','38619f5cebc31315a73db60647ca9eb9','e50b90202ceada3bf075f5b65dd22d77','27d3fd3bf139d92348d1b6ce10b611a9','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 commit;
 set autocommit=0;
 commit;
