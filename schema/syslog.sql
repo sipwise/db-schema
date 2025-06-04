@@ -1,3 +1,4 @@
+SET SESSION time_zone=UTC;
 SET FOREIGN_KEY_CHECKS=0;
 SET NAMES utf8;
 SET SESSION autocommit=0;
