@@ -1,0 +1,9 @@
+USE provisioning;
+
+SET autocommit=0;
+
+DELETE from voip_preferences WHERE attribute = "enable_2fa";
+DELETE from voip_preferences WHERE attribute = "show_otp_registration_info";
+DELETE from voip_preferences WHERE attribute = "otp_secret";
+
+COMMIT;

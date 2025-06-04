@@ -1194,7 +1194,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=407 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4156,6 +4156,9 @@ INSERT INTO `voip_preferences` VALUES (403,9,'aa_extensions_dial_mode','Auto-Att
 INSERT INTO `voip_preferences` VALUES (404,5,'sdp_media_remove','Remove/reject SDP media sections by type',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Comma-separated list of SDP media types (e.g. \'video\') to remove from an offer.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (405,9,'aa_timeout_repetition','Auto-Attendant message repetition on timeout',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'int',0,'Define Auto-Attendant number of message repetitions played before reaching associated overflow in case of timeout',0,0,0);
 INSERT INTO `voip_preferences` VALUES (406,9,'aa_wrongkey_repetition','Auto-Attendant message repetition on wrong key',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'int',0,'Define Auto-Attendant number of message repetitions played before reaching associated overflow in case of wrong keypress',0,0,0);
+INSERT INTO `voip_preferences` VALUES (407,3,'enable_2fa','2-Factor Authentication (2FA)',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Time-based One-Time-Password (TOTP) Multifactor Authentication for Subscriber CSC logins.',0,0,1);
+INSERT INTO `voip_preferences` VALUES (408,3,'otp_secret','OTP Secret',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'string',1,'Time-based One-Time-Password (TOTP) secret (RFC 6238).',0,0,0);
+INSERT INTO `voip_preferences` VALUES (409,3,'show_otp_registration_info','Show OTP Registration Info',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'boolean',1,'Show Time-based One-Time-Password (TOTP) secret and registration info for the next CSC logins.',0,0,0);
 commit;
 set autocommit=0;
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
