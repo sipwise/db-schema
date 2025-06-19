@@ -100,6 +100,7 @@ CREATE TABLE `autoprov_field_device_lines` (
   `extension_unit` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `deviceid_dbaliases_id` int(11) unsigned DEFAULT NULL,
   `target_number` varchar(100) DEFAULT NULL,
+  `label` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_fdev_line_const` (`device_id`),
   KEY `fk_sub_line_const` (`subscriber_id`),

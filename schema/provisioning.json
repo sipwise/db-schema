@@ -540,6 +540,18 @@
          "TABLE_NAME" : "autoprov_field_device_lines",
          "key_col" : "autoprov_field_device_lines/key_num"
       },
+      "autoprov_field_device_lines/label" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "label",
+         "COLUMN_TYPE" : "varchar(100)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 10,
+         "TABLE_NAME" : "autoprov_field_device_lines",
+         "key_col" : "autoprov_field_device_lines/label"
+      },
       "autoprov_field_device_lines/line_type" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
