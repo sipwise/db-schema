@@ -1,3 +1,34 @@
+ngcp-db-schema (13.5.0.0+0~mr13.5.0.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [e935ac4] MT#62676 fixes for mariadb 10.8/debian trixie
+  * [374f456] MT#62863 fix3 unix_timestamp('970-01-01') for trixie
+  * [4e8e9a7] MT#62568 subscribers 2fa fields
+
+  [ Kirill Solomko ]
+  * [49f3d91] MT#59836 fix voip_preferences_enum preference_id key
+  * [57b924c] MT#62863 fix transform_billing_mappings() for debian/trixie
+  * [39e6d65] MT#62863 fix2 transform_billing_mappings() for debian/trixie
+  * [16b016c] Revert "MT#61373 Update some columns for reproducible builds"
+
+  [ Victor Seva ]
+  * [4894302] MT#62662 prosody: 13.0 changes in db
+
+  [ Mykola Malkov ]
+  * [29ce663] MT#61373 Update some columns for reproducible builds
+  * [bd17a99] MT#61373 Update some columns for reproducible builds
+  * [f4320b7] MT#61373 Specify time zone for schema sql files
+  * [2452b54] MT#61373 Use mariadb-install-db to create db
+  * [3f5749c] MT#61373 Use '+00:00' time zone
+
+  [ Guillem Jover ]
+  * [6ea20e3] MT#62763 Fix shellcheck issues
+
+  [ Richard Fuchs ]
+  * [64dde6c] MT#62544 add transcription columns
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 20 Jun 2025 10:42:36 +0200
+
 ngcp-db-schema (13.4.0.0+0~mr13.4.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
