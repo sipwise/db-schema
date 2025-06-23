@@ -1,0 +1,31 @@
+use provisioning;
+set autocommit=0;
+
+SET @group_id = (SELECT id FROM voip_preference_groups WHERE name = 'Access Restrictions' LIMIT 1);
+
+INSERT INTO voip_preferences SET
+voip_preference_groups_id = @group_id,
+attribute = 'dnd',
+label = 'Do Not Disturb (DND) mode',
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref =  0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+modify_timestamp = now(),
+internal = 0,
+expose_to_customer = 1,
+data_type = 'boolean',
+read_only = 0,
+description = 'Enable Do Not Disturb (DND) mode. If activated the subscriber will not receive any call. The call forwards will not be taken into account.',
+dynamic = 0,
+reseller_pref = 0,
+expose_to_subscriber = 1;
+
+COMMIT;
