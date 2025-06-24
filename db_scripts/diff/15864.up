@@ -1,0 +1,151 @@
+USE billing;
+
+CREATE OR REPLACE VIEW v_contract_phonebook AS
+SELECT cp.id, cp.contract_id, cp.number, cp.name, 0 as shared, 1 as own
+  FROM contract_phonebook cp
+UNION ALL
+SELECT CONCAT("s", sp.id, "c", s.contract_id), s.contract_id, sp.number, sp.name, sp.shared, 0 as own
+  FROM subscriber_phonebook sp
+  JOIN voip_subscribers s ON s.id = sp.subscriber_id
+   AND sp.number NOT IN (
+    SELECT cp2.number
+      FROM contract_phonebook cp2
+     WHERE cp2.contract_id = s.contract_id)
+ WHERE sp.shared = 1
+UNION ALL
+SELECT CONCAT("r", rp.id, "c", c.id), c.id as contract_id, rp.number, rp.name, 0 as shared, 0 as own
+  FROM reseller_phonebook rp
+  JOIN contacts cc ON cc.reseller_id = rp.reseller_id
+  JOIN contracts c ON c.contact_id = cc.id
+   AND rp.number NOT IN (
+    SELECT cp2.number
+      FROM contract_phonebook cp2
+     WHERE cp2.contract_id = c.id)
+   AND rp.number NOT IN (
+    SELECT sp.number
+      FROM subscriber_phonebook sp
+      JOIN voip_subscribers s ON s.id = sp.subscriber_id
+     WHERE s.contract_id = c.id
+       AND sp.shared = 1);
+
+
+CREATE OR REPLACE VIEW v_contract_shared_phonebook AS
+SELECT cp.id, cp.contract_id, cp.number, cp.name, 0 as shared, 1 as own
+  FROM contract_phonebook cp
+UNION ALL
+SELECT CONCAT("s", sp.id, "c", s.contract_id), s.contract_id, sp.number, sp.name, sp.shared, 0 as own
+  FROM subscriber_phonebook sp
+  JOIN voip_subscribers s ON s.id = sp.subscriber_id
+   AND sp.number NOT IN (
+    SELECT cp2.number
+      FROM contract_phonebook cp2
+     WHERE cp2.contract_id = s.contract_id)
+ WHERE sp.shared = 1;
+
+
+CREATE OR REPLACE VIEW v_contract_reseller_phonebook AS
+SELECT cp.id, cp.contract_id, cp.number, cp.name, 1 as own
+  FROM contract_phonebook cp
+UNION ALL
+SELECT CONCAT("r", rp.id, "c", c.id), c.id as contract_id, rp.number, rp.name, 0 as own
+  FROM reseller_phonebook rp
+  JOIN contacts cc ON cc.reseller_id = rp.reseller_id
+  JOIN contracts c ON c.contact_id = cc.id
+   AND rp.number NOT IN (
+    SELECT cp2.number
+      FROM contract_phonebook cp2
+     WHERE cp2.contract_id = c.id);
+
+
+CREATE OR REPLACE VIEW v_subscriber_phonebook AS
+SELECT sp.id, sp.subscriber_id, sp.number, sp.name, sp.shared, 1 as own
+  FROM subscriber_phonebook sp
+UNION ALL
+SELECT CONCAT("s", sp.id, "s", ss.id), ss.id as subscriber_id, sp.number, sp.name, sp.shared, 0 as own
+  FROM subscriber_phonebook sp
+  JOIN voip_subscribers s ON s.id = sp.subscriber_id
+  JOIN contracts c ON c.id = s.contract_id
+  JOIN voip_subscribers ss ON ss.contract_id = c.id
+  JOIN provisioning.voip_subscribers ps ON (ps.uuid = ss.uuid AND ps.is_pbx_group = 0)
+   AND sp.number NOT IN (
+    SELECT cp2.number
+     FROM contract_phonebook cp2
+    WHERE cp2.contract_id = s.contract_id)
+   AND sp.number NOT IN (
+    SELECT sp2.number
+     FROM subscriber_phonebook sp2
+    WHERE sp2.subscriber_id = ss.id)
+ WHERE sp.shared = 1
+UNION ALL
+SELECT CONCAT("c", cp.id, "s", s.id), s.id as subscriber_id, cp.number, cp.name, 0 as shared, 0 as own
+  FROM contract_phonebook cp
+  JOIN voip_subscribers s ON s.contract_id = cp.contract_id
+  JOIN provisioning.voip_subscribers ps ON (ps.uuid = s.uuid AND ps.is_pbx_group = 0)
+   AND cp.number NOT IN (
+    SELECT sp2.number
+     FROM subscriber_phonebook sp2
+     JOIN voip_subscribers s2 ON s2.id = sp2.subscriber_id
+    WHERE s2.contract_id = cp.contract_id
+       AND sp2.shared = 0)
+UNION ALL
+SELECT CONCAT("r", rp.id, "s", s.id), s.id as subscriber_id, rp.number, rp.name, 0 as shared, 0 as own
+  FROM reseller_phonebook rp
+  JOIN contacts cc ON cc.reseller_id = rp.reseller_id
+  JOIN contracts c ON c.contact_id = cc.id
+  JOIN voip_subscribers s ON s.contract_id = c.id
+  JOIN provisioning.voip_subscribers ps ON (ps.uuid = s.uuid AND ps.is_pbx_group = 0)
+   AND rp.number NOT IN (
+    SELECT cp2.number
+      FROM contract_phonebook cp2
+     WHERE cp2.contract_id = c.id)
+   AND rp.number NOT IN (
+    SELECT sp2.number
+     FROM subscriber_phonebook sp2
+     JOIN voip_subscribers s2 ON s2.id = sp2.subscriber_id
+    WHERE s2.contract_id = c.id);
+
+
+CREATE OR REPLACE VIEW v_subscriber_contract_phonebook AS
+SELECT sp.id, sp.subscriber_id, sp.number, sp.name, sp.shared, 1 as own
+  FROM subscriber_phonebook sp
+UNION ALL
+SELECT CONCAT("s", sp.id, "s", ss.id), ss.id as subscriber_id, sp.number, sp.name, sp.shared, 0 as own
+  FROM subscriber_phonebook sp
+  JOIN voip_subscribers s ON s.id = sp.subscriber_id
+  JOIN contracts c ON c.id = s.contract_id
+  JOIN voip_subscribers ss ON ss.contract_id = c.id
+   AND sp.number NOT IN (
+    SELECT cp2.number
+     FROM contract_phonebook cp2
+    WHERE cp2.contract_id = s.contract_id)
+   AND sp.number NOT IN (
+    SELECT sp2.number
+     FROM subscriber_phonebook sp2
+    WHERE sp2.subscriber_id = ss.id)
+ WHERE sp.shared = 1
+UNION ALL
+SELECT CONCAT("c", cp.id, "s", s.id), s.id as subscriber_id, cp.number, cp.name, 0 as shared, 0 as own
+  FROM contract_phonebook cp
+  JOIN voip_subscribers s ON s.contract_id = cp.contract_id
+   AND cp.number NOT IN (
+    SELECT sp2.number
+      FROM subscriber_phonebook sp2
+      JOIN voip_subscribers s2 ON s2.id = sp2.subscriber_id
+     WHERE s2.contract_id = cp.contract_id
+       AND sp2.shared = 0);
+
+
+CREATE OR REPLACE VIEW v_subscriber_reseller_phonebook AS
+SELECT sp.id, sp.subscriber_id, sp.number, sp.name, sp.shared, 1 as own
+  FROM subscriber_phonebook sp
+UNION ALL
+SELECT CONCAT("r", rp.id, "s", s.id), s.id as subscriber_id, rp.number, rp.name, 0 as shared, 0 as own
+  FROM reseller_phonebook rp
+  JOIN contacts cc ON cc.reseller_id = rp.reseller_id
+  JOIN contracts c ON c.contact_id = cc.id
+  JOIN voip_subscribers s ON s.contract_id = c.id
+   AND rp.number NOT IN (
+    SELECT sp2.number
+      FROM subscriber_phonebook sp2
+      JOIN voip_subscribers s2 ON s2.id = sp2.subscriber_id
+     WHERE s2.contract_id = c.id);

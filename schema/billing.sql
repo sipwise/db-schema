@@ -1094,7 +1094,8 @@ SET character_set_client = utf8mb4;
   1 AS `contract_id`,
   1 AS `number`,
   1 AS `name`,
-  1 AS `shared` */;
+  1 AS `shared`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -1102,7 +1103,8 @@ SET character_set_client = utf8mb4;
  1 AS `id`,
   1 AS `contract_id`,
   1 AS `number`,
-  1 AS `name` */;
+  1 AS `name`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -1111,7 +1113,8 @@ SET character_set_client = utf8mb4;
   1 AS `contract_id`,
   1 AS `number`,
   1 AS `name`,
-  1 AS `shared` */;
+  1 AS `shared`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -1134,7 +1137,8 @@ SET character_set_client = utf8mb4;
   1 AS `subscriber_id`,
   1 AS `number`,
   1 AS `name`,
-  1 AS `shared` */;
+  1 AS `shared`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -1143,7 +1147,8 @@ SET character_set_client = utf8mb4;
   1 AS `subscriber_id`,
   1 AS `number`,
   1 AS `name`,
-  1 AS `shared` */;
+  1 AS `shared`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -1152,7 +1157,8 @@ SET character_set_client = utf8mb4;
   1 AS `subscriber_id`,
   1 AS `number`,
   1 AS `name`,
-  1 AS `shared` */;
+  1 AS `shared`,
+  1 AS `own` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
@@ -2355,7 +2361,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_contract_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 VIEW `v_contract_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared`,1 AS `own` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,0 AS `own` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared`,0 AS `own` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)) and !(`rp`.`number` in (select `sp`.`number` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) where `s`.`contract_id` = `c`.`id` and `sp`.`shared` = 1)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2368,7 +2374,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_contract_reseller_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name` from `contract_phonebook` `cp` union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 VIEW `v_contract_reseller_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,1 AS `own` from `contract_phonebook` `cp` union all select concat('r',`rp`.`id`,'c',`c`.`id`) AS `CONCAT("r", rp.id, "c", c.id)`,`c`.`id` AS `contract_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `own` from ((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2381,7 +2387,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_contract_shared_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 */;
+/*!50001 VIEW `v_contract_shared_phonebook` AS select `cp`.`id` AS `id`,`cp`.`contract_id` AS `contract_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared`,1 AS `own` from `contract_phonebook` `cp` union all select concat('s',`sp`.`id`,'c',`s`.`contract_id`) AS `CONCAT("s", sp.id, "c", s.contract_id)`,`s`.`contract_id` AS `contract_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,0 AS `own` from (`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)))) where `sp`.`shared` = 1 */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2420,7 +2426,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_subscriber_contract_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` where `sp`.`shared` = 0 union all select `sp`.`id` AS `id`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (((`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `ss`.`contract_id` and `sp2`.`shared` = 0)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from (`contract_phonebook` `cp` join `voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id` and !(`cp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) */;
+/*!50001 VIEW `v_subscriber_contract_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,1 AS `own` from `subscriber_phonebook` `sp` union all select concat('s',`sp`.`id`,'s',`ss`.`id`) AS `CONCAT("s", sp.id, "s", ss.id)`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,0 AS `own` from (((`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from `subscriber_phonebook` `sp2` where `sp2`.`subscriber_id` = `ss`.`id`)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared`,0 AS `own` from (`contract_phonebook` `cp` join `voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id` and !(`cp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2433,7 +2439,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_subscriber_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` where `sp`.`shared` = 0 union all select `sp`.`id` AS `id`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from (((`subscriber_phonebook` `sp` join `voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id` and !(`sp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `ss`.`contract_id` and `sp2`.`shared` = 0)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared` from (`contract_phonebook` `cp` join `voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id` and !(`cp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from (((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id` and !(`rp`.`number` in (select `cp2`.`number` from `contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)) and !(`rp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 VIEW `v_subscriber_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,1 AS `own` from `billing`.`subscriber_phonebook` `sp` union all select concat('s',`sp`.`id`,'s',`ss`.`id`) AS `CONCAT("s", sp.id, "s", ss.id)`,`ss`.`id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,0 AS `own` from ((((`billing`.`subscriber_phonebook` `sp` join `billing`.`voip_subscribers` `s` on(`s`.`id` = `sp`.`subscriber_id`)) join `billing`.`contracts` `c` on(`c`.`id` = `s`.`contract_id`)) join `billing`.`voip_subscribers` `ss` on(`ss`.`contract_id` = `c`.`id`)) join `provisioning`.`voip_subscribers` `ps` on(`ps`.`uuid` = `ss`.`uuid` and `ps`.`is_pbx_group` = 0 and !(`sp`.`number` in (select `cp2`.`number` from `billing`.`contract_phonebook` `cp2` where `cp2`.`contract_id` = `s`.`contract_id`)) and !(`sp`.`number` in (select `sp2`.`number` from `billing`.`subscriber_phonebook` `sp2` where `sp2`.`subscriber_id` = `ss`.`id`)))) where `sp`.`shared` = 1 union all select concat('c',`cp`.`id`,'s',`s`.`id`) AS `CONCAT("c", cp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`cp`.`number` AS `number`,`cp`.`name` AS `name`,0 AS `shared`,0 AS `own` from ((`billing`.`contract_phonebook` `cp` join `billing`.`voip_subscribers` `s` on(`s`.`contract_id` = `cp`.`contract_id`)) join `provisioning`.`voip_subscribers` `ps` on(`ps`.`uuid` = `s`.`uuid` and `ps`.`is_pbx_group` = 0 and !(`cp`.`number` in (select `sp2`.`number` from (`billing`.`subscriber_phonebook` `sp2` join `billing`.`voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `cp`.`contract_id` and `sp2`.`shared` = 0)))) union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared`,0 AS `own` from ((((`billing`.`reseller_phonebook` `rp` join `billing`.`contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `billing`.`contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `billing`.`voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id`)) join `provisioning`.`voip_subscribers` `ps` on(`ps`.`uuid` = `s`.`uuid` and `ps`.`is_pbx_group` = 0 and !(`rp`.`number` in (select `cp2`.`number` from `billing`.`contract_phonebook` `cp2` where `cp2`.`contract_id` = `c`.`id`)) and !(`rp`.`number` in (select `sp2`.`number` from (`billing`.`subscriber_phonebook` `sp2` join `billing`.`voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2446,7 +2452,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_subscriber_reseller_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared` from `subscriber_phonebook` `sp` union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared` from (((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id` and !(`rp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
+/*!50001 VIEW `v_subscriber_reseller_phonebook` AS select `sp`.`id` AS `id`,`sp`.`subscriber_id` AS `subscriber_id`,`sp`.`number` AS `number`,`sp`.`name` AS `name`,`sp`.`shared` AS `shared`,1 AS `own` from `subscriber_phonebook` `sp` union all select concat('r',`rp`.`id`,'s',`s`.`id`) AS `CONCAT("r", rp.id, "s", s.id)`,`s`.`id` AS `subscriber_id`,`rp`.`number` AS `number`,`rp`.`name` AS `name`,0 AS `shared`,0 AS `own` from (((`reseller_phonebook` `rp` join `contacts` `cc` on(`cc`.`reseller_id` = `rp`.`reseller_id`)) join `contracts` `c` on(`c`.`contact_id` = `cc`.`id`)) join `voip_subscribers` `s` on(`s`.`contract_id` = `c`.`id` and !(`rp`.`number` in (select `sp2`.`number` from (`subscriber_phonebook` `sp2` join `voip_subscribers` `s2` on(`s2`.`id` = `sp2`.`subscriber_id`)) where `s2`.`contract_id` = `c`.`id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
