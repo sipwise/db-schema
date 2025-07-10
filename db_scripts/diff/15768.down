@@ -2,6 +2,8 @@ USE kamailio;
 
 drop table reseller_preferences;
 
+USE provisioning;
+
 drop trigger voip_resellerpref_crepl_trig;
 drop trigger voip_resellerpref_urepl_trig;
 drop trigger voip_resellerpref_drepl_trig;
