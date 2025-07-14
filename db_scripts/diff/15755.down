@@ -21,6 +21,6 @@ INSERT INTO voip_preferences SET
     expose_to_subscriber = 0,
     data_type = 'string',
     read_only = 0,
-    description = 'The 'caller_pattern' of a peering group has to match this tag to be considered for outgoing calls.';
+    description = "The 'caller_pattern' of a peering group has to match this tag to be considered for outgoing calls.";
 
 COMMIT;
