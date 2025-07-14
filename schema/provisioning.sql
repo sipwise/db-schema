@@ -1342,7 +1342,7 @@ CREATE TABLE `voip_sound_handles` (
   PRIMARY KEY (`id`),
   KEY `v_s_h_group_ref` (`group_id`),
   CONSTRAINT `v_s_h_group_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_sound_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=154 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4159,7 +4159,7 @@ INSERT INTO `voip_preferences` VALUES (406,9,'aa_wrongkey_repetition','Auto-Atte
 INSERT INTO `voip_preferences` VALUES (407,3,'enable_2fa','2-Factor Authentication (2FA)',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Time-based One-Time-Password (TOTP) Multifactor Authentication for Subscriber CSC logins.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (408,3,'otp_secret','OTP Secret',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'string',1,'Time-based One-Time-Password (TOTP) secret (RFC 6238).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (409,3,'show_otp_registration_info','Show OTP Registration Info',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'boolean',1,'Show Time-based One-Time-Password (TOTP) secret and registration info for the next CSC logins.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (410,3,'dnd','Do Not Disturb (DND) mode',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Do Not Disturb (DND) mode.',0,0,1);
+INSERT INTO `voip_preferences` VALUES (410,3,'dnd','Do Not Disturb (DND) mode',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Do Not Disturb (DND) mode. If activated the subscriber will not receive any call. The call forwards will not be taken into account.',0,0,1);
 commit;
 set autocommit=0;
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
@@ -4714,6 +4714,7 @@ INSERT INTO `voip_sound_handles` VALUES (149,'recent_call_deleted',12,1);
 INSERT INTO `voip_sound_handles` VALUES (150,'ringback_tone',13,1);
 INSERT INTO `voip_sound_handles` VALUES (151,'aa_timeout',2,1);
 INSERT INTO `voip_sound_handles` VALUES (152,'aa_default',2,1);
+INSERT INTO `voip_sound_handles` VALUES (153,'callee_dnd',1,1);
 commit;
 set autocommit=0;
 commit;
