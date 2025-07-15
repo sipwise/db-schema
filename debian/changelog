@@ -1,3 +1,10 @@
+ngcp-db-schema (13.4.2.0+1~mr13.4.2.0) unstable; urgency=medium
+
+  [ jsung ]
+  * [5f470aa] MT#63198 Fix 15768.down script
+
+ -- Mykola Malkov <mmalkov@sipwise.com>  Tue, 15 Jul 2025 14:12:18 +0300
+
 ngcp-db-schema (13.4.2.0+0~mr13.4.2.0) unstable; urgency=medium
 
   * New release.
