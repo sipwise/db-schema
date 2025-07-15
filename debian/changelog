@@ -1,3 +1,10 @@
+ngcp-db-schema (13.4.1.2+0~mr13.4.1.2) unstable; urgency=medium
+
+  [ jsung ]
+  * [bcb1673] MT#63198 Fix 15768.down script
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 15 Jul 2025 15:32:44 +0200
+
 ngcp-db-schema (13.4.1.1+0~mr13.4.1.1) unstable; urgency=medium
 
   * New release.
