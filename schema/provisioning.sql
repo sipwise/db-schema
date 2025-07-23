@@ -1320,6 +1320,7 @@ CREATE TABLE `voip_sound_files` (
   PRIMARY KEY (`id`),
   KEY `set_id_ref` (`set_id`),
   KEY `handle_set_id_idx` (`handle_id`,`set_id`),
+  CONSTRAINT `handle_id_ref` FOREIGN KEY (`handle_id`) REFERENCES `voip_sound_handles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `set_id_ref` FOREIGN KEY (`set_id`) REFERENCES `voip_sound_sets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

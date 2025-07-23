@@ -8698,6 +8698,16 @@
          "UPDATE_RULE" : "CASCADE",
          "key_col" : "voip_rewrite_rules/v_rwr_setid_ref/set_id/voip_rewrite_rule_sets/id"
       },
+      "voip_sound_files/handle_id_ref/handle_id/voip_sound_handles/id" : {
+         "COLUMN_NAME" : "handle_id",
+         "CONSTRAINT_NAME" : "handle_id_ref",
+         "DELETE_RULE" : "CASCADE",
+         "REFERENCED_COLUMN_NAME" : "id",
+         "REFERENCED_TABLE_NAME" : "voip_sound_handles",
+         "TABLE_NAME" : "voip_sound_files",
+         "UPDATE_RULE" : "CASCADE",
+         "key_col" : "voip_sound_files/handle_id_ref/handle_id/voip_sound_handles/id"
+      },
       "voip_sound_files/set_id_ref/set_id/voip_sound_sets/id" : {
          "COLUMN_NAME" : "set_id",
          "CONSTRAINT_NAME" : "set_id_ref",

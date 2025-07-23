@@ -1,5 +1,4 @@
 USE provisioning;
 
 ALTER TABLE voip_preferences_enum DROP FOREIGN KEY `pref_id_fk`;
-ALTER TABLE voip_preferences_enum ADD CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`);
-
+ALTER TABLE voip_preferences_enum ADD CONSTRAINT `voip_preferences_enum_ibfk_1` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
