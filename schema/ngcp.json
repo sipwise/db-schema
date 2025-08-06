@@ -72,6 +72,18 @@
          "TABLE_NAME" : "db_schema",
          "key_col" : "db_schema/revision"
       },
+      "db_schema/site_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "NULL",
+         "COLUMN_NAME" : "site_id",
+         "COLUMN_TYPE" : "int(1) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 6,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/site_id"
+      },
       "timezone/created_at" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -242,6 +254,18 @@
          "SUB_PART" : null,
          "TABLE_NAME" : "db_schema",
          "key_col" : "db_schema/rev_idx/2"
+      },
+      "db_schema/rev_idx/3" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "site_id",
+         "INDEX_NAME" : "rev_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "YES",
+         "SEQ_IN_INDEX" : 3,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "db_schema",
+         "key_col" : "db_schema/rev_idx/3"
       },
       "timezone/PRIMARY/1" : {
          "COLLATION" : "A",
