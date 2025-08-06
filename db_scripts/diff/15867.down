@@ -1,0 +1,6 @@
+USE ngcp;
+
+ALTER TABLE db_schema
+    DROP KEY `rev_idx`,
+    ADD UNIQUE KEY `rev_idx` (`revision`, `node`),
+    DROP COLUMN `site_id`;
