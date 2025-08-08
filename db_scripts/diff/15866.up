@@ -1,0 +1,30 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Number Manipulations';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "colr",
+label = "Hide own number for inbound calls",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 0,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'Connected line identification restriction' - if set to true, the CLI is not displayed to the remote party on incoming calls.";
+
+COMMIT;
