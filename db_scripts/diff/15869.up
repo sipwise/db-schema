@@ -1,0 +1,7 @@
+use billing;
+set autocommit=0;
+
+ALTER TABLE ncos_levels
+  ADD `time_set_invert` tinyint(1) NOT NULL DEFAULT 0;
+
+commit;

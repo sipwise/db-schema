@@ -4356,6 +4356,18 @@
          "TABLE_NAME" : "ncos_levels",
          "key_col" : "ncos_levels/time_set_id"
       },
+      "ncos_levels/time_set_invert" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "time_set_invert",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 10,
+         "TABLE_NAME" : "ncos_levels",
+         "key_col" : "ncos_levels/time_set_invert"
+      },
       "ncos_lnp_list/description" : {
          "CHARACTER_SET_NAME" : "utf8mb3",
          "COLLATION_NAME" : "utf8mb3_general_ci",
