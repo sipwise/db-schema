@@ -110,6 +110,9 @@ class Config:
         _post_set_release_for_revisions (List[int]): set release in the
             db_schema table for all revisions that were applied when
             the `release` column was not available
+        _post_set_site_id_for_revisions (List[int]): set site_id in the
+            db_schema table for all revisions that were applied when
+            the `site_id` column was not available
 
 
         node_name (str): current node name
@@ -185,6 +188,7 @@ class Config:
     _run_cmd_mysql_options: List[str] = []
     _scripts_dir_order: List[str] = ['init', 'base', 'diff']
     _post_set_release_for_revisions: List[int] = []
+    _post_set_site_id_for_revisions: List[int] = []
 
     # attributes that are initialised in __init__()
     node_name: str
@@ -1107,8 +1111,12 @@ def apply_revisions(revisions: Revisions) -> None:
             config.db_conn.commit()
             config._script_was_applied = True
 
+        # order matters for next 2 lines
+        post_set_site_id_for_applied_revisions()
         post_set_release_for_applied_revisions()
     except RevisionApplyError:
+        # order matters for next 2 lines
+        post_set_site_id_for_applied_revisions()
         post_set_release_for_applied_revisions()
         shutdown(1)
 
@@ -1233,7 +1241,11 @@ def apply_up_script(script_name: str, revision: int) -> int:
             config._temp_sql_file.write(
                 str(f'\n; {sql}; COMMIT;\n').encode()
             )
+
         config._post_set_release_for_revisions.append(revision)
+
+        if is_db_role and not check_column_exists('site_id'):
+            config._post_set_site_id_for_revisions.append(revision)
 
         if revision not in db_schema:
             db_schema[revision] = {}
@@ -1419,15 +1431,67 @@ def post_set_release_for_applied_revisions() -> None:
     if not check_column_exists('release'):
         return
 
+    node_name = config.node_name
     release = getattr(config, 'set_release', config.ngcp_version)
+    cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
+
+    if check_column_exists('site_id'):
+        site_id = int(config.node_roles.get('ngcp_site_id') or 1)
+        post_set_revisions = config._post_set_release_for_revisions
+        cursor.execute(f"""
+            UPDATE {config.db_schema_table}
+               SET `release` = '{release}',
+                   applied_at = applied_at
+             WHERE site_id = {site_id}
+               AND node = '{node_name}'
+               AND revision IN ({
+                ','.join(str(x) for x in post_set_revisions)
+             })
+        """)
+    else:
+        cursor.execute(f"""
+            UPDATE {config.db_schema_table}
+               SET `release` = '{release}',
+                   applied_at = applied_at
+             WHERE node = '{node_name}'
+               AND revision IN ({
+                ','.join(str(x) for x in post_set_revisions)
+             })
+        """)
+
+    cursor.close()
+    config.db_conn.commit()
+
+
+def post_set_site_id_for_applied_revisions() -> None:
+    """Sets site_id column for applied revisions.
+
+    Sets site_id column for applied revisions
+
+    Args:
+        None
+
+    Returns
+        None
+
+    """
+    if config.mode != 'up':
+        return
+    if not config._post_set_site_id_for_revisions:
+        return
+    if not check_column_exists('site_id'):
+        return
+
+    site_id = int(config.node_roles.get('ngcp_site_id') or 1)
     cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
 
     cursor.execute(f"""
         UPDATE {config.db_schema_table}
-           SET `release` = '{release}',
+           SET site_id = '{site_id}',
                applied_at = applied_at
-         WHERE revision IN ({
-            ','.join(str(x) for x in config._post_set_release_for_revisions)
+         WHERE site_id IS NULL
+           AND revision IN ({
+            ','.join(str(x) for x in config._post_set_site_id_for_revisions)
          })
     """)
 
