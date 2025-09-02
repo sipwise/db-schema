@@ -738,6 +738,7 @@ CREATE TABLE `ncos_levels` (
   `description` text DEFAULT NULL,
   `time_set_id` int(11) unsigned DEFAULT NULL,
   `expose_to_customer` tinyint(1) NOT NULL DEFAULT 0,
+  `time_set_invert` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `reslev_idx` (`reseller_id`,`level`),
   KEY `nl_time_set_id_idx` (`time_set_id`),
