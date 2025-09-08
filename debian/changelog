@@ -1,3 +1,31 @@
+ngcp-db-schema (14.0.0.0+0~mr14.0.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d363aad] MT#63047 phonebook views shared entries fix, add 'own' field
+  * [cb228a7] MT#63361 add site_id supoort
+  * [eec4135] MT#63361 apply site_id retroactively
+
+  [ jsung ]
+  * [891dc81] MT#63198 Fix 15768.down script
+  * [37a7f99] MT#63224 Fix 15755.down script
+  * [6698a2c] MT#63229 Fix 15663.down script
+  * [58598ee] MT#63233 Fix 15565.down script
+  * [40bf8fb] MT#63239 Fix 15787.down db script
+
+  [ Fabricio Santolin da Silva ]
+  * [6b707ba] MT#63032 add "dnd" preference for the subscriber
+
+  [ Marco Capetta ]
+  * [a8d9c27] MT#63033 Add new 'callee_dnd' early_reject announcement handle
+  * [32b1c71] MT#63030 Add new 'colr' preference for subscribers
+  * [7a4eacb] MT#60563 Add 'label' column to provisioning.autoprov_field_device_lines
+  * [5c89899] MT#63454 Add new time_set_invert column to billing.ncos_levels
+
+  [ Sipwise Jenkins Builder ]
+  * [d560d6b] MT#63361 Update schema files
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 08 Sep 2025 11:43:32 +0200
+
 ngcp-db-schema (13.5.0.0+0~mr13.5.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
