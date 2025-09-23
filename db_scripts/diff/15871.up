@@ -1,0 +1,31 @@
+use provisioning;
+set autocommit=0;
+
+SET @group_id = (SELECT id FROM voip_preference_groups WHERE name = 'Cloud PBX' LIMIT 1);
+
+INSERT INTO voip_preferences SET
+voip_preference_groups_id = @group_id,
+attribute = 'log_debug',
+label = 'Debug log level',
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref =  1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+modify_timestamp = now(),
+internal = 0,
+expose_to_customer = 1,
+data_type = 'boolean',
+read_only = 0,
+description = 'Enable scoped SIP debug logging for subscriber, domain, or peer. When enabled, all log levels for dialogs in this scope are promoted to be recorded regardless of the global proxy log setting. The default is disabled.',
+dynamic = 0,
+reseller_pref = 0,
+expose_to_subscriber = 1;
+
+COMMIT;
