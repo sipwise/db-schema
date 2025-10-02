@@ -1,3 +1,10 @@
+ngcp-db-schema (13.5.1.1+0~mr13.5.1.1) unstable; urgency=medium
+
+  [ Jose Su ]
+  * [c7f3d05] MT#63431 Create new upscript to cope with changes done to 15418.up
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 02 Oct 2025 10:53:12 +0200
+
 ngcp-db-schema (13.5.1.0+0~mr13.5.1.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
