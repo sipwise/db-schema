@@ -1432,10 +1432,12 @@ def post_set_release_for_applied_revisions() -> None:
         return
 
     node_name = config.node_name
+    node_roles = config.node_roles
+    is_db_role = node_roles.get('ngcp_is_db') is True
     release = getattr(config, 'set_release', config.ngcp_version)
     cursor: pymysql.cursors.Cursor = config.db_conn.cursor()
 
-    if check_column_exists('site_id'):
+    if is_db_role and check_column_exists('site_id'):
         site_id = int(config.node_roles.get('ngcp_site_id') or 1)
         post_set_revisions = config._post_set_release_for_revisions
         cursor.execute(f"""
