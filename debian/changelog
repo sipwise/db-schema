@@ -1,3 +1,10 @@
+ngcp-db-schema (13.5.1.2+0~mr13.5.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [78bd9a5] MT#63753 update db schema skip site_id check for non db nodes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 15 Oct 2025 16:25:38 +0200
+
 ngcp-db-schema (13.5.1.1+0~mr13.5.1.1) unstable; urgency=medium
 
   [ Jose Su ]
