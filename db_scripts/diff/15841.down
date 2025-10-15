@@ -2,5 +2,5 @@ USE prosody;
 SET autocommit=0;
 
 DROP INDEX prosody_unique_index on prosody;
-CREATE INDEX prosody_index ON prosody(`host`(20), `user`(20), `store`(20), `key`(20)) USING BTREE;
+CREATE INDEX IF NOT EXISTS prosody_index ON prosody(`host`(20), `user`(20), `store`(20), `key`(20)) USING BTREE;
 COMMIT;
