@@ -1218,7 +1218,7 @@ CREATE TABLE `voip_preferences_enum` (
   PRIMARY KEY (`id`),
   KEY `pref_id_idx` (`preference_id`),
   CONSTRAINT `pref_id_fk` FOREIGN KEY (`preference_id`) REFERENCES `voip_preferences` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=410 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=413 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1587,7 +1587,7 @@ CREATE TABLE `voip_usr_preferences` (
   CONSTRAINT `v_u_p_subscriberid_ref` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `voip_usr_preferences_ibfk_1` FOREIGN KEY (`subscriber_id`) REFERENCES `voip_subscribers` (`id`),
   CONSTRAINT `voip_usr_preferences_ibfk_2` FOREIGN KEY (`attribute_id`) REFERENCES `voip_preferences` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4162,7 +4162,7 @@ INSERT INTO `voip_preferences` VALUES (408,3,'otp_secret','OTP Secret',0,1,1,0,0
 INSERT INTO `voip_preferences` VALUES (409,3,'show_otp_registration_info','Show OTP Registration Info',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'boolean',1,'Show Time-based One-Time-Password (TOTP) secret and registration info for the next CSC logins.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (410,3,'dnd','Do Not Disturb (DND) mode',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Do Not Disturb (DND) mode. If activated the subscriber will not receive any call. The call forwards will not be taken into account.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (411,4,'colr','Hide own number for inbound calls',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'\'Connected line identification restriction\' - if set to true, the CLI is not displayed to the remote party on incoming calls.',0,0,1);
-INSERT INTO `voip_preferences` VALUES (412,8,'log_debug','Debug log level',1,1,1,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Enable scoped SIP debug logging for subscriber, domain, or peer. When enabled, all log levels for dialogs in this scope are promoted to be recorded regardless of the global proxy log setting. The default is disabled.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (412,8,'call_log_level','Debug log level',1,1,1,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'enum',0,'Define the log level verbosity preference for subscribers or peers. The level can be NOTICE, INFO or DEBUG.',0,0,0);
 commit;
 set autocommit=0;
 INSERT INTO `voip_preferences_enum` VALUES (8,62,'use domain default',NULL,1,1,0,0,NULL,0,0,0,0,NULL,NULL);
@@ -4536,6 +4536,9 @@ INSERT INTO `voip_preferences_enum` VALUES (406,403,'use domain default',NULL,1,
 INSERT INTO `voip_preferences_enum` VALUES (407,403,'Disabled','disabled',1,1,0,0,0,0,0,0,0,0,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (408,403,'Disabled','disabled',0,0,1,0,0,0,0,0,0,1,NULL);
 INSERT INTO `voip_preferences_enum` VALUES (409,403,'Enabled','enabled',1,1,1,0,0,0,0,0,0,0,NULL);
+INSERT INTO `voip_preferences_enum` VALUES (410,412,'NOTICE','notice',1,0,0,1,0,0,0,0,0,1,NULL);
+INSERT INTO `voip_preferences_enum` VALUES (411,412,'INFO','info',1,0,0,1,0,0,0,0,0,0,NULL);
+INSERT INTO `voip_preferences_enum` VALUES (412,412,'DEBUG','debug',1,0,0,1,0,0,0,0,0,0,NULL);
 commit;
 set autocommit=0;
 commit;
@@ -4750,6 +4753,7 @@ set autocommit=0;
 INSERT INTO `voip_usr_preferences` VALUES (1,3,97,'none','1970-01-01 00:00:01');
 INSERT INTO `voip_usr_preferences` VALUES (7,3,372,'cirpack','1970-01-01 00:00:01');
 INSERT INTO `voip_usr_preferences` VALUES (8,3,305,'never','1970-01-01 00:00:01');
+INSERT INTO `voip_usr_preferences` VALUES (10,3,412,'notice','1970-01-01 00:00:01');
 commit;
 set autocommit=0;
 commit;

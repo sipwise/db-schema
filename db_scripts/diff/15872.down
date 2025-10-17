@@ -1,0 +1,18 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vp_id FROM voip_preferences
+WHERE attribute = 'call_log_level';
+
+UPDATE voip_preferences
+SET attribute = 'log_debug'
+WHERE id = @vp_id;
+
+UPDATE voip_preferences
+SET data_type = 'boolean',
+description = "Enable scoped debug logging for subscriber, domain, or peer. When enabled, all log levels for dialogs in this scope are promoted to be recorded regardless of the global proxy log setting. The default is disabled."
+WHERE id = @vp_id;
+
+DELETE FROM voip_preferences_enum WHERE preference_id = @vp_id;
+
+COMMIT;

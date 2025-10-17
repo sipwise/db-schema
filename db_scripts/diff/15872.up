@@ -1,0 +1,23 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vp_id FROM voip_preferences
+WHERE attribute = 'log_debug';
+
+UPDATE voip_preferences
+SET attribute = 'call_log_level'
+WHERE id = @vp_id;
+
+UPDATE voip_preferences
+SET data_type = 'enum',
+description = "Define the log level verbosity preference for subscribers or peers. The level can be NOTICE, INFO or DEBUG."
+WHERE id = @vp_id;
+
+INSERT INTO voip_preferences_enum
+(preference_id, label, value, usr_pref, dom_pref, prof_pref, peer_pref, contract_pref, contract_location_pref, default_val)
+VALUES
+(@vp_id, 'NOTICE', 'notice', 1, 0, 0, 1, 0, 0, 1),
+(@vp_id, 'INFO', 'info', 1, 0, 0, 1, 0, 0, 0),
+(@vp_id, 'DEBUG', 'debug', 1, 0, 0, 1, 0, 0, 0);
+
+COMMIT;
