@@ -1451,6 +1451,7 @@ def post_set_release_for_applied_revisions() -> None:
              })
         """)
     else:
+        post_set_revisions = config._post_set_release_for_revisions
         cursor.execute(f"""
             UPDATE {config.db_schema_table}
                SET `release` = '{release}',
