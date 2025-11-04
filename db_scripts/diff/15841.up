@@ -1,6 +1,16 @@
 USE prosody;
 SET autocommit=0;
 
+DELETE FROM prosody
+WHERE (host, user, store, `key`, `value`) NOT IN (
+    SELECT t.host, t.user, t.store, t.`key`, t.max_value
+    FROM (
+        SELECT host, user, store, `key`, MAX(value) AS max_value
+        FROM prosody
+        GROUP BY host, user, store, `key`
+    ) AS t
+);
+
 DROP INDEX prosody_index on prosody;
 CREATE UNIQUE INDEX prosody_unique_index ON prosody(`host`(20), `user`(20), `store`(20), `key`(20)) USING BTREE;
 COMMIT;
