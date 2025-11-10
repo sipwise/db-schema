@@ -1,3 +1,10 @@
+ngcp-db-schema (13.5.1.5+0~mr13.5.1.5) unstable; urgency=medium
+
+  [ Jose Su ]
+  * [b174b7a] MT#63239 Add IF NOT EXISTS option when creating INDEX for 15841.down
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 10 Nov 2025 11:19:39 +0100
+
 ngcp-db-schema (13.5.1.4+0~mr13.5.1.4) unstable; urgency=medium
 
   [ Jose Su ]
