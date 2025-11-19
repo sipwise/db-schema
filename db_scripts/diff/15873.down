@@ -1,0 +1,8 @@
+ALTER TABLE kamailio.acc MODIFY COLUMN `src_leg` varchar(10240) DEFAULT NULL,
+MODIFY COLUMN `dst_leg` varchar(10240) DEFAULT NULL;
+
+ALTER TABLE kamailio.acc_backup MODIFY COLUMN `src_leg` varchar(10240) DEFAULT NULL,
+MODIFY COLUMN `dst_leg` varchar(10240) DEFAULT NULL;
+
+ALTER TABLE kamailio.acc_trash MODIFY COLUMN `src_leg` varchar(10240) DEFAULT NULL,
+MODIFY COLUMN `dst_leg` varchar(10240) DEFAULT NULL;
