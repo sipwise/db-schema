@@ -1,3 +1,22 @@
+ngcp-db-schema (14.1.0.0+0~mr14.1.0.0) unstable; urgency=medium
+
+  [ Jose Su ]
+  * [41769aa] MT#63431 Create new upscript to cope with changes done to 15418.up
+  * [5a33a65] MT#63431 Create downscript for 15780.up script
+  * [1bf0fbf] MT#63462 Remove duplicate prosody table entries
+  * [f863fe3] MT#63239 Add IF NOT EXISTS option when creating INDEX for 15841.down
+
+  [ kthiry ]
+  * [a341404] MT#63594 Add log_debug preference in Cloud PBX group
+  * [f0cc980] MT#63594 Update log_debug preferences
+  * [646bb31] MT#63594 Update log_debug preference
+
+  [ Kirill Solomko ]
+  * [8cd03ea] MT#63753 update db schema skip site_id check for non db nodes
+  * [dc2a069] MT#63753 fix fetch post_set_revisions for non-db nodes
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 24 Nov 2025 16:55:05 +0100
+
 ngcp-db-schema (14.0.0.0+0~mr14.0.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
