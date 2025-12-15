@@ -48,4 +48,11 @@ SELECT ph.id, p.id, pe.value
   JOIN voip_peer_hosts ph
   LEFT OUTER JOIN voip_peer_preferences pp ON pp.attribute_id = p.id AND ph.id = pp.peer_host_id
  WHERE p.peer_pref = 1 AND pe.peer_pref = 1 AND pe.default_val = 1 AND pe.value IS NOT NULL
-   AND pp.value IS NULL;
+   AND pp.value IS NULL
+   AND NOT EXISTS (
+    SELECT id FROM voip_preferences_enum pn
+    WHERE pn.preference_id = p.id
+      AND pn.peer_pref = 1
+      AND pn.default_val = 0
+      AND pn.value IS NULL
+    LIMIT 1);
