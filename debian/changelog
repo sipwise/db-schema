@@ -1,3 +1,10 @@
+ngcp-db-schema (14.0.1.2+0~mr14.0.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [b43b638] MT#64020 fix 15797 to avoid restoring valid peer prefs
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 23 Dec 2025 14:40:01 +0100
+
 ngcp-db-schema (14.0.1.1+0~mr14.0.1.1) unstable; urgency=medium
 
   * New release.
