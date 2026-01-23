@@ -203,7 +203,7 @@
          "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
-         "SUB_PART" : 20,
+         "SUB_PART" : 128,
          "TABLE_NAME" : "prosody",
          "key_col" : "prosody/prosody_unique_index/1"
       },
@@ -215,7 +215,7 @@
          "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 2,
-         "SUB_PART" : 20,
+         "SUB_PART" : 128,
          "TABLE_NAME" : "prosody",
          "key_col" : "prosody/prosody_unique_index/2"
       },
@@ -227,7 +227,7 @@
          "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 3,
-         "SUB_PART" : 20,
+         "SUB_PART" : 128,
          "TABLE_NAME" : "prosody",
          "key_col" : "prosody/prosody_unique_index/3"
       },
@@ -239,7 +239,7 @@
          "NON_UNIQUE" : 0,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 4,
-         "SUB_PART" : 20,
+         "SUB_PART" : 128,
          "TABLE_NAME" : "prosody",
          "key_col" : "prosody/prosody_unique_index/4"
       },
