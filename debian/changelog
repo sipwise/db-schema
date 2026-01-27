@@ -1,3 +1,10 @@
+ngcp-db-schema (13.5.1.8+0~mr13.5.1.8) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [d7cea74] MT#64099 15841.up increase prosody unique index keys size
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 27 Jan 2026 08:08:40 +0100
+
 ngcp-db-schema (13.5.1.7+0~mr13.5.1.7) unstable; urgency=medium
 
   [ Kirill Solomko ]
