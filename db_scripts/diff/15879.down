@@ -1,0 +1,47 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
+
+# Migrate lnp preferences to the old Internals group
+UPDATE voip_preferences SET
+  voip_preference_groups_id = @vpg_id
+WHERE attribute in ('caller_lnp_lookup', 'default_lnp_prefix', 'lnp_add_npdi', 'lnp_to_rn', 'skip_callee_lnp_lookup', 'lnp_for_local_sub');
+
+
+# Remove 'connect_on_ported' preference
+SELECT id INTO @vp_id FROM voip_preferences WHERE attribute = 'connect_on_ported';
+
+DELETE FROM voip_usr_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_dom_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@vp_id;
+
+DELETE FROM kamailio.usr_preferences WHERE attribute='connect_on_ported';
+DELETE FROM kamailio.prof_preferences WHERE attribute='connect_on_ported';
+DELETE FROM kamailio.dom_preferences WHERE attribute='connect_on_ported';
+DELETE FROM kamailio.peer_preferences WHERE attribute='connect_on_ported';
+
+DELETE FROM voip_preferences WHERE attribute = 'connect_on_ported';
+
+
+# Remove 'ported_n1_to_ruri' preference
+SELECT id INTO @vp_id FROM voip_preferences WHERE attribute = 'ported_n1_to_ruri';
+
+DELETE FROM voip_usr_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_prof_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_dom_preferences WHERE attribute_id=@vp_id;
+DELETE FROM voip_peer_preferences WHERE attribute_id=@vp_id;
+
+DELETE FROM kamailio.usr_preferences WHERE attribute='ported_n1_to_ruri';
+DELETE FROM kamailio.prof_preferences WHERE attribute='ported_n1_to_ruri';
+DELETE FROM kamailio.dom_preferences WHERE attribute='ported_n1_to_ruri';
+DELETE FROM kamailio.peer_preferences WHERE attribute='ported_n1_to_ruri';
+
+DELETE FROM voip_preferences WHERE attribute = 'ported_n1_to_ruri';
+
+
+# Remove the new 'Number Portability' group
+DELETE FROM voip_preference_groups WHERE name = 'Number Portability';
+
+COMMIT;

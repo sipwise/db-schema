@@ -1146,7 +1146,7 @@ CREATE TABLE `voip_preference_groups` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1197,7 +1197,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -3861,6 +3861,7 @@ INSERT INTO `voip_preference_groups` VALUES (15,'IMS Application Server');
 INSERT INTO `voip_preference_groups` VALUES (16,'SIP Response Codes');
 INSERT INTO `voip_preference_groups` VALUES (17,'Media Codec Transcoding Options');
 INSERT INTO `voip_preference_groups` VALUES (18,'CDR/EDR Export Settings');
+INSERT INTO `voip_preference_groups` VALUES (19,'Number Portability');
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4006,14 +4007,14 @@ INSERT INTO `voip_preferences` VALUES (170,4,'outbound_to_user_is_phone','Add us
 INSERT INTO `voip_preferences` VALUES (171,4,'clir_override','Override clir',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If true, calling party number is shown regardles of caller CLIR settings.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (172,4,'rewrite_caller_lnp_dpid','Internal # for lnp caller rewrite rule set',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'int',0,NULL,0,0,0);
 INSERT INTO `voip_preferences` VALUES (173,4,'rewrite_callee_lnp_dpid','Internal # for lnp callee rewrite rule set',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'int',0,NULL,0,0,0);
-INSERT INTO `voip_preferences` VALUES (174,8,'default_lnp_prefix','Default LNP prefix',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Defines a default caller LNP prefix which is written into CDRs if no LNP entry is found for the caller number in the LNP database. This prefix is NOT used for routing purposes like rewrite rules, only for CDR tagging.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (175,8,'caller_lnp_lookup','Enable Caller LNP lookup',1,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, an LNP lookup is performed for calls from this peer using the network-provided calling party number. The resulting LNP prefix is written to CDRs as source_lnp_prefix.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (174,19,'default_lnp_prefix','Default LNP prefix',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Defines a default caller LNP prefix which is written into CDRs if no LNP entry is found for the caller number in the LNP database. This prefix is NOT used for routing purposes like rewrite rules, only for CDR tagging.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (175,19,'caller_lnp_lookup','Enable Caller LNP lookup',1,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, an LNP lookup is performed for calls from this peer using the network-provided calling party number. The resulting LNP prefix is written to CDRs as source_lnp_prefix.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (176,8,'emergency_priorization','Emergency Priorization',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Defines whether the subscriber can still register and send/receive calls if Emergency Mode is enabled for the domain of the subscriber. If disabled, registrations and calls are blocked and dropped.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (177,8,'emergency_mode_enabled','Emergency Mode Enabled',1,1,0,0,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If activated for this domain, subscribers not having the emergency_priorization flag set are no longer able to register and place calls except for emergency calls.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (178,8,'call_deflection','Enable Call Deflection',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'enum',0,'Call Deflection allows a called endpoint to redirect the unanswered call to another destination during the call setup phase by sending 302 redirect message in ringing phase. Disabling the preference will make the platform ignore the redirect message. Setting Immediate the redirection will be immediately executed cancelling the other active brances.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (179,8,'lnp_to_rn','LNP Routing number to rn param',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Defines how to provide the routing number after a LNP query. If enabled, rn parameter will be used.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (180,8,'lnp_add_npdi','LNP npdi param',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, npdi parameter will be added if there is a LNP query.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (181,8,'lnp_for_local_sub','LNP for local subscribers',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled allows LNP queries for local subscribers.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (179,19,'lnp_to_rn','LNP Routing number to rn param',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Defines how to provide the routing number after a LNP query. If enabled, rn parameter will be used.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (180,19,'lnp_add_npdi','LNP npdi param',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, npdi parameter will be added if there is a LNP query.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (181,19,'lnp_for_local_sub','LNP for local subscribers',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled allows LNP queries for local subscribers.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (182,8,'lawful_interception','Lawful Interception',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Enables lawful interception for the subscriber.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (183,8,'disable_prack_method','Disable PRACK Method',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Disables PRACK method (RFC3262) by filtering the 100rel tag from SIP Supported header.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (184,5,'set_moh_sendonly','MoH sendonly',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Subscriber put on hold is notified with a=sendonly in reINVITE.',0,0,0);
@@ -4042,7 +4043,7 @@ INSERT INTO `voip_preferences` VALUES (210,1,'cfs','Internal Cal Forward SMS #',
 INSERT INTO `voip_preferences` VALUES (211,8,'reason_text_for_failover','Failover to next peer on 5xx with given Reason text',0,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Failover to the next peer if it sends 5xx response with Reason text parameter matching provided value (regex).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (212,4,'outbound_diversion_counter','Force Diversion counter',0,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'If set, the value given here is forced as counter parameter in the outbound Diversion header.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (213,3,'max_call_duration','Maximum Call Duration (seconds)',0,1,1,1,1,0,1,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Maximum Call Duration (seconds).',0,0,0);
-INSERT INTO `voip_preferences` VALUES (214,8,'skip_callee_lnp_lookup','Skip callee LNP lookup',0,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Skip callee LNP lookup when receiving a call from this peer.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (214,19,'skip_callee_lnp_lookup','Skip callee LNP lookup',0,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Skip callee LNP lookup when receiving a call from this peer.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (215,16,'no_credit_code','Reject code if involved party has no credit',1,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'int',0,'Reject code if involved party has no credit',0,0,0);
 INSERT INTO `voip_preferences` VALUES (216,16,'no_credit_reason','Reject reason if involved party has no credit',0,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'Reject reason if involved party has no credit',0,0,0);
 INSERT INTO `voip_preferences` VALUES (217,16,'locked_in_code','Reject code if callee is locked',1,1,0,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'int',0,'Reject code if callee is locked',0,0,0);
@@ -4237,6 +4238,8 @@ INSERT INTO `voip_preferences` VALUES (410,3,'dnd','Do Not Disturb (DND) mode',1
 INSERT INTO `voip_preferences` VALUES (411,4,'colr','Hide own number for inbound calls',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'\'Connected line identification restriction\' - if set to true, the CLI is not displayed to the remote party on incoming calls.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (412,8,'call_log_level','Debug log level',0,1,1,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'enum',0,'Define the log level verbosity preference for subscribers or peers. The level can be NOTICE, INFO or DEBUG.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (413,17,'allow_asymmetric_codecs','Allow asymmetric codecs in RTP streams',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, rtpengine will accept mismatched RTP payload type numbers between SDP offer and answer, allowing codec matching by name rather than payload type.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (414,19,'connect_on_ported','Connect to the final destination using ported number',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'In case of successful lookup in the lnp table for a call to a non-local ported number, send the outgoing call to the ported number (used only for lnp local_qor type).',0,0,0);
+INSERT INTO `voip_preferences` VALUES (415,19,'ported_n1_to_ruri','Substitute the CLI with the original number (N1)',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If the caller subscriber is ported and the CLI ported number (N2) matches the allowed_cli list, then substitute the CLI with the original number (N1) (used only for lnp local_qor type).',0,0,0);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;

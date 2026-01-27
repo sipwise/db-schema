@@ -1,0 +1,65 @@
+use provisioning;
+set autocommit=0;
+
+# Create the new 'Number Portability' group
+INSERT INTO voip_preference_groups (name) values ('Number Portability');
+SELECT LAST_INSERT_ID() INTO @vpg_id;
+
+# Migrate lnp preferences to the new 'Number Portability' group
+UPDATE voip_preferences SET
+  voip_preference_groups_id = @vpg_id
+WHERE attribute in ('caller_lnp_lookup', 'default_lnp_prefix', 'lnp_add_npdi', 'lnp_to_rn', 'skip_callee_lnp_lookup', 'lnp_for_local_sub');
+
+# Add 'connect_on_ported' preference
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @vpg_id,
+  attribute = 'connect_on_ported',
+  label = 'Connect to the final destination using ported number',
+  type = 1,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref =  1,
+  peer_pref = 1,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  fielddev_pref = 0,
+  modify_timestamp = now(),
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = 'boolean',
+  read_only = 0,
+  description = 'In case of successful lookup in the lnp table for a call to a non-local ported number, send the outgoing call to the ported number (used only for lnp local_qor type).',
+  dynamic = 0,
+  reseller_pref = 0,
+  expose_to_subscriber = 0;
+
+# Add 'ported_n1_to_ruri' preference
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @vpg_id,
+  attribute = 'ported_n1_to_ruri',
+  label = 'Substitute the CLI with the original number (N1)',
+  type = 1,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref =  1,
+  peer_pref = 0,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  fielddev_pref = 0,
+  modify_timestamp = now(),
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = 'boolean',
+  read_only = 0,
+  description = 'If the caller subscriber is ported and the CLI ported number (N2) matches the allowed_cli list, then substitute the CLI with the original number (N1) (used only for lnp local_qor type).',
+  dynamic = 0,
+  reseller_pref = 0,
+  expose_to_subscriber = 0;
+
+COMMIT;
