@@ -1071,9 +1071,11 @@ CREATE TABLE `voip_peer_hosts` (
   `via_lb` tinyint(1) NOT NULL DEFAULT 0,
   `enabled` tinyint(1) NOT NULL DEFAULT 1,
   `probe` tinyint(1) NOT NULL DEFAULT 0,
+  `site_id` int(2) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `grpname` (`group_id`,`name`),
   KEY `grpidx` (`group_id`),
+  KEY `site_id_idx` (`site_id`),
   CONSTRAINT `v_ps_groupid_ref` FOREIGN KEY (`group_id`) REFERENCES `voip_peer_groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -5453,8 +5455,13 @@ DELIMITER ;;
             WHERE vpg.id <=> NEW.group_id;
 
     IF NEW.probe = 1 THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      IF NEW.site_id IS NOT NULL THEN
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+      ELSE
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      END IF;
     END IF;
 
   END IF;
@@ -5504,15 +5511,20 @@ DELIMITER ;;
        AND gw.lcr_id = 1
        AND gw.group_id <=> NEW.group_id;
 
-    IF OLD.probe = 1 AND (OLD.ip != NEW.ip OR OLD.port != NEW.port OR OLD.transport != NEW.transport OR OLD.name != NEW.name OR OLD.group_id != NEW.group_id) THEN
+    IF OLD.probe = 1 AND (OLD.ip != NEW.ip OR OLD.port != NEW.port OR OLD.transport != NEW.transport OR OLD.name != NEW.name OR OLD.group_id != NEW.group_id OR OLD.site_id != NEW.site_id) THEN
       DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
       SET m_probechange := 1;
     ELSEIF OLD.probe = 1 and NEW.probe = 0 THEN
       DELETE FROM kamailio.dispatcher WHERE attrs LIKE CONCAT('%peerid=', OLD.id, ';%');
     END IF;
     IF NEW.probe = 1 AND (m_probechange = 1 OR OLD.probe = 0) THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      IF NEW.site_id IS NOT NULL THEN
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+      ELSE
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      END IF;
     END IF;
 
   ELSEIF OLD.enabled = 0 AND NEW.enabled = 1 THEN
@@ -5527,8 +5539,13 @@ DELIMITER ;;
             WHERE vpg.id <=> NEW.group_id;
 
     IF NEW.probe = 1 THEN
-      INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-        VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      IF NEW.site_id IS NOT NULL THEN
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+      ELSE
+        INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
+          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
+      END IF;
     END IF;
 
   ELSEIF OLD.enabled = 1 AND NEW.enabled = 0 THEN
