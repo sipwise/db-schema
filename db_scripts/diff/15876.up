@@ -1,0 +1,25 @@
+SET autocommit=0;
+
+USE provisioning;
+
+INSERT INTO voip_usr_preferences (subscriber_id, attribute_id, value)
+SELECT s.id, p.id, ct.reseller_id
+  FROM voip_subscribers s
+  JOIN billing.contracts c ON c.id = s.account_id
+  JOIN billing.contacts ct ON ct.id = c.contact_id
+  JOIN voip_preferences p ON p.attribute = 'reseller_id'
+ WHERE s.id NOT IN (SELECT up.subscriber_id
+                      FROM voip_usr_preferences up
+                      JOIN voip_preferences pp ON pp.attribute = 'reseller_id'
+                     WHERE up.attribute_id = pp.id
+                       AND up.subscriber_id = s.id);
+
+USE kamailio;
+
+DELETE up FROM usr_preferences up
+  JOIN usr_preferences up2 on up.uuid = up2.uuid
+ WHERE up.attribute = 'reseller_id'
+   AND up2.attribute = up.attribute
+   AND up.id > up2.id;
+
+COMMIT;
