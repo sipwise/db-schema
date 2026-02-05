@@ -1,3 +1,17 @@
+ngcp-db-schema (14.1.1.0+0~mr14.1.1.0) unstable; urgency=medium
+
+  [ Rene Krenn ]
+  * [2c8921f] MT#63978 enlarge kamailio.acc_*.src_leg, dst_leg cols
+
+  [ Guillem Jover ]
+  * [adcd679] MT#62899 Update packaging for Debian trixie
+
+  [ Kirill Solomko ]
+  * [5b840a6] MT#64020 fix 15797 to avoid restoring valid peer prefs
+  * [fa08e4a] MT#64099 15841.up increase prosody unique index keys size
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Thu, 05 Feb 2026 10:21:47 +0100
+
 ngcp-db-schema (14.1.0.0+0~mr14.1.0.0) unstable; urgency=medium
 
   [ Jose Su ]
