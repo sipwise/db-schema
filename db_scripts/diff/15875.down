@@ -1,0 +1,21 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vp_id FROM voip_preferences
+WHERE attribute = 'call_log_level';
+
+UPDATE voip_preferences
+SET type = 1
+WHERE id = @vp_id;
+
+use kamailio;
+
+UPDATE usr_preferences
+SET type = 1
+WHERE attribute = 'call_log_level';
+
+UPDATE peer_preferences
+SET type = 1
+WHERE attribute = 'call_log_level';
+
+COMMIT;

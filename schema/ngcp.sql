@@ -25,7 +25,7 @@ CREATE TABLE `db_schema` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`,`site_id`),
   KEY `release_idx` (`release`)
-) ENGINE=InnoDB AUTO_INCREMENT=921 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=922 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -30971,7 +30971,8 @@ INSERT INTO `db_schema` VALUES (916,15871,'spce','1970-01-01 00:00:01','trunk',1
 INSERT INTO `db_schema` VALUES (917,15872,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (918,15873,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (919,15874,'spce','1970-01-01 00:00:01','trunk',1);
-INSERT INTO `db_schema` VALUES (920,15876,'spce','1970-01-01 00:00:01','trunk',1);
+INSERT INTO `db_schema` VALUES (920,15875,'spce','1970-01-01 00:00:01','trunk',1);
+INSERT INTO `db_schema` VALUES (921,15876,'spce','1970-01-01 00:00:01','trunk',1);
 commit;
 set autocommit=0;
 INSERT INTO `timezone` VALUES ('1','localtime','1970-01-01 00:00:01','1970-01-01 00:00:01',NULL);
