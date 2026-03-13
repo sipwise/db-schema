@@ -1,0 +1,9 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id FROM voip_preferences where attribute='inbound_uprn' INTO @pref_id;
+
+DELETE from voip_preferences_enum WHERE preference_id = @pref_id and value = 'original/npn';
+DELETE from voip_preferences_enum WHERE preference_id = @pref_id and value = 'original/upn';
+
+COMMIT;

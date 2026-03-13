@@ -25,7 +25,7 @@ CREATE TABLE `db_schema` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`,`site_id`),
   KEY `release_idx` (`release`)
-) ENGINE=InnoDB AUTO_INCREMENT=922 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=923 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -49,7 +49,7 @@ CREATE TABLE `tzinfo_version` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*M!999999\- enable the sandbox mode */ 
-set autocommit=0;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `date_range_helper` VALUES ('1970-01-01');
 INSERT INTO `date_range_helper` VALUES ('1970-01-02');
 INSERT INTO `date_range_helper` VALUES ('1970-01-03');
@@ -30050,8 +30050,9 @@ INSERT INTO `date_range_helper` VALUES ('2052-02-16');
 INSERT INTO `date_range_helper` VALUES ('2052-02-17');
 INSERT INTO `date_range_helper` VALUES ('2052-02-18');
 INSERT INTO `date_range_helper` VALUES ('2052-02-19');
-commit;
-set autocommit=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `db_schema` VALUES (1,5,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (2,10,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (3,20,'spce','1970-01-01 00:00:01','trunk',1);
@@ -30973,12 +30974,16 @@ INSERT INTO `db_schema` VALUES (918,15873,'spce','1970-01-01 00:00:01','trunk',1
 INSERT INTO `db_schema` VALUES (919,15874,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (920,15875,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (921,15876,'spce','1970-01-01 00:00:01','trunk',1);
-commit;
-set autocommit=0;
+INSERT INTO `db_schema` VALUES (922,15877,'spce','1970-01-01 00:00:01','trunk',1);
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `timezone` VALUES ('1','localtime','1970-01-01 00:00:01','1970-01-01 00:00:01',NULL);
-commit;
-set autocommit=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `tzinfo_version` VALUES ('1','0','1970-01-01 00:00:01','1970-01-01 00:00:01');
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*M!999999\- enable the sandbox mode */ 
 COMMIT;

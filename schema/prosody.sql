@@ -93,11 +93,14 @@ DELIMITER ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*M!999999\- enable the sandbox mode */ 
-set autocommit=0;
-commit;
-set autocommit=0;
-commit;
-set autocommit=0;
-commit;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*M!999999\- enable the sandbox mode */ 
 COMMIT;
