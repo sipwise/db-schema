@@ -1,0 +1,10 @@
+USE provisioning;
+SET autocommit = 0;
+
+DELETE FROM voip_usr_preferences WHERE attribute_id = (SELECT id FROM voip_preferences WHERE attribute = "allow_asymmetric_codecs");
+DELETE FROM voip_prof_preferences WHERE attribute_id = (SELECT id FROM voip_preferences WHERE attribute = "allow_asymmetric_codecs");
+DELETE FROM voip_dom_preferences WHERE attribute_id = (SELECT id FROM voip_preferences WHERE attribute = "allow_asymmetric_codecs");
+DELETE FROM voip_peer_preferences WHERE attribute_id = (SELECT id FROM voip_preferences WHERE attribute = "allow_asymmetric_codecs");
+DELETE FROM voip_preferences WHERE attribute = "allow_asymmetric_codecs";
+
+COMMIT;

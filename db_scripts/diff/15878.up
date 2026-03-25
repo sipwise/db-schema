@@ -1,0 +1,26 @@
+USE provisioning;
+SET autocommit=0;
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = (SELECT id FROM voip_preference_groups WHERE name="Media Codec Transcoding Options"),
+attribute = "allow_asymmetric_codecs",
+label = "Allow asymmetric codecs in RTP streams",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 1,
+dom_pref = 1,
+peer_pref = 1,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+internal = 0,
+expose_to_customer = 0,
+expose_to_subscriber = 0,
+data_type = "boolean",
+read_only = 0,
+description = "If enabled, rtpengine will accept mismatched RTP payload type numbers between SDP offer and answer, allowing codec matching by name rather than payload type.";
+
+COMMIT;

@@ -1197,7 +1197,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=413 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4236,6 +4236,7 @@ INSERT INTO `voip_preferences` VALUES (409,3,'show_otp_registration_info','Show 
 INSERT INTO `voip_preferences` VALUES (410,3,'dnd','Do Not Disturb (DND) mode',1,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'Enable Do Not Disturb (DND) mode. If activated the subscriber will not receive any call. The call forwards will not be taken into account.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (411,4,'colr','Hide own number for inbound calls',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'boolean',0,'\'Connected line identification restriction\' - if set to true, the CLI is not displayed to the remote party on incoming calls.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (412,8,'call_log_level','Debug log level',0,1,1,0,0,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'enum',0,'Define the log level verbosity preference for subscribers or peers. The level can be NOTICE, INFO or DEBUG.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (413,17,'allow_asymmetric_codecs','Allow asymmetric codecs in RTP streams',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, rtpengine will accept mismatched RTP payload type numbers between SDP offer and answer, allowing codec matching by name rather than payload type.',0,0,0);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
