@@ -1,3 +1,21 @@
+ngcp-db-schema (26.1.0.0+0~mr26.1.0.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [ae4fbd9] MT#64115 add voip_peer_hosts.site_id
+  * [c45dacc] MT#64391 sync missing reseller_id preference
+
+  [ Kéryl Thiry ]
+  * [3462244] MT#63594 call_log_level preference, update type
+
+  [ Marco Capetta ]
+  * [d3f1037] MT#63394 Add two new selections for inbound_uprn preference
+  * [f5375d9] MT#63026 Add new 'connect_on_ported' and 'ported_n1_to_ruri' prefs
+
+  [ Bit-Savva Mikhail ]
+  * [7eac6bf] MT#61968 Add 'allow_asymmetric_codecs' rtpengine preference
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 07 Apr 2026 12:56:10 +0200
+
 ngcp-db-schema (14.2.0.0+0~mr14.2.0.0) unstable; urgency=medium
 
   [ Rene Krenn ]
