@@ -1,0 +1,96 @@
+SET sql_log_bin=0;
+SET sql_mode=STRICT_ALL_TABLES;
+
+USE accounting;
+
+ALTER TABLE accounting.acc
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.acc_backup
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.acc_cdi
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.acc_trash
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.cdr
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.cdr_cash_balance_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_export_status_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_group
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_mos_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_period_costs
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  MODIFY `first_cdr_id` bigint(20) unsigned DEFAULT NULL,
+  MODIFY `last_cdr_id` bigint(20) unsigned DEFAULT NULL;
+
+ALTER TABLE accounting.cdr_relation_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_tag_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.cdr_time_balance_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.events
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.events_relation_data
+  MODIFY `event_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.events_tag_data
+  MODIFY `event_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.int_cdr_cash_balance_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr_export_status_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr_group
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr_relation_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr_tag_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.int_cdr_time_balance_data
+  MODIFY `cdr_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.malicious_calls
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE accounting.mark
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  MODIFY `acc_id` bigint(20) unsigned NOT NULL;
+
+ALTER TABLE accounting.prepaid_costs
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+
+USE stats;
+
+ALTER TABLE stats.call_info
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE stats.cdr_info
+  MODIFY `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  MODIFY `last_rated_id` bigint(20) unsigned DEFAULT NULL;
+

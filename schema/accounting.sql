@@ -9,7 +9,7 @@ USE accounting;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
   `from_tag` varchar(64) NOT NULL DEFAULT '',
   `to_tag` varchar(64) NOT NULL DEFAULT '',
@@ -32,7 +32,7 @@ CREATE TABLE `acc` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_backup` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
   `from_tag` varchar(64) NOT NULL DEFAULT '',
   `to_tag` varchar(64) NOT NULL DEFAULT '',
@@ -55,7 +55,7 @@ CREATE TABLE `acc_backup` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_cdi` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `callid` varchar(255) NOT NULL,
   `mark` decimal(13,3) NOT NULL,
   PRIMARY KEY (`id`),
@@ -65,7 +65,7 @@ CREATE TABLE `acc_cdi` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `acc_trash` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `method` varchar(16) NOT NULL DEFAULT '',
   `from_tag` varchar(64) NOT NULL DEFAULT '',
   `to_tag` varchar(64) NOT NULL DEFAULT '',
@@ -88,7 +88,7 @@ CREATE TABLE `acc_trash` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `source_user_id` char(36) NOT NULL,
   `source_provider_id` varchar(255) NOT NULL,
@@ -207,7 +207,7 @@ CREATE TABLE `cdr_cash_balance` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_cash_balance_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `cash_balance_id` int(3) unsigned NOT NULL,
@@ -239,7 +239,7 @@ CREATE TABLE `cdr_export_status` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_export_status_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `status_id` int(3) unsigned NOT NULL,
   `exported_at` datetime DEFAULT NULL,
   `export_status` enum('unexported','ok','failed','skipped') NOT NULL DEFAULT 'unexported',
@@ -251,7 +251,7 @@ CREATE TABLE `cdr_export_status_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_group` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `call_id` varchar(255) NOT NULL,
   `cdr_start_time` decimal(13,3) NOT NULL,
   PRIMARY KEY (`cdr_id`,`call_id`,`cdr_start_time`),
@@ -262,7 +262,7 @@ CREATE TABLE `cdr_group` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_mos_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `mos_average` decimal(5,1) DEFAULT NULL,
   `mos_average_packetloss` decimal(5,1) DEFAULT NULL,
   `mos_average_jitter` decimal(5,1) DEFAULT NULL,
@@ -274,7 +274,7 @@ CREATE TABLE `cdr_mos_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_period_costs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `contract_id` int(11) unsigned NOT NULL,
   `period` enum('month','day') NOT NULL,
   `period_date` date NOT NULL,
@@ -287,9 +287,9 @@ CREATE TABLE `cdr_period_costs` (
   `notify_status` enum('new','notified') NOT NULL DEFAULT 'new',
   `notified_at` datetime DEFAULT NULL,
   `first_cdr_start_time` decimal(13,3) NOT NULL,
-  `first_cdr_id` int(10) unsigned DEFAULT NULL,
+  `first_cdr_id` bigint(20) unsigned DEFAULT NULL,
   `last_cdr_start_time` decimal(13,3) NOT NULL,
-  `last_cdr_id` int(10) unsigned DEFAULT NULL,
+  `last_cdr_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `contract_id` (`contract_id`,`period`,`period_date`,`direction`),
   KEY `cdrperiodcosts_pdfls` (`period`,`period_date`,`direction`,`fraud_limit_exceeded`,`notify_status`),
@@ -330,7 +330,7 @@ CREATE TABLE `cdr_relation` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_relation_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `relation_id` int(3) unsigned NOT NULL,
@@ -352,7 +352,7 @@ CREATE TABLE `cdr_tag` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_tag_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `tag_id` int(3) unsigned NOT NULL,
@@ -374,7 +374,7 @@ CREATE TABLE `cdr_time_balance` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cdr_time_balance_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `time_balance_id` int(3) unsigned NOT NULL,
@@ -388,7 +388,7 @@ CREATE TABLE `cdr_time_balance_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `subscriber_id` int(11) unsigned NOT NULL,
   `reseller_id` int(11) unsigned NOT NULL DEFAULT 1,
@@ -415,7 +415,7 @@ CREATE TABLE `events_relation` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_relation_data` (
-  `event_id` int(11) unsigned NOT NULL,
+  `event_id` bigint(20) unsigned NOT NULL,
   `relation_id` int(3) unsigned NOT NULL,
   `val` int(10) unsigned NOT NULL,
   `event_timestamp` decimal(13,3) NOT NULL,
@@ -435,7 +435,7 @@ CREATE TABLE `events_tag` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events_tag_data` (
-  `event_id` int(11) unsigned NOT NULL,
+  `event_id` bigint(20) unsigned NOT NULL,
   `tag_id` int(3) unsigned NOT NULL,
   `val` text NOT NULL,
   `event_timestamp` decimal(13,3) NOT NULL,
@@ -446,7 +446,7 @@ CREATE TABLE `events_tag_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `update_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `source_user_id` char(36) NOT NULL,
   `source_provider_id` varchar(255) NOT NULL,
@@ -558,7 +558,7 @@ CREATE TABLE `int_cdr` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_cash_balance_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `cash_balance_id` int(3) unsigned NOT NULL,
@@ -572,7 +572,7 @@ CREATE TABLE `int_cdr_cash_balance_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_export_status_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `status_id` int(3) unsigned NOT NULL,
   `exported_at` datetime DEFAULT NULL,
   `export_status` enum('unexported','ok','failed','skipped') NOT NULL DEFAULT 'unexported',
@@ -584,7 +584,7 @@ CREATE TABLE `int_cdr_export_status_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_group` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `call_id` varchar(255) NOT NULL,
   `cdr_start_time` decimal(13,3) NOT NULL,
   PRIMARY KEY (`cdr_id`,`call_id`,`cdr_start_time`),
@@ -595,7 +595,7 @@ CREATE TABLE `int_cdr_group` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_relation_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `relation_id` int(3) unsigned NOT NULL,
@@ -608,7 +608,7 @@ CREATE TABLE `int_cdr_relation_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_tag_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `tag_id` int(3) unsigned NOT NULL,
@@ -621,7 +621,7 @@ CREATE TABLE `int_cdr_tag_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `int_cdr_time_balance_data` (
-  `cdr_id` int(10) unsigned NOT NULL,
+  `cdr_id` bigint(20) unsigned NOT NULL,
   `provider_id` int(3) unsigned NOT NULL,
   `direction_id` int(3) unsigned NOT NULL,
   `time_balance_id` int(3) unsigned NOT NULL,
@@ -635,7 +635,7 @@ CREATE TABLE `int_cdr_time_balance_data` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `malicious_calls` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `callee_uuid` varchar(255) NOT NULL,
   `call_id` varchar(255) NOT NULL,
   `start_time` decimal(13,3) NOT NULL,
@@ -652,9 +652,9 @@ CREATE TABLE `malicious_calls` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `mark` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `collector` varchar(255) NOT NULL,
-  `acc_id` int(10) unsigned NOT NULL,
+  `acc_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `collector_idx` (`collector`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
@@ -662,7 +662,7 @@ CREATE TABLE `mark` (
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prepaid_costs` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `call_id` varchar(255) NOT NULL,
   `cost` double NOT NULL,
   `free_time_used` int(10) unsigned NOT NULL,
