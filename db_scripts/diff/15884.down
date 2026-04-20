@@ -1,0 +1,9 @@
+use provisioning;
+
+alter table recording_streams
+  drop column storage_file,
+  drop column storage_db,
+  drop column storage_s3,
+  drop column storage_gcs,
+  drop column s3_uri,
+  drop column gcs_uri;

@@ -1320,6 +1320,18 @@
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams/full_filename"
       },
+      "recording_streams/gcs_uri" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "''",
+         "COLUMN_NAME" : "gcs_uri",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 24,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/gcs_uri"
+      },
       "recording_streams/id" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -1355,6 +1367,18 @@
          "ORDINAL_POSITION" : 6,
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams/output_type"
+      },
+      "recording_streams/s3_uri" : {
+         "CHARACTER_SET_NAME" : "utf8mb3",
+         "COLLATION_NAME" : "utf8mb3_general_ci",
+         "COLUMN_DEFAULT" : "''",
+         "COLUMN_NAME" : "s3_uri",
+         "COLUMN_TYPE" : "varchar(255)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 23,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/s3_uri"
       },
       "recording_streams/sample_rate" : {
          "CHARACTER_SET_NAME" : null,
@@ -1403,6 +1427,54 @@
          "ORDINAL_POSITION" : 13,
          "TABLE_NAME" : "recording_streams",
          "key_col" : "recording_streams/start_timestamp"
+      },
+      "recording_streams/storage_db" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "storage_db",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 20,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/storage_db"
+      },
+      "recording_streams/storage_file" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "1",
+         "COLUMN_NAME" : "storage_file",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 19,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/storage_file"
+      },
+      "recording_streams/storage_gcs" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "storage_gcs",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 22,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/storage_gcs"
+      },
+      "recording_streams/storage_s3" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "0",
+         "COLUMN_NAME" : "storage_s3",
+         "COLUMN_TYPE" : "tinyint(1)",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "NO",
+         "ORDINAL_POSITION" : 21,
+         "TABLE_NAME" : "recording_streams",
+         "key_col" : "recording_streams/storage_s3"
       },
       "recording_streams/stream" : {
          "CHARACTER_SET_NAME" : null,

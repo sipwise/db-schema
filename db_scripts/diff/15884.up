@@ -1,0 +1,9 @@
+use provisioning;
+
+alter table recording_streams
+  add column storage_file tinyint(1) not null default 1,
+  add column storage_db tinyint(1) not null default 0,
+  add column storage_s3 tinyint(1) not null default 0,
+  add column storage_gcs tinyint(1) not null default 0,
+  add column s3_uri varchar(255) not null default '',
+  add column gcs_uri varchar(255) not null default '';
