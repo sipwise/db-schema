@@ -1,0 +1,14 @@
+use provisioning;
+set autocommit=0;
+
+# Remove 'conference_pin' to profile preferences
+UPDATE voip_preferences SET
+  prof_pref = 0
+WHERE attribute = 'conference_pin';
+
+
+# Remove new 'phonebook' internal preference
+DELETE FROM voip_preferences
+WHERE attribute = 'phonebook';
+
+COMMIT;

@@ -1197,7 +1197,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=416 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=417 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -3992,7 +3992,7 @@ INSERT INTO `voip_preferences` VALUES (138,9,'cloud_pbx_callqueue','PBX Call Que
 INSERT INTO `voip_preferences` VALUES (139,8,'language','Language for voicemail and app server',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'enum',0,'Voice prompts language for voicemail, conference and application server.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (140,2,'adm_cf_ncos_id','Internal Administrative NCOS Level for Call Forward #',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',1,0,'int',0,NULL,0,0,0);
 INSERT INTO `voip_preferences` VALUES (141,2,'adm_cf_ncos','Administrative NCOS Level For Call Forward',0,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',-1,0,'string',0,'Specifies the Administrative NCOS Level that applies for the Call Forward from the user.',0,0,0);
-INSERT INTO `voip_preferences` VALUES (142,8,'conference_pin','PIN for access to pin-protected conference',0,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'string',0,'PIN for access to private conferencing service.',0,0,1);
+INSERT INTO `voip_preferences` VALUES (142,8,'conference_pin','PIN for access to pin-protected conference',0,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'string',0,'PIN for access to private conferencing service.',0,0,1);
 INSERT INTO `voip_preferences` VALUES (143,9,'max_queue_length','Call Queue length',0,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'string',0,'Maximum number of callers in a PBX Call Queue. By default 5',0,0,1);
 INSERT INTO `voip_preferences` VALUES (144,9,'queue_wrap_up_time','Call Queue wrap-up time, sec',0,1,1,1,0,0,0,0,0,0,0,'1970-01-01 00:00:01',0,1,'string',0,'Idle interval before connecting first caller in PBX Call Queue. By default it is 10 seconds',0,0,1);
 INSERT INTO `voip_preferences` VALUES (145,5,'rtp_interface','RTP interface',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'enum',0,'Logical RTP interface to use for media packets',0,0,0);
@@ -4240,6 +4240,7 @@ INSERT INTO `voip_preferences` VALUES (412,8,'call_log_level','Debug log level',
 INSERT INTO `voip_preferences` VALUES (413,17,'allow_asymmetric_codecs','Allow asymmetric codecs in RTP streams',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If enabled, rtpengine will accept mismatched RTP payload type numbers between SDP offer and answer, allowing codec matching by name rather than payload type.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (414,19,'connect_on_ported','Connect to the final destination using ported number',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'In case of successful lookup in the lnp table for a call to a non-local ported number, send the outgoing call to the ported number (used only for lnp local_qor type).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (415,19,'ported_n1_to_ruri','Substitute the CLI with the original number (N1)',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If the caller subscriber is ported and the CLI ported number (N2) matches the allowed_cli list, then substitute the CLI with the original number (N1) (used only for lnp local_qor type).',0,0,0);
+INSERT INTO `voip_preferences` VALUES (416,8,'phonebook','Phonebook',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,1,'boolean',0,'An internal flag for the phonebook pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.',0,0,1);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;

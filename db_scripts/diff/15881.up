@@ -1,0 +1,38 @@
+use provisioning;
+set autocommit=0;
+
+# Add 'conference_pin' to profile preferences
+UPDATE voip_preferences SET
+  prof_pref = 1
+WHERE attribute = 'conference_pin';
+
+
+# Add new 'phonebook' internal preference
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Internals';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @vpg_id,
+  attribute = 'phonebook',
+  label = 'Phonebook',
+  type = 1,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 0,
+  dom_pref =  0,
+  peer_pref = 0,
+  contract_pref = 0,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  fielddev_pref = 0,
+  modify_timestamp = now(),
+  internal = 1,
+  expose_to_customer = 1,
+  data_type = 'boolean',
+  read_only = 0,
+  description = 'An internal flag for the phonebook pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.',
+  dynamic = 0,
+  reseller_pref = 0,
+  expose_to_subscriber = 1;
+
+COMMIT;
