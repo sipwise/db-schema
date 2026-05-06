@@ -13,8 +13,9 @@ CREATE TABLE `call_info` (
   `sip_code` varchar(3) NOT NULL,
   `period` datetime NOT NULL,
   `amount` int(11) unsigned NOT NULL,
+  `site_id` int(2) unsigned DEFAULT 1,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `call_info_sip_code_period_idx` (`sip_code`,`period`)
+  UNIQUE KEY `call_info_site_sip_code_period_idx` (`site_id`,`sip_code`,`period`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
