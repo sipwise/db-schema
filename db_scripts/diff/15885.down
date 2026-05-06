@@ -1,0 +1,6 @@
+USE stats;
+
+ALTER TABLE stats.call_info
+  DROP KEY `call_info_site_sip_code_period_idx`,
+  ADD UNIQUE KEY `call_info_sip_code_period_idx` (`sip_code`,`period`),
+  DROP COLUMN `site_id`;
