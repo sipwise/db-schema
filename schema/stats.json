@@ -48,6 +48,18 @@
          "TABLE_NAME" : "call_info",
          "key_col" : "call_info/sip_code"
       },
+      "call_info/site_id" : {
+         "CHARACTER_SET_NAME" : null,
+         "COLLATION_NAME" : null,
+         "COLUMN_DEFAULT" : "1",
+         "COLUMN_NAME" : "site_id",
+         "COLUMN_TYPE" : "int(2) unsigned",
+         "EXTRA" : "",
+         "IS_NULLABLE" : "YES",
+         "ORDINAL_POSITION" : 5,
+         "TABLE_NAME" : "call_info",
+         "key_col" : "call_info/site_id"
+      },
       "cdr_info/customer_cost" : {
          "CHARACTER_SET_NAME" : null,
          "COLLATION_NAME" : null,
@@ -279,29 +291,41 @@
          "TABLE_NAME" : "call_info",
          "key_col" : "call_info/PRIMARY/1"
       },
-      "call_info/call_info_sip_code_period_idx/1" : {
+      "call_info/call_info_site_sip_code_period_idx/1" : {
          "COLLATION" : "A",
-         "COLUMN_NAME" : "sip_code",
-         "INDEX_NAME" : "call_info_sip_code_period_idx",
+         "COLUMN_NAME" : "site_id",
+         "INDEX_NAME" : "call_info_site_sip_code_period_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 0,
-         "NULLABLE" : "",
+         "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "call_info",
-         "key_col" : "call_info/call_info_sip_code_period_idx/1"
+         "key_col" : "call_info/call_info_site_sip_code_period_idx/1"
       },
-      "call_info/call_info_sip_code_period_idx/2" : {
+      "call_info/call_info_site_sip_code_period_idx/2" : {
          "COLLATION" : "A",
-         "COLUMN_NAME" : "period",
-         "INDEX_NAME" : "call_info_sip_code_period_idx",
+         "COLUMN_NAME" : "sip_code",
+         "INDEX_NAME" : "call_info_site_sip_code_period_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 0,
          "NULLABLE" : "",
          "SEQ_IN_INDEX" : 2,
          "SUB_PART" : null,
          "TABLE_NAME" : "call_info",
-         "key_col" : "call_info/call_info_sip_code_period_idx/2"
+         "key_col" : "call_info/call_info_site_sip_code_period_idx/2"
+      },
+      "call_info/call_info_site_sip_code_period_idx/3" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "period",
+         "INDEX_NAME" : "call_info_site_sip_code_period_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 0,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 3,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "call_info",
+         "key_col" : "call_info/call_info_site_sip_code_period_idx/3"
       },
       "cdr_info/PRIMARY/1" : {
          "COLLATION" : "A",
