@@ -1,3 +1,17 @@
+ngcp-db-schema (26.1.1.0+0~mr26.1.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [75882c9] MT#59286 convert accounting, stats database tables to use bigint
+  * [1a92d0b] MT#65050 add stats.call_info site_id column
+
+  [ Marco Capetta ]
+  * [e18c111] MT#63396 New 'phonebook' int pref, add 'conference_pin' as prof_pref
+
+  [ Richard Fuchs ]
+  * [ce13242] MT#64939 recording: fields indicating storage
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 15 Jun 2026 15:30:47 +0200
+
 ngcp-db-schema (26.1.0.0+0~mr26.1.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
