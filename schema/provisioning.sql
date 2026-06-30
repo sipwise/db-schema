@@ -1203,7 +1203,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=417 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=421 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4247,6 +4247,10 @@ INSERT INTO `voip_preferences` VALUES (413,17,'allow_asymmetric_codecs','Allow a
 INSERT INTO `voip_preferences` VALUES (414,19,'connect_on_ported','Connect to the final destination using ported number',1,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'In case of successful lookup in the lnp table for a call to a non-local ported number, send the outgoing call to the ported number (used only for lnp local_qor type).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (415,19,'ported_n1_to_ruri','Substitute the CLI with the original number (N1)',1,1,1,1,1,0,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'If the caller subscriber is ported and the CLI ported number (N2) matches the allowed_cli list, then substitute the CLI with the original number (N1) (used only for lnp local_qor type).',0,0,0);
 INSERT INTO `voip_preferences` VALUES (416,8,'phonebook','Phonebook',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,1,'boolean',0,'An internal flag for the phonebook pseudo-preference feature to be able to map it do subscriber profiles. Not directly used.',0,0,1);
+INSERT INTO `voip_preferences` VALUES (417,17,'transcode_G726_16','Transcode to G.726 16 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/16 kbps) to this subscriber or peer.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (418,17,'transcode_G726_24','Transcode to G.726 24 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/24 kbps) to this subscriber or peer.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (419,17,'transcode_G726_32','Transcode to G.726 32 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/32 kbps) to this subscriber or peer.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (420,17,'transcode_G726_40','Transcode to G.726 40 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/40 kbps) to this subscriber or peer.',0,0,0);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
