@@ -1,3 +1,14 @@
+ngcp-db-schema (26.2.1.0+0~mr26.2.1.0) unstable; urgency=medium
+
+  [ Marco Capetta ]
+  * [b98d1a7] MT#65116 Expose to customer and subscriber the mobile_push_enable pref
+
+  [ Richard Fuchs ]
+  * [63c2376] MT#65429 rtpengine/kamailio: add G.726 transcoding
+  * [016e41c] MT#65428 rtpengine/kamailio: transcode pref order
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Tue, 11 Aug 2026 14:18:51 +0200
+
 ngcp-db-schema (26.2.0.0+0~mr26.2.0.0) unstable; urgency=medium
 
   [ Kirill Solomko ]
