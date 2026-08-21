@@ -5576,7 +5576,7 @@ DELIMITER ;;
     IF NEW.probe = 1 THEN
       IF NEW.site_id IS NOT NULL THEN
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+          VALUES(CONCAT(NEW.site_id,100), CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto, ';site_id=', NEW.site_id), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
       ELSE
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
           VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
@@ -5639,7 +5639,7 @@ DELIMITER ;;
     IF NEW.probe = 1 AND (m_probechange = 1 OR OLD.probe = 0) THEN
       IF NEW.site_id IS NOT NULL THEN
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+          VALUES(CONCAT(NEW.site_id,100), CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto, ';site_id=', NEW.site_id), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
       ELSE
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
           VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
@@ -5660,7 +5660,7 @@ DELIMITER ;;
     IF NEW.probe = 1 THEN
       IF NEW.site_id IS NOT NULL THEN
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
-          VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
+          VALUES(CONCAT(NEW.site_id,100), CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto, ';site_id=', NEW.site_id), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';site_id=', NEW.site_id, ';'), 'Peer Probe');
       ELSE
         INSERT INTO kamailio.dispatcher (setid, destination, flags, priority, attrs, description)
           VALUES(100, CONCAT('sip:', NEW.ip, ':', NEW.port, ';transport=', m_proto), 8, 0, CONCAT('peerid=', NEW.id, ';peername="', NEW.name, '";peergid=', NEW.group_id, ';'), 'Peer Probe');
