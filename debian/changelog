@@ -1,3 +1,10 @@
+ngcp-db-schema (26.2.1.2+0~mr26.2.1.2) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [2f8978d] MT#65752 voip_phost* triggers split dispatcher set ids per site
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Wed, 26 Aug 2026 16:12:59 +0200
+
 ngcp-db-schema (26.2.1.1+0~mr26.2.1.1) unstable; urgency=medium
 
   * New release.
