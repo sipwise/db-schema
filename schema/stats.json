@@ -291,6 +291,30 @@
          "TABLE_NAME" : "call_info",
          "key_col" : "call_info/PRIMARY/1"
       },
+      "call_info/call_info_period_sip_code_idx/1" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "period",
+         "INDEX_NAME" : "call_info_period_sip_code_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 1,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "call_info",
+         "key_col" : "call_info/call_info_period_sip_code_idx/1"
+      },
+      "call_info/call_info_period_sip_code_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "sip_code",
+         "INDEX_NAME" : "call_info_period_sip_code_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "call_info",
+         "key_col" : "call_info/call_info_period_sip_code_idx/2"
+      },
       "call_info/call_info_site_sip_code_period_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "site_id",

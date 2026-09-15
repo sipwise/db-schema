@@ -1,0 +1,1 @@
+alter table stats.call_info drop key call_info_period_sip_code_idx;

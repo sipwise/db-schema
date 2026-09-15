@@ -1,0 +1,1 @@
+alter table stats.call_info add key call_info_period_sip_code_idx (period, sip_code);
