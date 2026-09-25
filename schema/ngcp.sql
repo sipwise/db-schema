@@ -49,7 +49,7 @@ CREATE TABLE `tzinfo_version` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*M!999999\- enable the sandbox mode */ 
-set autocommit=0;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `date_range_helper` VALUES ('1970-01-01');
 INSERT INTO `date_range_helper` VALUES ('1970-01-02');
 INSERT INTO `date_range_helper` VALUES ('1970-01-03');
@@ -30050,8 +30050,9 @@ INSERT INTO `date_range_helper` VALUES ('2052-02-16');
 INSERT INTO `date_range_helper` VALUES ('2052-02-17');
 INSERT INTO `date_range_helper` VALUES ('2052-02-18');
 INSERT INTO `date_range_helper` VALUES ('2052-02-19');
-commit;
-set autocommit=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `db_schema` VALUES (1,5,'spce','1970-01-01 00:00:01','mr13.5',1);
 INSERT INTO `db_schema` VALUES (2,10,'spce','1970-01-01 00:00:01','mr13.5',1);
 INSERT INTO `db_schema` VALUES (3,20,'spce','1970-01-01 00:00:01','mr13.5',1);
@@ -30967,12 +30968,15 @@ INSERT INTO `db_schema` VALUES (912,15867,'spce','1970-01-01 00:00:01','mr13.5',
 INSERT INTO `db_schema` VALUES (913,15868,'spce','1970-01-01 00:00:01','mr13.5',1);
 INSERT INTO `db_schema` VALUES (914,15869,'spce','1970-01-01 00:00:01','mr13.5',1);
 INSERT INTO `db_schema` VALUES (915,15870,'spce','1970-01-01 00:00:01','mr13.5',1);
-commit;
-set autocommit=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `timezone` VALUES ('1','localtime','1970-01-01 00:00:01','1970-01-01 00:00:01',NULL);
-commit;
-set autocommit=0;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 INSERT INTO `tzinfo_version` VALUES ('1','0','1970-01-01 00:00:01','1970-01-01 00:00:01');
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*M!999999\- enable the sandbox mode */ 
 COMMIT;
