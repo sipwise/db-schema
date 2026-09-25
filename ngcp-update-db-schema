@@ -396,7 +396,7 @@ def connect_db() -> Connection:  # type: ignore
             socket file {db_socket} is not readable,
             using {db_defaults_conf_file}
         """))
-        db_connect_method == 'config'
+        db_connect_method = 'config'
 
     if db_connect_method == 'socket':
         config._run_cmd_mysql_options = [
