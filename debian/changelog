@@ -1,3 +1,10 @@
+ngcp-db-schema (12.5.1.19+0~mr12.5.1.19) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [e86fba8] MT#66112 ngcp-update-db-schema: fix db_connect_method == 'config' typo
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Fri, 25 Sep 2026 16:42:47 +0200
+
 ngcp-db-schema (12.5.1.18+0~mr12.5.1.18) unstable; urgency=medium
 
   [ Kirill Solomko ]
