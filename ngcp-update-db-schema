@@ -7,6 +7,8 @@ using .up and .down scripts
 For more info you can run check the docstring descriptions or
 run the script with --help
 """
+from __future__ import annotations
+
 import argparse
 import configparser
 import json
@@ -120,7 +122,7 @@ class Config:
         node_dbconf (ConfigDict): current node db config
         node_state (str): current node state (active/inactive,etc.)
         ngcp_version (str): current NGCP version
-        db_conn (Connection): database connection handler
+        db_conn (Connection[Any]): database connection handler
         db_schema (DBSchema): database schema revisions state
         revisions (Revisions): revisions that are read from
             the scripts directory
@@ -196,7 +198,7 @@ class Config:
     node_dbconf: ConfigDict
     node_state: str
     ngcp_version: str
-    db_conn: Connection  # type: ignore
+    db_conn: Connection[Any]
     db_schema: DBSchema
     revisions: Revisions
 
@@ -372,22 +374,23 @@ def c_str(in_str: str) -> str:
     return re.sub(r'\s{2,}|\n', ' ', out_str, flags=re.MULTILINE)
 
 
-def connect_db() -> Connection:  # type: ignore
+def connect_db() -> Connection[Any]:
     """Connects to the database to perform versioning on.
 
     Args:
         None
 
     Returns:
-        Connection: database connection handler
+        Connection[Any]: database connection handler
 
     """
-    db_host = config.node_dbconf['pair_dbhost']
+    db_host = str(config.node_dbconf['pair_dbhost'])
     db_port = int(config.node_dbconf['pair_dbport'])
     db_user = config.db_socket_user
     db_socket = config.db_socket
     db_defaults_conf_file = config.db_defaults_conf_file
     db_connect_method = config.db_connect_method
+    db_conn: Connection[Any]
 
     socket_available = os.access(str(db_socket), os.R_OK)
 
@@ -404,12 +407,12 @@ def connect_db() -> Connection:  # type: ignore
             '-u', db_user, '-S', db_socket
             ]
         try:
-            db_conn: Connection = pymysql.connect(  # type: ignore
+            db_conn = pymysql.connect(
                 host=db_host,
                 port=db_port,
                 user=db_user,
                 unix_socket=db_socket,
-                autocommit=0,
+                autocommit=False,
             )
             debug(
                 'connected to database %s:%d via socket %s as %s' %
@@ -438,12 +441,12 @@ def connect_db() -> Connection:  # type: ignore
             shutdown(1)
 
         try:
-            db_conn: Connection = pymysql.connect(  # type: ignore
+            db_conn = pymysql.connect(
                 host=db_host,
                 port=db_port,
                 user=db_user,
                 read_default_file=db_defaults_conf_file,
-                autocommit=0,
+                autocommit=False,
             )
             log(
                 'connected to database %s:%d via config %s as %s' %
