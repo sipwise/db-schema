@@ -61,7 +61,8 @@ RETURN
         HEX(SUBSTR(_bin,  1, 2)),
         HEX(SUBSTR(_bin,  9, 2)),
         HEX(SUBSTR(_bin, 11))
-             )) ;;
+             ))
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -85,7 +86,8 @@ RETURN
         SUBSTR(_uuid, 10, 4),
         SUBSTR(_uuid,  1, 8),
         SUBSTR(_uuid, 20, 4),
-        SUBSTR(_uuid, 25) )) ;;
+        SUBSTR(_uuid, 25) ))
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;

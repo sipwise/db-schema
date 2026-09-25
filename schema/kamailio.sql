@@ -1004,15 +1004,15 @@ CREATE TABLE `usr_preferences` (
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_subscriber_devices` AS SELECT
- 1 AS `username`,
-  1 AS `sub_username`,
-  1 AS `domain`,
-  1 AS `uuid`,
-  1 AS `password`,
-  1 AS `ha1`,
-  1 AS `ha1b`,
-  1 AS `is_devid`,
-  1 AS `devid_alias` */;
+ NULL AS `username`,
+ NULL AS `sub_username`,
+ NULL AS `domain`,
+ NULL AS `uuid`,
+ NULL AS `password`,
+ NULL AS `ha1`,
+ NULL AS `ha1b`,
+ NULL AS `is_devid`,
+ NULL AS `devid_alias` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1163,7 +1163,7 @@ INSERT INTO `dom_preferences` VALUES (29,'','0','voip.sipwise.local','busy_hg_me
 INSERT INTO `dom_preferences` VALUES (30,'','0','voip.sipwise.local','announce_conn_type',0,'early','1900-01-01 00:00:01');
 INSERT INTO `dom_preferences` VALUES (31,'','0','voip.sipwise.local','record_call',0,'0','1900-01-01 00:00:01');
 INSERT INTO `domain` VALUES (1,'voip.sipwise.local','1900-01-01 00:00:01',NULL);
-INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','1a492568b5c3e74e64d3ce2c064ec0c3','3a4b76a9594d9c0d7e2e4aecafb84170','55cdcdef51384afb0bb81d6994c51f43','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
+INSERT INTO `subscriber` VALUES (1,'no_such_number','voip.sipwise.local','fecc50ef0b5bb7f15d7bfe232e245e7a','25c5b74db3b2207cd56f7f29a55c6769','f0a93f14d14a88ef41c12413309a527f','9bcb88b6-541a-43da-8fdc-816f5557ff93','','0000-00-00 00:00:00');
 INSERT INTO `usr_preferences` VALUES (1,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','cloud_pbx_hunt_policy',0,'none','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (5,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','emergency_location_format',0,'cirpack','1900-01-01 00:00:01');
 INSERT INTO `usr_preferences` VALUES (6,'9bcb88b6-541a-43da-8fdc-816f5557ff93','no_such_number','voip.sipwise.local','play_announce_before_recording',0,'never','1900-01-01 00:00:01');
@@ -1222,7 +1222,8 @@ BEGIN
         INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
     END IF;
 
-END */;;
+END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1249,7 +1250,8 @@ BEGIN
         INSERT INTO accounting.cdr_presentity (call_id,event,received_time,body) VALUES (_call_id,NEW.event,NEW.received_time,NEW.body);
     END IF;
 
-END */;;
+END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;

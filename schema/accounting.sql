@@ -746,7 +746,8 @@ DELIMITER ;;
   update accounting.cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
   update accounting.cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -771,7 +772,8 @@ DELIMITER ;;
   delete from accounting.cdr_export_status_data where cdr_id = OLD.id;
   delete from accounting.cdr_group where cdr_id = OLD.id;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -801,7 +803,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -875,7 +878,8 @@ DELIMITER ;;
         set @err_msg = 'Error deleting data from accounting.cdr_direction, related data exists in accounting.int_cdr_tag_data';
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -905,7 +909,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -981,7 +986,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1011,7 +1017,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1041,7 +1048,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1071,7 +1079,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1096,7 +1105,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1121,7 +1131,8 @@ DELIMITER ;;
         signal sqlstate '45000' set message_text = @err_msg;
     end if;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1146,7 +1157,8 @@ DELIMITER ;;
   update accounting.int_cdr_export_status_data set cdr_id = NEW.id where cdr_id = OLD.id;
   update accounting.int_cdr_group set cdr_id = NEW.id where cdr_id = OLD.id;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1171,7 +1183,8 @@ DELIMITER ;;
   delete from accounting.int_cdr_export_status_data where cdr_id = OLD.id;
   delete from accounting.int_cdr_group where cdr_id = OLD.id;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;

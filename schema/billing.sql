@@ -8,8 +8,8 @@ USE billing;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `_v_actual_effective_start_time` AS SELECT
- 1 AS `contract_id`,
-  1 AS `effective_start_time` */;
+ NULL AS `contract_id`,
+ NULL AS `effective_start_time` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1062,45 +1062,45 @@ CREATE TABLE `topup_log` (
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_actual_billing_profiles` AS SELECT
- 1 AS `contract_id`,
-  1 AS `billing_profile_id` */;
+ NULL AS `contract_id`,
+ NULL AS `billing_profile_id` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_contract_billing_profile_network_schedules` AS SELECT
- 1 AS `id`,
-  1 AS `contract_id`,
-  1 AS `start_date`,
-  1 AS `end_date`,
-  1 AS `billing_profile_id`,
-  1 AS `network_id`,
-  1 AS `effective_start_time`,
-  1 AS `effective_start_date`,
-  1 AS `billing_profile_name`,
-  1 AS `billing_profile_handle`,
-  1 AS `billing_network_name` */;
+ NULL AS `id`,
+ NULL AS `contract_id`,
+ NULL AS `start_date`,
+ NULL AS `end_date`,
+ NULL AS `billing_profile_id`,
+ NULL AS `network_id`,
+ NULL AS `effective_start_time`,
+ NULL AS `effective_start_date`,
+ NULL AS `billing_profile_name`,
+ NULL AS `billing_profile_handle`,
+ NULL AS `billing_network_name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_contract_timezone` AS SELECT
- 1 AS `contact_id`,
-  1 AS `contract_id`,
-  1 AS `name` */;
+ NULL AS `contact_id`,
+ NULL AS `contract_id`,
+ NULL AS `name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_reseller_timezone` AS SELECT
- 1 AS `contact_id`,
-  1 AS `reseller_id`,
-  1 AS `name` */;
+ NULL AS `contact_id`,
+ NULL AS `reseller_id`,
+ NULL AS `name` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `v_subscriber_timezone` AS SELECT
- 1 AS `contact_id`,
-  1 AS `subscriber_id`,
-  1 AS `uuid`,
-  1 AS `name` */;
+ NULL AS `contact_id`,
+ NULL AS `subscriber_id`,
+ NULL AS `uuid`,
+ NULL AS `name` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -1310,7 +1310,8 @@ begin
 
   return _is_offpeak;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1351,7 +1352,8 @@ begin
 
   return _fee_string;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1492,7 +1494,8 @@ begin
 
   return _fee_id;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1541,7 +1544,8 @@ begin
     and c.status != 'terminated'
   );
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1587,7 +1591,8 @@ begin
 
   return _profile_id;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1647,7 +1652,8 @@ begin
 
   return _profile_id;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1672,7 +1678,8 @@ begin
   return billing.get_billing_profile_by_contract_id((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
     provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch);
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1698,7 +1705,8 @@ begin
   return billing.get_billing_profile_by_contract_id_network((select pg.peering_contract_id from provisioning.voip_peer_hosts ph join
     provisioning.voip_peer_groups pg on pg.id = ph.group_id where ph.id = _peer_host_id),_epoch,_ip);
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1722,7 +1730,8 @@ begin
 
   return billing.get_billing_profile_by_contract_id((select account_id from provisioning.voip_subscribers where uuid = _uuid),_epoch);
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1748,7 +1757,8 @@ begin
   return billing.get_billing_profile_by_contract_id_network((select account_id from provisioning.voip_subscribers where uuid = _uuid),
     _epoch,_ip);
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1797,7 +1807,8 @@ begin
     and c.status != 'terminated'
   );
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1841,7 +1852,8 @@ begin
 
   return _number_id;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1878,7 +1890,8 @@ begin
   end if;
   insert into billing.contracts_billing_profile_network_schedule values(null,_profile_network_id,_effective_start_date);
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1905,7 +1918,8 @@ begin
     if(network_id is null,"",network_id),",") order by id separator ";") from billing.package_profile_sets
     where package_id = _package_id and discriminator = _package_profile_set));
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1955,7 +1969,8 @@ begin
   prepare stmt from @statement;
   execute stmt using @profile_id;
   deallocate prepare stmt;
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2139,7 +2154,8 @@ main: begin
   drop temporary table tmp_billing_mappings;
   drop temporary table tmp_billing_mappings_clone;
 
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2241,7 +2257,8 @@ begin
     end nested1;
   end loop contracts_loop;
   close contracts_cur;
-end ;;
+end
+;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2348,18 +2365,18 @@ INSERT INTO `acl_roles` VALUES (3,'reseller',0);
 INSERT INTO `acl_roles` VALUES (4,'ccareadmin',0);
 INSERT INTO `acl_roles` VALUES (5,'ccare',0);
 INSERT INTO `acl_roles` VALUES (6,'lintercept',0);
-INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2025-10-23 08:20:33',0);
+INSERT INTO `admins` VALUES (1,1,'administrator',NULL,'AtAFGhepIuEaQ.dSfdJ6b.$TNfqchYY76HTh2FAgD3l4r9JFYmFr9i',1,1,0,1,0,1,1,1,0,NULL,NULL,NULL,1,1,1,'2026-09-25 14:09:05',0);
 INSERT INTO `billing_fees` VALUES (1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1,NULL,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_fees_history` VALUES (1000,1,1,1,'.','.*','out','call',0,600,0,600,0,600,0,600,0,'regex_longest_pattern',0,NULL,0,NULL,0,0);
 INSERT INTO `billing_mappings` VALUES (1,NULL,NULL,1,1,3,NULL);
-INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2025-10-23 08:20:17','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
+INSERT INTO `billing_profiles` VALUES (1,1,'default','Default Billing Profile',0,0,0,0,'month',1,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,'active','2026-09-25 14:08:57','0000-00-00 00:00:00','0000-00-00 00:00:00',0,'libswrate',0);
 INSERT INTO `billing_zones` VALUES (1,1,'Free Default Zone','All Destinations');
 INSERT INTO `billing_zones_history` VALUES (1,1,1,'Free Default Zone','All Destinations');
-INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2025-10-23 08:19:50','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
-INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2025-10-23 08:19:51','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-customer@default.invalid',0,'2026-09-25 14:08:42','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
+INSERT INTO `contacts` VALUES (2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'default-system@default.invalid',0,'2026-09-25 14:08:44','0000-00-00 00:00:00',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'active',NULL,NULL);
 INSERT INTO `contract_balances` VALUES (1,1,0,0,0,0,0,0,'2014-01-01 00:00:00','2014-01-31 23:59:59',NULL,NULL,NULL,NULL,NULL);
-INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2025-10-23 08:20:12','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
+INSERT INTO `contracts` VALUES (1,NULL,2,NULL,NULL,'active',NULL,'2026-09-25 14:08:55','0000-00-00 00:00:00','0000-00-00 00:00:00',NULL,NULL,1,NULL,NULL,NULL,NULL,0.000000,0,3);
 INSERT INTO `contracts_billing_profile_network` VALUES (1,1,1,NULL,NULL,NULL,1);
 INSERT INTO `contracts_billing_profile_network_schedule` VALUES (1,1,0.000);
 INSERT INTO `email_templates` VALUES (1,NULL,'subscriber_default_email','default@sipwise.com','Subscriber created','Dear Customer,\n\nA new subscriber [% subscriber %] has been created for you.\n\nYour faithful Sipwise system\n\n-- \nThis is an automatically generated message. Do not reply.','');
@@ -2406,7 +2423,8 @@ DELIMITER ;;
       NEW.match_mode, NEW.onpeak_extra_rate, NEW.onpeak_extra_second, NEW.offpeak_extra_rate, NEW.offpeak_extra_second,
       NEW.offpeak_use_free_time, NEW.aoc_pulse_amount_per_message);
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2444,7 +2462,8 @@ DELIMITER ;;
       aoc_pulse_amount_per_message = NEW.aoc_pulse_amount_per_message
     where bf_id = OLD.id;
 
-  end */;;
+  end 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2465,7 +2484,8 @@ DELIMITER ;;
   INSERT INTO billing_zones_history
        VALUES(NULL, NEW.id, NEW.billing_profile_id, NEW.zone, NEW.detail);
 
-  END */;;
+  END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2488,7 +2508,8 @@ DELIMITER ;;
          zone = NEW.zone, detail = NEW.detail
    WHERE bz_id <=> OLD.id;
 
-  END */;;
+  END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2509,7 +2530,8 @@ BEGIN
     IF new.status = 'terminated' THEN
         DELETE FROM contract_phonebook WHERE contract_id = old.id;
     END IF;
-END */;;
+END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2530,7 +2552,8 @@ BEGIN
     IF new.status = 'terminated' THEN
         DELETE FROM reseller_phonebook WHERE reseller_id = old.id;
     END IF;
-END */;;
+END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -2551,7 +2574,8 @@ BEGIN
     IF new.status = 'terminated' THEN
         DELETE FROM subscriber_phonebook WHERE subscriber_id = old.id;
     END IF;
-END */;;
+END 
+*/;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;

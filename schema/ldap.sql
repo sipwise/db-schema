@@ -25,11 +25,11 @@ CREATE TABLE `ldap_attr_mappings` (
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `ldap_entries` AS SELECT
- 1 AS `id`,
-  1 AS `dn`,
-  1 AS `oc_map_id`,
-  1 AS `parent`,
-  1 AS `keyval` */;
+ NULL AS `id`,
+ NULL AS `dn`,
+ NULL AS `oc_map_id`,
+ NULL AS `parent`,
+ NULL AS `keyval` */;
 SET character_set_client = @saved_cs_client;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -47,20 +47,20 @@ CREATE TABLE `ldap_oc_mappings` (
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `org` AS SELECT
- 1 AS `id`,
-  1 AS `o`,
-  1 AS `dc` */;
+ NULL AS `id`,
+ NULL AS `o`,
+ NULL AS `dc` */;
 SET character_set_client = @saved_cs_client;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8mb4;
 /*!50001 CREATE VIEW `users` AS SELECT
- 1 AS `id`,
-  1 AS `account_id`,
-  1 AS `uuid`,
-  1 AS `username`,
-  1 AS `password`,
-  1 AS `displayname`,
-  1 AS `phone` */;
+ NULL AS `id`,
+ NULL AS `account_id`,
+ NULL AS `uuid`,
+ NULL AS `username`,
+ NULL AS `password`,
+ NULL AS `displayname`,
+ NULL AS `phone` */;
 SET character_set_client = @saved_cs_client;
 /*!50001 DROP VIEW IF EXISTS `ldap_entries`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
