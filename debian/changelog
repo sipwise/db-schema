@@ -1,3 +1,17 @@
+ngcp-db-schema (26.3.1.0+0~mr26.3.1.0) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [a433def] MT#65752 voip_phost* triggers split dispatcher set ids per site
+  * [c8641de] MT#66112 ngcp-update-db-schema: fix db_connect_method == 'config' typo
+
+  [ Richard Fuchs ]
+  * [f2204ef] MT#55057 add call_info_period_sip_code_idx index
+
+  [ Michael Prokop ]
+  * [d8a2d62] MT#63385 ngcp-update-db-schema: fix mypy Debian/forky compat
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 05 Oct 2026 12:33:44 +0200
+
 ngcp-db-schema (26.3.0.0+0~mr26.3.0.0) unstable; urgency=medium
 
   [ Marco Capetta ]
