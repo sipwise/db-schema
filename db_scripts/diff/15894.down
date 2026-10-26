@@ -1,0 +1,8 @@
+USE provisioning;
+SET autocommit = 0;
+
+DELETE FROM voip_preferences WHERE attribute = 'cdr';
+DELETE FROM voip_preferences WHERE attribute = 'csc_app_info';
+DELETE FROM voip_preferences WHERE attribute = 'admin_manage_only';
+
+COMMIT;

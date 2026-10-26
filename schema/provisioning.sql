@@ -1203,7 +1203,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=423 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=426 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4253,6 +4253,9 @@ INSERT INTO `voip_preferences` VALUES (419,17,'transcode_G726_32','Transcode to 
 INSERT INTO `voip_preferences` VALUES (420,17,'transcode_G726_40','Transcode to G.726 40 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/40 kbps) to this subscriber or peer.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (421,17,'transcode_preference','Offer codecs for transcoding in the given order of preference',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'List of codecs, separated by commas, to determine the order of preference for transcoded codecs.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (422,12,'emulated_rbt_stop_on_ingress','Stop emulated ringback tone on media from the callee',0,1,1,1,1,1,1,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Only used together with play_emulated_ringback_tone. The emulated ringback tone is also played if the callee answers with a 183 Session Progress with SDP, announcing early media, and it is stopped as soon as the first media packet from the callee is received, which is then forwarded to the caller. Useful for callees announcing early media without sending any.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (423,8,'cdr','CDR PBX Statistics',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,1,'boolean',0,'\'CDR PBX Statistics\' - An internal flag to be able to map PBX CDR visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (424,8,'csc_app_info','CDR APP Info',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,1,'boolean',0,'\'CDR APP Info\' - An internal flag to be able to map the smartphone APP information visibility to subscriber profiles. Not directly used',0,0,1);
+INSERT INTO `voip_preferences` VALUES (425,8,'admin_manage_only','Admin Management Only',1,1,1,0,0,0,0,0,0,0,0,'1970-01-01 00:00:01',1,1,'boolean',0,'\'Admin Management Only\' - An internal flag to restrict the subscriberadmin role to management functions only. Profile attribute, not directly used.',0,0,1);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;

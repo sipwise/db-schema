@@ -1,0 +1,76 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups
+  WHERE name='Internals';
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "cdr",
+label = "CDR PBX Statistics",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CDR PBX Statistics' - An internal flag to be able to map PBX CDR visibility to subscriber profiles. Not directly used";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "csc_app_info",
+label = "CDR APP Info",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'CDR APP Info' - An internal flag to be able to map the smartphone APP information visibility to subscriber profiles. Not directly used";
+
+INSERT INTO voip_preferences
+  SET
+voip_preference_groups_id = @vpg_id,
+attribute = "admin_manage_only",
+label = "Admin Management Only",
+type = 1,
+max_occur = 1,
+usr_pref = 1,
+prof_pref = 0,
+dom_pref = 0,
+peer_pref = 0,
+contract_pref = 0,
+contract_location_pref = 0,
+dev_pref = 0,
+devprof_pref = 0,
+fielddev_pref = 0,
+internal = 1,
+expose_to_customer = 1,
+expose_to_subscriber = 1,
+data_type = "boolean",
+read_only = 0,
+description = "'Admin Management Only' - An internal flag to restrict the subscriberadmin role to management functions only. Profile attribute, not directly used.";
+
+COMMIT;
