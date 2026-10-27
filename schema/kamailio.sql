@@ -1043,10 +1043,10 @@ CREATE TABLE `voicemail_spool` (
   `transcript_status` enum('none','pending','done') NOT NULL DEFAULT 'none',
   `transcript` text NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `dir` (`dir`),
   KEY `callid_idx` (`call_id`),
   KEY `mboxuser_msgnum_idx` (`mailboxuser`,`msgnum`),
   KEY `transcript_status_mailboxuser_idx` (`transcript_status`,`mailboxuser`),
+  KEY `dir_msgnum_idx` (`dir`,`msgnum`),
   CONSTRAINT `v_s_mailboxuser_ref` FOREIGN KEY (`mailboxuser`) REFERENCES `voicemail_users` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

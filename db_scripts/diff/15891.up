@@ -1,0 +1,5 @@
+use kamailio;
+
+alter table kamailio.voicemail_spool
+  add key `dir_msgnum_idx` (`dir`, `msgnum`),
+  drop key `dir`;

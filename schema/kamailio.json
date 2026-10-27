@@ -10598,17 +10598,29 @@
          "TABLE_NAME" : "voicemail_spool",
          "key_col" : "voicemail_spool/callid_idx/1"
       },
-      "voicemail_spool/dir/1" : {
+      "voicemail_spool/dir_msgnum_idx/1" : {
          "COLLATION" : "A",
          "COLUMN_NAME" : "dir",
-         "INDEX_NAME" : "dir",
+         "INDEX_NAME" : "dir_msgnum_idx",
          "INDEX_TYPE" : "BTREE",
          "NON_UNIQUE" : 1,
          "NULLABLE" : "YES",
          "SEQ_IN_INDEX" : 1,
          "SUB_PART" : null,
          "TABLE_NAME" : "voicemail_spool",
-         "key_col" : "voicemail_spool/dir/1"
+         "key_col" : "voicemail_spool/dir_msgnum_idx/1"
+      },
+      "voicemail_spool/dir_msgnum_idx/2" : {
+         "COLLATION" : "A",
+         "COLUMN_NAME" : "msgnum",
+         "INDEX_NAME" : "dir_msgnum_idx",
+         "INDEX_TYPE" : "BTREE",
+         "NON_UNIQUE" : 1,
+         "NULLABLE" : "",
+         "SEQ_IN_INDEX" : 2,
+         "SUB_PART" : null,
+         "TABLE_NAME" : "voicemail_spool",
+         "key_col" : "voicemail_spool/dir_msgnum_idx/2"
       },
       "voicemail_spool/mboxuser_msgnum_idx/1" : {
          "COLLATION" : "A",
