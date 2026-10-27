@@ -1588,11 +1588,17 @@ begin
           1
         from billing.contracts_billing_profile_network_schedule cbpns
         join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
-        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
-        join billing.contracts as c on est.contract_id = c.id
+        join billing.contracts as c on cbpn.contract_id = c.id
         where
         cbpn.billing_network_id = _network_id
         and c.status != 'terminated'
+        and cbpns.effective_start_time = (select
+            max(cbpns2.effective_start_time)
+          from billing.contracts_billing_profile_network_schedule cbpns2
+          join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+          where cbpn2.contract_id = cbpn.contract_id
+          and cbpn2.base = 1
+          and cbpns2.effective_start_time <= unix_timestamp(now()))
         limit _limit) as q
     );
   end if;
@@ -1601,11 +1607,17 @@ begin
       count(1)
     from billing.contracts_billing_profile_network_schedule cbpns
     join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
-    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
-    join billing.contracts as c on est.contract_id = c.id
+    join billing.contracts as c on cbpn.contract_id = c.id
     where
     cbpn.billing_network_id = _network_id
     and c.status != 'terminated'
+    and cbpns.effective_start_time = (select
+        max(cbpns2.effective_start_time)
+      from billing.contracts_billing_profile_network_schedule cbpns2
+      join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+      where cbpn2.contract_id = cbpn.contract_id
+      and cbpn2.base = 1
+      and cbpns2.effective_start_time <= unix_timestamp(now()))
   );
 
 end ;;
@@ -1844,11 +1856,17 @@ begin
           1
         from billing.contracts_billing_profile_network_schedule cbpns
         join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
-        join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
-        join billing.contracts as c on est.contract_id = c.id
+        join billing.contracts as c on cbpn.contract_id = c.id
         where
         cbpn.billing_profile_id = _profile_id
         and c.status != 'terminated'
+        and cbpns.effective_start_time = (select
+            max(cbpns2.effective_start_time)
+          from billing.contracts_billing_profile_network_schedule cbpns2
+          join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+          where cbpn2.contract_id = cbpn.contract_id
+          and cbpn2.base = 1
+          and cbpns2.effective_start_time <= unix_timestamp(now()))
         limit _limit) as q
     );
   end if;
@@ -1857,11 +1875,17 @@ begin
       count(1)
     from billing.contracts_billing_profile_network_schedule cbpns
     join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
-    join billing._v_actual_effective_start_time est on est.contract_id = cbpn.contract_id and cbpns.effective_start_time = est.effective_start_time
-    join billing.contracts as c on est.contract_id = c.id
+    join billing.contracts as c on cbpn.contract_id = c.id
     where
     cbpn.billing_profile_id = _profile_id
     and c.status != 'terminated'
+    and cbpns.effective_start_time = (select
+        max(cbpns2.effective_start_time)
+      from billing.contracts_billing_profile_network_schedule cbpns2
+      join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+      where cbpn2.contract_id = cbpn.contract_id
+      and cbpn2.base = 1
+      and cbpns2.effective_start_time <= unix_timestamp(now()))
   );
 
 end ;;
@@ -2336,7 +2360,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb3_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `v_actual_billing_profiles` AS select `est`.`contract_id` AS `contract_id`,`cbpn`.`billing_profile_id` AS `billing_profile_id` from ((`contracts_billing_profile_network_schedule` `cbpns` join `contracts_billing_profile_network` `cbpn` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) join `_v_actual_effective_start_time` `est` on(`est`.`contract_id` = `cbpn`.`contract_id` and `cbpns`.`effective_start_time` = `est`.`effective_start_time`)) where `cbpn`.`base` = 1 */;
+/*!50001 VIEW `v_actual_billing_profiles` AS select `cbpn`.`contract_id` AS `contract_id`,`cbpn`.`billing_profile_id` AS `billing_profile_id` from (`contracts_billing_profile_network_schedule` `cbpns` join `contracts_billing_profile_network` `cbpn` on(`cbpns`.`profile_network_id` = `cbpn`.`id`)) where `cbpn`.`base` = 1 and `cbpns`.`effective_start_time` = (select max(`cbpns2`.`effective_start_time`) from (`contracts_billing_profile_network_schedule` `cbpns2` join `contracts_billing_profile_network` `cbpn2` on(`cbpns2`.`profile_network_id` = `cbpn2`.`id`)) where `cbpn2`.`contract_id` = `cbpn`.`contract_id` and `cbpn2`.`base` = 1 and `cbpns2`.`effective_start_time` <= unix_timestamp(current_timestamp())) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
