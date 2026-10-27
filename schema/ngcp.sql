@@ -25,7 +25,7 @@ CREATE TABLE `db_schema` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `rev_idx` (`revision`,`node`,`site_id`),
   KEY `release_idx` (`release`)
-) ENGINE=InnoDB AUTO_INCREMENT=935 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=936 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -30987,6 +30987,7 @@ INSERT INTO `db_schema` VALUES (931,15888,'spce','1970-01-01 00:00:01','trunk',1
 INSERT INTO `db_schema` VALUES (932,15889,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (933,15890,'spce','1970-01-01 00:00:01','trunk',1);
 INSERT INTO `db_schema` VALUES (934,15891,'spce','1970-01-01 00:00:01','trunk',1);
+INSERT INTO `db_schema` VALUES (935,15892,'spce','1970-01-01 00:00:01','trunk',1);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
