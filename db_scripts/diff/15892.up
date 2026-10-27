@@ -1,0 +1,117 @@
+use billing;
+
+create or replace view v_actual_billing_profiles as select
+  cbpn.contract_id as contract_id,
+  cbpn.billing_profile_id as billing_profile_id
+from billing.contracts_billing_profile_network_schedule cbpns
+join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+where cbpn.base = 1
+  and cbpns.effective_start_time = (select
+      max(cbpns2.effective_start_time)
+    from billing.contracts_billing_profile_network_schedule cbpns2
+    join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+    where cbpn2.contract_id = cbpn.contract_id
+      and cbpn2.base = 1
+      and cbpns2.effective_start_time <= unix_timestamp(now())
+  );
+
+delimiter ;;
+drop function if exists get_billing_profile_contract_cnt;;
+create function get_billing_profile_contract_cnt(
+  _profile_id int,
+  _limit int
+) returns int(11)
+deterministic reads sql data
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing.contracts as c on cbpn.contract_id = c.id
+        where
+        cbpn.billing_profile_id = _profile_id
+        and c.status != 'terminated'
+        and cbpns.effective_start_time = (select
+            max(cbpns2.effective_start_time)
+          from billing.contracts_billing_profile_network_schedule cbpns2
+          join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+          where cbpn2.contract_id = cbpn.contract_id
+          and cbpn2.base = 1
+          and cbpns2.effective_start_time <= unix_timestamp(now()))
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing.contracts as c on cbpn.contract_id = c.id
+    where
+    cbpn.billing_profile_id = _profile_id
+    and c.status != 'terminated'
+    and cbpns.effective_start_time = (select
+        max(cbpns2.effective_start_time)
+      from billing.contracts_billing_profile_network_schedule cbpns2
+      join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+      where cbpn2.contract_id = cbpn.contract_id
+      and cbpn2.base = 1
+      and cbpns2.effective_start_time <= unix_timestamp(now()))
+  );
+
+end;;
+
+drop function if exists get_billing_network_contract_cnt;;
+create function get_billing_network_contract_cnt(
+  _network_id int,
+  _limit int
+) returns int(11)
+deterministic reads sql data
+begin
+
+  if _limit >= 0 then
+    return (select
+        count(1)
+      from (select
+          1
+        from billing.contracts_billing_profile_network_schedule cbpns
+        join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+        join billing.contracts as c on cbpn.contract_id = c.id
+        where
+        cbpn.billing_network_id = _network_id
+        and c.status != 'terminated'
+        and cbpns.effective_start_time = (select
+            max(cbpns2.effective_start_time)
+          from billing.contracts_billing_profile_network_schedule cbpns2
+          join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+          where cbpn2.contract_id = cbpn.contract_id
+          and cbpn2.base = 1
+          and cbpns2.effective_start_time <= unix_timestamp(now()))
+        limit _limit) as q
+    );
+  end if;
+
+  return (select
+      count(1)
+    from billing.contracts_billing_profile_network_schedule cbpns
+    join billing.contracts_billing_profile_network cbpn on cbpns.profile_network_id = cbpn.id
+    join billing.contracts as c on cbpn.contract_id = c.id
+    where
+    cbpn.billing_network_id = _network_id
+    and c.status != 'terminated'
+    and cbpns.effective_start_time = (select
+        max(cbpns2.effective_start_time)
+      from billing.contracts_billing_profile_network_schedule cbpns2
+      join billing.contracts_billing_profile_network cbpn2 on cbpns2.profile_network_id = cbpn2.id
+      where cbpn2.contract_id = cbpn.contract_id
+      and cbpn2.base = 1
+      and cbpns2.effective_start_time <= unix_timestamp(now()))
+  );
+
+end;;
+
+delimiter ;
