@@ -1,0 +1,31 @@
+use provisioning;
+set autocommit=0;
+
+SELECT id INTO @vpg_id FROM voip_preference_groups WHERE name = 'Applications';
+
+INSERT INTO voip_preferences SET
+  voip_preference_groups_id = @vpg_id,
+  attribute = 'emulated_rbt_stop_on_ingress',
+  label = 'Stop emulated ringback tone on media from the callee',
+  type = 0,
+  max_occur = 1,
+  usr_pref = 1,
+  prof_pref = 1,
+  dom_pref = 1,
+  peer_pref = 1,
+  contract_pref = 1,
+  contract_location_pref = 0,
+  dev_pref = 0,
+  devprof_pref = 0,
+  fielddev_pref = 0,
+  modify_timestamp = now(),
+  internal = 0,
+  expose_to_customer = 0,
+  data_type = 'boolean',
+  read_only = 0,
+  description = 'Only used together with play_emulated_ringback_tone. The emulated ringback tone is also played if the callee answers with a 183 Session Progress with SDP, announcing early media, and it is stopped as soon as the first media packet from the callee is received, which is then forwarded to the caller. Useful for callees announcing early media without sending any.',
+  dynamic = 0,
+  reseller_pref = 0,
+  expose_to_subscriber = 0;
+
+commit;

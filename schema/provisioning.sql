@@ -1203,7 +1203,7 @@ CREATE TABLE `voip_preferences` (
   UNIQUE KEY `attribute_idx` (`attribute`),
   KEY `vpgid_ref` (`voip_preference_groups_id`),
   CONSTRAINT `vpgid_ref` FOREIGN KEY (`voip_preference_groups_id`) REFERENCES `voip_preference_groups` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=422 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=423 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8mb4 */;
@@ -4252,6 +4252,7 @@ INSERT INTO `voip_preferences` VALUES (418,17,'transcode_G726_24','Transcode to 
 INSERT INTO `voip_preferences` VALUES (419,17,'transcode_G726_32','Transcode to G.726 32 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/32 kbps) to this subscriber or peer.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (420,17,'transcode_G726_40','Transcode to G.726 40 kbps',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Always offer the audio codec G.726 (8 kHz/40 kbps) to this subscriber or peer.',0,0,0);
 INSERT INTO `voip_preferences` VALUES (421,17,'transcode_preference','Offer codecs for transcoding in the given order of preference',0,1,1,1,1,1,0,0,0,0,0,'1970-01-01 00:00:01',0,0,'string',0,'List of codecs, separated by commas, to determine the order of preference for transcoded codecs.',0,0,0);
+INSERT INTO `voip_preferences` VALUES (422,12,'emulated_rbt_stop_on_ingress','Stop emulated ringback tone on media from the callee',0,1,1,1,1,1,1,0,0,0,0,'1970-01-01 00:00:01',0,0,'boolean',0,'Only used together with play_emulated_ringback_tone. The emulated ringback tone is also played if the callee answers with a 183 Session Progress with SDP, announcing early media, and it is stopped as soon as the first media packet from the callee is received, which is then forwarded to the caller. Useful for callees announcing early media without sending any.',0,0,0);
 COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
