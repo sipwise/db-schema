@@ -1,3 +1,10 @@
+ngcp-db-schema (13.5.1.10+0~mr13.5.1.10) unstable; urgency=medium
+
+  [ Kirill Solomko ]
+  * [187cb2e] MT#66407 fix slow v_actual_billing_profiles and contract_cnt functions
+
+ -- Sipwise Jenkins Builder <jenkins@sipwise.com>  Mon, 02 Nov 2026 17:31:02 +0100
+
 ngcp-db-schema (13.5.1.9+0~mr13.5.1.9) unstable; urgency=medium
 
   [ Kirill Solomko ]
