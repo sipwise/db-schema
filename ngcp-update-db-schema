@@ -11,10 +11,12 @@ from __future__ import annotations
 
 import argparse
 import configparser
+import glob
 import json
 import os
 import re
 import signal
+import stat
 import sys
 import tempfile
 import textwrap
@@ -31,6 +33,24 @@ from pymysql import Connection
 Revisions = Dict[str, Dict[int, str]]
 DBSchema = Dict[int, Dict[int, List[str]]]
 ConfigDict = Dict[str, str | int | bool]
+
+
+def _find_socket(want_ro: bool, default: str) -> str:
+    """Return the first socket in /run/mariadbd or /run/mysqld.
+
+    want_ro=True  -> only *2.sock files
+    want_ro=False -> any *.sock except *2.sock
+    """
+    for directory in ('/run/mariadbd', '/run/mysqld'):
+        for path in sorted(glob.glob(os.path.join(directory, '*.sock'))):
+            if path.endswith('2.sock') != want_ro:
+                continue
+            try:
+                if stat.S_ISSOCK(os.stat(path).st_mode):
+                    return path
+            except OSError:
+                continue
+    return default
 
 
 class RevisionApplyError(Exception):
@@ -136,8 +156,12 @@ class Config:
 
     # db options
     db_socket_user: str = 'root'
-    db_socket: str = '/run/mysqld/mysqld.sock'
-    db_ro_socket: str = '/run/mysqld/mysqld2.sock'
+    db_socket: str = _find_socket(
+        want_ro=False, default='/run/mysqld/mysqld.sock'
+    )
+    db_ro_socket: str = _find_socket(
+        want_ro=True, default='/run/mysqld/mysqld2.sock'
+    )
     db_defaults_conf_file: str = '/etc/mysql/sipwise_extra.cnf'
     db_connect_method: str = 'socket'
 
