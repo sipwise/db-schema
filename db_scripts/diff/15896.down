@@ -1,0 +1,22 @@
+USE provisioning;
+SET autocommit=0;
+
+SELECT id INTO @vp_id_cdr FROM voip_preferences
+  WHERE attribute='cdr';
+
+SELECT id INTO @vp_id_app FROM voip_preferences
+  WHERE attribute='csc_app_info';
+
+SELECT id INTO @vp_id_admin FROM voip_preferences
+  WHERE attribute='admin_manage_only';
+
+SELECT id INTO @vp_id_sound FROM voip_preferences
+  WHERE attribute='contract_sound_set';
+
+SELECT id INTO @vp_id_moh FROM voip_preferences
+  WHERE attribute='music_on_hold';
+
+DELETE FROM voip_subscriber_profile_attributes
+  WHERE attribute_id IN (@vp_id_cdr, @vp_id_app, @vp_id_admin, @vp_id_sound, @vp_id_moh);
+
+COMMIT;
